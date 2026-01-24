@@ -18,8 +18,8 @@ interface ScrollRevealProps {
 export default function ScrollReveal({
     children,
     direction = 'up',
-    distance = 25, /* Reduced displacement for stability */
-    duration = 1.4, /* Slightly slower for elegance */
+    distance = 25,
+    duration = 0.8,
     delay = 0,
     blur = 15,
     className = '',
@@ -29,7 +29,8 @@ export default function ScrollReveal({
     const ref = useRef<HTMLDivElement>(null);
     const isInView = useInView(ref, {
         once: true,
-        amount: 0.15 /* Increased threshold for stability */
+        amount: 0.1,
+        margin: "0px 0px -50px 0px"
     });
 
     const x = direction === 'left' ? -distance : direction === 'right' ? distance : 0;
