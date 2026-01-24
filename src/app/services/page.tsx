@@ -10,26 +10,26 @@ import { useRef } from 'react';
 const services = [
   {
     index: '01',
-    title: 'AI Tool Setup',
-    tagline: 'Precision Rollouts.',
-    desc: 'I handle the high-friction part of AI: getting your team to actually use it. From evaluation to live training.',
-    points: ['System evaluation & selection', 'Direct clinician onboarding', 'Operational SOP design'],
+    title: 'Software Setup',
+    tagline: 'Practical Onboarding.',
+    desc: 'Setting up software is easy. Getting a team to use it is hard. I handle the evaluation, configuration, and staff training.',
+    points: ['Software evaluation', 'Staff training sessions', 'Workflow documentation'],
     img: '/assets/n_strategy.png'
   },
   {
     index: '02',
-    title: 'Workflow Automation',
-    tagline: 'Digital Leverage.',
-    desc: 'Turning manual chores into automated systems. I use tools like Claude Code to reclaim hours spent on documentation.',
-    points: ['Intake pipe optimization', 'Document generation systems', 'Email flow automation'],
+    title: 'Automation',
+    tagline: 'Time Recovery.',
+    desc: 'I build simple automations that handle repetitive tasks. This usually involves reducing time spent on documentation and intake.',
+    points: ['Intake automation', 'Document templates', 'Task notifications'],
     img: '/assets/n_logic.png'
   },
   {
     index: '03',
-    title: 'Operations Support',
-    tagline: 'Systematic Growth.',
-    desc: 'Scaling clinics through logic. I optimize Jane App pathways and referral tracking to ensure nothing leaks.',
-    points: ['Booking flow architecture', 'Referral attribution systems', 'Local SEO & acquisition'],
+    title: 'Operations',
+    tagline: 'Daily Logistics.',
+    desc: 'Helping clinics run better day-to-day. I fix booking flows, referral tracking, and patient intake systems.',
+    points: ['Jane App optimization', 'Referral tracking', 'Administrative support'],
     img: '/assets/n_story_bg_03.png'
   }
 ];
@@ -55,7 +55,7 @@ function ServiceSection({ service, isEven }: { service: typeof services[0], isEv
         {/* Content Side */}
         <div className={`space-y-12 ${isEven ? 'lg:col-start-2' : ''}`}>
           <ScrollReveal direction="up">
-            <span className="text-accent font-mono text-sm tracking-[0.4em] uppercase block mb-4">Service {service.index}</span>
+            <span className="text-accent font-mono text-sm tracking-[0.4em] uppercase block mb-4">0{service.index}</span>
             <h2 className="text-7xl md:text-9xl font-medium tracking-tighter leading-none italic font-serif opacity-90">
               {service.title}
             </h2>
@@ -111,18 +111,17 @@ export default function Services() {
       {/* Cinematic Hero */}
       <section className="min-h-[90vh] flex flex-col justify-center items-center text-center px-6">
         <ScrollReveal direction="up">
-          <span className="block text-[10px] font-bold tracking-[0.8em] uppercase mb-12 opacity-30">Capabilities</span>
+          <span className="block text-[10px] font-bold tracking-[0.8em] uppercase mb-12 opacity-30">Services</span>
         </ScrollReveal>
 
         <h1 className="text-[12vw] md:text-[8vw] font-medium tracking-tighter leading-[0.8] mb-12">
-          Clinical <br />
-          <CharReveal delay={0.4} className="text-accent">Systems.</CharReveal>
+          How I <br />
+          <CharReveal delay={0.4} className="text-accent">work.</CharReveal>
         </h1>
 
         <div className="max-w-3xl border-t border-white/5 pt-12">
           <p className="text-2xl md:text-3xl text-muted-foreground font-light italic leading-snug">
-            Moving healthcare from manual chaos to technical precision.
-            No boxes. No fluff. Just better work.
+            I help clinics set up software and organize workflows so the staff can focus on the patient.
           </p>
         </div>
       </section>

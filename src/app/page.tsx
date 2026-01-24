@@ -28,18 +28,18 @@ export default function Home() {
             <div className="space-y-12">
               <ScrollReveal direction="up" distance={20} blur={10}>
                 <span className="inline-block text-sm font-medium tracking-[0.3em] uppercase opacity-40 mb-4 border border-white/10 px-4 py-2 rounded-full backdrop-blur-sm shadow-inner mt-10 md:mt-0">
-                  Implementation Specialist
+                  Clinic Operations & Automation
                 </span>
               </ScrollReveal>
 
               <motion.h1 variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="text-6xl md:text-8xl lg:text-[115px] font-medium leading-[0.85] tracking-tight mb-16 text-balance">
-                Clinical precision. <br />
-                <CharReveal delay={0.6} className="py-2">Digital logic.</CharReveal>
+                Operations <br />
+                <CharReveal delay={0.6} className="py-2 text-accent">Help.</CharReveal>
               </motion.h1>
 
               <div className="max-w-xl">
                 <TextReveal
-                  text="I setup AI tools and automate workflows that clinical teams actually use. Background in clinic ops with an MSc in Physiotherapy."
+                  text="I set up AI tools and automate paper-work for clinics. I have an MSc in Physiotherapy and I manage operations for several physical therapy groups."
                   className="text-xl md:text-2xl text-muted-foreground font-light leading-relaxed italic"
                   delay={0.8}
                 />
@@ -50,8 +50,8 @@ export default function Home() {
                   href="/contact"
                   className="group flex items-center gap-8 text-xl font-bold tracking-tight text-foreground link-underline pb-1 transition-all"
                 >
-                  Get in touch
-                  <ArrowRight size={24} className="opacity-20 group-hover:translate-x-4 transition-transform duration-700" />
+                  Contact me
+                  <ArrowRight size={24} className="opacity-20 group-hover:translate-x-4 transition-all duration-700" />
                 </Link>
               </motion.div>
             </div>
@@ -69,8 +69,6 @@ export default function Home() {
                   alt="Abstract Architecture"
                   className="w-full aspect-[4/5] rounded-[3rem] shadow-2xl border border-white/5"
                 />
-
-                {/* No Philosophy fillers. Just the image. */}
               </motion.div>
             </div>
           </div>
@@ -81,7 +79,7 @@ export default function Home() {
       <section className="py-24 relative z-10 w-full px-6 md:px-12">
         <ScrollReveal direction="up" distance={40} blur={20}>
           <div className="flex items-end justify-between mb-24 border-b border-white/10 pb-8 hover:border-white/20 transition-colors duration-700">
-            <h2 className="text-sm font-bold tracking-[0.2em] uppercase opacity-40">Projects</h2>
+            <h2 className="text-sm font-bold tracking-[0.2em] uppercase opacity-40">Previous Work</h2>
             <span className="text-sm font-mono opacity-20">2023 — 2025</span>
           </div>
         </ScrollReveal>

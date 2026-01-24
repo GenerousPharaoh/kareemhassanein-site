@@ -10,10 +10,10 @@ const roadmap = [
     period: '2024 - Present',
     title: 'Digital Ops Lead',
     company: 'Endorphins Health',
-    focus: 'Healthcare Operations',
+    focus: 'Health Ops',
     points: [
-      'Managing digital operations across 6 clinics',
-      'Redesigned booking flow in Jane App',
+      'Managing operations for 6 clinic locations',
+      'Redesigned booking flows and Jane App setup',
       'Built custom referral tracking systems'
     ]
   },
@@ -23,20 +23,20 @@ const roadmap = [
     company: 'Tax Relief Counsel',
     focus: 'Legal Tech',
     points: [
-      'Built automation with Claude Code',
-      'Cut document generation time by 85%',
-      'Standardized intake workflows'
+      'Built automations using AI tools',
+      'Reduced document processing time by 85%',
+      'Standardized office intake workflows'
     ]
   },
   {
     period: '2021 - 2024',
-    title: 'Registered Physiotherapist',
+    title: 'Physiotherapist',
     company: 'Movement Solutions',
-    focus: 'Clinical Practice',
+    focus: 'Clinical',
     points: [
-      'Managed Heidi AI rollout with clinicians',
-      'Highest revenue clinician for 3 years',
-      'Focused on clinical workflow adoption'
+      'Managed AI rollout for the clinician team',
+      'Handled patient care as a full-time clinician',
+      'Designed internal staff training workflows'
     ]
   }
 ];
@@ -44,23 +44,20 @@ const roadmap = [
 export default function About() {
   return (
     <main className="pt-24 overflow-hidden relative bg-background">
-      {/* Ambient glow */}
-      <div className="glow-blob top-[10%] -left-[10%] opacity-[0.02]" />
-
       {/* Identity Hero */}
       <section className="py-40 px-6 lg:px-0 relative overflow-hidden perspective-3000">
         <div className="section-container">
           <ScrollReveal direction="up" distance={20} blur={20} staggerChildren={0.2} className="grid lg:grid-cols-[1fr_1fr] gap-20 lg:gap-32 items-center">
             <motion.div>
               <motion.span variants={{ hidden: { opacity: 0 }, visible: { opacity: 0.3 } }} className="block text-[10px] font-bold tracking-[0.5em] uppercase mb-10">
-                Background
+                About me
               </motion.span>
               <motion.h1 variants={{ hidden: { opacity: 0, y: 15 }, visible: { opacity: 1, y: 0 } }} className="text-7xl md:text-[140px] font-medium tracking-tighter mb-20 leading-[0.75]">
-                Clinician <br /><span className="opacity-30 italic font-light font-serif">& logical.</span>
+                My <br /><span className="opacity-30 italic font-light font-serif">background.</span>
               </motion.h1>
             </motion.div>
             <motion.div variants={{ hidden: { opacity: 0, x: 30, filter: 'blur(30px)' }, visible: { opacity: 1, x: 0, filter: 'blur(0px)' } }} className="group mb-12">
-              <ParallaxImage src="/assets/n_logic.png" alt="Operational Logic" className="aspect-[4/5] w-full rounded-[2rem]" />
+              <ParallaxImage src="/assets/n_logic.png" alt="Operations" className="aspect-[4/5] w-full rounded-[2rem]" />
             </motion.div>
           </ScrollReveal>
         </div>
@@ -69,7 +66,7 @@ export default function About() {
       {/* Section Divider */}
       <div className="divider-subtle w-full" />
 
-      {/* Practitioner vs Architect */}
+      {/* Practical Split */}
       <section className="py-40 lg:py-64 bg-white/[0.005]">
         <div className="section-container">
           <ScrollReveal direction="up" distance={20} blur={20} staggerChildren={0.25} className="grid lg:grid-cols-2 gap-40 items-start">
@@ -78,10 +75,10 @@ export default function About() {
                 <div className="w-12 h-12 rounded-2xl bg-white/[0.01] border border-white/5 flex items-center justify-center">
                   <HeartPulse className="text-muted-foreground w-6 h-6" />
                 </div>
-                <h2 className="text-5xl font-medium tracking-tight">Clinical roots.</h2>
+                <h2 className="text-5xl font-medium tracking-tight">Physiotherapy.</h2>
               </div>
               <p className="text-3xl font-light text-muted-foreground leading-relaxed max-w-xl italic">
-                MSc Physiotherapy with Distinction. I spent years as a clinician before moving into operations.
+                I have an MSc in Physiotherapy with Distinction. I worked full-time as a clinician for years before moving into operations.
               </p>
             </motion.div>
 
@@ -90,10 +87,10 @@ export default function About() {
                 <div className="w-12 h-12 rounded-2xl bg-white/[0.01] border border-white/5 flex items-center justify-center">
                   <Binary className="text-muted-foreground w-6 h-6" />
                 </div>
-                <h2 className="text-5xl font-medium tracking-tight">System focus.</h2>
+                <h2 className="text-5xl font-medium tracking-tight">Operations.</h2>
               </div>
               <p className="text-3xl font-light text-muted-foreground leading-relaxed max-w-xl">
-                I help teams set up AI tools and automate the boring parts of their work.
+                Now I help clinics set up software and automate the parts of the job that suck up too much time.
               </p>
             </motion.div>
           </ScrollReveal>
@@ -149,19 +146,16 @@ export default function About() {
         </div>
       </section>
 
-      {/* Section Divider */}
-      <div className="divider-subtle w-full" />
-
       <section className="py-32 md:py-48 text-center px-6 bg-white/[0.005]">
         <ScrollReveal direction="up" blur={40} className="w-full" viewport={{ once: true, margin: "-20%" }}>
           <h2 className="text-8xl md:text-[160px] font-medium tracking-tighter mb-24 leading-[0.7] text-balance">
-            Want to <br /><span className="opacity-40 italic font-light font-serif">know more?</span>
+            Questions?
           </h2>
           <a
             href="/Kareem-Hassanein-Resume.pdf"
             className="group inline-flex items-center gap-12 text-3xl font-bold tracking-tight text-foreground link-underline pb-4 px-12 transition-all"
           >
-            Get the full resume
+            Download resume
             <Download size={48} className="opacity-10 group-hover:translate-y-4 transition-all duration-1000" />
           </a>
         </ScrollReveal>
