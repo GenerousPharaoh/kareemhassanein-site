@@ -22,7 +22,7 @@ const services = [
     tagline: 'Technical Leverage.',
     desc: 'I design systems that handle administrative edge cases. From automated document pipes in legal firms to complex intake logic in healthcare, I build for data integrity.',
     points: ['Logical pipe design', 'Edge-case automation', 'Data integrity guardrails'],
-    img: '/images/flow%20of%20organized%20transformation.png'
+    img: '/assets/n_logic.png'
   },
   {
     index: '03',
@@ -30,7 +30,7 @@ const services = [
     tagline: 'Growth Architecture.',
     desc: 'Identifying operational friction before it caps your growth. I optimize administrative pathways and referral tracking for professional service groups across health and law.',
     points: ['Bottleneck identification', 'Referral attribution', 'Scale-ready SOPs'],
-    img: '/images/orchestrating.png'
+    img: '/assets/n_synergy.png'
   }
 ];
 

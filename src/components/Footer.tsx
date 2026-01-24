@@ -1,8 +1,15 @@
+'use client';
+
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import ParallaxImage from './ParallaxImage';
+import { usePathname } from 'next/navigation';
 
 export default function Footer() {
+  const pathname = usePathname();
+
+  if (pathname === '/contact') return null;
+
   return (
     <div
       className="fixed bottom-0 left-0 w-full h-[800px] z-0 flex flex-col justify-end pointer-events-none"
