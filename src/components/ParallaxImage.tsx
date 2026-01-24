@@ -81,6 +81,11 @@ export default function ParallaxImage({
         mass: 0.1
     });
 
+    // Responsive buffer for parallax - smaller on mobile
+    const bufferClass = isMobile
+        ? "absolute inset-0 w-full h-full"
+        : "absolute inset-[-5%] w-[110%] h-[110%]";
+
     return (
         <div
             ref={containerRef}
@@ -95,7 +100,7 @@ export default function ParallaxImage({
                         ([g, b]) => `grayscale(${g}%) brightness(${b})`
                     )
                 }}
-                className="absolute inset-[-10%] w-[120%] h-[120%]"
+                className={bufferClass}
             >
                 <Image
                     src={src}

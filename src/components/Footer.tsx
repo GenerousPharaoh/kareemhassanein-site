@@ -75,11 +75,12 @@ export default function Footer() {
         />
 
         {/* Cinematic Background */}
-        <div className="absolute inset-0 z-0 opacity-15">
+        <div className="absolute inset-0 z-0 opacity-10 md:opacity-15">
           <ParallaxImage
             src="/images/bridging.png"
             alt="Footer Texture"
-            className="w-full h-full object-cover"
+            className="w-full h-full"
+            intensity="subtle"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#0a0d12] via-transparent to-[#0a0d12]" />
         </div>
