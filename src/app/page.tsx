@@ -27,7 +27,7 @@ export default function Home() {
         {/* Cinematic Background Layer */}
         <div className="absolute inset-0 z-0">
           <ParallaxImage
-            src="/images/%20hero-home.png"
+            src="/images/orchestrating.png"
             alt="Cinematic Core"
             className="w-full h-full opacity-20"
           />
@@ -59,9 +59,12 @@ export default function Home() {
               </div>
 
               {/* Metrics Row */}
-              <div className="grid grid-cols-3 gap-8 py-10 border-y border-white/5 max-w-3xl mx-auto">
+              <div className="relative grid grid-cols-3 gap-8 py-10 border-y border-white/5 max-w-3xl mx-auto overflow-hidden group">
+                <div className="absolute inset-0 z-0 opacity-[0.05] grayscale group-hover:opacity-10 transition-opacity duration-700 pointer-events-none">
+                  <ParallaxImage src="/images/image-2.png" alt="Technical Leverage" className="w-full h-full object-cover" />
+                </div>
                 {metrics.map((m) => (
-                  <div key={m.label} className="space-y-2">
+                  <div key={m.label} className="space-y-2 relative z-10">
                     <p className="text-4xl md:text-5xl font-serif italic text-accent">{m.value}</p>
                     <p className="text-[10px] font-bold uppercase tracking-widest opacity-30">{m.label}</p>
                   </div>
