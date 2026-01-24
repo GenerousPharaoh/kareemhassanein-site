@@ -96,13 +96,20 @@ export default function About() {
         <div className="relative z-10 text-center md:text-left w-full max-w-[1400px]">
           <ScrollReveal direction="up">
             <span className="block text-[10px] font-bold tracking-[1em] uppercase mb-12 opacity-30">Background</span>
-            <h1 className="text-[10vw] md:text-[8vw] font-medium tracking-tighter leading-[0.85] mb-8">
-              Clinician <CharReveal delay={0.4} className="text-accent italic font-serif">turned</CharReveal> <br />
-              implementer.
+            <h1 className="text-[8vw] md:text-[6vw] font-medium tracking-tighter leading-[0.9] mb-12">
+              Physiotherapist <CharReveal delay={0.4} className="text-accent italic font-serif">first.</CharReveal>
             </h1>
-            <p className="text-2xl md:text-3xl font-light text-muted-foreground max-w-xl leading-relaxed mx-auto md:mx-0">
-              I spent years as a physiotherapist watching good software fail because no one thought about how it fit into the actual workday. Now I fix that.
-            </p>
+            <div className="max-w-2xl space-y-6 mx-auto md:mx-0">
+              <p className="text-xl md:text-2xl font-light text-muted-foreground leading-relaxed">
+                I spent years treating patients. MSc from Robert Gordon, top biller at a busy clinic, the whole trajectory.
+              </p>
+              <p className="text-xl md:text-2xl font-light text-muted-foreground leading-relaxed">
+                But I kept getting pulled into the operational side. Why is the booking system losing referrals? Why are clinicians spending three hours a day on documentation? Why did we buy this software if nobody uses it?
+              </p>
+              <p className="text-xl md:text-2xl font-light text-foreground/90 leading-relaxed">
+                Eventually I realized I was more interested in fixing those problems than treating another rotator cuff. So now that&apos;s what I do.
+              </p>
+            </div>
           </ScrollReveal>
         </div>
       </section>
