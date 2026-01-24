@@ -13,7 +13,7 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-background text-foreground overflow-hidden">
       {/* Hero Section */}
-      <section className="min-h-screen flex items-center justify-center relative px-6 md:px-12">
+      <section className="min-h-screen flex items-center justify-center relative px-6 md:px-12 pt-40 md:pt-32">
 
         {/* Background Elements */}
         <div className="absolute inset-0 z-0">
@@ -27,7 +27,7 @@ export default function Home() {
             {/* Text Content */}
             <div className="space-y-12">
               <ScrollReveal direction="up" distance={20} blur={10}>
-                <span className="inline-block text-sm font-medium tracking-[0.3em] uppercase opacity-40 mb-4 border border-white/10 px-4 py-2 rounded-full backdrop-blur-sm shadow-inner">
+                <span className="inline-block text-sm font-medium tracking-[0.3em] uppercase opacity-40 mb-4 border border-white/10 px-4 py-2 rounded-full backdrop-blur-sm shadow-inner mt-10 md:mt-0">
                   Implementation Specialist
                 </span>
               </ScrollReveal>
