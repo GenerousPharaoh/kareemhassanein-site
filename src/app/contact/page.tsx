@@ -2,92 +2,69 @@
 
 import { Mail, Linkedin, Globe, ArrowUpRight } from 'lucide-react';
 import ScrollReveal from '@/components/ScrollReveal';
-import MaskedReveal from '@/components/MaskedReveal';
+import CharReveal from '@/components/CharReveal';
 
-const socialLinks = [
+const contactLinks = [
   { label: 'Email', href: 'mailto:kareem.hassanein@gmail.com', icon: <Mail className="w-5 h-5" /> },
   { label: 'LinkedIn', href: 'https://linkedin.com/in/kareemhassanein', icon: <Linkedin className="w-5 h-5" /> },
   { label: 'Kinetikare Physio', href: 'https://www.kinetikarephysio.com', icon: <Globe className="w-5 h-5" /> },
   { label: 'Endorphins Health', href: 'https://www.endorphinshealth.com', icon: <Globe className="w-5 h-5" /> },
 ];
 
-import ParallaxImage from '@/components/ParallaxImage';
-
-// ... socialLinks array stays the same
-
 export default function Contact() {
   return (
-    <main className="min-h-screen relative overflow-hidden flex flex-col justify-between bg-background">
+    <main className="min-h-screen bg-background text-foreground pt-20">
 
-      {/* Cinematic Background Layer */}
-      <div className="absolute inset-0 z-0">
-        <ParallaxImage
-          src="/assets/logic.png"
-          alt="Logic & Analysis"
-          className="w-full h-full opacity-20"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background" />
-      </div>
+      {/* Hero */}
+      <section className="pt-24 pb-16 md:pt-32 md:pb-24 px-6 lg:px-12">
+        <div className="max-w-[1200px] mx-auto">
+          <ScrollReveal direction="up">
+            <span className="block text-xs font-medium tracking-[0.3em] uppercase text-muted-foreground mb-6">Contact</span>
+            <h1 className="text-4xl md:text-6xl font-medium tracking-tight mb-8">
+              Get in <CharReveal delay={0.4} className="text-accent italic font-serif">touch.</CharReveal>
+            </h1>
+            <p className="text-xl md:text-2xl text-muted-foreground font-light leading-relaxed max-w-2xl">
+              Whether you have a project in mind or just want to connect, I&apos;d be happy to hear from you.
+            </p>
+          </ScrollReveal>
+        </div>
+      </section>
 
-      <div className="section-container relative z-10 w-full pt-32 pb-12 flex-grow flex items-center">
-        <div className="grid lg:grid-cols-[1.3fr_0.7fr] gap-32 items-center w-full">
-          <div>
-            <ScrollReveal direction="none" blur={30} duration={1.8} className="mb-10">
-              <span className="text-[10px] font-bold tracking-[0.6em] opacity-30 uppercase">Contact</span>
-            </ScrollReveal>
-
-            <ScrollReveal direction="up" distance={60} blur={20} delay={0.2}>
-              <h1 className="text-7xl md:text-[140px] font-medium tracking-tighter mb-20 leading-[0.75]">
-                Get in <br /><span className="opacity-40 italic font-light font-serif"><MaskedReveal delay={0.3} className="py-2">touch.</MaskedReveal></span>
-              </h1>
-            </ScrollReveal>
-
-            <ScrollReveal delay={0.4} blur={15} distance={30} className="max-w-xl">
-              <p className="text-2xl text-muted-foreground font-light leading-relaxed mb-24 italic border-l border-white/5 pl-12">
-                Whether you have a project in mind or just want to connect, I&apos;d be happy to hear from you.
-              </p>
-            </ScrollReveal>
-          </div>
-
-          <div className="space-y-6">
-            {socialLinks.map((link, i) => (
-              <ScrollReveal
-                key={link.label}
-                direction="none"
-                delay={0.6 + i * 0.1}
-                blur={20}
-                className="group w-full"
-              >
+      {/* Contact Links */}
+      <section className="py-16 md:py-24 px-6 lg:px-12">
+        <div className="max-w-[900px] mx-auto">
+          <div className="space-y-4">
+            {contactLinks.map((link, i) => (
+              <ScrollReveal key={link.label} direction="up" delay={i * 0.1}>
                 <a
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-between p-10 transition-all glass-card hover:bg-white/[0.04] group-hover:-translate-y-1 border border-white/5 hover:border-white/10"
+                  className="group flex items-center justify-between p-6 md:p-8 rounded-2xl border border-white/5 hover:border-white/10 hover:bg-white/[0.02] transition-all duration-500"
                 >
-                  <div className="flex items-center gap-10">
-                    <div className="w-12 h-12 rounded-2xl bg-white/[0.01] border border-white/5 flex items-center justify-center group-hover:bg-accent/10 group-hover:border-accent/20 transition-all duration-700 text-foreground/50 group-hover:text-accent">
+                  <div className="flex items-center gap-6">
+                    <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-muted-foreground group-hover:text-accent group-hover:bg-accent/10 transition-all duration-500">
                       {link.icon}
                     </div>
-                    <div className="flex flex-col">
-                      <span className="text-xl font-medium tracking-tight opacity-40 group-hover:opacity-100 transition-all duration-700 leading-none mb-1">{link.label}</span>
-                      <span className="text-[10px] uppercase tracking-widest opacity-20 group-hover:opacity-40 transition-all font-bold">Link</span>
-                    </div>
+                    <span className="text-lg md:text-xl font-medium text-foreground/60 group-hover:text-foreground transition-all duration-500">
+                      {link.label}
+                    </span>
                   </div>
-                  <ArrowUpRight className="opacity-10 group-hover:opacity-100 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-700 text-accent" />
+                  <ArrowUpRight className="w-5 h-5 text-muted-foreground/40 group-hover:text-accent group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-500" />
                 </a>
               </ScrollReveal>
             ))}
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* Premium Anchor Footer */}
-      <footer className="relative z-10 w-full border-t border-white/5 bg-background/50 backdrop-blur-sm">
-        <div className="section-container flex flex-col md:flex-row justify-between items-end py-12 gap-8">
-          <div>
-            <h2 className="text-[120px] leading-[0.7] font-bold tracking-tighter opacity-[0.03] select-none pointer-events-none">HASSANEIN</h2>
-          </div>
-          <div className="flex gap-8 text-[10px] uppercase tracking-[0.2em] font-mono opacity-40 pb-2">
+      {/* Footer */}
+      <footer className="border-t border-white/5 mt-auto">
+        <div className="max-w-[1200px] mx-auto px-6 lg:px-12 py-8 flex flex-col md:flex-row justify-between items-center gap-4">
+          <span className="text-sm font-medium tracking-tight text-foreground/40">
+            Kareem Hassanein
+          </span>
+          <div className="flex gap-6 text-xs text-muted-foreground/60">
             <span>Burlington, ON</span>
             <span>Available remotely</span>
             <span>© 2026</span>
