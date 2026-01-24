@@ -1,8 +1,7 @@
 'use client';
 
-import Image from 'next/image';
-import { Download, HeartPulse, Binary, ChevronRight } from 'lucide-react';
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { Download, HeartPulse, Binary } from 'lucide-react';
+import { motion } from 'framer-motion';
 import ScrollReveal from '@/components/ScrollReveal';
 
 const roadmap = [
@@ -41,47 +40,7 @@ const roadmap = [
   }
 ];
 
-function TiltImage({ src, alt, className = "" }: { src: string; alt: string; className?: string }) {
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-  const mouseXSpring = useSpring(x);
-  const mouseYSpring = useSpring(y);
-
-  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["8deg", "-8deg"]);
-  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-8deg", "8deg"]);
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const width = rect.width;
-    const height = rect.height;
-    const mouseX = e.clientX - rect.left;
-    const mouseY = e.clientY - rect.top;
-    x.set(mouseX / width - 0.5);
-    y.set(mouseY / height - 0.5);
-  };
-
-  const handleMouseLeave = () => {
-    x.set(0);
-    y.set(0);
-  };
-
-  return (
-    <motion.div
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-      className={`relative rounded-[3.5rem] overflow-hidden glass-card ${className}`}
-    >
-      <div
-        style={{ transform: "translateZ(60px)", transformStyle: "preserve-3d" }}
-        className="absolute inset-0 z-10 bg-gradient-to-t from-background/90 via-transparent to-transparent pointer-events-none"
-      />
-      <motion.div style={{ transform: "translateZ(30px)" }} className="relative aspect-[4/5] w-full">
-        <Image src={src} alt={alt} fill className="object-cover opacity-90" />
-      </motion.div>
-    </motion.div>
-  );
-}
+import ParallaxImage from '@/components/ParallaxImage';
 
 export default function About() {
   return (
@@ -102,7 +61,7 @@ export default function About() {
               </motion.h1>
             </motion.div>
             <motion.div variants={{ hidden: { opacity: 0, x: 30, filter: 'blur(30px)' }, visible: { opacity: 1, x: 0, filter: 'blur(0px)' } }} className="group mb-12">
-              <TiltImage src="/assets/n_logic.png" alt="Operational Logic" />
+              <ParallaxImage src="/assets/n_logic.png" alt="Operational Logic" className="aspect-[4/5] w-full rounded-[2rem]" />
             </motion.div>
           </ScrollReveal>
         </div>
@@ -157,36 +116,33 @@ export default function About() {
               </div>
             </div>
 
-            <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-3 items-stretch">
+            <div className="flex flex-col">
               {roadmap.map((item) => (
                 <motion.div
                   key={item.title}
-                  variants={{ hidden: { opacity: 0, y: 40, filter: 'blur(20px)' }, visible: { opacity: 1, y: 0, filter: 'blur(0px)' } }}
-                  className="group flex flex-col h-full rounded-[3.5rem] glass-card glass-narrative p-12 lg:p-16 hover:bg-white/[0.03] transition-all duration-1000 before:bg-[url('/assets/n_story_timeline.png')]"
+                  variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
+                  className="group grid md:grid-cols-[1fr_2fr_1fr] py-16 border-b border-white/10 items-start gap-8"
                 >
-                  <div className="space-y-10 mb-12">
-                    <div className="flex justify-between items-start">
-                      <span className="text-[10px] font-bold tracking-widest uppercase opacity-20 group-hover:opacity-60 transition-opacity duration-1000">{item.period}</span>
-                      <ChevronRight size={16} className="opacity-10 group-hover:translate-x-2 transition-all duration-1000" />
-                    </div>
-                    <div className="space-y-4">
-                      <h3 className="text-4xl font-medium tracking-tight leading-tight group-hover:text-foreground transition-colors duration-1000">{item.title}</h3>
-                      <p className="text-lg font-light text-muted-foreground italic opacity-60 group-hover:opacity-100 transition-all">{item.company}</p>
-                    </div>
-                  </div>
+                  <span className="text-xs font-bold tracking-widest uppercase opacity-40">{item.period}</span>
 
-                  <div className="mt-auto pt-10 border-t border-white/5 space-y-6">
-                    <p className="text-[10px] font-bold uppercase tracking-[0.5em] opacity-20 italic">{item.focus}</p>
-                    <ul className="space-y-4">
+                  <div className="space-y-4">
+                    <h3 className="text-4xl font-serif font-medium tracking-tight text-foreground/90 group-hover:text-foreground transition-colors duration-500">
+                      {item.title}
+                    </h3>
+                    <p className="text-lg text-muted-foreground font-light">{item.company}</p>
+                    <ul className="space-y-2 mt-6">
                       {item.points.map((point) => (
-                        <li
-                          key={point}
-                          className="text-lg text-muted-foreground font-light leading-snug border-l border-white/[0.05] pl-6 hover:text-foreground transition-all duration-700"
-                        >
-                          {point}
+                        <li key={point} className="text-muted-foreground/60 text-sm leading-relaxed">
+                          • {point}
                         </li>
                       ))}
                     </ul>
+                  </div>
+
+                  <div className="hidden md:flex justify-end">
+                    <span className="text-[10px] font-bold uppercase tracking-[0.2em] opacity-20 group-hover:opacity-40 transition-opacity">
+                      {item.focus}
+                    </span>
                   </div>
                 </motion.div>
               ))}
@@ -198,9 +154,8 @@ export default function About() {
       {/* Section Divider */}
       <div className="divider-subtle w-full" />
 
-      {/* Final Call */}
       <section className="py-96 text-center px-6 bg-white/[0.005]">
-        <ScrollReveal direction="up" blur={40}>
+        <ScrollReveal direction="up" blur={40} className="w-full" viewport={{ once: true, margin: "-20%" }}>
           <h2 className="text-8xl md:text-[160px] font-medium tracking-tighter mb-24 leading-[0.7] text-balance">
             Want to <br /><span className="opacity-40 italic font-light font-serif">know more?</span>
           </h2>

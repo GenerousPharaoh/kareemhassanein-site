@@ -13,6 +13,11 @@ interface ScrollRevealProps {
     className?: string;
     style?: React.CSSProperties;
     staggerChildren?: number;
+    viewport?: {
+        once?: boolean;
+        margin?: string;
+        amount?: number | "some" | "all";
+    } | undefined;
 }
 
 export default function ScrollReveal({
@@ -25,13 +30,11 @@ export default function ScrollReveal({
     className = '',
     style = {},
     staggerChildren = 0,
+    viewport = { once: true, margin: "0px 0px -50px 0px", amount: 0.1 }
 }: ScrollRevealProps) {
     const ref = useRef<HTMLDivElement>(null);
-    const isInView = useInView(ref, {
-        once: true,
-        amount: 0.1,
-        margin: "0px 0px -50px 0px"
-    });
+    // @ts-expect-error - Frame motion margin type is strict but string is valid at runtime
+    const isInView = useInView(ref, viewport);
 
     const x = direction === 'left' ? -distance : direction === 'right' ? distance : 0;
     const y = direction === 'up' ? distance : direction === 'down' ? -distance : 0;
