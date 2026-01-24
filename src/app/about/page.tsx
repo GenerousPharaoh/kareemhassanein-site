@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Download, ArrowRight } from 'lucide-react';
+import { Download } from 'lucide-react';
 import ScrollReveal from '@/components/ScrollReveal';
 
 const experience = [
@@ -9,77 +9,76 @@ const experience = [
     title: 'Digital Strategy & Operations Lead',
     company: 'Endorphins Health and Wellness Centre',
     period: '2024 - Present',
-    description: 'Leading digital operations across 6 specialties. Redesigned booking architecture and reduced intake friction.',
-    marginTop: '0px'
+    description: 'Lead digital operations for a multi-specialty clinic spanning 6 specialties. Designed and built search-optimized infrastructure and multi-provider booking architectures (Jane App).',
   },
   {
-    title: 'Workflow Automation Consultant',
+    title: 'Operations Consultant (Process Automation)',
     company: 'Tax Relief Counsel',
     period: '2025 - Present',
-    description: 'Built Claude Code automation reducing document generation time by 85%. Defined SOPs for case management.',
-    marginTop: '60px'
+    description: 'Architecting agentic workflows using Claude Code to automate document drafting and client correspondence, reducing baseline template generation time by 85%.',
   },
   {
     title: 'Clinical Advisor',
-    company: 'Neuro-Mod',
+    company: 'Neuro-Mod (Medical Device Startup)',
     period: '2025 - Present',
-    description: 'Reviewing clinical deployment strategies and interface design. Supporting market validation.',
-    marginTop: '20px'
+    description: 'Advising on clinical usability and adoption barriers for AR-based pain management tools, focusing on clinician workflow integration and market validation.',
   },
   {
     title: 'Registered Physiotherapist',
     company: 'Movement Solutions Physiotherapy',
     period: '2021 - 2024',
-    description: 'Led Heidi AI implementation achieving 100% adoption. Highest revenue-generating clinician for 3 years.',
-    marginTop: '80px'
+    description: 'Generated $600K+ in treatment revenue while spearheading the clinic-wide adoption of Heidi AI, ensuring seamless integration for a team of 6 clinicians.',
   },
 ];
 
 const education = [
   {
     degree: 'MSc Physiotherapy',
-    school: 'Robert Gordon University',
-    detail: 'with Distinction',
+    school: 'Robert Gordon University (Distinction)',
+    detail: 'Hamilton, ON | Scotland',
   },
   {
     degree: 'BSc Kinesiology',
-    school: 'McMaster University',
-    detail: 'Honours',
+    school: 'McMaster University (Honours)',
+    detail: 'Hamilton, ON',
   },
 ];
 
 export default function About() {
   return (
     <div className="pt-24 overflow-hidden">
-      {/* Hero Section */}
+      {/* Identity Hero */}
       <section className="py-48 px-6 relative">
-        <div className="max-w-6xl mx-auto z-10 relative text-center">
+        <div className="max-w-6xl mx-auto z-10 relative">
           <ScrollReveal direction="up" distance={30}>
-            <p className="text-accent font-bold tracking-[0.4em] uppercase text-[10px] mb-12 opacity-80">The Narrative</p>
-            <h1 className="text-6xl md:text-8xl lg:text-[140px] font-medium tracking-tighter mb-20 leading-[0.85] text-balance">
-              Frontline Roots. <br />
-              <span className="text-accent italic">Digital Impact.</span>
+            <p className="text-[10px] font-bold tracking-[0.5em] uppercase opacity-30 mb-12">The Narrative</p>
+            <h1 className="text-7xl md:text-[140px] font-medium tracking-tighter mb-20 leading-[0.75] text-balance">
+              Practice Meet <br />
+              <span className="opacity-40 italic font-light">Procedure.</span>
             </h1>
           </ScrollReveal>
 
-          <div className="grid lg:grid-cols-2 gap-24 items-start mt-24 text-left">
-            <ScrollReveal direction="up" delay={0.2} distance={30} className="space-y-12 text-2xl text-muted-foreground leading-relaxed font-light">
+          <div className="grid lg:grid-cols-2 gap-32 items-start mt-24">
+            <ScrollReveal direction="up" delay={0.2} distance={30} className="space-y-12 text-3xl text-muted-foreground leading-relaxed font-light">
               <p>
-                My path from clinical practice to digital strategy gives me a <span className="text-foreground">unique advantage</span>: I know what it&apos;s like to use technology when time is scarce and the stakes are high.
+                My entry into digital strategy wasn&apos;t through a screen, but through the <span className="text-foreground">frontline friction</span> of clinical healthcare.
+              </p>
+              <p>
+                I&apos;ve spent thousands of hours in the gap between what technology promises and what users actually need. My work is about bridging that gap.
               </p>
             </ScrollReveal>
 
-            <ScrollReveal direction="up" delay={0.3} distance={30} className="space-y-12 text-2xl text-muted-foreground leading-relaxed lg:mt-32 font-light">
+            <ScrollReveal direction="up" delay={0.3} distance={30} className="space-y-12 text-3xl text-muted-foreground leading-relaxed lg:mt-48 font-light">
               <p>
-                I bridge the gap between technical capability and operational reality, ensuring that systems don&apos;t just exist—they drive <span className="text-accent">real performance</span> for organizations.
+                From automating legal workflows to stabilizing AI adoption in healthcare, I build systems that respect human time and drive <span className="text-foreground">organizational scale.</span>
               </p>
               <div className="pt-12">
                 <a
                   href="/Kareem-Hassanein-Resume.pdf"
-                  className="group inline-flex items-center gap-4 px-10 py-5 border border-white/10 rounded-full hover:bg-white/5 transition-all duration-700 text-xl font-medium"
+                  className="group inline-flex items-center gap-6 px-10 py-5 border border-white/5 rounded-full hover:bg-white/10 transition-all duration-700 text-xl font-medium"
                 >
-                  <Download size={24} className="group-hover:translate-y-1 transition-transform duration-500" />
-                  <span className="link-underline pb-1">Review Resume</span>
+                  <Download size={24} className="group-hover:translate-y-1 transition-transform duration-500 opacity-40 group-hover:opacity-100" />
+                  <span className="link-underline pb-1">Resume</span>
                 </a>
               </div>
             </ScrollReveal>
@@ -87,87 +86,78 @@ export default function About() {
         </div>
       </section>
 
-      {/* Experience Section - Sophisticated Asymmetry */}
-      <section className="py-64 px-6 bg-card/40 relative">
-        <div className="max-w-7xl mx-auto">
-          <ScrollReveal direction="left" distance={40} className="mb-40">
-            <p className="text-accent font-bold tracking-[0.3em] uppercase text-[10px] mb-8">Professional History</p>
-            <h2 className="text-5xl md:text-8xl font-medium tracking-tighter leading-none">
-              The <span className="text-accent italic">Arc.</span>
+      {/* Timeline Section */}
+      <section className="py-64 px-6 bg-card/10">
+        <div className="max-w-6xl mx-auto">
+          <ScrollReveal direction="up" className="mb-40">
+            <h2 className="text-5xl md:text-8xl font-medium tracking-tighter">
+              Professional Arc.
             </h2>
           </ScrollReveal>
 
-          <div className="grid md:grid-cols-2 gap-12 lg:gap-24">
+          <div className="space-y-32">
             {experience.map((item, i) => (
               <ScrollReveal
                 key={item.title}
                 direction="up"
                 delay={i * 0.1}
-                className="group"
-                style={{ marginTop: item.marginTop }}
+                className="grid lg:grid-cols-[1fr_2fr] gap-12 items-start group"
               >
-                <div className="p-16 rounded-[3rem] glass-premium transition-all duration-1000 group-hover:border-accent/40 flex flex-col h-full">
-                  <div className="flex flex-col mb-12">
-                    <span className="text-[10px] font-bold tracking-[0.4em] text-accent uppercase mb-4 opacity-70">{item.period}</span>
-                    <h3 className="text-4xl font-medium group-hover:text-accent transition-colors duration-700 leading-tight tracking-tighter">{item.title}</h3>
-                    <p className="text-xl text-muted-foreground font-light mt-3">{item.company}</p>
-                  </div>
-                  <p className="text-muted-foreground leading-relaxed text-2xl font-light">
-                    {item.description}
-                  </p>
+                <div className="space-y-2">
+                  <p className="text-[10px] font-bold tracking-[0.4em] uppercase opacity-20">{item.period}</p>
+                  <h3 className="text-3xl font-medium tracking-tight group-hover:text-accent transition-colors duration-500">{item.title}</h3>
+                  <p className="text-xl text-muted-foreground font-light">{item.company}</p>
                 </div>
+                <p className="text-2xl text-muted-foreground leading-relaxed font-light">
+                  {item.description}
+                </p>
               </ScrollReveal>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Education - Clean Layout */}
-      <section className="py-72 px-6 relative">
-        <div className="max-w-7xl mx-auto grid lg:grid-cols-[1.5fr_1fr] gap-40 items-center">
-          <div className="grid gap-12">
+      {/* Education & Foundations */}
+      <section className="py-72 px-6">
+        <div className="max-w-6xl mx-auto grid lg:grid-cols-[1.5fr_1fr] gap-40 items-start">
+          <div className="grid gap-16">
             {education.map((item, i) => (
               <ScrollReveal
                 key={item.degree}
                 direction="up"
                 delay={i * 0.2}
+                className="space-y-6"
               >
-                <div className="p-16 rounded-[3rem] border border-white/[0.03] bg-card/50 transition-all duration-1000">
-                  <h3 className="text-5xl font-medium mb-4 leading-none tracking-tighter">{item.degree}</h3>
-                  <p className="text-3xl text-foreground font-light">{item.school}</p>
-                  <p className="text-muted-foreground mt-6 text-xl font-light italic opacity-60 uppercase tracking-widest">{item.detail}</p>
-                </div>
+                <h3 className="text-5xl font-medium tracking-tighter italic opacity-40">{item.degree}</h3>
+                <p className="text-3xl font-light">{item.school}</p>
+                <p className="text-[10px] font-bold uppercase tracking-[0.4em] opacity-20">{item.detail}</p>
               </ScrollReveal>
             ))}
           </div>
 
-          <ScrollReveal direction="right" distance={80}>
-            <p className="text-accent font-bold tracking-[0.4em] uppercase text-[10px] mb-10">Academic Foundation</p>
-            <h2 className="text-6xl md:text-9xl font-medium tracking-tighter mb-16 leading-[0.85]">
-              Scientific <br /> <span className="italic">Rigor.</span>
-            </h2>
-            <p className="text-3xl text-muted-foreground leading-relaxed font-light">
-              Building operative excellence on a scientific foundation of research and clinical application.
-            </p>
+          <ScrollReveal direction="up" delay={0.4}>
+            <div className="space-y-10 border-l border-white/[0.02] pl-16">
+              <p className="text-[10px] font-bold tracking-[0.4em] uppercase opacity-20">Scientific Core</p>
+              <p className="text-4xl font-medium tracking-tighter leading-tight">
+                Building <br /> operative <br /> excellence on <br /> academic <br /> rigor.
+              </p>
+            </div>
           </ScrollReveal>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-80 px-6 relative overflow-hidden flex items-center justify-center">
+      {/* CTA */}
+      <section className="py-80 px-6 text-center border-t border-white/[0.02]">
         <ScrollReveal direction="up">
-          <div className="max-w-7xl mx-auto text-center relative z-10">
-            <h2 className="text-7xl md:text-[140px] font-medium tracking-tighter mb-20 leading-[0.7]">
-              Let&apos;s Build <br /> <span className="text-accent italic">Value.</span>
-            </h2>
-            <Link
-              href="/contact"
-              className="inline-flex items-center justify-center gap-8 px-24 py-12 bg-foreground text-background rounded-full font-bold hover:scale-[1.05] active:scale-95 transition-all duration-700 text-4xl"
-            >
-              Collaborate
-              <ArrowRight size={48} />
-            </Link>
-          </div>
+          <h2 className="text-6xl md:text-[140px] font-medium tracking-tighter mb-24 leading-[0.7]">
+            Build <br /> <span className="opacity-30 italic font-light">Value.</span>
+          </h2>
+          <Link
+            href="/contact"
+            className="text-2xl font-light link-underline pb-2"
+          >
+            Start a project
+          </Link>
         </ScrollReveal>
       </section>
     </div>
