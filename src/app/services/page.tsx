@@ -117,7 +117,9 @@ export default function Services() {
                 }}
                 className="group relative"
               >
-                <div className="h-full p-16 lg:p-20 rounded-[4rem] glass-nanobanana hover:bg-white/[0.04] transition-all duration-1000 flex flex-col justify-between group-hover:-translate-y-4">
+                <div
+                  className={`h-full p-16 lg:p-20 rounded-[4rem] glass-nanobanana glass-narrative hover:bg-white/[0.04] transition-all duration-1000 flex flex-col justify-between group-hover:-translate-y-4 before:bg-[url('/assets/n_story_bg_${module.index}.png')]`}
+                >
                   <div className="space-y-16">
                     <div className="flex justify-between items-start">
                       <div className="w-16 h-16 rounded-[2rem] bg-white/[0.01] border border-white/5 flex items-center justify-center group-hover:border-foreground/20 transition-all duration-1000">

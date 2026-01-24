@@ -150,7 +150,7 @@ export default function About() {
                 <motion.div
                   key={item.title}
                   variants={{ hidden: { opacity: 0, y: 30, filter: 'blur(15px)' }, visible: { opacity: 1, y: 0, filter: 'blur(0px)' } }}
-                  className="grid lg:grid-cols-[1.3fr_2.7fr] gap-12 group p-16 bg-background border-b border-white/5 last:border-0 hover:bg-white/[0.02] transition-all duration-1000"
+                  className="grid lg:grid-cols-[1.3fr_2.7fr] gap-12 group p-16 bg-background border-b border-white/5 last:border-0 hover:bg-white/[0.02] transition-all duration-1000 glass-narrative before:bg-[url('/assets/n_story_timeline.png')]"
                 >
                   <div className="space-y-8">
                     <span className="text-[11px] font-bold tracking-widest uppercase italic opacity-30 group-hover:opacity-100 transition-opacity duration-1000">{item.period}</span>

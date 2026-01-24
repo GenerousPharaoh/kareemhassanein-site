@@ -151,7 +151,7 @@ export default function Home() {
                   variants={{ hidden: { opacity: 0, y: 30, filter: 'blur(10px)' }, visible: { opacity: 1, y: 0, filter: 'blur(0px)' } }}
                   className="group relative h-full flex flex-col"
                 >
-                  <div className="h-full p-20 rounded-[4rem] glass-nanobanana hover:bg-white/[0.04] transition-all duration-1000 flex flex-col justify-between group-hover:-translate-y-4">
+                  <div className={`h-full p-20 rounded-[4rem] glass-nanobanana glass-narrative hover:bg-white/[0.04] transition-all duration-1000 flex flex-col justify-between group-hover:-translate-y-4 before:bg-[url('/assets/n_story_impact_${impact.title.toLowerCase().replace(/\s+/g, '_')}.png')]`}>
                     <div className="space-y-12">
                       <div className="flex justify-between items-start">
                         <div className="w-14 h-14 rounded-3xl bg-white/[0.01] border border-white/10 flex items-center justify-center group-hover:border-foreground/20 transition-all duration-1000">
