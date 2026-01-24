@@ -62,7 +62,7 @@ function ServiceSection({ service, isEven }: { service: typeof services[0], isEv
   const y = useTransform(scrollYProgress, [0, 1], [100, -100]);
 
   return (
-    <section ref={ref} className="min-h-screen flex items-center justify-center relative py-40 overflow-hidden px-6 lg:px-20">
+    <section ref={ref} className="min-h-[80vh] flex items-center justify-center relative py-24 overflow-hidden px-6 lg:px-20">
       {/* Background Number */}
       <div className={`absolute top-1/2 -translate-y-1/2 text-[25vw] font-bold text-white/[0.02] select-none pointer-events-none ${isEven ? 'right-10' : 'left-10'}`}>
         {service.index}
@@ -163,7 +163,7 @@ export default function Services() {
       </div>
 
       {/* Technical Index: Tabular Spec Sheet */}
-      <section className="py-64 px-6 lg:px-32 relative overflow-hidden bg-white/[0.005] border-t border-white/5">
+      <section className="py-32 px-6 lg:px-32 relative overflow-hidden bg-white/[0.005] border-t border-white/5">
 
         {/* Background Texture Asset */}
         <div className="absolute inset-0 z-0 opacity-[0.03] pointer-events-none grayscale">
@@ -230,7 +230,7 @@ export default function Services() {
       </section>
 
       {/* The Final Line */}
-      <section className="py-96 text-center border-t border-white/5 relative overflow-hidden">
+      <section className="py-48 text-center border-t border-white/5 relative overflow-hidden">
         <div className="absolute inset-0 z-0 opacity-[0.07] pointer-events-none">
           <ParallaxImage src="/images/glow.png" alt="Atmospheric Glow" className="w-full h-full object-cover" />
         </div>

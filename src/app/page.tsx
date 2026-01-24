@@ -101,12 +101,12 @@ export default function Home() {
       </section>
 
       {/* Immersive Scroll Transition Section */}
-      <section ref={transitionRef} className="h-screen w-full relative overflow-hidden flex items-center justify-center py-40 border-y border-white/5">
+      <section ref={transitionRef} className="h-[80vh] w-full relative overflow-hidden flex items-center justify-center py-24 border-y border-white/5">
         <motion.div style={{ y }} className="absolute inset-0 z-0">
           <img
             src="/images/chaos-to-order.png"
             alt="Chaos to Order"
-            className="w-full h-[120%] object-cover opacity-60 grayscale"
+            className="w-full h-[110%] object-cover opacity-60 grayscale"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background" />
         </motion.div>
@@ -117,7 +117,7 @@ export default function Home() {
               Chaos into <br />
               <span className="text-accent not-italic">Order.</span>
             </h2>
-            <p className="mt-12 text-xl md:text-3xl font-light text-muted-foreground max-w-2xl mx-auto tracking-tight">
+            <p className="mt-8 text-xl md:text-3xl font-light text-muted-foreground max-w-2xl mx-auto tracking-tight">
               Replacing manual friction with architectural precision.
             </p>
           </ScrollReveal>
@@ -125,9 +125,9 @@ export default function Home() {
       </section>
 
       {/* Selected Projects */}
-      <section className="py-48 relative z-10 w-full px-6 md:px-12 bg-white/[0.002]">
+      <section className="py-32 relative z-10 w-full px-6 md:px-12 bg-white/[0.002]">
         <ScrollReveal direction="up" distance={40} blur={20}>
-          <div className="flex items-end justify-between mb-32 border-b border-white/10 pb-12 hover:border-white/20 transition-colors duration-700">
+          <div className="flex items-end justify-between mb-24 border-b border-white/10 pb-12 hover:border-white/20 transition-colors duration-700">
             <div className="space-y-4">
               <span className="text-[10px] font-bold tracking-[1em] uppercase opacity-30">Portfolio</span>
               <h2 className="text-4xl md:text-6xl font-medium tracking-tighter italic font-serif">Selected Logic</h2>

@@ -119,7 +119,7 @@ export default function About() {
       />
 
       {/* Visual Evidence Gallery */}
-      <section className="py-64 overflow-hidden border-b border-white/5 bg-white/[0.002]">
+      <section className="py-32 overflow-hidden border-b border-white/5 bg-white/[0.002]">
         <div className="px-12 lg:px-32 mb-24">
           <span className="text-[10px] font-bold tracking-[0.5em] uppercase opacity-30 mb-8 block">Process Visuals</span>
           <h2 className="text-6xl md:text-9xl font-medium tracking-tighter italic font-serif">The Bridge.</h2>
@@ -146,7 +146,7 @@ export default function About() {
       </section>
 
       {/* Experience Track */}
-      <section className="py-64 px-12 lg:px-32 bg-white/[0.005]">
+      <section className="py-40 px-12 lg:px-32 bg-white/[0.005]">
         <div className="max-w-[1400px] mx-auto">
           <h2 className="text-6xl md:text-9xl font-medium tracking-tighter mb-40 opacity-20">History.</h2>
           <div className="space-y-40">
@@ -170,7 +170,7 @@ export default function About() {
       </section>
 
       {/* Call to Action */}
-      <section className="py-64 text-center border-t border-white/5 relative overflow-hidden">
+      <section className="py-40 text-center border-t border-white/5 relative overflow-hidden">
         <div className="absolute inset-0 z-0 opacity-[0.08] pointer-events-none">
           <ParallaxImage src="/images/glow.png" alt="Atmospheric Glow" className="w-full h-full object-cover" />
         </div>

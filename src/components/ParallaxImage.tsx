@@ -19,9 +19,9 @@ export default function ParallaxImage({ src, alt, className = "", priority = fal
         offset: ["start end", "end start"]
     });
 
-    // Simple, elegant vertical parallax
-    const y = useTransform(scrollYProgress, [0, 1], ["-15%", "15%"]);
-    const scale = useTransform(scrollYProgress, [0, 0.5, 1], [1.1, 1, 1.1]);
+    // Softer vertical parallax
+    const y = useTransform(scrollYProgress, [0, 1], ["-5%", "5%"]);
+    const scale = useTransform(scrollYProgress, [0, 0.5, 1], [1.05, 1, 1.05]);
 
     // Smooth out the motion
     const smoothY = useSpring(y, { stiffness: 100, damping: 30, mass: 0.1 });
@@ -33,14 +33,14 @@ export default function ParallaxImage({ src, alt, className = "", priority = fal
         >
             <motion.div
                 style={{ y: smoothY, scale }}
-                className="absolute inset-0 w-full h-[120%]"
+                className="absolute inset-0 w-full h-[110%]"
             >
                 <Image
                     src={src}
                     alt={alt}
                     fill
                     priority={priority}
-                    className="object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-700"
+                    className="object-cover object-center opacity-80 group-hover:opacity-100 transition-opacity duration-700"
                 />
                 <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-700" />
             </motion.div>
