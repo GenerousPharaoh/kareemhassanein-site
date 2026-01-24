@@ -28,18 +28,18 @@ export default function Home() {
             <div className="space-y-12">
               <ScrollReveal direction="up" distance={20} blur={10}>
                 <span className="inline-block text-sm font-medium tracking-[0.3em] uppercase opacity-40 mb-4 border border-white/10 px-4 py-2 rounded-full backdrop-blur-sm shadow-inner mt-10 md:mt-0">
-                  Clinic Operations & Automation
+                  Operational Architecture
                 </span>
               </ScrollReveal>
 
               <motion.h1 variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="text-6xl md:text-8xl lg:text-[115px] font-medium leading-[0.85] tracking-tight mb-16 text-balance">
-                Operations <br />
-                <CharReveal delay={0.6} className="py-2 text-accent">Help.</CharReveal>
+                Technical <br />
+                <CharReveal delay={0.6} className="py-2 text-accent">Design.</CharReveal>
               </motion.h1>
 
               <div className="max-w-xl">
                 <TextReveal
-                  text="I set up AI tools and automate paper-work for clinics. I have an MSc in Physiotherapy and I manage operations for several physical therapy groups."
+                  text="I design and build operational systems for professional service firms. I specialize in removing technical friction for health and legal groups through automation."
                   className="text-xl md:text-2xl text-muted-foreground font-light leading-relaxed italic"
                   delay={0.8}
                 />
@@ -51,7 +51,7 @@ export default function Home() {
                   className="group flex items-center gap-8 text-xl font-bold tracking-tight text-foreground link-underline pb-1 transition-all"
                 >
                   Contact me
-                  <ArrowRight size={24} className="opacity-20 group-hover:translate-x-4 transition-all duration-700" />
+                  <ArrowRight size={24} className="opacity-20 group-hover:translate-x-4 transition-transform duration-700" />
                 </Link>
               </motion.div>
             </div>

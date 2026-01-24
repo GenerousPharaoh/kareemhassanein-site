@@ -12,21 +12,21 @@ const roadmap = [
     period: '2024 - Present',
     title: 'Digital Ops Lead',
     company: 'Endorphins Health',
-    desc: 'Managing operations for 6 clinic locations. Built referral tracking and booking architectures on Jane App.',
+    desc: 'Analyzing operational bottlenecks across 6 clinic locations. Built administrative pathways and referral tracking systems to handle group-level scale.',
     img: '/assets/n_strategy.png'
   },
   {
     period: '2025 - Present',
     title: 'Automation Consultant',
     company: 'Tax Relief Counsel',
-    desc: 'Cutting document processing time by 85% through AI-driven intake and workflow standardization.',
+    desc: 'Addressing high-stakes administrative complexity through workflow logic. Standardizing intake and document gen for legal professionals.',
     img: '/assets/n_hero.png'
   },
   {
     period: '2021 - 2024',
     title: 'Physiotherapist',
     company: 'Movement Solutions',
-    desc: 'Worked as a full-time clinician while managing the 100% adoption rollout of AI tools like Heidi.',
+    desc: 'Practiced as a full-time clinician while designing the internal rollout of medical AI tools. Designed for 100% clinician adoption in high-volume environments.',
     img: '/assets/n_logic.png'
   }
 ];
@@ -44,8 +44,8 @@ function BioSection({ title, label, text, img, isReversed }: { title: string, la
           <h2 className="text-7xl md:text-9xl font-medium tracking-tighter leading-[0.8] mb-12 italic font-serif">
             {title}
           </h2>
-          <p className="text-2xl md:text-3xl font-light text-muted-foreground leading-relaxed max-w-xl italic">
-            &quot;{text}&quot;
+          <p className="text-2xl md:text-3xl font-light text-muted-foreground leading-relaxed max-w-xl">
+            {text}
           </p>
         </ScrollReveal>
       </div>
@@ -69,24 +69,24 @@ export default function About() {
         <ScrollReveal direction="up">
           <span className="block text-[10px] font-bold tracking-[1em] uppercase mb-12 opacity-30">Background</span>
           <h1 className="text-[12vw] md:text-[8vw] font-medium tracking-tighter leading-[0.75] mb-4">
-            The Clinical <br />
-            <CharReveal delay={0.4} className="text-accent italic font-serif">Eye.</CharReveal>
+            System <br />
+            <CharReveal delay={0.4} className="text-accent italic font-serif">Logic.</CharReveal>
           </h1>
         </ScrollReveal>
       </section>
 
       {/* Chapters */}
       <BioSection
-        label="Credentials"
-        title="Physiotherapy"
-        text="I spent years in the clinic, seeing patients and seeing where operations break down. MSc with Distinction."
+        label="Experience"
+        title="Foundation"
+        text="I spent years as a full-time clinician before shifting to building the systems they use. My expertise is rooted in understanding where professional operations break down under pressure."
         img="/assets/n_logic.png"
       />
 
       <BioSection
         label="Methodology"
-        title="Logic First"
-        text="I automate the repetitive tasks that suck the life out of clinicians. Deep focus on adoption and real-world utility."
+        title="Architecture"
+        text="I build systems that solve administrative friction. I focus on logic and data integrity, ensuring that technical tools actually serve the professionals using them."
         img="/assets/n_strategy.png"
         isReversed
       />
@@ -132,4 +132,3 @@ export default function About() {
     </main>
   );
 }
-

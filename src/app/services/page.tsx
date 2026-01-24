@@ -10,26 +10,26 @@ import { useRef } from 'react';
 const services = [
   {
     index: '01',
-    title: 'Software Setup',
-    tagline: 'Practical Onboarding.',
-    desc: 'Setting up software is easy. Getting a team to use it is hard. I handle the evaluation, configuration, and staff training.',
-    points: ['Software evaluation', 'Staff training sessions', 'Workflow documentation'],
+    title: 'Operational Infrastructure',
+    tagline: 'System Integrity.',
+    desc: 'Professional operations require more than just login credentials. I handle system interoperability, rule-based configuration, and cross-platform logic for firms handling high-stakes workflows.',
+    points: ['Architecture evaluation', 'Interoperability design', 'Rule-based configuration'],
     img: '/assets/n_strategy.png'
   },
   {
     index: '02',
-    title: 'Automation',
-    tagline: 'Time Recovery.',
-    desc: 'I build simple automations that handle repetitive tasks. This usually involves reducing time spent on documentation and intake.',
-    points: ['Intake automation', 'Document templates', 'Task notifications'],
+    title: 'Workflow Logic',
+    tagline: 'Technical Leverage.',
+    desc: 'I design systems that handle administrative edge cases. From automated document pipes in legal firms to complex intake logic in healthcare, I build for data integrity.',
+    points: ['Logical pipe design', 'Edge-case automation', 'Data integrity guardrails'],
     img: '/assets/n_logic.png'
   },
   {
     index: '03',
-    title: 'Operations',
-    tagline: 'Daily Logistics.',
-    desc: 'Helping clinics run better day-to-day. I fix booking flows, referral tracking, and patient intake systems.',
-    points: ['Jane App optimization', 'Referral tracking', 'Administrative support'],
+    title: 'Scaling Systems',
+    tagline: 'Growth Architecture.',
+    desc: 'Identifying operational friction before it caps your growth. I optimize administrative pathways and referral tracking for professional service groups across health and law.',
+    points: ['Bottleneck identification', 'Referral attribution', 'Scale-ready SOPs'],
     img: '/assets/n_story_bg_03.png'
   }
 ];
@@ -111,17 +111,17 @@ export default function Services() {
       {/* Cinematic Hero */}
       <section className="min-h-[90vh] flex flex-col justify-center items-center text-center px-6">
         <ScrollReveal direction="up">
-          <span className="block text-[10px] font-bold tracking-[0.8em] uppercase mb-12 opacity-30">Services</span>
+          <span className="block text-[10px] font-bold tracking-[0.8em] uppercase mb-12 opacity-30">Architecture</span>
         </ScrollReveal>
 
         <h1 className="text-[12vw] md:text-[8vw] font-medium tracking-tighter leading-[0.8] mb-12">
-          How I <br />
-          <CharReveal delay={0.4} className="text-accent">work.</CharReveal>
+          Operational <br />
+          <CharReveal delay={0.4} className="text-accent">Design.</CharReveal>
         </h1>
 
         <div className="max-w-3xl border-t border-white/5 pt-12">
           <p className="text-2xl md:text-3xl text-muted-foreground font-light italic leading-snug">
-            I help clinics set up software and organize workflows so the staff can focus on the patient.
+            I design and build the technical systems that remove operational friction for professional service firms.
           </p>
         </div>
       </section>
