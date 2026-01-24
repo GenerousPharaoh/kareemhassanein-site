@@ -13,7 +13,7 @@ const roadmap = [
     title: 'Workflow Automation',
     company: 'Tax Relief Counsel',
     desc: 'Addressing high-stakes administrative complexity through custom workflow logic. Built automation pipes for a solo law firm that reduced document generation time by 85%.',
-    img: '/images/flow.png'
+    img: '/assets/n_implementation.png'
   },
   {
     period: '2024 - Present',
@@ -34,7 +34,7 @@ const roadmap = [
     title: 'Contributor',
     company: 'Canadian Physiotherapy Assoc.',
     desc: 'Collaborated with the CPA CEO on national initiatives focusing on workforce analysis and operational conditions for physiotherapists across Canada.',
-    img: '/assets/n_story_bg_03.png'
+    img: '/assets/n_synergy.png'
   }
 ];
 
@@ -42,7 +42,7 @@ const gallery = [
   { src: '/images/bridging.png', label: 'Clinical Bridge' },
   { src: '/assets/precision.png', label: 'Operational Precision' },
   { src: '/assets/mapping.png', label: 'System Mapping' },
-  { src: '/images/order.png', label: 'Architectural Order' }
+  { src: '/assets/n_strategy.png', label: 'Architectural Order' }
 ];
 
 function BioSection({ title, label, text, img, isReversed }: { title: string, label: string, text: string, img: string, isReversed?: boolean }) {
