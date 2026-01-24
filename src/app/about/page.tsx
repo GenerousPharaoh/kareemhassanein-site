@@ -10,39 +10,39 @@ import { useRef } from 'react';
 const roadmap = [
   {
     period: '2025 - Present',
-    title: 'Workflow Automation',
+    title: 'Automation',
     company: 'Tax Relief Counsel',
-    desc: 'Addressing high-stakes administrative complexity through custom workflow logic. Built automation pipes for a solo law firm that reduced document generation time by 85%.',
+    desc: 'A solo tax lawyer was spending hours on repetitive document assembly. I built a Claude-powered system that generates court-ready documents from intake data. 85% faster than before.',
     img: '/assets/n_implementation.png'
   },
   {
     period: '2024 - Present',
-    title: 'Digital Ops Lead',
+    title: 'Operations',
     company: 'Endorphins Health',
-    desc: 'Analyzing operational bottlenecks across 6 clinic locations. Built administrative architecture on Jane App and custom referral systems generating $600K+ in revenue.',
+    desc: 'A 6-practitioner clinic with booking chaos and lost referrals. I rebuilt their Jane App configuration, automated follow-ups, and built tracking for referral sources. $600K+ in attributed revenue.',
     img: '/assets/n_strategy.png'
   },
   {
     period: '2025 - Present',
     title: 'Advisory',
     company: 'Neuro-Mod (Startup)',
-    desc: 'Advising on clinician-facing interface design and workflow integration for an emerging medical device startup.',
+    desc: 'A medical device startup building tools for clinicians. I review their interface designs and flag usability issues before they ship.',
     img: '/assets/n_logic.png'
   },
   {
-    period: '2024 - 2025',
-    title: 'Contributor',
-    company: 'Canadian Physiotherapy Assoc.',
-    desc: 'Collaborated with the CPA CEO on national initiatives focusing on workforce analysis and operational conditions for physiotherapists across Canada.',
+    period: '2021 - 2024',
+    title: 'Clinical',
+    company: 'Movement Solutions Physio',
+    desc: 'Before any of this, I was a physiotherapist. Three years as the top revenue generator at a busy clinic. I led the rollout of Heidi AI for clinical documentation and got 100% team adoption in 8 weeks.',
     img: '/assets/n_synergy.png'
   }
 ];
 
 const gallery = [
-  { src: '/images/bridging.png', label: 'Clinical Bridge' },
-  { src: '/assets/precision.png', label: 'Operational Precision' },
-  { src: '/assets/mapping.png', label: 'System Mapping' },
-  { src: '/assets/n_strategy.png', label: 'Architectural Order' }
+  { src: '/images/bridging.png', label: 'Healthcare' },
+  { src: '/assets/precision.png', label: 'Legal' },
+  { src: '/assets/mapping.png', label: 'Process Design' },
+  { src: '/assets/n_strategy.png', label: 'Implementation' }
 ];
 
 function BioSection({ title, label, text, img, isReversed }: { title: string, label: string, text: string, img: string, isReversed?: boolean }) {
@@ -96,12 +96,12 @@ export default function About() {
         <div className="relative z-10 text-center md:text-left w-full max-w-[1400px]">
           <ScrollReveal direction="up">
             <span className="block text-[10px] font-bold tracking-[1em] uppercase mb-12 opacity-30">Background</span>
-            <h1 className="text-[10vw] md:text-[8vw] font-medium tracking-tighter leading-[0.75] mb-8">
-              System <br />
-              <CharReveal delay={0.4} className="text-accent italic font-serif">Logic.</CharReveal>
+            <h1 className="text-[10vw] md:text-[8vw] font-medium tracking-tighter leading-[0.85] mb-8">
+              Clinician <CharReveal delay={0.4} className="text-accent italic font-serif">turned</CharReveal> <br />
+              implementer.
             </h1>
-            <p className="text-2xl md:text-3xl font-light text-muted-foreground max-w-xl italic leading-relaxed mx-auto md:mx-0">
-              Merging clinical insight with operational engineering to remove technical friction.
+            <p className="text-2xl md:text-3xl font-light text-muted-foreground max-w-xl leading-relaxed mx-auto md:mx-0">
+              I spent years as a physiotherapist watching good software fail because no one thought about how it fit into the actual workday. Now I fix that.
             </p>
           </ScrollReveal>
         </div>
@@ -109,16 +109,16 @@ export default function About() {
 
       {/* Chapters */}
       <BioSection
-        label="Clinical Roots"
+        label="Where I started"
         title="Physiotherapy"
-        text="MSc with Distinction from Robert Gordon University. I practiced for years before shifting to building the systems clinicians actually need."
+        text="MSc with Distinction from Robert Gordon University. I treated patients for years, but I kept noticing the same thing: clinicians drowning in admin work that better systems could handle."
         img="/assets/precision.png"
       />
 
       <BioSection
-        label="Technical Leverage"
-        title="Engineering"
-        text="I build systems that solve administrative friction. I focus on logic and data integrity, ensuring that technical tools actually serve the professionals using them."
+        label="What I do now"
+        title="Implementation"
+        text="I figure out why software isn't getting used and fix it. That usually means rebuilding configurations, automating the tedious parts, and training teams on workflows that actually make sense."
         img="/images/image-2.png"
         isReversed
       />
@@ -126,8 +126,8 @@ export default function About() {
       {/* Visual Evidence Gallery */}
       <section className="py-32 overflow-hidden border-b border-white/5 bg-white/[0.002]">
         <div className="px-12 lg:px-32 mb-24">
-          <span className="text-[10px] font-bold tracking-[0.5em] uppercase opacity-30 mb-8 block">Process Visuals</span>
-          <h2 className="text-6xl md:text-9xl font-medium tracking-tighter italic font-serif">The Bridge.</h2>
+          <span className="text-[10px] font-bold tracking-[0.5em] uppercase opacity-30 mb-8 block">Industries</span>
+          <h2 className="text-6xl md:text-9xl font-medium tracking-tighter">Where I work.</h2>
         </div>
 
         <div className="flex gap-12 px-12 lg:px-32 overflow-x-auto pb-24 no-scrollbar scroll-smooth">
@@ -184,12 +184,12 @@ export default function About() {
           <ParallaxImage src="/images/glow.png" alt="Atmospheric Glow" className="w-full h-full object-cover" />
         </div>
         <ScrollReveal direction="up" className="relative z-10">
-          <h2 className="text-7xl md:text-[120px] font-medium tracking-tighter mb-24 opacity-80">Knowledge.</h2>
+          <h2 className="text-7xl md:text-[120px] font-medium tracking-tighter mb-24 opacity-80">Resume</h2>
           <a
             href="/Kareem-Hassanein-Resume.pdf"
             className="group inline-flex items-center gap-12 text-3xl font-bold tracking-tight text-accent link-underline pb-4 px-12 transition-all hover:scale-105"
           >
-            Get full resume
+            Download PDF
             <Download size={48} className="opacity-40 group-hover:translate-y-4 transition-all duration-1000" />
           </a>
         </ScrollReveal>

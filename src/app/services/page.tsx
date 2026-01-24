@@ -10,45 +10,45 @@ import { useRef } from 'react';
 const services = [
   {
     index: '01',
-    title: 'Operational Infrastructure',
-    tagline: 'System Integrity.',
-    desc: 'Professional operations require more than just login credentials. I handle system interoperability, rule-based configuration, and cross-platform logic for firms handling high-stakes workflows.',
-    points: ['Architecture evaluation', 'Interoperability design', 'Rule-based configuration'],
+    title: 'Software Implementation',
+    tagline: 'Get your team actually using the tools you paid for.',
+    desc: 'Most software fails because of poor rollout, not poor software. I handle the configuration, training, and workflow adjustments that turn shelfware into something people actually use.',
+    points: ['System configuration', 'Team training', 'Workflow documentation'],
     img: '/assets/n_strategy.png'
   },
   {
     index: '02',
-    title: 'Workflow Logic',
-    tagline: 'Technical Leverage.',
-    desc: 'I design systems that handle administrative edge cases. From automated document pipes in legal firms to complex intake logic in healthcare, I build for data integrity.',
-    points: ['Logical pipe design', 'Edge-case automation', 'Data integrity guardrails'],
+    title: 'Process Automation',
+    tagline: 'Stop doing manually what a computer should handle.',
+    desc: 'I build automations for the repetitive work that eats up your day. Document generation, appointment reminders, intake processing, referral tracking. If you do it the same way every time, it can probably be automated.',
+    points: ['Document automation', 'Scheduling workflows', 'Data entry reduction'],
     img: '/assets/n_logic.png'
   },
   {
     index: '03',
-    title: 'Scaling Systems',
-    tagline: 'Growth Architecture.',
-    desc: 'Identifying operational friction before it caps your growth. I optimize administrative pathways and referral tracking for professional service groups across health and law.',
-    points: ['Bottleneck identification', 'Referral attribution', 'Scale-ready SOPs'],
+    title: 'Operations Consulting',
+    tagline: 'Figure out where time and money are leaking.',
+    desc: 'Sometimes you need someone to look at how your practice actually runs and find the bottlenecks. I map out your workflows, identify what is slowing you down, and recommend fixes.',
+    points: ['Workflow mapping', 'Bottleneck analysis', 'Process documentation'],
     img: '/assets/n_synergy.png'
   }
 ];
 
 const technicalIndex = [
   {
-    domain: 'Automation',
-    tools: ['Claude Code', 'Google Antigravity', 'Webhooks', 'REST APIs'],
-    specs: ['LLM integration', 'Logic pipes', 'Real-time sync', 'Custom endpoints']
+    domain: 'AI & Automation',
+    tools: ['Claude', 'Heidi AI', 'Zapier', 'Custom Scripts'],
+    specs: ['Document generation', 'Clinical notes', 'Workflow triggers', 'Data processing']
   },
   {
-    domain: 'Operations',
-    tools: ['Jane App', 'Practice Management', 'CRM Architectures', 'Workflow Mapping'],
-    specs: ['EHR architecture', 'Patient acquisition', 'Data migration', 'Lead tracking']
+    domain: 'Healthcare',
+    tools: ['Jane App', 'Cliniko', 'Practice Management', 'EHR Systems'],
+    specs: ['Booking setup', 'Intake forms', 'Billing config', 'Referral tracking']
   },
   {
-    domain: 'Digital',
-    tools: ['Next.js (App Dir)', 'TypeScript', 'Lighthouse / SEO', 'Google Search Console'],
-    specs: ['SSR / RSC', 'Static typing', 'Performance audit', 'Index optimization']
+    domain: 'Web & SEO',
+    tools: ['Next.js', 'Vercel', 'Google Search Console', 'Analytics'],
+    specs: ['Site builds', 'Performance', 'Local SEO', 'Conversion tracking']
   }
 ];
 
@@ -134,17 +134,16 @@ export default function Services() {
 
         <div className="relative z-10">
           <ScrollReveal direction="up">
-            <span className="block text-[10px] font-bold tracking-[0.8em] uppercase mb-12 opacity-30">Methodology</span>
+            <span className="block text-[10px] font-bold tracking-[0.8em] uppercase mb-12 opacity-30">Services</span>
           </ScrollReveal>
 
           <h1 className="text-[12vw] md:text-[8vw] font-medium tracking-tighter leading-[0.8] mb-12">
-            Operational <br />
-            <CharReveal delay={0.4} className="text-accent italic font-serif">Design.</CharReveal>
+            What I <CharReveal delay={0.4} className="text-accent italic font-serif">do.</CharReveal>
           </h1>
 
           <div className="max-w-3xl border-t border-white/5 pt-12 mx-auto">
-            <p className="text-2xl md:text-3xl text-muted-foreground font-light italic leading-snug">
-              Designing and building the technical systems that remove operational friction for professional service firms.
+            <p className="text-2xl md:text-3xl text-muted-foreground font-light leading-snug">
+              I help healthcare practices and professional service firms get more out of their software and spend less time on admin work.
             </p>
           </div>
         </div>
@@ -172,9 +171,9 @@ export default function Services() {
 
         <div className="max-w-[1600px] mx-auto relative z-10">
           <div className="mb-32">
-            <span className="text-accent font-mono text-sm tracking-[0.6em] uppercase block mb-8">System Inventory</span>
-            <h2 className="text-7xl md:text-8xl font-medium tracking-tighter italic font-serif">
-              Technical Index
+            <span className="text-accent font-mono text-sm tracking-[0.6em] uppercase block mb-8">Tools</span>
+            <h2 className="text-7xl md:text-8xl font-medium tracking-tighter">
+              What I use.
             </h2>
           </div>
 
@@ -220,11 +219,6 @@ export default function Services() {
             ))}
           </div>
 
-          {/* Bottom Verification Stat */}
-          <div className="mt-24 flex justify-between items-end border-t border-white/5 pt-8 opacity-10">
-            <span className="text-[10px] font-mono tracking-widest uppercase">PRO_SPEC_V2.0 // ARCHITECTURAL_INTENT</span>
-            <span className="text-[10px] font-mono tracking-[0.5em] uppercase">Verified logic units</span>
-          </div>
         </div>
       </section>
 
