@@ -1,163 +1,180 @@
 'use client';
 
-import Link from 'next/link';
-import { Download } from 'lucide-react';
+import { Download, ChevronRight, Hash } from 'lucide-react';
 import ScrollReveal from '@/components/ScrollReveal';
 
-const experience = [
+const roadmap = [
   {
-    title: 'Digital Strategy & Operations Lead',
-    company: 'Endorphins Health and Wellness Centre',
     period: '2024 - Present',
-    description: 'Lead digital operations for a multi-specialty clinic spanning 6 specialties. Designed and built search-optimized infrastructure and multi-provider booking architectures (Jane App).',
+    title: 'Digital Strategy & Operations Lead',
+    company: 'Endorphins Health',
+    focus: 'Multidisciplinary System Architecture',
+    points: [
+      'Built endorphinshealth.com supporting acquisition across 6 specialties',
+      'Engineered Jane App booking architecture and referral flows',
+      'Configured technical local SEO and acquisition pipelines'
+    ]
   },
   {
-    title: 'Operations Consultant (Process Automation)',
+    period: '2025 - Present',
+    title: 'Operations Consultant',
     company: 'Tax Relief Counsel',
-    period: '2025 - Present',
-    description: 'Architecting agentic workflows using Claude Code to automate document drafting and client correspondence, reducing baseline template generation time by 85%.',
+    focus: 'Agentic Automation',
+    points: [
+      'Eliminated 85% of document drafting friction via Claude Code',
+      'Integrated automated client correspondence workflows',
+      'Increased team capacity without additional technical overhead'
+    ]
   },
   {
+    period: '2025 - Present',
     title: 'Clinical Advisor',
-    company: 'Neuro-Mod (Medical Device Startup)',
-    period: '2025 - Present',
-    description: 'Advising on clinical usability and adoption barriers for AR-based pain management tools, focusing on clinician workflow integration and market validation.',
+    company: 'Neuro-Mod',
+    focus: 'Medical Device Usability',
+    points: [
+      'Reviewed clinical adoption barriers for AR pain-management',
+      'Supported market validation for early go-to-market planning',
+      'Advised on clinician-facing workflow integration'
+    ]
   },
   {
-    title: 'Registered Physiotherapist',
-    company: 'Movement Solutions Physiotherapy',
     period: '2021 - 2024',
-    description: 'Generated $600K+ in treatment revenue while spearheading the clinic-wide adoption of Heidi AI, ensuring seamless integration for a team of 6 clinicians.',
-  },
-];
-
-const education = [
-  {
-    degree: 'MSc Physiotherapy',
-    school: 'Robert Gordon University (Distinction)',
-    detail: 'Hamilton, ON | Scotland',
-  },
-  {
-    degree: 'BSc Kinesiology',
-    school: 'McMaster University (Honours)',
-    detail: 'Hamilton, ON',
-  },
+    title: 'Registered Physiotherapist',
+    company: 'Movement Solutions',
+    focus: 'Core Clinical Implementation',
+    points: [
+      'Spearheaded transition to Heidi AI documentation software',
+      'Generated $600K treatment revenue over 36 months',
+      'Developed SOPs for peer evaluation and software rollout'
+    ]
+  }
 ];
 
 export default function About() {
   return (
-    <div className="pt-24 overflow-hidden">
-      {/* Identity Hero */}
+    <div className="pt-24 overflow-hidden relative">
+      <div className="absolute inset-0 grid-pattern opacity-30 pointer-events-none -z-10" />
+
+      {/* Architectural Hero */}
       <section className="py-48 px-6 relative">
-        <div className="max-w-6xl mx-auto z-10 relative">
-          <ScrollReveal direction="up" distance={30}>
-            <p className="text-[10px] font-bold tracking-[0.5em] uppercase opacity-30 mb-12">The Narrative</p>
-            <h1 className="text-7xl md:text-[140px] font-medium tracking-tighter mb-20 leading-[0.75] text-balance">
-              Practice Meet <br />
-              <span className="opacity-40 italic font-light">Procedure.</span>
-            </h1>
-          </ScrollReveal>
-
-          <div className="grid lg:grid-cols-2 gap-32 items-start mt-24">
-            <ScrollReveal direction="up" delay={0.2} distance={30} className="space-y-12 text-3xl text-muted-foreground leading-relaxed font-light">
-              <p>
-                My entry into digital strategy wasn&apos;t through a screen, but through the <span className="text-foreground">frontline friction</span> of clinical healthcare.
-              </p>
-              <p>
-                I&apos;ve spent thousands of hours in the gap between what technology promises and what users actually need. My work is about bridging that gap.
-              </p>
-            </ScrollReveal>
-
-            <ScrollReveal direction="up" delay={0.3} distance={30} className="space-y-12 text-3xl text-muted-foreground leading-relaxed lg:mt-48 font-light">
-              <p>
-                From automating legal workflows to stabilizing AI adoption in healthcare, I build systems that respect human time and drive <span className="text-foreground">organizational scale.</span>
-              </p>
-              <div className="pt-12">
-                <a
-                  href="/Kareem-Hassanein-Resume.pdf"
-                  className="group inline-flex items-center gap-6 px-10 py-5 border border-white/5 rounded-full hover:bg-white/10 transition-all duration-700 text-xl font-medium"
-                >
-                  <Download size={24} className="group-hover:translate-y-1 transition-transform duration-500 opacity-40 group-hover:opacity-100" />
-                  <span className="link-underline pb-1">Resume</span>
-                </a>
-              </div>
-            </ScrollReveal>
-          </div>
-        </div>
-      </section>
-
-      {/* Timeline Section */}
-      <section className="py-64 px-6 bg-card/10">
-        <div className="max-w-6xl mx-auto">
-          <ScrollReveal direction="up" className="mb-40">
-            <h2 className="text-5xl md:text-8xl font-medium tracking-tighter">
-              Professional Arc.
-            </h2>
-          </ScrollReveal>
-
-          <div className="space-y-32">
-            {experience.map((item, i) => (
-              <ScrollReveal
-                key={item.title}
-                direction="up"
-                delay={i * 0.1}
-                className="grid lg:grid-cols-[1fr_2fr] gap-12 items-start group"
-              >
-                <div className="space-y-2">
-                  <p className="text-[10px] font-bold tracking-[0.4em] uppercase opacity-20">{item.period}</p>
-                  <h3 className="text-3xl font-medium tracking-tight group-hover:text-accent transition-colors duration-500">{item.title}</h3>
-                  <p className="text-xl text-muted-foreground font-light">{item.company}</p>
-                </div>
-                <p className="text-2xl text-muted-foreground leading-relaxed font-light">
-                  {item.description}
+        <div className="max-w-7xl mx-auto z-10 relative">
+          <div className="grid lg:grid-cols-[2fr_1fr] gap-24 items-start">
+            <div>
+              <ScrollReveal direction="none" className="mb-12">
+                <span className="text-[10px] font-bold tracking-[0.5em] uppercase text-accent">Identity Profile</span>
+              </ScrollReveal>
+              <h1 className="text-7xl md:text-[140px] font-medium tracking-tighter mb-20 leading-[0.75]">
+                Identity <br /> & <span className="opacity-40 italic">Logic.</span>
+              </h1>
+            </div>
+            <div className="lg:pt-48 pb-12 border-b border-white/5">
+              <ScrollReveal delay={0.2}>
+                <p className="text-2xl text-muted-foreground font-light leading-relaxed">
+                  Synthesizing clinical precision with technical operational scale. Architecting the bridge between healthcare necessity and digital efficiency.
                 </p>
               </ScrollReveal>
-            ))}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Education & Foundations */}
+      {/* Layered Bio Section */}
+      <section className="py-72 px-6 bg-white/[0.01] border-y border-white/5">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-40">
+            <ScrollReveal direction="up" className="space-y-16">
+              <div className="flex items-center gap-6">
+                <Hash className="text-accent w-6 h-6" />
+                <h2 className="text-4xl font-medium tracking-tight">The Clinical Layer.</h2>
+              </div>
+              <p className="text-2xl text-muted-foreground font-light leading-relaxed">
+                MSc Physiotherapy with Distinction from Robert Gordon, Scotland. Trained in systemic evaluation and diagnostic workflows. I deliver care that respects objective data and human adherence.
+              </p>
+              <ul className="space-y-6 pt-12 border-l border-white/5 pl-12">
+                {['MSc Physiotherapy (Distinction)', 'BSc Kinesiology (Honours)', '2,000+ Coaching Hours'].map(item => (
+                  <li key={item} className="text-xl font-light text-foreground">{item}</li>
+                ))}
+              </ul>
+            </ScrollReveal>
+
+            <ScrollReveal direction="up" delay={0.2} className="space-y-16">
+              <div className="flex items-center gap-6">
+                <Hash className="text-accent w-6 h-6" />
+                <h2 className="text-4xl font-medium tracking-tight">The Technical Layer.</h2>
+              </div>
+              <p className="text-2xl text-muted-foreground font-light leading-relaxed">
+                Applying agentic automation and CI/CD stability to professional operations. Claude Code for complex workflow re-engineering and Antigravity for technical deployment.
+              </p>
+              <ul className="space-y-6 pt-12 border-l border-white/5 pl-12">
+                {['Agentic DevOps (Claude Code)', 'System Workflow Mapping', 'API Functional Conceptualization'].map(item => (
+                  <li key={item} className="text-xl font-light text-foreground">{item}</li>
+                ))}
+              </ul>
+            </ScrollReveal>
+          </div>
+        </div>
+      </section>
+
+      {/* Non-Linear Roadmap */}
       <section className="py-72 px-6">
-        <div className="max-w-6xl mx-auto grid lg:grid-cols-[1.5fr_1fr] gap-40 items-start">
-          <div className="grid gap-16">
-            {education.map((item, i) => (
+        <div className="max-w-7xl mx-auto">
+          <ScrollReveal direction="up" className="mb-40">
+            <p className="text-[10px] font-bold tracking-[0.3em] uppercase opacity-30 mb-8">Career Architecture</p>
+            <h2 className="text-6xl md:text-9xl font-medium tracking-tighter leading-none mb-12">The Roadmap.</h2>
+          </ScrollReveal>
+
+          <div className="space-y-2px bg-white/5 border border-white/5 overflow-hidden">
+            {roadmap.map((item, i) => (
               <ScrollReveal
-                key={item.degree}
-                direction="up"
-                delay={i * 0.2}
-                className="space-y-6"
+                key={item.title}
+                direction="none"
+                delay={i * 0.1}
+                className="bg-[#050608] group"
               >
-                <h3 className="text-5xl font-medium tracking-tighter italic opacity-40">{item.degree}</h3>
-                <p className="text-3xl font-light">{item.school}</p>
-                <p className="text-[10px] font-bold uppercase tracking-[0.4em] opacity-20">{item.detail}</p>
+                <div className="grid lg:grid-cols-[1fr_2fr_1fr] gap-12 p-16 items-start hover:bg-white/[0.02] transition-all duration-700">
+                  <div className="space-y-3">
+                    <span className="text-[10px] font-bold tracking-widest text-accent italic">{item.period}</span>
+                    <h3 className="text-3xl font-medium tracking-tight whitespace-nowrap">{item.title}</h3>
+                    <p className="text-muted-foreground font-light">{item.company}</p>
+                  </div>
+
+                  <div className="space-y-8">
+                    <p className="text-xl font-medium text-secondary-foreground">{item.focus}</p>
+                    <ul className="space-y-4 pr-12">
+                      {item.points.map(point => (
+                        <li key={point} className="flex gap-4 text-muted-foreground font-light leading-relaxed">
+                          <ChevronRight className="w-4 h-4 text-accent mt-1 flex-shrink-0" />
+                          {point}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div className="hidden lg:flex justify-end opacity-10 group-hover:opacity-100 transition-opacity">
+                    <span className="text-8xl font-medium tracking-tighter text-white/5 italic">0{roadmap.length - i}</span>
+                  </div>
+                </div>
               </ScrollReveal>
             ))}
           </div>
-
-          <ScrollReveal direction="up" delay={0.4}>
-            <div className="space-y-10 border-l border-white/[0.02] pl-16">
-              <p className="text-[10px] font-bold tracking-[0.4em] uppercase opacity-20">Scientific Core</p>
-              <p className="text-4xl font-medium tracking-tighter leading-tight">
-                Building <br /> operative <br /> excellence on <br /> academic <br /> rigor.
-              </p>
-            </div>
-          </ScrollReveal>
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-80 px-6 text-center border-t border-white/[0.02]">
+      {/* High-Fi Resume CTA */}
+      <section className="py-80 px-6 text-center bg-white/[0.01]">
         <ScrollReveal direction="up">
-          <h2 className="text-6xl md:text-[140px] font-medium tracking-tighter mb-24 leading-[0.7]">
-            Build <br /> <span className="opacity-30 italic font-light">Value.</span>
-          </h2>
-          <Link
-            href="/contact"
-            className="text-2xl font-light link-underline pb-2"
-          >
-            Start a project
-          </Link>
+          <div className="mb-16 titanium-border p-12 inline-block max-w-xl text-left">
+            <p className="text-xl text-muted-foreground font-light leading-relaxed mb-12">
+              For a granular audit of my clinical revenue metrics, technical integration logs, and institutional accreditation history.
+            </p>
+            <a
+              href="/Kareem Hassanein - Resume January 2026.pdf"
+              className="flex items-center gap-6 text-2xl font-bold tracking-tight text-accent link-underline pb-1"
+            >
+              Access Technical Dossier
+              <Download size={24} />
+            </a>
+          </div>
         </ScrollReveal>
       </section>
     </div>
