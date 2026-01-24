@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import Spotlight from "@/components/Spotlight";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -14,6 +15,9 @@ const geistMono = localFont({
   variable: "--font-geist-mono",
   weight: "100 900",
 });
+
+import { Playfair_Display } from 'next/font/google';
+const playfair = Playfair_Display({ subsets: ['latin'], variable: '--font-serif' });
 
 export const metadata: Metadata = {
   title: "Kareem Hassanein | Implementation & Workflow Optimization",
@@ -35,9 +39,10 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased font-sans`}
+        className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} antialiased font-sans`}
       >
         <div className="noise-overlay" />
+        <Spotlight />
         <Header />
         <main className="min-h-screen page-content">
           {children}

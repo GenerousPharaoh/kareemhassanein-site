@@ -66,6 +66,15 @@ body::after {
   body {
     @apply bg-background text-foreground;
   }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-serif;
+  }
 }
 
 .glass-card {
@@ -132,12 +141,16 @@ body::after {
   }
 
   @keyframes float-subtle {
-    0%, 100% {
+
+    0%,
+    100% {
       transform: translateY(0) rotate(0deg);
     }
+
     33% {
       transform: translateY(-12px) rotate(0.4deg);
     }
+
     66% {
       transform: translateY(6px) rotate(-0.4deg);
     }
@@ -234,12 +247,10 @@ button:focus-visible {
 /* Subtle divider line */
 .divider-subtle {
   height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(255, 255, 255, 0.1) 50%,
-    transparent 100%
-  );
+  background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.1) 50%,
+      transparent 100%);
 }
 
 /* Noise overlay for texture */
@@ -264,6 +275,7 @@ button:focus-visible {
     transform: translateY(10px);
     filter: blur(4px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
