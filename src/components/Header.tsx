@@ -1,8 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { useState } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 
@@ -15,23 +15,34 @@ const navItems = [
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
+  const { scrollY } = useScroll();
 
-  useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 20);
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  const headerHeight = useTransform(scrollY, [0, 50], ['5.5rem', '4rem']);
+  const headerBg = useTransform(
+    scrollY,
+    [0, 50],
+    ['rgba(9, 9, 11, 0)', 'rgba(15, 15, 17, 0.8)']
+  );
+  const headerBorder = useTransform(
+    scrollY,
+    [0, 50],
+    ['rgba(255, 255, 255, 0)', 'rgba(255, 255, 255, 0.06)']
+  );
+  const headerBlur = useTransform(scrollY, [0, 50], ['blur(0px)', 'blur(12px)']);
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        isScrolled ? 'glass border-b border-subtle' : ''
-      }`}
+    <motion.header
+      style={{
+        height: headerHeight,
+        backgroundColor: headerBg,
+        borderColor: headerBorder,
+        backdropFilter: headerBlur,
+      }}
+      className="fixed top-0 left-0 right-0 z-50 border-b transition-colors duration-500"
     >
-      <nav className="max-w-6xl mx-auto px-6 py-5">
-        <div className="flex items-center justify-between">
+      <nav className="h-full max-w-6xl mx-auto px-6 flex items-center">
+        <div className="w-full flex items-center justify-between">
           <Link
             href="/"
             className="text-lg font-medium text-foreground hover:text-accent transition-colors duration-300"
@@ -45,11 +56,10 @@ export default function Header() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`text-sm transition-colors duration-300 link-underline ${
-                  pathname === item.href
-                    ? 'text-foreground'
-                    : 'text-muted-foreground hover:text-foreground'
-                }`}
+                className={`text-sm transition-colors duration-300 link-underline ${pathname === item.href
+                  ? 'text-foreground'
+                  : 'text-muted-foreground hover:text-foreground'
+                  }`}
               >
                 {item.label}
               </Link>
@@ -82,11 +92,10 @@ export default function Header() {
                 key={item.href}
                 href={item.href}
                 onClick={() => setIsMenuOpen(false)}
-                className={`block text-lg transition-colors duration-300 ${
-                  pathname === item.href
-                    ? 'text-foreground'
-                    : 'text-muted-foreground hover:text-foreground'
-                }`}
+                className={`block text-lg transition-colors duration-300 ${pathname === item.href
+                  ? 'text-foreground'
+                  : 'text-muted-foreground hover:text-foreground'
+                  }`}
               >
                 {item.label}
               </Link>
@@ -94,6 +103,6 @@ export default function Header() {
           </div>
         </motion.div>
       </nav>
-    </header>
+    </motion.header>
   );
 }
