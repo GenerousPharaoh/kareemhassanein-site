@@ -28,7 +28,7 @@ export default function Footer() {
             href="/contact"
             className="group inline-flex items-center gap-8 text-3xl md:text-5xl font-light border border-white/20 rounded-full px-12 py-6 hover:bg-white hover:text-black transition-all duration-500"
           >
-            Initiate Conversation
+            Get in touch
             <ArrowRight size={40} className="group-hover:translate-x-2 transition-transform duration-500" />
           </Link>
         </div>
