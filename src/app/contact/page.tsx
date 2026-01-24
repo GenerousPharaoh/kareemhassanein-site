@@ -46,7 +46,7 @@ export default function Contact() {
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-between p-12 transition-all glass-nanobanana hover:bg-white/[0.04] group-hover:-translate-y-1"
+                  className="flex items-center justify-between p-12 transition-all glass-card hover:bg-white/[0.04] group-hover:-translate-y-1"
                 >
                   <div className="flex items-center gap-10">
                     <div className="w-12 h-12 rounded-2xl bg-white/[0.01] border border-white/5 flex items-center justify-center group-hover:border-white/20 transition-all duration-700">

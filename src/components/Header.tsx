@@ -6,10 +6,10 @@ import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
 import { usePathname } from 'next/navigation';
 
 const navItems = [
-  { href: '/', label: 'Overview' },
-  { href: '/about', label: 'Identity' },
-  { href: '/services', label: 'Capabilities' },
-  { href: '/contact', label: 'Dialogue' },
+  { href: '/', label: 'Home' },
+  { href: '/about', label: 'About' },
+  { href: '/services', label: 'Services' },
+  { href: '/contact', label: 'Contact' },
 ];
 
 export default function Header() {

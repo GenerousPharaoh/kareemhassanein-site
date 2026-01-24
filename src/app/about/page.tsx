@@ -70,7 +70,7 @@ function TiltImage({ src, alt, className = "" }: { src: string; alt: string; cla
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-      className={`relative rounded-[3.5rem] overflow-hidden glass-nanobanana ${className}`}
+      className={`relative rounded-[3.5rem] overflow-hidden glass-card ${className}`}
     >
       <div
         style={{ transform: "translateZ(60px)", transformStyle: "preserve-3d" }}
@@ -153,7 +153,7 @@ export default function About() {
                 <motion.div
                   key={item.title}
                   variants={{ hidden: { opacity: 0, y: 40, filter: 'blur(20px)' }, visible: { opacity: 1, y: 0, filter: 'blur(0px)' } }}
-                  className="group flex flex-col h-full rounded-[3.5rem] glass-nanobanana glass-narrative p-12 lg:p-16 hover:bg-white/[0.03] transition-all duration-1000 before:bg-[url('/assets/n_story_timeline.png')]"
+                  className="group flex flex-col h-full rounded-[3.5rem] glass-card glass-narrative p-12 lg:p-16 hover:bg-white/[0.03] transition-all duration-1000 before:bg-[url('/assets/n_story_timeline.png')]"
                 >
                   <div className="space-y-10 mb-12">
                     <div className="flex justify-between items-start">
