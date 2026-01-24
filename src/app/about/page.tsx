@@ -97,7 +97,7 @@ export default function About() {
           <ScrollReveal direction="up">
             <span className="block text-[10px] font-bold tracking-[1em] uppercase mb-12 opacity-30">Background</span>
             <h1 className="text-[8vw] md:text-[6vw] font-medium tracking-tighter leading-[0.9] mb-12">
-              Physiotherapist <CharReveal delay={0.4} className="text-accent italic font-serif">first.</CharReveal>
+              How I <CharReveal delay={0.4} className="text-accent italic font-serif">got here.</CharReveal>
             </h1>
             <div className="max-w-2xl space-y-6 mx-auto md:mx-0">
               <p className="text-xl md:text-2xl font-light text-muted-foreground leading-relaxed">
@@ -116,16 +116,16 @@ export default function About() {
 
       {/* Chapters */}
       <BioSection
-        label="Where I started"
-        title="Physiotherapy"
-        text="MSc with Distinction from Robert Gordon University. I treated patients for years, but I kept noticing the same thing: clinicians drowning in admin work that better systems could handle."
+        label="Why it matters"
+        title="Clinical experience."
+        text="Most implementation consultants have never used the software in a real workflow. I have. I know what it feels like when the system fights you instead of helping. That changes how I approach the work."
         img="/assets/precision.png"
       />
 
       <BioSection
-        label="What I do now"
-        title="Implementation"
-        text="I figure out why software isn't getting used and fix it. That usually means rebuilding configurations, automating the tedious parts, and training teams on workflows that actually make sense."
+        label="How I work"
+        title="Hands on."
+        text="I don't write reports and leave. I get into the system, rebuild the configuration, document the workflows, and train the team. When I'm done, people are actually using the thing."
         img="/images/image-2.png"
         isReversed
       />

@@ -40,13 +40,10 @@ export default function Footer() {
             <div>
               <h2 className="text-[80px] md:text-[120px] leading-[0.7] font-bold tracking-tighter opacity-[0.05] select-none pointer-events-none">HASSANEIN</h2>
             </div>
-            <div className="flex gap-12 text-[10px] uppercase tracking-[0.2em] font-mono opacity-40 pb-2">
-              <div className="flex items-center gap-3">
-                <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                <span>System Status: Online</span>
-              </div>
-              <span>LOC: Global // Remote</span>
-              <span>© 2024</span>
+            <div className="flex gap-8 text-[10px] uppercase tracking-[0.2em] font-mono opacity-40 pb-2">
+              <span>Burlington, ON</span>
+              <span>Available remotely</span>
+              <span>© 2026</span>
             </div>
           </div>
         </div>

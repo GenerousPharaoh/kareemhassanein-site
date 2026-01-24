@@ -33,7 +33,7 @@ export default function Contact() {
         <div className="grid lg:grid-cols-[1.3fr_0.7fr] gap-32 items-center w-full">
           <div>
             <ScrollReveal direction="none" blur={30} duration={1.8} className="mb-10">
-              <span className="text-[10px] font-bold tracking-[0.6em] opacity-30 uppercase">Initiate</span>
+              <span className="text-[10px] font-bold tracking-[0.6em] opacity-30 uppercase">Contact</span>
             </ScrollReveal>
 
             <ScrollReveal direction="up" distance={60} blur={20} delay={0.2}>
@@ -87,13 +87,10 @@ export default function Contact() {
           <div>
             <h2 className="text-[120px] leading-[0.7] font-bold tracking-tighter opacity-[0.03] select-none pointer-events-none">HASSANEIN</h2>
           </div>
-          <div className="flex gap-16 text-[10px] uppercase tracking-[0.2em] font-mono opacity-40 pb-2">
-            <div className="flex items-center gap-3">
-              <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-              <span>System Status: Online</span>
-            </div>
-            <span>LOC: Global // Remote</span>
-            <span>v2.4.0</span>
+          <div className="flex gap-8 text-[10px] uppercase tracking-[0.2em] font-mono opacity-40 pb-2">
+            <span>Burlington, ON</span>
+            <span>Available remotely</span>
+            <span>© 2026</span>
           </div>
         </div>
       </footer>
