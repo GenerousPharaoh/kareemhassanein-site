@@ -14,7 +14,7 @@ export default function LayoutWrapper({
 
     return (
         <>
-            <div className={`relative z-10 bg-background shadow-2xl ${isContactPage ? 'mb-0' : 'mb-[500px] md:mb-[800px]'}`}>
+            <div className={`relative z-10 bg-background shadow-2xl ${isContactPage ? 'mb-0' : 'mb-[420px] sm:mb-[500px] md:mb-[700px] lg:mb-[800px]'}`}>
                 <Header />
                 <main className="min-h-screen page-content">
                     {children}
