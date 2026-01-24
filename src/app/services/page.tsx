@@ -9,30 +9,30 @@ import ScrollReveal from '@/components/ScrollReveal';
 const solutions = [
   {
     index: '01',
-    title: 'AI Intelligence Implementation',
-    desc: 'Strategic architecture and rollout of agentic systems (Heidi AI) for clinical teams. Evaluating technical barriers and constructing SOPs built for immediate field adoption.',
-    outcomes: ['SOP System Architecture', 'Technical Tool Baseline Configuration', 'Post-Deployment Stability Auditing', 'Clinic-Wide Transition Advisory'],
+    title: 'AI Tool Implementation',
+    desc: 'End-to-end rollout of AI tools like Heidi AI for clinical teams. From evaluation through training, go-live, and making sure it actually sticks.',
+    outcomes: ['Tool evaluation and selection', 'Training and onboarding', 'SOP development', 'Post-launch support'],
     icon: <Layers className="w-5 h-5 opacity-40" />
   },
   {
     index: '02',
-    title: 'Agentic Workflow DevOps',
-    desc: 'Engineering complex automated modules via Claude Code and Google Antigravity platforms. Reduction in operational friction by 85% via modular automation logic.',
-    outcomes: ['Modular Automation Blueprints', 'CI/CD Pipeline System Auditing', 'Reduction in operational friction', 'Workflow Logic Mapping'],
+    title: 'Workflow Automation',
+    desc: 'Building automation systems that reduce manual work. Using tools like Claude Code to cut document generation time by 85%.',
+    outcomes: ['Process automation', 'Template systems', 'Intake optimization', 'Correspondence workflows'],
     icon: <Workflow className="w-5 h-5 opacity-40" />
   },
   {
     index: '03',
-    title: 'Discovery Infrastructure',
-    desc: 'Constructing search-optimized acquisition streams with technical local SEO and Jane App functional integration. Linking presence to patient conversion.',
-    outcomes: ['Local SEO Technical Infrastructure', 'Jane App pathway integration', 'Technical Conversion Audits', 'Patient Acquisition Blueprints'],
+    title: 'Operations Optimization',
+    desc: 'Improving how clinics and professional services run. Booking systems, referral pathways, and patient acquisition.',
+    outcomes: ['Booking system design', 'Referral pathways', 'Local SEO setup', 'Jane App configuration'],
     icon: <BarChart3 className="w-5 h-5 opacity-40" />
   },
   {
     index: '04',
-    title: 'Implementation Advisory',
-    desc: 'Consulting for med-tech and health-tech platforms on clinical usability, adoption barriers, and market validation within clinical workflows.',
-    outcomes: ['Med-Tech Adoption Root Cause Audit', 'Technical Usability Workflow Mapping', 'Early Market Fit Strategy', 'Clinical Usability Validation'],
+    title: 'Clinical Advisory',
+    desc: 'Advising health-tech companies on clinical workflows, usability, and what it takes to get clinicians to actually adopt new tools.',
+    outcomes: ['Usability review', 'Adoption strategy', 'Workflow integration', 'Market validation'],
     icon: <ShieldCheck className="w-5 h-5 opacity-40" />
   }
 ];
@@ -90,11 +90,11 @@ export default function Services() {
           <ScrollReveal direction="up" distance={20} blur={20} staggerChildren={0.2} className="grid lg:grid-cols-[1.3fr_0.7fr] gap-32 items-end">
             <motion.div>
               <motion.span variants={{ hidden: { opacity: 0 }, visible: { opacity: 0.3 } }} className="block text-[10px] font-bold tracking-[0.6em] uppercase mb-10">
-                Operational Capabilities
+                Services
               </motion.span>
               <motion.h1 variants={{ hidden: { opacity: 0, y: 15 }, visible: { opacity: 1, y: 0 } }} className="text-8xl md:text-[130px] font-medium tracking-tighter mb-20 leading-[0.75]">
-                System <br />
-                {"&"} <span className="opacity-30 italic font-light font-serif">Scale.</span>
+                How I <br />
+                {"&"} <span className="opacity-30 italic font-light font-serif">help.</span>
               </motion.h1>
             </motion.div>
             <motion.div variants={{ hidden: { opacity: 0, x: 30, filter: 'blur(30px)' }, visible: { opacity: 1, x: 0, filter: 'blur(0px)' } }} className="group mb-12">
@@ -137,7 +137,7 @@ export default function Services() {
                   </div>
 
                   <div className="pt-20 border-t border-white/5 space-y-10">
-                    <p className="text-[10px] font-bold tracking-[0.5em] uppercase opacity-20">Technical Outcomes</p>
+                    <p className="text-[10px] font-bold tracking-[0.5em] uppercase opacity-20">What you get</p>
                     <ul className="grid md:grid-cols-2 gap-x-12 gap-y-12">
                       {module.outcomes.map(point => (
                         <li key={point} className="flex gap-6 text-xl text-muted-foreground font-light tracking-tight pb-4 border-b border-white/[0.02] items-center group/item hover:text-foreground transition-all duration-700">
@@ -159,19 +159,19 @@ export default function Services() {
         <div className="section-container relative z-10 space-y-32">
           <ScrollReveal direction="up" blur={40} distance={20} staggerChildren={0.2}>
             <motion.h2 variants={{ hidden: { opacity: 0, y: 15 }, visible: { opacity: 1, y: 0 } }} className="text-8xl md:text-[180px] font-medium tracking-tighter mb-24 leading-[0.75] text-balance">
-              Building <br /> <span className="opacity-10 italic font-light font-serif">Outcome.</span>
+              Have a <br /> <span className="opacity-10 italic font-light font-serif">project?</span>
             </motion.h2>
 
             <motion.div variants={{ hidden: { opacity: 0, y: 15 }, visible: { opacity: 1, y: 0 } }} className="space-y-32 max-w-4xl mx-auto">
               <p className="text-3xl md:text-5xl text-muted-foreground font-light leading-snug text-balance italic border-x border-white/5 px-20">
-                Engineering high-stakes implementation where <span className="text-foreground border-b border-white/10 italic">user adoption</span> is the primary metric.
+                I focus on implementations where <span className="text-foreground border-b border-white/10 italic">people actually adopt</span> the tools.
               </p>
               <div className="pt-24 flex justify-center">
                 <Link
                   href="/contact"
                   className="group inline-flex items-center gap-12 text-5xl font-bold tracking-tight text-foreground link-underline pb-4 px-12 transition-all"
                 >
-                  Inquire for Architecture
+                  Let&apos;s talk
                   <ArrowRight size={72} className="opacity-0 group-hover:opacity-100 group-hover:translate-x-6 transition-all duration-[1.5s]" />
                 </Link>
               </div>

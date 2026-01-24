@@ -10,28 +10,28 @@ import ScrollReveal from '@/components/ScrollReveal';
 const impacts = [
   {
     title: 'Endorphins Health',
-    details: 'Piloted and established SOPs for Heidi AI across multidisciplinary regional teams. Eliminated documentation bottlenecks by bridging the gap between software capability and clinician trust.',
-    tag: 'Strategy',
+    details: 'Led Heidi AI rollout across a 6-specialty clinic. Created SOPs that got every clinician on board and cut documentation time significantly.',
+    tag: 'AI Implementation',
     href: 'https://www.endorphinshealth.com',
     icon: <Sparkles className="w-5 h-5 opacity-40" />
   },
   {
     title: 'Kinetikare Physio',
-    details: 'Architected automated drafting systems using Claude Code and Google Antigravity platforms. Reduction of baseline operational time by 85% through custom modular automation logic.',
-    tag: 'Implementation',
+    details: 'Built automation systems using Claude Code that reduced document generation time by 85%. Streamlined intake and correspondence workflows.',
+    tag: 'Automation',
     href: 'https://www.kinetikarephysio.com',
     icon: <Workflow className="w-5 h-5 opacity-40" />
   },
   {
-    title: 'Clinical AI Selection & Rollout',
-    details: 'Built patient acquisition infrastructure across 6 specialties. Architected multi-provider Jane App booking & referral logic and configured local SEO technical architecture.',
-    tag: 'Care Ops',
+    title: 'Booking System Redesign',
+    details: 'Redesigned multi-provider booking architecture in Jane App. Built referral pathways and configured local SEO to drive patient acquisition.',
+    tag: 'Operations',
     icon: <Binary className="w-5 h-5 opacity-40" />
   },
   {
-    title: 'Process Architecture Design',
-    details: 'Designing multidisciplinary clinical booking and referral pathways. Operationalizing clinical excellence through repeatable, automated system architecture.',
-    tag: 'Architecture',
+    title: 'Clinical Workflow Design',
+    details: 'Created repeatable processes for clinical operations. Designed intake flows and scheduling systems that actually work in practice.',
+    tag: 'Process',
     icon: <HeartPulse className="w-5 h-5 opacity-40" />
   }
 ];
@@ -95,17 +95,17 @@ export default function Home() {
           <ScrollReveal direction="up" distance={30} blur={20} staggerChildren={0.2} className="grid lg:grid-cols-[1.25fr_0.75fr] gap-32 items-center">
             <motion.div style={{ opacity: heroOpacity }} className="z-10">
               <motion.span variants={{ hidden: { opacity: 0, scale: 0.95 }, visible: { opacity: 0.4, scale: 1 } }} className="block text-[10px] font-bold tracking-[0.6em] uppercase mb-10">
-                Frontline Implementation Specialist
+                Implementation Specialist
               </motion.span>
 
               <motion.h1 variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="text-6xl md:text-8xl lg:text-[115px] font-medium leading-[0.85] tracking-tight mb-16 text-balance">
-                The bridge <br />
-                between care <br />
-                {"&"} <span className="opacity-40 italic font-light font-serif">outcome.</span>
+                Making <br />
+                technology <br />
+                {"&"} <span className="opacity-40 italic font-light font-serif">work.</span>
               </motion.h1>
 
               <motion.p variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="text-xl md:text-2xl text-muted-foreground leading-relaxed mb-20 font-light text-balance border-l border-white/5 pl-12 italic">
-                Driving digital operations and AI adoption through the lens of high-stakes clinical experience. MSc Physiotherapy with Distinction.
+                I help organizations adopt AI tools and optimize their workflows. Background in clinical operations with an MSc in Physiotherapy.
               </motion.p>
 
               <motion.div variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }} className="flex gap-16 items-center">
@@ -113,7 +113,7 @@ export default function Home() {
                   href="/contact"
                   className="group flex items-center gap-8 text-xl font-bold tracking-tight text-foreground link-underline pb-1"
                 >
-                  Initiate Dialogue
+                  Get in touch
                   <ArrowRight size={24} className="opacity-20 group-hover:translate-x-4 transition-transform duration-700" />
                 </Link>
               </motion.div>
@@ -132,14 +132,14 @@ export default function Home() {
           <ScrollReveal direction="up" distance={30} blur={20} staggerChildren={0.1} className="w-full">
             <div className="flex flex-col lg:flex-row justify-between items-end mb-48 gap-12">
               <div className="space-y-4">
-                <motion.p variants={{ hidden: { opacity: 0 }, visible: { opacity: 0.3 } }} className="text-[10px] font-bold tracking-[0.5em] uppercase mb-4">Clinical Success</motion.p>
+                <motion.p variants={{ hidden: { opacity: 0 }, visible: { opacity: 0.3 } }} className="text-[10px] font-bold tracking-[0.5em] uppercase mb-4">Recent Work</motion.p>
                 <motion.h2 variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="text-7xl md:text-9xl font-medium tracking-tighter leading-none">
-                  Discrete <br /> Impact.
+                  Real <br /> Results.
                 </motion.h2>
               </div>
               <motion.div variants={{ hidden: { opacity: 0, x: 20 }, visible: { opacity: 1, x: 0 } }} className="max-w-sm text-right pb-4 lg:border-r border-white/10 lg:pr-12">
                 <p className="text-xl text-muted-foreground font-light italic leading-relaxed">
-                  Measurable successes in clinical operations and agentic architecture.
+                  Projects where I helped teams adopt new tools and improve how they work.
                 </p>
               </motion.div>
             </div>
@@ -181,7 +181,7 @@ export default function Home() {
                     {impact.href && (
                       <div className="pt-12 mt-12 border-t border-white/5">
                         <span className="text-[10px] font-bold uppercase tracking-[0.4em] opacity-20 group-hover:opacity-100 group-hover:text-accent transition-all flex items-center gap-4">
-                          Visit Portal <ArrowRight size={12} />
+                          View site <ArrowRight size={12} />
                         </span>
                       </div>
                     )}
@@ -199,10 +199,10 @@ export default function Home() {
           <ScrollReveal direction="up" distance={30} blur={25} staggerChildren={0.2} className="grid lg:grid-cols-[2fr_1.5fr] gap-32 items-center">
             <div className="space-y-20">
               <motion.h2 variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="text-5xl md:text-[110px] font-medium tracking-tighter leading-[0.85] text-balance">
-                Care <br /> {"&"} Workflow.
+                Clinical <br /> {"&"} Technical.
               </motion.h2>
               <motion.p variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="text-3xl font-light text-muted-foreground leading-relaxed max-w-2xl italic">
-                I understand the friction of high-stakes clinical environments because I have lived in them. Technical stability is the prerequisite for clinical care.
+                I know what it&apos;s like to be the person who has to use the tools. That perspective shapes how I approach implementation.
               </motion.p>
             </div>
 
@@ -217,14 +217,14 @@ export default function Home() {
       <section className="py-96 text-center relative flex flex-col items-center">
         <ScrollReveal direction="up" blur={30} distance={20}>
           <h2 className="text-8xl md:text-[180px] font-medium tracking-tighter mb-24 leading-[0.75]">
-            Build <br />
-            <span className="opacity-10 italic font-light font-serif">outcome.</span>
+            Let&apos;s <br />
+            <span className="opacity-10 italic font-light font-serif">talk.</span>
           </h2>
           <Link
             href="/contact"
             className="group inline-flex items-center gap-12 text-5xl font-light link-underline pb-4 px-12 transition-all"
           >
-            Initiate Conversation
+            Get in touch
             <ArrowRight size={72} className="opacity-0 group-hover:opacity-100 group-hover:translate-x-6 transition-all duration-[1.5s]" />
           </Link>
         </ScrollReveal>

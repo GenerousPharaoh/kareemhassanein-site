@@ -10,33 +10,33 @@ const roadmap = [
     period: '2024 - Present',
     title: 'Digital Strategy & Operations',
     company: 'Endorphins Health',
-    focus: 'Multidisciplinary System Architecture',
+    focus: 'Healthcare Operations',
     points: [
-      'Built patient acquisition infrastructure across 6 specialties',
-      'Architected multi-provider Jane App booking & referral logic',
-      'Configured local SEO technical architecture for clinic growth'
+      'Leading digital operations across 6 specialties',
+      'Redesigned booking architecture in Jane App',
+      'Built patient acquisition and referral systems'
     ]
   },
   {
     period: '2025 - Present',
-    title: 'Operations Consultant',
+    title: 'Workflow Automation Consultant',
     company: 'Tax Relief Counsel',
-    focus: 'Agentic Workflow DevOps',
+    focus: 'Legal Tech',
     points: [
-      'Engineered automated drafting modules via Claude Code',
+      'Built automation with Claude Code',
       'Reduced document generation time by 85%',
-      'Optimized correspondence flows for high-volume legal ops'
+      'Defined SOPs for case management'
     ]
   },
   {
     period: '2021 - 2024',
     title: 'Registered Physiotherapist',
-    company: 'Kinetikare Physio',
-    focus: 'Core Clinical Implementation',
+    company: 'Movement Solutions',
+    focus: 'Clinical Practice',
     points: [
-      'Spearheaded clinic-wide transition to Heidi AI and SOPs',
-      'Achieved 100% clinician adoption in high-stakes settings',
-      'Generated $600K in revenue while leading operations'
+      'Led Heidi AI rollout with 100% adoption',
+      'Highest revenue clinician for 3 years',
+      'Generated $600K+ annually'
     ]
   }
 ];
@@ -92,10 +92,10 @@ export default function About() {
           <ScrollReveal direction="up" distance={20} blur={20} staggerChildren={0.2} className="grid lg:grid-cols-[1.3fr_0.7fr] gap-32 items-end">
             <motion.div>
               <motion.span variants={{ hidden: { opacity: 0 }, visible: { opacity: 0.3 } }} className="block text-[10px] font-bold tracking-[0.5em] uppercase mb-10">
-                Identity Profile
+                About
               </motion.span>
               <motion.h1 variants={{ hidden: { opacity: 0, y: 15 }, visible: { opacity: 1, y: 0 } }} className="text-7xl md:text-[140px] font-medium tracking-tighter mb-20 leading-[0.75]">
-                Roots <br /> {"&"} <span className="opacity-30 italic font-light font-serif">Rationale.</span>
+                Background <br /> {"&"} <span className="opacity-30 italic font-light font-serif">Experience.</span>
               </motion.h1>
             </motion.div>
             <motion.div variants={{ hidden: { opacity: 0, x: 30, filter: 'blur(30px)' }, visible: { opacity: 1, x: 0, filter: 'blur(0px)' } }} className="group mb-12">
@@ -114,10 +114,10 @@ export default function About() {
                 <div className="w-12 h-12 rounded-2xl bg-white/[0.01] border border-white/5 flex items-center justify-center">
                   <HeartPulse className="text-muted-foreground w-6 h-6" />
                 </div>
-                <h2 className="text-5xl font-medium tracking-tight">The Practitioner.</h2>
+                <h2 className="text-5xl font-medium tracking-tight">Clinical roots.</h2>
               </div>
               <p className="text-3xl font-light text-muted-foreground leading-relaxed max-w-xl italic">
-                MSc Physiotherapy with Distinction. My perspective is rooted in the thousand-hour diagnostic cycle of care and adherence across 6 specialties.
+                MSc Physiotherapy with Distinction. I spent years as a clinician before moving into operations and consulting.
               </p>
             </motion.div>
 
@@ -126,10 +126,10 @@ export default function About() {
                 <div className="w-12 h-12 rounded-2xl bg-white/[0.01] border border-white/5 flex items-center justify-center">
                   <Binary className="text-muted-foreground w-6 h-6" />
                 </div>
-                <h2 className="text-5xl font-medium tracking-tight">The Architect.</h2>
+                <h2 className="text-5xl font-medium tracking-tight">Technical focus.</h2>
               </div>
               <p className="text-3xl font-light text-muted-foreground leading-relaxed max-w-xl">
-                Architecting bridge systems in agentic AI and operational DevOps. Ensuring technology drives adoption and ROI without compromising clinical reality.
+                Now I help organizations implement AI tools and build automation systems that people actually use.
               </p>
             </motion.div>
           </ScrollReveal>
@@ -143,8 +143,8 @@ export default function About() {
           <ScrollReveal direction="up" distance={30} blur={30} staggerChildren={0.2}>
             <div className="mb-48 flex justify-between items-end">
               <div className="max-w-xl">
-                <motion.p variants={{ hidden: { opacity: 0 }, visible: { opacity: 0.3 } }} className="text-[10px] font-bold tracking-[0.4em] uppercase mb-8">Professional Timeline</motion.p>
-                <motion.h2 variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="text-8xl md:text-[140px] font-medium tracking-tighter leading-[0.75] mb-12">Perspective.</motion.h2>
+                <motion.p variants={{ hidden: { opacity: 0 }, visible: { opacity: 0.3 } }} className="text-[10px] font-bold tracking-[0.4em] uppercase mb-8">Experience</motion.p>
+                <motion.h2 variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="text-8xl md:text-[140px] font-medium tracking-tighter leading-[0.75] mb-12">Timeline.</motion.h2>
               </div>
             </div>
 
@@ -190,13 +190,13 @@ export default function About() {
       <section className="py-96 text-center px-6 border-t border-white/5 bg-white/[0.005]">
         <ScrollReveal direction="up" blur={40}>
           <h2 className="text-8xl md:text-[160px] font-medium tracking-tighter mb-24 leading-[0.7] text-balance">
-            Build <br /> <span className="opacity-10 italic font-light font-serif">The Narrative.</span>
+            Want <br /> <span className="opacity-10 italic font-light font-serif">more?</span>
           </h2>
           <a
-            href="/Kareem Hassanein - Resume January 2026.pdf"
+            href="/Kareem-Hassanein-Resume.pdf"
             className="group inline-flex items-center gap-12 text-3xl font-bold tracking-tight text-foreground link-underline pb-4 px-12 transition-all"
           >
-            Access Identity Dossier
+            Download resume
             <Download size={48} className="opacity-10 group-hover:translate-y-4 transition-all duration-1000" />
           </a>
         </ScrollReveal>
