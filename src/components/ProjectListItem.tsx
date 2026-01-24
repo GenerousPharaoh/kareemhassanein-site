@@ -41,7 +41,7 @@ export default function ProjectListItem({ project, index, setHovered }: ProjectL
             style={{ cursor: 'pointer' }}
         >
             <div className="flex flex-col gap-2 z-30 mix-blend-difference">
-                <h3 className="text-4xl md:text-6xl font-serif font-medium tracking-tight group-hover:italic transition-all duration-500 text-foreground">
+                <h3 className="text-4xl md:text-6xl font-serif font-medium tracking-tight transition-all duration-500 text-foreground">
                     {project.title}
                 </h3>
                 <span className="text-sm font-bold tracking-[0.2em] uppercase opacity-50 group-hover:opacity-100 transition-opacity duration-500 text-foreground">
