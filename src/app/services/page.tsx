@@ -36,8 +36,8 @@ const services = [
 
 const techStack = [
   { group: 'Automation', tools: ['Claude Code', 'Google Antigravity', 'Webhooks', 'REST APIs'] },
-  { group: 'Operations', tools: ['Jane App', 'CRM Platforms', 'Google Search Console', 'Lighthouse'] },
-  { group: 'Stack', tools: ['Next.js', 'TypeScript', 'Tailwind', 'Vercel'] }
+  { group: 'Operations', tools: ['Jane App', 'Practice Management', 'CRM Architectures', 'Workflow Mapping'] },
+  { group: 'Digital', tools: ['Next.js (App Dir)', 'TypeScript', 'Lighthouse / SEO', 'Google Search Console'] }
 ];
 
 function ServiceSection({ service, isEven }: { service: typeof services[0], isEven: boolean }) {
@@ -143,24 +143,48 @@ export default function Services() {
         ))}
       </div>
 
-      {/* Technical Ecosystem Section */}
-      <section className="py-64 px-12 lg:px-32 bg-white/[0.01] border-t border-white/5">
-        <div className="max-w-[1400px] mx-auto">
-          <h2 className="text-6xl md:text-[140px] font-medium tracking-tighter mb-40 opacity-10">Ecosystem.</h2>
-          <div className="grid md:grid-cols-3 gap-20">
+      {/* Tech Stack Spec Sheet Section */}
+      <section className="py-64 px-12 lg:px-32 relative">
+        <div className="max-w-[1600px] mx-auto">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-32 gap-10">
+            <div className="space-y-6">
+              <span className="text-accent font-mono text-sm tracking-[0.4em] uppercase block">Inventory</span>
+              <h2 className="text-7xl md:text-9xl font-medium tracking-tighter leading-none italic font-serif opacity-80">
+                The Stack.
+              </h2>
+            </div>
+            <p className="text-xl text-muted-foreground font-light max-w-sm border-l border-white/10 pl-10 mb-2 italic">
+              Technical infrastructure for professional service groups.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-y-24 border-t border-white/5 pt-24">
             {techStack.map((group) => (
-              <div key={group.group} className="space-y-12">
-                <p className="text-[10px] font-bold tracking-[0.5em] uppercase opacity-30">{group.group}</p>
-                <ul className="space-y-6">
+              <div key={group.group} className="space-y-16 px-4 md:px-0">
+                <div className="flex items-center gap-6">
+                  <div className="w-2 h-2 rounded-full bg-accent animate-pulse" />
+                  <h3 className="text-xs font-bold tracking-[0.5em] uppercase opacity-40">{group.group}</h3>
+                </div>
+                <ul className="space-y-10">
                   {group.tools.map(tool => (
-                    <li key={tool} className="text-3xl md:text-4xl font-light tracking-tight hover:text-accent transition-colors duration-500 cursor-default">
-                      {tool}
+                    <li key={tool} className="group relative">
+                      <div className="flex items-end gap-6 overflow-hidden">
+                        <span className="text-2xl md:text-4xl font-light tracking-tight text-foreground/70 group-hover:text-foreground transition-all duration-700 whitespace-nowrap">
+                          {tool}
+                        </span>
+                        <div className="h-[1px] w-full bg-white/5 group-hover:bg-accent/40 transition-colors duration-1000 mb-2" />
+                      </div>
                     </li>
                   ))}
                 </ul>
               </div>
             ))}
           </div>
+        </div>
+
+        {/* Ambient Grid Marker */}
+        <div className="absolute bottom-0 right-0 p-12 opacity-10 text-[10px] font-mono tracking-widest hidden lg:block">
+          PRO_SPEC_V2.0 // CORE_STACK
         </div>
       </section>
 
