@@ -82,7 +82,7 @@ function TiltImage({ src, alt, className = "" }: { src: string; alt: string; cla
 export default function Services() {
   return (
     <main className="pt-24 overflow-hidden relative bg-background">
-      <div className="glow-blob top-[15%] -left-[10%] opacity-05" />
+      <div className="glow-blob top-[15%] -left-[10%] opacity-[0.03]" />
 
       {/* Capability Hero: Unified Cohesive Reveal Pattern */}
       <section className="py-40 px-6 lg:px-0 relative overflow-hidden perspective-3000">
@@ -104,8 +104,11 @@ export default function Services() {
         </div>
       </section>
 
+      {/* Section Divider */}
+      <div className="divider-subtle w-full" />
+
       {/* Outcome-Driven Capability Dossiers: Unified Cohesive Reveal Pattern */}
-      <section className="py-40 lg:py-64 bg-white/[0.005] border-y border-white/5">
+      <section className="py-40 lg:py-64 bg-white/[0.005]">
         <div className="section-container">
           <ScrollReveal direction="up" distance={20} blur={20} staggerChildren={0.15} className="grid lg:grid-cols-2 gap-10">
             {solutions.map((module) => (
@@ -154,8 +157,11 @@ export default function Services() {
         </div>
       </section>
 
+      {/* Section Divider */}
+      <div className="divider-subtle w-full" />
+
       {/* High-Fi Final Call */}
-      <section className="py-96 text-center px-6 border-t border-white/5 bg-white/[0.005]">
+      <section className="py-96 text-center px-6 bg-white/[0.005]">
         <div className="section-container relative z-10 space-y-32">
           <ScrollReveal direction="up" blur={40} distance={20} staggerChildren={0.2}>
             <motion.h2 variants={{ hidden: { opacity: 0, y: 15 }, visible: { opacity: 1, y: 0 } }} className="text-8xl md:text-[180px] font-medium tracking-tighter mb-24 leading-[0.75] text-balance">

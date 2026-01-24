@@ -86,6 +86,9 @@ function TiltImage({ src, alt, className = "" }: { src: string; alt: string; cla
 export default function About() {
   return (
     <main className="pt-24 overflow-hidden relative bg-background">
+      {/* Ambient glow */}
+      <div className="glow-blob top-[10%] -left-[10%] opacity-[0.02]" />
+
       {/* Identity Hero: Unified Cohesive Reveal Pattern */}
       <section className="py-40 px-6 lg:px-0 relative overflow-hidden perspective-3000">
         <div className="section-container">
@@ -105,8 +108,11 @@ export default function About() {
         </div>
       </section>
 
+      {/* Section Divider */}
+      <div className="divider-subtle w-full" />
+
       {/* Practitioner vs Architect: Unified Cohesive Reveal Pattern */}
-      <section className="py-40 lg:py-64 border-t border-white/5 bg-white/[0.005]">
+      <section className="py-40 lg:py-64 bg-white/[0.005]">
         <div className="section-container">
           <ScrollReveal direction="up" distance={20} blur={20} staggerChildren={0.25} className="grid lg:grid-cols-2 gap-40 items-start">
             <motion.div variants={{ hidden: { opacity: 0, y: 15 }, visible: { opacity: 1, y: 0 } }} className="space-y-16">
@@ -136,9 +142,12 @@ export default function About() {
         </div>
       </section>
 
+      {/* Section Divider */}
+      <div className="divider-subtle w-full" />
+
       {/* Compact Roadmap: Unified Vertical Narrative Pattern */}
       {/* Timeline: Individual High-Fidelity Floating Cards */}
-      <section className="py-40 lg:py-64 relative border-y border-white/5 bg-white/[0.002]">
+      <section className="py-40 lg:py-64 relative bg-white/[0.002]">
         <div className="section-container">
           <ScrollReveal direction="up" distance={30} blur={30} staggerChildren={0.2}>
             <div className="mb-48 flex justify-between items-end">
@@ -186,8 +195,11 @@ export default function About() {
         </div>
       </section>
 
+      {/* Section Divider */}
+      <div className="divider-subtle w-full" />
+
       {/* Final Call */}
-      <section className="py-96 text-center px-6 border-t border-white/5 bg-white/[0.005]">
+      <section className="py-96 text-center px-6 bg-white/[0.005]">
         <ScrollReveal direction="up" blur={40}>
           <h2 className="text-8xl md:text-[160px] font-medium tracking-tighter mb-24 leading-[0.7] text-balance">
             Want <br /> <span className="opacity-10 italic font-light font-serif">more?</span>
