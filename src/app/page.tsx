@@ -91,6 +91,7 @@ export default function Home() {
     <div ref={containerRef} className="relative">
       {/* Hyper-Premium Hero: Unified Staggered Sequence */}
       <section className="relative min-h-[90vh] flex items-center px-6 lg:px-20 pt-32 pb-20 overflow-hidden perspective-3000">
+        <div className="glow-blob top-[20%] -right-[15%] opacity-[0.03]" />
         <div className="section-container">
           <ScrollReveal direction="up" distance={30} blur={20} staggerChildren={0.2} className="grid lg:grid-cols-[1.25fr_0.75fr] gap-32 items-center">
             <motion.div style={{ opacity: heroOpacity }} className="z-10">
@@ -126,8 +127,11 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Section Divider */}
+      <div className="divider-subtle w-full" />
+
       {/* Project Matrix: Unified Entrance */}
-      <section className="py-64 lg:py-80 border-t border-white/5 bg-white/[0.01] relative overflow-hidden">
+      <section className="py-64 lg:py-80 bg-white/[0.01] relative overflow-hidden">
         <div className="section-container">
           <ScrollReveal direction="up" distance={30} blur={20} staggerChildren={0.1} className="w-full">
             <div className="flex flex-col lg:flex-row justify-between items-end mb-48 gap-12">
@@ -193,8 +197,11 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Section Divider */}
+      <div className="divider-subtle w-full" />
+
       {/* Narrative Break: Unified Entrance */}
-      <section className="py-80 relative border-y border-white/10 overflow-hidden bg-white/[0.005]">
+      <section className="py-80 relative overflow-hidden bg-white/[0.005]">
         <div className="section-container">
           <ScrollReveal direction="up" distance={30} blur={25} staggerChildren={0.2} className="grid lg:grid-cols-[2fr_1.5fr] gap-32 items-center">
             <div className="space-y-20">
@@ -213,8 +220,11 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Section Divider */}
+      <div className="divider-subtle w-full" />
+
       {/* Closing Statement */}
-      <section className="py-96 text-center relative flex flex-col items-center">
+      <section className="py-96 text-center relative flex flex-col items-center bg-white/[0.002]">
         <ScrollReveal direction="up" blur={30} distance={20}>
           <h2 className="text-8xl md:text-[180px] font-medium tracking-tighter mb-24 leading-[0.75]">
             Let&apos;s <br />
