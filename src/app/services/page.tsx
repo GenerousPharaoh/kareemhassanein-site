@@ -1,99 +1,100 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
-import { ChevronRight, BarChart3, Database, Layers, ShieldCheck } from 'lucide-react';
+import { ChevronRight, Layers, Workflow, BarChart3, ShieldCheck } from 'lucide-react';
 import ScrollReveal from '@/components/ScrollReveal';
 
-const modules = [
+const solutions = [
   {
     index: '01',
-    title: 'Implementation Architecture',
-    desc: 'End-to-end configuration and rollout of agentic AI systems (Heidi AI) and clinic infrastructure (Jane App). Bridging software possibility and operational stability.',
-    outcomes: ['SOP Workflow Development', 'Stakeholder Training & Enablement', 'Post-Launch Stabilization'],
-    icon: <Layers className="w-6 h-6 text-accent" />
+    title: 'AI System Implementation',
+    desc: 'Rollout of agentic systems (Heidi AI) for multi-specialty clinical operations. Establishing technical SOPs, configuration models, and peer enablement programs.',
+    outcomes: ['SOP Workflow Technical Architecture', 'Technical Tool Baseline Configuration', 'Post-Deployment Stability Auditing'],
+    icon: <Layers className="w-6 h-6" />
   },
   {
     index: '02',
-    title: 'Workflow DevOps',
-    desc: 'Engineering automated document pipelines and client correspondence modules through Claude Code and agentic deployment logic.',
-    outcomes: ['Modular Automation Logic', 'CI/CD Pipeline Auditing', 'Reduction in Manual Friction'],
-    icon: <Database className="w-6 h-6 text-accent" />
+    title: 'Agentic Workflow DevOps',
+    desc: 'Building custom automated modules using Claude Code and Google Antigravity platforms to optimize high-volume documentation and client correspondence.',
+    outcomes: ['Modular Documentation Automation', 'CI/CD Pipeline System Auditing', 'Reduction in baseline operational friction'],
+    icon: <Workflow className="w-6 h-6" />
   },
   {
     index: '03',
-    title: 'Acquisition Engineering',
-    desc: 'Linking clinical services to digital discoverability through local SEO architecture, Google Search Console optimization, and review capture loops.',
-    outcomes: ['Patient Pathway Optimization', 'Crawlability Improvement', 'Conversion Rate Refinement'],
-    icon: <BarChart3 className="w-6 h-6 text-accent" />
+    title: 'Digital Patient Infrastructure',
+    desc: 'Constructing search-optimized patient discoverability pathways with deep Jane App booking integration and local GSC technical fixes.',
+    outcomes: ['Local SEO Technical Architecture', 'Jane App Functional Integration', 'Conversion Pathway Refinement'],
+    icon: <BarChart3 className="w-6 h-6" />
   },
   {
     index: '04',
-    title: 'Clinical Usability Advisory',
-    desc: 'Technical consultation for health-tech startups on adoption barriers, clinical workflow integration, and market validation pathways.',
-    outcomes: ['Adherence Barrier Mapping', 'Technical Usability Audit', 'Market Fit Validation'],
-    icon: <ShieldCheck className="w-6 h-6 text-accent" />
+    title: 'Clinical Strategy Advisory',
+    desc: 'Advising health-tech med-tech startups on clinical usability, adoption barriers, and market validation as they deploy into clinical settings.',
+    outcomes: ['Med-Tech Adoption Root Cause Audit', 'Technical Usability Workflow Mapping', 'Early Market Fit Strategy'],
+    icon: <ShieldCheck className="w-6 h-6" />
   }
 ];
 
 export default function Services() {
   return (
     <div className="pt-24 overflow-hidden relative">
-      <div className="absolute inset-0 grid-pattern opacity-30 pointer-events-none -z-10" />
-
-      {/* Broad Capabilities Hero */}
-      <section className="py-48 px-6 relative">
+      {/* Capability Hero */}
+      <section className="py-48 px-6 lg:px-16 relative">
         <div className="max-w-7xl mx-auto z-10 relative">
           <div className="grid lg:grid-cols-[1.5fr_1fr] gap-24 items-end">
             <div>
               <ScrollReveal direction="none" className="mb-12">
-                <span className="text-[10px] font-bold tracking-[0.5em] uppercase text-accent">Service Infrastructure</span>
+                <span className="text-[10px] font-bold tracking-[0.5em] uppercase opacity-40">Operational Capabilities</span>
               </ScrollReveal>
               <h1 className="text-7xl md:text-[140px] font-medium tracking-tighter mb-20 leading-[0.75]">
-                Protocol <br /> & <span className="opacity-40 italic">Capability.</span>
+                Systems <br />
+                & <span className="opacity-40 italic font-light">Scale.</span>
               </h1>
             </div>
-            <div className="pb-16 lg:pb-32 border-l border-white/5 pl-12">
-              <ScrollReveal delay={0.2}>
-                <p className="text-2xl text-muted-foreground font-light leading-relaxed">
-                  I implement technology that people actually use. My services are built on the roadmap to organizational scale through precise technical enablement.
-                </p>
-              </ScrollReveal>
-            </div>
+            <ScrollReveal direction="right" distance={40} className="relative aspect-square lg:aspect-video rounded-[4rem] overflow-hidden glass-organic p-1 mb-20">
+              <Image
+                src="/assets/mapping.png"
+                alt="Mapping Illustration"
+                fill
+                className="object-cover opacity-60"
+              />
+            </ScrollReveal>
           </div>
         </div>
       </section>
 
-      {/* Module-Based Service Grid */}
-      <section className="py-72 px-6 bg-white/[0.01] border-y border-white/5">
+      {/* Outcome-Driven Capability Modules */}
+      <section className="py-72 px-6 lg:px-16 border-t border-white/[0.03] bg-[#242933]/20">
         <div className="max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-px bg-white/5 border border-white/5 overflow-hidden">
-            {modules.map((module, i) => (
+          <div className="grid md:grid-cols-2 gap-12 lg:gap-24">
+            {solutions.map((module, i) => (
               <ScrollReveal
                 key={module.title}
                 direction="up"
                 delay={i * 0.1}
-                className="bg-[#050608] p-16 space-y-12 hover:bg-white/[0.02] transition-all duration-700"
+                className="group p-16 rounded-[4rem] glass-organic hover:bg-white/[0.05] transition-all duration-1000 flex flex-col justify-between border border-white/5"
               >
-                <div className="flex justify-between items-center">
-                  <div className="p-4 bg-white/[0.02] border border-white/5">
+                <div className="flex justify-between items-start mb-16">
+                  <div className="w-16 h-16 rounded-[1.5rem] bg-white/[0.03] flex items-center justify-center opacity-40 group-hover:opacity-100 transition-opacity">
                     {module.icon}
                   </div>
-                  <span className="text-6xl font-medium tracking-tighter text-white/5 italic">{module.index}</span>
+                  <span className="text-6xl font-light tracking-tighter text-white/5 opacity-50 group-hover:opacity-100 transition-opacity italic">0{module.index}</span>
                 </div>
 
-                <div className="space-y-8">
-                  <h3 className="text-5xl font-medium tracking-tighter leading-none italic">{module.title}</h3>
+                <div className="space-y-10">
+                  <h3 className="text-5xl font-medium tracking-tighter leading-none">{module.title}</h3>
                   <p className="text-2xl text-muted-foreground font-light leading-relaxed">
                     {module.desc}
                   </p>
                 </div>
 
-                <div className="space-y-6 pt-12 border-t border-white/5">
-                  <p className="text-[10px] font-bold tracking-[0.3em] uppercase text-accent">Module Outcomes</p>
-                  <ul className="grid md:grid-cols-2 gap-6">
+                <div className="pt-16 mt-16 border-t border-white/5 space-y-10">
+                  <p className="text-[10px] font-bold tracking-[0.4em] uppercase text-accent opacity-40">Strategic Outcomes</p>
+                  <ul className="space-y-6">
                     {module.outcomes.map(point => (
-                      <li key={point} className="flex gap-4 text-lg text-foreground font-light tracking-tight pb-2 border-b border-white/[0.02]">
-                        <ChevronRight className="w-4 h-4 text-accent mt-1 opacity-40" />
+                      <li key={point} className="flex gap-6 text-xl text-foreground font-light tracking-tight pb-2 border-b border-white/[0.02] items-center">
+                        <ChevronRight className="w-5 h-5 text-accent opacity-20 group-hover:opacity-100 transition-opacity" />
                         {point}
                       </li>
                     ))}
@@ -105,22 +106,27 @@ export default function Services() {
         </div>
       </section>
 
-      {/* Complexity & ROI Section */}
-      <section className="py-80 px-6">
-        <div className="max-w-5xl mx-auto text-center">
-          <ScrollReveal direction="up" className="space-y-16">
-            <h2 className="text-6xl md:text-9xl font-medium tracking-tighter leading-[0.75] mb-12">
-              Engineering <br /> <span className="opacity-30 italic">High-Stakes ROI.</span>
+      {/* Deployment Narrative */}
+      <section className="py-80 px-6 lg:px-16 text-center border-t border-white/[0.03]">
+        <div className="max-w-4xl mx-auto space-y-24">
+          <ScrollReveal direction="up">
+            <h2 className="text-6xl md:text-9xl font-medium tracking-tighter leading-[0.75]">
+              Systemic <br /> <span className="opacity-40 italic font-light">ROI.</span>
             </h2>
-            <p className="text-2xl text-muted-foreground font-light leading-relaxed mb-20">
-              I specialize in technical engagements where user adoption is the critical bottleneck for organizational scaling. I build the systems that drive the revenue.
+          </ScrollReveal>
+
+          <ScrollReveal direction="up" delay={0.2} className="space-y-16 text-3xl text-muted-foreground font-light leading-relaxed max-w-3xl mx-auto">
+            <p>
+              My engagements are architected for organizational ROI where user adoption is the primary bottleneck. I implement the systems that drive the revenue.
             </p>
-            <Link
-              href="/contact"
-              className="inline-flex items-center gap-6 text-3xl font-bold tracking-tight text-accent link-underline pb-2 px-4 shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
-            >
-              Initiate Technical Consultation
-            </Link>
+            <div className="pt-12">
+              <Link
+                href="/contact"
+                className="text-3xl font-bold tracking-tight text-foreground link-underline pb-4 px-12"
+              >
+                Inquire for Architecture
+              </Link>
+            </div>
           </ScrollReveal>
         </div>
       </section>

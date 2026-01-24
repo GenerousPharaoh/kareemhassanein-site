@@ -1,35 +1,36 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
-import { ArrowRight, Terminal, Workflow, Microscope, Network } from 'lucide-react';
+import { ArrowRight, Sparkles, Binary, HeartPulse, Workflow } from 'lucide-react';
 import ScrollReveal from '@/components/ScrollReveal';
 
 const impacts = [
   {
-    title: 'Clinical AI Implementation',
-    details: 'Piloted and established SOPs for Heidi AI across multi-specialty teams. Bridging the gap between software capability and clinician adoption to eliminate documentation bottlenecks.',
-    tag: 'Healthcare Ops',
-    icon: <Microscope className="w-5 h-5 text-accent" />
+    title: 'Clinical AI Adoption',
+    details: 'Piloted and established SOPs for Heidi AI across multi-specialty clinical teams. Bridging the gap between software capability and clinician adoption to eliminate documentation bottlenecks.',
+    tag: 'Implementation',
+    icon: <Sparkles className="w-5 h-5 opacity-40" />
   },
   {
     title: 'Agentic Workflow DevOps',
-    details: 'Architected custom workflows using Claude Code and Google Antigravity platforms. Reduction in document generation time by 85% through modular automation logic.',
-    tag: 'Technical Implementation',
-    icon: <Terminal className="w-5 h-5 text-accent" />
+    details: 'Architected custom automated legal drafting workflows using Claude Code and Google Antigravity platforms, reducing baseline template generation time by 85%.',
+    tag: 'Automation',
+    icon: <Binary className="w-5 h-5 opacity-40" />
   },
   {
-    title: 'Digital Patient Infrastructure',
+    title: 'Digital Patient Pathways',
     details: 'Building high-performance patient acquisition streams with SEO-first architecture and Jane App integration. Linking clinical visibility to patient conversion.',
-    tag: 'Visibility & Conversion',
-    icon: <Network className="w-5 h-5 text-accent" />
+    tag: 'Infrastructure',
+    icon: <HeartPulse className="w-5 h-5 opacity-40" />
   },
   {
-    title: 'Process Architecture & SOPs',
+    title: 'Process Architecture',
     details: 'Redesigning multidisciplinary clinic booking flows and referral pathways. Operationalizing clinical excellence through repeatable system architecture.',
-    tag: 'Operational Excellence',
-    icon: <Workflow className="w-5 h-5 text-accent" />
+    tag: 'Operations',
+    icon: <Workflow className="w-5 h-5 opacity-40" />
   }
 ];
 
@@ -40,176 +41,161 @@ export default function Home() {
     offset: ['start start', 'end end'],
   });
 
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.1], [1, 0]);
+  const heroScale = useTransform(scrollYProgress, [0, 0.1], [1, 1.05]);
 
   return (
     <div ref={containerRef} className="relative">
-      <div className="absolute inset-0 grid-pattern opacity-40 pointer-events-none -z-10" />
-
-      {/* Flagship Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center px-6 pt-40 pb-32">
-        <motion.div
-          style={{ opacity: heroOpacity }}
-          className="max-w-7xl mx-auto w-full"
-        >
-          <div className="grid lg:grid-cols-2 gap-24 items-end">
-            <div>
-              <ScrollReveal direction="none" className="mb-12">
-                <span className="text-[10px] font-bold tracking-[0.5em] uppercase text-accent">
-                  Titanium Protocol v.2026
-                </span>
-              </ScrollReveal>
-
-              <h1 className="text-6xl md:text-8xl lg:text-[130px] font-medium leading-[0.85] tracking-tighter mb-16 mask-reveal">
-                Practice <br /> meets <br /> <span className="text-secondary-foreground italic">Procedure.</span>
-              </h1>
-            </div>
-
-            <div className="pb-16 border-l border-white/5 pl-12">
-              <ScrollReveal delay={0.4} distance={20}>
-                <p className="text-2xl md:text-3xl text-muted-foreground leading-snug mb-16 font-light">
-                  Implementation specialist architecting the intersection of <span className="text-foreground">clinical depth</span> and <span className="text-foreground">digital automation</span>.
-                </p>
-                <div className="flex gap-12 items-center">
-                  <Link
-                    href="/contact"
-                    className="group flex items-center gap-4 text-xl font-bold tracking-tight text-foreground transition-all duration-500"
-                  >
-                    Initiate Dialogue
-                    <div className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center group-hover:bg-accent group-hover:border-accent transition-all duration-500">
-                      <ArrowRight size={20} className="group-hover:text-black" />
-                    </div>
-                  </Link>
-                </div>
-              </ScrollReveal>
-            </div>
-          </div>
-        </motion.div>
-      </section>
-
-      {/* Robust The Perspective Section */}
-      <section className="py-72 px-6 relative overflow-hidden border-y border-white/5 bg-white/[0.01]">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-[1fr_2fr] gap-32">
-            <ScrollReveal direction="left" className="sticky top-40">
-              <p className="text-[10px] font-bold tracking-[0.3em] uppercase opacity-30 mb-8">Identity</p>
-              <h2 className="text-5xl md:text-8xl font-medium tracking-tighter leading-[0.9]">
-                Frontline <br /> Depth. <br /> Systemic <br /> Scale.
-              </h2>
+      {/* Narrative Hero with Identity Image */}
+      <section className="relative min-h-screen flex items-center px-6 lg:px-16 pt-32 pb-20 overflow-hidden">
+        <div className="max-w-7xl mx-auto w-full grid lg:grid-cols-2 gap-24 items-center">
+          <motion.div style={{ scale: heroScale }} className="z-10">
+            <ScrollReveal direction="none" className="mb-10">
+              <span className="text-[10px] font-bold tracking-[0.5em] uppercase opacity-40">
+                Identity Profile v.2026
+              </span>
             </ScrollReveal>
 
-            <div className="space-y-32">
-              <ScrollReveal direction="up" className="space-y-12">
-                <p className="text-3xl md:text-5xl font-light leading-[1.1] text-balance">
-                  I understand the friction of high-stakes environments because I&apos;ve lived in them. Care doesn&apos;t happen without <span className="text-accent underline decoration-1 underline-offset-[12px]">adoption</span>.
-                </p>
-                <div className="grid md:grid-cols-2 gap-12 pt-12">
-                  <div className="space-y-6">
-                    <h4 className="text-sm font-bold uppercase tracking-widest text-accent">Clinical Core</h4>
-                    <p className="text-xl text-muted-foreground font-light leading-relaxed">
-                      MSc PT with Distinction. Thousands of hours delivering care, assessing needs, and coordinating multidisciplinary referral pathways.
-                    </p>
-                  </div>
-                  <div className="space-y-6">
-                    <h4 className="text-sm font-bold uppercase tracking-widest text-accent">Technical DevOps</h4>
-                    <p className="text-xl text-muted-foreground font-light leading-relaxed">
-                      Architecting agentic AI systems that respect time. Claude Code, Antigravity, and CI/CD for operational stability.
-                    </p>
-                  </div>
-                </div>
-              </ScrollReveal>
-            </div>
-          </div>
+            <h1 className="text-6xl md:text-8xl lg:text-[110px] font-medium leading-[0.9] tracking-tighter mb-16 text-balance mask-reveal">
+              Bridging <br /> clinical reality <br />
+              <span className="opacity-40 font-light italic text-7xl lg:text-[90px]">and digital scale.</span>
+            </h1>
+
+            <ScrollReveal delay={0.4} distance={20} className="max-w-2xl">
+              <p className="text-2xl md:text-3xl text-muted-foreground leading-relaxed mb-20 font-light">
+                Implementation specialist driving digital operations and AI adoption through the lens of frontline clinical experience.
+              </p>
+              <div className="flex gap-16 items-center">
+                <Link
+                  href="/contact"
+                  className="text-xl font-bold tracking-tight text-foreground link-underline pb-2"
+                >
+                  Initiate Dialogue
+                </Link>
+                <Link
+                  href="/about"
+                  className="text-xl font-medium opacity-40 hover:opacity-100 transition-opacity"
+                >
+                  Identity
+                </Link>
+              </div>
+            </ScrollReveal>
+          </motion.div>
+
+          <ScrollReveal direction="right" distance={80} className="relative aspect-square lg:aspect-[4/5] rounded-[3rem] overflow-hidden glass-organic p-1">
+            <div className="absolute inset-0 bg-gradient-to-tr from-background/80 to-transparent z-10" />
+            <Image
+              src="/assets/bridge.png"
+              alt="Bridge Illustration"
+              fill
+              className="object-cover transition-transform duration-[3s] hover:scale-110"
+              priority
+            />
+          </ScrollReveal>
         </div>
       </section>
 
-      {/* Discrete Impact Modules */}
-      <section className="py-72 px-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row justify-between items-end mb-40 gap-12">
-            <ScrollReveal direction="up">
-              <p className="text-[10px] font-bold tracking-[0.3em] uppercase opacity-30 mb-8">Proven Discrete Impact</p>
-              <h2 className="text-6xl md:text-9xl font-medium tracking-tighter leading-none">
-                Protocol <br /> Evidence.
-              </h2>
-            </ScrollReveal>
-            <ScrollReveal direction="right" className="max-w-sm text-right pb-4 border-r-2 border-accent/20 pr-12">
-              <p className="text-xl text-muted-foreground font-light leading-snug">
-                Moving specific operational needles through targeted implementation.
-              </p>
-            </ScrollReveal>
-          </div>
+      {/* The Perspective - Expanded Narrative */}
+      <section className="py-72 px-6 lg:px-16 relative border-y border-white/[0.03]">
+        <div className="max-w-5xl mx-auto text-center space-y-24">
+          <ScrollReveal direction="up">
+            <h2 className="text-4xl md:text-7xl font-medium tracking-tighter leading-tight balance">
+              Technical possibility <br />
+              meets <span className="opacity-40 font-light italic">human reality.</span>
+            </h2>
+          </ScrollReveal>
 
-          <div className="grid md:grid-cols-2 gap-1px bg-white/5 border border-white/5">
+          <ScrollReveal direction="up" delay={0.2} className="space-y-12 text-2xl text-muted-foreground font-light leading-relaxed max-w-3xl mx-auto">
+            <p>
+              I understand the frustration of high-stakes environments because I have lived in them. Care does not happen without adoption. My specialization is in the technical engagements where user friction is the primary bottleneck for ROI.
+            </p>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* Discrete Impact - Robust Grid */}
+      <section className="py-72 px-6 lg:px-16 container mx-auto">
+        <div className="max-w-7xl mx-auto">
+          <ScrollReveal direction="up" className="mb-40">
+            <p className="text-[10px] font-bold tracking-[0.4em] uppercase opacity-40 mb-10">Discrete Evidence</p>
+            <h2 className="text-6xl md:text-9xl font-medium tracking-tighter">Impact Portfolio.</h2>
+          </ScrollReveal>
+
+          <div className="grid md:grid-cols-2 gap-16">
             {impacts.map((impact, i) => (
               <ScrollReveal
                 key={impact.title}
                 direction="up"
                 delay={i * 0.1}
-                className="bg-[#050608] p-16 space-y-12 hover:bg-white/[0.02] transition-all duration-700"
+                className="group"
               >
-                <div className="flex justify-between items-start">
-                  <div className="p-4 rounded-sm border border-white/5 bg-white/[0.01]">
-                    {impact.icon}
+                <div className="h-full p-16 rounded-[4rem] glass-organic hover:bg-white/[0.04] transition-all duration-1000 flex flex-col justify-between">
+                  <div className="space-y-10">
+                    <div className="flex items-center gap-6">
+                      <div className="w-12 h-12 rounded-full border border-white/5 flex items-center justify-center opacity-40 group-hover:opacity-100 transition-opacity">
+                        {impact.icon}
+                      </div>
+                      <span className="text-[10px] font-bold tracking-[0.3em] uppercase opacity-20">{impact.tag}</span>
+                    </div>
+                    <h3 className="text-4xl font-medium tracking-tighter group-hover:text-accent transition-colors duration-700">{impact.title}</h3>
+                    <p className="text-2xl text-muted-foreground font-light leading-relaxed">
+                      {impact.details}
+                    </p>
                   </div>
-                  <span className="text-[10px] font-bold uppercase tracking-widest opacity-20">{impact.tag}</span>
                 </div>
-                <div className="space-y-6">
-                  <h3 className="text-4xl font-medium tracking-tighter">{impact.title}</h3>
-                  <p className="text-xl text-muted-foreground font-light leading-relaxed">
-                    {impact.details}
-                  </p>
-                </div>
-                <div className="h-px w-12 bg-accent opacity-30 group-hover:w-full transition-all duration-1000" />
               </ScrollReveal>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Capability Stack Grid */}
-      <section className="py-72 px-6 bg-[#050608] border-t border-white/5">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-4 gap-12">
+      {/* Capability Stack with Illustrations */}
+      <section className="py-72 px-6 lg:px-16 border-t border-white/[0.03] bg-card/10">
+        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-32 items-center">
+          <div className="space-y-32">
             {[
-              { label: 'Ops Architecture', desc: 'Process mapping, SOP development, and root cause analysis across clinical service lines.' },
-              { label: 'Technical Integration', desc: 'Agentic AI deployment, API conceptualization, and CI/CD operationalization.' },
-              { label: 'User Enablement', desc: 'Change management coaching, stakeholder alignment, and peer-to-peer software training.' },
-              { label: 'Strategy Advisory', desc: 'Market validation for med-tech, usability auditing, and clinical workflow fitting.' },
-            ].map((skill, i) => (
+              { label: 'Implementation', desc: 'Strategy and rollout for clinical systems like Heidi AI.' },
+              { label: 'Workflow DevOps', desc: 'Engineering modular document automation via Claude Code.' },
+              { label: 'Strategic Advisory', desc: 'Technical usability audits and market fit for med-tech.' }
+            ].map((stack, i) => (
               <ScrollReveal
-                key={skill.label}
+                key={stack.label}
                 direction="up"
                 delay={i * 0.1}
-                className="space-y-8 p-10 titanium-border"
+                className="space-y-6 group"
               >
-                <span className="text-5xl font-medium text-white/5 tracking-tighter block">0{i + 1}</span>
-                <h4 className="text-xl font-bold uppercase tracking-widest text-accent">{skill.label}</h4>
-                <p className="text-lg text-muted-foreground font-light leading-relaxed">
-                  {skill.desc}
-                </p>
+                <span className="text-[10px] font-bold tracking-[0.4em] uppercase opacity-20">Capability 0{i + 1}</span>
+                <h4 className="text-4xl font-medium tracking-tight group-hover:translate-x-4 transition-transform duration-700">{stack.label}</h4>
+                <p className="text-xl text-muted-foreground font-light max-w-md">{stack.desc}</p>
               </ScrollReveal>
             ))}
           </div>
+
+          <ScrollReveal direction="none" className="relative aspect-square rounded-[4rem] overflow-hidden glass-organic p-1">
+            <Image
+              src="/assets/mapping.png"
+              alt="Mapping Illustration"
+              fill
+              className="object-cover opacity-60 hover:opacity-100 transition-opacity duration-1000"
+            />
+          </ScrollReveal>
         </div>
       </section>
 
-      {/* Robust Footer Statement */}
-      <section className="py-80 px-6 text-center border-t border-white/5">
-        <div className="max-w-6xl mx-auto">
-          <ScrollReveal direction="up">
-            <h2 className="text-8xl md:text-[180px] font-medium tracking-tighter mb-24 leading-[0.75]">
-              System <br /> <span className="text-accent italic">Advance.</span>
-            </h2>
-            <Link
-              href="/contact"
-              className="inline-flex items-center gap-10 text-3xl font-light link-underline pb-4 px-4"
-            >
-              Collaborate
-              <ArrowRight size={48} className="opacity-20" />
-            </Link>
-          </ScrollReveal>
-        </div>
+      {/* Closing Identity Statement */}
+      <section className="py-96 px-6 text-center relative overflow-hidden">
+        <ScrollReveal direction="up" className="relative z-10">
+          <h2 className="text-7xl md:text-[140px] font-medium tracking-tighter mb-24 leading-[0.75] text-balance">
+            Let&apos;s advance <br />
+            <span className="opacity-40 italic font-light">the standard.</span>
+          </h2>
+          <Link
+            href="/contact"
+            className="group inline-flex items-center justify-center gap-6 text-3xl font-light link-underline pb-4 px-8"
+          >
+            Initiate Conversation
+            <ArrowRight size={48} className="opacity-20 group-hover:translate-x-4 transition-transform" />
+          </Link>
+        </ScrollReveal>
       </section>
     </div>
   );
