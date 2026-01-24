@@ -11,16 +11,29 @@ const socialLinks = [
   { label: 'Endorphins Health', href: 'https://www.endorphinshealth.com', icon: <Globe className="w-5 h-5" /> },
 ];
 
+import ParallaxImage from '@/components/ParallaxImage';
+
+// ... socialLinks array stays the same
+
 export default function Contact() {
   return (
-    <main className="pt-24 min-h-screen relative overflow-hidden flex items-center bg-background">
-      {/* Ambient glow */}
-      <div className="glow-blob top-[30%] -right-[10%] opacity-[0.02]" />
-      <div className="section-container relative z-10 w-full py-32">
-        <div className="grid lg:grid-cols-[1.3fr_0.7fr] gap-32 items-center">
+    <main className="min-h-screen relative overflow-hidden flex flex-col justify-between bg-background">
+
+      {/* Cinematic Background Layer */}
+      <div className="absolute inset-0 z-0">
+        <ParallaxImage
+          src="/images/bridging.png"
+          alt="Bridge to Reality"
+          className="w-full h-full opacity-20"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background" />
+      </div>
+
+      <div className="section-container relative z-10 w-full pt-32 pb-12 flex-grow flex items-center">
+        <div className="grid lg:grid-cols-[1.3fr_0.7fr] gap-32 items-center w-full">
           <div>
             <ScrollReveal direction="none" blur={30} duration={1.8} className="mb-10">
-              <span className="text-[10px] font-bold tracking-[0.6em] opacity-30 uppercase">Contact</span>
+              <span className="text-[10px] font-bold tracking-[0.6em] opacity-30 uppercase">Initiate</span>
             </ScrollReveal>
 
             <ScrollReveal direction="up" distance={60} blur={20} delay={0.2}>
@@ -49,10 +62,10 @@ export default function Contact() {
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-between p-12 transition-all glass-card hover:bg-white/[0.04] group-hover:-translate-y-1"
+                  className="flex items-center justify-between p-10 transition-all glass-card hover:bg-white/[0.04] group-hover:-translate-y-1 border border-white/5 hover:border-white/10"
                 >
                   <div className="flex items-center gap-10">
-                    <div className="w-12 h-12 rounded-2xl bg-white/[0.01] border border-white/5 flex items-center justify-center group-hover:border-white/20 transition-all duration-700">
+                    <div className="w-12 h-12 rounded-2xl bg-white/[0.01] border border-white/5 flex items-center justify-center group-hover:bg-accent/10 group-hover:border-accent/20 transition-all duration-700 text-foreground/50 group-hover:text-accent">
                       {link.icon}
                     </div>
                     <div className="flex flex-col">
@@ -60,13 +73,30 @@ export default function Contact() {
                       <span className="text-[10px] uppercase tracking-widest opacity-20 group-hover:opacity-40 transition-all font-bold">Link</span>
                     </div>
                   </div>
-                  <ArrowUpRight className="opacity-10 group-hover:opacity-100 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-700" />
+                  <ArrowUpRight className="opacity-10 group-hover:opacity-100 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-700 text-accent" />
                 </a>
               </ScrollReveal>
             ))}
           </div>
         </div>
       </div>
+
+      {/* Premium Anchor Footer */}
+      <footer className="relative z-10 w-full border-t border-white/5 bg-background/50 backdrop-blur-sm">
+        <div className="section-container flex flex-col md:flex-row justify-between items-end py-12 gap-8">
+          <div>
+            <h2 className="text-[120px] leading-[0.7] font-bold tracking-tighter opacity-[0.03] select-none pointer-events-none">HASSANEIN</h2>
+          </div>
+          <div className="flex gap-16 text-[10px] uppercase tracking-[0.2em] font-mono opacity-40 pb-2">
+            <div className="flex items-center gap-3">
+              <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              <span>System Status: Online</span>
+            </div>
+            <span>LOC: Global // Remote</span>
+            <span>v2.4.0</span>
+          </div>
+        </div>
+      </footer>
     </main>
   );
 }
