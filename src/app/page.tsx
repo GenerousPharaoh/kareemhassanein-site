@@ -21,8 +21,8 @@ export default function Home() {
           <div className="absolute bottom-[20%] right-[10%] w-[40vw] h-[40vw] bg-blue-500/5 rounded-full blur-[120px]" />
         </div>
 
-        <div className="relative z-10 w-full max-w-[1800px] h-full flex flex-col justify-center">
-          <div className="grid lg:grid-cols-[1.5fr_1fr] gap-20 items-center">
+        <div className="relative z-10 w-full max-w-[1800px] h-full flex flex-col justify-center py-20">
+          <div className="grid lg:grid-cols-2 gap-20 lg:gap-32 items-center">
 
             {/* Text Content */}
             <div className="space-y-12">
@@ -37,7 +37,7 @@ export default function Home() {
                 <CharReveal delay={0.6} className="py-2">Digital logic.</CharReveal>
               </motion.h1>
 
-              <div className="max-w-xl border-l border-white/10 pl-10">
+              <div className="max-w-xl">
                 <TextReveal
                   text="I setup AI tools and automate workflows that clinical teams actually use. Background in clinic ops with an MSc in Physiotherapy."
                   className="text-xl md:text-2xl text-muted-foreground font-light leading-relaxed italic"
@@ -56,18 +56,18 @@ export default function Home() {
               </motion.div>
             </div>
 
-            {/* Visual Content - Parallax Card */}
-            <div className="hidden lg:block relative h-[800px]">
+            {/* Visual Content - Natural Aspect Ratio */}
+            <div className="hidden lg:block relative">
               <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
-                className="relative w-full h-full"
+                className="relative w-full"
               >
                 <ParallaxImage
                   src="/assets/n_hero.png"
                   alt="Abstract Architecture"
-                  className="w-full h-full rounded-[3rem] shadow-2xl border border-white/5"
+                  className="w-full aspect-[4/5] rounded-[3rem] shadow-2xl border border-white/5"
                 />
 
                 {/* Floating Info Card */}
