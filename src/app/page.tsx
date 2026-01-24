@@ -51,7 +51,7 @@ export default function Home() {
                   className="group flex items-center gap-8 text-xl font-bold tracking-tight text-foreground link-underline pb-1 transition-all"
                 >
                   Get in touch
-                  <ArrowRight size={24} className="opacity-20 group-hover:translate-x-4 transition-all duration-700" />
+                  <ArrowRight size={24} className="opacity-20 group-hover:translate-x-4 transition-transform duration-700" />
                 </Link>
               </motion.div>
             </div>
@@ -70,21 +70,7 @@ export default function Home() {
                   className="w-full aspect-[4/5] rounded-[3rem] shadow-2xl border border-white/5"
                 />
 
-                {/* Floating Info Card */}
-                <motion.div
-                  initial={{ opacity: 0, y: 40 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 1.2, duration: 1 }}
-                  className="absolute -left-12 bottom-24 p-8 glass-card rounded-3xl max-w-xs border border-white/10 backdrop-blur-xl"
-                >
-                  <p className="text-sm text-foreground/80 font-medium leading-relaxed italic">
-                    &quot;Design is not just what it looks like and feels like. Design is how it works.&quot;
-                  </p>
-                  <div className="mt-4 flex items-center gap-3 opacity-50">
-                    <div className="w-8 h-[1px] bg-foreground" />
-                    <span className="text-[10px] uppercase tracking-widest">Philosophy</span>
-                  </div>
-                </motion.div>
+                {/* No Philosophy fillers. Just the image. */}
               </motion.div>
             </div>
           </div>
