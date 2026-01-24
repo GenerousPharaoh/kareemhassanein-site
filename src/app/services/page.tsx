@@ -125,8 +125,8 @@ export default function Services() {
       <section className="min-h-[90vh] flex flex-col justify-center items-center text-center px-6 relative overflow-hidden">
         <div className="absolute inset-0 z-0">
           <ParallaxImage
-            src="/images/digital-cathedral.png"
-            alt="Atmospheric Texture"
+            src="/images/flow.png"
+            alt="Flow Dynamic"
             className="w-full h-full opacity-10"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background" />
@@ -134,7 +134,7 @@ export default function Services() {
 
         <div className="relative z-10">
           <ScrollReveal direction="up">
-            <span className="block text-[10px] font-bold tracking-[0.8em] uppercase mb-12 opacity-30">Architecture</span>
+            <span className="block text-[10px] font-bold tracking-[0.8em] uppercase mb-12 opacity-30">Methodology</span>
           </ScrollReveal>
 
           <h1 className="text-[12vw] md:text-[8vw] font-medium tracking-tighter leading-[0.8] mb-12">

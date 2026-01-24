@@ -34,11 +34,11 @@ export default function Home() {
           <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background" />
         </div>
 
-        <div className="relative z-10 w-full max-w-[1800px] h-full flex flex-col justify-center py-20">
-          <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-20 lg:gap-32 items-center">
+        <div className="relative z-10 w-full max-w-[1400px] h-full flex flex-col justify-center py-20">
+          <div className="grid lg:grid-cols-1 items-center justify-center text-center">
 
             {/* Text Content */}
-            <div className="space-y-12">
+            <div className="space-y-12 mx-auto max-w-4xl">
               <ScrollReveal direction="up" distance={20} blur={10}>
                 <span className="inline-block text-sm font-medium tracking-[0.4em] uppercase opacity-40 mb-4 border border-white/10 px-6 py-2 rounded-full backdrop-blur-sm shadow-inner mt-10 md:mt-0">
                   Architecting Efficiency
@@ -50,7 +50,7 @@ export default function Home() {
                 <CharReveal delay={0.6} className="py-2 text-accent italic font-serif">Design.</CharReveal>
               </motion.h1>
 
-              <div className="max-w-xl">
+              <div className="max-w-2xl mx-auto">
                 <TextReveal
                   text="Designing and building operational systems for professional service firms. Generating clinical revenue growth and removing documentation overhead through precise technical leverage."
                   className="text-xl md:text-2xl text-muted-foreground font-light leading-relaxed italic"
@@ -59,7 +59,7 @@ export default function Home() {
               </div>
 
               {/* Metrics Row */}
-              <div className="grid grid-cols-3 gap-8 py-10 border-y border-white/5">
+              <div className="grid grid-cols-3 gap-8 py-10 border-y border-white/5 max-w-3xl mx-auto">
                 {metrics.map((m) => (
                   <div key={m.label} className="space-y-2">
                     <p className="text-4xl md:text-5xl font-serif italic text-accent">{m.value}</p>
@@ -68,7 +68,7 @@ export default function Home() {
                 ))}
               </div>
 
-              <motion.div variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }} className="flex gap-16 items-center pt-8">
+              <motion.div variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }} className="flex gap-16 items-center justify-center pt-8">
                 <Link
                   href="/contact"
                   className="group flex items-center gap-10 text-2xl font-bold tracking-tight text-foreground link-underline pb-1 transition-all"
@@ -76,23 +76,6 @@ export default function Home() {
                   Initiate Discussion
                   <ArrowRight size={32} className="opacity-20 group-hover:translate-x-4 transition-transform duration-1000" />
                 </Link>
-              </motion.div>
-            </div>
-
-            {/* Cinematic Hero Asset */}
-            <div className="hidden lg:block relative">
-              <motion.div
-                initial={{ opacity: 0, scale: 0.98, filter: 'blur(10px)' }}
-                animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
-                transition={{ duration: 2, ease: [0.16, 1, 0.3, 1], delay: 0.4 }}
-                className="relative w-full aspect-[4/5] rounded-[3.5rem] overflow-hidden shadow-[0_0_100px_rgba(34,211,238,0.1)] border border-white/5"
-              >
-                <ParallaxImage
-                  src="/images/%20hero-home.png"
-                  alt="Cinematic Architectural Core"
-                  className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-[3s]"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-background/40 to-transparent pointer-events-none" />
               </motion.div>
             </div>
           </div>
