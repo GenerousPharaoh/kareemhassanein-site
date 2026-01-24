@@ -34,10 +34,10 @@ export default function Home() {
                 Implementation Specialist
               </motion.span>
 
-              <motion.h1 variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="text-6xl md:text-8xl lg:text-[115px] font-medium leading-[0.85] tracking-tight mb-16 text-balance">
+              <motion.h1 variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="text-7xl md:text-9xl lg:text-[140px] font-bold leading-[0.8] tracking-tighter mb-16 text-foreground/90 mix-blend-overlay">
                 Making <br />
                 technology <br />
-                <span className="opacity-40 italic font-light font-serif">work.</span>
+                <span className="opacity-60 italic font-light font-serif">work.</span>
               </motion.h1>
 
               <TextReveal

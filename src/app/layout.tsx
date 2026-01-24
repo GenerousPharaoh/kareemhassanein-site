@@ -3,7 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import Spotlight from "@/components/Spotlight";
+import Aurora from "@/components/Aurora";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -42,7 +42,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} antialiased font-sans`}
       >
         <div className="noise-overlay" />
-        <Spotlight />
+        <Aurora />
         <Header />
         <main className="min-h-screen page-content">
           {children}
