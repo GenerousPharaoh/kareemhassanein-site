@@ -18,16 +18,19 @@ interface ScrollRevealProps {
 export default function ScrollReveal({
     children,
     direction = 'up',
-    distance = 40,
-    duration = 1.2,
+    distance = 25, /* Reduced displacement for stability */
+    duration = 1.4, /* Slightly slower for elegance */
     delay = 0,
-    blur = 10,
+    blur = 15,
     className = '',
     style = {},
     staggerChildren = 0,
 }: ScrollRevealProps) {
     const ref = useRef<HTMLDivElement>(null);
-    const isInView = useInView(ref, { once: true, margin: '-10% 0px' });
+    const isInView = useInView(ref, {
+        once: true,
+        amount: 0.15 /* Increased threshold for stability */
+    });
 
     const x = direction === 'left' ? -distance : direction === 'right' ? distance : 0;
     const y = direction === 'up' ? distance : direction === 'down' ? -distance : 0;
@@ -38,19 +41,18 @@ export default function ScrollReveal({
             x: x,
             y: y,
             filter: `blur(${blur}px)`,
-            scale: 0.98,
         },
         visible: {
             opacity: 1,
             x: 0,
             y: 0,
             filter: 'blur(0px)',
-            scale: 1,
             transition: {
                 duration,
                 delay,
                 ease: [0.16, 1, 0.3, 1] as [number, number, number, number],
                 staggerChildren: staggerChildren,
+                staggerDirection: 1,
             }
         }
     };
@@ -62,7 +64,11 @@ export default function ScrollReveal({
             animate={isInView ? "visible" : "hidden"}
             variants={variants}
             className={className}
-            style={{ ...style, willChange: 'transform, opacity, filter' }}
+            style={{
+                ...style,
+                willChange: 'transform, opacity, filter',
+                backfaceVisibility: 'hidden' /* Prevent flashing/jitter */
+            }}
         >
             {children}
         </motion.div>

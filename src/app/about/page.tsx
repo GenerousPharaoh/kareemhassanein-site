@@ -31,7 +31,7 @@ const roadmap = [
   {
     period: '2021 - 2024',
     title: 'Registered Physiotherapist',
-    company: 'Movement Solutions',
+    company: 'Kinetikare Physio',
     focus: 'Core Clinical Implementation',
     points: [
       'Spearheaded clinic-wide transition to Heidi AI and SOPs',
@@ -86,21 +86,21 @@ function TiltImage({ src, alt, className = "" }: { src: string; alt: string; cla
 export default function About() {
   return (
     <main className="pt-24 overflow-hidden relative">
-      {/* Identity Hero: Fixed Spacing & High-Fi Blur */}
+      {/* Identity Hero: Unified Cohesive Reveal */}
       <section className="py-40 px-6 lg:px-0 relative overflow-hidden perspective-3000">
-        <div className="section-container grid lg:grid-cols-[1.3fr_0.7fr] gap-32 items-end">
-          <motion.div>
-            <ScrollReveal direction="none" blur={30} className="mb-10">
-              <span className="text-[10px] font-bold tracking-[0.5em] uppercase opacity-30">Identity Profile</span>
-            </ScrollReveal>
-            <ScrollReveal direction="up" distance={40} blur={20} delay={0.2}>
-              <h1 className="text-7xl md:text-[140px] font-medium tracking-tighter mb-20 leading-[0.75]">
+        <div className="section-container">
+          <ScrollReveal direction="up" distance={30} blur={20} staggerChildren={0.2} className="grid lg:grid-cols-[1.3fr_0.7fr] gap-32 items-end">
+            <motion.div>
+              <motion.span variants={{ hidden: { opacity: 0 }, visible: { opacity: 0.3 } }} className="block text-[10px] font-bold tracking-[0.5em] uppercase mb-10">
+                Identity Profile
+              </motion.span>
+              <motion.h1 variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="text-7xl md:text-[140px] font-medium tracking-tighter mb-20 leading-[0.75]">
                 Roots <br /> {"&"} <span className="opacity-30 italic font-light font-serif">Rationale.</span>
-              </h1>
-            </ScrollReveal>
-          </motion.div>
-          <ScrollReveal direction="right" distance={80} blur={40} delay={0.4} className="group mb-12">
-            <TiltImage src="/assets/n_logic.png" alt="Operational Logic Microscopic Detail" />
+              </motion.h1>
+            </motion.div>
+            <motion.div variants={{ hidden: { opacity: 0, x: 40, filter: 'blur(30px)' }, visible: { opacity: 1, x: 0, filter: 'blur(0px)' } }} className="group mb-12">
+              <TiltImage src="/assets/n_logic.png" alt="Operational Logic Microscopic Detail" />
+            </motion.div>
           </ScrollReveal>
         </div>
       </section>
