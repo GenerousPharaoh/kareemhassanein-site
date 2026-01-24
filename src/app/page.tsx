@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Zap, Target, Gauge } from 'lucide-react';
 import ScrollReveal from '@/components/ScrollReveal';
 
 const work = [
@@ -11,16 +11,19 @@ const work = [
     metric: '100%',
     label: 'Adoption rate',
     description: 'Led Heidi AI rollout achieving full clinician adoption in 8 weeks',
+    icon: <Target className="w-6 h-6" />,
   },
   {
     metric: '85%',
     label: 'Time reduction',
     description: 'Built automation systems reducing document generation time',
+    icon: <Zap className="w-6 h-6" />,
   },
   {
     metric: '$600K+',
     label: 'Revenue generated',
     description: 'Highest performing clinician for three consecutive years',
+    icon: <Gauge className="w-6 h-6" />,
   },
 ];
 
@@ -31,192 +34,200 @@ export default function Home() {
     offset: ['start start', 'end end'],
   });
 
+  const heroScale = useTransform(scrollYProgress, [0, 0.2], [1, 0.9]);
   const heroOpacity = useTransform(scrollYProgress, [0, 0.15], [1, 0]);
-  const heroScale = useTransform(scrollYProgress, [0, 0.15], [1, 0.95]);
+
+  const expoEasing = [0.16, 1, 0.3, 1] as const;
 
   return (
-    <div ref={containerRef} className="relative overflow-hidden">
-      {/* Hero Section - Bold & Expansive */}
-      <section className="relative min-h-screen flex items-center justify-center px-6 pt-40 pb-20">
+    <div ref={containerRef} className="relative">
+      {/* Flagship Hero Section */}
+      <section className="relative min-h-[110vh] flex items-center justify-center px-6 pt-40 pb-32 overflow-hidden">
+        {/* Layered Background Geometry */}
+        <div className="absolute inset-0 -z-10 pointer-events-none">
+          <motion.div
+            style={{ y: useTransform(scrollYProgress, [0, 1], [0, -200]) }}
+            className="absolute top-1/4 right-[-10%] w-[60%] h-[1px] bg-accent/20 -rotate-[25deg]"
+          />
+          <motion.div
+            style={{ y: useTransform(scrollYProgress, [0, 1], [0, 300]) }}
+            className="absolute bottom-1/4 left-[-10%] w-[80%] h-[1px] bg-accent/10 rotate-[15deg]"
+          />
+          <div className="absolute top-[15%] left-[10%] w-[300px] h-[300px] bg-accent/5 blur-[120px] rounded-full" />
+        </div>
+
         <motion.div
           style={{ opacity: heroOpacity, scale: heroScale }}
-          className="max-w-6xl mx-auto text-center z-10"
+          className="max-w-7xl mx-auto text-center z-10"
         >
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <p className="text-accent font-medium tracking-[0.4em] uppercase text-[10px] mb-10 opacity-80">
-              Implementation & Workflow Optimization
-            </p>
-          </motion.div>
+          <div className="overflow-hidden mb-12">
+            <motion.p
+              initial={{ y: '100%' }}
+              animate={{ y: 0 }}
+              transition={{ duration: 1.2, ease: expoEasing }}
+              className="text-accent font-bold tracking-[0.5em] uppercase text-[10px]"
+            >
+              Operations Re-Engineered
+            </motion.p>
+          </div>
 
-          <motion.h1
+          <h1 className="relative">
+            <ScrollReveal maskReveal direction="none" className="text-7xl md:text-[120px] lg:text-[160px] font-medium leading-[0.8] tracking-[-0.05em] mb-16 text-center italic">
+              Solve. <br />
+              <span className="text-accent not-italic">Scale.</span> <br />
+              Sustain.
+            </ScrollReveal>
+          </h1>
+
+          <ScrollReveal delay={0.4} distance={30} className="max-w-3xl mx-auto">
+            <p className="text-2xl md:text-3xl text-muted-foreground leading-[1.3] mb-20 font-light text-balance">
+              Implementation specialist bridging the gap between <span className="text-foreground">technical possibility</span> and <span className="text-foreground">human productivity</span>.
+            </p>
+          </ScrollReveal>
+
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="text-6xl md:text-8xl lg:text-[120px] font-medium leading-[0.85] tracking-tighter mb-16 text-balance"
-          >
-            Design. <br className="hidden md:block" />
-            <span className="text-accent">Adopt.</span> <br className="hidden md:block" />
-            Optimize.
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            className="text-2xl md:text-3xl text-muted-foreground leading-relaxed mb-20 max-w-3xl mx-auto text-balance font-light"
-          >
-            I bridge the gap between technical possibility and human productivity through high-stakes operations optimization.
-          </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="flex flex-col sm:flex-row gap-10 justify-center"
+            transition={{ duration: 1, delay: 0.6, ease: expoEasing }}
+            className="flex flex-col sm:flex-row gap-8 justify-center items-center"
           >
             <Link
               href="/contact"
-              className="inline-flex items-center justify-center gap-4 px-12 py-6 bg-foreground text-background rounded-full font-medium hover:bg-foreground/90 transition-all duration-500 hover:scale-110 active:scale-95 text-xl"
+              className="group relative px-14 py-7 bg-foreground text-background rounded-full font-semibold overflow-hidden transition-transform duration-500 hover:scale-[1.05] active:scale-95 text-xl"
             >
-              Start a project
-              <ArrowRight size={24} />
-            </Link>
-            <Link
-              href="/about"
-              className="inline-flex items-center justify-center gap-4 px-12 py-6 text-foreground rounded-full font-medium border border-border hover:bg-white/5 transition-all duration-500 hover:scale-110 active:scale-95 text-xl"
-            >
-              The Background
+              <div className="absolute inset-0 bg-accent translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]" />
+              <span className="relative z-10 flex items-center gap-4">
+                Let&apos;s talk systems
+                <ArrowRight size={24} className="group-hover:translate-x-2 transition-transform duration-500" />
+              </span>
             </Link>
           </motion.div>
         </motion.div>
-
-        {/* Aggressive Angular Divider */}
-        <div className="absolute bottom-0 left-0 w-full h-[30vh] bg-card/20 -skew-y-6 translate-y-1/2 -z-10 pointer-events-none border-t border-accent/20" />
       </section>
 
-      {/* Results Section - Extreme Angular Layout */}
-      <section className="py-64 px-6 relative overflow-hidden bg-card/5 mask-skew-up">
-        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-24 items-center">
-          <ScrollReveal direction="left" distance={100}>
-            <p className="text-muted-foreground mb-6 uppercase tracking-[0.3em] text-[10px] font-bold">Performance</p>
-            <h2 className="text-5xl md:text-8xl font-medium tracking-tighter mb-12 leading-[0.9]">
-              Measurable <br /> Difference.
-            </h2>
-            <p className="text-2xl text-muted-foreground leading-relaxed max-w-xl font-light">
-              I deliver results that translate directly into operational throughput and revenue growth.
-            </p>
-          </ScrollReveal>
+      {/* Performance Section - Complex Masking & Layers */}
+      <section className="py-72 px-6 relative bg-[#09090b] mask-skew-up overflow-hidden">
+        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-32 items-end">
+          <div className="relative">
+            <ScrollReveal direction="left" distance={100} parallaxVelocity={0.05}>
+              <p className="text-accent font-bold tracking-[0.3em] uppercase text-[10px] mb-8">Performance Metrics</p>
+              <h2 className="text-6xl md:text-9xl font-medium tracking-tighter mb-12 leading-[0.8]">
+                Proven <br /> <span className="text-accent italic">Impact.</span>
+              </h2>
+              <p className="text-2xl text-muted-foreground leading-relaxed font-light max-w-xl">
+                Redesigning operations is a science. I deliver the data to prove it works.
+              </p>
+            </ScrollReveal>
 
-          <div className="grid gap-12 relative">
+            {/* Background Slash Element */}
+            <div className="absolute top-1/2 left-0 w-[200%] h-[1px] bg-accent/20 -rotate-[15deg] translate-y-24 pointer-events-none" />
+          </div>
+
+          <div className="grid gap-10 relative">
             {work.map((item, i) => (
               <ScrollReveal
                 key={item.metric}
-                direction="none"
-                delay={i * 0.1}
-                className="group"
+                direction="right"
+                distance={60}
+                delay={i * 0.15}
+                className="group/item"
               >
                 <div
-                  className="p-12 rounded-[3rem] border border-border bg-background/50 backdrop-blur-md hover:border-accent/40 transition-all duration-700 hover:-translate-y-4 shadow-2xl flex items-center justify-between"
-                  style={{ transform: `rotate(${i % 2 === 0 ? '-2deg' : '2deg'})` }}
+                  className="glass-premium p-14 rounded-[3.5rem] flex items-center justify-between group-hover/item:border-accent/40 transition-all duration-700"
+                  style={{ transform: `rotate(${i % 2 === 0 ? '-1.5deg' : '1.5deg'}) hover:rotate(0deg)` }}
                 >
-                  <div>
-                    <p className="text-xs text-foreground font-bold uppercase tracking-[0.2em] mb-4 opacity-60">
-                      {item.label}
-                    </p>
-                    <p className="text-xl text-muted-foreground leading-snug">
+                  <div className="flex-grow">
+                    <div className="flex items-center gap-4 mb-3 text-accent/60">
+                      {item.icon}
+                      <span className="text-[10px] font-bold uppercase tracking-[0.2em]">{item.label}</span>
+                    </div>
+                    <p className="text-xl text-muted-foreground leading-[1.4] font-light max-w-xs transition-colors group-hover/item:text-foreground">
                       {item.description}
                     </p>
                   </div>
-                  <p className="text-6xl md:text-8xl font-medium text-accent leading-none ml-8">
+                  <div className="text-7xl md:text-9xl font-medium text-accent tracking-tighter leading-none italic group-hover/item:not-italic transition-all duration-700">
                     {item.metric}
-                  </p>
+                  </div>
                 </div>
               </ScrollReveal>
             ))}
-            {/* Geometric Slash */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150%] h-[30%] bg-accent/5 mask-slash -z-10 -rotate-45 pointer-events-none" />
           </div>
         </div>
       </section>
 
-      {/* Expertise Section - Bold Slash Layout */}
-      <section className="py-64 px-6 bg-foreground text-background relative overflow-hidden mask-diagonal-right">
-        <div className="max-w-7xl mx-auto py-24">
-          <ScrollReveal direction="up" className="mb-32">
-            <p className="text-background/40 mb-6 uppercase tracking-[0.3em] text-[10px] font-bold">Expertise</p>
-            <h2 className="text-6xl md:text-9xl font-medium tracking-tighter mb-12 leading-[0.8]">
-              Strategy <br /> & Scale.
+      {/* Strategic Domains - Layered Grid */}
+      <section className="py-72 px-6 relative overflow-hidden bg-card/5">
+        <div className="absolute inset-0 -z-20">
+          <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-accent/20 to-transparent" />
+          <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-accent/20 to-transparent" />
+        </div>
+
+        <div className="max-w-7xl mx-auto">
+          <ScrollReveal direction="up" className="mb-40 text-center">
+            <p className="text-accent font-bold tracking-[0.4em] uppercase text-[10px] mb-8">Strategic Capabilities</p>
+            <h2 className="text-7xl md:text-[130px] font-medium tracking-tighter leading-[0.75] mb-12">
+              Deep <span className="italic">Systems</span> Expertise.
             </h2>
           </ScrollReveal>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12 relative">
             {[
-              'AI Integration',
-              'Workflow Automation',
-              'Process Architecture',
-              'Training Enablement',
-              'Clinical Strategy',
-              'Ops Optimization',
+              { title: 'AI Implementation', desc: 'Rollout strategy & user adoption stabilization.' },
+              { title: 'Workflow Automation', desc: 'End-to-end efficiency through modular scaling.' },
+              { title: 'Process Design', desc: 'Architecture for high-throughput professional services.' },
+              { title: 'Training Enablement', desc: 'Driving adoption across resistant user bases.' },
+              { title: 'Clinical Strategy', desc: 'Bridging med-tech innovation and frontline reality.' },
+              { title: 'Ops Optimization', desc: 'Throughput gains through data-driven refinement.' }
             ].map((service, i) => (
               <ScrollReveal
-                key={service}
+                key={service.title}
                 direction="none"
                 delay={i * 0.1}
-                className="group"
+                className="group/card h-full"
+                parallaxVelocity={0.02 * (i + 1)}
               >
                 <div
-                  className="h-full p-16 rounded-[4rem] border border-background/10 bg-background/5 hover:bg-background/10 transition-all duration-700 relative overflow-hidden group-hover:-translate-y-4"
-                  style={{ transform: `rotate(${i % 2 === 0 ? '2deg' : '-2deg'})` }}
+                  className="h-full p-16 rounded-[4rem] border border-white/5 bg-white/[0.02] hover:bg-white/[0.05] transition-all duration-700 relative overflow-hidden"
+                  style={{ transform: `rotate(${i % 2 === 0 ? '1.5deg' : '-1.5deg'})` }}
                 >
-                  <h3 className="text-4xl font-medium mb-8">
-                    {service}
+                  <div className="absolute top-0 right-0 p-10 opacity-20 group-hover/card:opacity-100 transition-opacity">
+                    <ArrowRight size={32} className="-rotate-45" />
+                  </div>
+                  <h3 className="text-4xl font-medium mb-8 leading-tight">
+                    {service.title}
                   </h3>
-                  <div className="h-[2px] w-12 bg-background/20 mb-8" />
-                  <p className="text-background/60 text-xl font-light leading-relaxed">
-                    Scaling operations through precise {service.toLowerCase()}.
+                  <div className="h-[1px] w-12 bg-accent/40 mb-8 transition-all duration-1000 group-hover/card:w-full" />
+                  <p className="text-muted-foreground text-xl font-light leading-relaxed">
+                    {service.desc}
                   </p>
                 </div>
               </ScrollReveal>
             ))}
           </div>
-
-          <ScrollReveal direction="up" delay={0.6} className="mt-40">
-            <Link
-              href="/services"
-              className="inline-flex items-center gap-6 text-background hover:translate-x-4 transition-all duration-500 text-3xl font-medium group"
-            >
-              <span className="border-b-2 border-background pb-1">All services</span>
-              <ArrowRight size={40} className="group-hover:translate-x-4 transition-transform" />
-            </Link>
-          </ScrollReveal>
         </div>
       </section>
 
-      {/* Final CTA - Aggressive Minimalism */}
-      <section className="py-80 px-6 relative overflow-hidden flex items-center justify-center">
-        <div className="max-w-6xl mx-auto text-center z-10">
-          <ScrollReveal direction="up">
-            <h2 className="text-8xl md:text-[180px] font-medium tracking-tighter mb-20 leading-[0.75]">
-              Let&apos;s talk <br />
-              <span className="text-accent underline decoration-4 underline-offset-8">systems.</span>
+      {/* CTA - The Climax */}
+      <section className="py-[30vh] px-6 relative overflow-hidden flex items-center justify-center">
+        <ScrollReveal direction="up" parallaxVelocity={0.1}>
+          <div className="max-w-7xl mx-auto text-center relative z-10">
+            <h2 className="text-8xl md:text-[180px] lg:text-[240px] font-medium tracking-tighter mb-24 leading-[0.7]">
+              Let&apos;s Advance <br />
+              <span className="text-accent italic underline decoration-8 underline-offset-[20px]">Operations.</span>
             </h2>
             <Link
               href="/contact"
-              className="inline-flex items-center justify-center gap-6 px-20 py-10 bg-foreground text-background rounded-full font-medium hover:bg-foreground/90 transition-all duration-700 hover:scale-110 active:scale-95 text-3xl"
+              className="inline-flex items-center justify-center gap-8 px-24 py-12 bg-foreground text-background rounded-full font-bold hover:bg-foreground/90 transition-all duration-700 hover:scale-110 active:scale-95 text-4xl shadow-[0_30px_60px_rgba(0,0,0,0.4)]"
             >
-              Partner with me
-              <ArrowRight size={40} />
+              Start high-stakes project
+              <ArrowRight size={48} />
             </Link>
-          </ScrollReveal>
-        </div>
+          </div>
+        </ScrollReveal>
 
-        {/* Background Angular Slashing */}
-        <div className="absolute top-0 right-0 w-[60%] h-full bg-accent/5 -skew-x-[30deg] translate-x-1/2 -z-10 pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-[40%] h-full border-r-2 border-accent/20 -skew-x-[30deg] -translate-x-1/2 -z-10 pointer-events-none" />
+        {/* Closing Geometric Slashes */}
+        <div className="absolute top-0 right-0 w-full h-[1px] bg-accent/30 -rotate-[15deg] translate-y-32" />
+        <div className="absolute bottom-0 left-0 w-full h-[1px] bg-accent/30 rotate-[15deg] -translate-y-32" />
       </section>
     </div>
   );

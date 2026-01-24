@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
+import { motion, useScroll, useTransform, useSpring, useInView } from 'framer-motion';
 import { useRef, ReactNode } from 'react';
 
 interface ScrollRevealProps {
@@ -14,30 +14,34 @@ interface ScrollRevealProps {
     parallaxVelocity?: number;
     className?: string;
     style?: React.CSSProperties;
+    staggerChildren?: number;
+    maskReveal?: boolean;
 }
 
 export default function ScrollReveal({
     children,
     direction = 'up',
     distance = 50,
-    duration = 0.8,
+    duration = 1.2,
     delay = 0,
     opacity = [0, 1],
     scale = [0.95, 1],
     parallaxVelocity = 0,
     className = '',
     style = {},
+    maskReveal = false,
 }: ScrollRevealProps) {
     const ref = useRef<HTMLDivElement>(null);
+    const isInView = useInView(ref, { once: true, margin: '-100px 0px' });
+
     const { scrollYProgress } = useScroll({
         target: ref,
         offset: ['start end', 'end start'],
     });
 
-    // Smooth scroll progress
     const springProgress = useSpring(scrollYProgress, {
-        stiffness: 100,
-        damping: 30,
+        stiffness: 40,
+        damping: 20,
         restDelta: 0.001,
     });
 
@@ -45,15 +49,17 @@ export default function ScrollReveal({
     const x = direction === 'left' ? -distance : direction === 'right' ? distance : 0;
     const y = direction === 'up' ? distance : direction === 'down' ? -distance : 0;
 
-    // Scroll-linked transforms
-    const opacityValue = useTransform(springProgress, [0, 0.2, 0.8, 1], [0, opacity[1], opacity[1], 0]);
-    const scaleValue = useTransform(springProgress, [0, 0.2, 0.8, 1], [0.9, scale[1], scale[1], 0.9]);
-
     // Parallax effect
     const translateY = useTransform(
         springProgress,
         [0, 1],
-        [parallaxVelocity * 100, -parallaxVelocity * 100]
+        [parallaxVelocity * 150, -parallaxVelocity * 150]
+    );
+
+    const rotateValue = useTransform(
+        springProgress,
+        [0, 1],
+        [parallaxVelocity * 10, -parallaxVelocity * 10]
     );
 
     const expoEasing = [0.16, 1, 0.3, 1] as const;
@@ -62,32 +68,33 @@ export default function ScrollReveal({
         <motion.div
             ref={ref}
             style={{
-                opacity: opacityValue,
-                scale: scaleValue,
                 y: translateY,
+                rotateZ: rotateValue,
                 ...style,
             }}
-            className={className}
+            className={`relative ${className}`}
         >
             <motion.div
                 initial={{
                     opacity: opacity[0],
                     x: direction === 'left' || direction === 'right' ? x : 0,
                     y: direction === 'up' || direction === 'down' ? y : 0,
-                    scale: scale[0]
+                    scale: scale[0],
+                    skewX: direction === 'left' ? 5 : direction === 'right' ? -5 : 0,
                 }}
-                whileInView={{
+                animate={isInView ? {
                     opacity: opacity[1],
                     x: 0,
                     y: 0,
-                    scale: scale[1]
-                }}
-                viewport={{ once: true, margin: '-50px' }}
+                    scale: scale[1],
+                    skewX: 0,
+                } : {}}
                 transition={{
                     duration,
                     delay,
                     ease: expoEasing,
                 }}
+                className={maskReveal ? 'text-mask-reveal' : ''}
             >
                 {children}
             </motion.div>

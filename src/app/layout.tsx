@@ -37,6 +37,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <div className="noise-overlay" />
         <Header />
         <main className="min-h-screen">
           {children}
