@@ -3,6 +3,7 @@
 import { Download } from 'lucide-react';
 import ScrollReveal from '@/components/ScrollReveal';
 import CharReveal from '@/components/CharReveal';
+import ParallaxImage from '@/components/ParallaxImage';
 
 const experience = [
   {
@@ -36,11 +37,22 @@ export default function About() {
     <main className="bg-background text-foreground pt-20">
 
       {/* Hero */}
-      <section className="pt-24 pb-16 md:pt-32 md:pb-24 px-6 lg:px-12 border-b border-white/5">
-        <div className="max-w-[900px] mx-auto">
+      <section className="min-h-[70vh] flex items-center relative border-b border-white/5 overflow-hidden px-6 lg:px-12">
+
+        {/* Cinematic Background */}
+        <div className="absolute inset-0 z-0">
+          <ParallaxImage
+            src="/images/digital-cathedral.png"
+            alt="Architecture"
+            className="w-full h-full opacity-20"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background" />
+        </div>
+
+        <div className="max-w-[900px] mx-auto relative z-10 py-32">
           <ScrollReveal direction="up">
             <span className="block text-xs font-medium tracking-[0.3em] uppercase text-muted-foreground mb-6">Background</span>
-            <h1 className="text-4xl md:text-5xl font-medium tracking-tight mb-10">
+            <h1 className="text-5xl md:text-7xl font-medium tracking-tight mb-10">
               How I <CharReveal delay={0.4} className="text-accent italic font-serif">got here.</CharReveal>
             </h1>
             <div className="space-y-6 text-lg md:text-xl text-muted-foreground leading-relaxed">
