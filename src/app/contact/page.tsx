@@ -22,8 +22,8 @@ export default function Contact() {
       {/* Cinematic Background Layer */}
       <div className="absolute inset-0 z-0">
         <ParallaxImage
-          src="/images/bridging.png"
-          alt="Bridge to Reality"
+          src="/assets/logic.png"
+          alt="Logic & Analysis"
           className="w-full h-full opacity-20"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background" />
