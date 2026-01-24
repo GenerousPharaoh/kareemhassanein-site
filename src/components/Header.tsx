@@ -49,12 +49,12 @@ export default function Header() {
           }}
           animate={hidden ? "hidden" : "visible"}
           transition={{ duration: 0.4, ease }}
-          className="pointer-events-auto flex items-center gap-12 px-8 py-3 rounded-full bg-white/[0.03] backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.3)] inner-glow"
+          className="pointer-events-auto flex items-center gap-4 md:gap-12 px-4 md:px-8 py-3 rounded-full bg-white/[0.03] backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.3)] inner-glow"
         >
           {/* Logo / Brand */}
           <Link
             href="/"
-            className="group flex items-center gap-3 pr-8 border-r border-white/10 transition-transform active:scale-95"
+            className="group flex items-center gap-2 md:gap-3 pr-4 md:pr-8 border-r border-white/10 transition-transform active:scale-95"
           >
             <div className="w-2 h-2 rounded-full bg-foreground opacity-40 group-hover:opacity-100 transition-opacity" />
             <span className="text-[10px] font-bold tracking-[0.3em] uppercase opacity-40 group-hover:opacity-100 transition-opacity whitespace-nowrap">

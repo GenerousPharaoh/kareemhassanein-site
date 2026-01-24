@@ -22,7 +22,7 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-background text-foreground overflow-hidden">
       {/* Hero Section */}
-      <section className="min-h-screen flex items-center justify-center relative px-6 md:px-12 pt-40 md:pt-32">
+      <section className="min-h-screen flex items-center justify-center relative px-6 md:px-12 pt-28 md:pt-32">
 
         {/* Cinematic Background Layer */}
         <div className="absolute inset-0 z-0">
@@ -40,12 +40,12 @@ export default function Home() {
             {/* Text Content */}
             <div className="space-y-12 mx-auto max-w-4xl">
               <ScrollReveal direction="up" distance={20} blur={10}>
-                <span className="inline-block text-sm font-medium tracking-[0.4em] uppercase opacity-40 mb-4 border border-white/10 px-6 py-2 rounded-full backdrop-blur-sm shadow-inner mt-10 md:mt-0">
+                <span className="inline-block text-xs sm:text-sm font-medium tracking-[0.3em] sm:tracking-[0.4em] uppercase opacity-40 mb-4 border border-white/10 px-4 sm:px-6 py-2 rounded-full backdrop-blur-sm shadow-inner mt-6 md:mt-0">
                   Implementation Consulting
                 </span>
               </ScrollReveal>
 
-              <motion.h1 variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="text-5xl md:text-7xl lg:text-8xl font-medium leading-[0.9] tracking-tighter mb-16 text-balance">
+              <motion.h1 variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-medium leading-[0.9] tracking-tighter mb-10 md:mb-16 text-balance">
                 I find bottlenecks and <CharReveal delay={0.6} className="py-2 text-accent italic font-serif">build</CharReveal> <br />
                 systems to fix them.
               </motion.h1>
@@ -68,7 +68,7 @@ export default function Home() {
                 ))}
               </div>
 
-              <motion.div variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }} className="flex gap-6 items-center justify-center pt-8">
+              <motion.div variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }} className="flex flex-col sm:flex-row gap-4 sm:gap-6 items-center justify-center pt-6 md:pt-8">
                 <Link
                   href="/contact"
                   className="group flex items-center gap-4 text-lg font-medium tracking-tight bg-foreground text-background px-8 py-4 rounded-full hover:bg-accent hover:text-background transition-all duration-500"
@@ -89,7 +89,7 @@ export default function Home() {
       </section>
 
       {/* Statement Section */}
-      <section ref={transitionRef} className="py-32 md:py-48 w-full relative overflow-hidden flex items-center justify-center">
+      <section ref={transitionRef} className="py-20 md:py-48 w-full relative overflow-hidden flex items-center justify-center">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/[0.02] to-transparent pointer-events-none" />
 
         <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
