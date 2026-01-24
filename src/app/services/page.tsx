@@ -6,6 +6,7 @@ import { ChevronRight, Layers, Workflow, BarChart3, ShieldCheck, ArrowRight } fr
 import ScrollReveal from '@/components/ScrollReveal';
 import ParallaxImage from '@/components/ParallaxImage';
 import TextScramble from '@/components/TextScramble';
+import AnimatedGrid from '@/components/AnimatedGrid';
 
 const solutions = [
   {
@@ -13,34 +14,45 @@ const solutions = [
     title: 'AI Tool Implementation',
     desc: 'End-to-end rollout of AI tools like Heidi AI for clinical teams. From evaluation through training, go-live, and making sure it actually sticks.',
     outcomes: ['Tool evaluation and selection', 'Training and onboarding', 'SOP development', 'Post-launch support'],
-    icon: <Layers className="w-5 h-5 opacity-40" />
+    icon: Layers
   },
   {
     index: '02',
     title: 'Workflow Automation',
     desc: 'Building automation systems that reduce manual work. Using tools like Claude Code to cut document generation time by 85%.',
     outcomes: ['Process automation', 'Template systems', 'Intake optimization', 'Correspondence workflows'],
-    icon: <Workflow className="w-5 h-5 opacity-40" />
+    icon: Workflow
   },
   {
     index: '03',
     title: 'Operations Optimization',
     desc: 'Improving how clinics and professional services run. Booking systems, referral pathways, and patient acquisition.',
     outcomes: ['Booking system design', 'Referral pathways', 'Local SEO setup', 'Jane App configuration'],
-    icon: <BarChart3 className="w-5 h-5 opacity-40" />
+    icon: BarChart3
   },
   {
     index: '04',
     title: 'Clinical Advisory',
     desc: 'Advising health-tech companies on clinical workflows, usability, and what it takes to get clinicians to actually adopt new tools.',
     outcomes: ['Usability review', 'Adoption strategy', 'Workflow integration', 'Market validation'],
-    icon: <ShieldCheck className="w-5 h-5 opacity-40" />
+    icon: ShieldCheck
   }
 ];
+
+import { LucideIcon } from 'lucide-react';
+
+function IconDraw({ Icon }: { Icon: LucideIcon }) {
+  return (
+    <div className="w-16 h-16 rounded-[2rem] bg-white/[0.01] border border-white/5 flex items-center justify-center group-hover:border-foreground/20 transition-all duration-1000">
+      <Icon className="w-6 h-6 opacity-40 group-hover:opacity-100 transition-opacity duration-300" />
+    </div>
+  );
+}
 
 export default function Services() {
   return (
     <main className="pt-24 overflow-hidden relative bg-background">
+      <AnimatedGrid />
       <div className="glow-blob top-[15%] -left-[10%] opacity-[0.03]" />
 
       {/* Capability Hero */}
@@ -86,9 +98,7 @@ export default function Services() {
                 >
                   <div className="space-y-16">
                     <div className="flex justify-between items-start">
-                      <div className="w-16 h-16 rounded-[2rem] bg-white/[0.01] border border-white/5 flex items-center justify-center group-hover:border-foreground/20 transition-all duration-1000">
-                        {module.icon}
-                      </div>
+                      <IconDraw Icon={module.icon} />
                       <span className="text-7xl font-light tracking-tighter text-white/5 italic opacity-40 group-hover:opacity-100 transition-opacity duration-1000">0{module.index}</span>
                     </div>
 
