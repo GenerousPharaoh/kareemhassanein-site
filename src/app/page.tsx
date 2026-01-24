@@ -6,6 +6,8 @@ import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'fram
 import { useRef } from 'react';
 import { ArrowRight, Sparkles, Binary, HeartPulse, Workflow, ArrowUpRight } from 'lucide-react';
 import ScrollReveal from '@/components/ScrollReveal';
+import TextReveal from '@/components/TextReveal';
+import Magnetic from '@/components/Magnetic';
 
 const impacts = [
   {
@@ -105,18 +107,22 @@ export default function Home() {
                 <span className="opacity-40 italic font-light font-serif">work.</span>
               </motion.h1>
 
-              <motion.p variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="text-xl md:text-2xl text-muted-foreground leading-relaxed mb-20 font-light text-balance border-l border-white/5 pl-12 italic">
-                I help organizations adopt AI tools and optimize their workflows. Background in clinical operations with an MSc in Physiotherapy.
-              </motion.p>
+              <TextReveal
+                text="I help organizations adopt AI tools and optimize their workflows. Background in clinical operations with an MSc in Physiotherapy."
+                className="text-xl md:text-2xl text-muted-foreground leading-relaxed mb-20 font-light text-balance border-l border-white/5 pl-12 italic block max-w-2xl"
+                delay={0.4}
+              />
 
               <motion.div variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }} className="flex gap-16 items-center">
-                <Link
-                  href="/contact"
-                  className="group flex items-center gap-8 text-xl font-bold tracking-tight text-foreground link-underline pb-1"
-                >
-                  Get in touch
-                  <ArrowRight size={24} className="opacity-20 group-hover:translate-x-4 transition-transform duration-700" />
-                </Link>
+                <Magnetic>
+                  <Link
+                    href="/contact"
+                    className="group flex items-center gap-8 text-xl font-bold tracking-tight text-foreground link-underline pb-1"
+                  >
+                    Get in touch
+                    <ArrowRight size={24} className="opacity-20 group-hover:translate-x-4 transition-transform duration-700" />
+                  </Link>
+                </Magnetic>
               </motion.div>
             </motion.div>
 
@@ -221,13 +227,15 @@ export default function Home() {
           <h2 className="text-8xl md:text-[180px] font-medium tracking-tighter mb-24 leading-[0.75]">
             Let&apos;s <br /><span className="opacity-40 italic font-light font-serif">talk.</span>
           </h2>
-          <Link
-            href="/contact"
-            className="group inline-flex items-center gap-12 text-5xl font-light link-underline pb-4 px-12 transition-all"
-          >
-            Get in touch
-            <ArrowRight size={72} className="opacity-0 group-hover:opacity-100 group-hover:translate-x-6 transition-all duration-[1.5s]" />
-          </Link>
+          <Magnetic>
+            <Link
+              href="/contact"
+              className="group inline-flex items-center gap-12 text-5xl font-light link-underline pb-4 px-12 transition-all"
+            >
+              Get in touch
+              <ArrowRight size={72} className="opacity-0 group-hover:opacity-100 group-hover:translate-x-6 transition-all duration-[1.5s]" />
+            </Link>
+          </Magnetic>
         </ScrollReveal>
       </section>
     </div>
