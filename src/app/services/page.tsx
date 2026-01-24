@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 import ScrollReveal from '@/components/ScrollReveal';
 import ParallaxImage from '@/components/ParallaxImage';
 import CharReveal from '@/components/CharReveal';
@@ -54,12 +54,6 @@ const technicalIndex = [
 
 function ServiceSection({ service, isEven }: { service: typeof services[0], isEven: boolean }) {
   const ref = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"]
-  });
-
-  const y = useTransform(scrollYProgress, [0, 1], [100, -100]);
 
   return (
     <section ref={ref} className="min-h-[80vh] flex items-center justify-center relative py-24 overflow-hidden px-6 lg:px-20">
@@ -108,13 +102,14 @@ function ServiceSection({ service, isEven }: { service: typeof services[0], isEv
         </div>
 
         {/* Image Side */}
-        <motion.div
-          style={{ y }}
-          className="relative aspect-[4/5] w-full max-w-[600px] mx-auto rounded-3xl overflow-hidden shadow-2xl grayscale hover:grayscale-0 transition-all duration-1000 border border-white/5"
-        >
-          <ParallaxImage src={service.img} alt={service.title} className="w-full h-full" />
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-60" />
-        </motion.div>
+        <div className="relative aspect-[4/5] w-full max-w-[600px] mx-auto shadow-2xl">
+          <ParallaxImage
+            src={service.img}
+            alt={service.title}
+            className="w-full h-full rounded-3xl border border-white/5"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-40 pointer-events-none rounded-3xl" />
+        </div>
 
       </div>
     </section>

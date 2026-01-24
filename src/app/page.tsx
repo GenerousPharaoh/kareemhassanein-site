@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import ScrollReveal from '@/components/ScrollReveal';
 import TextReveal from '@/components/TextReveal';
@@ -18,11 +18,6 @@ const metrics = [
 
 export default function Home() {
   const transitionRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: transitionRef,
-    offset: ["start end", "end start"]
-  });
-  const y = useTransform(scrollYProgress, [0, 1], [-50, 50]);
 
   return (
     <main className="min-h-screen bg-background text-foreground overflow-hidden">
@@ -102,14 +97,12 @@ export default function Home() {
 
       {/* Immersive Scroll Transition Section */}
       <section ref={transitionRef} className="h-[80vh] w-full relative overflow-hidden flex items-center justify-center py-24 border-y border-white/5">
-        <motion.div style={{ y }} className="absolute inset-0 z-0">
-          <img
-            src="/images/chaos-to-order.png"
-            alt="Chaos to Order"
-            className="w-full h-[110%] object-cover opacity-30"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background" />
-        </motion.div>
+        <ParallaxImage
+          src="/images/chaos-to-order.png"
+          alt="Chaos to Order"
+          className="absolute inset-0 w-full h-full opacity-30"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background pointer-events-none" />
 
         <div className="relative z-10 text-center px-6">
           <ScrollReveal direction="up">

@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Download } from 'lucide-react';
 import ScrollReveal from '@/components/ScrollReveal';
 import ParallaxImage from '@/components/ParallaxImage';
@@ -47,8 +47,6 @@ const gallery = [
 
 function BioSection({ title, label, text, img, isReversed }: { title: string, label: string, text: string, img: string, isReversed?: boolean }) {
   const ref = useRef(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-  const y = useTransform(scrollYProgress, [0, 1], [50, -50]);
 
   return (
     <section ref={ref} className="min-h-[80vh] flex items-center relative overflow-hidden border-b border-white/5">
@@ -64,11 +62,13 @@ function BioSection({ title, label, text, img, isReversed }: { title: string, la
             </p>
           </ScrollReveal>
         </div>
-        <div className={`relative h-[60vh] lg:h-full overflow-hidden grayscale hover:grayscale-0 transition-all duration-1000 ${isReversed ? 'lg:order-1' : ''}`}>
-          <motion.div style={{ scale: 1.05, y }} className="h-full w-full">
-            <ParallaxImage src={img} alt={title} className="h-full w-full object-cover" />
-          </motion.div>
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-40" />
+        <div className={`relative h-[50vh] lg:h-full ${isReversed ? 'lg:order-1' : ''}`}>
+          <ParallaxImage
+            src={img}
+            alt={title}
+            className="h-full w-full"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-30 pointer-events-none" />
         </div>
       </div>
     </section>
@@ -96,9 +96,13 @@ export default function About() {
           </ScrollReveal>
         </div>
 
-        <div className="relative h-screen hidden lg:block grayscale">
-          <ParallaxImage src="/images/digital-cathedral.png" alt="Architecture" className="h-full w-full object-cover opacity-40" />
-          <div className="absolute inset-0 bg-gradient-to-r from-background via-transparent to-transparent" />
+        <div className="relative h-[80vh] hidden lg:block">
+          <ParallaxImage
+            src="/images/digital-cathedral.png"
+            alt="Architecture"
+            className="h-full w-full"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-background via-transparent to-transparent opacity-80 pointer-events-none" />
         </div>
       </section>
 
@@ -134,9 +138,13 @@ export default function About() {
               transition={{ delay: i * 0.1 }}
               className="flex-shrink-0 w-[80vw] md:w-[600px] group"
             >
-              <div className="aspect-[16/10] w-full rounded-2xl overflow-hidden grayscale hover:grayscale-0 transition-all duration-1000 border border-white/5 relative">
-                <ParallaxImage src={item.src} alt={item.label} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-[2s]" />
-                <div className="absolute bottom-6 left-6 text-[10px] font-mono tracking-widest uppercase opacity-0 group-hover:opacity-60 transition-opacity bg-black/40 backdrop-blur-md px-3 py-1 rounded-full">
+              <div className="aspect-[16/10] w-full rounded-2xl shadow-2xl relative">
+                <ParallaxImage
+                  src={item.src}
+                  alt={item.label}
+                  className="w-full h-full rounded-2xl border border-white/5"
+                />
+                <div className="absolute bottom-6 left-6 text-[10px] font-mono tracking-widest uppercase opacity-60 bg-black/40 backdrop-blur-md px-3 py-1 rounded-full pointer-events-none">
                   {item.label}
                 </div>
               </div>
