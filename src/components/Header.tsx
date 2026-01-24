@@ -52,6 +52,7 @@ export default function Header() {
           <div className="w-full flex items-center justify-between">
             <Link
               href="/"
+              onClick={() => setIsMenuOpen(false)}
               className="group flex items-center gap-2"
             >
               <span className="text-xl font-medium tracking-tight text-foreground transition-colors group-hover:text-accent duration-300">
@@ -91,7 +92,7 @@ export default function Header() {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="md:hidden relative z-50 p-2 -mr-2 text-muted-foreground hover:text-foreground transition-colors"
+              className="md:hidden relative z-[60] p-2 -mr-2 text-muted-foreground hover:text-foreground transition-colors"
               aria-label="Toggle menu"
             >
               {isMenuOpen ? <X size={24} /> : <Menu size={24} />}

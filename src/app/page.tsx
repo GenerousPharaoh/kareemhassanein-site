@@ -50,7 +50,7 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
           >
-            <p className="text-accent font-medium tracking-widest uppercase text-[11px] mb-8">
+            <p className="text-accent font-medium tracking-[0.3em] uppercase text-[10px] mb-8">
               Implementation & Workflow Optimization
             </p>
           </motion.div>
@@ -59,7 +59,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="text-5xl md:text-7xl lg:text-[100px] font-medium leading-[0.95] tracking-tight mb-12 text-balance"
+            className="text-5xl md:text-7xl lg:text-[110px] font-medium leading-[0.9] tracking-tighter mb-12 text-balance"
           >
             I help organizations adopt technology and optimize the way they work
           </motion.h1>
@@ -96,38 +96,36 @@ export default function Home() {
           </motion.div>
         </motion.div>
 
-        {/* Subtle background element - not an orb or gradient, just a structural hint */}
-        <div className="absolute inset-0 -z-10 pointer-events-none opacity-20">
-          <div className="absolute top-1/4 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-border to-transparent" />
-          <div className="absolute top-3/4 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-border to-transparent" />
-        </div>
+        {/* Angular Background Element */}
+        <div className="absolute top-1/2 left-0 w-full h-[300px] bg-accent/5 -skew-y-6 -z-10 pointer-events-none" />
       </section>
 
-      {/* Results Section - Asymmetric Grid */}
-      <section className="py-48 px-6 relative">
+      {/* Results Section - Angular Layout */}
+      <section className="py-48 px-6 relative bg-card/20 mask-skew-up">
         <div className="max-w-6xl mx-auto">
           <ScrollReveal direction="up" distance={30}>
-            <p className="text-muted-foreground mb-4 uppercase tracking-widest text-xs font-semibold">Results</p>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight mb-24 max-w-3xl leading-tight">
+            <p className="text-muted-foreground mb-4 uppercase tracking-[0.2em] text-[10px] font-bold">Results</p>
+            <h2 className="text-4xl md:text-6xl font-medium tracking-tight mb-24 max-w-3xl leading-[1.1]">
               Driving adoption and delivering measurable operational gains
             </h2>
           </ScrollReveal>
 
-          <div className="grid md:grid-cols-3 gap-12 lg:gap-24 items-start">
+          <div className="grid md:grid-cols-3 gap-12 items-start">
             {work.map((item, i) => (
               <ScrollReveal
                 key={item.metric}
-                direction="up"
-                distance={50}
+                direction="none"
                 delay={i * 0.15}
-                className="group"
-                style={{ marginTop: item.offset }}
+                className="group relative"
               >
-                <div className="relative p-8 rounded-3xl border border-border bg-card/30 backdrop-blur-sm hover:border-accent/30 transition-all duration-500 group-hover:-translate-y-2">
-                  <p className="text-5xl md:text-6xl font-medium text-accent mb-4">
+                <div
+                  className="relative p-10 rounded-[2rem] border border-border bg-background/50 backdrop-blur-md hover:border-accent/40 transition-all duration-700 hover:-translate-y-4 shadow-2xl"
+                  style={{ transform: `rotate(${i % 2 === 0 ? '-1deg' : '1deg'})` }}
+                >
+                  <p className="text-6xl md:text-7xl font-medium text-accent mb-6 leading-none">
                     {item.metric}
                   </p>
-                  <p className="text-sm text-foreground font-semibold uppercase tracking-widest mb-4">
+                  <p className="text-xs text-foreground font-bold uppercase tracking-[0.2em] mb-4">
                     {item.label}
                   </p>
                   <p className="text-muted-foreground leading-relaxed text-lg">
@@ -140,64 +138,66 @@ export default function Home() {
         </div>
       </section>
 
-      {/* About Section - Split Screen & Overlap */}
-      <section className="py-48 px-6 relative overflow-hidden">
-        <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-24 items-center">
-          <ScrollReveal direction="left" distance={100} parallaxVelocity={0.2}>
-            <p className="text-muted-foreground mb-4 uppercase tracking-widest text-xs font-semibold">Background</p>
-            <h2 className="text-4xl md:text-5xl font-medium tracking-tight mb-8 leading-tight">
+      {/* About Section - Angled Containers */}
+      <section className="py-64 px-6 relative">
+        <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-32 items-center">
+          <ScrollReveal direction="left" distance={100} parallaxVelocity={0.1}>
+            <p className="text-muted-foreground mb-4 uppercase tracking-[0.2em] text-[10px] font-bold">Background</p>
+            <h2 className="text-4xl md:text-6xl font-medium tracking-tight mb-8 leading-[1.1]">
               Frontline clinical roots meet digital operations
             </h2>
             <div className="space-y-8 text-xl text-muted-foreground leading-relaxed">
               <p>
                 I understand both the pressure of clinical practice and the power of automation. I bridge that gap to ensure technology actually gets adopted.
               </p>
-              <p>
-                From leading AI implementations for multi-specialty clinics to building automation for law firms, my focus is always on adoption and impact.
-              </p>
             </div>
             <Link
               href="/about"
-              className="inline-flex items-center gap-2 mt-12 text-foreground hover:text-accent transition-colors duration-300 link-underline pb-1 text-lg"
+              className="inline-flex items-center gap-3 mt-12 text-foreground hover:text-accent transition-all duration-300 group text-xl"
             >
-              Read more
-              <ArrowRight size={20} />
+              <span className="link-underline pb-1">Read more</span>
+              <ArrowRight size={24} className="group-hover:translate-x-2 transition-transform" />
             </Link>
           </ScrollReveal>
 
           <div className="relative">
-            <ScrollReveal direction="right" distance={50} delay={0.2} className="relative z-10 translate-x-4 lg:translate-x-12">
-              <div className="p-8 rounded-3xl border border-border bg-card shadow-2xl">
-                <p className="text-accent text-sm font-semibold uppercase tracking-widest mb-6">Current Focus</p>
-                <div className="space-y-8">
+            <ScrollReveal direction="right" distance={50} className="relative z-10">
+              <div
+                className="p-12 rounded-[3rem] border border-border bg-card shadow-[0_0_100px_rgba(0,0,0,0.5)] -rotate-3"
+              >
+                <p className="text-accent text-[10px] font-bold uppercase tracking-[0.3em] mb-10">Current Roles</p>
+                <div className="space-y-12">
                   {[
                     { role: 'Digital Strategy & Operations Lead', company: 'Endorphins Health' },
                     { role: 'Workflow Automation Consultant', company: 'Tax Relief Counsel' },
                     { role: 'Clinical Advisor', company: 'Neuro-Mod' },
                   ].map((item, idx) => (
-                    <div key={item.role} className="group">
-                      <p className="text-xl font-medium mb-1 group-hover:text-accent transition-colors duration-300">{item.role}</p>
-                      <p className="text-muted-foreground">{item.company}</p>
-                      {idx < 2 && <div className="h-[1px] w-12 bg-border mt-6" />}
+                    <div key={item.role} className="group flex items-start gap-6">
+                      <div className="text-accent/30 font-medium pt-1">0{idx + 1}</div>
+                      <div>
+                        <p className="text-2xl font-medium mb-1 group-hover:text-accent transition-colors duration-300 leading-tight">{item.role}</p>
+                        <p className="text-lg text-muted-foreground">{item.company}</p>
+                      </div>
                     </div>
                   ))}
                 </div>
               </div>
             </ScrollReveal>
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] border border-border/50 rounded-[50px] -z-10 rotate-3 pointer-events-none" />
+            {/* Background Slash */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[60%] bg-accent/5 mask-slash -z-10 -rotate-12 pointer-events-none" />
           </div>
         </div>
       </section>
 
-      {/* Services Section - Dynamic Asymmetric Grid */}
-      <section className="py-48 px-6 bg-card/20 relative">
-        <div className="max-w-6xl mx-auto">
+      {/* Services Section - Angled Dividers & Tiles */}
+      <section className="py-48 px-6 bg-foreground text-background mask-diagonal-right relative">
+        <div className="max-w-6xl mx-auto py-24">
           <ScrollReveal direction="up" className="text-center mb-32">
-            <p className="text-muted-foreground mb-4 uppercase tracking-widest text-xs font-semibold">Expertise</p>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight mb-8">
+            <p className="text-background/60 mb-4 uppercase tracking-[0.2em] text-[10px] font-bold">Expertise</p>
+            <h2 className="text-4xl md:text-7xl font-medium tracking-tighter mb-8 leading-none">
               Optimization through adoption
             </h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto text-balance">
+            <p className="text-xl text-background/80 max-w-2xl mx-auto text-balance font-medium">
               Building systems is easy. Getting people to use them is where the value is realized.
             </p>
           </ScrollReveal>
@@ -213,62 +213,58 @@ export default function Home() {
             ].map((service, i) => (
               <ScrollReveal
                 key={service}
-                direction="up"
-                distance={30}
+                direction="none"
                 delay={i * 0.1}
-                className="group h-full"
+                className="group"
               >
-                <div className="h-full p-10 rounded-2xl border border-border bg-card/50 hover:border-accent/50 transition-all duration-500 overflow-hidden relative">
-                  <div className="absolute top-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <ArrowRight size={20} className="text-accent -rotate-45" />
-                  </div>
-                  <h3 className="text-2xl font-medium mb-4 group-hover:text-accent transition-colors duration-300">
+                <div
+                  className="h-full p-12 rounded-3xl border border-background/10 bg-background/5 hover:bg-background/10 transition-all duration-500 relative overflow-hidden"
+                  style={{ transform: `rotate(${i % 2 === 0 ? '1deg' : '-1deg'})` }}
+                >
+                  <h3 className="text-3xl font-medium mb-6 transition-colors duration-300">
                     {service}
                   </h3>
-                  <div className="h-[2px] w-8 bg-accent/30 group-hover:w-full transition-all duration-700 mb-6" />
-                  <p className="text-muted-foreground text-lg">
-                    Comprehensive strategy for scaling {service.toLowerCase()} across your organization.
+                  <div className="h-[2px] w-12 bg-background/20 mb-8" />
+                  <p className="text-background/70 text-lg leading-relaxed">
+                    Strategy for scaling {service.toLowerCase()} across your organization.
                   </p>
                 </div>
               </ScrollReveal>
             ))}
           </div>
 
-          <ScrollReveal direction="up" delay={0.6} className="text-center mt-24">
+          <ScrollReveal direction="up" delay={0.6} className="text-center mt-32">
             <Link
               href="/services"
-              className="inline-flex items-center gap-2 text-foreground hover:text-accent transition-colors duration-300 link-underline pb-1 text-lg"
+              className="inline-flex items-center gap-3 text-background hover:scale-110 transition-transform duration-300 text-2xl font-medium"
             >
               Explore all services
-              <ArrowRight size={20} />
+              <ArrowRight size={32} />
             </Link>
           </ScrollReveal>
         </div>
       </section>
 
-      {/* CTA Section - Sophisticated but minimal */}
-      <section className="py-64 px-6 relative overflow-hidden">
-        <div className="max-w-4xl mx-auto text-center relative z-10">
+      {/* CTA Section - Minimal Angular */}
+      <section className="py-80 px-6 relative overflow-hidden">
+        <div className="max-w-5xl mx-auto text-center relative z-10">
           <ScrollReveal direction="up" distance={50}>
-            <h2 className="text-5xl md:text-7xl lg:text-8xl font-medium tracking-tighter mb-12 leading-none">
+            <h2 className="text-6xl md:text-8xl lg:text-[140px] font-medium tracking-tighter mb-16 leading-[0.85]">
               Let&apos;s build better systems
             </h2>
-            <p className="text-xl md:text-2xl text-muted-foreground mb-16 max-w-xl mx-auto text-balance">
-              Available for consulting, advisory roles, and high-impact implementation projects.
-            </p>
             <Link
               href="/contact"
-              className="inline-flex items-center justify-center gap-3 px-12 py-6 bg-foreground text-background rounded-full font-medium hover:bg-foreground/90 transition-all duration-300 hover:scale-105 active:scale-95 text-lg"
+              className="inline-flex items-center justify-center gap-4 px-16 py-8 bg-foreground text-background rounded-full font-medium hover:bg-foreground/90 transition-all duration-300 hover:scale-110 active:scale-95 text-2xl"
             >
               Start a project
-              <ArrowRight size={24} />
+              <ArrowRight size={32} />
             </Link>
           </ScrollReveal>
         </div>
 
-        {/* Abstract structural elements */}
-        <div className="absolute top-1/2 left-0 w-full h-[1px] bg-border/30 -z-10" />
-        <div className="absolute top-0 left-1/2 w-[1px] h-full bg-border/30 -z-10" />
+        {/* Abstract Angular Elements */}
+        <div className="absolute bottom-0 right-0 w-1/2 h-full bg-accent/5 -skew-x-12 -z-10 translate-x-1/4 pointer-events-none" />
+        <div className="absolute top-0 left-0 w-1/4 h-full border-r border-border/20 -z-10 -skew-x-12 pointer-events-none" />
       </section>
     </div>
   );

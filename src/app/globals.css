@@ -137,3 +137,39 @@ button:focus-visible {
     text-wrap: balance;
   }
 }
+/* Angular Layout Utilities */
+.mask-skew-up {
+  clip-path: polygon(0 5%, 100% 0, 100% 95%, 0 100%);
+}
+
+.mask-skew-down {
+  clip-path: polygon(0 0, 100% 5%, 100% 100%, 0 95%);
+}
+
+.mask-diagonal-right {
+  clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+}
+
+.mask-diagonal-left {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 90%);
+}
+
+.mask-slash {
+  clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
+}
+
+.angled-border {
+  position: relative;
+}
+
+.angled-border::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: var(--border);
+  transform: rotate(-1deg);
+  transform-origin: left center;
+}
