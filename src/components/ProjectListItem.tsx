@@ -2,7 +2,6 @@
 
 import { motion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
-import Image from 'next/image';
 import { useState } from 'react';
 
 interface Project {
@@ -15,9 +14,10 @@ interface Project {
 interface ProjectListItemProps {
     project: Project;
     index: number;
+    setHovered: (isHovered: boolean) => void;
 }
 
-export default function ProjectListItem({ project, index }: ProjectListItemProps) {
+export default function ProjectListItem({ project, index, setHovered }: ProjectListItemProps) {
     const [isHovered, setIsHovered] = useState(false);
 
     return (
@@ -25,13 +25,19 @@ export default function ProjectListItem({ project, index }: ProjectListItemProps
             href={project.href}
             target="_blank"
             rel="noopener noreferrer"
-            className="group relative flex items-center justify-between py-12 border-b border-white/10 last:border-b-0 cursor-none" // cursor-none because we want custom cursor effect ideally, but for now we'll stick to system cursor
+            className="group relative flex items-center justify-between py-12 border-b border-white/10 last:border-b-0 cursor-none"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1, duration: 0.8 }}
             viewport={{ once: true }}
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
+            onMouseEnter={() => {
+                setIsHovered(true);
+                setHovered(true);
+            }}
+            onMouseLeave={() => {
+                setIsHovered(false);
+                setHovered(false);
+            }}
             style={{ cursor: 'pointer' }}
         >
             <div className="flex flex-col gap-2 z-10 mix-blend-difference">
@@ -58,31 +64,6 @@ export default function ProjectListItem({ project, index }: ProjectListItemProps
                     <ArrowUpRight className="w-5 h-5" />
                 </div>
             </div>
-
-            {/* Hover Image Reveal */}
-            <motion.div
-                className="fixed pointer-events-none z-0 hidden md:block w-[400px] h-[500px] rounded-lg overflow-hidden"
-                style={{
-                    top: '50%',
-                    left: '50%',
-                    x: '-50%',
-                    y: '-50%',
-                }}
-                animate={{
-                    opacity: isHovered ? 0.15 : 0,
-                    scale: isHovered ? 1.1 : 0.8,
-                    filter: isHovered ? 'blur(0px)' : 'blur(20px)',
-                    rotate: isHovered ? -5 : 0,
-                }}
-                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            >
-                <Image
-                    src={project.image}
-                    alt={project.title}
-                    fill
-                    className="object-cover"
-                />
-            </motion.div>
         </motion.a>
     );
 }
