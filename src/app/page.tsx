@@ -40,17 +40,17 @@ export default function Home() {
   return (
     <div ref={containerRef} className="relative overflow-hidden">
       {/* Hero */}
-      <section className="relative min-h-[90vh] flex items-center justify-center px-6">
+      <section className="relative min-h-screen flex items-center justify-center px-6 pt-32 pb-20">
         <motion.div
           style={{ opacity: heroOpacity, scale: heroScale }}
-          className="max-w-4xl mx-auto text-center z-10"
+          className="max-w-5xl mx-auto text-center z-10"
         >
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
           >
-            <p className="text-accent font-medium tracking-wide uppercase text-sm mb-6">
+            <p className="text-accent font-medium tracking-widest uppercase text-[11px] mb-8">
               Implementation & Workflow Optimization
             </p>
           </motion.div>
@@ -59,7 +59,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="text-5xl md:text-7xl lg:text-8xl font-medium leading-[1.05] tracking-tight mb-8 text-balance"
+            className="text-5xl md:text-7xl lg:text-[100px] font-medium leading-[0.95] tracking-tight mb-12 text-balance"
           >
             I help organizations adopt technology and optimize the way they work
           </motion.h1>
@@ -68,28 +68,28 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            className="text-xl md:text-2xl text-muted-foreground leading-relaxed mb-12 max-w-2xl mx-auto text-balance"
+            className="text-xl md:text-2xl text-muted-foreground leading-relaxed mb-16 max-w-3xl mx-auto text-balance"
           >
             From AI implementation to workflow automation, I bridge the gap between
-            possibility and productivity.
+            possibility and productivity through human-centric operations.
           </motion.p>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="flex flex-col sm:flex-row gap-6 justify-center"
+            className="flex flex-col sm:flex-row gap-8 justify-center"
           >
             <Link
               href="/contact"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-foreground text-background rounded-full font-medium hover:bg-foreground/90 transition-all duration-300 hover:scale-105 active:scale-95"
+              className="inline-flex items-center justify-center gap-3 px-10 py-5 bg-foreground text-background rounded-full font-medium hover:bg-foreground/90 transition-all duration-300 hover:scale-105 active:scale-95 text-lg"
             >
               Get in touch
-              <ArrowRight size={18} />
+              <ArrowRight size={20} />
             </Link>
             <Link
               href="/about"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 text-foreground rounded-full font-medium border border-border hover:bg-white/5 transition-all duration-300 hover:scale-105 active:scale-95"
+              className="inline-flex items-center justify-center gap-3 px-10 py-5 text-foreground rounded-full font-medium border border-border hover:bg-white/5 transition-all duration-300 hover:scale-105 active:scale-95 text-lg"
             >
               Learn more
             </Link>
