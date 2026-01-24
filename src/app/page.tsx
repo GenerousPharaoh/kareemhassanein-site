@@ -11,9 +11,9 @@ import Link from 'next/link';
 import { useRef } from 'react';
 
 const metrics = [
-  { label: 'Revenue Generated', value: '$600K+' },
-  { label: 'Process Reduction', value: '85%' },
-  { label: 'Clinician Adoption', value: '100%' },
+  { label: 'Annual Billings (as clinician)', value: '$600K+' },
+  { label: 'Doc Generation Time Saved', value: '85%' },
+  { label: 'Team Adoption (Heidi AI)', value: '100%' },
 ];
 
 export default function Home() {
@@ -41,19 +41,19 @@ export default function Home() {
             <div className="space-y-12 mx-auto max-w-4xl">
               <ScrollReveal direction="up" distance={20} blur={10}>
                 <span className="inline-block text-sm font-medium tracking-[0.4em] uppercase opacity-40 mb-4 border border-white/10 px-6 py-2 rounded-full backdrop-blur-sm shadow-inner mt-10 md:mt-0">
-                  Architecting Efficiency
+                  Implementation Consulting
                 </span>
               </ScrollReveal>
 
-              <motion.h1 variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="text-6xl md:text-8xl lg:text-[130px] font-medium leading-[0.8] tracking-tighter mb-16 text-balance">
-                Technical <br />
-                <CharReveal delay={0.6} className="py-2 text-accent italic font-serif">Design.</CharReveal>
+              <motion.h1 variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="text-5xl md:text-7xl lg:text-8xl font-medium leading-[0.9] tracking-tighter mb-16 text-balance">
+                I make software <CharReveal delay={0.6} className="py-2 text-accent italic font-serif">work</CharReveal> <br />
+                for the people using it.
               </motion.h1>
 
               <div className="max-w-2xl mx-auto">
                 <TextReveal
-                  text="Designing and building operational systems for professional service firms. Generating clinical revenue growth and removing documentation overhead through precise technical leverage."
-                  className="text-xl md:text-2xl text-muted-foreground font-light leading-relaxed italic"
+                  text="Most technology fails at adoption, not installation. I help healthcare practices and law firms get their tools to actually work. Implementation strategy, workflow design, and the operational details that determine whether software gets used or abandoned."
+                  className="text-xl md:text-2xl text-muted-foreground font-light leading-relaxed"
                   delay={0.8}
                 />
               </div>
@@ -76,7 +76,7 @@ export default function Home() {
                   href="/contact"
                   className="group flex items-center gap-10 text-2xl font-bold tracking-tight text-foreground link-underline pb-1 transition-all"
                 >
-                  Initiate Discussion
+                  Let&apos;s talk
                   <ArrowRight size={32} className="opacity-20 group-hover:translate-x-4 transition-transform duration-1000" />
                 </Link>
               </motion.div>
@@ -96,12 +96,12 @@ export default function Home() {
 
         <div className="relative z-10 text-center px-6">
           <ScrollReveal direction="up">
-            <h2 className="text-5xl md:text-[140px] font-medium tracking-tighter leading-none italic font-serif opacity-90">
-              Chaos into <br />
-              <span className="text-accent not-italic">Order.</span>
+            <h2 className="text-4xl md:text-7xl lg:text-8xl font-medium tracking-tighter leading-[1.1] opacity-90">
+              The problem isn&apos;t <br />
+              <span className="text-accent italic font-serif">the software.</span>
             </h2>
             <p className="mt-8 text-xl md:text-3xl font-light text-muted-foreground max-w-2xl mx-auto tracking-tight">
-              Replacing manual friction with architectural precision.
+              It&apos;s how it fits into the way people already work.
             </p>
           </ScrollReveal>
         </div>
@@ -118,9 +118,8 @@ export default function Home() {
             <div className="flex items-end justify-between mb-24 border-b border-white/10 pb-12 hover:border-white/20 transition-colors duration-700">
               <div className="space-y-4">
                 <span className="text-[10px] font-bold tracking-[1em] uppercase opacity-30">Portfolio</span>
-                <h2 className="text-4xl md:text-6xl font-medium tracking-tighter italic font-serif">Selected Logic</h2>
+                <h2 className="text-4xl md:text-6xl font-medium tracking-tighter">Recent Work</h2>
               </div>
-              <span className="text-sm font-mono opacity-20 hidden md:block">2023 — 2026 // ARCH_V2</span>
             </div>
           </ScrollReveal>
 
