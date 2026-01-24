@@ -6,6 +6,7 @@ import { useRef } from 'react';
 import { ArrowRight } from 'lucide-react';
 import ScrollReveal from '@/components/ScrollReveal';
 import TextReveal from '@/components/TextReveal';
+import TextScramble from '@/components/TextScramble';
 import ProjectList from '@/components/ProjectList';
 import ParallaxImage from '@/components/ParallaxImage';
 
@@ -36,7 +37,7 @@ export default function Home() {
 
               <motion.h1 variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="text-6xl md:text-8xl lg:text-[115px] font-medium leading-[0.85] tracking-tight mb-16 text-balance">
                 Making <br />
-                technology <br />
+                <TextScramble delay={0.5}>technology</TextScramble> <br />
                 <span className="opacity-40 italic font-light font-serif">work.</span>
               </motion.h1>
 

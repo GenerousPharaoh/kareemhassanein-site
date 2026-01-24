@@ -1,10 +1,11 @@
 'use client';
 
-import Image from 'next/image';
 import Link from 'next/link';
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { ChevronRight, Layers, Workflow, BarChart3, ShieldCheck, ArrowRight } from 'lucide-react';
 import ScrollReveal from '@/components/ScrollReveal';
+import ParallaxImage from '@/components/ParallaxImage';
+import TextScramble from '@/components/TextScramble';
 
 const solutions = [
   {
@@ -37,54 +38,12 @@ const solutions = [
   }
 ];
 
-function TiltImage({ src, alt, className = "" }: { src: string; alt: string; className?: string }) {
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-  const mouseXSpring = useSpring(x);
-  const mouseYSpring = useSpring(y);
-
-  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["8deg", "-8deg"]);
-  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-8deg", "8deg"]);
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const width = rect.width;
-    const height = rect.height;
-    const mouseX = e.clientX - rect.left;
-    const mouseY = e.clientY - rect.top;
-    x.set(mouseX / width - 0.5);
-    y.set(mouseY / height - 0.5);
-  };
-
-  const handleMouseLeave = () => {
-    x.set(0);
-    y.set(0);
-  };
-
-  return (
-    <motion.div
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-      className={`relative rounded-[3.5rem] overflow-hidden glass-card ${className}`}
-    >
-      <div
-        style={{ transform: "translateZ(60px)", transformStyle: "preserve-3d" }}
-        className="absolute inset-0 z-10 bg-gradient-to-t from-background/90 via-transparent to-transparent pointer-events-none"
-      />
-      <motion.div style={{ transform: "translateZ(30px)" }} className="relative aspect-[4/5] w-full">
-        <Image src={src} alt={alt} fill className="object-cover opacity-90" />
-      </motion.div>
-    </motion.div>
-  );
-}
-
 export default function Services() {
   return (
     <main className="pt-24 overflow-hidden relative bg-background">
       <div className="glow-blob top-[15%] -left-[10%] opacity-[0.03]" />
 
-      {/* Capability Hero: Unified Cohesive Reveal Pattern */}
+      {/* Capability Hero */}
       <section className="py-40 px-6 lg:px-0 relative overflow-hidden perspective-3000">
         <div className="section-container">
           <ScrollReveal direction="up" distance={20} blur={20} staggerChildren={0.2} className="grid lg:grid-cols-[1fr_1fr] gap-20 lg:gap-32 items-center">
@@ -93,11 +52,14 @@ export default function Services() {
                 Services
               </motion.span>
               <motion.h1 variants={{ hidden: { opacity: 0, y: 15 }, visible: { opacity: 1, y: 0 } }} className="text-8xl md:text-[130px] font-medium tracking-tighter mb-20 leading-[0.75]">
-                How I can <br /><span className="opacity-40 italic font-light font-serif">help.</span>
+                How I can <br />
+                <span className="opacity-40 italic font-light font-serif">
+                  <TextScramble delay={0.3}>help.</TextScramble>
+                </span>
               </motion.h1>
             </motion.div>
             <motion.div variants={{ hidden: { opacity: 0, x: 30, filter: 'blur(30px)' }, visible: { opacity: 1, x: 0, filter: 'blur(0px)' } }} className="group mb-12">
-              <TiltImage src="/assets/n_strategy.png" alt="Strategic Outcome" />
+              <ParallaxImage src="/assets/n_strategy.png" alt="Strategic Outcome" className="aspect-[4/5] w-full rounded-[2rem]" />
             </motion.div>
           </ScrollReveal>
         </div>
@@ -106,7 +68,7 @@ export default function Services() {
       {/* Section Divider */}
       <div className="divider-subtle w-full" />
 
-      {/* Outcome-Driven Capability Dossiers: Unified Cohesive Reveal Pattern */}
+      {/* Outcome-Driven Capability Dossiers */}
       <section className="py-40 lg:py-64 bg-white/[0.005]">
         <div className="section-container">
           <ScrollReveal direction="up" distance={20} blur={20} staggerChildren={0.15} className="grid lg:grid-cols-2 gap-10">

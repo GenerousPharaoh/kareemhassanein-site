@@ -2,6 +2,7 @@
 
 import { Mail, Linkedin, Globe, ArrowUpRight } from 'lucide-react';
 import ScrollReveal from '@/components/ScrollReveal';
+import TextScramble from '@/components/TextScramble';
 
 const socialLinks = [
   { label: 'Email', href: 'mailto:kareem.hassanein@gmail.com', icon: <Mail className="w-5 h-5" /> },
@@ -24,7 +25,7 @@ export default function Contact() {
 
             <ScrollReveal direction="up" distance={60} blur={20} delay={0.2}>
               <h1 className="text-7xl md:text-[140px] font-medium tracking-tighter mb-20 leading-[0.75]">
-                Get in <br /><span className="opacity-40 italic font-light font-serif">touch.</span>
+                Get in <br /><span className="opacity-40 italic font-light font-serif"><TextScramble delay={0.3}>touch.</TextScramble></span>
               </h1>
             </ScrollReveal>
 
