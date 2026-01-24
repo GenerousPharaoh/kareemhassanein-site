@@ -9,18 +9,18 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "#09090b",
-        foreground: "#fafafa",
+        background: "#0d1117",
+        foreground: "#f0f4f8",
         accent: {
-          DEFAULT: "#f97316",
-          dim: "#ea580c",
+          DEFAULT: "#14b8a6",
+          secondary: "#0d9488",
         },
         muted: {
-          DEFAULT: "#71717a",
-          foreground: "#a1a1aa",
+          DEFAULT: "#1e293b",
+          foreground: "#64748b",
         },
-        card: "#0f0f11",
-        border: "#1f1f23",
+        card: "rgba(15, 23, 42, 0.4)",
+        border: "rgba(255, 255, 255, 0.04)",
       },
       fontFamily: {
         sans: ['var(--font-geist-sans)', 'system-ui', 'sans-serif'],

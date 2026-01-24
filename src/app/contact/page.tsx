@@ -13,6 +13,8 @@ const socialLinks = [
 export default function Contact() {
   return (
     <main className="pt-24 min-h-screen relative overflow-hidden flex items-center bg-background">
+      {/* Ambient glow */}
+      <div className="glow-blob top-[30%] -right-[10%] opacity-[0.02]" />
       <div className="section-container relative z-10 w-full py-32">
         <div className="grid lg:grid-cols-[1.3fr_0.7fr] gap-32 items-center">
           <div>
