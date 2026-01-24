@@ -22,7 +22,7 @@ const services = [
     tagline: 'Technical Leverage.',
     desc: 'I design systems that handle administrative edge cases. From automated document pipes in legal firms to complex intake logic in healthcare, I build for data integrity.',
     points: ['Logical pipe design', 'Edge-case automation', 'Data integrity guardrails'],
-    img: '/assets/flow.png'
+    img: '/images/flow%20of%20organized%20transformation.png'
   },
   {
     index: '03',
@@ -30,7 +30,7 @@ const services = [
     tagline: 'Growth Architecture.',
     desc: 'Identifying operational friction before it caps your growth. I optimize administrative pathways and referral tracking for professional service groups across health and law.',
     points: ['Bottleneck identification', 'Referral attribution', 'Scale-ready SOPs'],
-    img: '/assets/n_implementation.png'
+    img: '/images/orchestrating.png'
   }
 ];
 
@@ -110,7 +110,7 @@ function ServiceSection({ service, isEven }: { service: typeof services[0], isEv
         {/* Image Side */}
         <motion.div
           style={{ y }}
-          className="relative aspect-[4/5] w-full max-w-[600px] mx-auto rounded-3xl overflow-hidden shadow-2xl grayscale hover:grayscale-0 transition-all duration-1000"
+          className="relative aspect-[4/5] w-full max-w-[600px] mx-auto rounded-3xl overflow-hidden shadow-2xl grayscale hover:grayscale-0 transition-all duration-1000 border border-white/5"
         >
           <ParallaxImage src={service.img} alt={service.title} className="w-full h-full" />
           <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-60" />
@@ -127,20 +127,27 @@ export default function Services() {
       <AnimatedGrid />
 
       {/* Cinematic Hero */}
-      <section className="min-h-[90vh] flex flex-col justify-center items-center text-center px-6">
-        <ScrollReveal direction="up">
-          <span className="block text-[10px] font-bold tracking-[0.8em] uppercase mb-12 opacity-30">Architecture</span>
-        </ScrollReveal>
+      <section className="min-h-[90vh] flex flex-col justify-center items-center text-center px-6 relative">
+        <div className="absolute inset-0 z-0 opacity-[0.05] grayscale pointer-events-none">
+          <ParallaxImage src="/images/digital-cathedral.png" alt="Atmospheric Texture" className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-background/50" />
+        </div>
 
-        <h1 className="text-[12vw] md:text-[8vw] font-medium tracking-tighter leading-[0.8] mb-12">
-          Operational <br />
-          <CharReveal delay={0.4} className="text-accent">Design.</CharReveal>
-        </h1>
+        <div className="relative z-10">
+          <ScrollReveal direction="up">
+            <span className="block text-[10px] font-bold tracking-[0.8em] uppercase mb-12 opacity-30">Architecture</span>
+          </ScrollReveal>
 
-        <div className="max-w-3xl border-t border-white/5 pt-12">
-          <p className="text-2xl md:text-3xl text-muted-foreground font-light italic leading-snug">
-            I design and build the technical systems that remove operational friction for professional service firms.
-          </p>
+          <h1 className="text-[12vw] md:text-[8vw] font-medium tracking-tighter leading-[0.8] mb-12">
+            Operational <br />
+            <CharReveal delay={0.4} className="text-accent italic font-serif">Design.</CharReveal>
+          </h1>
+
+          <div className="max-w-3xl border-t border-white/5 pt-12 mx-auto">
+            <p className="text-2xl md:text-3xl text-muted-foreground font-light italic leading-snug">
+              Designing and building the technical systems that remove operational friction for professional service firms.
+            </p>
+          </div>
         </div>
       </section>
 
@@ -234,4 +241,3 @@ export default function Services() {
     </main>
   );
 }
-

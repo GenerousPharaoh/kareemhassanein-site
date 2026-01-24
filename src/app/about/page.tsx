@@ -13,7 +13,7 @@ const roadmap = [
     title: 'Workflow Automation',
     company: 'Tax Relief Counsel',
     desc: 'Addressing high-stakes administrative complexity through custom workflow logic. Built automation pipes for a solo law firm that reduced document generation time by 85%.',
-    img: '/assets/n_hero.png'
+    img: '/images/flow.png'
   },
   {
     period: '2024 - Present',
@@ -39,10 +39,10 @@ const roadmap = [
 ];
 
 const gallery = [
-  { src: '/assets/bridge.png', label: 'Clinical Bridge' },
+  { src: '/images/bridging.png', label: 'Clinical Bridge' },
   { src: '/assets/precision.png', label: 'Operational Precision' },
   { src: '/assets/mapping.png', label: 'System Mapping' },
-  { src: '/assets/harmony.png', label: 'Technical Harmony' }
+  { src: '/images/order.png', label: 'Architectural Order' }
 ];
 
 function BioSection({ title, label, text, img, isReversed }: { title: string, label: string, text: string, img: string, isReversed?: boolean }) {
@@ -97,7 +97,7 @@ export default function About() {
         </div>
 
         <div className="relative h-screen hidden lg:block grayscale">
-          <ParallaxImage src="/assets/n_logic.png" alt="Architecture" className="h-full w-full object-cover opacity-60" />
+          <ParallaxImage src="/images/digital-cathedral.png" alt="Architecture" className="h-full w-full object-cover opacity-40" />
           <div className="absolute inset-0 bg-gradient-to-r from-background via-transparent to-transparent" />
         </div>
       </section>
@@ -114,7 +114,7 @@ export default function About() {
         label="Technical Leverage"
         title="Engineering"
         text="I build systems that solve administrative friction. I focus on logic and data integrity, ensuring that technical tools actually serve the professionals using them."
-        img="/assets/bridge.png"
+        img="/images/image-2.png"
         isReversed
       />
 
@@ -186,4 +186,3 @@ export default function About() {
     </main>
   );
 }
-
