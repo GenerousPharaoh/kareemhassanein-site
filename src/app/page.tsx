@@ -59,25 +59,28 @@ export default function Home() {
               </div>
 
               {/* Metrics Row */}
-              <div className="relative grid grid-cols-3 gap-8 py-10 border-y border-white/5 max-w-3xl mx-auto overflow-hidden group">
-                <div className="absolute inset-0 z-0 opacity-[0.05] grayscale group-hover:opacity-10 transition-opacity duration-700 pointer-events-none">
-                  <ParallaxImage src="/images/image-2.png" alt="Technical Leverage" className="w-full h-full object-cover" />
-                </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-4 max-w-3xl mx-auto">
                 {metrics.map((m) => (
-                  <div key={m.label} className="space-y-2 relative z-10">
-                    <p className="text-4xl md:text-5xl font-serif italic text-accent">{m.value}</p>
-                    <p className="text-[10px] font-bold uppercase tracking-widest opacity-30">{m.label}</p>
+                  <div key={m.label} className="group relative p-6 rounded-2xl border border-white/5 hover:border-white/10 hover:bg-white/[0.02] transition-all duration-500">
+                    <p className="text-4xl md:text-5xl font-serif italic text-accent mb-3">{m.value}</p>
+                    <p className="text-xs text-muted-foreground leading-relaxed">{m.label}</p>
                   </div>
                 ))}
               </div>
 
-              <motion.div variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }} className="flex gap-16 items-center justify-center pt-8">
+              <motion.div variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }} className="flex gap-6 items-center justify-center pt-8">
                 <Link
                   href="/contact"
-                  className="group flex items-center gap-10 text-2xl font-bold tracking-tight text-foreground link-underline pb-1 transition-all"
+                  className="group flex items-center gap-4 text-lg font-medium tracking-tight bg-foreground text-background px-8 py-4 rounded-full hover:bg-accent hover:text-background transition-all duration-500"
                 >
                   Let&apos;s talk
-                  <ArrowRight size={32} className="opacity-20 group-hover:translate-x-4 transition-transform duration-1000" />
+                  <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform duration-500" />
+                </Link>
+                <Link
+                  href="/about"
+                  className="text-lg font-medium tracking-tight text-foreground/60 hover:text-foreground px-6 py-4 transition-all duration-500"
+                >
+                  Learn more
                 </Link>
               </motion.div>
             </div>
@@ -85,22 +88,16 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Immersive Scroll Transition Section */}
-      <section ref={transitionRef} className="h-[80vh] w-full relative overflow-hidden flex items-center justify-center py-24 border-y border-white/5">
-        <ParallaxImage
-          src="/images/chaos-to-order.png"
-          alt="Chaos to Order"
-          className="absolute inset-0 w-full h-full opacity-30"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background pointer-events-none" />
+      {/* Statement Section */}
+      <section ref={transitionRef} className="py-32 md:py-48 w-full relative overflow-hidden flex items-center justify-center">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/[0.02] to-transparent pointer-events-none" />
 
-        <div className="relative z-10 text-center px-6">
+        <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
           <ScrollReveal direction="up">
-            <h2 className="text-4xl md:text-7xl lg:text-8xl font-medium tracking-tighter leading-[1.1] opacity-90">
-              The problem isn&apos;t <br />
-              <span className="text-accent italic font-serif">the software.</span>
+            <h2 className="text-3xl md:text-5xl lg:text-6xl font-medium tracking-tight leading-[1.2] mb-6">
+              The problem isn&apos;t the software.
             </h2>
-            <p className="mt-8 text-xl md:text-3xl font-light text-muted-foreground max-w-2xl mx-auto tracking-tight">
+            <p className="text-xl md:text-2xl font-light text-muted-foreground max-w-2xl mx-auto">
               It&apos;s how it fits into the way people already work.
             </p>
           </ScrollReveal>
@@ -108,18 +105,12 @@ export default function Home() {
       </section>
 
       {/* Selected Projects */}
-      <section className="py-32 relative z-10 w-full px-6 md:px-12">
-        <div className="absolute inset-0 z-0 opacity-[0.03] pointer-events-none grayscale blur-xl">
-          <ParallaxImage src="/images/order.png" alt="Process Texture" className="w-full h-full object-cover" />
-        </div>
-
-        <div className="relative z-10">
+      <section className="py-24 md:py-32 relative z-10 w-full px-6 md:px-12">
+        <div className="max-w-[1400px] mx-auto">
           <ScrollReveal direction="up" distance={40} blur={20}>
-            <div className="flex items-end justify-between mb-24 border-b border-white/10 pb-12 hover:border-white/20 transition-colors duration-700">
-              <div className="space-y-4">
-                <span className="text-[10px] font-bold tracking-[1em] uppercase opacity-30">Portfolio</span>
-                <h2 className="text-4xl md:text-6xl font-medium tracking-tighter">Recent Work</h2>
-              </div>
+            <div className="mb-16 md:mb-20">
+              <span className="text-xs font-medium tracking-[0.3em] uppercase text-muted-foreground mb-4 block">Portfolio</span>
+              <h2 className="text-3xl md:text-5xl font-medium tracking-tight">Recent Work</h2>
             </div>
           </ScrollReveal>
 
