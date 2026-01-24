@@ -137,36 +137,43 @@ export default function About() {
       </section>
 
       {/* Compact Roadmap: Unified Vertical Narrative Pattern */}
-      <section className="py-40 lg:py-64 relative border-y border-white/5">
+      {/* Timeline: Individual High-Fidelity Floating Cards */}
+      <section className="py-40 lg:py-64 relative border-y border-white/5 bg-white/[0.002]">
         <div className="section-container">
-          <ScrollReveal direction="up" distance={20} blur={20} staggerChildren={0.15}>
-            <div className="mb-48">
-              <motion.p variants={{ hidden: { opacity: 0 }, visible: { opacity: 0.3 } }} className="text-[10px] font-bold tracking-[0.4em] uppercase mb-8">Professional Timeline</motion.p>
-              <motion.h2 variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="text-7xl md:text-[120px] font-medium tracking-tighter leading-none mb-12 text-balance">Perspective.</motion.h2>
+          <ScrollReveal direction="up" distance={30} blur={30} staggerChildren={0.2}>
+            <div className="mb-48 flex justify-between items-end">
+              <div className="max-w-xl">
+                <motion.p variants={{ hidden: { opacity: 0 }, visible: { opacity: 0.3 } }} className="text-[10px] font-bold tracking-[0.4em] uppercase mb-8">Professional Timeline</motion.p>
+                <motion.h2 variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="text-8xl md:text-[140px] font-medium tracking-tighter leading-[0.75] mb-12">Perspective.</motion.h2>
+              </div>
             </div>
 
-            <div className="overflow-hidden rounded-[3.5rem] border border-white/5 bg-white/[0.005] glass-nanobanana">
+            <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-3 items-stretch">
               {roadmap.map((item) => (
                 <motion.div
                   key={item.title}
-                  variants={{ hidden: { opacity: 0, y: 30, filter: 'blur(15px)' }, visible: { opacity: 1, y: 0, filter: 'blur(0px)' } }}
-                  className="grid lg:grid-cols-[1.3fr_2.7fr] gap-12 group p-16 bg-background border-b border-white/5 last:border-0 hover:bg-white/[0.02] transition-all duration-1000 glass-narrative before:bg-[url('/assets/n_story_timeline.png')]"
+                  variants={{ hidden: { opacity: 0, y: 40, filter: 'blur(20px)' }, visible: { opacity: 1, y: 0, filter: 'blur(0px)' } }}
+                  className="group flex flex-col h-full rounded-[3.5rem] glass-nanobanana glass-narrative p-12 lg:p-16 hover:bg-white/[0.03] transition-all duration-1000 before:bg-[url('/assets/n_story_timeline.png')]"
                 >
-                  <div className="space-y-8">
-                    <span className="text-[11px] font-bold tracking-widest uppercase italic opacity-30 group-hover:opacity-100 transition-opacity duration-1000">{item.period}</span>
-                    <h3 className="text-4xl font-medium tracking-tight leading-none group-hover:text-accent transition-colors duration-1000">{item.title}</h3>
-                    <p className="text-xl font-light text-muted-foreground italic">{item.company}</p>
+                  <div className="space-y-10 mb-12">
+                    <div className="flex justify-between items-start">
+                      <span className="text-[10px] font-bold tracking-widest uppercase opacity-20 group-hover:opacity-60 transition-opacity duration-1000">{item.period}</span>
+                      <ChevronRight size={16} className="opacity-10 group-hover:translate-x-2 transition-all duration-1000" />
+                    </div>
+                    <div className="space-y-4">
+                      <h3 className="text-4xl font-medium tracking-tight leading-tight group-hover:text-foreground transition-colors duration-1000">{item.title}</h3>
+                      <p className="text-lg font-light text-muted-foreground italic opacity-60 group-hover:opacity-100 transition-all">{item.company}</p>
+                    </div>
                   </div>
 
-                  <div className="space-y-12">
+                  <div className="mt-auto pt-10 border-t border-white/5 space-y-6">
                     <p className="text-[10px] font-bold uppercase tracking-[0.5em] opacity-20 italic">{item.focus}</p>
-                    <ul className="grid md:grid-cols-2 gap-x-12 gap-y-12">
+                    <ul className="space-y-4">
                       {item.points.map((point) => (
                         <li
                           key={point}
-                          className="flex gap-6 text-xl text-muted-foreground font-light leading-snug items-start border-l border-white/[0.03] pl-6 hover:text-foreground transition-all duration-700"
+                          className="text-lg text-muted-foreground font-light leading-snug border-l border-white/[0.05] pl-6 hover:text-foreground transition-all duration-700"
                         >
-                          <ChevronRight size={20} className="opacity-10 mt-1 flex-shrink-0" />
                           {point}
                         </li>
                       ))}
