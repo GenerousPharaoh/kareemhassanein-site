@@ -106,7 +106,7 @@ export default function Home() {
           <img
             src="/images/chaos-to-order.png"
             alt="Chaos to Order"
-            className="w-full h-[110%] object-cover opacity-60 grayscale"
+            className="w-full h-[110%] object-cover opacity-30"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background" />
         </motion.div>
