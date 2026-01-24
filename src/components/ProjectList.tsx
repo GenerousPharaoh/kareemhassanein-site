@@ -66,6 +66,7 @@ export default function ProjectList() {
                             src={project.image}
                             alt={project.title}
                             fill
+                            priority // Preload images
                             className={`object-cover transition-opacity duration-500 ${activeProject === index ? 'opacity-100' : 'opacity-0'
                                 }`}
                         />

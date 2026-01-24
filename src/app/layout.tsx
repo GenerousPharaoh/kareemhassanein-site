@@ -43,10 +43,12 @@ export default function RootLayout({
       >
         <div className="noise-overlay" />
         <Spotlight />
-        <Header />
-        <main className="min-h-screen page-content">
-          {children}
-        </main>
+        <div className="relative z-10 bg-background mb-[800px] shadow-2xl">
+          <Header />
+          <main className="min-h-screen page-content">
+            {children}
+          </main>
+        </div>
         <Footer />
       </body>
     </html>

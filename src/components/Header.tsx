@@ -1,8 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { useState, useEffect } from 'react';
-import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import { useState, useEffect, useRef } from 'react';
+import { motion, useScroll, AnimatePresence } from 'framer-motion';
 import { usePathname } from 'next/navigation';
 
 const navItems = [
@@ -15,13 +15,23 @@ const navItems = [
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = usePathname();
-  const { scrollY } = useScroll();
 
-  const headerBg = useTransform(
-    scrollY,
-    [0, 50],
-    ['rgba(16, 20, 29, 0)', 'rgba(16, 20, 29, 0.95)']
-  );
+  // Smart Scroll Logic
+  const { scrollY } = useScroll();
+  const [hidden, setHidden] = useState(false);
+  const lastScrollY = useRef(0);
+
+  useEffect(() => {
+    return scrollY.on("change", (latest) => {
+      const direction = latest > lastScrollY.current ? "down" : "up";
+      if (direction === "down" && latest > 100) {
+        setHidden(true);
+      } else {
+        setHidden(false);
+      }
+      lastScrollY.current = latest;
+    });
+  }, [scrollY]);
 
   const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -32,8 +42,13 @@ export default function Header() {
   return (
     <>
       <motion.header
-        style={{ backgroundColor: headerBg }}
-        className="fixed top-0 left-0 right-0 z-50 py-10 px-8 lg:px-20 flex items-center justify-between pointer-events-none backdrop-blur-3xl transition-all duration-700"
+        variants={{
+          visible: { y: 0, opacity: 1 },
+          hidden: { y: "-100%", opacity: 0 },
+        }}
+        animate={hidden ? "hidden" : "visible"}
+        transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+        className="fixed top-0 left-0 right-0 z-50 py-10 px-8 lg:px-20 flex items-center justify-between pointer-events-none transition-all duration-700 mix-blend-difference text-white"
       >
         <Link
           href="/"
@@ -54,14 +69,14 @@ export default function Header() {
                 href={item.href}
                 className="relative group py-2"
               >
-                <span className={`text-[10px] font-bold tracking-[0.2em] uppercase transition-colors duration-700 ${isActive ? 'text-foreground' : 'text-foreground/30 group-hover:text-foreground'
+                <span className={`text-[10px] font-bold tracking-[0.2em] uppercase transition-colors duration-700 ${isActive ? 'text-white' : 'text-white/40 group-hover:text-white'
                   }`}>
                   {item.label}
                 </span>
                 {isActive && (
                   <motion.div
                     layoutId="header-active-moon"
-                    className="absolute -bottom-1 left-0 right-0 h-[1px] bg-foreground/40"
+                    className="absolute -bottom-1 left-0 right-0 h-[1px] bg-white/40"
                     transition={{ duration: 0.8, ease }}
                   />
                 )}
@@ -73,7 +88,7 @@ export default function Header() {
         {/* Mobile Menu Button */}
         <button
           onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className="md:hidden relative z-50 p-2 -mr-2 text-foreground/50 hover:text-foreground pointer-events-auto"
+          className="md:hidden relative z-50 p-2 -mr-2 text-white/50 hover:text-white pointer-events-auto"
           aria-label="Toggle menu"
         >
           <div className="space-y-1.5 w-5">

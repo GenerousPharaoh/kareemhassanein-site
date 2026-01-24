@@ -118,21 +118,6 @@ export default function Home() {
       {/* Section Divider */}
       <div className="divider-subtle w-full" />
 
-      {/* Closing Statement */}
-      <section className="py-96 text-center relative flex flex-col items-center bg-white/[0.002]">
-        <ScrollReveal direction="up" blur={30} distance={20}>
-          <h2 className="text-8xl md:text-[180px] font-medium tracking-tighter mb-24 leading-[0.75]">
-            Let&apos;s <br /><span className="opacity-40 italic font-light font-serif">talk.</span>
-          </h2>
-          <Link
-            href="/contact"
-            className="group inline-flex items-center gap-12 text-5xl font-light link-underline pb-4 px-12 transition-all"
-          >
-            Get in touch
-            <ArrowRight size={72} className="opacity-0 group-hover:opacity-100 group-hover:translate-x-6 transition-all duration-[1.5s]" />
-          </Link>
-        </ScrollReveal>
-      </section>
     </div>
   );
 }
