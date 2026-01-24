@@ -3,7 +3,6 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import SmoothScroll from "@/components/SmoothScroll";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -38,14 +37,12 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased font-sans`}
       >
-        <SmoothScroll>
-          <div className="noise-overlay" />
-          <Header />
-          <main className="min-h-screen page-content">
-            {children}
-          </main>
-          <Footer />
-        </SmoothScroll>
+        <div className="noise-overlay" />
+        <Header />
+        <main className="min-h-screen page-content">
+          {children}
+        </main>
+        <Footer />
       </body>
     </html>
   );
