@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useRef } from 'react';
 import ProjectListItem from './ProjectListItem';
-import { motion, useSpring, useMotionValue } from 'framer-motion';
+import { motion } from 'framer-motion';
 import Image from 'next/image';
 
 const projects = [
@@ -34,25 +34,6 @@ export default function ProjectList() {
     const [activeProject, setActiveProject] = useState<number | null>(null);
     const containerRef = useRef<HTMLDivElement>(null);
 
-    // Smooth mouse tracking
-    const mouseX = useMotionValue(0);
-    const mouseY = useMotionValue(0);
-
-    // Smooth spring physics for the image
-    const springConfig = { damping: 20, stiffness: 100, mass: 0.5 };
-    const smoothX = useSpring(mouseX, springConfig);
-    const smoothY = useSpring(mouseY, springConfig);
-
-    useEffect(() => {
-        const handleMouseMove = (e: MouseEvent) => {
-            mouseX.set(e.clientX);
-            mouseY.set(e.clientY);
-        };
-
-        window.addEventListener('mousemove', handleMouseMove);
-        return () => window.removeEventListener('mousemove', handleMouseMove);
-    }, [mouseX, mouseY]);
-
     return (
         <div ref={containerRef} className="w-full flex flex-col relative group/list">
             {projects.map((project, index) => (
@@ -64,20 +45,19 @@ export default function ProjectList() {
                 />
             ))}
 
-            {/* Shared Floating Image */}
+            {/* Shared Floating Image - Fixed Center */}
             <motion.div
                 style={{
-                    x: smoothX,
-                    y: smoothY,
-                    top: 0,
-                    left: 0,
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)', // Centered in viewport
                 }}
                 animate={{
                     opacity: activeProject !== null ? 1 : 0,
-                    scale: activeProject !== null ? 1 : 0.5,
+                    scale: activeProject !== null ? 1 : 0.95, // Subtle breathe effect instead of movement
                 }}
                 transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                className="fixed pointer-events-none z-10 hidden md:block w-[400px] h-[500px] -translate-x-1/2 -translate-y-1/2 rounded-2xl overflow-hidden glass-card"
+                className="fixed pointer-events-none z-10 hidden md:block w-[500px] h-[600px] -translate-x-1/2 -translate-y-1/2 rounded-2xl overflow-hidden glass-card"
             >
                 <div className="relative w-full h-full bg-black/50">
                     {projects.map((project, index) => (
