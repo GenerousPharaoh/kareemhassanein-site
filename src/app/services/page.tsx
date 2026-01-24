@@ -34,10 +34,22 @@ const services = [
   }
 ];
 
-const techStack = [
-  { group: 'Automation', tools: ['Claude Code', 'Google Antigravity', 'Webhooks', 'REST APIs'] },
-  { group: 'Operations', tools: ['Jane App', 'Practice Management', 'CRM Architectures', 'Workflow Mapping'] },
-  { group: 'Digital', tools: ['Next.js (App Dir)', 'TypeScript', 'Lighthouse / SEO', 'Google Search Console'] }
+const technicalIndex = [
+  {
+    domain: 'Automation',
+    tools: ['Claude Code', 'Google Antigravity', 'Webhooks', 'REST APIs'],
+    specs: ['LLM integration', 'Logic pipes', 'Real-time sync', 'Custom endpoints']
+  },
+  {
+    domain: 'Operations',
+    tools: ['Jane App', 'Practice Management', 'CRM Architectures', 'Workflow Mapping'],
+    specs: ['EHR architecture', 'Patient acquisition', 'Data migration', 'Lead tracking']
+  },
+  {
+    domain: 'Digital',
+    tools: ['Next.js (App Dir)', 'TypeScript', 'Lighthouse / SEO', 'Google Search Console'],
+    specs: ['SSR / RSC', 'Static typing', 'Performance audit', 'Index optimization']
+  }
 ];
 
 function ServiceSection({ service, isEven }: { service: typeof services[0], isEven: boolean }) {
@@ -143,55 +155,70 @@ export default function Services() {
         ))}
       </div>
 
-      {/* Tech Stack Spec Sheet Section */}
-      <section className="py-64 px-12 lg:px-32 relative">
+      {/* Technical Index: Tabular Spec Sheet */}
+      <section className="py-64 px-6 lg:px-32 relative bg-white/[0.005] border-t border-white/5">
         <div className="max-w-[1600px] mx-auto">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-32 gap-10">
-            <div className="space-y-6">
-              <span className="text-accent font-mono text-sm tracking-[0.4em] uppercase block">Inventory</span>
-              <h2 className="text-7xl md:text-9xl font-medium tracking-tighter leading-none italic font-serif opacity-80">
-                The Stack.
-              </h2>
-            </div>
-            <p className="text-xl text-muted-foreground font-light max-w-sm border-l border-white/10 pl-10 mb-2 italic">
-              Technical infrastructure for professional service groups.
-            </p>
+          <div className="mb-32">
+            <span className="text-accent font-mono text-sm tracking-[0.6em] uppercase block mb-8">System Inventory</span>
+            <h2 className="text-7xl md:text-8xl font-medium tracking-tighter italic font-serif">
+              Technical Index
+            </h2>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-y-24 border-t border-white/5 pt-24">
-            {techStack.map((group) => (
-              <div key={group.group} className="space-y-16 px-4 md:px-0">
-                <div className="flex items-center gap-6">
-                  <div className="w-2 h-2 rounded-full bg-accent animate-pulse" />
-                  <h3 className="text-xs font-bold tracking-[0.5em] uppercase opacity-40">{group.group}</h3>
+          <div className="w-full border-t border-white/10">
+            {technicalIndex.map((row) => (
+              <div key={row.domain} className="grid md:grid-cols-[1fr_2fr_1fr] border-b border-white/5 py-16 group hover:bg-white/[0.01] transition-all duration-700 items-start gap-12">
+
+                {/* Domain Header */}
+                <div className="space-y-4">
+                  <div className="flex items-center gap-4">
+                    <div className="w-[1px] h-12 bg-accent opacity-20 group-hover:h-16 transition-all duration-700" />
+                    <h3 className="font-mono text-xs tracking-[0.4em] uppercase opacity-40 group-hover:opacity-80 transition-opacity">
+                      {row.domain}
+                    </h3>
+                  </div>
                 </div>
-                <ul className="space-y-10">
-                  {group.tools.map(tool => (
-                    <li key={tool} className="group relative">
-                      <div className="flex items-end gap-6 overflow-hidden">
-                        <span className="text-2xl md:text-4xl font-light tracking-tight text-foreground/70 group-hover:text-foreground transition-all duration-700 whitespace-nowrap">
-                          {tool}
-                        </span>
-                        <div className="h-[1px] w-full bg-white/5 group-hover:bg-accent/40 transition-colors duration-1000 mb-2" />
-                      </div>
-                    </li>
+
+                {/* Core Tools */}
+                <div className="flex flex-wrap gap-x-12 gap-y-8">
+                  {row.tools.map(tool => (
+                    <span key={tool} className="text-3xl md:text-5xl font-light tracking-tight text-foreground/70 group-hover:text-foreground transition-all duration-500 whitespace-nowrap italic font-serif">
+                      {tool}
+                    </span>
                   ))}
-                </ul>
+                </div>
+
+                {/* Technical Specs */}
+                <div className="hidden md:block space-y-4">
+                  <p className="text-[10px] font-bold tracking-[0.3em] uppercase opacity-10 mb-6">Capabilities</p>
+                  <div className="grid grid-cols-1 gap-2">
+                    {row.specs.map(spec => (
+                      <div key={spec} className="flex items-center gap-4 group/spec">
+                        <div className="w-1 h-1 rounded-full bg-white/5 group-hover/spec:bg-accent/40" />
+                        <span className="text-[11px] font-mono tracking-widest opacity-20 group-hover/spec:opacity-60 transition-opacity">
+                          {spec}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
               </div>
             ))}
           </div>
-        </div>
 
-        {/* Ambient Grid Marker */}
-        <div className="absolute bottom-0 right-0 p-12 opacity-10 text-[10px] font-mono tracking-widest hidden lg:block">
-          PRO_SPEC_V2.0 // CORE_STACK
+          {/* Bottom Verification Stat */}
+          <div className="mt-24 flex justify-between items-end border-t border-white/5 pt-8 opacity-10">
+            <span className="text-[10px] font-mono tracking-widest uppercase">PRO_SPEC_V2.0 // ARCHITECTURAL_INTENT</span>
+            <span className="text-[10px] font-mono tracking-[0.5em] uppercase">Verified logic units</span>
+          </div>
         </div>
       </section>
 
       {/* The Final Line */}
       <section className="py-96 text-center border-t border-white/5">
         <ScrollReveal direction="up">
-          <h2 className="text-8xl md:text-[180px] font-medium tracking-[calc(-0.04em)] leading-[0.7] opacity-10">
+          <h2 className="text-8xl md:text-[220px] font-medium tracking-[calc(-0.06em)] leading-[0.7] opacity-5 select-none">
             Ready.
           </h2>
         </ScrollReveal>
