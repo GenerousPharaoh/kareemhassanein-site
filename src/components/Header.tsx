@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import { usePathname } from 'next/navigation';
@@ -18,47 +18,52 @@ export default function Header() {
   const pathname = usePathname();
   const { scrollY } = useScroll();
 
-  const headerHeight = useTransform(scrollY, [0, 100], ['6rem', '4.5rem']);
+  // Header transformation values
+  const headerPadding = useTransform(scrollY, [0, 100], ['20px', '12px']);
   const headerBg = useTransform(
     scrollY,
     [0, 100],
-    ['rgba(9, 9, 11, 0)', 'rgba(15, 15, 17, 0.7)']
+    ['rgba(15, 15, 17, 0)', 'rgba(15, 15, 17, 0.8)']
   );
   const headerBorder = useTransform(
     scrollY,
     [0, 100],
-    ['rgba(255, 255, 255, 0)', 'rgba(255, 255, 255, 0.08)']
+    ['rgba(255, 255, 255, 0)', 'rgba(255, 255, 255, 0.1)']
   );
   const headerBlur = useTransform(scrollY, [0, 100], ['blur(0px)', 'blur(16px)']);
-  const headerY = useTransform(scrollY, [0, 100], [0, 8]);
-  const headerWidth = useTransform(scrollY, [0, 100], ['100%', '95%']);
+  const headerY = useTransform(scrollY, [0, 100], [20, 12]);
+  const headerWidth = useTransform(scrollY, [0, 100], ['95%', '90%']);
 
   const expoEasing = [0.16, 1, 0.3, 1] as const;
 
+  // Close mobile menu on route change
+  useEffect(() => {
+    setIsMenuOpen(false);
+  }, [pathname]);
+
   return (
     <>
-      <motion.header
-        style={{
-          height: headerHeight,
-          backgroundColor: headerBg,
-          borderColor: headerBorder,
-          backdropFilter: headerBlur,
-          y: headerY,
-          width: headerWidth,
-        }}
-        className="fixed top-0 left-1/2 -translate-x-1/2 z-50 border rounded-2xl transition-shadow duration-500 overflow-hidden"
-      >
-        <nav className="h-full max-w-6xl mx-auto px-8 flex items-center">
-          <div className="w-full flex items-center justify-between">
+      <div className="fixed top-0 left-0 right-0 z-50 pointer-events-none flex justify-center">
+        <motion.header
+          style={{
+            backgroundColor: headerBg,
+            borderColor: headerBorder,
+            backdropFilter: headerBlur,
+            y: headerY,
+            width: headerWidth,
+            padding: headerPadding,
+          }}
+          className="pointer-events-auto border rounded-[2rem] shadow-2xl transition-shadow duration-500 overflow-hidden max-w-7xl"
+        >
+          <nav className="flex items-center justify-between px-6 lg:px-10">
             <Link
               href="/"
-              onClick={() => setIsMenuOpen(false)}
-              className="group flex items-center gap-2"
+              className="flex items-center gap-3 group relative z-50"
             >
-              <span className="text-xl font-medium tracking-tight text-foreground transition-colors group-hover:text-accent duration-300">
+              <div className="w-2 h-2 rounded-full bg-accent animate-pulse" />
+              <span className="text-xl font-medium tracking-tight text-foreground">
                 Kareem Hassanein
               </span>
-              <div className="w-1.5 h-1.5 rounded-full bg-accent scale-0 group-hover:scale-100 transition-transform duration-500" />
             </Link>
 
             {/* Desktop Navigation */}
@@ -71,18 +76,16 @@ export default function Header() {
                     href={item.href}
                     className="relative group py-2"
                   >
-                    <span className={`text-[13px] font-medium tracking-wide uppercase transition-colors duration-300 ${isActive ? 'text-foreground' : 'text-muted-foreground group-hover:text-foreground'
+                    <span className={`text-[12px] font-semibold tracking-[0.2em] uppercase transition-colors duration-300 ${isActive ? 'text-accent' : 'text-muted-foreground group-hover:text-foreground'
                       }`}>
                       {item.label}
                     </span>
-                    {isActive ? (
+                    {isActive && (
                       <motion.div
-                        layoutId="nav-active"
-                        className="absolute -bottom-1 left-0 right-0 h-[1.5px] bg-accent"
-                        transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                        layoutId="pill-nav-active"
+                        className="absolute -bottom-1 left-0 right-0 h-[2px] bg-accent"
+                        transition={{ duration: 0.6, ease: expoEasing }}
                       />
-                    ) : (
-                      <div className="absolute -bottom-1 left-0 w-0 h-[1.5px] bg-accent/40 transition-all duration-500 group-hover:w-full" />
                     )}
                   </Link>
                 );
@@ -92,38 +95,41 @@ export default function Header() {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="md:hidden relative z-[60] p-2 -mr-2 text-muted-foreground hover:text-foreground transition-colors"
+              className="md:hidden relative z-[60] p-2 -mr-2 text-foreground"
               aria-label="Toggle menu"
             >
-              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              <motion.div
+                animate={isMenuOpen ? { rotate: 90 } : { rotate: 0 }}
+                transition={{ duration: 0.4, ease: expoEasing }}
+              >
+                {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
+              </motion.div>
             </button>
-          </div>
-        </nav>
-      </motion.header>
+          </nav>
+        </motion.header>
+      </div>
 
       {/* Mobile Navigation - Full Screen Overlay */}
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, backdropFilter: 'blur(0px)' }}
-            animate={{ opacity: 1, backdropFilter: 'blur(12px)' }}
-            exit={{ opacity: 0, backdropFilter: 'blur(0px)' }}
-            transition={{ duration: 0.5, ease: expoEasing }}
-            className="fixed inset-0 z-[40] bg-background/80 md:hidden"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.4 }}
+            className="fixed inset-0 z-[45] bg-background/95 backdrop-blur-2xl md:hidden flex flex-col items-center justify-center"
           >
-            <div className="flex flex-col items-center justify-center h-full gap-8 px-6">
+            <div className="flex flex-col items-center gap-12">
               {navItems.map((item, i) => (
                 <motion.div
                   key={item.href}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 10 }}
-                  transition={{ delay: i * 0.1, duration: 0.6, ease: expoEasing }}
+                  initial={{ opacity: 0, scale: 0.8, y: 30 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  transition={{ delay: i * 0.1, duration: 0.8, ease: expoEasing }}
                 >
                   <Link
                     href={item.href}
-                    onClick={() => setIsMenuOpen(false)}
-                    className={`text-4xl font-medium tracking-tighter ${pathname === item.href ? 'text-accent' : 'text-foreground'
+                    className={`text-5xl font-medium tracking-tighter transition-all duration-300 ${pathname === item.href ? 'text-accent scale-110' : 'text-foreground hover:text-accent'
                       }`}
                   >
                     {item.label}
