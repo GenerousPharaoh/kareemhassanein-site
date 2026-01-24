@@ -9,29 +9,29 @@ import ScrollReveal from '@/components/ScrollReveal';
 
 const impacts = [
   {
-    title: 'Kinetikare Physio',
-    details: 'Built automation systems using Claude Code that reduced document generation time by 85%. Streamlined intake and correspondence workflows.',
-    tag: 'Automation',
+    title: 'KinetiKare Physio',
+    details: 'Built and deployed a 60+ page Next.js healthcare application with online booking integration, SEO content strategy across 6 service categories, and automated review capture.',
+    tag: 'Web Development',
     href: 'https://www.kinetikarephysio.com',
-    icon: <Workflow className="w-5 h-5 opacity-40" />
-  },
-  {
-    title: 'Endorphins Health',
-    details: 'Led Heidi AI rollout across a 6-specialty clinic. Created SOPs that got every clinician on board and cut documentation time significantly.',
-    tag: 'AI Implementation',
-    href: 'https://www.endorphinshealth.com',
-    icon: <Sparkles className="w-5 h-5 opacity-40" />
-  },
-  {
-    title: 'Booking System Redesign',
-    details: 'Redesigned multi-provider booking architecture in Jane App. Built referral pathways and configured local SEO to drive patient acquisition.',
-    tag: 'Operations',
     icon: <Binary className="w-5 h-5 opacity-40" />
   },
   {
-    title: 'Clinical Workflow Design',
-    details: 'Created repeatable processes for clinical operations. Designed intake flows and scheduling systems that actually work in practice.',
-    tag: 'Process',
+    title: 'Endorphins Health',
+    details: 'Leading digital operations across 6 specialties. Redesigned booking architecture, integrated multi-provider scheduling, and launched the clinic website.',
+    tag: 'Digital Operations',
+    href: 'https://www.endorphinshealth.com',
+    icon: <Workflow className="w-5 h-5 opacity-40" />
+  },
+  {
+    title: 'Tax Relief Counsel',
+    details: 'Built Claude Code automation that reduced document generation time by 85%. Defined SOPs for case management and automated intake workflows.',
+    tag: 'Workflow Automation',
+    icon: <Sparkles className="w-5 h-5 opacity-40" />
+  },
+  {
+    title: 'Movement Solutions',
+    details: 'Led Heidi AI implementation from evaluation to go-live, achieving 100% clinician adoption in 8 weeks. Reduced documentation time by 3 hours/week per practitioner.',
+    tag: 'AI Implementation',
     icon: <HeartPulse className="w-5 h-5 opacity-40" />
   }
 ];
