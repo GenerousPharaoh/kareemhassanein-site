@@ -6,42 +6,42 @@ import CharReveal from '@/components/CharReveal';
 const services = [
   {
     index: '01',
-    title: 'Software Implementation',
-    tagline: 'Get your team actually using the tools you paid for.',
-    desc: 'Most software fails because of poor rollout, not poor software. I handle the configuration, training, and workflow adjustments that turn shelfware into something people actually use.',
-    points: ['System configuration', 'Team training', 'Workflow documentation'],
+    title: 'Workflow Automation',
+    tagline: 'Stop doing manually what a computer should handle.',
+    desc: 'I build LLM-powered automations and integrations for the repetitive work that eats up your day. Document generation, intake processing, client communications, referral tracking. If you do it the same way every time, it can be automated.',
+    points: ['LLM document generation', 'Intake automation', 'API integrations', 'Template libraries'],
   },
   {
     index: '02',
-    title: 'Process Automation',
-    tagline: 'Stop doing manually what a computer should handle.',
-    desc: 'I build automations for the repetitive work that eats up your day. Document generation, appointment reminders, intake processing, referral tracking. If you do it the same way every time, it can probably be automated.',
-    points: ['Document automation', 'Scheduling workflows', 'Data entry reduction'],
+    title: 'Software Implementation',
+    tagline: 'Get your team actually using the tools you paid for.',
+    desc: 'Most software fails at adoption, not installation. I handle everything from evaluation through go-live: configuration, workflow adjustments, training, and the change management that gets teams to actually use what you bought.',
+    points: ['System configuration', 'Training enablement', 'Change management', 'Post-go-live support'],
   },
   {
     index: '03',
-    title: 'Operations Consulting',
+    title: 'Operations Improvement',
     tagline: 'Figure out where time and money are leaking.',
-    desc: 'Sometimes you need someone to look at how your practice actually runs and find the bottlenecks. I map out your workflows, identify what is slowing you down, and recommend fixes.',
-    points: ['Workflow mapping', 'Bottleneck analysis', 'Process documentation'],
+    desc: 'I map out how your practice actually runs, find the bottlenecks, and fix them. Intake redesign, scheduling optimization, documentation workflows, referral pathways. Process improvement backed by operational experience.',
+    points: ['Workflow mapping', 'Process optimization', 'SOPs and playbooks', 'Capacity planning'],
   }
 ];
 
 const technicalIndex = [
   {
-    domain: 'AI & Automation',
-    tools: ['Claude', 'Heidi AI', 'Zapier', 'Custom Scripts'],
-    specs: ['Document generation', 'Clinical notes', 'Workflow triggers', 'Data processing']
+    domain: 'Automation & AI',
+    tools: ['Claude Code', 'Heidi AI', 'REST APIs', 'Webhooks'],
+    specs: ['LLM document generation', 'Clinical documentation', 'Workflow triggers', 'System integrations']
   },
   {
-    domain: 'Healthcare',
-    tools: ['Jane App', 'Cliniko', 'Practice Management', 'EHR Systems'],
-    specs: ['Booking setup', 'Intake forms', 'Billing config', 'Referral tracking']
+    domain: 'Healthcare Operations',
+    tools: ['Jane App', 'Practice Management Systems', 'EHR Platforms'],
+    specs: ['Multi-provider scheduling', 'Intake optimization', 'Referral tracking', 'Review capture']
   },
   {
-    domain: 'Web & SEO',
-    tools: ['Next.js', 'Vercel', 'Google Search Console', 'Analytics'],
-    specs: ['Site builds', 'Performance', 'Local SEO', 'Conversion tracking']
+    domain: 'Development & Analytics',
+    tools: ['Next.js', 'GitHub', 'Vercel', 'Google Analytics'],
+    specs: ['Web applications', 'CI/CD pipelines', 'Local SEO', 'Conversion tracking']
   }
 ];
 
@@ -94,7 +94,7 @@ export default function Services() {
               What I <CharReveal delay={0.4} className="text-accent italic font-serif">do.</CharReveal>
             </h1>
             <p className="text-xl md:text-2xl text-muted-foreground font-light leading-relaxed max-w-2xl">
-              I help healthcare practices and professional service firms get more out of their software and spend less time on admin work.
+              Operations improvement, workflow automation, and technology implementation for healthcare practices and professional services firms.
             </p>
           </ScrollReveal>
         </div>

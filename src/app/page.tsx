@@ -11,9 +11,9 @@ import Link from 'next/link';
 import { useRef } from 'react';
 
 const metrics = [
-  { label: 'Annual Billings (as clinician)', value: '$600K+' },
-  { label: 'Doc Generation Time Saved', value: '85%' },
-  { label: 'Team Adoption (Heidi AI)', value: '100%' },
+  { label: 'Document generation time reduced', value: '85%' },
+  { label: 'Clinician adoption in 8 weeks', value: '100%' },
+  { label: 'Annual admin cost eliminated', value: '$20K' },
 ];
 
 export default function Home() {
@@ -46,13 +46,13 @@ export default function Home() {
               </ScrollReveal>
 
               <motion.h1 variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="text-5xl md:text-7xl lg:text-8xl font-medium leading-[0.9] tracking-tighter mb-16 text-balance">
-                I make software <CharReveal delay={0.6} className="py-2 text-accent italic font-serif">work</CharReveal> <br />
-                for the people using it.
+                I find bottlenecks and <CharReveal delay={0.6} className="py-2 text-accent italic font-serif">build</CharReveal> <br />
+                systems to fix them.
               </motion.h1>
 
               <div className="max-w-2xl mx-auto">
                 <TextReveal
-                  text="Most technology fails at adoption, not installation. I help healthcare practices and law firms get their tools to actually work. Implementation strategy, workflow design, and the operational details that determine whether software gets used or abandoned."
+                  text="Operations improvement, workflow automation, and technology implementation for healthcare practices and professional services firms. I map out where time and money are leaking, then build the systems, automations, and processes to stop it."
                   className="text-xl md:text-2xl text-muted-foreground font-light leading-relaxed"
                   delay={0.8}
                 />

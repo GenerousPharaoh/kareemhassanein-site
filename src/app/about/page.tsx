@@ -7,27 +7,27 @@ import CharReveal from '@/components/CharReveal';
 const experience = [
   {
     period: '2025 - Present',
-    role: 'Automation',
+    role: 'Workflow Automation',
     company: 'Tax Relief Counsel',
-    desc: 'A solo tax lawyer was spending hours on repetitive document assembly. I built a Claude-powered system that generates court-ready documents from intake data. 85% faster than before.',
+    desc: 'Built an LLM-based drafting automation system that reduced document generation time by 85%. Mapped intake and client communication workflows, identified bottlenecks, and created a reusable template library for repeatable output at scale.',
   },
   {
     period: '2024 - Present',
-    role: 'Operations',
+    role: 'Digital Strategy & Operations',
     company: 'Endorphins Health',
-    desc: 'A 6-practitioner clinic with booking chaos and lost referrals. I rebuilt their Jane App configuration, automated follow-ups, and built tracking for referral sources. $600K+ in attributed revenue.',
+    desc: 'Redesigned booking architecture across 6 specialties, reducing intake friction. Built and deployed a 60+ page web application with booking integration and Google Reviews API. Executed local SEO across 8 GTA municipalities.',
   },
   {
     period: '2025 - Present',
-    role: 'Advisory',
-    company: 'Neuro-Mod (Startup)',
-    desc: 'A medical device startup building tools for clinicians. I review their interface designs and flag usability issues before they ship.',
+    role: 'Clinical Advisor',
+    company: 'Neuro-Mod',
+    desc: 'Reviewing clinician workflows for a medical device startup. Documenting usability friction points and delivering workflow integration recommendations to support deployment readiness.',
   },
   {
     period: '2021 - 2024',
-    role: 'Clinical',
-    company: 'Movement Solutions Physio',
-    desc: 'Before any of this, I was a physiotherapist. Three years as the top revenue generator at a busy clinic. I led the rollout of Heidi AI for clinical documentation and got 100% team adoption in 8 weeks.',
+    role: 'Registered Physiotherapist',
+    company: 'Movement Solutions',
+    desc: 'Top revenue-generating clinician for 3 consecutive years. Led the rollout of Heidi AI from evaluation through go-live, achieving 100% adoption in 8 weeks, reducing documentation by 3 hours/week per practitioner, and eliminating $20K in annual admin cost.',
   }
 ];
 
@@ -45,13 +45,16 @@ export default function About() {
             </h1>
             <div className="space-y-6 text-lg md:text-xl text-muted-foreground leading-relaxed">
               <p>
-                I spent years treating patients. MSc from Robert Gordon, top biller at a busy clinic, the whole trajectory.
+                I spent years as a physiotherapist. MSc from Robert Gordon, 6,000+ patient sessions, top revenue generator at a busy clinic for three consecutive years.
               </p>
               <p>
                 But I kept getting pulled into the operational side. Why is the booking system losing referrals? Why are clinicians spending three hours a day on documentation? Why did we buy this software if nobody uses it?
               </p>
+              <p>
+                So I started fixing those problems. Led an AI documentation rollout that hit 100% adoption in 8 weeks. Built web applications. Created automation systems that cut document generation time by 85%.
+              </p>
               <p className="text-foreground">
-                Eventually I realized I was more interested in fixing those problems than treating another rotator cuff. So now that&apos;s what I do.
+                Now I help healthcare practices and professional services firms do the same. Find the bottlenecks, build the systems, drive the adoption.
               </p>
             </div>
           </ScrollReveal>
@@ -65,16 +68,16 @@ export default function About() {
             <div className="grid md:grid-cols-2 gap-12 md:gap-16">
               <div>
                 <h2 className="text-sm font-medium text-accent mb-4">Why it matters</h2>
-                <h3 className="text-2xl md:text-3xl font-medium tracking-tight mb-4">Clinical experience.</h3>
+                <h3 className="text-2xl md:text-3xl font-medium tracking-tight mb-4">Operational experience.</h3>
                 <p className="text-muted-foreground leading-relaxed">
-                  Most implementation consultants have never used the software in a real workflow. I have. I know what it feels like when the system fights you instead of helping. That changes how I approach the work.
+                  8,000+ hours of client-facing delivery. I know what it feels like when systems fight you instead of helping. That shapes how I map workflows, configure tools, and design automations that actually fit into real work.
                 </p>
               </div>
               <div>
                 <h2 className="text-sm font-medium text-accent mb-4">How I work</h2>
-                <h3 className="text-2xl md:text-3xl font-medium tracking-tight mb-4">Hands on.</h3>
+                <h3 className="text-2xl md:text-3xl font-medium tracking-tight mb-4">I build things.</h3>
                 <p className="text-muted-foreground leading-relaxed">
-                  I don&apos;t write reports and leave. I get into the system, rebuild the configuration, document the workflows, and train the team. When I&apos;m done, people are actually using the thing.
+                  I don&apos;t write reports and leave. I build the automation, configure the system, write the SOPs, train the team, and stick around for post-go-live support. When I&apos;m done, people are actually using it.
                 </p>
               </div>
             </div>
