@@ -32,10 +32,10 @@
 body {
   background-color: var(--background);
   color: var(--foreground);
-  font-feature-settings: 'rlig' 1, 'calt' 1;
+  font-feature-settings: 'rlig' 1, 'calt' 1, 'ss01' 1;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.015em;
 }
 
 /* Hyper-Sophisticated Atmospheric Foundation */
@@ -69,14 +69,14 @@ body::after {
 }
 
 .glass-nanobanana {
-  background: rgba(255, 255, 255, 0.015);
+  background: rgba(255, 255, 255, 0.01);
   backdrop-filter: blur(80px);
-  border: 0.5px solid rgba(255, 255, 255, 0.08);
+  border: 0.5px solid rgba(255, 255, 255, 0.06);
   box-shadow:
-    0 50px 100px -30px rgba(0, 0, 0, 0.8),
-    inset 0 1px 1px rgba(255, 255, 255, 0.03);
-  /* Inner-glow refinement */
-  transition: border-color 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    0 50px 100px -30px rgba(0, 0, 0, 0.9),
+    inset 0 1px 1px rgba(255, 255, 255, 0.02);
+  /* Refined inner-glow */
+  transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .link-underline {
@@ -88,7 +88,7 @@ body::after {
   position: absolute;
   width: 0;
   height: 0.5px;
-  bottom: -4px;
+  bottom: -6px;
   left: 0;
   background-color: var(--accent);
   transition: width 1s cubic-bezier(0.16, 1, 0.3, 1);
@@ -108,7 +108,7 @@ body::after {
   }
 
   .nanobanana-float {
-    animation: nanobanana-float 15s ease-in-out infinite;
+    animation: nanobanana-float 18s ease-in-out infinite;
   }
 
   @keyframes nanobanana-float {
@@ -119,16 +119,16 @@ body::after {
     }
 
     33% {
-      transform: translateY(-10px) rotate(0.5deg);
+      transform: translateY(-12px) rotate(0.4deg);
     }
 
     66% {
-      transform: translateY(5px) rotate(-0.5deg);
+      transform: translateY(6px) rotate(-0.4deg);
     }
   }
 
   .section-container {
-    @apply max-w-[1200px] mx-auto px-6 lg:px-8;
+    @apply max-w-[1100px] mx-auto px-6 lg:px-0;
   }
 
   .mask-image-fade {
@@ -137,13 +137,24 @@ body::after {
 }
 
 /* Sophisticated Typography Adjustments */
-h1,
+h1 {
+  letter-spacing: -0.06em;
+  line-height: 0.82;
+}
+
 h2,
 h3 {
   letter-spacing: -0.04em;
+  line-height: 1.1;
 }
 
 p {
-  line-height: 1.6;
-  letter-spacing: 0.01em;
+  line-height: 1.7;
+  letter-spacing: 0.015em;
+}
+
+/* Refined Interaction States */
+.group:hover .glass-nanobanana {
+  border-color: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.02);
 }
