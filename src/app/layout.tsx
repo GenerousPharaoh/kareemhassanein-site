@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import LayoutWrapper from "@/components/LayoutWrapper";
 import Spotlight from "@/components/Spotlight";
 
 const geistSans = localFont({
@@ -43,13 +42,9 @@ export default function RootLayout({
       >
         <div className="noise-overlay" />
         <Spotlight />
-        <div className="relative z-10 bg-background mb-[800px] shadow-2xl">
-          <Header />
-          <main className="min-h-screen page-content">
-            {children}
-          </main>
-        </div>
-        <Footer />
+        <LayoutWrapper>
+          {children}
+        </LayoutWrapper>
       </body>
     </html>
   );
