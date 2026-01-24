@@ -1,8 +1,7 @@
 'use client';
 
-import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { ChevronRight, Layers, Workflow, BarChart3, ShieldCheck, ArrowRight, LucideIcon } from 'lucide-react';
+import { ChevronRight, Layers, Workflow, BarChart3, ShieldCheck, LucideIcon } from 'lucide-react';
 import ScrollReveal from '@/components/ScrollReveal';
 import ParallaxImage from '@/components/ParallaxImage';
 import MaskedReveal from '@/components/MaskedReveal';
@@ -129,31 +128,7 @@ export default function Services() {
       {/* Section Divider */}
       <div className="divider-subtle w-full" />
 
-      {/* High-Fi Final Call */}
-      <section className="py-96 text-center px-6 bg-white/[0.005]">
-        <div className="section-container relative z-10 space-y-32">
-          <ScrollReveal direction="up" blur={40} distance={20} staggerChildren={0.2}>
-            <motion.h2 variants={{ hidden: { opacity: 0, y: 15 }, visible: { opacity: 1, y: 0 } }} className="text-8xl md:text-[180px] font-medium tracking-tighter mb-24 leading-[0.75] text-balance">
-              Have a <br /><span className="opacity-40 italic font-light font-serif">project?</span>
-            </motion.h2>
 
-            <motion.div variants={{ hidden: { opacity: 0, y: 15 }, visible: { opacity: 1, y: 0 } }} className="space-y-32 max-w-4xl mx-auto">
-              <p className="text-3xl md:text-5xl text-muted-foreground font-light leading-snug text-balance italic border-x border-white/5 px-20">
-                I focus on implementations where <span className="text-foreground border-b border-white/10 italic">people actually adopt</span> the tools.
-              </p>
-              <div className="pt-24 flex justify-center">
-                <Link
-                  href="/contact"
-                  className="group inline-flex items-center gap-12 text-5xl font-bold tracking-tight text-foreground link-underline pb-4 px-12 transition-all"
-                >
-                  Let&apos;s talk
-                  <ArrowRight size={72} className="opacity-0 group-hover:opacity-100 group-hover:translate-x-6 transition-all duration-[1.5s]" />
-                </Link>
-              </div>
-            </motion.div>
-          </ScrollReveal>
-        </div>
-      </section>
     </main>
   );
 }
