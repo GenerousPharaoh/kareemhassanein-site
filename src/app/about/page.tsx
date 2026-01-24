@@ -154,7 +154,7 @@ export default function About() {
       {/* Section Divider */}
       <div className="divider-subtle w-full" />
 
-      <section className="py-96 text-center px-6 bg-white/[0.005]">
+      <section className="py-32 md:py-48 text-center px-6 bg-white/[0.005]">
         <ScrollReveal direction="up" blur={40} className="w-full" viewport={{ once: true, margin: "-20%" }}>
           <h2 className="text-8xl md:text-[160px] font-medium tracking-tighter mb-24 leading-[0.7] text-balance">
             Want to <br /><span className="opacity-40 italic font-light font-serif">know more?</span>

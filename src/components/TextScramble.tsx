@@ -3,11 +3,12 @@
 import { useEffect, useState, useRef } from 'react';
 import { useInView } from 'framer-motion';
 
-const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%&';
+const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#&';
 
 interface TextScrambleProps {
     children: string;
-    className?: string;
+    className?: string; // Text styling
+    scrambleClassName?: string; // Specific styling for the scrambled/animating part
     duration?: number;
     delay?: number;
 }
@@ -15,6 +16,7 @@ interface TextScrambleProps {
 export default function TextScramble({
     children,
     className = "",
+    scrambleClassName = "",
     duration = 0.8,
     delay = 0
 }: TextScrambleProps) {
@@ -40,13 +42,16 @@ export default function TextScramble({
         const length = children.length;
         let animationFrameId: number;
         let timeout: NodeJS.Timeout | undefined;
+
+        // Create a queue for each character
         const queue: { from: string; to: string; start: number; end: number; char?: string }[] = [];
 
         for (let i = 0; i < length; i++) {
             const from = chars[Math.floor(Math.random() * chars.length)];
             const to = children[i];
-            const start = Math.floor(Math.random() * (duration * 30));
-            const end = start + Math.floor(Math.random() * (duration * 30));
+            // Distribute start times to create a "wave" effect
+            const start = Math.floor(Math.random() * 10) + (i * 2);
+            const end = start + Math.floor(Math.random() * 20) + 10;
             queue.push({ from, to, start, end });
         }
 
@@ -83,13 +88,24 @@ export default function TextScramble({
 
         return () => {
             cancelAnimationFrame(animationFrameId);
-            clearTimeout(timeout);
+            if (timeout) clearTimeout(timeout);
         };
     }, [children, duration, started]);
 
     return (
-        <span ref={ref} className={className} aria-label={children}>
-            {displayText}
+        <span ref={ref} className={`inline-grid relative ${className}`}>
+            {/* 
+        This invisible span reserves the exact width/height of the final text.
+        This prevents ANY layout shift ("rattling") during the animation.
+      */}
+            <span className="invisible pointer-events-none select-none" aria-hidden="true">
+                {children}
+            </span>
+
+            {/* The animating text overlays the reserved space perfectly */}
+            <span className={`absolute inset-0 top-0 left-0 ${scrambleClassName}`}>
+                {displayText}
+            </span>
         </span>
     );
 }
