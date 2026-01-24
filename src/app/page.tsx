@@ -6,7 +6,6 @@ import { useRef } from 'react';
 import { ArrowRight } from 'lucide-react';
 import ScrollReveal from '@/components/ScrollReveal';
 import TextReveal from '@/components/TextReveal';
-import Magnetic from '@/components/Magnetic';
 import ProjectList from '@/components/ProjectList';
 import ParallaxImage from '@/components/ParallaxImage';
 
@@ -48,15 +47,13 @@ export default function Home() {
               />
 
               <motion.div variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }} className="flex gap-16 items-center">
-                <Magnetic>
-                  <Link
-                    href="/contact"
-                    className="group flex items-center gap-8 text-xl font-bold tracking-tight text-foreground link-underline pb-1"
-                  >
-                    Get in touch
-                    <ArrowRight size={24} className="opacity-20 group-hover:translate-x-4 transition-transform duration-700" />
-                  </Link>
-                </Magnetic>
+                <Link
+                  href="/contact"
+                  className="group flex items-center gap-8 text-xl font-bold tracking-tight text-foreground link-underline pb-1"
+                >
+                  Get in touch
+                  <ArrowRight size={24} className="opacity-20 group-hover:translate-x-4 transition-transform duration-700" />
+                </Link>
               </motion.div>
             </motion.div>
 
@@ -127,15 +124,13 @@ export default function Home() {
           <h2 className="text-8xl md:text-[180px] font-medium tracking-tighter mb-24 leading-[0.75]">
             Let&apos;s <br /><span className="opacity-40 italic font-light font-serif">talk.</span>
           </h2>
-          <Magnetic>
-            <Link
-              href="/contact"
-              className="group inline-flex items-center gap-12 text-5xl font-light link-underline pb-4 px-12 transition-all"
-            >
-              Get in touch
-              <ArrowRight size={72} className="opacity-0 group-hover:opacity-100 group-hover:translate-x-6 transition-all duration-[1.5s]" />
-            </Link>
-          </Magnetic>
+          <Link
+            href="/contact"
+            className="group inline-flex items-center gap-12 text-5xl font-light link-underline pb-4 px-12 transition-all"
+          >
+            Get in touch
+            <ArrowRight size={72} className="opacity-0 group-hover:opacity-100 group-hover:translate-x-6 transition-all duration-[1.5s]" />
+          </Link>
         </ScrollReveal>
       </section>
     </div>

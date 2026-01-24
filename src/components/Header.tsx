@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import { usePathname } from 'next/navigation';
-import Magnetic from './Magnetic';
 
 const navItems = [
   { href: '/', label: 'Home' },
@@ -50,41 +49,38 @@ export default function Header() {
           {navItems.map((item) => {
             const isActive = pathname === item.href;
             return (
-              <Magnetic key={item.href}>
-                <Link
-                  href={item.href}
-                  className="relative group py-2"
-                >
-                  <span className={`text-[10px] font-bold tracking-[0.2em] uppercase transition-colors duration-700 ${isActive ? 'text-foreground' : 'text-foreground/30 group-hover:text-foreground'
-                    }`}>
-                    {item.label}
-                  </span>
-                  {isActive && (
-                    <motion.div
-                      layoutId="header-active-moon"
-                      className="absolute -bottom-1 left-0 right-0 h-[1px] bg-foreground/40"
-                      transition={{ duration: 0.8, ease }}
-                    />
-                  )}
-                </Link>
-              </Magnetic>
+              <Link
+                key={item.href}
+                href={item.href}
+                className="relative group py-2"
+              >
+                <span className={`text-[10px] font-bold tracking-[0.2em] uppercase transition-colors duration-700 ${isActive ? 'text-foreground' : 'text-foreground/30 group-hover:text-foreground'
+                  }`}>
+                  {item.label}
+                </span>
+                {isActive && (
+                  <motion.div
+                    layoutId="header-active-moon"
+                    className="absolute -bottom-1 left-0 right-0 h-[1px] bg-foreground/40"
+                    transition={{ duration: 0.8, ease }}
+                  />
+                )}
+              </Link>
             );
           })}
         </nav>
 
         {/* Mobile Menu Button */}
-        <Magnetic>
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden relative z-50 p-2 -mr-2 text-foreground/50 hover:text-foreground pointer-events-auto"
-            aria-label="Toggle menu"
-          >
-            <div className="space-y-1.5 w-5">
-              <div className={`h-[1px] bg-current transition-all duration-500 ${isMenuOpen ? 'rotate-45 translate-y-1.5' : ''}`} />
-              <div className={`h-[1px] bg-current transition-all duration-500 ${isMenuOpen ? '-rotate-45 -translate-y-[1px]' : ''}`} />
-            </div>
-          </button>
-        </Magnetic>
+        <button
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          className="md:hidden relative z-50 p-2 -mr-2 text-foreground/50 hover:text-foreground pointer-events-auto"
+          aria-label="Toggle menu"
+        >
+          <div className="space-y-1.5 w-5">
+            <div className={`h-[1px] bg-current transition-all duration-500 ${isMenuOpen ? 'rotate-45 translate-y-1.5' : ''}`} />
+            <div className={`h-[1px] bg-current transition-all duration-500 ${isMenuOpen ? '-rotate-45 -translate-y-[1px]' : ''}`} />
+          </div>
+        </button>
       </motion.header>
 
       {/* Mobile Navigation */}
