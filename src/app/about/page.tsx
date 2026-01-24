@@ -1,7 +1,7 @@
 'use client';
 
-import { Download } from 'lucide-react';
 import { motion, useScroll, useTransform } from 'framer-motion';
+import { Download } from 'lucide-react';
 import ScrollReveal from '@/components/ScrollReveal';
 import ParallaxImage from '@/components/ParallaxImage';
 import CharReveal from '@/components/CharReveal';
@@ -36,6 +36,13 @@ const roadmap = [
     desc: 'Collaborated with the CPA CEO on national initiatives focusing on workforce analysis and operational conditions for physiotherapists across Canada.',
     img: '/assets/n_story_bg_03.png'
   }
+];
+
+const gallery = [
+  { src: '/assets/bridge.png', label: 'Clinical Bridge' },
+  { src: '/assets/precision.png', label: 'Operational Precision' },
+  { src: '/assets/mapping.png', label: 'System Mapping' },
+  { src: '/assets/harmony.png', label: 'Technical Harmony' }
 ];
 
 function BioSection({ title, label, text, img, isReversed }: { title: string, label: string, text: string, img: string, isReversed?: boolean }) {
@@ -97,24 +104,51 @@ export default function About() {
 
       {/* Chapters */}
       <BioSection
-        label="Experience"
-        title="Foundation"
-        text="I spent years as a full-time clinician before shifting to building the systems they use. My expertise is rooted in understanding where professional operations break down under pressure."
-        img="/assets/n_story_bg_03.png"
+        label="Clinical Roots"
+        title="Physiotherapy"
+        text="MSc with Distinction from Robert Gordon University. I practiced for years before shifting to building the systems clinicians actually need."
+        img="/assets/precision.png"
       />
 
       <BioSection
         label="Technical Leverage"
         title="Engineering"
         text="I build systems that solve administrative friction. I focus on logic and data integrity, ensuring that technical tools actually serve the professionals using them."
-        img="/assets/n_strategy.png"
+        img="/assets/bridge.png"
         isReversed
       />
+
+      {/* Visual Evidence Gallery */}
+      <section className="py-64 overflow-hidden border-b border-white/5 bg-white/[0.002]">
+        <div className="px-12 lg:px-32 mb-24">
+          <span className="text-[10px] font-bold tracking-[0.5em] uppercase opacity-30 mb-8 block">Process Visuals</span>
+          <h2 className="text-6xl md:text-9xl font-medium tracking-tighter italic font-serif">The Bridge.</h2>
+        </div>
+
+        <div className="flex gap-12 px-12 lg:px-32 overflow-x-auto pb-24 no-scrollbar scroll-smooth">
+          {gallery.map((item, i) => (
+            <motion.div
+              key={item.src}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.1 }}
+              className="flex-shrink-0 w-[80vw] md:w-[600px] group"
+            >
+              <div className="aspect-[16/10] w-full rounded-2xl overflow-hidden grayscale hover:grayscale-0 transition-all duration-1000 border border-white/5 relative">
+                <ParallaxImage src={item.src} alt={item.label} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-[2s]" />
+                <div className="absolute bottom-6 left-6 text-[10px] font-mono tracking-widest uppercase opacity-0 group-hover:opacity-60 transition-opacity bg-black/40 backdrop-blur-md px-3 py-1 rounded-full">
+                  {item.label}
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </section>
 
       {/* Experience Track */}
       <section className="py-64 px-12 lg:px-32 bg-white/[0.005]">
         <div className="max-w-[1400px] mx-auto">
-          <h2 className="text-6xl md:text-9xl font-medium tracking-tighter mb-40 opacity-10">History.</h2>
+          <h2 className="text-6xl md:text-9xl font-medium tracking-tighter mb-40 opacity-20">History.</h2>
           <div className="space-y-40">
             {roadmap.map((item) => (
               <div key={item.title} className="grid lg:grid-cols-[1fr_2fr] gap-20 items-start">
@@ -152,3 +186,4 @@ export default function About() {
     </main>
   );
 }
+

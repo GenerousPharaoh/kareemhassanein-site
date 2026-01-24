@@ -22,7 +22,7 @@ const services = [
     tagline: 'Technical Leverage.',
     desc: 'I design systems that handle administrative edge cases. From automated document pipes in legal firms to complex intake logic in healthcare, I build for data integrity.',
     points: ['Logical pipe design', 'Edge-case automation', 'Data integrity guardrails'],
-    img: '/assets/n_logic.png'
+    img: '/assets/flow.png'
   },
   {
     index: '03',
@@ -30,7 +30,7 @@ const services = [
     tagline: 'Growth Architecture.',
     desc: 'Identifying operational friction before it caps your growth. I optimize administrative pathways and referral tracking for professional service groups across health and law.',
     points: ['Bottleneck identification', 'Referral attribution', 'Scale-ready SOPs'],
-    img: '/assets/n_story_bg_03.png'
+    img: '/assets/n_implementation.png'
   }
 ];
 
@@ -156,8 +156,15 @@ export default function Services() {
       </div>
 
       {/* Technical Index: Tabular Spec Sheet */}
-      <section className="py-64 px-6 lg:px-32 relative bg-white/[0.005] border-t border-white/5">
-        <div className="max-w-[1600px] mx-auto">
+      <section className="py-64 px-6 lg:px-32 relative overflow-hidden bg-white/[0.005] border-t border-white/5">
+
+        {/* Background Texture Asset */}
+        <div className="absolute inset-0 z-0 opacity-[0.03] pointer-events-none grayscale">
+          <ParallaxImage src="/assets/devops.png" alt="DevOps Texture" className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-background/60" />
+        </div>
+
+        <div className="max-w-[1600px] mx-auto relative z-10">
           <div className="mb-32">
             <span className="text-accent font-mono text-sm tracking-[0.6em] uppercase block mb-8">System Inventory</span>
             <h2 className="text-7xl md:text-8xl font-medium tracking-tighter italic font-serif">
@@ -227,3 +234,4 @@ export default function Services() {
     </main>
   );
 }
+
