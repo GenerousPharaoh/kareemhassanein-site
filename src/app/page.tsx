@@ -9,28 +9,28 @@ import ScrollReveal from '@/components/ScrollReveal';
 
 const impacts = [
   {
-    title: 'Clinical AI Adoption',
-    details: 'Piloted and established SOPs for Heidi AI across multi-specialty clinical teams. Bridging the gap between software capability and clinician adoption to eliminate documentation bottlenecks.',
+    title: 'Clinical AI Selection & Rollout',
+    details: 'Spearheaded the technical evaluation and clinic-wide implementation of Heidi AI for a multidisciplinary team. Built custom SOPs that ensured 100% adoption and eliminated friction in high-stakes documentation.',
     tag: 'Implementation',
-    icon: <Sparkles className="w-5 h-5 opacity-40" />
+    icon: <Sparkles className="w-5 h-5 text-accent" />
   },
   {
-    title: 'Agentic Workflow DevOps',
-    details: 'Architected custom automated legal drafting workflows using Claude Code and Google Antigravity platforms, reducing baseline template generation time by 85%.',
+    title: 'Agentic Workflow Automation',
+    details: 'Architected sophisticated agentic workflows using Claude Code and Google Antigravity platforms. Reduction in document generation time by 85% through custom modular automation logic.',
     tag: 'Automation',
-    icon: <Binary className="w-5 h-5 opacity-40" />
+    icon: <Binary className="w-5 h-5 text-accent-secondary" />
   },
   {
-    title: 'Digital Patient Pathways',
-    details: 'Building high-performance patient acquisition streams with SEO-first architecture and Jane App integration. Linking clinical visibility to patient conversion.',
+    title: 'Local Discovery Architecture',
+    details: 'Constructed high-performance patient acquisition streams with SEO-first infrastructure and Jane App integration. Linking clinical visibility to measurable patient conversion.',
     tag: 'Infrastructure',
-    icon: <HeartPulse className="w-5 h-5 opacity-40" />
+    icon: <HeartPulse className="w-5 h-5 text-accent" />
   },
   {
-    title: 'Process Architecture',
-    details: 'Redesigning multidisciplinary clinic booking flows and referral pathways. Operationalizing clinical excellence through repeatable system architecture.',
+    title: 'Strategic Process Design',
+    details: 'Redesigning multidisciplinary clinical booking architectures and referral pathways. Operationalizing clinical excellence through repeatable, automated system design.',
     tag: 'Operations',
-    icon: <Workflow className="w-5 h-5 opacity-40" />
+    icon: <Workflow className="w-5 h-5 text-accent-secondary" />
   }
 ];
 
@@ -41,106 +41,174 @@ export default function Home() {
     offset: ['start start', 'end end'],
   });
 
-  const heroScale = useTransform(scrollYProgress, [0, 0.1], [1, 1.05]);
+  const heroY = useTransform(scrollYProgress, [0, 0.2], [0, -50]);
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.15], [1, 0]);
 
   return (
     <div ref={containerRef} className="relative">
-      {/* Narrative Hero with Identity Image */}
-      <section className="relative min-h-screen flex items-center px-6 lg:px-16 pt-32 pb-20 overflow-hidden">
-        <div className="max-w-7xl mx-auto w-full grid lg:grid-cols-2 gap-24 items-center">
-          <motion.div style={{ scale: heroScale }} className="z-10">
-            <ScrollReveal direction="none" className="mb-10">
-              <span className="text-[10px] font-bold tracking-[0.5em] uppercase opacity-40">
-                Identity Profile v.2026
+      {/* Background Vivid Glows */}
+      <div className="glow-blob top-[10%] -left-[10%] opacity-20" />
+      <div className="glow-blob-secondary bottom-[20%] -right-[10%] opacity-20" />
+
+      {/* Immersive Hero Section */}
+      <section className="relative min-h-screen flex items-center px-6 lg:px-24 pt-40 pb-32 overflow-hidden">
+        <div className="max-w-[1400px] mx-auto w-full grid lg:grid-cols-[1.2fr_0.8fr] gap-32 items-center">
+          <motion.div style={{ y: heroY, opacity: heroOpacity }} className="z-10">
+            <ScrollReveal direction="none" className="mb-12">
+              <span className="text-[11px] font-bold tracking-[0.5em] uppercase text-accent bg-accent/10 px-4 py-2 rounded-full">
+                Vivid Identity v.2026
               </span>
             </ScrollReveal>
 
-            <h1 className="text-6xl md:text-8xl lg:text-[110px] font-medium leading-[0.9] tracking-tighter mb-16 text-balance mask-reveal">
-              Bridging <br /> clinical reality <br />
-              <span className="opacity-40 font-light italic text-7xl lg:text-[90px]">and digital scale.</span>
+            <h1 className="text-6xl md:text-8xl lg:text-[130px] font-medium leading-[0.85] tracking-tight mb-20 text-balance mask-reveal">
+              Bridging <br /> clinical depth <br />
+              <span className="text-accent italic font-light">and digital scale.</span>
             </h1>
 
             <ScrollReveal delay={0.4} distance={20} className="max-w-2xl">
-              <p className="text-2xl md:text-3xl text-muted-foreground leading-relaxed mb-20 font-light">
+              <p className="text-2xl md:text-3xl text-muted-foreground leading-relaxed mb-24 font-light">
                 Implementation specialist driving digital operations and AI adoption through the lens of frontline clinical experience.
               </p>
               <div className="flex gap-16 items-center">
                 <Link
                   href="/contact"
-                  className="text-xl font-bold tracking-tight text-foreground link-underline pb-2"
+                  className="group flex items-center gap-6 text-2xl font-bold tracking-tight text-foreground link-underline pb-1"
                 >
                   Initiate Dialogue
-                </Link>
-                <Link
-                  href="/about"
-                  className="text-xl font-medium opacity-40 hover:opacity-100 transition-opacity"
-                >
-                  Identity
+                  <ArrowRight className="opacity-40 group-hover:translate-x-4 transition-transform text-accent" />
                 </Link>
               </div>
             </ScrollReveal>
           </motion.div>
 
-          <ScrollReveal direction="right" distance={80} className="relative aspect-square lg:aspect-[4/5] rounded-[3rem] overflow-hidden glass-organic p-1">
-            <div className="absolute inset-0 bg-gradient-to-tr from-background/80 to-transparent z-10" />
+          <ScrollReveal direction="right" distance={100} className="relative aspect-[4/5] rounded-[4rem] overflow-hidden glass-vivid p-2 floating">
+            <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-transparent z-10" />
             <Image
               src="/assets/bridge.png"
               alt="Bridge Illustration"
               fill
-              className="object-cover transition-transform duration-[3s] hover:scale-110"
+              className="object-cover transition-transform duration-[5s] hover:scale-110"
               priority
             />
+            {/* Visual Callout */}
+            <div className="absolute bottom-12 left-12 right-12 z-20 space-y-4">
+              <div className="h-[1px] w-12 bg-accent" />
+              <p className="text-sm font-bold uppercase tracking-widest text-foreground/80">Interface: Identity</p>
+            </div>
           </ScrollReveal>
         </div>
       </section>
 
-      {/* The Perspective - Expanded Narrative */}
-      <section className="py-72 px-6 lg:px-16 relative border-y border-white/[0.03]">
-        <div className="max-w-5xl mx-auto text-center space-y-24">
-          <ScrollReveal direction="up">
-            <h2 className="text-4xl md:text-7xl font-medium tracking-tighter leading-tight balance">
-              Technical possibility <br />
-              meets <span className="opacity-40 font-light italic">human reality.</span>
-            </h2>
-          </ScrollReveal>
+      {/* The Impact Matrix - High Contrast Grid */}
+      <section className="py-80 px-6 lg:px-24 relative overflow-hidden">
+        <div className="max-w-[1400px] mx-auto">
+          <div className="grid lg:grid-cols-[1fr_2.5fr] gap-32 mb-48">
+            <ScrollReveal direction="left" className="sticky top-40">
+              <p className="text-[11px] font-bold tracking-[0.4em] uppercase text-accent-secondary mb-10">Verification</p>
+              <h2 className="text-5xl md:text-8xl font-medium tracking-tight leading-[0.9] mb-12">
+                Proven <br /> Discrete <br /> <span className="text-accent-secondary italic">Impact.</span>
+              </h2>
+              <p className="text-xl text-muted-foreground font-light leading-relaxed max-w-sm">
+                Specific architectural successes in healthcare operations and agentic deployment.
+              </p>
+            </ScrollReveal>
 
-          <ScrollReveal direction="up" delay={0.2} className="space-y-12 text-2xl text-muted-foreground font-light leading-relaxed max-w-3xl mx-auto">
-            <p>
-              I understand the frustration of high-stakes environments because I have lived in them. Care does not happen without adoption. My specialization is in the technical engagements where user friction is the primary bottleneck for ROI.
-            </p>
-          </ScrollReveal>
+            <div className="grid md:grid-cols-2 gap-10">
+              {impacts.map((impact, i) => (
+                <ScrollReveal
+                  key={impact.title}
+                  direction="up"
+                  delay={i * 0.1}
+                  className="group relative h-full p-2"
+                >
+                  <div className="h-full p-16 rounded-[4rem] glass-vivid hover:bg-white/[0.05] transition-all duration-1000 flex flex-col justify-between group-hover:-translate-y-4">
+                    <div className="space-y-12">
+                      <div className="flex justify-between items-start">
+                        <div className="w-14 h-14 rounded-2xl bg-white/[0.03] border border-white/10 flex items-center justify-center group-hover:scale-110 group-hover:border-accent transition-all duration-700">
+                          {impact.icon}
+                        </div>
+                        <span className="text-[11px] font-bold tracking-widest uppercase text-accent opacity-30 group-hover:opacity-100 transition-opacity">{impact.tag}</span>
+                      </div>
+                      <h3 className="text-4xl font-medium tracking-tight leading-none group-hover:text-accent transition-colors duration-700">{impact.title}</h3>
+                      <p className="text-2xl text-muted-foreground font-light leading-relaxed">
+                        {impact.details}
+                      </p>
+                    </div>
+                  </div>
+                </ScrollReveal>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* Discrete Impact - Robust Grid */}
-      <section className="py-72 px-6 lg:px-16 container mx-auto">
-        <div className="max-w-7xl mx-auto">
-          <ScrollReveal direction="up" className="mb-40">
-            <p className="text-[10px] font-bold tracking-[0.4em] uppercase opacity-40 mb-10">Discrete Evidence</p>
-            <h2 className="text-6xl md:text-9xl font-medium tracking-tighter">Impact Portfolio.</h2>
-          </ScrollReveal>
+      {/* Narrative Break - Immersive Flow Illustration */}
+      <section className="py-72 relative border-y border-white/10 bg-white/[0.01]">
+        <div className="max-w-[1400px] mx-auto px-6 lg:px-24">
+          <div className="grid lg:grid-cols-[2fr_1.5fr] gap-32 items-center">
+            <ScrollReveal direction="up" className="space-y-16">
+              <h2 className="text-5xl md:text-[110px] font-medium tracking-tighter leading-[0.85] text-balance">
+                The bridge <br /> is built on <br /> <span className="opacity-30">human adoption.</span>
+              </h2>
+              <p className="text-3xl font-light text-muted-foreground leading-relaxed max-w-2xl text-balance">
+                I understand the friction of high-stakes clinical environments because I have lived in them. Care does not happen without technical stability and user confidence.
+              </p>
+            </ScrollReveal>
 
-          <div className="grid md:grid-cols-2 gap-16">
-            {impacts.map((impact, i) => (
+            <ScrollReveal direction="right" className="relative aspect-square rounded-[4rem] overflow-hidden glass-vivid p-1">
+              <Image
+                src="/assets/flow.png"
+                alt="System Flow"
+                fill
+                className="object-cover opacity-80 hover:opacity-100 transition-opacity duration-1000"
+              />
+            </ScrollReveal>
+          </div>
+        </div>
+      </section>
+
+      {/* Multi-Layered Skill Stack */}
+      <section className="py-80 px-6 lg:px-24 relative">
+        <div className="max-w-[1400px] mx-auto">
+          <div className="flex justify-between items-end mb-40 border-b border-white/10 pb-20">
+            <ScrollReveal direction="up" className="space-y-6">
+              <p className="text-[11px] font-bold tracking-[0.5em] uppercase text-accent">Capability Matrix</p>
+              <h2 className="text-7xl md:text-[140px] font-medium tracking-tight">Stack.</h2>
+            </ScrollReveal>
+            <ScrollReveal direction="right" className="text-right pb-4">
+              <span className="text-2xl font-light opacity-30 italic leading-none whitespace-nowrap">Technical x Clinical</span>
+            </ScrollReveal>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-px bg-white/10 border border-white/10">
+            {[
+              { cat: 'Clinical Depth', items: ['MSc PT (Distinction)', 'Systemic Evaluation', 'Patient Adherence Strategy'], icon: <HeartPulse className="w-5 h-5 text-accent" /> },
+              { cat: 'Agentic DevOps', items: ['Claude Code', 'Google Antigravity', 'CI/CD Stability'], icon: <Binary className="w-5 h-5 text-accent-secondary" /> },
+              { cat: 'Ops Architecture', items: ['Process Mapping', 'SOP Development', 'Root Cause Audit'], icon: <Workflow className="w-5 h-5 text-accent" /> },
+              { cat: 'Technical GTM', items: ['Local SEO technical', 'Jane App Integrations', 'Conversion Mapping'], icon: <Sparkles className="w-5 h-5 text-accent-secondary" /> },
+            ].map((skill, i) => (
               <ScrollReveal
-                key={impact.title}
+                key={skill.cat}
                 direction="up"
                 delay={i * 0.1}
-                className="group"
+                className="bg-[#080a0c] p-16 space-y-12 hover:bg-white/[0.03] transition-all duration-700"
               >
-                <div className="h-full p-16 rounded-[4rem] glass-organic hover:bg-white/[0.04] transition-all duration-1000 flex flex-col justify-between">
-                  <div className="space-y-10">
-                    <div className="flex items-center gap-6">
-                      <div className="w-12 h-12 rounded-full border border-white/5 flex items-center justify-center opacity-40 group-hover:opacity-100 transition-opacity">
-                        {impact.icon}
-                      </div>
-                      <span className="text-[10px] font-bold tracking-[0.3em] uppercase opacity-20">{impact.tag}</span>
-                    </div>
-                    <h3 className="text-4xl font-medium tracking-tighter group-hover:text-accent transition-colors duration-700">{impact.title}</h3>
-                    <p className="text-2xl text-muted-foreground font-light leading-relaxed">
-                      {impact.details}
-                    </p>
+                <div className="flex justify-between items-start">
+                  <div className="p-4 rounded-xl border border-white/5 bg-white/[0.02]">
+                    {skill.icon}
                   </div>
+                  <span className="text-5xl font-medium tracking-tighter text-white/5 italic">0{i + 1}</span>
+                </div>
+                <div className="space-y-8">
+                  <h4 className="text-2xl font-bold uppercase tracking-[0.2em] text-accent/80">{skill.cat}</h4>
+                  <ul className="space-y-4">
+                    {skill.items.map(item => (
+                      <li key={item} className="text-xl font-light text-muted-foreground flex items-center gap-4">
+                        <div className="w-1 h-1 rounded-full bg-accent opacity-40" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </ScrollReveal>
             ))}
@@ -148,52 +216,19 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Capability Stack with Illustrations */}
-      <section className="py-72 px-6 lg:px-16 border-t border-white/[0.03] bg-card/10">
-        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-32 items-center">
-          <div className="space-y-32">
-            {[
-              { label: 'Implementation', desc: 'Strategy and rollout for clinical systems like Heidi AI.' },
-              { label: 'Workflow DevOps', desc: 'Engineering modular document automation via Claude Code.' },
-              { label: 'Strategic Advisory', desc: 'Technical usability audits and market fit for med-tech.' }
-            ].map((stack, i) => (
-              <ScrollReveal
-                key={stack.label}
-                direction="up"
-                delay={i * 0.1}
-                className="space-y-6 group"
-              >
-                <span className="text-[10px] font-bold tracking-[0.4em] uppercase opacity-20">Capability 0{i + 1}</span>
-                <h4 className="text-4xl font-medium tracking-tight group-hover:translate-x-4 transition-transform duration-700">{stack.label}</h4>
-                <p className="text-xl text-muted-foreground font-light max-w-md">{stack.desc}</p>
-              </ScrollReveal>
-            ))}
-          </div>
-
-          <ScrollReveal direction="none" className="relative aspect-square rounded-[4rem] overflow-hidden glass-organic p-1">
-            <Image
-              src="/assets/mapping.png"
-              alt="Mapping Illustration"
-              fill
-              className="object-cover opacity-60 hover:opacity-100 transition-opacity duration-1000"
-            />
-          </ScrollReveal>
-        </div>
-      </section>
-
-      {/* Closing Identity Statement */}
-      <section className="py-96 px-6 text-center relative overflow-hidden">
-        <ScrollReveal direction="up" className="relative z-10">
-          <h2 className="text-7xl md:text-[140px] font-medium tracking-tighter mb-24 leading-[0.75] text-balance">
-            Let&apos;s advance <br />
-            <span className="opacity-40 italic font-light">the standard.</span>
+      {/* Vivid CTA Section */}
+      <section className="py-96 px-6 relative flex flex-col items-center justify-center text-center">
+        <div className="glow-blob opacity-40 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+        <ScrollReveal direction="up" className="z-10 space-y-24">
+          <h2 className="text-7xl md:text-[180px] font-medium tracking-tight mb-24 leading-[0.75] text-balance">
+            Design <br /> <span className="text-accent italic font-light">The Future.</span>
           </h2>
           <Link
             href="/contact"
-            className="group inline-flex items-center justify-center gap-6 text-3xl font-light link-underline pb-4 px-8"
+            className="group inline-flex items-center gap-10 text-4xl lg:text-5xl font-bold tracking-tight text-foreground link-underline pb-4 px-12"
           >
             Initiate Conversation
-            <ArrowRight size={48} className="opacity-20 group-hover:translate-x-4 transition-transform" />
+            <ArrowRight size={80} className="opacity-10 group-hover:opacity-100 group-hover:translate-x-8 transition-all duration-1000 text-accent" />
           </Link>
         </ScrollReveal>
       </section>

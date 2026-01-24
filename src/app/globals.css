@@ -3,27 +3,29 @@
 @tailwind utilities;
 
 :root {
-  --background: #1a1d23;
-  --foreground: #f1f5f9;
-  --card: #242933;
-  --card-foreground: #f1f5f9;
-  --popover: #1a1d23;
-  --popover-foreground: #f1f5f9;
-  --primary: #f1f5f9;
-  --primary-foreground: #1a1d23;
-  --secondary: #334155;
-  --secondary-foreground: #f1f5f9;
-  --muted: #334155;
-  --muted-foreground: #94a3b8;
-  --accent: #94a3b8;
-  /* Muted Sage/Slate */
-  --accent-foreground: #1a1d23;
+  --background: #080a0c;
+  --foreground: #f8fafc;
+  --card: #111418;
+  --card-foreground: #f8fafc;
+  --popover: #080a0c;
+  --popover-foreground: #f8fafc;
+  --primary: #f8fafc;
+  --primary-foreground: #080a0c;
+  --secondary: #1e293b;
+  --secondary-foreground: #f8fafc;
+  --muted: #1e293b;
+  --muted-foreground: #64748b;
+  --accent: #4ade80;
+  /* Vivid Sage */
+  --accent-secondary: #06b6d4;
+  /* Electric Cyan */
+  --accent-foreground: #080a0c;
   --destructive: #7f1d1d;
-  --destructive-foreground: #f1f5f9;
-  --border: rgba(255, 255, 255, 0.05);
-  --input: rgba(255, 255, 255, 0.05);
-  --ring: #94a3b8;
-  --radius: 1rem;
+  --destructive-foreground: #f8fafc;
+  --border: rgba(255, 255, 255, 0.1);
+  --input: rgba(255, 255, 255, 0.1);
+  --ring: #4ade80;
+  --radius: 0.75rem;
 }
 
 body {
@@ -34,15 +36,25 @@ body {
   overflow-x: hidden;
 }
 
-/* Organic Texture Overlay */
-body::after {
-  content: '';
+/* Vivid Background Glows */
+.glow-blob {
   position: fixed;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3%3Ffilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-  opacity: 0.02;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(74, 222, 128, 0.05) 0%, transparent 70%);
+  filter: blur(80px);
   pointer-events: none;
-  z-index: 100;
+  z-index: -1;
+}
+
+.glow-blob-secondary {
+  position: fixed;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(6, 182, 212, 0.05) 0%, transparent 70%);
+  filter: blur(80px);
+  pointer-events: none;
+  z-index: -1;
 }
 
 @layer base {
@@ -51,11 +63,11 @@ body::after {
   }
 }
 
-.glass-organic {
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: var(--radius);
+.glass-vivid {
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 20px 50px -20px rgba(0, 0, 0, 0.8);
 }
 
 .link-underline {
@@ -66,10 +78,10 @@ body::after {
   content: '';
   position: absolute;
   width: 0;
-  height: 1px;
-  bottom: -2px;
+  height: 2px;
+  bottom: -4px;
   left: 0;
-  background-color: var(--foreground);
+  background: linear-gradient(90deg, var(--accent), var(--accent-secondary));
   transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -90,6 +102,22 @@ body::after {
   @keyframes mask-reveal-up {
     to {
       clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    }
+  }
+
+  .floating {
+    animation: floating 6s ease-in-out infinite;
+  }
+
+  @keyframes floating {
+
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+
+    50% {
+      transform: translateY(-20px);
     }
   }
 }
