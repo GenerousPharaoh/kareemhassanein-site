@@ -34,6 +34,12 @@ const services = [
   }
 ];
 
+const techStack = [
+  { group: 'Automation', tools: ['Claude Code', 'Google Antigravity', 'Webhooks', 'REST APIs'] },
+  { group: 'Operations', tools: ['Jane App', 'CRM Platforms', 'Google Search Console', 'Lighthouse'] },
+  { group: 'Stack', tools: ['Next.js', 'TypeScript', 'Tailwind', 'Vercel'] }
+];
+
 function ServiceSection({ service, isEven }: { service: typeof services[0], isEven: boolean }) {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({
@@ -137,10 +143,29 @@ export default function Services() {
         ))}
       </div>
 
-      <div className="divider-subtle w-full" />
+      {/* Technical Ecosystem Section */}
+      <section className="py-64 px-12 lg:px-32 bg-white/[0.01] border-t border-white/5">
+        <div className="max-w-[1400px] mx-auto">
+          <h2 className="text-6xl md:text-[140px] font-medium tracking-tighter mb-40 opacity-10">Ecosystem.</h2>
+          <div className="grid md:grid-cols-3 gap-20">
+            {techStack.map((group) => (
+              <div key={group.group} className="space-y-12">
+                <p className="text-[10px] font-bold tracking-[0.5em] uppercase opacity-30">{group.group}</p>
+                <ul className="space-y-6">
+                  {group.tools.map(tool => (
+                    <li key={tool} className="text-3xl md:text-4xl font-light tracking-tight hover:text-accent transition-colors duration-500 cursor-default">
+                      {tool}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* The Final Line */}
-      <section className="py-96 text-center">
+      <section className="py-96 text-center border-t border-white/5">
         <ScrollReveal direction="up">
           <h2 className="text-8xl md:text-[180px] font-medium tracking-[calc(-0.04em)] leading-[0.7] opacity-10">
             Ready.

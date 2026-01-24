@@ -9,6 +9,12 @@ import ParallaxImage from '@/components/ParallaxImage';
 import CharReveal from '@/components/CharReveal';
 import Link from 'next/link';
 
+const metrics = [
+  { label: 'Revenue Generated', value: '$600K+' },
+  { label: 'Process Reduction', value: '85%' },
+  { label: 'Clinician Adoption', value: '100%' },
+];
+
 export default function Home() {
   return (
     <main className="min-h-screen bg-background text-foreground overflow-hidden">
@@ -39,13 +45,23 @@ export default function Home() {
 
               <div className="max-w-xl">
                 <TextReveal
-                  text="I design and build operational systems for professional service firms. I specialize in removing technical friction for health and legal groups through automation."
+                  text="I design and build operational systems for professional service firms. Track record of generating $600K+ in clinical revenue and reducing document overhead by 85% for legal teams."
                   className="text-xl md:text-2xl text-muted-foreground font-light leading-relaxed italic"
                   delay={0.8}
                 />
               </div>
 
-              <motion.div variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }} className="flex gap-16 items-center">
+              {/* Metrics Row */}
+              <div className="grid grid-cols-3 gap-8 py-8 border-y border-white/5">
+                {metrics.map((m) => (
+                  <div key={m.label} className="space-y-1">
+                    <p className="text-3xl md:text-4xl font-serif italic text-accent">{m.value}</p>
+                    <p className="text-[10px] uppercase tracking-widest opacity-40">{m.label}</p>
+                  </div>
+                ))}
+              </div>
+
+              <motion.div variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }} className="flex gap-16 items-center pt-8">
                 <Link
                   href="/contact"
                   className="group flex items-center gap-8 text-xl font-bold tracking-tight text-foreground link-underline pb-1 transition-all"
@@ -79,7 +95,7 @@ export default function Home() {
       <section className="py-24 relative z-10 w-full px-6 md:px-12">
         <ScrollReveal direction="up" distance={40} blur={20}>
           <div className="flex items-end justify-between mb-24 border-b border-white/10 pb-8 hover:border-white/20 transition-colors duration-700">
-            <h2 className="text-sm font-bold tracking-[0.2em] uppercase opacity-40">Previous Work</h2>
+            <h2 className="text-sm font-bold tracking-[0.2em] uppercase opacity-40">Projects</h2>
             <span className="text-sm font-mono opacity-20">2023 — 2025</span>
           </div>
         </ScrollReveal>

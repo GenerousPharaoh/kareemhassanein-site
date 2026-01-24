@@ -9,25 +9,32 @@ import { useRef } from 'react';
 
 const roadmap = [
   {
+    period: '2025 - Present',
+    title: 'Workflow Automation',
+    company: 'Tax Relief Counsel',
+    desc: 'Addressing high-stakes administrative complexity through custom workflow logic. Built automation pipes for a solo law firm that reduced document generation time by 85%.',
+    img: '/assets/n_hero.png'
+  },
+  {
     period: '2024 - Present',
     title: 'Digital Ops Lead',
     company: 'Endorphins Health',
-    desc: 'Analyzing operational bottlenecks across 6 clinic locations. Built administrative pathways and referral tracking systems to handle group-level scale.',
+    desc: 'Analyzing operational bottlenecks across 6 clinic locations. Built administrative architecture on Jane App and custom referral systems generating $600K+ in revenue.',
     img: '/assets/n_strategy.png'
   },
   {
     period: '2025 - Present',
-    title: 'Automation Consultant',
-    company: 'Tax Relief Counsel',
-    desc: 'Addressing high-stakes administrative complexity through workflow logic. Standardizing intake and document gen for legal professionals.',
-    img: '/assets/n_hero.png'
+    title: 'Advisory',
+    company: 'Neuro-Mod (Startup)',
+    desc: 'Advising on clinician-facing interface design and workflow integration for an emerging medical device startup.',
+    img: '/assets/n_logic.png'
   },
   {
-    period: '2021 - 2024',
-    title: 'Physiotherapist',
-    company: 'Movement Solutions',
-    desc: 'Practiced as a full-time clinician while designing the internal rollout of medical AI tools. Designed for 100% clinician adoption in high-volume environments.',
-    img: '/assets/n_logic.png'
+    period: '2024 - 2025',
+    title: 'Contributor',
+    company: 'Canadian Physiotherapy Assoc.',
+    desc: 'Collaborated with the CPA CEO on national initiatives focusing on workforce analysis and operational conditions for physiotherapists across Canada.',
+    img: '/assets/n_story_bg_03.png'
   }
 ];
 
@@ -67,7 +74,7 @@ export default function About() {
       <section className="min-h-[80vh] flex flex-col justify-center px-12 lg:px-32 relative border-b border-white/5">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[60vw] bg-accent/5 rounded-full blur-[150px] pointer-events-none" />
         <ScrollReveal direction="up">
-          <span className="block text-[10px] font-bold tracking-[1em] uppercase mb-12 opacity-30">Background</span>
+          <span className="block text-[10px] font-bold tracking-[1em] uppercase mb-12 opacity-30">About</span>
           <h1 className="text-[12vw] md:text-[8vw] font-medium tracking-tighter leading-[0.75] mb-4">
             System <br />
             <CharReveal delay={0.4} className="text-accent italic font-serif">Logic.</CharReveal>
@@ -77,16 +84,16 @@ export default function About() {
 
       {/* Chapters */}
       <BioSection
-        label="Experience"
-        title="Foundation"
-        text="I spent years as a full-time clinician before shifting to building the systems they use. My expertise is rooted in understanding where professional operations break down under pressure."
+        label="Clinical Roots"
+        title="Physiotherapy"
+        text="MSc with Distinction from Robert Gordon University. I practiced for years before shifting to building the systems clinicians actually need."
         img="/assets/n_logic.png"
       />
 
       <BioSection
-        label="Methodology"
-        title="Architecture"
-        text="I build systems that solve administrative friction. I focus on logic and data integrity, ensuring that technical tools actually serve the professionals using them."
+        label="Technical Leverage"
+        title="Engineering"
+        text="I built KinetiKare, a 60+ page Next.js application with AODA compliance and integrated booking. I bridge the gap between healthcare and code."
         img="/assets/n_strategy.png"
         isReversed
       />
