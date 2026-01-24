@@ -77,7 +77,7 @@ export default function ProjectList() {
                     scale: activeProject !== null ? 1 : 0.5,
                 }}
                 transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                className="fixed pointer-events-none z-50 hidden md:block w-[400px] h-[500px] -translate-x-1/2 -translate-y-1/2 rounded-2xl overflow-hidden glass-card"
+                className="fixed pointer-events-none z-10 hidden md:block w-[400px] h-[500px] -translate-x-1/2 -translate-y-1/2 rounded-2xl overflow-hidden glass-card"
             >
                 <div className="relative w-full h-full bg-black/50">
                     {projects.map((project, index) => (

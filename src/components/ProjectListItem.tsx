@@ -40,7 +40,7 @@ export default function ProjectListItem({ project, index, setHovered }: ProjectL
             }}
             style={{ cursor: 'pointer' }}
         >
-            <div className="flex flex-col gap-2 z-10 mix-blend-difference">
+            <div className="flex flex-col gap-2 z-30 mix-blend-difference">
                 <h3 className="text-4xl md:text-6xl font-serif font-medium tracking-tight group-hover:italic transition-all duration-500 text-foreground">
                     {project.title}
                 </h3>
@@ -49,7 +49,7 @@ export default function ProjectListItem({ project, index, setHovered }: ProjectL
                 </span>
             </div>
 
-            <div className="flex items-center gap-4 z-10 mix-blend-difference">
+            <div className="flex items-center gap-4 z-30 mix-blend-difference">
                 <motion.div
                     animate={{
                         x: isHovered ? 0 : -20,
