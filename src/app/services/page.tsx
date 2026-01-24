@@ -122,10 +122,14 @@ export default function Services() {
       <AnimatedGrid />
 
       {/* Cinematic Hero */}
-      <section className="min-h-[90vh] flex flex-col justify-center items-center text-center px-6 relative">
-        <div className="absolute inset-0 z-0 opacity-[0.05] grayscale pointer-events-none">
-          <ParallaxImage src="/images/digital-cathedral.png" alt="Atmospheric Texture" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-background/50" />
+      <section className="min-h-[90vh] flex flex-col justify-center items-center text-center px-6 relative overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <ParallaxImage
+            src="/images/digital-cathedral.png"
+            alt="Atmospheric Texture"
+            className="w-full h-full opacity-10"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background" />
         </div>
 
         <div className="relative z-10">

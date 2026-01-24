@@ -80,29 +80,30 @@ export default function About() {
     <main className="bg-background text-foreground pt-20">
 
       {/* Cinematic Identity Hero */}
-      <section className="min-h-screen grid lg:grid-cols-[1.2fr_1fr] items-center relative border-b border-white/5 overflow-hidden">
-        <div className="absolute top-1/2 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[60vw] bg-accent/5 rounded-full blur-[150px] pointer-events-none" />
+      <section className="min-h-screen flex items-center justify-center relative border-b border-white/5 overflow-hidden px-6 md:px-24 py-32">
 
-        <div className="px-12 lg:px-32 z-10">
-          <ScrollReveal direction="up">
-            <span className="block text-[10px] font-bold tracking-[1em] uppercase mb-12 opacity-30">Background</span>
-            <h1 className="text-[12vw] md:text-[8vw] font-medium tracking-tighter leading-[0.75] mb-8">
-              System <br />
-              <CharReveal delay={0.4} className="text-accent italic font-serif">Logic.</CharReveal>
-            </h1>
-            <p className="text-2xl md:text-3xl font-light text-muted-foreground max-w-xl italic leading-relaxed">
-              Merging clinical insight with operational engineering to remove technical friction.
-            </p>
-          </ScrollReveal>
-        </div>
-
-        <div className="relative h-[80vh] hidden lg:block">
+        {/* Full-Bleed Background Layer */}
+        <div className="absolute inset-0 z-0">
           <ParallaxImage
             src="/images/digital-cathedral.png"
             alt="Architecture"
-            className="h-full w-full"
+            className="w-full h-full opacity-20"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-background via-transparent to-transparent opacity-80 pointer-events-none" />
+          <div className="absolute inset-0 bg-background/40" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background" />
+        </div>
+
+        <div className="relative z-10 text-center md:text-left w-full max-w-[1400px]">
+          <ScrollReveal direction="up">
+            <span className="block text-[10px] font-bold tracking-[1em] uppercase mb-12 opacity-30">Background</span>
+            <h1 className="text-[10vw] md:text-[8vw] font-medium tracking-tighter leading-[0.75] mb-8">
+              System <br />
+              <CharReveal delay={0.4} className="text-accent italic font-serif">Logic.</CharReveal>
+            </h1>
+            <p className="text-2xl md:text-3xl font-light text-muted-foreground max-w-xl italic leading-relaxed mx-auto md:mx-0">
+              Merging clinical insight with operational engineering to remove technical friction.
+            </p>
+          </ScrollReveal>
         </div>
       </section>
 

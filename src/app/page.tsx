@@ -24,10 +24,14 @@ export default function Home() {
       {/* Hero Section */}
       <section className="min-h-screen flex items-center justify-center relative px-6 md:px-12 pt-40 md:pt-32">
 
-        {/* Background Elements */}
-        <div className="absolute inset-0 z-0 opacity-20">
-          <div className="absolute top-[20%] left-[10%] w-[40vw] h-[40vw] bg-accent/10 rounded-full blur-[120px]" />
-          <div className="absolute bottom-[20%] right-[10%] w-[50vw] h-[50vw] bg-blue-500/10 rounded-full blur-[150px]" />
+        {/* Cinematic Background Layer */}
+        <div className="absolute inset-0 z-0">
+          <ParallaxImage
+            src="/images/%20hero-home.png"
+            alt="Cinematic Core"
+            className="w-full h-full opacity-20"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background" />
         </div>
 
         <div className="relative z-10 w-full max-w-[1800px] h-full flex flex-col justify-center py-20">
@@ -118,18 +122,24 @@ export default function Home() {
       </section>
 
       {/* Selected Projects */}
-      <section className="py-32 relative z-10 w-full px-6 md:px-12 bg-white/[0.002]">
-        <ScrollReveal direction="up" distance={40} blur={20}>
-          <div className="flex items-end justify-between mb-24 border-b border-white/10 pb-12 hover:border-white/20 transition-colors duration-700">
-            <div className="space-y-4">
-              <span className="text-[10px] font-bold tracking-[1em] uppercase opacity-30">Portfolio</span>
-              <h2 className="text-4xl md:text-6xl font-medium tracking-tighter italic font-serif">Selected Logic</h2>
-            </div>
-            <span className="text-sm font-mono opacity-20 hidden md:block">2023 — 2026 // ARCH_V2</span>
-          </div>
-        </ScrollReveal>
+      <section className="py-32 relative z-10 w-full px-6 md:px-12">
+        <div className="absolute inset-0 z-0 opacity-[0.03] pointer-events-none grayscale blur-xl">
+          <ParallaxImage src="/images/order.png" alt="Process Texture" className="w-full h-full object-cover" />
+        </div>
 
-        <ProjectList />
+        <div className="relative z-10">
+          <ScrollReveal direction="up" distance={40} blur={20}>
+            <div className="flex items-end justify-between mb-24 border-b border-white/10 pb-12 hover:border-white/20 transition-colors duration-700">
+              <div className="space-y-4">
+                <span className="text-[10px] font-bold tracking-[1em] uppercase opacity-30">Portfolio</span>
+                <h2 className="text-4xl md:text-6xl font-medium tracking-tighter italic font-serif">Selected Logic</h2>
+              </div>
+              <span className="text-sm font-mono opacity-20 hidden md:block">2023 — 2026 // ARCH_V2</span>
+            </div>
+          </ScrollReveal>
+
+          <ProjectList />
+        </div>
       </section>
 
     </main>
