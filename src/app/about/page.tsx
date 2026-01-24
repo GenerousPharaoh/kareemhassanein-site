@@ -85,31 +85,31 @@ function TiltImage({ src, alt, className = "" }: { src: string; alt: string; cla
 
 export default function About() {
   return (
-    <main className="pt-24 overflow-hidden relative">
-      {/* Identity Hero: Unified Cohesive Reveal */}
+    <main className="pt-24 overflow-hidden relative bg-background">
+      {/* Identity Hero: Unified Cohesive Reveal Pattern */}
       <section className="py-40 px-6 lg:px-0 relative overflow-hidden perspective-3000">
         <div className="section-container">
-          <ScrollReveal direction="up" distance={30} blur={20} staggerChildren={0.2} className="grid lg:grid-cols-[1.3fr_0.7fr] gap-32 items-end">
+          <ScrollReveal direction="up" distance={20} blur={20} staggerChildren={0.2} className="grid lg:grid-cols-[1.3fr_0.7fr] gap-32 items-end">
             <motion.div>
               <motion.span variants={{ hidden: { opacity: 0 }, visible: { opacity: 0.3 } }} className="block text-[10px] font-bold tracking-[0.5em] uppercase mb-10">
                 Identity Profile
               </motion.span>
-              <motion.h1 variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="text-7xl md:text-[140px] font-medium tracking-tighter mb-20 leading-[0.75]">
+              <motion.h1 variants={{ hidden: { opacity: 0, y: 15 }, visible: { opacity: 1, y: 0 } }} className="text-7xl md:text-[140px] font-medium tracking-tighter mb-20 leading-[0.75]">
                 Roots <br /> {"&"} <span className="opacity-30 italic font-light font-serif">Rationale.</span>
               </motion.h1>
             </motion.div>
-            <motion.div variants={{ hidden: { opacity: 0, x: 40, filter: 'blur(30px)' }, visible: { opacity: 1, x: 0, filter: 'blur(0px)' } }} className="group mb-12">
-              <TiltImage src="/assets/n_logic.png" alt="Operational Logic Microscopic Detail" />
+            <motion.div variants={{ hidden: { opacity: 0, x: 30, filter: 'blur(30px)' }, visible: { opacity: 1, x: 0, filter: 'blur(0px)' } }} className="group mb-12">
+              <TiltImage src="/assets/n_logic.png" alt="Operational Logic" />
             </motion.div>
           </ScrollReveal>
         </div>
       </section>
 
-      {/* Practitioner vs Architect: Balanced High-Fi */}
+      {/* Practitioner vs Architect: Unified Cohesive Reveal Pattern */}
       <section className="py-40 lg:py-64 border-t border-white/5 bg-white/[0.005]">
         <div className="section-container">
-          <div className="grid lg:grid-cols-2 gap-40 items-start">
-            <ScrollReveal direction="up" blur={20} className="space-y-16">
+          <ScrollReveal direction="up" distance={20} blur={20} staggerChildren={0.25} className="grid lg:grid-cols-2 gap-40 items-start">
+            <motion.div variants={{ hidden: { opacity: 0, y: 15 }, visible: { opacity: 1, y: 0 } }} className="space-y-16">
               <div className="flex items-center gap-8">
                 <div className="w-12 h-12 rounded-2xl bg-white/[0.01] border border-white/5 flex items-center justify-center">
                   <HeartPulse className="text-muted-foreground w-6 h-6" />
@@ -119,9 +119,9 @@ export default function About() {
               <p className="text-3xl font-light text-muted-foreground leading-relaxed max-w-xl italic">
                 MSc Physiotherapy with Distinction. My perspective is rooted in the thousand-hour diagnostic cycle of care and adherence across 6 specialties.
               </p>
-            </ScrollReveal>
+            </motion.div>
 
-            <ScrollReveal direction="up" delay={0.3} blur={20} className="space-y-16 lg:pt-48 border-l border-white/5 pl-24 ml-auto">
+            <motion.div variants={{ hidden: { opacity: 0, y: 15 }, visible: { opacity: 1, y: 0 } }} className="space-y-16 lg:pt-48 border-l border-white/5 pl-24 ml-auto">
               <div className="flex items-center gap-8">
                 <div className="w-12 h-12 rounded-2xl bg-white/[0.01] border border-white/5 flex items-center justify-center">
                   <Binary className="text-muted-foreground w-6 h-6" />
@@ -131,51 +131,51 @@ export default function About() {
               <p className="text-3xl font-light text-muted-foreground leading-relaxed max-w-xl">
                 Architecting bridge systems in agentic AI and operational DevOps. Ensuring technology drives adoption and ROI without compromising clinical reality.
               </p>
-            </ScrollReveal>
-          </div>
+            </motion.div>
+          </ScrollReveal>
         </div>
       </section>
 
-      {/* Compact Roadmap: High-Density & Staggered Reveal */}
+      {/* Compact Roadmap: Unified Vertical Narrative Pattern */}
       <section className="py-40 lg:py-64 relative border-y border-white/5">
         <div className="section-container">
-          <ScrollReveal direction="up" blur={20} className="mb-48">
-            <p className="text-[10px] font-bold tracking-[0.4em] uppercase opacity-30 mb-8">Professional Timeline</p>
-            <h2 className="text-7xl md:text-[120px] font-medium tracking-tighter leading-none mb-12 text-balance">Perspective.</h2>
+          <ScrollReveal direction="up" distance={20} blur={20} staggerChildren={0.15}>
+            <div className="mb-48">
+              <motion.p variants={{ hidden: { opacity: 0 }, visible: { opacity: 0.3 } }} className="text-[10px] font-bold tracking-[0.4em] uppercase mb-8">Professional Timeline</motion.p>
+              <motion.h2 variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="text-7xl md:text-[120px] font-medium tracking-tighter leading-none mb-12 text-balance">Perspective.</motion.h2>
+            </div>
+
+            <div className="overflow-hidden rounded-[3.5rem] border border-white/5 bg-white/[0.005] glass-nanobanana">
+              {roadmap.map((item) => (
+                <motion.div
+                  key={item.title}
+                  variants={{ hidden: { opacity: 0, y: 30, filter: 'blur(15px)' }, visible: { opacity: 1, y: 0, filter: 'blur(0px)' } }}
+                  className="grid lg:grid-cols-[1.3fr_2.7fr] gap-12 group p-16 bg-background border-b border-white/5 last:border-0 hover:bg-white/[0.02] transition-all duration-1000"
+                >
+                  <div className="space-y-8">
+                    <span className="text-[11px] font-bold tracking-widest uppercase italic opacity-30 group-hover:opacity-100 transition-opacity duration-1000">{item.period}</span>
+                    <h3 className="text-4xl font-medium tracking-tight leading-none group-hover:text-accent transition-colors duration-1000">{item.title}</h3>
+                    <p className="text-xl font-light text-muted-foreground italic">{item.company}</p>
+                  </div>
+
+                  <div className="space-y-12">
+                    <p className="text-[10px] font-bold uppercase tracking-[0.5em] opacity-20 italic">{item.focus}</p>
+                    <ul className="grid md:grid-cols-2 gap-x-12 gap-y-12">
+                      {item.points.map((point) => (
+                        <li
+                          key={point}
+                          className="flex gap-6 text-xl text-muted-foreground font-light leading-snug items-start border-l border-white/[0.03] pl-6 hover:text-foreground transition-all duration-700"
+                        >
+                          <ChevronRight size={20} className="opacity-10 mt-1 flex-shrink-0" />
+                          {point}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
           </ScrollReveal>
-
-          <div className="overflow-hidden rounded-[3.5rem] border border-white/5 bg-white/[0.005] glass-nanobanana">
-            {roadmap.map((item, i) => (
-              <ScrollReveal
-                key={item.title}
-                direction="none"
-                delay={i * 0.2}
-                blur={20}
-                className="grid lg:grid-cols-[1.3fr_2.7fr] gap-12 group p-16 bg-[#0d1117] border-b border-white/5 last:border-0 hover:bg-white/[0.02] transition-all duration-1000"
-              >
-                <div className="space-y-8">
-                  <span className="text-[11px] font-bold tracking-widest uppercase italic opacity-30 group-hover:opacity-100 transition-opacity duration-1000">{item.period}</span>
-                  <h3 className="text-4xl font-medium tracking-tight leading-none group-hover:text-accent transition-colors duration-1000">{item.title}</h3>
-                  <p className="text-xl font-light text-muted-foreground opacity-50">{item.company}</p>
-                </div>
-
-                <div className="space-y-12">
-                  <p className="text-[10px] font-bold uppercase tracking-[0.5em] opacity-20 italic">{item.focus}</p>
-                  <ul className="grid md:grid-cols-2 gap-x-12 gap-y-12">
-                    {item.points.map((point) => (
-                      <li
-                        key={point}
-                        className="flex gap-6 text-xl text-muted-foreground font-light leading-snug items-start border-l border-white/[0.03] pl-6 hover:text-foreground transition-all duration-700"
-                      >
-                        <ChevronRight size={20} className="opacity-10 mt-1 flex-shrink-0" />
-                        {point}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </ScrollReveal>
-            ))}
-          </div>
         </div>
       </section>
 

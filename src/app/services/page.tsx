@@ -11,28 +11,28 @@ const solutions = [
     index: '01',
     title: 'AI Intelligence Implementation',
     desc: 'Strategic architecture and rollout of agentic systems (Heidi AI) for clinical teams. Evaluating technical barriers and constructing SOPs built for immediate field adoption.',
-    outcomes: ['SOP System Architecture', 'Technical Tool Baseline Configuration', 'Post-Deployment Stability Auditing'],
+    outcomes: ['SOP System Architecture', 'Technical Tool Baseline Configuration', 'Post-Deployment Stability Auditing', 'Clinic-Wide Transition Advisory'],
     icon: <Layers className="w-5 h-5 opacity-40" />
   },
   {
     index: '02',
     title: 'Agentic Workflow DevOps',
     desc: 'Engineering complex automated modules via Claude Code and Google Antigravity platforms. Reduction in operational friction by 85% via modular automation logic.',
-    outcomes: ['Modular Automation Blueprints', 'CI/CD Pipeline System Auditing', 'Reduction in baseline operational friction'],
+    outcomes: ['Modular Automation Blueprints', 'CI/CD Pipeline System Auditing', 'Reduction in operational friction', 'Workflow Logic Mapping'],
     icon: <Workflow className="w-5 h-5 opacity-40" />
   },
   {
     index: '03',
     title: 'Discovery Infrastructure',
     desc: 'Constructing search-optimized acquisition streams with technical local SEO and Jane App functional integration. Linking presence to patient conversion.',
-    outcomes: ['Local SEO Technical Infrastructure', 'Jane App pathway integration', 'Technical Conversion Audits'],
+    outcomes: ['Local SEO Technical Infrastructure', 'Jane App pathway integration', 'Technical Conversion Audits', 'Patient Acquisition Blueprints'],
     icon: <BarChart3 className="w-5 h-5 opacity-40" />
   },
   {
     index: '04',
     title: 'Implementation Advisory',
     desc: 'Consulting for med-tech and health-tech platforms on clinical usability, adoption barriers, and market validation within clinical workflows.',
-    outcomes: ['Med-Tech Adoption Root Cause Audit', 'Technical Usability Workflow Mapping', 'Early Market Fit Strategy'],
+    outcomes: ['Med-Tech Adoption Root Cause Audit', 'Technical Usability Workflow Mapping', 'Early Market Fit Strategy', 'Clinical Usability Validation'],
     icon: <ShieldCheck className="w-5 h-5 opacity-40" />
   }
 ];
@@ -81,30 +81,30 @@ function TiltImage({ src, alt, className = "" }: { src: string; alt: string; cla
 
 export default function Services() {
   return (
-    <main className="pt-24 overflow-hidden relative">
+    <main className="pt-24 overflow-hidden relative bg-background">
       <div className="glow-blob top-[15%] -left-[10%] opacity-05" />
 
-      {/* Capability Hero: Fixed Spacing & High-Fi Blur */}
+      {/* Capability Hero: Unified Cohesive Reveal Pattern */}
       <section className="py-40 px-6 lg:px-0 relative overflow-hidden perspective-3000">
-        <div className="section-container grid lg:grid-cols-[1.3fr_0.7fr] gap-32 items-end">
-          <motion.div>
-            <ScrollReveal direction="none" blur={30} className="mb-10">
-              <span className="text-[10px] font-bold tracking-[0.6em] uppercase opacity-30">Operational Capabilities</span>
-            </ScrollReveal>
-            <ScrollReveal direction="up" distance={40} blur={20} delay={0.2}>
-              <h1 className="text-8xl md:text-[130px] font-medium tracking-tighter mb-20 leading-[0.75]">
+        <div className="section-container">
+          <ScrollReveal direction="up" distance={20} blur={20} staggerChildren={0.2} className="grid lg:grid-cols-[1.3fr_0.7fr] gap-32 items-end">
+            <motion.div>
+              <motion.span variants={{ hidden: { opacity: 0 }, visible: { opacity: 0.3 } }} className="block text-[10px] font-bold tracking-[0.6em] uppercase mb-10">
+                Operational Capabilities
+              </motion.span>
+              <motion.h1 variants={{ hidden: { opacity: 0, y: 15 }, visible: { opacity: 1, y: 0 } }} className="text-8xl md:text-[130px] font-medium tracking-tighter mb-20 leading-[0.75]">
                 System <br />
                 {"&"} <span className="opacity-30 italic font-light font-serif">Scale.</span>
-              </h1>
-            </ScrollReveal>
-          </motion.div>
-          <ScrollReveal direction="right" distance={80} blur={40} delay={0.4} className="group mb-12">
-            <TiltImage src="/assets/n_strategy.png" alt="Strategic Outcome Microscopic Detail" />
+              </motion.h1>
+            </motion.div>
+            <motion.div variants={{ hidden: { opacity: 0, x: 30, filter: 'blur(30px)' }, visible: { opacity: 1, x: 0, filter: 'blur(0px)' } }} className="group mb-12">
+              <TiltImage src="/assets/n_strategy.png" alt="Strategic Outcome" />
+            </motion.div>
           </ScrollReveal>
         </div>
       </section>
 
-      {/* Outcome-Driven Capability Dossiers: Unified Cohesive Reveal */}
+      {/* Outcome-Driven Capability Dossiers: Unified Cohesive Reveal Pattern */}
       <section className="py-40 lg:py-64 bg-white/[0.005] border-y border-white/5">
         <div className="section-container">
           <ScrollReveal direction="up" distance={20} blur={20} staggerChildren={0.15} className="grid lg:grid-cols-2 gap-10">
@@ -127,7 +127,7 @@ export default function Services() {
                     </div>
 
                     <div className="space-y-10">
-                      <h3 className="text-5xl font-medium tracking-tight h-[2.2em] lg:h-auto group-hover:text-foreground transition-colors duration-1000 leading-none">{module.title}</h3>
+                      <h3 className="text-5xl font-medium tracking-tight h-[2.2em] lg:h-auto group-hover:text-foreground transition-all duration-1000 leading-none">{module.title}</h3>
                       <p className="text-2xl font-light text-muted-foreground leading-relaxed max-w-2xl text-balance italic">
                         {module.desc}
                       </p>
@@ -155,25 +155,25 @@ export default function Services() {
       {/* High-Fi Final Call */}
       <section className="py-96 text-center px-6 border-t border-white/5 bg-white/[0.005]">
         <div className="section-container relative z-10 space-y-32">
-          <ScrollReveal direction="up" blur={40}>
-            <h2 className="text-8xl md:text-[180px] font-medium tracking-tighter mb-24 leading-[0.75] text-balance">
+          <ScrollReveal direction="up" blur={40} distance={20} staggerChildren={0.2}>
+            <motion.h2 variants={{ hidden: { opacity: 0, y: 15 }, visible: { opacity: 1, y: 0 } }} className="text-8xl md:text-[180px] font-medium tracking-tighter mb-24 leading-[0.75] text-balance">
               Building <br /> <span className="opacity-10 italic font-light font-serif">Outcome.</span>
-            </h2>
-          </ScrollReveal>
+            </motion.h2>
 
-          <ScrollReveal direction="up" delay={0.2} blur={25} className="space-y-32 max-w-4xl mx-auto">
-            <p className="text-3xl md:text-5xl text-muted-foreground font-light leading-snug text-balance italic border-x border-white/5 px-20">
-              Engineering high-stakes implementation where <span className="text-foreground border-b border-white/10 italic">user adoption</span> is the primary metric.
-            </p>
-            <div className="pt-24 flex justify-center">
-              <Link
-                href="/contact"
-                className="group inline-flex items-center gap-12 text-5xl font-bold tracking-tight text-foreground link-underline pb-4 px-12 transition-all"
-              >
-                Inquire for Architecture
-                <ArrowRight size={72} className="opacity-0 group-hover:opacity-100 group-hover:translate-x-6 transition-all duration-[1.5s]" />
-              </Link>
-            </div>
+            <motion.div variants={{ hidden: { opacity: 0, y: 15 }, visible: { opacity: 1, y: 0 } }} className="space-y-32 max-w-4xl mx-auto">
+              <p className="text-3xl md:text-5xl text-muted-foreground font-light leading-snug text-balance italic border-x border-white/5 px-20">
+                Engineering high-stakes implementation where <span className="text-foreground border-b border-white/10 italic">user adoption</span> is the primary metric.
+              </p>
+              <div className="pt-24 flex justify-center">
+                <Link
+                  href="/contact"
+                  className="group inline-flex items-center gap-12 text-5xl font-bold tracking-tight text-foreground link-underline pb-4 px-12 transition-all"
+                >
+                  Inquire for Architecture
+                  <ArrowRight size={72} className="opacity-0 group-hover:opacity-100 group-hover:translate-x-6 transition-all duration-[1.5s]" />
+                </Link>
+              </div>
+            </motion.div>
           </ScrollReveal>
         </div>
       </section>
