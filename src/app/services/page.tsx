@@ -230,9 +230,12 @@ export default function Services() {
       </section>
 
       {/* The Final Line */}
-      <section className="py-96 text-center border-t border-white/5">
+      <section className="py-96 text-center border-t border-white/5 relative overflow-hidden">
+        <div className="absolute inset-0 z-0 opacity-[0.07] pointer-events-none">
+          <ParallaxImage src="/images/glow.png" alt="Atmospheric Glow" className="w-full h-full object-cover" />
+        </div>
         <ScrollReveal direction="up">
-          <h2 className="text-8xl md:text-[220px] font-medium tracking-[calc(-0.06em)] leading-[0.7] opacity-5 select-none">
+          <h2 className="text-8xl md:text-[220px] font-medium tracking-[calc(-0.06em)] leading-[0.7] opacity-5 select-none relative z-10">
             Ready.
           </h2>
         </ScrollReveal>

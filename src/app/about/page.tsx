@@ -170,8 +170,11 @@ export default function About() {
       </section>
 
       {/* Call to Action */}
-      <section className="py-64 text-center border-t border-white/5">
-        <ScrollReveal direction="up">
+      <section className="py-64 text-center border-t border-white/5 relative overflow-hidden">
+        <div className="absolute inset-0 z-0 opacity-[0.08] pointer-events-none">
+          <ParallaxImage src="/images/glow.png" alt="Atmospheric Glow" className="w-full h-full object-cover" />
+        </div>
+        <ScrollReveal direction="up" className="relative z-10">
           <h2 className="text-7xl md:text-[120px] font-medium tracking-tighter mb-24 opacity-80">Knowledge.</h2>
           <a
             href="/Kareem-Hassanein-Resume.pdf"
