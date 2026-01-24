@@ -24,7 +24,7 @@ export default function Contact() {
 
             <ScrollReveal direction="up" distance={60} blur={20} delay={0.2}>
               <h1 className="text-7xl md:text-[140px] font-medium tracking-tighter mb-20 leading-[0.75]">
-                Get in <br /> {"&"} <span className="opacity-30 italic font-light font-serif">touch.</span>
+                Get in <br /><span className="opacity-40 italic font-light font-serif">touch.</span>
               </h1>
             </ScrollReveal>
 

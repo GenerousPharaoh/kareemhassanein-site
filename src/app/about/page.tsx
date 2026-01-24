@@ -76,8 +76,8 @@ function TiltImage({ src, alt, className = "" }: { src: string; alt: string; cla
         style={{ transform: "translateZ(60px)", transformStyle: "preserve-3d" }}
         className="absolute inset-0 z-10 bg-gradient-to-t from-background/90 via-transparent to-transparent pointer-events-none"
       />
-      <motion.div style={{ transform: "translateZ(30px)" }} className="relative aspect-square w-full">
-        <Image src={src} alt={alt} fill className="object-cover opacity-80" />
+      <motion.div style={{ transform: "translateZ(30px)" }} className="relative aspect-[4/5] w-full">
+        <Image src={src} alt={alt} fill className="object-cover opacity-90" />
       </motion.div>
     </motion.div>
   );
@@ -92,13 +92,13 @@ export default function About() {
       {/* Identity Hero: Unified Cohesive Reveal Pattern */}
       <section className="py-40 px-6 lg:px-0 relative overflow-hidden perspective-3000">
         <div className="section-container">
-          <ScrollReveal direction="up" distance={20} blur={20} staggerChildren={0.2} className="grid lg:grid-cols-[1.3fr_0.7fr] gap-32 items-end">
+          <ScrollReveal direction="up" distance={20} blur={20} staggerChildren={0.2} className="grid lg:grid-cols-[1fr_1fr] gap-20 lg:gap-32 items-center">
             <motion.div>
               <motion.span variants={{ hidden: { opacity: 0 }, visible: { opacity: 0.3 } }} className="block text-[10px] font-bold tracking-[0.5em] uppercase mb-10">
                 About
               </motion.span>
               <motion.h1 variants={{ hidden: { opacity: 0, y: 15 }, visible: { opacity: 1, y: 0 } }} className="text-7xl md:text-[140px] font-medium tracking-tighter mb-20 leading-[0.75]">
-                Background <br /> {"&"} <span className="opacity-30 italic font-light font-serif">Experience.</span>
+                Background <br /><span className="opacity-30 italic font-light font-serif">& Experience.</span>
               </motion.h1>
             </motion.div>
             <motion.div variants={{ hidden: { opacity: 0, x: 30, filter: 'blur(30px)' }, visible: { opacity: 1, x: 0, filter: 'blur(0px)' } }} className="group mb-12">
@@ -202,7 +202,7 @@ export default function About() {
       <section className="py-96 text-center px-6 bg-white/[0.005]">
         <ScrollReveal direction="up" blur={40}>
           <h2 className="text-8xl md:text-[160px] font-medium tracking-tighter mb-24 leading-[0.7] text-balance">
-            Want <br /> <span className="opacity-10 italic font-light font-serif">more?</span>
+            Want to <br /><span className="opacity-40 italic font-light font-serif">know more?</span>
           </h2>
           <a
             href="/Kareem-Hassanein-Resume.pdf"

@@ -72,8 +72,8 @@ function TiltImage({ src, alt, className = "" }: { src: string; alt: string; cla
         style={{ transform: "translateZ(60px)", transformStyle: "preserve-3d" }}
         className="absolute inset-0 z-10 bg-gradient-to-t from-background/90 via-transparent to-transparent pointer-events-none"
       />
-      <motion.div style={{ transform: "translateZ(30px)" }} className="relative aspect-video w-full">
-        <Image src={src} alt={alt} fill className="object-cover opacity-80" />
+      <motion.div style={{ transform: "translateZ(30px)" }} className="relative aspect-[4/5] w-full">
+        <Image src={src} alt={alt} fill className="object-cover opacity-90" />
       </motion.div>
     </motion.div>
   );
@@ -87,14 +87,13 @@ export default function Services() {
       {/* Capability Hero: Unified Cohesive Reveal Pattern */}
       <section className="py-40 px-6 lg:px-0 relative overflow-hidden perspective-3000">
         <div className="section-container">
-          <ScrollReveal direction="up" distance={20} blur={20} staggerChildren={0.2} className="grid lg:grid-cols-[1.3fr_0.7fr] gap-32 items-end">
+          <ScrollReveal direction="up" distance={20} blur={20} staggerChildren={0.2} className="grid lg:grid-cols-[1fr_1fr] gap-20 lg:gap-32 items-center">
             <motion.div>
               <motion.span variants={{ hidden: { opacity: 0 }, visible: { opacity: 0.3 } }} className="block text-[10px] font-bold tracking-[0.6em] uppercase mb-10">
                 Services
               </motion.span>
               <motion.h1 variants={{ hidden: { opacity: 0, y: 15 }, visible: { opacity: 1, y: 0 } }} className="text-8xl md:text-[130px] font-medium tracking-tighter mb-20 leading-[0.75]">
-                How I <br />
-                {"&"} <span className="opacity-30 italic font-light font-serif">help.</span>
+                How I can <br /><span className="opacity-40 italic font-light font-serif">help.</span>
               </motion.h1>
             </motion.div>
             <motion.div variants={{ hidden: { opacity: 0, x: 30, filter: 'blur(30px)' }, visible: { opacity: 1, x: 0, filter: 'blur(0px)' } }} className="group mb-12">
@@ -165,7 +164,7 @@ export default function Services() {
         <div className="section-container relative z-10 space-y-32">
           <ScrollReveal direction="up" blur={40} distance={20} staggerChildren={0.2}>
             <motion.h2 variants={{ hidden: { opacity: 0, y: 15 }, visible: { opacity: 1, y: 0 } }} className="text-8xl md:text-[180px] font-medium tracking-tighter mb-24 leading-[0.75] text-balance">
-              Have a <br /> <span className="opacity-10 italic font-light font-serif">project?</span>
+              Have a <br /><span className="opacity-40 italic font-light font-serif">project?</span>
             </motion.h2>
 
             <motion.div variants={{ hidden: { opacity: 0, y: 15 }, visible: { opacity: 1, y: 0 } }} className="space-y-32 max-w-4xl mx-auto">

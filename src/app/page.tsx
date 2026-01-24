@@ -9,18 +9,18 @@ import ScrollReveal from '@/components/ScrollReveal';
 
 const impacts = [
   {
-    title: 'Endorphins Health',
-    details: 'Led Heidi AI rollout across a 6-specialty clinic. Created SOPs that got every clinician on board and cut documentation time significantly.',
-    tag: 'AI Implementation',
-    href: 'https://www.endorphinshealth.com',
-    icon: <Sparkles className="w-5 h-5 opacity-40" />
-  },
-  {
     title: 'Kinetikare Physio',
     details: 'Built automation systems using Claude Code that reduced document generation time by 85%. Streamlined intake and correspondence workflows.',
     tag: 'Automation',
     href: 'https://www.kinetikarephysio.com',
     icon: <Workflow className="w-5 h-5 opacity-40" />
+  },
+  {
+    title: 'Endorphins Health',
+    details: 'Led Heidi AI rollout across a 6-specialty clinic. Created SOPs that got every clinician on board and cut documentation time significantly.',
+    tag: 'AI Implementation',
+    href: 'https://www.endorphinshealth.com',
+    icon: <Sparkles className="w-5 h-5 opacity-40" />
   },
   {
     title: 'Booking System Redesign',
@@ -71,8 +71,8 @@ function TiltImage({ src, alt, className = "" }: { src: string; alt: string; cla
         style={{ transform: "translateZ(75px)", transformStyle: "preserve-3d" }}
         className="absolute inset-0 z-10 bg-gradient-to-t from-background/80 via-transparent to-transparent pointer-events-none"
       />
-      <motion.div style={{ transform: "translateZ(50px)" }} className="relative aspect-square lg:aspect-[4/5] w-full">
-        <Image src={src} alt={alt} fill className="object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-[2s]" />
+      <motion.div style={{ transform: "translateZ(50px)" }} className="relative aspect-[4/5] w-full">
+        <Image src={src} alt={alt} fill className="object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-[2s]" />
       </motion.div>
     </motion.div>
   );
@@ -93,7 +93,7 @@ export default function Home() {
       <section className="relative min-h-[90vh] flex items-center px-6 lg:px-20 pt-32 pb-20 overflow-hidden perspective-3000">
         <div className="glow-blob top-[20%] -right-[15%] opacity-[0.03]" />
         <div className="section-container">
-          <ScrollReveal direction="up" distance={30} blur={20} staggerChildren={0.2} className="grid lg:grid-cols-[1.25fr_0.75fr] gap-32 items-center">
+          <ScrollReveal direction="up" distance={30} blur={20} staggerChildren={0.2} className="grid lg:grid-cols-[1fr_1fr] gap-20 lg:gap-32 items-center">
             <motion.div style={{ opacity: heroOpacity }} className="z-10">
               <motion.span variants={{ hidden: { opacity: 0, scale: 0.95 }, visible: { opacity: 0.4, scale: 1 } }} className="block text-[10px] font-bold tracking-[0.6em] uppercase mb-10">
                 Implementation Specialist
@@ -102,7 +102,7 @@ export default function Home() {
               <motion.h1 variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="text-6xl md:text-8xl lg:text-[115px] font-medium leading-[0.85] tracking-tight mb-16 text-balance">
                 Making <br />
                 technology <br />
-                {"&"} <span className="opacity-40 italic font-light font-serif">work.</span>
+                <span className="opacity-40 italic font-light font-serif">work.</span>
               </motion.h1>
 
               <motion.p variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="text-xl md:text-2xl text-muted-foreground leading-relaxed mb-20 font-light text-balance border-l border-white/5 pl-12 italic">
@@ -148,47 +148,39 @@ export default function Home() {
               </motion.div>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-10">
+            <div className="flex flex-col gap-16">
               {impacts.map((impact) => (
                 <motion.div
                   key={impact.title}
                   variants={{ hidden: { opacity: 0, y: 30, filter: 'blur(10px)' }, visible: { opacity: 1, y: 0, filter: 'blur(0px)' } }}
-                  className="group relative h-full flex flex-col"
+                  className="group relative"
                 >
-                  <div className={`h-full p-20 rounded-[4rem] glass-card glass-narrative hover:bg-white/[0.04] transition-all duration-1000 flex flex-col justify-between group-hover:-translate-y-4 before:bg-[url('/assets/n_story_impact_${impact.title.toLowerCase().replace(/\s+/g, '_')}.png')]`}>
-                    <div className="space-y-12">
-                      <div className="flex justify-between items-start">
-                        <div className="w-14 h-14 rounded-3xl bg-white/[0.01] border border-white/10 flex items-center justify-center group-hover:border-foreground/20 transition-all duration-1000">
+                  <div className="p-12 lg:p-20 rounded-[3rem] glass-card hover:bg-white/[0.03] transition-all duration-1000 group-hover:-translate-y-2">
+                    <div className="flex flex-col lg:flex-row lg:items-center gap-12 lg:gap-20">
+                      <div className="flex items-center gap-8 lg:min-w-[200px]">
+                        <div className="w-14 h-14 rounded-2xl bg-white/[0.02] border border-white/10 flex items-center justify-center group-hover:border-accent/30 transition-all duration-700">
                           {impact.icon}
                         </div>
-                        <span className="text-[10px] font-bold tracking-widest uppercase opacity-20">{impact.tag}</span>
-                      </div>
-                      <div className="space-y-6">
-                        <div className="flex items-center justify-between group/title">
-                          <h3 className="text-4xl font-medium tracking-tight group-hover:text-accent transition-colors duration-1000 leading-none">{impact.title}</h3>
-                          {impact.href && (
-                            <a
-                              href={impact.href}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="opacity-0 group-hover:opacity-100 group-hover:translate-x-4 transition-all duration-1000"
-                            >
-                              <ArrowUpRight className="text-accent w-6 h-6" />
-                            </a>
-                          )}
+                        <div>
+                          <h3 className="text-3xl lg:text-4xl font-medium tracking-tight group-hover:text-accent transition-colors duration-700 leading-none">{impact.title}</h3>
+                          <span className="text-[10px] font-bold tracking-widest uppercase opacity-30 mt-2 block">{impact.tag}</span>
                         </div>
-                        <p className="text-2xl text-muted-foreground font-light leading-relaxed">
-                          {impact.details}
-                        </p>
                       </div>
+                      <p className="text-xl lg:text-2xl text-muted-foreground font-light leading-relaxed flex-1">
+                        {impact.details}
+                      </p>
+                      {impact.href && (
+                        <a
+                          href={impact.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-4 text-sm font-bold uppercase tracking-widest opacity-30 group-hover:opacity-100 group-hover:text-accent transition-all duration-700 shrink-0"
+                        >
+                          View site
+                          <ArrowUpRight className="w-5 h-5" />
+                        </a>
+                      )}
                     </div>
-                    {impact.href && (
-                      <div className="pt-12 mt-12 border-t border-white/5">
-                        <span className="text-[10px] font-bold uppercase tracking-[0.4em] opacity-20 group-hover:opacity-100 group-hover:text-accent transition-all flex items-center gap-4">
-                          View site <ArrowRight size={12} />
-                        </span>
-                      </div>
-                    )}
                   </div>
                 </motion.div>
               ))}
@@ -201,20 +193,20 @@ export default function Home() {
       <div className="divider-subtle w-full" />
 
       {/* Narrative Break: Unified Entrance */}
-      <section className="py-80 relative overflow-hidden bg-white/[0.005]">
+      <section className="py-64 lg:py-80 relative overflow-hidden bg-white/[0.005]">
         <div className="section-container">
-          <ScrollReveal direction="up" distance={30} blur={25} staggerChildren={0.2} className="grid lg:grid-cols-[2fr_1.5fr] gap-32 items-center">
-            <div className="space-y-20">
-              <motion.h2 variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="text-5xl md:text-[110px] font-medium tracking-tighter leading-[0.85] text-balance">
-                Clinical <br /> {"&"} Technical.
+          <ScrollReveal direction="up" distance={30} blur={25} staggerChildren={0.2} className="grid lg:grid-cols-[1fr_1.2fr] gap-20 lg:gap-32 items-center">
+            <div className="space-y-16 lg:space-y-20">
+              <motion.h2 variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="text-5xl md:text-8xl lg:text-[100px] font-medium tracking-tighter leading-[0.85] text-balance">
+                Clinical <br /><span className="opacity-40 italic font-light font-serif">& Technical.</span>
               </motion.h2>
-              <motion.p variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="text-3xl font-light text-muted-foreground leading-relaxed max-w-2xl italic">
+              <motion.p variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="text-2xl lg:text-3xl font-light text-muted-foreground leading-relaxed max-w-xl italic">
                 I know what it&apos;s like to be the person who has to use the tools. That perspective shapes how I approach implementation.
               </motion.p>
             </div>
 
             <motion.div variants={{ hidden: { opacity: 0, x: 40, filter: 'blur(30px)' }, visible: { opacity: 1, x: 0, filter: 'blur(0px)' } }} className="group">
-              <TiltImage src="/assets/n_implementation.png" alt="Clinical Implementation Details" className="aspect-square" />
+              <TiltImage src="/assets/n_implementation.png" alt="Clinical Implementation Details" />
             </motion.div>
           </ScrollReveal>
         </div>
@@ -227,8 +219,7 @@ export default function Home() {
       <section className="py-96 text-center relative flex flex-col items-center bg-white/[0.002]">
         <ScrollReveal direction="up" blur={30} distance={20}>
           <h2 className="text-8xl md:text-[180px] font-medium tracking-tighter mb-24 leading-[0.75]">
-            Let&apos;s <br />
-            <span className="opacity-10 italic font-light font-serif">talk.</span>
+            Let&apos;s <br /><span className="opacity-40 italic font-light font-serif">talk.</span>
           </h2>
           <Link
             href="/contact"
