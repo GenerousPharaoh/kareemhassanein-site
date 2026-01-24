@@ -4,10 +4,10 @@ import { Mail, Linkedin, Globe, ArrowUpRight } from 'lucide-react';
 import ScrollReveal from '@/components/ScrollReveal';
 
 const socialLinks = [
-  { label: 'Platform Correspondence', href: 'mailto:kareemhassanein@gmail.com', icon: <Mail className="w-5 h-5" /> },
-  { label: 'Endorphins Health', href: 'https://www.endorphinshealth.com', icon: <Globe className="w-5 h-5" /> },
+  { label: 'Direct Email', href: 'mailto:kareemhassanein@gmail.com', icon: <Mail className="w-5 h-5" /> },
   { label: 'Kinetikare Physio', href: 'https://www.kinetikarephysio.com', icon: <Globe className="w-5 h-5" /> },
-  { label: 'Professional Graph', href: 'https://linkedin.com/in/kareemh', icon: <Linkedin className="w-5 h-5" /> },
+  { label: 'Endorphins Health', href: 'https://www.endorphinshealth.com', icon: <Globe className="w-5 h-5" /> },
+  { label: 'LinkedIn', href: 'https://linkedin.com/in/kareemh', icon: <Linkedin className="w-5 h-5" /> },
 ];
 
 export default function Contact() {
