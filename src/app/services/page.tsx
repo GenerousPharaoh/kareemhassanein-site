@@ -2,10 +2,10 @@
 
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { ChevronRight, Layers, Workflow, BarChart3, ShieldCheck, ArrowRight } from 'lucide-react';
+import { ChevronRight, Layers, Workflow, BarChart3, ShieldCheck, ArrowRight, LucideIcon } from 'lucide-react';
 import ScrollReveal from '@/components/ScrollReveal';
 import ParallaxImage from '@/components/ParallaxImage';
-import TextScramble from '@/components/TextScramble';
+import MaskedReveal from '@/components/MaskedReveal';
 import AnimatedGrid from '@/components/AnimatedGrid';
 
 const solutions = [
@@ -39,8 +39,6 @@ const solutions = [
   }
 ];
 
-import { LucideIcon } from 'lucide-react';
-
 function IconDraw({ Icon }: { Icon: LucideIcon }) {
   return (
     <div className="w-16 h-16 rounded-[2rem] bg-white/[0.01] border border-white/5 flex items-center justify-center group-hover:border-foreground/20 transition-all duration-1000">
@@ -66,7 +64,7 @@ export default function Services() {
               <motion.h1 variants={{ hidden: { opacity: 0, y: 15 }, visible: { opacity: 1, y: 0 } }} className="text-8xl md:text-[130px] font-medium tracking-tighter mb-20 leading-[0.75]">
                 How I can <br />
                 <span className="opacity-40 italic font-light font-serif">
-                  <TextScramble delay={0.3}>help.</TextScramble>
+                  <MaskedReveal delay={0.3} className="py-2" direction="up">help.</MaskedReveal>
                 </span>
               </motion.h1>
             </motion.div>

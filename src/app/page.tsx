@@ -1,51 +1,49 @@
 'use client';
 
-import Link from 'next/link';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { useRef } from 'react';
+import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import ScrollReveal from '@/components/ScrollReveal';
 import TextReveal from '@/components/TextReveal';
-import TextScramble from '@/components/TextScramble';
+import MaskedReveal from '@/components/MaskedReveal';
 import ProjectList from '@/components/ProjectList';
 import ParallaxImage from '@/components/ParallaxImage';
-
-
-
-
+import Link from 'next/link';
 
 export default function Home() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start start', 'end end'],
-  });
-
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.1], [1, 0]);
-
   return (
-    <div ref={containerRef} className="relative">
-      {/* Hyper-Premium Hero: Unified Staggered Sequence */}
-      <section className="relative min-h-[90vh] flex items-center px-6 lg:px-20 pt-32 pb-20 overflow-hidden perspective-3000">
-        <div className="glow-blob top-[20%] -right-[15%] opacity-[0.03]" />
-        <div className="section-container">
-          <ScrollReveal direction="up" distance={30} blur={20} staggerChildren={0.2} className="grid lg:grid-cols-[1fr_1fr] gap-20 lg:gap-32 items-center">
-            <motion.div style={{ opacity: heroOpacity }} className="z-10">
-              <motion.span variants={{ hidden: { opacity: 0, scale: 0.95 }, visible: { opacity: 0.4, scale: 1 } }} className="block text-[10px] font-bold tracking-[0.6em] uppercase mb-10">
-                Implementation Specialist
-              </motion.span>
+    <main className="min-h-screen bg-background text-foreground overflow-hidden">
+      {/* Hero Section */}
+      <section className="min-h-screen flex items-center justify-center relative px-6 md:px-12">
+
+        {/* Background Elements */}
+        <div className="absolute inset-0 z-0">
+          <div className="absolute top-[20%] left-[10%] w-[30vw] h-[30vw] bg-accent/5 rounded-full blur-[100px]" />
+          <div className="absolute bottom-[20%] right-[10%] w-[40vw] h-[40vw] bg-blue-500/5 rounded-full blur-[120px]" />
+        </div>
+
+        <div className="relative z-10 w-full max-w-[1800px] h-full flex flex-col justify-center">
+          <div className="grid lg:grid-cols-[1.5fr_1fr] gap-20 items-center">
+
+            {/* Text Content */}
+            <div className="space-y-12">
+              <ScrollReveal direction="up" distance={20} blur={10}>
+                <span className="inline-block text-sm font-medium tracking-[0.3em] uppercase opacity-40 mb-4 border border-white/10 px-4 py-2 rounded-full backdrop-blur-sm">
+                  Digital Experience Designer
+                </span>
+              </ScrollReveal>
 
               <motion.h1 variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="text-6xl md:text-8xl lg:text-[115px] font-medium leading-[0.85] tracking-tight mb-16 text-balance">
-                Making <br />
-                <TextScramble delay={0.5}>technology</TextScramble> <br />
-                <span className="opacity-40 italic font-light font-serif">work.</span>
+                Orchestrating <br />
+                <MaskedReveal delay={0.5} className="py-2">complexity.</MaskedReveal>
               </motion.h1>
 
-              <TextReveal
-                text="I help organizations adopt AI tools and optimize their workflows. Background in clinical operations with an MSc in Physiotherapy."
-                className="text-xl md:text-2xl text-muted-foreground leading-relaxed mb-20 font-light text-balance border-l border-white/5 pl-12 italic block max-w-2xl"
-                delay={0.4}
-              />
+              <div className="max-w-xl">
+                <TextReveal
+                  text="I build systems that bridge the gap between human intuition and technical scale."
+                  className="text-xl md:text-2xl text-muted-foreground font-light leading-relaxed"
+                  delay={0.8}
+                />
+              </div>
 
               <motion.div variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }} className="flex gap-16 items-center">
                 <Link
@@ -56,69 +54,55 @@ export default function Home() {
                   <ArrowRight size={24} className="opacity-20 group-hover:translate-x-4 transition-transform duration-700" />
                 </Link>
               </motion.div>
-            </motion.div>
+            </div>
 
-            <motion.div variants={{ hidden: { opacity: 0, x: 40, filter: 'blur(30px)' }, visible: { opacity: 1, x: 0, filter: 'blur(0px)' } }} className="group">
-              <ParallaxImage src="/assets/n_synergy.png" alt="Clinical Synergy" className="aspect-[4/5] w-full rounded-[2rem]" priority />
-            </motion.div>
-          </ScrollReveal>
-        </div>
-      </section>
+            {/* Visual Content - Parallax Card */}
+            <div className="hidden lg:block relative h-[800px]">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
+                className="relative w-full h-full"
+              >
+                <ParallaxImage
+                  src="/assets/n_hero.png" // Using the high-quality asset path
+                  alt="Abstract Architecture"
+                  className="w-full h-full rounded-[3rem] shadow-2xl border border-white/5"
+                />
 
-      {/* Section Divider */}
-      <div className="divider-subtle w-full" />
-
-      {/* Project Matrix: Unified Entrance */}
-      <section className="py-64 lg:py-80 bg-white/[0.01] relative overflow-hidden">
-        <div className="section-container">
-          <ScrollReveal direction="up" distance={30} blur={20} staggerChildren={0.1} className="w-full">
-            <div className="flex flex-col lg:flex-row justify-between items-end mb-48 gap-12">
-              <div className="space-y-4">
-                <motion.p variants={{ hidden: { opacity: 0 }, visible: { opacity: 0.3 } }} className="text-[10px] font-bold tracking-[0.5em] uppercase mb-4">Recent Work</motion.p>
-                <motion.h2 variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="text-7xl md:text-9xl font-medium tracking-tighter leading-none">
-                  Real <br /> Results.
-                </motion.h2>
-              </div>
-              <motion.div variants={{ hidden: { opacity: 0, x: 20 }, visible: { opacity: 1, x: 0 } }} className="max-w-sm text-right pb-4 lg:border-r border-white/10 lg:pr-12">
-                <p className="text-xl text-muted-foreground font-light italic leading-relaxed">
-                  Projects where I helped teams adopt new tools and improve how they work.
-                </p>
+                {/* Floating Info Card */}
+                <motion.div
+                  initial={{ opacity: 0, y: 40 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 1.2, duration: 1 }}
+                  className="absolute -left-12 bottom-24 p-8 glass-card rounded-3xl max-w-xs border border-white/10"
+                >
+                  <p className="text-sm text-foreground/80 font-medium leading-relaxed">
+                    &quot;Design is not just what it looks like and feels like. Design is how it works.&quot;
+                  </p>
+                  <div className="mt-4 flex items-center gap-3 opacity-50">
+                    <div className="w-8 h-[1px] bg-foreground" />
+                    <span className="text-[10px] uppercase tracking-widest">Philosophy</span>
+                  </div>
+                </motion.div>
               </motion.div>
             </div>
-
-            <div className="flex flex-col gap-16">
-              <ProjectList />
-            </div>
-          </ScrollReveal>
+          </div>
         </div>
       </section>
 
-      {/* Section Divider */}
-      <div className="divider-subtle w-full" />
+      {/* Selected Work Section */}
+      <section className="py-24 relative z-10 w-full px-6 md:px-12">
+        <ScrollReveal direction="up" distance={40} blur={20}>
+          <div className="flex items-end justify-between mb-24 border-b border-white/10 pb-8 hover:border-white/20 transition-colors duration-700">
+            <h2 className="text-sm font-bold tracking-[0.2em] uppercase opacity-40">Selected Work</h2>
+            <span className="text-sm font-mono opacity-20">2023 — 2025</span>
+          </div>
+        </ScrollReveal>
 
-      {/* Narrative Break: Unified Entrance */}
-      <section className="py-64 lg:py-80 relative overflow-hidden bg-white/[0.005]">
-        <div className="section-container">
-          <ScrollReveal direction="up" distance={30} blur={25} staggerChildren={0.2} className="grid lg:grid-cols-[1fr_1.2fr] gap-20 lg:gap-32 items-center">
-            <div className="space-y-16 lg:space-y-20">
-              <motion.h2 variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="text-5xl md:text-8xl lg:text-[100px] font-medium tracking-tighter leading-[0.85] text-balance">
-                Clinical <br /><span className="opacity-40 italic font-light font-serif">& Technical.</span>
-              </motion.h2>
-              <motion.p variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="text-2xl lg:text-3xl font-light text-muted-foreground leading-relaxed max-w-xl italic">
-                I know what it&apos;s like to be the person who has to use the tools. That perspective shapes how I approach implementation.
-              </motion.p>
-            </div>
-
-            <motion.div variants={{ hidden: { opacity: 0, x: 40, filter: 'blur(30px)' }, visible: { opacity: 1, x: 0, filter: 'blur(0px)' } }} className="group">
-              <ParallaxImage src="/assets/n_implementation.png" alt="Clinical Implementation Details" className="aspect-square w-full rounded-[2rem]" />
-            </motion.div>
-          </ScrollReveal>
-        </div>
+        <ProjectList />
       </section>
 
-      {/* Section Divider */}
-      <div className="divider-subtle w-full" />
-
-    </div>
+    </main>
   );
 }
