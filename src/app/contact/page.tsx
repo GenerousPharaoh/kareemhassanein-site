@@ -27,20 +27,20 @@ export default function Contact() {
       </div>
 
       <div className="section-container relative z-10 w-full pt-32 pb-12 flex-grow flex items-center">
-        <div className="grid lg:grid-cols-[1.3fr_0.7fr] gap-32 items-center w-full">
+        <div className="grid lg:grid-cols-[1.3fr_0.7fr] gap-12 md:gap-20 lg:gap-32 items-center w-full">
           <div>
             <ScrollReveal direction="none" blur={30} duration={1.8} className="mb-10">
               <span className="text-[10px] font-bold tracking-[0.6em] opacity-30 uppercase">Contact</span>
             </ScrollReveal>
 
             <ScrollReveal direction="up" distance={60} blur={20} delay={0.2}>
-              <h1 className="text-7xl md:text-[140px] font-medium tracking-tighter mb-20 leading-[0.75]">
+              <h1 className="text-5xl sm:text-6xl md:text-[140px] font-medium tracking-tighter mb-10 md:mb-20 leading-[0.75]">
                 Get in <br /><span className="opacity-40 italic font-light font-serif"><MaskedReveal delay={0.3} className="py-2">touch.</MaskedReveal></span>
               </h1>
             </ScrollReveal>
 
             <ScrollReveal delay={0.4} blur={15} distance={30} className="max-w-xl">
-              <p className="text-2xl text-muted-foreground font-light leading-relaxed mb-24 italic border-l border-white/5 pl-12">
+              <p className="text-lg md:text-2xl text-muted-foreground font-light leading-relaxed mb-12 md:mb-24 italic border-l border-white/5 pl-6 md:pl-12">
                 Whether you have a project in mind or just want to connect, I&apos;d be happy to hear from you.
               </p>
             </ScrollReveal>
@@ -59,10 +59,10 @@ export default function Contact() {
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-between p-10 transition-all glass-card hover:bg-white/[0.04] group-hover:-translate-y-1 border border-white/5 hover:border-white/10"
+                  className="flex items-center justify-between p-5 md:p-10 transition-all glass-card hover:bg-white/[0.04] group-hover:-translate-y-1 border border-white/5 hover:border-white/10"
                 >
-                  <div className="flex items-center gap-10">
-                    <div className="w-12 h-12 rounded-2xl bg-white/[0.01] border border-white/5 flex items-center justify-center group-hover:bg-accent/10 group-hover:border-accent/20 transition-all duration-700 text-foreground/50 group-hover:text-accent">
+                  <div className="flex items-center gap-4 md:gap-10">
+                    <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl bg-white/[0.01] border border-white/5 flex items-center justify-center group-hover:bg-accent/10 group-hover:border-accent/20 transition-all duration-700 text-foreground/50 group-hover:text-accent shrink-0">
                       {link.icon}
                     </div>
                     <div className="flex flex-col">
@@ -82,9 +82,9 @@ export default function Contact() {
       <footer className="relative z-10 w-full border-t border-white/5 bg-background/50 backdrop-blur-sm">
         <div className="section-container flex flex-col md:flex-row justify-between items-end py-12 gap-8">
           <div>
-            <h2 className="text-[120px] leading-[0.7] font-bold tracking-tighter opacity-[0.03] select-none pointer-events-none">HASSANEIN</h2>
+            <h2 className="text-[50px] sm:text-[80px] md:text-[120px] leading-[0.7] font-bold tracking-tighter opacity-[0.03] select-none pointer-events-none">HASSANEIN</h2>
           </div>
-          <div className="flex gap-8 text-[10px] uppercase tracking-[0.2em] font-mono opacity-40 pb-2">
+          <div className="flex flex-wrap gap-4 md:gap-8 text-[9px] md:text-[10px] uppercase tracking-[0.2em] font-mono opacity-40 pb-2">
             <span>Burlington, ON</span>
             <span>Available remotely</span>
             <span>© 2026</span>
