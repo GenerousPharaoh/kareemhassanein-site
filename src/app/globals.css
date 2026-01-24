@@ -5,8 +5,8 @@
 :root {
   --background: #09090b;
   --foreground: #fafafa;
-  --accent: #a78bfa;
-  --accent-dim: #7c3aed;
+  --accent: #f97316;
+  --accent-dim: #ea580c;
   --muted: #71717a;
   --muted-foreground: #a1a1aa;
   --card: #0f0f11;
@@ -44,7 +44,7 @@ body {
 
 /* Subtle gradient text */
 .text-gradient {
-  background: linear-gradient(to right, #a78bfa, #818cf8);
+  background: linear-gradient(to right, #f97316, #fb923c);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
