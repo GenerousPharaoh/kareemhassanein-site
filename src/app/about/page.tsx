@@ -1,165 +1,135 @@
 'use client';
 
-import { Download, HeartPulse, Binary } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { Download } from 'lucide-react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import ScrollReveal from '@/components/ScrollReveal';
 import ParallaxImage from '@/components/ParallaxImage';
+import CharReveal from '@/components/CharReveal';
+import { useRef } from 'react';
 
 const roadmap = [
   {
     period: '2024 - Present',
     title: 'Digital Ops Lead',
     company: 'Endorphins Health',
-    focus: 'Health Ops',
-    points: [
-      'Managing operations for 6 clinic locations',
-      'Redesigned booking flows and Jane App setup',
-      'Built custom referral tracking systems'
-    ]
+    desc: 'Managing operations for 6 clinic locations. Built referral tracking and booking architectures on Jane App.',
+    img: '/assets/n_strategy.png'
   },
   {
     period: '2025 - Present',
     title: 'Automation Consultant',
     company: 'Tax Relief Counsel',
-    focus: 'Legal Tech',
-    points: [
-      'Built automations using AI tools',
-      'Reduced document processing time by 85%',
-      'Standardized office intake workflows'
-    ]
+    desc: 'Cutting document processing time by 85% through AI-driven intake and workflow standardization.',
+    img: '/assets/n_hero.png'
   },
   {
     period: '2021 - 2024',
     title: 'Physiotherapist',
     company: 'Movement Solutions',
-    focus: 'Clinical',
-    points: [
-      'Managed AI rollout for the clinician team',
-      'Handled patient care as a full-time clinician',
-      'Designed internal staff training workflows'
-    ]
+    desc: 'Worked as a full-time clinician while managing the 100% adoption rollout of AI tools like Heidi.',
+    img: '/assets/n_logic.png'
   }
 ];
 
+function BioSection({ title, label, text, img, isReversed }: { title: string, label: string, text: string, img: string, isReversed?: boolean }) {
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+  const y = useTransform(scrollYProgress, [0, 1], [50, -50]);
+
+  return (
+    <section ref={ref} className="min-h-screen grid lg:grid-cols-2 items-center relative overflow-hidden">
+      <div className={`p-12 lg:p-32 space-y-12 ${isReversed ? 'lg:order-2' : ''}`}>
+        <ScrollReveal direction="up">
+          <span className="text-accent font-mono text-sm tracking-[0.4em] uppercase block mb-6">{label}</span>
+          <h2 className="text-7xl md:text-9xl font-medium tracking-tighter leading-[0.8] mb-12 italic font-serif">
+            {title}
+          </h2>
+          <p className="text-2xl md:text-3xl font-light text-muted-foreground leading-relaxed max-w-xl italic">
+            &quot;{text}&quot;
+          </p>
+        </ScrollReveal>
+      </div>
+      <div className="relative h-screen lg:h-full overflow-hidden grayscale hover:grayscale-0 transition-all duration-1000">
+        <motion.div style={{ scale: 1.1, y }} className="h-full w-full">
+          <ParallaxImage src={img} alt={title} className="h-full w-full object-cover" />
+        </motion.div>
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-80 lg:hidden" />
+      </div>
+    </section>
+  );
+}
+
 export default function About() {
   return (
-    <main className="pt-24 overflow-hidden relative bg-background">
-      {/* Identity Hero */}
-      <section className="py-40 px-6 lg:px-0 relative overflow-hidden perspective-3000">
-        <div className="section-container">
-          <ScrollReveal direction="up" distance={20} blur={20} staggerChildren={0.2} className="grid lg:grid-cols-[1fr_1fr] gap-20 lg:gap-32 items-center">
-            <motion.div>
-              <motion.span variants={{ hidden: { opacity: 0 }, visible: { opacity: 0.3 } }} className="block text-[10px] font-bold tracking-[0.5em] uppercase mb-10">
-                About me
-              </motion.span>
-              <motion.h1 variants={{ hidden: { opacity: 0, y: 15 }, visible: { opacity: 1, y: 0 } }} className="text-7xl md:text-[140px] font-medium tracking-tighter mb-20 leading-[0.75]">
-                My <br /><span className="opacity-30 italic font-light font-serif">background.</span>
-              </motion.h1>
-            </motion.div>
-            <motion.div variants={{ hidden: { opacity: 0, x: 30, filter: 'blur(30px)' }, visible: { opacity: 1, x: 0, filter: 'blur(0px)' } }} className="group mb-12">
-              <ParallaxImage src="/assets/n_logic.png" alt="Operations" className="aspect-[4/5] w-full rounded-[2rem]" />
-            </motion.div>
-          </ScrollReveal>
-        </div>
+    <main className="bg-background text-foreground pt-20">
+
+      {/* Cinematic Identity Hero */}
+      <section className="min-h-[80vh] flex flex-col justify-center px-12 lg:px-32 relative border-b border-white/5">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[60vw] bg-accent/5 rounded-full blur-[150px] pointer-events-none" />
+        <ScrollReveal direction="up">
+          <span className="block text-[10px] font-bold tracking-[1em] uppercase mb-12 opacity-30">Background</span>
+          <h1 className="text-[12vw] md:text-[8vw] font-medium tracking-tighter leading-[0.75] mb-4">
+            The Clinical <br />
+            <CharReveal delay={0.4} className="text-accent italic font-serif">Eye.</CharReveal>
+          </h1>
+        </ScrollReveal>
       </section>
 
-      {/* Section Divider */}
-      <div className="divider-subtle w-full" />
+      {/* Chapters */}
+      <BioSection
+        label="Credentials"
+        title="Physiotherapy"
+        text="I spent years in the clinic, seeing patients and seeing where operations break down. MSc with Distinction."
+        img="/assets/n_logic.png"
+      />
 
-      {/* Practical Split */}
-      <section className="py-40 lg:py-64 bg-white/[0.005]">
-        <div className="section-container">
-          <ScrollReveal direction="up" distance={20} blur={20} staggerChildren={0.25} className="grid lg:grid-cols-2 gap-40 items-start">
-            <motion.div variants={{ hidden: { opacity: 0, y: 15 }, visible: { opacity: 1, y: 0 } }} className="space-y-16">
-              <div className="flex items-center gap-8">
-                <div className="w-12 h-12 rounded-2xl bg-white/[0.01] border border-white/5 flex items-center justify-center">
-                  <HeartPulse className="text-muted-foreground w-6 h-6" />
+      <BioSection
+        label="Methodology"
+        title="Logic First"
+        text="I automate the repetitive tasks that suck the life out of clinicians. Deep focus on adoption and real-world utility."
+        img="/assets/n_strategy.png"
+        isReversed
+      />
+
+      {/* Experience Track */}
+      <section className="py-64 px-12 lg:px-32 bg-white/[0.005]">
+        <div className="max-w-[1400px] mx-auto">
+          <h2 className="text-6xl md:text-9xl font-medium tracking-tighter mb-40 opacity-20">History.</h2>
+          <div className="space-y-40">
+            {roadmap.map((item) => (
+              <div key={item.title} className="grid lg:grid-cols-[1fr_2fr] gap-20 items-start">
+                <div className="sticky top-40">
+                  <span className="text-xs font-bold tracking-widest uppercase opacity-40 block mb-4">{item.period}</span>
+                  <h3 className="text-4xl text-accent font-serif italic">{item.title}</h3>
+                  <p className="text-muted-foreground mt-4">{item.company}</p>
                 </div>
-                <h2 className="text-5xl font-medium tracking-tight">Physiotherapy.</h2>
-              </div>
-              <p className="text-3xl font-light text-muted-foreground leading-relaxed max-w-xl italic">
-                I have an MSc in Physiotherapy with Distinction. I worked full-time as a clinician for years before moving into operations.
-              </p>
-            </motion.div>
-
-            <motion.div variants={{ hidden: { opacity: 0, y: 15 }, visible: { opacity: 1, y: 0 } }} className="space-y-16 lg:pt-48 border-l border-white/5 pl-24 ml-auto">
-              <div className="flex items-center gap-8">
-                <div className="w-12 h-12 rounded-2xl bg-white/[0.01] border border-white/5 flex items-center justify-center">
-                  <Binary className="text-muted-foreground w-6 h-6" />
+                <div className="space-y-12">
+                  <p className="text-3xl md:text-5xl font-light leading-snug">{item.desc}</p>
+                  <div className="aspect-video w-full rounded-3xl overflow-hidden grayscale hover:grayscale-0 transition-all duration-1000 border border-white/5">
+                    <ParallaxImage src={item.img} alt={item.title} className="w-full h-full" />
+                  </div>
                 </div>
-                <h2 className="text-5xl font-medium tracking-tight">Operations.</h2>
               </div>
-              <p className="text-3xl font-light text-muted-foreground leading-relaxed max-w-xl">
-                Now I help clinics set up software and automate the parts of the job that suck up too much time.
-              </p>
-            </motion.div>
-          </ScrollReveal>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* Section Divider */}
-      <div className="divider-subtle w-full" />
-
-      {/* Timeline */}
-      <section className="py-40 lg:py-64 relative bg-white/[0.002]">
-        <div className="section-container">
-          <ScrollReveal direction="up" distance={30} blur={30} staggerChildren={0.2}>
-            <div className="mb-48 flex justify-between items-end">
-              <div className="max-w-xl">
-                <motion.p variants={{ hidden: { opacity: 0 }, visible: { opacity: 0.3 } }} className="text-[10px] font-bold tracking-[0.4em] uppercase mb-8">Work History</motion.p>
-                <motion.h2 variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="text-8xl md:text-[140px] font-medium tracking-tighter leading-[0.75] mb-12">Timeline.</motion.h2>
-              </div>
-            </div>
-
-            <div className="flex flex-col">
-              {roadmap.map((item) => (
-                <motion.div
-                  key={item.title}
-                  variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
-                  className="group grid md:grid-cols-[1fr_2fr_1fr] py-16 border-b border-white/10 items-start gap-8 hover:bg-white/[0.01] transition-all"
-                >
-                  <span className="text-xs font-bold tracking-widest uppercase opacity-40">{item.period}</span>
-
-                  <div className="space-y-4">
-                    <h3 className="text-4xl font-serif font-medium tracking-tight text-foreground/90 group-hover:text-foreground transition-colors duration-500">
-                      {item.title}
-                    </h3>
-                    <p className="text-lg text-muted-foreground font-light">{item.company}</p>
-                    <ul className="space-y-2 mt-6">
-                      {item.points.map((point) => (
-                        <li key={point} className="text-muted-foreground/80 text-sm leading-relaxed">
-                          • {point}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div className="hidden md:flex justify-end">
-                    <span className="text-[10px] font-bold uppercase tracking-[0.2em] opacity-20 group-hover:opacity-40 transition-opacity">
-                      {item.focus}
-                    </span>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
-
-      <section className="py-32 md:py-48 text-center px-6 bg-white/[0.005]">
-        <ScrollReveal direction="up" blur={40} className="w-full" viewport={{ once: true, margin: "-20%" }}>
-          <h2 className="text-8xl md:text-[160px] font-medium tracking-tighter mb-24 leading-[0.7] text-balance">
-            Questions?
-          </h2>
+      {/* Call to Action */}
+      <section className="py-64 text-center border-t border-white/5">
+        <ScrollReveal direction="up">
+          <h2 className="text-7xl md:text-[120px] font-medium tracking-tighter mb-24 opacity-80">Knowledge.</h2>
           <a
             href="/Kareem-Hassanein-Resume.pdf"
-            className="group inline-flex items-center gap-12 text-3xl font-bold tracking-tight text-foreground link-underline pb-4 px-12 transition-all"
+            className="group inline-flex items-center gap-12 text-3xl font-bold tracking-tight text-accent link-underline pb-4 px-12 transition-all hover:scale-105"
           >
-            Download resume
-            <Download size={48} className="opacity-10 group-hover:translate-y-4 transition-all duration-1000" />
+            Get full resume
+            <Download size={48} className="opacity-40 group-hover:translate-y-4 transition-all duration-1000" />
           </a>
         </ScrollReveal>
       </section>
+
     </main>
   );
 }
+

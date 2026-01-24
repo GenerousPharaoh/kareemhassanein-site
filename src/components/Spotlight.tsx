@@ -30,9 +30,9 @@ export default function Spotlight() {
             aria-hidden="true"
         >
             <motion.div
-                className="absolute w-[1000px] h-[1000px] rounded-full blur-[140px] opacity-[0.15] transform -translate-x-1/2 -translate-y-1/2"
+                className="absolute w-[1200px] h-[1200px] rounded-full blur-[160px] opacity-[0.25] transform -translate-x-1/2 -translate-y-1/2"
                 style={{
-                    background: `radial-gradient(circle, hsl(var(--accent) / 0.8) 0%, hsl(var(--accent-secondary) / 0.4) 30%, transparent 70%)`,
+                    background: `radial-gradient(circle, hsl(var(--accent) / 0.9) 0%, hsl(var(--accent-secondary) / 0.5) 40%, transparent 75%)`,
                     x: springX,
                     y: springY,
                 }}
