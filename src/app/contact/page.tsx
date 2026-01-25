@@ -2,11 +2,9 @@
 
 import { Mail, Linkedin, Globe, ArrowUpRight } from 'lucide-react';
 import { motion, useInView } from 'framer-motion';
-import ScrollReveal from '@/components/ScrollReveal';
 import MaskedReveal from '@/components/MaskedReveal';
 import ParallaxImage from '@/components/ParallaxImage';
 import AmbientParticles from '@/components/AmbientParticles';
-import SplitTextReveal from '@/components/SplitTextReveal';
 import { useRef } from 'react';
 
 const socialLinks = [

@@ -7,7 +7,6 @@ interface CurtainRevealProps {
     children: ReactNode;
     className?: string;
     direction?: 'up' | 'down' | 'left' | 'right' | 'center';
-    color?: string;
     delay?: number;
 }
 
@@ -15,7 +14,6 @@ export default function CurtainReveal({
     children,
     className = "",
     direction = 'up',
-    color = 'hsl(var(--background))',
     delay = 0
 }: CurtainRevealProps) {
     const ref = useRef<HTMLDivElement>(null);
@@ -25,54 +23,47 @@ export default function CurtainReveal({
         offset: ["start end", "center center"]
     });
 
-    // Transform based on direction
-    const getTransform = () => {
-        switch (direction) {
-            case 'up':
-                return {
-                    clipPath: useTransform(
-                        scrollYProgress,
-                        [0, 0.8 + delay, 1],
-                        ['inset(100% 0 0 0)', 'inset(0% 0 0 0)', 'inset(0% 0 0 0)']
-                    )
-                };
-            case 'down':
-                return {
-                    clipPath: useTransform(
-                        scrollYProgress,
-                        [0, 0.8 + delay, 1],
-                        ['inset(0 0 100% 0)', 'inset(0 0 0% 0)', 'inset(0 0 0% 0)']
-                    )
-                };
-            case 'left':
-                return {
-                    clipPath: useTransform(
-                        scrollYProgress,
-                        [0, 0.8 + delay, 1],
-                        ['inset(0 100% 0 0)', 'inset(0 0% 0 0)', 'inset(0 0% 0 0)']
-                    )
-                };
-            case 'right':
-                return {
-                    clipPath: useTransform(
-                        scrollYProgress,
-                        [0, 0.8 + delay, 1],
-                        ['inset(0 0 0 100%)', 'inset(0 0 0 0%)', 'inset(0 0 0 0%)']
-                    )
-                };
-            case 'center':
-                return {
-                    clipPath: useTransform(
-                        scrollYProgress,
-                        [0, 0.8 + delay, 1],
-                        ['inset(50% 50% 50% 50%)', 'inset(0% 0% 0% 0%)', 'inset(0% 0% 0% 0%)']
-                    )
-                };
-            default:
-                return {};
-        }
+    // Create all transforms at the top level (following Rules of Hooks)
+    const clipPathUp = useTransform(
+        scrollYProgress,
+        [0, 0.8 + delay, 1],
+        ['inset(100% 0 0 0)', 'inset(0% 0 0 0)', 'inset(0% 0 0 0)']
+    );
+
+    const clipPathDown = useTransform(
+        scrollYProgress,
+        [0, 0.8 + delay, 1],
+        ['inset(0 0 100% 0)', 'inset(0 0 0% 0)', 'inset(0 0 0% 0)']
+    );
+
+    const clipPathLeft = useTransform(
+        scrollYProgress,
+        [0, 0.8 + delay, 1],
+        ['inset(0 100% 0 0)', 'inset(0 0% 0 0)', 'inset(0 0% 0 0)']
+    );
+
+    const clipPathRight = useTransform(
+        scrollYProgress,
+        [0, 0.8 + delay, 1],
+        ['inset(0 0 0 100%)', 'inset(0 0 0 0%)', 'inset(0 0 0 0%)']
+    );
+
+    const clipPathCenter = useTransform(
+        scrollYProgress,
+        [0, 0.8 + delay, 1],
+        ['inset(50% 50% 50% 50%)', 'inset(0% 0% 0% 0%)', 'inset(0% 0% 0% 0%)']
+    );
+
+    // Select the correct clipPath based on direction
+    const clipPathMap = {
+        up: clipPathUp,
+        down: clipPathDown,
+        left: clipPathLeft,
+        right: clipPathRight,
+        center: clipPathCenter
     };
 
+    const clipPath = clipPathMap[direction];
     const opacity = useTransform(scrollYProgress, [0, 0.3], [0, 1]);
     const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.95, 1, 1]);
 
@@ -80,7 +71,7 @@ export default function CurtainReveal({
         <div ref={ref} className={`relative ${className}`}>
             <motion.div
                 style={{
-                    ...getTransform(),
+                    clipPath,
                     opacity,
                     scale
                 }}
