@@ -9,7 +9,7 @@ import ParallaxImage from '@/components/ParallaxImage';
 import CharReveal from '@/components/CharReveal';
 import AmbientParticles from '@/components/AmbientParticles';
 import Link from 'next/link';
-import { useRef } from 'react';
+import { useRef, useEffect, useState } from 'react';
 
 const metrics = [
   { label: 'Document generation time reduced', value: '85%', icon: '⚡' },
@@ -20,16 +20,24 @@ const metrics = [
 export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLElement>(null);
+  const [isMobile, setIsMobile] = useState(true);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const { scrollYProgress } = useScroll({
     target: heroRef,
     offset: ["start start", "end start"]
   });
 
-  // Parallax effects for hero content
-  const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
-  const heroScale = useTransform(scrollYProgress, [0, 0.5], [1, 0.95]);
+  // Disable scroll effects on mobile - content fades too early on small screens
+  const heroY = useTransform(scrollYProgress, [0, 1], isMobile ? ["0%", "0%"] : ["0%", "20%"]);
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.7, 1], isMobile ? [1, 1, 1] : [1, 1, 0]);
+  const heroScale = useTransform(scrollYProgress, [0, 1], isMobile ? [1, 1] : [1, 0.98]);
 
   const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -41,12 +49,12 @@ export default function Home() {
         {/* Ambient Particles */}
         <AmbientParticles count={15} className="z-[1]" />
 
-        {/* Cinematic Background Layer */}
-        <div className="absolute inset-0 z-0">
+        {/* Cinematic Background Layer - more subtle on mobile */}
+        <div className="absolute inset-0 z-0 opacity-[0.06] md:opacity-100">
           <ParallaxImage
             src="/images/orchestrating.png"
             alt="Cinematic Core"
-            className="w-full h-full opacity-15 md:opacity-20"
+            className="w-full h-full md:opacity-20"
             intensity="subtle"
             overlay="both"
           />

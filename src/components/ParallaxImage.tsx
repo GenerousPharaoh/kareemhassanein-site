@@ -86,7 +86,7 @@ export default function ParallaxImage({
                 This ensures mobile never has overflow issues
             */}
 
-            {/* Mobile: Simple static image */}
+            {/* Mobile: Simple static image - use object-top to show more of the image */}
             <div className="md:hidden absolute inset-0 w-full h-full">
                 <Image
                     src={src}
@@ -94,7 +94,8 @@ export default function ParallaxImage({
                     fill
                     sizes="100vw"
                     priority={priority}
-                    className="object-cover object-center"
+                    className="object-cover object-top"
+                    style={{ objectPosition: 'center 20%' }}
                 />
             </div>
 
