@@ -1,11 +1,13 @@
 'use client';
 
 import { Download } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 import ScrollReveal from '@/components/ScrollReveal';
 import CharReveal from '@/components/CharReveal';
 import ParallaxImage from '@/components/ParallaxImage';
 import AmbientParticles from '@/components/AmbientParticles';
+import SplitTextReveal from '@/components/SplitTextReveal';
+import { useRef } from 'react';
 
 const experience = [
   {
@@ -37,8 +39,23 @@ const experience = [
 const ease = [0.16, 1, 0.3, 1] as const;
 
 export default function About() {
+  const curtainRef = useRef<HTMLDivElement>(null);
+  const experienceRef = useRef<HTMLElement>(null);
+  const ctaRef = useRef<HTMLElement>(null);
+
+  const experienceInView = useInView(experienceRef, { once: true, margin: "-10%" });
+  const ctaInView = useInView(ctaRef, { once: true, margin: "-20%" });
+
+  const { scrollYProgress: curtainProgress } = useScroll({
+    target: curtainRef,
+    offset: ["start end", "end start"]
+  });
+
+  const curtainY = useTransform(curtainProgress, [0, 0.5, 1], ['100%', '0%', '-100%']);
+  const curtainOpacity = useTransform(curtainProgress, [0, 0.3, 0.7, 1], [0, 1, 1, 0]);
+
   return (
-    <main className="bg-background text-foreground pt-16 md:pt-20">
+    <main className="bg-background text-foreground pt-16 md:pt-20 overflow-hidden">
 
       {/* Hero */}
       <section className="min-h-[60vh] md:min-h-[70vh] flex items-center relative border-b border-white/5 overflow-hidden px-6 lg:px-12">
@@ -119,6 +136,36 @@ export default function About() {
         </div>
       </section>
 
+      {/* Curtain Transition Element */}
+      <div ref={curtainRef} className="relative h-[30vh] md:h-[50vh] overflow-hidden">
+        {/* Animated curtain that sweeps through */}
+        <motion.div
+          className="absolute inset-0 z-20 pointer-events-none"
+          style={{ y: curtainY, opacity: curtainOpacity }}
+        >
+          <div className="absolute inset-0 bg-gradient-to-b from-accent/15 via-accent/8 to-transparent" />
+          <div className="absolute inset-0 backdrop-blur-sm" />
+        </motion.div>
+
+        {/* Horizontal scan lines */}
+        <motion.div
+          className="absolute inset-0 z-10 overflow-hidden pointer-events-none"
+          style={{ opacity: curtainOpacity }}
+        >
+          {[...Array(4)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-accent/25 to-transparent"
+              style={{ top: `${25 + i * 15}%` }}
+              initial={{ scaleX: 0, opacity: 0 }}
+              whileInView={{ scaleX: 1, opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1.2, delay: i * 0.1, ease: "easeOut" }}
+            />
+          ))}
+        </motion.div>
+      </div>
+
       {/* What I bring */}
       <section className="py-12 md:py-24 px-6 lg:px-12 border-b border-white/5 relative overflow-hidden">
         {/* Subtle background gradient */}
@@ -155,7 +202,20 @@ export default function About() {
       </section>
 
       {/* Experience */}
-      <section className="py-12 md:py-24 px-6 lg:px-12 relative">
+      <section ref={experienceRef} className="py-12 md:py-24 px-6 lg:px-12 relative">
+        {/* Animated background lines */}
+        <div className="absolute inset-0 flex justify-around pointer-events-none overflow-hidden">
+          {[...Array(4)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="w-[1px] h-full bg-gradient-to-b from-transparent via-white/[0.03] to-transparent"
+              initial={{ scaleY: 0, opacity: 0 }}
+              animate={experienceInView ? { scaleY: 1, opacity: 1 } : {}}
+              transition={{ duration: 1.5, delay: i * 0.15, ease: "easeOut" }}
+            />
+          ))}
+        </div>
+
         {/* Decorative line */}
         <motion.div
           className="absolute left-6 md:left-12 lg:left-1/2 lg:-translate-x-[450px] top-0 w-[1px] h-16 md:h-24 bg-gradient-to-b from-transparent via-accent/30 to-transparent hidden lg:block"
@@ -195,32 +255,67 @@ export default function About() {
       </section>
 
       {/* Resume CTA */}
-      <section className="py-12 md:py-24 px-6 lg:px-12 border-t border-white/5 relative overflow-hidden">
-        {/* Background glow */}
+      <section ref={ctaRef} className="py-12 md:py-24 px-6 lg:px-12 border-t border-white/5 relative overflow-hidden">
+        {/* Background glow - enhanced */}
         <motion.div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] md:w-[500px] md:h-[500px] rounded-full pointer-events-none"
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] md:w-[600px] md:h-[600px] rounded-full pointer-events-none"
           style={{
-            background: 'radial-gradient(circle, hsl(38 30% 75% / 0.08) 0%, transparent 70%)',
-            filter: 'blur(60px)',
+            background: 'radial-gradient(circle, hsl(38 30% 75% / 0.1) 0%, transparent 70%)',
+            filter: 'blur(80px)',
           }}
-          animate={{
-            scale: [1, 1.1, 1],
-          }}
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={ctaInView ? {
+            scale: [0.8, 1.2, 1],
+            opacity: [0, 1, 0.8],
+          } : {}}
+          transition={{ duration: 2, ease: "easeOut" }}
         />
 
+        {/* Radial scan lines */}
+        <motion.div
+          className="absolute inset-0 pointer-events-none"
+          initial={{ opacity: 0 }}
+          animate={ctaInView ? { opacity: 1 } : {}}
+          transition={{ duration: 1 }}
+        >
+          {[...Array(3)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 border border-white/[0.03] rounded-full"
+              style={{
+                width: `${200 + i * 150}px`,
+                height: `${200 + i * 150}px`,
+              }}
+              initial={{ scale: 0.5, opacity: 0 }}
+              animate={ctaInView ? { scale: 1, opacity: 1 } : {}}
+              transition={{ duration: 1.5, delay: i * 0.2, ease: "easeOut" }}
+            />
+          ))}
+        </motion.div>
+
         <div className="max-w-[900px] mx-auto text-center relative z-10">
-          <ScrollReveal direction="up">
-            <h2 className="text-xl sm:text-2xl md:text-3xl font-medium tracking-tight mb-6 md:mb-8">Want the full picture?</h2>
-            <a
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={ctaInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, ease }}
+          >
+            <SplitTextReveal
+              text="Want the full picture?"
+              className="text-xl sm:text-2xl md:text-3xl font-medium tracking-tight mb-6 md:mb-8"
+              type="words"
+              staggerDelay={0.08}
+            />
+            <motion.a
               href="/Kareem-Hassanein-Resume.pdf"
               className="group relative inline-flex items-center gap-3 text-base md:text-lg font-medium bg-foreground text-background px-6 md:px-8 py-3 md:py-4 rounded-full overflow-hidden transition-all duration-500"
+              whileHover={{ scale: 1.02, y: -2 }}
+              whileTap={{ scale: 0.98 }}
             >
               <span className="absolute inset-0 bg-accent translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]" />
               <span className="relative z-10">Download Resume</span>
               <Download size={18} className="relative z-10 group-hover:translate-y-0.5 transition-transform duration-500" />
-            </a>
-          </ScrollReveal>
+            </motion.a>
+          </motion.div>
         </div>
       </section>
 
