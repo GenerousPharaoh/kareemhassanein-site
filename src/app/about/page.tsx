@@ -148,30 +148,20 @@ export default function About() {
         <div className="absolute inset-0 bg-gradient-to-b from-background via-background/50 to-background pointer-events-none z-[1]" />
 
         <motion.div style={{ y: heroTextY }} className="max-w-[1200px] mx-auto relative z-10 py-32 will-change-transform">
-          {/* Large dramatic title */}
-          <div className="mb-16 md:mb-24">
+          {/* Title */}
+          <div className="mb-12 md:mb-20">
             <AnimatedBlock delay={0} className="overflow-hidden">
-              <span className="block text-xs font-medium tracking-[0.4em] uppercase text-accent/70 mb-8">Background</span>
+              <span className="block text-xs font-medium tracking-[0.4em] uppercase text-accent/70 mb-6">Background</span>
             </AnimatedBlock>
 
             <div className="overflow-hidden">
               <motion.h1
-                initial={{ y: 100, opacity: 0 }}
+                initial={{ y: 60, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
-                transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-                className="text-6xl md:text-8xl lg:text-9xl font-medium tracking-tighter leading-[0.85]"
+                transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                className="text-4xl md:text-6xl lg:text-7xl font-medium tracking-tight leading-[1.1]"
               >
-                How I
-              </motion.h1>
-            </div>
-            <div className="overflow-hidden">
-              <motion.h1
-                initial={{ y: 100, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ duration: 1, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                className="text-6xl md:text-8xl lg:text-9xl font-medium tracking-tighter leading-[0.85]"
-              >
-                <CharReveal delay={0.6} className="text-accent italic font-serif">got here.</CharReveal>
+                From clinician to <CharReveal delay={0.5} className="text-accent italic font-serif">consultant.</CharReveal>
               </motion.h1>
             </div>
           </div>
