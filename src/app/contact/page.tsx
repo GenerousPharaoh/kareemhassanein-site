@@ -100,11 +100,12 @@ export default function Contact() {
       {/* Cinematic Background Layer with Parallax */}
       <motion.div style={{ y: bgY }} className="absolute inset-0 z-0 will-change-transform">
         <ParallaxImage
-          src="/images/flow.png"
-          alt="Flow"
-          className="w-full h-full opacity-20"
+          src="/images/hero-home.png"
+          alt="Connection"
+          className="w-full h-full opacity-15"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-background" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-background" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background/80 via-transparent to-background/80" />
       </motion.div>
 
       <motion.div

@@ -89,8 +89,9 @@ function ServiceSection({ service, index }: { service: typeof services[0], index
   const springConfig = { stiffness: 100, damping: 30 };
   const y = useSpring(useTransform(scrollYProgress, [0, 1], [80, 0]), springConfig);
   const opacity = useSpring(useTransform(scrollYProgress, [0, 0.4, 1], [0, 0.4, 1]), springConfig);
-  const imgY = useSpring(useTransform(scrollYProgress, [0, 1], [30, -30]), springConfig);
-  const imgOpacity = useSpring(useTransform(scrollYProgress, [0, 0.5, 1], [0, 0.15, 0.2]), springConfig);
+  const imgY = useSpring(useTransform(scrollYProgress, [0, 1], [50, -50]), springConfig);
+  const imgOpacity = useSpring(useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0, 0.2, 0.25, 0.15]), springConfig);
+  const imgScale = useSpring(useTransform(scrollYProgress, [0, 1], [1.1, 1]), springConfig);
 
   const isEven = index % 2 === 0;
 
@@ -99,17 +100,18 @@ function ServiceSection({ service, index }: { service: typeof services[0], index
       ref={ref}
       className="py-24 md:py-32 px-6 lg:px-12 border-b border-white/5 last:border-b-0 relative overflow-hidden"
     >
-      {/* Background image with parallax */}
+      {/* Background image with enhanced parallax */}
       <motion.div
-        style={{ y: imgY, opacity: imgOpacity }}
-        className={`absolute inset-y-0 w-1/2 ${isEven ? 'right-0' : 'left-0'} pointer-events-none will-change-transform`}
+        style={{ y: imgY, opacity: imgOpacity, scale: imgScale }}
+        className={`absolute inset-y-0 w-2/3 ${isEven ? 'right-0 -mr-20' : 'left-0 -ml-20'} pointer-events-none will-change-transform`}
       >
         <ParallaxImage
           src={service.image}
           alt={service.title}
           className="w-full h-full"
         />
-        <div className={`absolute inset-0 bg-gradient-to-${isEven ? 'r' : 'l'} from-background via-background/80 to-transparent`} />
+        <div className={`absolute inset-0 bg-gradient-to-${isEven ? 'r' : 'l'} from-background via-background/70 to-transparent`} />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/30 via-transparent to-background/30" />
       </motion.div>
 
       <motion.div

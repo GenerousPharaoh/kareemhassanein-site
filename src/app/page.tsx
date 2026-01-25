@@ -208,21 +208,22 @@ export default function Home() {
 
       {/* Visual Break - Approach Section */}
       <section ref={visualRef} className="relative h-[60vh] md:h-[70vh] overflow-hidden">
-        {/* Parallax Background */}
+        {/* Parallax Background - Enhanced depth */}
         <motion.div
           style={{ y: visualBgY }}
-          className="absolute inset-0 -top-20 -bottom-20 will-change-transform"
+          className="absolute inset-0 -top-32 -bottom-32 will-change-transform"
         >
           <ParallaxImage
             src="/images/flow.png"
             alt="Workflow"
-            className="w-full h-full opacity-30"
+            className="w-full h-full opacity-35 scale-110"
           />
         </motion.div>
 
-        {/* Gradient overlays */}
+        {/* Layered gradient overlays for cinematic depth */}
         <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background pointer-events-none" />
-        <div className="absolute inset-0 bg-background/40 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background/60 via-transparent to-background/60 pointer-events-none" />
+        <div className="absolute inset-0 bg-background/30 pointer-events-none" />
 
         {/* Content */}
         <motion.div
@@ -258,14 +259,17 @@ export default function Home() {
 
       {/* Selected Projects */}
       <section ref={portfolioRef} className="py-24 md:py-32 relative z-10 w-full px-6 md:px-12 overflow-hidden">
-        {/* Background image */}
+        {/* Background image - positioned for visual interest */}
         <div className="absolute inset-0 z-0">
-          <ParallaxImage
-            src="/images/flow of organized transformation.png"
-            alt="Transformation"
-            className="w-full h-full opacity-8"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-background via-background/85 to-background" />
+          <div className="absolute inset-0 -right-1/4 top-0">
+            <ParallaxImage
+              src="/images/flow of organized transformation.png"
+              alt="Transformation"
+              className="w-full h-full opacity-12"
+            />
+          </div>
+          <div className="absolute inset-0 bg-gradient-to-b from-background via-background/80 to-background" />
+          <div className="absolute inset-0 bg-gradient-to-l from-transparent via-background/50 to-background" />
         </div>
 
         <div className="max-w-[1400px] mx-auto relative z-10">

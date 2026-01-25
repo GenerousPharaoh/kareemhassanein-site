@@ -233,14 +233,17 @@ export default function About() {
 
       {/* What I bring */}
       <section ref={valuesRef} className="py-20 md:py-32 px-6 lg:px-12 border-b border-white/5 overflow-hidden relative">
-        {/* Background image */}
+        {/* Background image - offset for asymmetric interest */}
         <div className="absolute inset-0 z-0">
-          <ParallaxImage
-            src="/images/customer-relations.png"
-            alt="Values"
-            className="w-full h-full opacity-10"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-background via-background/80 to-background" />
+          <div className="absolute -inset-x-20 inset-y-0 -top-20 -bottom-20">
+            <ParallaxImage
+              src="/images/customer-relations.png"
+              alt="Values"
+              className="w-full h-full opacity-12 scale-110"
+            />
+          </div>
+          <div className="absolute inset-0 bg-gradient-to-b from-background via-background/70 to-background" />
+          <div className="absolute inset-0 bg-gradient-to-tr from-background via-transparent to-background/50" />
         </div>
 
         <motion.div
@@ -268,14 +271,17 @@ export default function About() {
 
       {/* Experience */}
       <section className="py-20 md:py-32 px-6 lg:px-12 relative overflow-hidden">
-        {/* Background image */}
+        {/* Background image - subtle left-positioned for visual depth */}
         <div className="absolute inset-0 z-0">
-          <ParallaxImage
-            src="/images/backdrop.png"
-            alt="Experience"
-            className="w-full h-full opacity-8"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-background via-background/90 to-background" />
+          <div className="absolute -left-1/4 inset-y-0 w-3/4">
+            <ParallaxImage
+              src="/images/backdrop.png"
+              alt="Experience"
+              className="w-full h-full opacity-10"
+            />
+          </div>
+          <div className="absolute inset-0 bg-gradient-to-b from-background via-background/85 to-background" />
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-background/60 to-background" />
         </div>
 
         <div className="max-w-[1000px] mx-auto relative z-10">
