@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import TextReveal from '@/components/TextReveal';
 import ProjectList from '@/components/ProjectList';
@@ -20,28 +20,40 @@ export default function Home() {
   const transitionRef = useRef(null);
   const portfolioRef = useRef(null);
 
-  // Hero parallax - simple background movement only
+  // Spring config for smooth, fluid animations
+  const springConfig = { stiffness: 100, damping: 30, restDelta: 0.001 };
+
+  // Hero parallax - smooth background movement
   const { scrollYProgress: heroProgress } = useScroll({
     target: heroRef,
     offset: ["start start", "end start"]
   });
-  const heroBgY = useTransform(heroProgress, [0, 1], [0, 80]);
+  const heroBgYRaw = useTransform(heroProgress, [0, 1], [0, 120]);
+  const heroBgY = useSpring(heroBgYRaw, springConfig);
 
-  // Statement section - simple fade and slide
+  // Statement section - smooth fade and slide
   const { scrollYProgress: statementProgress } = useScroll({
     target: transitionRef,
     offset: ["start end", "center center"]
   });
-  const statementY = useTransform(statementProgress, [0, 1], [60, 0]);
-  const statementOpacity = useTransform(statementProgress, [0, 0.5, 1], [0, 0.5, 1]);
+  const statementYRaw = useTransform(statementProgress, [0, 1], [80, 0]);
+  const statementOpacityRaw = useTransform(statementProgress, [0, 0.3, 1], [0, 0.3, 1]);
+  const statementY = useSpring(statementYRaw, springConfig);
+  const statementOpacity = useSpring(statementOpacityRaw, springConfig);
+  const statementScale = useSpring(
+    useTransform(statementProgress, [0, 1], [0.95, 1]),
+    springConfig
+  );
 
-  // Portfolio section - simple reveal
+  // Portfolio section - smooth reveal with scale
   const { scrollYProgress: portfolioProgress } = useScroll({
     target: portfolioRef,
-    offset: ["start end", "start 0.4"]
+    offset: ["start end", "start 0.3"]
   });
-  const portfolioY = useTransform(portfolioProgress, [0, 1], [80, 0]);
-  const portfolioOpacity = useTransform(portfolioProgress, [0, 0.6, 1], [0, 0.6, 1]);
+  const portfolioYRaw = useTransform(portfolioProgress, [0, 1], [100, 0]);
+  const portfolioOpacityRaw = useTransform(portfolioProgress, [0, 0.4, 1], [0, 0.5, 1]);
+  const portfolioY = useSpring(portfolioYRaw, springConfig);
+  const portfolioOpacity = useSpring(portfolioOpacityRaw, springConfig);
 
   return (
     <main className="min-h-screen bg-background text-foreground overflow-hidden">
@@ -139,7 +151,7 @@ export default function Home() {
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/[0.02] to-transparent pointer-events-none" />
 
         <motion.div
-          style={{ y: statementY, opacity: statementOpacity }}
+          style={{ y: statementY, opacity: statementOpacity, scale: statementScale }}
           className="relative z-10 text-center px-6 max-w-5xl mx-auto will-change-transform"
         >
           <h2 className="text-4xl md:text-6xl lg:text-7xl font-medium tracking-tight leading-[1.1] mb-6">

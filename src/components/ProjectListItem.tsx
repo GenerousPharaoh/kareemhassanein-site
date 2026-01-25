@@ -1,8 +1,8 @@
 'use client';
 
-import { motion, useInView } from 'framer-motion';
+import { motion, useInView, useSpring } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 
 interface Project {
     title: string;
@@ -17,7 +17,24 @@ interface ProjectListItemProps {
 
 export default function ProjectListItem({ project, index }: ProjectListItemProps) {
     const ref = useRef<HTMLAnchorElement>(null);
-    const isInView = useInView(ref, { once: true, margin: "-50px" });
+    const isInView = useInView(ref, { once: true, margin: "-100px" });
+
+    // Spring-based animations for ultra-smooth reveals
+    const springConfig = { stiffness: 80, damping: 20 };
+    const opacity = useSpring(0, springConfig);
+    const y = useSpring(40, springConfig);
+
+    // Trigger spring animation when in view
+    useEffect(() => {
+        const delay = index * 0.12;
+        if (isInView) {
+            const timer = setTimeout(() => {
+                opacity.set(1);
+                y.set(0);
+            }, delay * 1000);
+            return () => clearTimeout(timer);
+        }
+    }, [isInView, index, opacity, y]);
 
     return (
         <motion.a
@@ -26,13 +43,7 @@ export default function ProjectListItem({ project, index }: ProjectListItemProps
             target="_blank"
             rel="noopener noreferrer"
             className="group relative flex items-center justify-between py-8 md:py-10 px-6 md:px-8 -mx-6 md:-mx-8 rounded-2xl cursor-pointer hover:bg-white/[0.02] transition-colors duration-500 border-b border-white/5 last:border-b-0"
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-            transition={{
-                delay: index * 0.1,
-                duration: 0.6,
-                ease: [0.16, 1, 0.3, 1]
-            }}
+            style={{ opacity, y }}
         >
             {/* Accent line */}
             <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[2px] h-0 group-hover:h-12 bg-accent rounded-full transition-all duration-500" />
