@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 import { ArrowRight, ArrowDown } from 'lucide-react';
 import ScrollReveal from '@/components/ScrollReveal';
 import TextReveal from '@/components/TextReveal';
@@ -8,6 +8,7 @@ import ProjectList from '@/components/ProjectList';
 import ParallaxImage from '@/components/ParallaxImage';
 import CharReveal from '@/components/CharReveal';
 import AmbientParticles from '@/components/AmbientParticles';
+import SplitTextReveal from '@/components/SplitTextReveal';
 import Link from 'next/link';
 import { useRef, useEffect, useState } from 'react';
 
@@ -20,7 +21,13 @@ const metrics = [
 export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLElement>(null);
+  const statementRef = useRef<HTMLElement>(null);
+  const curtainRef = useRef<HTMLDivElement>(null);
+  const projectsRef = useRef<HTMLElement>(null);
   const [isMobile, setIsMobile] = useState(true);
+
+  const statementInView = useInView(statementRef, { once: false, margin: "-20%" });
+  const projectsInView = useInView(projectsRef, { once: true, margin: "-10%" });
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
@@ -29,24 +36,46 @@ export default function Home() {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  const { scrollYProgress } = useScroll({
+  const { scrollYProgress: heroProgress } = useScroll({
     target: heroRef,
     offset: ["start start", "end start"]
   });
 
-  // Disable scroll effects on mobile - content fades too early on small screens
-  const heroY = useTransform(scrollYProgress, [0, 1], isMobile ? ["0%", "0%"] : ["0%", "20%"]);
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.7, 1], isMobile ? [1, 1, 1] : [1, 1, 0]);
-  const heroScale = useTransform(scrollYProgress, [0, 1], isMobile ? [1, 1] : [1, 0.98]);
+  const { scrollYProgress: curtainProgress } = useScroll({
+    target: curtainRef,
+    offset: ["start end", "end start"]
+  });
+
+  const { scrollYProgress: projectsProgress } = useScroll({
+    target: projectsRef,
+    offset: ["start end", "center center"]
+  });
+
+  // Hero scroll effects
+  const heroY = useTransform(heroProgress, [0, 1], isMobile ? ["0%", "0%"] : ["0%", "30%"]);
+  const heroOpacity = useTransform(heroProgress, [0, 0.6, 0.8], isMobile ? [1, 1, 0.8] : [1, 1, 0]);
+  const heroScale = useTransform(heroProgress, [0, 1], isMobile ? [1, 1] : [1, 0.95]);
+  const heroBlur = useTransform(heroProgress, [0.5, 1], isMobile ? [0, 0] : [0, 10]);
+
+  // Curtain transition effect
+  const curtainY = useTransform(curtainProgress, [0, 0.5, 1], ['100%', '0%', '-100%']);
+  const curtainOpacity = useTransform(curtainProgress, [0, 0.3, 0.7, 1], [0, 1, 1, 0]);
+
+  // Projects section reveal
+  const projectsClip = useTransform(
+    projectsProgress,
+    [0, 0.5],
+    ['inset(100% 0 0 0)', 'inset(0% 0 0 0)']
+  );
 
   const ease = [0.16, 1, 0.3, 1] as const;
 
   return (
     <main ref={containerRef} className="min-h-screen bg-background text-foreground overflow-hidden">
+
       {/* Hero Section */}
       <section ref={heroRef} className="min-h-screen flex items-center justify-center relative px-6 md:px-12 pt-24 md:pt-28">
 
-        {/* Ambient Particles */}
         <AmbientParticles count={15} className="z-[1]" />
 
         {/* Cinematic Background Layer */}
@@ -87,12 +116,15 @@ export default function Home() {
         />
 
         <motion.div
-          style={{ y: heroY, opacity: heroOpacity, scale: heroScale }}
+          style={{
+            y: heroY,
+            opacity: heroOpacity,
+            scale: heroScale,
+            filter: useTransform(heroBlur, (v) => `blur(${v}px)`)
+          }}
           className="relative z-10 w-full max-w-[1400px] h-full flex flex-col justify-center py-16 md:py-20"
         >
           <div className="grid lg:grid-cols-1 items-center justify-center text-center">
-
-            {/* Text Content */}
             <div className="space-y-8 md:space-y-12 mx-auto max-w-4xl">
               <ScrollReveal direction="up" distance={20} blur={10}>
                 <motion.span
@@ -194,42 +226,144 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* Statement Section */}
-      <section className="py-16 md:py-32 lg:py-48 w-full relative overflow-hidden flex items-center justify-center">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/[0.02] to-transparent pointer-events-none" />
-
-        {/* Decorative line */}
+      {/* Curtain Transition Element */}
+      <div ref={curtainRef} className="relative h-[50vh] md:h-[70vh] overflow-hidden">
+        {/* Animated curtain that sweeps through */}
         <motion.div
-          className="absolute left-1/2 top-0 w-[1px] h-24 md:h-32 -translate-x-1/2 bg-gradient-to-b from-transparent via-white/20 to-transparent"
-          initial={{ scaleY: 0, opacity: 0 }}
-          whileInView={{ scaleY: 1, opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1, ease }}
-        />
+          className="absolute inset-0 z-20 pointer-events-none"
+          style={{ y: curtainY, opacity: curtainOpacity }}
+        >
+          <div className="absolute inset-0 bg-gradient-to-b from-accent/20 via-accent/10 to-transparent" />
+          <div className="absolute inset-0 backdrop-blur-sm" />
+        </motion.div>
+
+        {/* Horizontal scan lines */}
+        <motion.div
+          className="absolute inset-0 z-10 overflow-hidden pointer-events-none"
+          style={{ opacity: curtainOpacity }}
+        >
+          {[...Array(5)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-accent/30 to-transparent"
+              style={{ top: `${20 + i * 15}%` }}
+              initial={{ scaleX: 0, opacity: 0 }}
+              animate={statementInView ? { scaleX: 1, opacity: 1 } : { scaleX: 0, opacity: 0 }}
+              transition={{ duration: 1.5, delay: i * 0.1, ease: "easeOut" }}
+            />
+          ))}
+        </motion.div>
+      </div>
+
+      {/* Statement Section with dramatic reveal */}
+      <section
+        ref={statementRef}
+        className="py-16 md:py-32 lg:py-48 w-full relative overflow-hidden flex items-center justify-center"
+      >
+        {/* Parallax background layers */}
+        <motion.div
+          className="absolute inset-0 z-0"
+          animate={statementInView ? { opacity: 1 } : { opacity: 0 }}
+          transition={{ duration: 1 }}
+        >
+          <motion.div
+            className="absolute top-0 left-1/4 w-[400px] h-[400px] md:w-[600px] md:h-[600px] rounded-full"
+            style={{
+              background: 'radial-gradient(circle, hsl(38 30% 75% / 0.1) 0%, transparent 70%)',
+              filter: 'blur(100px)',
+            }}
+            animate={statementInView ? {
+              scale: [0.8, 1.1, 1],
+              x: ['-10%', '0%'],
+            } : {}}
+            transition={{ duration: 2, ease: "easeOut" }}
+          />
+        </motion.div>
+
+        {/* Animated vertical lines */}
+        <div className="absolute inset-0 flex justify-around pointer-events-none">
+          {[...Array(3)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="w-[1px] h-full bg-gradient-to-b from-transparent via-white/5 to-transparent"
+              initial={{ scaleY: 0 }}
+              animate={statementInView ? { scaleY: 1 } : { scaleY: 0 }}
+              transition={{ duration: 1.5, delay: i * 0.2, ease: "easeOut" }}
+            />
+          ))}
+        </div>
 
         <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
-          <ScrollReveal direction="up" blur={20}>
-            <h2 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-medium tracking-tight leading-[1.1] md:leading-[1.2] mb-4 md:mb-6">
-              The problem isn&apos;t the software.
-            </h2>
-            <p className="text-lg sm:text-xl md:text-2xl font-light text-muted-foreground max-w-2xl mx-auto">
-              It&apos;s how it fits into the way people already work.
-            </p>
-          </ScrollReveal>
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={statementInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+            transition={{ duration: 1, ease }}
+          >
+            <SplitTextReveal
+              text="The problem isn't the software."
+              className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-medium tracking-tight leading-[1.1] md:leading-[1.2] mb-4 md:mb-6"
+              type="words"
+              staggerDelay={0.05}
+            />
+          </motion.div>
+          <motion.p
+            className="text-lg sm:text-xl md:text-2xl font-light text-muted-foreground max-w-2xl mx-auto"
+            initial={{ opacity: 0, y: 30 }}
+            animate={statementInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+            transition={{ duration: 0.8, delay: 0.5, ease }}
+          >
+            It&apos;s how it fits into the way people already work.
+          </motion.p>
         </div>
       </section>
 
-      {/* Selected Projects */}
-      <section className="py-16 md:py-24 lg:py-32 relative z-10 w-full px-6 md:px-12">
-        <div className="max-w-[1400px] mx-auto">
-          <ScrollReveal direction="up" distance={40} blur={20}>
-            <div className="mb-12 md:mb-16 lg:mb-20">
-              <span className="text-[10px] md:text-xs font-medium tracking-[0.3em] uppercase text-muted-foreground mb-3 md:mb-4 block">Portfolio</span>
-              <h2 className="text-2xl sm:text-3xl md:text-5xl font-medium tracking-tight">Recent Work</h2>
-            </div>
-          </ScrollReveal>
+      {/* Projects Section with curtain reveal */}
+      <section ref={projectsRef} className="py-16 md:py-24 lg:py-32 relative z-10 w-full px-6 md:px-12 overflow-hidden">
 
-          <ProjectList />
+        {/* Reveal curtain from bottom */}
+        <motion.div
+          className="absolute inset-0 bg-background z-20 pointer-events-none origin-bottom"
+          style={{
+            clipPath: projectsClip
+          }}
+          initial={{ clipPath: 'inset(0 0 100% 0)' }}
+        >
+          <div className="absolute inset-0 bg-gradient-to-t from-accent/5 to-transparent" />
+        </motion.div>
+
+        <div className="max-w-[1400px] mx-auto relative">
+          <motion.div
+            initial={{ opacity: 0, y: 60 }}
+            animate={projectsInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 1, ease }}
+          >
+            <div className="mb-12 md:mb-16 lg:mb-20">
+              <motion.span
+                className="text-[10px] md:text-xs font-medium tracking-[0.3em] uppercase text-muted-foreground mb-3 md:mb-4 block"
+                initial={{ opacity: 0, x: -20 }}
+                animate={projectsInView ? { opacity: 1, x: 0 } : {}}
+                transition={{ duration: 0.6, delay: 0.2 }}
+              >
+                Portfolio
+              </motion.span>
+              <motion.h2
+                className="text-2xl sm:text-3xl md:text-5xl font-medium tracking-tight"
+                initial={{ opacity: 0, y: 20 }}
+                animate={projectsInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.8, delay: 0.3 }}
+              >
+                Recent Work
+              </motion.h2>
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={projectsInView ? { opacity: 1 } : {}}
+            transition={{ duration: 1, delay: 0.5 }}
+          >
+            <ProjectList />
+          </motion.div>
         </div>
       </section>
 
