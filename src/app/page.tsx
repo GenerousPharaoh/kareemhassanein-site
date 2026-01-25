@@ -15,20 +15,27 @@ const metrics = [
   { label: 'Annual admin cost eliminated', value: '$20K' },
 ];
 
+const approach = [
+  { title: 'Map', desc: 'Understand how work actually flows' },
+  { title: 'Build', desc: 'Create systems that fit the workflow' },
+  { title: 'Launch', desc: 'Drive adoption, not just installation' },
+];
+
 export default function Home() {
   const heroRef = useRef(null);
   const transitionRef = useRef(null);
+  const visualRef = useRef(null);
   const portfolioRef = useRef(null);
 
   // Spring config for smooth, fluid animations
   const springConfig = { stiffness: 100, damping: 30, restDelta: 0.001 };
 
-  // Hero parallax - smooth background movement
+  // Hero parallax - background moves UP (slower than scroll) for depth effect
   const { scrollYProgress: heroProgress } = useScroll({
     target: heroRef,
     offset: ["start start", "end start"]
   });
-  const heroBgYRaw = useTransform(heroProgress, [0, 1], [0, 120]);
+  const heroBgYRaw = useTransform(heroProgress, [0, 1], [0, -80]);
   const heroBgY = useSpring(heroBgYRaw, springConfig);
 
   // Statement section - smooth fade and slide
@@ -44,6 +51,14 @@ export default function Home() {
     useTransform(statementProgress, [0, 1], [0.95, 1]),
     springConfig
   );
+
+  // Visual break section - parallax image
+  const { scrollYProgress: visualProgress } = useScroll({
+    target: visualRef,
+    offset: ["start end", "end start"]
+  });
+  const visualBgY = useSpring(useTransform(visualProgress, [0, 1], [0, -60]), springConfig);
+  const visualOpacity = useSpring(useTransform(visualProgress, [0, 0.3, 0.7, 1], [0, 1, 1, 0]), springConfig);
 
   // Portfolio section - smooth reveal with scale
   const { scrollYProgress: portfolioProgress } = useScroll({
@@ -148,7 +163,7 @@ export default function Home() {
       </section>
 
       {/* Statement Section */}
-      <section ref={transitionRef} className="py-32 md:py-48 w-full relative overflow-hidden flex items-center justify-center">
+      <section ref={transitionRef} className="py-20 md:py-32 w-full relative overflow-hidden flex items-center justify-center">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/[0.02] to-transparent pointer-events-none" />
 
         <motion.div
@@ -162,6 +177,56 @@ export default function Home() {
           <p className="text-xl md:text-2xl lg:text-3xl font-light text-muted-foreground max-w-3xl mx-auto">
             It&apos;s how it fits into the way people already work.
           </p>
+        </motion.div>
+      </section>
+
+      {/* Visual Break - Approach Section */}
+      <section ref={visualRef} className="relative h-[60vh] md:h-[70vh] overflow-hidden">
+        {/* Parallax Background */}
+        <motion.div
+          style={{ y: visualBgY }}
+          className="absolute inset-0 -top-20 -bottom-20 will-change-transform"
+        >
+          <ParallaxImage
+            src="/images/flow.png"
+            alt="Workflow"
+            className="w-full h-full opacity-30"
+          />
+        </motion.div>
+
+        {/* Gradient overlays */}
+        <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background pointer-events-none" />
+        <div className="absolute inset-0 bg-background/40 pointer-events-none" />
+
+        {/* Content */}
+        <motion.div
+          style={{ opacity: visualOpacity }}
+          className="relative z-10 h-full flex items-center justify-center px-6"
+        >
+          <div className="max-w-4xl mx-auto">
+            <div className="grid md:grid-cols-3 gap-8 md:gap-12">
+              {approach.map((item, i) => (
+                <motion.div
+                  key={item.title}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-100px" }}
+                  transition={{ duration: 0.6, delay: i * 0.15, ease: [0.16, 1, 0.3, 1] }}
+                  className="text-center"
+                >
+                  <span className="text-6xl md:text-7xl font-light text-accent/20 block mb-2">
+                    0{i + 1}
+                  </span>
+                  <h3 className="text-2xl md:text-3xl font-medium tracking-tight mb-2">
+                    {item.title}
+                  </h3>
+                  <p className="text-muted-foreground text-sm md:text-base">
+                    {item.desc}
+                  </p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
         </motion.div>
       </section>
 
