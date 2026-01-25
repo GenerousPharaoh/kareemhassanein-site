@@ -39,14 +39,22 @@ export default function Home() {
 
             {/* Text Content */}
             <div className="space-y-12 mx-auto max-w-4xl">
-              <ScrollReveal direction="up" distance={20} blur={10}>
-                <span className="inline-block text-sm font-medium tracking-[0.4em] uppercase opacity-40 mb-4 border border-white/10 px-6 py-2 rounded-full backdrop-blur-sm shadow-inner mt-10 md:mt-0">
-                  Implementation Consulting
-                </span>
-              </ScrollReveal>
+              <motion.span
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 0.4, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+                className="inline-block text-sm font-medium tracking-[0.4em] uppercase mb-4 border border-white/10 px-6 py-2 rounded-full backdrop-blur-sm shadow-inner mt-10 md:mt-0"
+              >
+                Implementation Consulting
+              </motion.span>
 
-              <motion.h1 variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="text-5xl md:text-7xl lg:text-8xl font-medium leading-[0.9] tracking-tighter mb-16 text-balance">
-                I find bottlenecks and <CharReveal delay={0.6} className="py-2 text-accent italic font-serif">build</CharReveal> <br />
+              <motion.h1
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                className="text-5xl md:text-7xl lg:text-8xl font-medium leading-[0.9] tracking-tighter mb-16 text-balance"
+              >
+                I find bottlenecks and <CharReveal delay={0.8} className="py-2 text-accent italic font-serif">build</CharReveal> <br />
                 systems to fix them.
               </motion.h1>
 
@@ -54,21 +62,32 @@ export default function Home() {
                 <TextReveal
                   text="Operations improvement, workflow automation, and technology implementation for healthcare practices and professional services firms. I map out where time and money are leaking, then build the systems, automations, and processes to stop it."
                   className="text-xl md:text-2xl text-muted-foreground font-light leading-relaxed"
-                  delay={0.8}
+                  delay={1.0}
                 />
               </div>
 
               {/* Metrics Row */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-4 max-w-3xl mx-auto">
-                {metrics.map((m) => (
-                  <div key={m.label} className="group relative p-6 rounded-2xl border border-white/5 hover:border-white/10 hover:bg-white/[0.02] transition-all duration-500">
+                {metrics.map((m, i) => (
+                  <motion.div
+                    key={m.label}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 1.4 + i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                    className="group relative p-6 rounded-2xl border border-white/5 hover:border-white/10 hover:bg-white/[0.02] transition-all duration-500"
+                  >
                     <p className="text-4xl md:text-5xl font-serif italic text-accent mb-3">{m.value}</p>
                     <p className="text-xs text-muted-foreground leading-relaxed">{m.label}</p>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
 
-              <motion.div variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }} className="flex gap-6 items-center justify-center pt-8">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 1.8, ease: [0.16, 1, 0.3, 1] }}
+                className="flex gap-6 items-center justify-center pt-8"
+              >
                 <Link
                   href="/contact"
                   className="group flex items-center gap-4 text-lg font-medium tracking-tight bg-foreground text-background px-8 py-4 rounded-full hover:bg-accent hover:text-background transition-all duration-500"
