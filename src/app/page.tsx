@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import TextReveal from '@/components/TextReveal';
 import ProjectList from '@/components/ProjectList';
@@ -16,45 +16,72 @@ const metrics = [
 ];
 
 export default function Home() {
+  const heroRef = useRef(null);
   const transitionRef = useRef(null);
   const portfolioRef = useRef(null);
 
-  const { scrollYProgress: portfolioProgress } = useScroll({
-    target: portfolioRef,
-    offset: ["start end", "start 0.3"]
+  // Hero parallax - content moves up as you scroll down
+  const { scrollYProgress: heroProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"]
   });
 
-  const portfolioY = useTransform(portfolioProgress, [0, 1], [100, 0]);
-  const portfolioOpacity = useTransform(portfolioProgress, [0, 0.5, 1], [0, 0.5, 1]);
-  const portfolioScale = useTransform(portfolioProgress, [0, 1], [0.9, 1]);
-  const labelX = useTransform(portfolioProgress, [0, 1], [-50, 0]);
+  const heroY = useTransform(heroProgress, [0, 1], [0, -150]);
+  const heroOpacity = useTransform(heroProgress, [0, 0.5, 1], [1, 0.8, 0]);
+  const heroScale = useTransform(heroProgress, [0, 1], [1, 0.95]);
+  const heroBgY = useTransform(heroProgress, [0, 1], [0, 100]);
+  const heroBgScale = useTransform(heroProgress, [0, 1], [1, 1.1]);
 
-  // Statement section scroll animations
+  // Statement section - dramatic split reveal
   const { scrollYProgress: statementProgress } = useScroll({
     target: transitionRef,
     offset: ["start end", "center center"]
   });
 
-  const statementY = useTransform(statementProgress, [0, 1], [60, 0]);
-  const statementOpacity = useTransform(statementProgress, [0, 0.3, 1], [0, 0.3, 1]);
-  const statementScale = useTransform(statementProgress, [0, 1], [0.95, 1]);
+  const statementLine1Y = useTransform(statementProgress, [0, 0.6], [80, 0]);
+  const statementLine1Opacity = useTransform(statementProgress, [0, 0.4, 0.6], [0, 0.5, 1]);
+  const statementLine2Y = useTransform(statementProgress, [0.2, 0.8], [60, 0]);
+  const statementLine2Opacity = useTransform(statementProgress, [0.2, 0.5, 0.8], [0, 0.5, 1]);
+  const statementLineWidth = useTransform(statementProgress, [0.3, 1], ['0%', '100%']);
+
+  // Smooth spring for the decorative line
+  const smoothLineWidth = useSpring(statementLineWidth, { stiffness: 100, damping: 30 });
+
+  // Portfolio section - staggered multi-element reveal
+  const { scrollYProgress: portfolioProgress } = useScroll({
+    target: portfolioRef,
+    offset: ["start end", "start 0.2"]
+  });
+
+  const portfolioLabelX = useTransform(portfolioProgress, [0, 0.5], [-100, 0]);
+  const portfolioLabelOpacity = useTransform(portfolioProgress, [0, 0.5], [0, 1]);
+  const portfolioTitleY = useTransform(portfolioProgress, [0.1, 0.7], [120, 0]);
+  const portfolioTitleOpacity = useTransform(portfolioProgress, [0.1, 0.5, 0.7], [0, 0.6, 1]);
+  const portfolioTitleRotate = useTransform(portfolioProgress, [0.1, 0.7], [3, 0]);
+  const portfolioLineScale = useTransform(portfolioProgress, [0.3, 0.8], [0, 1]);
 
   return (
     <main className="min-h-screen bg-background text-foreground overflow-hidden">
       {/* Hero Section */}
-      <section className="min-h-screen flex items-center justify-center relative px-6 md:px-12 pt-40 md:pt-32">
+      <section ref={heroRef} className="min-h-screen flex items-center justify-center relative px-6 md:px-12 pt-40 md:pt-32">
 
-        {/* Cinematic Background Layer */}
-        <div className="absolute inset-0 z-0">
+        {/* Cinematic Background Layer - Parallax */}
+        <motion.div
+          style={{ y: heroBgY, scale: heroBgScale }}
+          className="absolute inset-0 z-0"
+        >
           <ParallaxImage
             src="/images/orchestrating.png"
             alt="Cinematic Core"
             className="w-full h-full opacity-20"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background" />
-        </div>
+        </motion.div>
 
-        <div className="relative z-10 w-full max-w-[1400px] h-full flex flex-col justify-center py-20">
+        <motion.div
+          style={{ y: heroY, opacity: heroOpacity, scale: heroScale }}
+          className="relative z-10 w-full max-w-[1400px] h-full flex flex-col justify-center py-20"
+        >
           <div className="grid lg:grid-cols-1 items-center justify-center text-center">
 
             {/* Text Content */}
@@ -124,42 +151,69 @@ export default function Home() {
               </motion.div>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* Statement Section */}
-      <section ref={transitionRef} className="py-32 md:py-48 w-full relative overflow-hidden flex items-center justify-center">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/[0.02] to-transparent pointer-events-none" />
-
-        <motion.div
-          style={{ y: statementY, opacity: statementOpacity, scale: statementScale }}
-          className="relative z-10 text-center px-6 max-w-4xl mx-auto"
-        >
-          <h2 className="text-3xl md:text-5xl lg:text-6xl font-medium tracking-tight leading-[1.2] mb-6">
-            The problem isn&apos;t the software.
-          </h2>
-          <p className="text-xl md:text-2xl font-light text-muted-foreground max-w-2xl mx-auto">
-            It&apos;s how it fits into the way people already work.
-          </p>
         </motion.div>
       </section>
 
-      {/* Selected Projects */}
-      <section ref={portfolioRef} className="py-24 md:py-32 relative z-10 w-full px-6 md:px-12 overflow-hidden">
+      {/* Statement Section - Dramatic Split Reveal */}
+      <section ref={transitionRef} className="py-40 md:py-56 w-full relative overflow-hidden flex items-center justify-center">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/[0.02] to-transparent pointer-events-none" />
+
+        <div className="relative z-10 text-center px-6 max-w-5xl mx-auto">
+          {/* Line 1 */}
+          <motion.h2
+            style={{ y: statementLine1Y, opacity: statementLine1Opacity }}
+            className="text-4xl md:text-6xl lg:text-7xl font-medium tracking-tight leading-[1.1] mb-4"
+          >
+            The problem isn&apos;t the software.
+          </motion.h2>
+
+          {/* Decorative animated line */}
+          <motion.div
+            style={{ width: smoothLineWidth }}
+            className="h-[1px] bg-gradient-to-r from-transparent via-accent/50 to-transparent mx-auto mb-6"
+          />
+
+          {/* Line 2 */}
+          <motion.p
+            style={{ y: statementLine2Y, opacity: statementLine2Opacity }}
+            className="text-2xl md:text-3xl lg:text-4xl font-light text-muted-foreground max-w-3xl mx-auto italic"
+          >
+            It&apos;s how it fits into the way people already work.
+          </motion.p>
+        </div>
+      </section>
+
+      {/* Selected Projects - Cinematic Reveal */}
+      <section ref={portfolioRef} className="py-32 md:py-40 relative z-10 w-full px-6 md:px-12 overflow-hidden">
         <div className="max-w-[1400px] mx-auto">
-          <div className="mb-16 md:mb-20">
+          <div className="mb-20 md:mb-24 relative">
+            {/* Animated label slides in from left */}
             <motion.span
-              style={{ x: labelX, opacity: portfolioOpacity }}
-              className="text-xs font-medium tracking-[0.3em] uppercase text-muted-foreground mb-4 block"
+              style={{ x: portfolioLabelX, opacity: portfolioLabelOpacity }}
+              className="text-xs font-medium tracking-[0.4em] uppercase text-accent mb-6 block"
             >
               Portfolio
             </motion.span>
-            <motion.h2
-              style={{ y: portfolioY, opacity: portfolioOpacity, scale: portfolioScale }}
-              className="text-3xl md:text-5xl font-medium tracking-tight origin-left"
-            >
-              Recent Work
-            </motion.h2>
+
+            {/* Title with rotation and scale */}
+            <div className="overflow-hidden">
+              <motion.h2
+                style={{
+                  y: portfolioTitleY,
+                  opacity: portfolioTitleOpacity,
+                  rotateX: portfolioTitleRotate
+                }}
+                className="text-5xl md:text-7xl lg:text-8xl font-medium tracking-tight origin-left"
+              >
+                Recent Work
+              </motion.h2>
+            </div>
+
+            {/* Animated underline */}
+            <motion.div
+              style={{ scaleX: portfolioLineScale }}
+              className="h-[2px] bg-gradient-to-r from-accent via-accent/50 to-transparent mt-8 origin-left max-w-md"
+            />
           </div>
 
           <ProjectList />
