@@ -1,8 +1,8 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
-import { useState } from 'react';
+import { useRef } from 'react';
 
 interface Project {
     title: string;
@@ -16,20 +16,23 @@ interface ProjectListItemProps {
 }
 
 export default function ProjectListItem({ project, index }: ProjectListItemProps) {
-    const [isHovered, setIsHovered] = useState(false);
+    const ref = useRef<HTMLAnchorElement>(null);
+    const isInView = useInView(ref, { once: true, margin: "-50px" });
 
     return (
         <motion.a
+            ref={ref}
             href={project.href}
             target="_blank"
             rel="noopener noreferrer"
             className="group relative flex items-center justify-between py-8 md:py-10 px-6 md:px-8 -mx-6 md:-mx-8 rounded-2xl cursor-pointer hover:bg-white/[0.03] transition-all duration-500"
             initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.1, duration: 0.8 }}
-            viewport={{ once: true }}
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{
+                delay: index * 0.1,
+                duration: 0.6,
+                ease: [0.16, 1, 0.3, 1]
+            }}
         >
             {/* Subtle left accent bar on hover */}
             <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-0 group-hover:h-12 bg-accent/50 rounded-full transition-all duration-500" />
@@ -44,16 +47,9 @@ export default function ProjectListItem({ project, index }: ProjectListItemProps
             </div>
 
             <div className="flex items-center gap-4 z-30">
-                <motion.div
-                    animate={{
-                        x: isHovered ? 0 : -10,
-                        opacity: isHovered ? 1 : 0
-                    }}
-                    transition={{ duration: 0.3 }}
-                    className="text-muted-foreground text-sm font-medium hidden md:block"
-                >
+                <span className="text-muted-foreground text-sm font-medium hidden md:block opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
                     View
-                </motion.div>
+                </span>
                 <div className="w-10 h-10 md:w-12 md:h-12 rounded-full border border-white/10 flex items-center justify-center group-hover:bg-accent group-hover:border-accent transition-all duration-500">
                     <ArrowUpRight className="w-4 h-4 md:w-5 md:h-5 text-muted-foreground group-hover:text-background transition-colors duration-500" />
                 </div>
