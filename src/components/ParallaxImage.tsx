@@ -9,9 +9,10 @@ interface ParallaxImageProps {
     alt: string;
     className?: string;
     priority?: boolean;
+    fadedSides?: boolean;
 }
 
-export default function ParallaxImage({ src, alt, className = "", priority = false }: ParallaxImageProps) {
+export default function ParallaxImage({ src, alt, className = "", priority = false, fadedSides = false }: ParallaxImageProps) {
     const containerRef = useRef<HTMLDivElement>(null);
 
     const { scrollYProgress } = useScroll({
@@ -27,6 +28,10 @@ export default function ParallaxImage({ src, alt, className = "", priority = fal
         <div
             ref={containerRef}
             className={`relative overflow-hidden ${className}`}
+            style={fadedSides ? {
+                maskImage: 'linear-gradient(to right, transparent, black 15%, black 85%, transparent)',
+                WebkitMaskImage: 'linear-gradient(to right, transparent, black 15%, black 85%, transparent)'
+            } : undefined}
         >
             <motion.div
                 style={{

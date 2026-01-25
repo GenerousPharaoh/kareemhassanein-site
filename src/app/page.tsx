@@ -184,9 +184,10 @@ export default function Home() {
         {/* Background image */}
         <div className="absolute inset-0 z-0">
           <ParallaxImage
-            src="/images/image-2.png"
-            alt="Statement"
+            src="/images/entropy_monolith.png"
+            alt="Entropy Monolith"
             className="w-full h-full opacity-20"
+            fadedSides={true}
           />
           <div className="absolute inset-0 bg-gradient-to-b from-background via-background/50 to-background" />
         </div>

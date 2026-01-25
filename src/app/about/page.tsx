@@ -237,9 +237,10 @@ export default function About() {
         <div className="absolute inset-0 z-0">
           <div className="absolute -inset-x-20 inset-y-0 -top-20 -bottom-20">
             <ParallaxImage
-              src="/images/customer-relations.png"
+              src="/images/crystalline_structure.png"
               alt="Values"
               className="w-full h-full opacity-20 scale-110"
+              fadedSides={true}
             />
           </div>
           <div className="absolute inset-0 bg-gradient-to-b from-background via-background/40 to-background" />
