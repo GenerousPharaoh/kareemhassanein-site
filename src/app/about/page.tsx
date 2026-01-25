@@ -42,31 +42,37 @@ function ExperienceItem({ item, index }: { item: typeof experience[0]; index: nu
   });
 
   const springConfig = { stiffness: 100, damping: 30 };
-  const y = useSpring(useTransform(scrollYProgress, [0, 1], [60, 0]), springConfig);
+  const y = useSpring(useTransform(scrollYProgress, [0, 1], [50, 0]), springConfig);
   const opacity = useSpring(useTransform(scrollYProgress, [0, 0.5, 1], [0, 0.5, 1]), springConfig);
-  const lineWidth = useSpring(useTransform(scrollYProgress, [0, 1], [0, 100]), springConfig);
 
   return (
     <motion.div
       ref={ref}
       style={{ y, opacity }}
-      className="pb-12 border-b border-white/5 last:border-b-0 last:pb-0 relative"
+      className="group relative grid md:grid-cols-[140px_1fr] gap-6 md:gap-10"
     >
-      {/* Animated accent line */}
-      <motion.div
-        style={{ width: lineWidth }}
-        className="absolute -left-6 top-3 h-[2px] bg-gradient-to-r from-accent to-transparent"
-      />
-
-      <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1 mb-4">
-        <span className="text-accent font-mono text-sm opacity-60">0{index + 1}</span>
-        <h3 className="text-xl md:text-2xl font-medium">{item.role}</h3>
-        <span className="text-muted-foreground">at {item.company}</span>
-        <span className="text-sm text-muted-foreground/60">{item.period}</span>
+      {/* Left column - Period and index */}
+      <div className="flex md:flex-col items-baseline md:items-start gap-4 md:gap-2">
+        <span className="text-5xl md:text-6xl font-light text-white/[0.04] group-hover:text-accent/10 transition-colors duration-700 leading-none">
+          0{index + 1}
+        </span>
+        <span className="text-sm text-muted-foreground/50 font-mono tracking-wide">
+          {item.period}
+        </span>
       </div>
-      <p className="text-muted-foreground leading-relaxed max-w-2xl pl-8">
-        {item.desc}
-      </p>
+
+      {/* Right column - Content */}
+      <div className="md:pt-2">
+        <div className="mb-3">
+          <h3 className="text-xl md:text-2xl font-medium tracking-tight group-hover:text-accent transition-colors duration-500">
+            {item.role}
+          </h3>
+          <span className="text-muted-foreground/70 text-sm">{item.company}</span>
+        </div>
+        <p className="text-muted-foreground leading-relaxed">
+          {item.desc}
+        </p>
+      </div>
     </motion.div>
   );
 }
@@ -139,19 +145,17 @@ export default function About() {
           style={{ y: valuesY, opacity: valuesOpacity, scale: valuesScale }}
           className="max-w-[900px] mx-auto will-change-transform"
         >
-          <div className="grid md:grid-cols-2 gap-16 md:gap-20">
-            <div className="relative">
-              <motion.div className="absolute -left-4 top-0 w-[2px] h-full bg-gradient-to-b from-accent via-accent/20 to-transparent" />
+          <div className="grid md:grid-cols-2 gap-12 md:gap-16">
+            <div className="group p-8 rounded-2xl border border-white/5 hover:border-accent/20 hover:bg-white/[0.01] transition-all duration-500">
               <h2 className="text-sm font-medium text-accent mb-4">Why it matters</h2>
-              <h3 className="text-2xl md:text-3xl font-medium tracking-tight mb-4">Operational experience.</h3>
+              <h3 className="text-2xl md:text-3xl font-medium tracking-tight mb-4 group-hover:text-accent transition-colors duration-500">Operational experience.</h3>
               <p className="text-muted-foreground leading-relaxed">
                 8,000+ hours of client-facing delivery. I know what it feels like when systems fight you instead of helping. That shapes how I map workflows, configure tools, and design automations that actually fit into real work.
               </p>
             </div>
-            <div className="relative">
-              <motion.div className="absolute -left-4 top-0 w-[2px] h-full bg-gradient-to-b from-accent via-accent/20 to-transparent" />
+            <div className="group p-8 rounded-2xl border border-white/5 hover:border-accent/20 hover:bg-white/[0.01] transition-all duration-500">
               <h2 className="text-sm font-medium text-accent mb-4">How I work</h2>
-              <h3 className="text-2xl md:text-3xl font-medium tracking-tight mb-4">I build things.</h3>
+              <h3 className="text-2xl md:text-3xl font-medium tracking-tight mb-4 group-hover:text-accent transition-colors duration-500">I build things.</h3>
               <p className="text-muted-foreground leading-relaxed">
                 I don&apos;t write reports and leave. I build the automation, configure the system, write the SOPs, train the team, and stick around for post-go-live support. When I&apos;m done, people are actually using it.
               </p>
@@ -162,15 +166,21 @@ export default function About() {
 
       {/* Experience */}
       <section className="py-20 md:py-32 px-6 lg:px-12">
-        <div className="max-w-[900px] mx-auto">
+        <div className="max-w-[1000px] mx-auto">
           <ScrollReveal direction="up">
             <span className="block text-xs font-medium tracking-[0.3em] uppercase text-muted-foreground mb-6">Experience</span>
-            <h2 className="text-3xl md:text-4xl font-medium tracking-tight mb-16">Work history.</h2>
+            <h2 className="text-3xl md:text-4xl font-medium tracking-tight mb-6">Work history.</h2>
+            <div className="h-[1px] bg-gradient-to-r from-accent/50 to-transparent max-w-[200px] mb-16" />
           </ScrollReveal>
 
-          <div className="space-y-16">
+          <div className="space-y-12 md:space-y-16">
             {experience.map((item, i) => (
-              <ExperienceItem key={item.role} item={item} index={i} />
+              <div key={item.role}>
+                <ExperienceItem item={item} index={i} />
+                {i < experience.length - 1 && (
+                  <div className="h-[1px] bg-white/5 mt-12 md:mt-16 md:ml-[180px]" />
+                )}
+              </div>
             ))}
           </div>
         </div>
