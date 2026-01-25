@@ -151,7 +151,7 @@ export default function About() {
           {/* Title */}
           <div className="mb-12 md:mb-20">
             <AnimatedBlock delay={0} className="overflow-hidden">
-              <span className="block text-xs font-medium tracking-[0.4em] uppercase text-accent/70 mb-6">Background</span>
+              <span className="block text-xs font-medium tracking-[0.4em] uppercase text-accent/70 mb-6">About</span>
             </AnimatedBlock>
 
             <div className="overflow-hidden">
@@ -161,7 +161,7 @@ export default function About() {
                 transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
                 className="text-4xl md:text-6xl lg:text-7xl font-medium tracking-tight leading-[1.1]"
               >
-                From clinician to <CharReveal delay={0.5} className="text-accent italic font-serif">consultant.</CharReveal>
+                The <CharReveal delay={0.5} className="text-accent italic font-serif">background.</CharReveal>
               </motion.h1>
             </div>
           </div>
