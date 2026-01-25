@@ -63,15 +63,16 @@ export default function Home() {
         {/* Cinematic Background Layer - Simple Parallax */}
         <motion.div
           style={{ y: heroBgY }}
-          className="absolute inset-0 z-0 will-change-transform"
+          className="absolute -inset-x-0 -top-32 -bottom-32 z-0 will-change-transform"
         >
           <ParallaxImage
             src="/images/orchestrating.png"
             alt="Cinematic Core"
             className="w-full h-full opacity-20"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background" />
         </motion.div>
+        {/* Fixed gradient overlay - doesn't move with parallax */}
+        <div className="absolute inset-0 z-[1] bg-gradient-to-b from-background via-transparent to-background pointer-events-none" />
 
         <div className="relative z-10 w-full max-w-[1400px] h-full flex flex-col justify-center py-20">
           <div className="grid lg:grid-cols-1 items-center justify-center text-center">

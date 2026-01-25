@@ -1,11 +1,36 @@
 'use client';
 
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
+import { motion, useScroll, useTransform, useSpring, useInView } from 'framer-motion';
 import { Download } from 'lucide-react';
 import ScrollReveal from '@/components/ScrollReveal';
 import CharReveal from '@/components/CharReveal';
 import ParallaxImage from '@/components/ParallaxImage';
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
+
+// Staggered paragraph component
+function StaggeredParagraph({ children, delay, className = "" }: { children: React.ReactNode; delay: number; className?: string }) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-50px" });
+  const springConfig = { stiffness: 100, damping: 25 };
+  const opacity = useSpring(0, springConfig);
+  const y = useSpring(25, springConfig);
+
+  useEffect(() => {
+    if (isInView) {
+      const timer = setTimeout(() => {
+        opacity.set(1);
+        y.set(0);
+      }, delay * 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [isInView, delay, opacity, y]);
+
+  return (
+    <motion.p ref={ref} style={{ opacity, y }} className={className}>
+      {children}
+    </motion.p>
+  );
+}
 
 const experience = [
   {
@@ -116,26 +141,28 @@ export default function About() {
         </motion.div>
 
         <motion.div style={{ y: heroTextY }} className="max-w-[900px] mx-auto relative z-10 py-32 will-change-transform">
-          <ScrollReveal direction="up">
+          <ScrollReveal direction="up" delay={0}>
             <span className="block text-xs font-medium tracking-[0.3em] uppercase text-muted-foreground mb-6">Background</span>
-            <h1 className="text-5xl md:text-7xl font-medium tracking-tight mb-10">
-              How I <CharReveal delay={0.4} className="text-accent italic font-serif">got here.</CharReveal>
-            </h1>
-            <div className="space-y-6 text-lg md:text-xl text-muted-foreground leading-relaxed">
-              <p>
-                I spent years as a physiotherapist. MSc from Robert Gordon, 6,000+ patient sessions, top revenue generator at a busy clinic for three consecutive years.
-              </p>
-              <p>
-                But I kept getting pulled into the operational side. Why is the booking system losing referrals? Why are clinicians spending three hours a day on documentation? Why did we buy this software if nobody uses it?
-              </p>
-              <p>
-                So I started fixing those problems. Led an AI documentation rollout that hit 100% adoption in 8 weeks. Built web applications. Created automation systems that cut document generation time by 85%.
-              </p>
-              <p className="text-foreground">
-                Now I help healthcare practices and professional services firms do the same. Find the bottlenecks, build the systems, drive the adoption.
-              </p>
-            </div>
           </ScrollReveal>
+          <ScrollReveal direction="up" delay={0.1}>
+            <h1 className="text-5xl md:text-7xl font-medium tracking-tight mb-10">
+              How I <CharReveal delay={0.5} className="text-accent italic font-serif">got here.</CharReveal>
+            </h1>
+          </ScrollReveal>
+          <div className="space-y-6 text-lg md:text-xl text-muted-foreground leading-relaxed">
+            <StaggeredParagraph delay={0.3}>
+              I spent years as a physiotherapist. MSc from Robert Gordon, 6,000+ patient sessions, top revenue generator at a busy clinic for three consecutive years.
+            </StaggeredParagraph>
+            <StaggeredParagraph delay={0.45}>
+              But I kept getting pulled into the operational side. Why is the booking system losing referrals? Why are clinicians spending three hours a day on documentation? Why did we buy this software if nobody uses it?
+            </StaggeredParagraph>
+            <StaggeredParagraph delay={0.6}>
+              So I started fixing those problems. Led an AI documentation rollout that hit 100% adoption in 8 weeks. Built web applications. Created automation systems that cut document generation time by 85%.
+            </StaggeredParagraph>
+            <StaggeredParagraph delay={0.75} className="text-foreground">
+              Now I help healthcare practices and professional services firms do the same. Find the bottlenecks, build the systems, drive the adoption.
+            </StaggeredParagraph>
+          </div>
         </motion.div>
       </section>
 
