@@ -23,18 +23,14 @@ export default function TextReveal({ text, className = "", delay = 0 }: TextReve
     const child = {
         hidden: {
             opacity: 0,
-            y: 20,
-            filter: "blur(10px)",
+            y: 15,
         },
         visible: {
             opacity: 1,
             y: 0,
-            filter: "blur(0px)",
             transition: {
-                type: "spring",
-                damping: 20,
-                stiffness: 100,
-                duration: 0.8,
+                duration: 0.5,
+                ease: [0.16, 1, 0.3, 1],
             } as const,
         },
     };

@@ -26,7 +26,7 @@ export default function ScrollReveal({
     distance = 25,
     duration = 0.6,
     delay = 0,
-    blur = 15,
+    blur = 0, // Disabled by default for performance
     className = '',
     style = {},
     staggerChildren = 0,
@@ -44,13 +44,13 @@ export default function ScrollReveal({
             opacity: 0,
             x: x,
             y: y,
-            filter: `blur(${blur}px)`,
+            ...(blur > 0 && { filter: `blur(${blur}px)` }),
         },
         visible: {
             opacity: 1,
             x: 0,
             y: 0,
-            filter: 'blur(0px)',
+            ...(blur > 0 && { filter: 'blur(0px)' }),
             transition: {
                 duration,
                 delay,
@@ -70,8 +70,8 @@ export default function ScrollReveal({
             className={className}
             style={{
                 ...style,
-                willChange: 'transform, opacity, filter',
-                backfaceVisibility: 'hidden' /* Prevent flashing/jitter */
+                willChange: 'transform, opacity',
+                backfaceVisibility: 'hidden',
             }}
         >
             {children}

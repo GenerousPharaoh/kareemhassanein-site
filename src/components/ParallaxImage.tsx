@@ -19,13 +19,9 @@ export default function ParallaxImage({ src, alt, className = "", priority = fal
         offset: ["start end", "end start"]
     });
 
-    // Softer vertical parallax
-    const y = useTransform(scrollYProgress, [0, 1], ["-5%", "5%"]);
-    const scale = useTransform(scrollYProgress, [0, 0.5, 1], [1.02, 1, 1.02]);
-    const grayscale = useTransform(scrollYProgress, [0, 0.3, 0.6], [100, 50, 0]);
-
-    // Smooth out the motion
-    const smoothY = useSpring(y, { stiffness: 100, damping: 30, mass: 0.1 });
+    // Gentle parallax - GPU accelerated transforms only
+    const y = useTransform(scrollYProgress, [0, 1], ["-3%", "3%"]);
+    const smoothY = useSpring(y, { stiffness: 80, damping: 25 });
 
     return (
         <div
@@ -35,17 +31,16 @@ export default function ParallaxImage({ src, alt, className = "", priority = fal
             <motion.div
                 style={{
                     y: smoothY,
-                    scale,
-                    filter: useTransform(grayscale, (v) => `grayscale(${v}%)`)
+                    willChange: 'transform',
                 }}
-                className="absolute inset-0 w-full h-[110%]"
+                className="absolute inset-0 w-full h-[106%]"
             >
                 <Image
                     src={src}
                     alt={alt}
                     fill
                     priority={priority}
-                    className="object-cover object-center transition-opacity duration-700"
+                    className="object-cover object-center"
                 />
             </motion.div>
         </div>

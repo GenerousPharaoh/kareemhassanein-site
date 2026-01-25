@@ -31,18 +31,14 @@ export default function CharReveal({
     const charVariants = {
         hidden: {
             opacity: 0,
-            filter: 'blur(10px)',
-            y: 10,
-            scale: 1.1
+            y: 15,
         },
         visible: {
             opacity: 1,
-            filter: 'blur(0px)',
             y: 0,
-            scale: 1,
             transition: {
-                duration: 0.8,
-                ease: [0.2, 0.65, 0.3, 0.9] as const
+                duration: 0.6,
+                ease: [0.16, 1, 0.3, 1] as const
             }
         }
     };
