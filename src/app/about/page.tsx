@@ -270,16 +270,17 @@ export default function About() {
 
       {/* Experience */}
       <section className="py-24 md:py-36 px-6 lg:px-12 xl:px-20 relative overflow-hidden">
-        {/* Background image - subtle left-positioned for visual depth */}
+        {/* Background image - centered with soft fade */}
         <div className="absolute inset-0 z-0">
-          <div className="absolute -left-1/4 inset-y-0 w-3/4">
+          <div className="absolute inset-0">
             <ParallaxImage
-              src="/images/backdrop.png"
+              src="/images/flow of organized transformation.png"
               alt="Experience"
               className="w-full h-full opacity-20"
             />
           </div>
-          <div className="absolute inset-0 bg-gradient-to-b from-background via-background/50 to-background" />
+          <div className="absolute inset-0 bg-gradient-to-b from-background via-background/40 to-background" />
+          <div className="absolute inset-0 bg-gradient-to-r from-background via-transparent to-background" />
         </div>
 
         <div className="max-w-[1000px] mx-auto relative z-10">

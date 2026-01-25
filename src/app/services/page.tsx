@@ -103,14 +103,15 @@ function ServiceSection({ service, index }: { service: typeof services[0], index
       {/* Background image with enhanced parallax */}
       <motion.div
         style={{ y: imgY, opacity: imgOpacity, scale: imgScale }}
-        className={`absolute inset-y-0 w-2/3 ${isEven ? 'right-0 -mr-20' : 'left-0 -ml-20'} pointer-events-none will-change-transform`}
+        className={`absolute inset-y-0 w-1/2 ${isEven ? 'right-0' : 'left-0'} pointer-events-none will-change-transform`}
       >
         <ParallaxImage
           src={service.image}
           alt={service.title}
           className="w-full h-full"
         />
-        <div className={`absolute inset-0 bg-gradient-to-${isEven ? 'r' : 'l'} from-background via-background/50 to-transparent`} />
+        <div className={`absolute inset-0 bg-gradient-to-${isEven ? 'r' : 'l'} from-background via-background/60 to-transparent`} />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/20 via-transparent to-background/20" />
       </motion.div>
 
       <motion.div
