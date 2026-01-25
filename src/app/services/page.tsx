@@ -21,7 +21,7 @@ const services = [
     tagline: 'Get your team actually using the tools you paid for.',
     desc: 'Most software fails at adoption, not installation. I handle everything from evaluation through go-live: configuration, workflow adjustments, training, and the change management that gets teams to actually use what you bought.',
     points: ['System configuration', 'Training enablement', 'Change management', 'Post-go-live support'],
-    image: '/images/implementation_mechanism_macro.png',
+    image: '/images/adoption_bloom.png',
   },
   {
     index: '03',
