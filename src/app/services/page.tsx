@@ -93,8 +93,6 @@ function ServiceSection({ service, index }: { service: typeof services[0], index
   const imgOpacity = useSpring(useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0, 0.3, 0.35, 0.25]), springConfig);
   const imgScale = useSpring(useTransform(scrollYProgress, [0, 1], [1.1, 1]), springConfig);
 
-  const isEven = index % 2 === 0;
-
   return (
     <section
       ref={ref}
