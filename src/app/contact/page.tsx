@@ -102,10 +102,9 @@ export default function Contact() {
         <ParallaxImage
           src="/images/hero-home.png"
           alt="Connection"
-          className="w-full h-full opacity-15"
+          className="w-full h-full opacity-25"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-background" />
-        <div className="absolute inset-0 bg-gradient-to-r from-background/80 via-transparent to-background/80" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-background" />
       </motion.div>
 
       <motion.div

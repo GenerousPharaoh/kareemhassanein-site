@@ -141,10 +141,10 @@ export default function About() {
           <ParallaxImage
             src="/images/digital-cathedral.png"
             alt="Architecture"
-            className="w-full h-full opacity-15"
+            className="w-full h-full opacity-25"
           />
         </motion.div>
-        <div className="absolute inset-0 bg-gradient-to-b from-background via-background/50 to-background pointer-events-none z-[1]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background pointer-events-none z-[1]" />
 
         <motion.div style={{ y: heroTextY }} className="max-w-[1200px] mx-auto relative z-10 py-32 will-change-transform">
           {/* Title */}
@@ -239,11 +239,10 @@ export default function About() {
             <ParallaxImage
               src="/images/customer-relations.png"
               alt="Values"
-              className="w-full h-full opacity-12 scale-110"
+              className="w-full h-full opacity-20 scale-110"
             />
           </div>
-          <div className="absolute inset-0 bg-gradient-to-b from-background via-background/70 to-background" />
-          <div className="absolute inset-0 bg-gradient-to-tr from-background via-transparent to-background/50" />
+          <div className="absolute inset-0 bg-gradient-to-b from-background via-background/40 to-background" />
         </div>
 
         <motion.div
@@ -277,11 +276,10 @@ export default function About() {
             <ParallaxImage
               src="/images/backdrop.png"
               alt="Experience"
-              className="w-full h-full opacity-10"
+              className="w-full h-full opacity-20"
             />
           </div>
-          <div className="absolute inset-0 bg-gradient-to-b from-background via-background/85 to-background" />
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-background/60 to-background" />
+          <div className="absolute inset-0 bg-gradient-to-b from-background via-background/50 to-background" />
         </div>
 
         <div className="max-w-[1000px] mx-auto relative z-10">
@@ -311,11 +309,11 @@ export default function About() {
           <ParallaxImage
             src="/images/kh_section_divider_signal-to-system_02.png"
             alt="Signal to system"
-            className="w-full h-full opacity-10"
+            className="w-full h-full opacity-20"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/70 to-background" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-background" />
         </div>
-        <div className="absolute inset-0 bg-gradient-to-t from-accent/5 via-transparent to-transparent pointer-events-none z-[1]" />
+        <div className="absolute inset-0 bg-gradient-to-t from-accent/10 via-transparent to-transparent pointer-events-none z-[1]" />
         <div className="max-w-[900px] mx-auto text-center relative z-10">
           <ScrollReveal direction="up">
             <h2 className="text-2xl md:text-3xl font-medium tracking-tight mb-8">Want the full picture?</h2>

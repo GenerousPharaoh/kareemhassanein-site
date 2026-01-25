@@ -186,11 +186,10 @@ export default function Home() {
           <ParallaxImage
             src="/images/image-2.png"
             alt="Statement"
-            className="w-full h-full opacity-8"
+            className="w-full h-full opacity-20"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-background via-background/80 to-background" />
+          <div className="absolute inset-0 bg-gradient-to-b from-background via-background/50 to-background" />
         </div>
-        <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-transparent pointer-events-none z-[1]" />
 
         <motion.div
           style={{ y: statementY, opacity: statementOpacity, scale: statementScale }}
@@ -220,10 +219,8 @@ export default function Home() {
           />
         </motion.div>
 
-        {/* Layered gradient overlays for cinematic depth */}
+        {/* Lighter gradient overlays */}
         <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background pointer-events-none" />
-        <div className="absolute inset-0 bg-gradient-to-r from-background/60 via-transparent to-background/60 pointer-events-none" />
-        <div className="absolute inset-0 bg-background/30 pointer-events-none" />
 
         {/* Content */}
         <motion.div
@@ -265,11 +262,10 @@ export default function Home() {
             <ParallaxImage
               src="/images/flow of organized transformation.png"
               alt="Transformation"
-              className="w-full h-full opacity-12"
+              className="w-full h-full opacity-20"
             />
           </div>
-          <div className="absolute inset-0 bg-gradient-to-b from-background via-background/80 to-background" />
-          <div className="absolute inset-0 bg-gradient-to-l from-transparent via-background/50 to-background" />
+          <div className="absolute inset-0 bg-gradient-to-b from-background via-background/60 to-background" />
         </div>
 
         <div className="max-w-[1400px] mx-auto relative z-10">

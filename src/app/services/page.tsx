@@ -90,7 +90,7 @@ function ServiceSection({ service, index }: { service: typeof services[0], index
   const y = useSpring(useTransform(scrollYProgress, [0, 1], [80, 0]), springConfig);
   const opacity = useSpring(useTransform(scrollYProgress, [0, 0.4, 1], [0, 0.4, 1]), springConfig);
   const imgY = useSpring(useTransform(scrollYProgress, [0, 1], [50, -50]), springConfig);
-  const imgOpacity = useSpring(useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0, 0.2, 0.25, 0.15]), springConfig);
+  const imgOpacity = useSpring(useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0, 0.3, 0.35, 0.25]), springConfig);
   const imgScale = useSpring(useTransform(scrollYProgress, [0, 1], [1.1, 1]), springConfig);
 
   const isEven = index % 2 === 0;
@@ -110,8 +110,7 @@ function ServiceSection({ service, index }: { service: typeof services[0], index
           alt={service.title}
           className="w-full h-full"
         />
-        <div className={`absolute inset-0 bg-gradient-to-${isEven ? 'r' : 'l'} from-background via-background/70 to-transparent`} />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/30 via-transparent to-background/30" />
+        <div className={`absolute inset-0 bg-gradient-to-${isEven ? 'r' : 'l'} from-background via-background/50 to-transparent`} />
       </motion.div>
 
       <motion.div
@@ -212,9 +211,9 @@ export default function Services() {
           <ParallaxImage
             src="/images/systems.png"
             alt="Systems"
-            className="w-full h-full opacity-15"
+            className="w-full h-full opacity-25"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-background via-background/70 to-background" />
+          <div className="absolute inset-0 bg-gradient-to-b from-background via-background/40 to-background" />
         </motion.div>
 
         <motion.div style={{ y: heroY }} className="max-w-[1200px] mx-auto relative z-10 will-change-transform">
@@ -248,9 +247,9 @@ export default function Services() {
           <ParallaxImage
             src="/images/glow.png"
             alt="Glow"
-            className="w-full h-full opacity-10"
+            className="w-full h-full opacity-20"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-background" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-background" />
         </div>
 
         <div className="max-w-[1200px] mx-auto relative z-10">
