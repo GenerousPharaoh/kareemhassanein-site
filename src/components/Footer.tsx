@@ -12,15 +12,14 @@ export default function Footer() {
     >
       <div className="relative h-full w-full bg-[#0d1117] flex flex-col justify-center items-center text-center pointer-events-auto overflow-hidden">
 
-        {/* Cinematic Background - Layered for depth */}
+        {/* Cinematic Background */}
         <div className="absolute inset-0 z-0">
           <ParallaxImage
-            src="/assets/synergy.png"
+            src="/images/digital-cathedral.png"
             alt="Footer Atmosphere"
-            className="w-full h-full object-cover opacity-40 scale-150"
+            className="w-full h-full object-cover opacity-25"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-radial from-accent/10 via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-background/80" />
         </div>
 
         <div className="relative z-10">
