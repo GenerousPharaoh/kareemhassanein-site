@@ -73,12 +73,12 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-background text-foreground overflow-hidden">
       {/* Hero Section */}
-      <section ref={heroRef} className="min-h-screen flex items-center justify-center relative px-6 md:px-12 pt-40 md:pt-32">
+      <section ref={heroRef} className="min-h-screen flex items-center justify-center relative px-6 md:px-12 pt-40 md:pt-32 bg-background">
 
         {/* Cinematic Background Layer - Simple Parallax */}
         <motion.div
           style={{ y: heroBgY }}
-          className="absolute -inset-x-0 -top-32 -bottom-32 z-0 will-change-transform"
+          className="absolute -inset-x-0 -top-32 -bottom-48 z-0 will-change-transform"
         >
           <ParallaxImage
             src="/images/orchestrating.png"
@@ -86,8 +86,8 @@ export default function Home() {
             className="w-full h-full opacity-20"
           />
         </motion.div>
-        {/* Fixed gradient overlay - doesn't move with parallax */}
-        <div className="absolute inset-0 z-[1] bg-gradient-to-b from-background via-transparent to-background pointer-events-none" />
+        {/* Fixed gradient overlay - extends beyond section for seamless blend */}
+        <div className="absolute inset-x-0 -top-10 -bottom-32 z-[1] bg-gradient-to-b from-background via-background/0 via-30% to-background pointer-events-none" />
 
         <div className="relative z-10 w-full max-w-[1400px] h-full flex flex-col justify-center py-20">
           <div className="grid lg:grid-cols-1 items-center justify-center text-center">
@@ -163,8 +163,8 @@ export default function Home() {
       </section>
 
       {/* Statement Section */}
-      <section ref={transitionRef} className="py-20 md:py-32 w-full relative overflow-hidden flex items-center justify-center">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/[0.02] to-transparent pointer-events-none" />
+      <section ref={transitionRef} className="py-20 md:py-32 w-full relative overflow-hidden flex items-center justify-center bg-background">
+        <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-transparent pointer-events-none" />
 
         <motion.div
           style={{ y: statementY, opacity: statementOpacity, scale: statementScale }}
