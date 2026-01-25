@@ -7,28 +7,35 @@ import CharReveal from '@/components/CharReveal';
 import ParallaxImage from '@/components/ParallaxImage';
 import { useRef, useEffect } from 'react';
 
-// Staggered paragraph component
-function StaggeredParagraph({ children, delay, className = "" }: { children: React.ReactNode; delay: number; className?: string }) {
+// Animated text block with spring physics
+function AnimatedBlock({ children, delay, direction = "up", className = "" }: {
+  children: React.ReactNode;
+  delay: number;
+  direction?: "up" | "left" | "right";
+  className?: string;
+}) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-50px" });
-  const springConfig = { stiffness: 100, damping: 25 };
+  const springConfig = { stiffness: 80, damping: 20 };
   const opacity = useSpring(0, springConfig);
-  const y = useSpring(25, springConfig);
+  const y = useSpring(direction === "up" ? 40 : 0, springConfig);
+  const x = useSpring(direction === "left" ? -40 : direction === "right" ? 40 : 0, springConfig);
 
   useEffect(() => {
     if (isInView) {
       const timer = setTimeout(() => {
         opacity.set(1);
         y.set(0);
+        x.set(0);
       }, delay * 1000);
       return () => clearTimeout(timer);
     }
-  }, [isInView, delay, opacity, y]);
+  }, [isInView, delay, opacity, y, x]);
 
   return (
-    <motion.p ref={ref} style={{ opacity, y }} className={className}>
+    <motion.div ref={ref} style={{ opacity, y, x }} className={className}>
       {children}
-    </motion.p>
+    </motion.div>
   );
 }
 
@@ -128,41 +135,107 @@ export default function About() {
     <main className="bg-background text-foreground pt-20">
 
       {/* Hero */}
-      <section ref={heroRef} className="min-h-[80vh] flex items-center relative border-b border-white/5 overflow-hidden px-6 lg:px-12">
+      <section ref={heroRef} className="min-h-screen relative overflow-hidden px-6 lg:px-12 flex flex-col justify-center">
 
         {/* Cinematic Background with Parallax */}
-        <motion.div style={{ y: heroBgY }} className="absolute inset-0 z-0 will-change-transform">
+        <motion.div style={{ y: heroBgY }} className="absolute -inset-20 z-0 will-change-transform">
           <ParallaxImage
             src="/images/digital-cathedral.png"
             alt="Architecture"
-            className="w-full h-full opacity-20"
+            className="w-full h-full opacity-15"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background" />
+        </motion.div>
+        <div className="absolute inset-0 bg-gradient-to-b from-background via-background/50 to-background pointer-events-none z-[1]" />
+
+        <motion.div style={{ y: heroTextY }} className="max-w-[1200px] mx-auto relative z-10 py-32 will-change-transform">
+          {/* Large dramatic title */}
+          <div className="mb-16 md:mb-24">
+            <AnimatedBlock delay={0} className="overflow-hidden">
+              <span className="block text-xs font-medium tracking-[0.4em] uppercase text-accent/70 mb-8">Background</span>
+            </AnimatedBlock>
+
+            <div className="overflow-hidden">
+              <motion.h1
+                initial={{ y: 100, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                className="text-6xl md:text-8xl lg:text-9xl font-medium tracking-tighter leading-[0.85]"
+              >
+                How I
+              </motion.h1>
+            </div>
+            <div className="overflow-hidden">
+              <motion.h1
+                initial={{ y: 100, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 1, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                className="text-6xl md:text-8xl lg:text-9xl font-medium tracking-tighter leading-[0.85]"
+              >
+                <CharReveal delay={0.6} className="text-accent italic font-serif">got here.</CharReveal>
+              </motion.h1>
+            </div>
+          </div>
+
+          {/* Story grid - alternating layout */}
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20">
+            {/* Left column - The beginning */}
+            <div className="space-y-8">
+              <AnimatedBlock delay={0.5} direction="up">
+                <div className="flex items-center gap-4 mb-4">
+                  <span className="text-7xl font-light text-white/[0.03]">01</span>
+                  <div className="h-[1px] flex-1 bg-gradient-to-r from-accent/30 to-transparent" />
+                </div>
+                <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
+                  I spent years as a physiotherapist. MSc from Robert Gordon, 6,000+ patient sessions, top revenue generator at a busy clinic for three consecutive years.
+                </p>
+              </AnimatedBlock>
+
+              <AnimatedBlock delay={0.7} direction="up">
+                <div className="flex items-center gap-4 mb-4">
+                  <span className="text-7xl font-light text-white/[0.03]">02</span>
+                  <div className="h-[1px] flex-1 bg-gradient-to-r from-accent/30 to-transparent" />
+                </div>
+                <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
+                  But I kept getting pulled into the operational side. Why is the booking system losing referrals? Why are clinicians spending three hours a day on documentation? Why did we buy this software if nobody uses it?
+                </p>
+              </AnimatedBlock>
+            </div>
+
+            {/* Right column - The transition */}
+            <div className="space-y-8 lg:pt-24">
+              <AnimatedBlock delay={0.9} direction="up">
+                <div className="flex items-center gap-4 mb-4">
+                  <span className="text-7xl font-light text-white/[0.03]">03</span>
+                  <div className="h-[1px] flex-1 bg-gradient-to-r from-accent/30 to-transparent" />
+                </div>
+                <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
+                  So I started fixing those problems. Led an AI documentation rollout that hit 100% adoption in 8 weeks. Built web applications. Created automation systems that cut document generation time by 85%.
+                </p>
+              </AnimatedBlock>
+
+              <AnimatedBlock delay={1.1} direction="up">
+                <div className="p-8 rounded-2xl border border-accent/20 bg-accent/[0.03]">
+                  <p className="text-xl md:text-2xl text-foreground font-medium leading-relaxed">
+                    Now I help healthcare practices and professional services firms do the same. Find the bottlenecks, build the systems, drive the adoption.
+                  </p>
+                </div>
+              </AnimatedBlock>
+            </div>
+          </div>
         </motion.div>
 
-        <motion.div style={{ y: heroTextY }} className="max-w-[900px] mx-auto relative z-10 py-32 will-change-transform">
-          <ScrollReveal direction="up" delay={0}>
-            <span className="block text-xs font-medium tracking-[0.3em] uppercase text-muted-foreground mb-6">Background</span>
-          </ScrollReveal>
-          <ScrollReveal direction="up" delay={0.1}>
-            <h1 className="text-5xl md:text-7xl font-medium tracking-tight mb-10">
-              How I <CharReveal delay={0.5} className="text-accent italic font-serif">got here.</CharReveal>
-            </h1>
-          </ScrollReveal>
-          <div className="space-y-6 text-lg md:text-xl text-muted-foreground leading-relaxed">
-            <StaggeredParagraph delay={0.3}>
-              I spent years as a physiotherapist. MSc from Robert Gordon, 6,000+ patient sessions, top revenue generator at a busy clinic for three consecutive years.
-            </StaggeredParagraph>
-            <StaggeredParagraph delay={0.45}>
-              But I kept getting pulled into the operational side. Why is the booking system losing referrals? Why are clinicians spending three hours a day on documentation? Why did we buy this software if nobody uses it?
-            </StaggeredParagraph>
-            <StaggeredParagraph delay={0.6}>
-              So I started fixing those problems. Led an AI documentation rollout that hit 100% adoption in 8 weeks. Built web applications. Created automation systems that cut document generation time by 85%.
-            </StaggeredParagraph>
-            <StaggeredParagraph delay={0.75} className="text-foreground">
-              Now I help healthcare practices and professional services firms do the same. Find the bottlenecks, build the systems, drive the adoption.
-            </StaggeredParagraph>
-          </div>
+        {/* Scroll indicator */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.4 }}
+          transition={{ delay: 1.5, duration: 1 }}
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10"
+        >
+          <motion.div
+            animate={{ y: [0, 8, 0] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            className="w-[1px] h-12 bg-gradient-to-b from-accent to-transparent"
+          />
         </motion.div>
       </section>
 
