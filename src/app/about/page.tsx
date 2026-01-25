@@ -274,7 +274,7 @@ export default function About() {
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0">
             <ParallaxImage
-              src="/images/flow of organized transformation.png"
+              src="/images/experience_layers.png"
               alt="Experience"
               className="w-full h-full opacity-20"
             />

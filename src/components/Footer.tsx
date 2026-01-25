@@ -15,7 +15,7 @@ export default function Footer() {
         {/* Cinematic Background */}
         <div className="absolute inset-0 z-0">
           <ParallaxImage
-            src="/images/digital-cathedral.png"
+            src="/images/finale_horizon.png"
             alt="Footer Atmosphere"
             className="w-full h-full object-cover opacity-25"
           />
