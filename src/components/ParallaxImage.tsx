@@ -23,9 +23,8 @@ export default function ParallaxImage({
 }: ParallaxImageProps) {
     const containerRef = useRef<HTMLDivElement>(null);
     const prefersReducedMotion = useReducedMotion();
-    const [isMobile, setIsMobile] = useState(true); // Default to mobile-safe
+    const [isMobile, setIsMobile] = useState(true);
 
-    // Detect mobile for reduced parallax intensity
     useEffect(() => {
         const checkMobile = () => setIsMobile(window.innerWidth < 768);
         checkMobile();
@@ -38,10 +37,9 @@ export default function ParallaxImage({
         offset: ["start end", "end start"]
     });
 
-    // On mobile: no parallax movement, no scale - just a static image
-    // On desktop: subtle parallax effects
-    const shouldAnimate = !isMobile && !prefersReducedMotion;
+    const shouldAnimate = !prefersReducedMotion;
 
+    // Desktop parallax settings
     const parallaxRange = {
         subtle: ["-2%", "2%"],
         medium: ["-4%", "4%"],
@@ -54,23 +52,22 @@ export default function ParallaxImage({
         strong: [1.05, 1, 1.05],
     };
 
-    // Motion values - disabled on mobile
+    // Motion values
     const y = useTransform(
         scrollYProgress,
         [0, 1],
-        shouldAnimate ? parallaxRange[intensity] as [string, string] : ["0%", "0%"]
+        shouldAnimate && !isMobile ? parallaxRange[intensity] as [string, string] : ["0%", "0%"]
     );
     const scale = useTransform(
         scrollYProgress,
         [0, 0.5, 1],
-        shouldAnimate ? scaleRange[intensity] : [1, 1, 1]
+        shouldAnimate && !isMobile ? scaleRange[intensity] : [1, 1, 1]
     );
 
-    // Dynamic grayscale - keep this subtle effect on all devices
-    const grayscale = useTransform(scrollYProgress, [0, 0.4, 0.6], [60, 20, 0]);
+    // Dynamic grayscale that reveals color as you scroll
+    const grayscale = useTransform(scrollYProgress, [0, 0.4, 0.6], [50, 15, 0]);
     const brightness = useTransform(scrollYProgress, [0, 0.5, 1], [0.95, 1, 0.95]);
 
-    // Smooth springs
     const smoothY = useSpring(y, { stiffness: 120, damping: 30, mass: 0.1 });
     const smoothScale = useSpring(scale, { stiffness: 200, damping: 40, mass: 0.1 });
 
@@ -79,27 +76,30 @@ export default function ParallaxImage({
             ref={containerRef}
             className={`relative overflow-hidden ${className}`}
         >
-            {/*
-                Use two layers:
-                - Mobile: static image with no transforms
-                - Desktop: animated image with parallax
-                This ensures mobile never has overflow issues
-            */}
-
-            {/* Mobile: Simple static image - use object-top to show more of the image */}
-            <div className="md:hidden absolute inset-0 w-full h-full">
+            {/* Mobile: Wider container to reduce zoom effect + slow drift animation */}
+            <motion.div
+                className="md:hidden absolute inset-y-0 left-1/2 w-[180%] h-full -translate-x-1/2"
+                animate={shouldAnimate ? {
+                    x: ['-50%', '-52%', '-50%'],
+                    scale: [1, 1.02, 1],
+                } : {}}
+                transition={{
+                    duration: 20,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                }}
+            >
                 <Image
                     src={src}
                     alt={alt}
                     fill
-                    sizes="100vw"
+                    sizes="180vw"
                     priority={priority}
-                    className="object-cover object-top"
-                    style={{ objectPosition: 'center 20%' }}
+                    className="object-cover object-center"
                 />
-            </div>
+            </motion.div>
 
-            {/* Desktop: Animated parallax image */}
+            {/* Desktop: Full parallax with scroll effects */}
             <motion.div
                 style={{
                     y: smoothY,
@@ -115,13 +115,13 @@ export default function ParallaxImage({
                     src={src}
                     alt={alt}
                     fill
-                    sizes="100vw"
+                    sizes="110vw"
                     priority={priority}
                     className="object-cover object-center"
                 />
             </motion.div>
 
-            {/* Optional overlays for depth */}
+            {/* Overlays */}
             {(overlay === 'gradient' || overlay === 'both') && (
                 <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background pointer-events-none z-10" />
             )}
@@ -129,7 +129,7 @@ export default function ParallaxImage({
                 <div
                     className="absolute inset-0 pointer-events-none z-10"
                     style={{
-                        background: 'radial-gradient(ellipse at center, transparent 0%, transparent 50%, hsl(var(--background) / 0.8) 100%)'
+                        background: 'radial-gradient(ellipse at center, transparent 0%, transparent 40%, hsl(var(--background) / 0.7) 100%)'
                     }}
                 />
             )}

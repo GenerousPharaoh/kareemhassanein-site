@@ -49,12 +49,12 @@ export default function Home() {
         {/* Ambient Particles */}
         <AmbientParticles count={15} className="z-[1]" />
 
-        {/* Cinematic Background Layer - more subtle on mobile */}
-        <div className="absolute inset-0 z-0 opacity-[0.06] md:opacity-100">
+        {/* Cinematic Background Layer */}
+        <div className="absolute inset-0 z-0">
           <ParallaxImage
             src="/images/orchestrating.png"
             alt="Cinematic Core"
-            className="w-full h-full md:opacity-20"
+            className="w-full h-full opacity-20"
             intensity="subtle"
             overlay="both"
           />

@@ -46,12 +46,12 @@ export default function About() {
         {/* Ambient Particles */}
         <AmbientParticles count={12} className="z-[1]" />
 
-        {/* Cinematic Background - more subtle on mobile */}
-        <div className="absolute inset-0 z-0 opacity-[0.06] md:opacity-100">
+        {/* Cinematic Background */}
+        <div className="absolute inset-0 z-0">
           <ParallaxImage
             src="/images/digital-cathedral.png"
             alt="Architecture"
-            className="w-full h-full md:opacity-20"
+            className="w-full h-full opacity-20"
             intensity="subtle"
             overlay="both"
           />
