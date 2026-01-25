@@ -5,7 +5,6 @@ import { ArrowRight } from 'lucide-react';
 import TextReveal from '@/components/TextReveal';
 import ProjectList from '@/components/ProjectList';
 import ParallaxImage from '@/components/ParallaxImage';
-import CharReveal from '@/components/CharReveal';
 import Link from 'next/link';
 import { useRef } from 'react';
 
@@ -103,15 +102,33 @@ export default function Home() {
                 Implementation Consulting
               </motion.span>
 
-              <motion.h1
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                className="text-5xl md:text-7xl lg:text-8xl font-medium leading-[0.9] tracking-tighter mb-16 text-balance"
-              >
-                I find bottlenecks and <CharReveal delay={0.8} className="py-2 text-accent italic font-serif">build</CharReveal> <br />
-                systems to fix them.
-              </motion.h1>
+              <h1 className="text-5xl md:text-7xl lg:text-8xl font-medium leading-[0.9] tracking-tighter mb-16 text-balance">
+                <motion.span
+                  initial={{ opacity: 0, y: 20, filter: "blur(10px)" }}
+                  animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                  transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                  className="inline"
+                >
+                  I find bottlenecks and{" "}
+                </motion.span>
+                <motion.span
+                  initial={{ opacity: 0, scale: 0.8, filter: "blur(12px)" }}
+                  animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+                  transition={{ duration: 1.2, delay: 1.1, ease: [0.16, 1, 0.3, 1] }}
+                  className="inline-block text-accent italic font-serif"
+                >
+                  build
+                </motion.span>
+                <br />
+                <motion.span
+                  initial={{ opacity: 0, y: 20, filter: "blur(10px)" }}
+                  animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                  transition={{ duration: 1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                  className="inline"
+                >
+                  systems to fix them.
+                </motion.span>
+              </h1>
 
               <div className="max-w-2xl mx-auto">
                 <TextReveal
