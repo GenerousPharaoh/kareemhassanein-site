@@ -21,7 +21,7 @@ const services = [
     tagline: 'Get your team actually using the tools you paid for.',
     desc: 'Most software fails at adoption, not installation. I handle everything from evaluation through go-live: configuration, workflow adjustments, training, and the change management that gets teams to actually use what you bought.',
     points: ['System configuration', 'Training enablement', 'Change management', 'Post-go-live support'],
-    image: '/images/adoption_bloom.png',
+    image: '/images/catalyst_spark.png',
   },
   {
     index: '03',
@@ -118,27 +118,29 @@ function ServiceSection({ service, index }: { service: typeof services[0], index
 
       <motion.div
         style={{ y, opacity }}
-        className="max-w-[1200px] mx-auto relative z-10 will-change-transform"
+        className="max-w-[1200px] mx-auto relative z-10 will-change-transform grid md:grid-cols-2 gap-12 items-center"
       >
-        <div className="flex items-baseline gap-6 mb-8">
-          <span className="text-accent font-mono text-sm">0{index + 1}</span>
-          <h2 className="text-3xl md:text-5xl font-medium tracking-tight">
-            {service.title}
-          </h2>
-        </div>
+        <div>
+          <div className="flex items-baseline gap-6 mb-8">
+            <span className="text-accent font-mono text-sm">0{index + 1}</span>
+            <h2 className="text-3xl md:text-5xl font-medium tracking-tight">
+              {service.title}
+            </h2>
+          </div>
 
-        <p className="text-xl md:text-2xl text-foreground/80 font-light mb-6 max-w-2xl">
-          {service.tagline}
-        </p>
+          <p className="text-xl md:text-2xl text-foreground/80 font-light mb-6">
+            {service.tagline}
+          </p>
 
-        <p className="text-lg text-muted-foreground leading-relaxed mb-10 max-w-2xl">
-          {service.desc}
-        </p>
+          <p className="text-lg text-muted-foreground leading-relaxed mb-10">
+            {service.desc}
+          </p>
 
-        <div className="flex flex-wrap gap-3">
-          {service.points.map((point, i) => (
-            <ServiceTag key={point} tag={point} index={i} />
-          ))}
+          <div className="flex flex-wrap gap-3">
+            {service.points.map((point, i) => (
+              <ServiceTag key={point} tag={point} index={i} />
+            ))}
+          </div>
         </div>
       </motion.div>
     </section>
