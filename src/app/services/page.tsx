@@ -3,6 +3,7 @@
 import { motion, useScroll, useTransform, useSpring, useInView } from 'framer-motion';
 import ScrollReveal from '@/components/ScrollReveal';
 import CharReveal from '@/components/CharReveal';
+import ParallaxImage from '@/components/ParallaxImage';
 import { useRef, useEffect } from 'react';
 
 const services = [
@@ -12,6 +13,7 @@ const services = [
     tagline: 'Stop doing manually what a computer should handle.',
     desc: 'I build LLM-powered automations and integrations for the repetitive work that eats up your day. Document generation, intake processing, client communications, referral tracking. If you do it the same way every time, it can be automated.',
     points: ['LLM document generation', 'Intake automation', 'API integrations', 'Template libraries'],
+    image: '/images/chaos-to-order.png',
   },
   {
     index: '02',
@@ -19,6 +21,7 @@ const services = [
     tagline: 'Get your team actually using the tools you paid for.',
     desc: 'Most software fails at adoption, not installation. I handle everything from evaluation through go-live: configuration, workflow adjustments, training, and the change management that gets teams to actually use what you bought.',
     points: ['System configuration', 'Training enablement', 'Change management', 'Post-go-live support'],
+    image: '/images/bridging.png',
   },
   {
     index: '03',
@@ -26,6 +29,7 @@ const services = [
     tagline: 'Figure out where time and money are leaking.',
     desc: 'I map out how your practice actually runs, find the bottlenecks, and fix them. Intake redesign, scheduling optimization, documentation workflows, referral pathways. Process improvement backed by operational experience.',
     points: ['Workflow mapping', 'Process optimization', 'SOPs and playbooks', 'Capacity planning'],
+    image: '/images/order.png',
   }
 ];
 
@@ -85,26 +89,33 @@ function ServiceSection({ service, index }: { service: typeof services[0], index
   const springConfig = { stiffness: 100, damping: 30 };
   const y = useSpring(useTransform(scrollYProgress, [0, 1], [80, 0]), springConfig);
   const opacity = useSpring(useTransform(scrollYProgress, [0, 0.4, 1], [0, 0.4, 1]), springConfig);
-  const lineHeight = useSpring(useTransform(scrollYProgress, [0, 1], [0, 100]), springConfig);
+  const imgY = useSpring(useTransform(scrollYProgress, [0, 1], [30, -30]), springConfig);
+  const imgOpacity = useSpring(useTransform(scrollYProgress, [0, 0.5, 1], [0, 0.15, 0.2]), springConfig);
+
+  const isEven = index % 2 === 0;
 
   return (
     <section
       ref={ref}
       className="py-24 md:py-32 px-6 lg:px-12 border-b border-white/5 last:border-b-0 relative overflow-hidden"
     >
-      {/* Subtle gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-accent/[0.02] via-transparent to-transparent pointer-events-none" />
+      {/* Background image with parallax */}
+      <motion.div
+        style={{ y: imgY, opacity: imgOpacity }}
+        className={`absolute inset-y-0 w-1/2 ${isEven ? 'right-0' : 'left-0'} pointer-events-none will-change-transform`}
+      >
+        <ParallaxImage
+          src={service.image}
+          alt={service.title}
+          className="w-full h-full"
+        />
+        <div className={`absolute inset-0 bg-gradient-to-${isEven ? 'r' : 'l'} from-background via-background/80 to-transparent`} />
+      </motion.div>
 
       <motion.div
         style={{ y, opacity }}
-        className="max-w-[1200px] mx-auto relative will-change-transform"
+        className="max-w-[1200px] mx-auto relative z-10 will-change-transform"
       >
-        {/* Animated vertical line */}
-        <motion.div
-          style={{ height: lineHeight }}
-          className="absolute -left-8 top-0 w-[2px] bg-gradient-to-b from-accent to-transparent"
-        />
-
         <div className="flex items-baseline gap-6 mb-8">
           <span className="text-accent font-mono text-sm">0{index + 1}</span>
           <h2 className="text-3xl md:text-5xl font-medium tracking-tight">
@@ -194,8 +205,15 @@ export default function Services() {
 
       {/* Hero */}
       <section ref={heroRef} className="pt-24 pb-20 md:pt-32 md:pb-28 px-6 lg:px-12 relative overflow-hidden">
-        {/* Subtle background gradient */}
-        <div className="absolute inset-0 bg-gradient-to-b from-accent/[0.03] via-transparent to-transparent pointer-events-none" />
+        {/* Background image */}
+        <motion.div style={{ y: heroY }} className="absolute inset-0 z-0 will-change-transform">
+          <ParallaxImage
+            src="/images/systems.png"
+            alt="Systems"
+            className="w-full h-full opacity-15"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-background via-background/70 to-background" />
+        </motion.div>
 
         <motion.div style={{ y: heroY }} className="max-w-[1200px] mx-auto relative z-10 will-change-transform">
           <ScrollReveal direction="up">
@@ -223,7 +241,15 @@ export default function Services() {
 
       {/* Tools Section */}
       <section ref={toolsRef} className="py-24 md:py-32 px-6 lg:px-12 border-t border-white/5 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-t from-accent/[0.02] via-transparent to-transparent pointer-events-none" />
+        {/* Background image */}
+        <div className="absolute inset-0 z-0">
+          <ParallaxImage
+            src="/images/glow.png"
+            alt="Glow"
+            className="w-full h-full opacity-10"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-background" />
+        </div>
 
         <div className="max-w-[1200px] mx-auto relative z-10">
           <motion.div

@@ -232,10 +232,20 @@ export default function About() {
       </section>
 
       {/* What I bring */}
-      <section ref={valuesRef} className="py-20 md:py-32 px-6 lg:px-12 border-b border-white/5 overflow-hidden">
+      <section ref={valuesRef} className="py-20 md:py-32 px-6 lg:px-12 border-b border-white/5 overflow-hidden relative">
+        {/* Background image */}
+        <div className="absolute inset-0 z-0">
+          <ParallaxImage
+            src="/images/customer-relations.png"
+            alt="Values"
+            className="w-full h-full opacity-10"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-background via-background/80 to-background" />
+        </div>
+
         <motion.div
           style={{ y: valuesY, opacity: valuesOpacity, scale: valuesScale }}
-          className="max-w-[900px] mx-auto will-change-transform"
+          className="max-w-[900px] mx-auto will-change-transform relative z-10"
         >
           <div className="grid md:grid-cols-2 gap-12 md:gap-16">
             <div className="group p-8 rounded-2xl border border-white/5 hover:border-accent/20 hover:bg-white/[0.01] transition-all duration-500">
@@ -257,8 +267,18 @@ export default function About() {
       </section>
 
       {/* Experience */}
-      <section className="py-20 md:py-32 px-6 lg:px-12">
-        <div className="max-w-[1000px] mx-auto">
+      <section className="py-20 md:py-32 px-6 lg:px-12 relative overflow-hidden">
+        {/* Background image */}
+        <div className="absolute inset-0 z-0">
+          <ParallaxImage
+            src="/images/backdrop.png"
+            alt="Experience"
+            className="w-full h-full opacity-8"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-background via-background/90 to-background" />
+        </div>
+
+        <div className="max-w-[1000px] mx-auto relative z-10">
           <ScrollReveal direction="up">
             <span className="block text-xs font-medium tracking-[0.3em] uppercase text-muted-foreground mb-6">Experience</span>
             <h2 className="text-3xl md:text-4xl font-medium tracking-tight mb-6">Work history.</h2>
@@ -280,7 +300,16 @@ export default function About() {
 
       {/* Resume CTA */}
       <section className="py-20 md:py-32 px-6 lg:px-12 border-t border-white/5 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-t from-accent/5 via-transparent to-transparent pointer-events-none" />
+        {/* Background image */}
+        <div className="absolute inset-0 z-0">
+          <ParallaxImage
+            src="/images/kh_section_divider_signal-to-system_02.png"
+            alt="Signal to system"
+            className="w-full h-full opacity-10"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/70 to-background" />
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-t from-accent/5 via-transparent to-transparent pointer-events-none z-[1]" />
         <div className="max-w-[900px] mx-auto text-center relative z-10">
           <ScrollReveal direction="up">
             <h2 className="text-2xl md:text-3xl font-medium tracking-tight mb-8">Want the full picture?</h2>

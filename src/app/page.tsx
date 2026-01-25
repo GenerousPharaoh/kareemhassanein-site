@@ -181,7 +181,16 @@ export default function Home() {
 
       {/* Statement Section */}
       <section ref={transitionRef} className="py-20 md:py-32 w-full relative overflow-hidden flex items-center justify-center bg-background">
-        <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-transparent pointer-events-none" />
+        {/* Background image */}
+        <div className="absolute inset-0 z-0">
+          <ParallaxImage
+            src="/images/image-2.png"
+            alt="Statement"
+            className="w-full h-full opacity-8"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-background via-background/80 to-background" />
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-transparent pointer-events-none z-[1]" />
 
         <motion.div
           style={{ y: statementY, opacity: statementOpacity, scale: statementScale }}
@@ -249,7 +258,17 @@ export default function Home() {
 
       {/* Selected Projects */}
       <section ref={portfolioRef} className="py-24 md:py-32 relative z-10 w-full px-6 md:px-12 overflow-hidden">
-        <div className="max-w-[1400px] mx-auto">
+        {/* Background image */}
+        <div className="absolute inset-0 z-0">
+          <ParallaxImage
+            src="/images/flow of organized transformation.png"
+            alt="Transformation"
+            className="w-full h-full opacity-8"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-background via-background/85 to-background" />
+        </div>
+
+        <div className="max-w-[1400px] mx-auto relative z-10">
           <motion.div
             style={{ y: portfolioY, opacity: portfolioOpacity }}
             className="mb-16 md:mb-20 will-change-transform"
