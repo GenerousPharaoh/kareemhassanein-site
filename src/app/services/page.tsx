@@ -98,7 +98,7 @@ function ServiceSection({ service, index }: { service: typeof services[0], index
   return (
     <section
       ref={ref}
-      className="py-24 md:py-32 px-6 lg:px-12 border-b border-white/5 last:border-b-0 relative overflow-hidden"
+      className="py-24 md:py-36 px-6 lg:px-12 xl:px-20 border-b border-white/5 last:border-b-0 relative overflow-hidden"
     >
       {/* Background image with enhanced parallax */}
       <motion.div
@@ -205,7 +205,7 @@ export default function Services() {
     <main className="relative bg-background text-foreground overflow-hidden pt-20">
 
       {/* Hero */}
-      <section ref={heroRef} className="pt-24 pb-20 md:pt-32 md:pb-28 px-6 lg:px-12 relative overflow-hidden">
+      <section ref={heroRef} className="pt-28 pb-20 md:pt-36 md:pb-28 px-6 lg:px-12 xl:px-20 relative overflow-hidden">
         {/* Background image */}
         <motion.div style={{ y: heroY }} className="absolute inset-0 z-0 will-change-transform">
           <ParallaxImage
@@ -241,7 +241,7 @@ export default function Services() {
       </div>
 
       {/* Tools Section */}
-      <section ref={toolsRef} className="py-24 md:py-32 px-6 lg:px-12 border-t border-white/5 relative overflow-hidden">
+      <section ref={toolsRef} className="py-24 md:py-36 px-6 lg:px-12 xl:px-20 border-t border-white/5 relative overflow-hidden">
         {/* Background image */}
         <div className="absolute inset-0 z-0">
           <ParallaxImage

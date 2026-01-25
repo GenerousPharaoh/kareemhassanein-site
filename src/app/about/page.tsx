@@ -134,7 +134,7 @@ export default function About() {
     <main className="bg-background text-foreground pt-20">
 
       {/* Hero */}
-      <section ref={heroRef} className="min-h-screen relative overflow-hidden px-6 lg:px-12 flex flex-col justify-center">
+      <section ref={heroRef} className="min-h-screen relative overflow-hidden px-6 lg:px-12 xl:px-20 flex flex-col justify-center">
 
         {/* Cinematic Background with Parallax */}
         <motion.div style={{ y: heroBgY }} className="absolute -inset-20 z-0 will-change-transform">
@@ -232,7 +232,7 @@ export default function About() {
       </section>
 
       {/* What I bring */}
-      <section ref={valuesRef} className="py-20 md:py-32 px-6 lg:px-12 border-b border-white/5 overflow-hidden relative">
+      <section ref={valuesRef} className="py-24 md:py-36 px-6 lg:px-12 xl:px-20 border-b border-white/5 overflow-hidden relative">
         {/* Background image - offset for asymmetric interest */}
         <div className="absolute inset-0 z-0">
           <div className="absolute -inset-x-20 inset-y-0 -top-20 -bottom-20">
@@ -269,7 +269,7 @@ export default function About() {
       </section>
 
       {/* Experience */}
-      <section className="py-20 md:py-32 px-6 lg:px-12 relative overflow-hidden">
+      <section className="py-24 md:py-36 px-6 lg:px-12 xl:px-20 relative overflow-hidden">
         {/* Background image - subtle left-positioned for visual depth */}
         <div className="absolute inset-0 z-0">
           <div className="absolute -left-1/4 inset-y-0 w-3/4">
@@ -303,7 +303,7 @@ export default function About() {
       </section>
 
       {/* Resume CTA */}
-      <section className="py-20 md:py-32 px-6 lg:px-12 border-t border-white/5 relative overflow-hidden">
+      <section className="py-24 md:py-36 px-6 lg:px-12 xl:px-20 border-t border-white/5 relative overflow-hidden">
         {/* Background image */}
         <div className="absolute inset-0 z-0">
           <ParallaxImage

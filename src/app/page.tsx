@@ -72,7 +72,7 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-background text-foreground overflow-hidden">
       {/* Hero Section */}
-      <section ref={heroRef} className="min-h-screen flex items-center justify-center relative px-6 md:px-12 pt-40 md:pt-32 bg-background">
+      <section ref={heroRef} className="min-h-screen flex items-center justify-center relative px-6 md:px-12 xl:px-20 pt-40 md:pt-32 bg-background">
 
         {/* Cinematic Background Layer - Simple Parallax */}
         <motion.div
@@ -139,7 +139,7 @@ export default function Home() {
               </div>
 
               {/* Metrics Row */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-4 max-w-3xl mx-auto">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-6 max-w-3xl mx-auto pt-4">
                 {metrics.map((m, i) => (
                   <motion.div
                     key={m.label}
@@ -158,7 +158,7 @@ export default function Home() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 1.8, ease: [0.16, 1, 0.3, 1] }}
-                className="flex gap-6 items-center justify-center pt-8"
+                className="flex gap-6 items-center justify-center pt-10"
               >
                 <Link
                   href="/contact"
@@ -228,7 +228,7 @@ export default function Home() {
           className="relative z-10 h-full flex items-center justify-center px-6"
         >
           <div className="max-w-4xl mx-auto">
-            <div className="grid md:grid-cols-3 gap-8 md:gap-12">
+            <div className="grid md:grid-cols-3 gap-10 md:gap-16">
               {approach.map((item, i) => (
                 <motion.div
                   key={item.title}
@@ -238,13 +238,13 @@ export default function Home() {
                   transition={{ duration: 0.6, delay: i * 0.15, ease: [0.16, 1, 0.3, 1] }}
                   className="text-center"
                 >
-                  <span className="text-6xl md:text-7xl font-light text-accent/20 block mb-2">
+                  <span className="text-6xl md:text-7xl font-light text-accent/30 block mb-3">
                     0{i + 1}
                   </span>
-                  <h3 className="text-2xl md:text-3xl font-medium tracking-tight mb-2">
+                  <h3 className="text-2xl md:text-3xl font-medium tracking-tight mb-3">
                     {item.title}
                   </h3>
-                  <p className="text-muted-foreground text-sm md:text-base">
+                  <p className="text-muted-foreground text-sm md:text-base leading-relaxed">
                     {item.desc}
                   </p>
                 </motion.div>
@@ -255,7 +255,7 @@ export default function Home() {
       </section>
 
       {/* Selected Projects */}
-      <section ref={portfolioRef} className="py-24 md:py-32 relative z-10 w-full px-6 md:px-12 overflow-hidden">
+      <section ref={portfolioRef} className="py-24 md:py-36 relative z-10 w-full px-6 md:px-12 xl:px-20 overflow-hidden">
         {/* Background image - positioned for visual interest */}
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 -right-1/4 top-0">
