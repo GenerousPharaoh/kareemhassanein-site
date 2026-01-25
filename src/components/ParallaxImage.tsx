@@ -10,9 +10,17 @@ interface ParallaxImageProps {
     className?: string;
     priority?: boolean;
     fadedSides?: boolean;
+    fadedVertical?: boolean;
 }
 
-export default function ParallaxImage({ src, alt, className = "", priority = false, fadedSides = false }: ParallaxImageProps) {
+export default function ParallaxImage({
+    src,
+    alt,
+    className = "",
+    priority = false,
+    fadedSides = false,
+    fadedVertical = false
+}: ParallaxImageProps) {
     const containerRef = useRef<HTMLDivElement>(null);
 
     const { scrollYProgress } = useScroll({
@@ -24,13 +32,25 @@ export default function ParallaxImage({ src, alt, className = "", priority = fal
     const y = useTransform(scrollYProgress, [0, 1], ["-3%", "3%"]);
     const smoothY = useSpring(y, { stiffness: 80, damping: 25 });
 
+    // Construct mask image based on props
+    let maskImage = '';
+
+    if (fadedSides && fadedVertical) {
+        // Radial mask for all-around fade
+        maskImage = 'radial-gradient(circle at center, black 40%, transparent 100%)';
+    } else if (fadedSides) {
+        maskImage = 'linear-gradient(to right, transparent, black 15%, black 85%, transparent)';
+    } else if (fadedVertical) {
+        maskImage = 'linear-gradient(to bottom, transparent, black 20%, black 80%, transparent)';
+    }
+
     return (
         <div
             ref={containerRef}
             className={`relative overflow-hidden ${className}`}
-            style={fadedSides ? {
-                maskImage: 'linear-gradient(to right, transparent, black 15%, black 85%, transparent)',
-                WebkitMaskImage: 'linear-gradient(to right, transparent, black 15%, black 85%, transparent)'
+            style={maskImage ? {
+                maskImage: maskImage,
+                WebkitMaskImage: maskImage
             } : undefined}
         >
             <motion.div
