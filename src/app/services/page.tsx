@@ -1,7 +1,9 @@
 'use client';
 
+import { motion, useScroll, useTransform, useSpring, useInView } from 'framer-motion';
 import ScrollReveal from '@/components/ScrollReveal';
 import CharReveal from '@/components/CharReveal';
+import { useRef, useEffect } from 'react';
 
 const services = [
   {
@@ -45,49 +47,157 @@ const technicalIndex = [
   }
 ];
 
-function ServiceSection({ service, index }: { service: typeof services[0], index: number }) {
+function ServiceTag({ tag, index }: { tag: string; index: number }) {
+  const springConfig = { stiffness: 120, damping: 20 };
+  const opacity = useSpring(0, springConfig);
+  const y = useSpring(15, springConfig);
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-50px" });
+
+  useEffect(() => {
+    if (isInView) {
+      const timer = setTimeout(() => {
+        opacity.set(1);
+        y.set(0);
+      }, 0.4 * 1000 + index * 80);
+      return () => clearTimeout(timer);
+    }
+  }, [isInView, index, opacity, y]);
+
   return (
-    <section className="py-20 md:py-28 px-6 lg:px-12 border-b border-white/5 last:border-b-0">
-      <div className="max-w-[1200px] mx-auto">
-        <ScrollReveal direction="up">
-          <div className="flex items-baseline gap-6 mb-8">
-            <span className="text-accent font-mono text-sm">0{index + 1}</span>
-            <h2 className="text-3xl md:text-5xl font-medium tracking-tight">
-              {service.title}
-            </h2>
-          </div>
+    <motion.span
+      ref={ref}
+      style={{ opacity, y }}
+      className="text-sm px-4 py-2 rounded-full border border-white/10 text-muted-foreground hover:border-accent/30 hover:text-accent transition-colors duration-500"
+    >
+      {tag}
+    </motion.span>
+  );
+}
 
-          <p className="text-xl md:text-2xl text-foreground/80 font-light mb-6 max-w-2xl">
-            {service.tagline}
-          </p>
+function ServiceSection({ service, index }: { service: typeof services[0], index: number }) {
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "center center"]
+  });
 
-          <p className="text-lg text-muted-foreground leading-relaxed mb-10 max-w-2xl">
-            {service.desc}
-          </p>
+  const springConfig = { stiffness: 100, damping: 30 };
+  const y = useSpring(useTransform(scrollYProgress, [0, 1], [80, 0]), springConfig);
+  const opacity = useSpring(useTransform(scrollYProgress, [0, 0.4, 1], [0, 0.4, 1]), springConfig);
+  const lineHeight = useSpring(useTransform(scrollYProgress, [0, 1], [0, 100]), springConfig);
 
-          <div className="flex flex-wrap gap-3">
-            {service.points.map((point) => (
-              <span
-                key={point}
-                className="text-sm px-4 py-2 rounded-full border border-white/10 text-muted-foreground"
-              >
-                {point}
-              </span>
-            ))}
-          </div>
-        </ScrollReveal>
-      </div>
+  return (
+    <section
+      ref={ref}
+      className="py-24 md:py-32 px-6 lg:px-12 border-b border-white/5 last:border-b-0 relative overflow-hidden"
+    >
+      {/* Subtle gradient background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-accent/[0.02] via-transparent to-transparent pointer-events-none" />
+
+      <motion.div
+        style={{ y, opacity }}
+        className="max-w-[1200px] mx-auto relative will-change-transform"
+      >
+        {/* Animated vertical line */}
+        <motion.div
+          style={{ height: lineHeight }}
+          className="absolute -left-8 top-0 w-[2px] bg-gradient-to-b from-accent to-transparent"
+        />
+
+        <div className="flex items-baseline gap-6 mb-8">
+          <span className="text-accent font-mono text-sm">0{index + 1}</span>
+          <h2 className="text-3xl md:text-5xl font-medium tracking-tight">
+            {service.title}
+          </h2>
+        </div>
+
+        <p className="text-xl md:text-2xl text-foreground/80 font-light mb-6 max-w-2xl">
+          {service.tagline}
+        </p>
+
+        <p className="text-lg text-muted-foreground leading-relaxed mb-10 max-w-2xl">
+          {service.desc}
+        </p>
+
+        <div className="flex flex-wrap gap-3">
+          {service.points.map((point, i) => (
+            <ServiceTag key={point} tag={point} index={i} />
+          ))}
+        </div>
+      </motion.div>
     </section>
   );
 }
 
+function ToolDomain({ domain }: { domain: typeof technicalIndex[0] }) {
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "center center"]
+  });
+
+  const springConfig = { stiffness: 100, damping: 30 };
+  const y = useSpring(useTransform(scrollYProgress, [0, 1], [50, 0]), springConfig);
+  const opacity = useSpring(useTransform(scrollYProgress, [0, 0.5, 1], [0, 0.5, 1]), springConfig);
+
+  return (
+    <motion.div
+      ref={ref}
+      style={{ y, opacity }}
+      className="pb-12 border-b border-white/5 last:border-b-0 last:pb-0 relative will-change-transform"
+    >
+      <h3 className="text-sm font-medium text-accent mb-6">
+        {domain.domain}
+      </h3>
+      <div className="flex flex-wrap gap-x-6 gap-y-2 mb-6">
+        {domain.tools.map((tool, i) => (
+          <span key={tool} className="text-lg md:text-xl font-light text-foreground">
+            {tool}
+            {i < domain.tools.length - 1 && <span className="text-white/20 ml-6">·</span>}
+          </span>
+        ))}
+      </div>
+      <div className="flex flex-wrap gap-2">
+        {domain.specs.map(spec => (
+          <span key={spec} className="text-xs px-3 py-1 rounded-full bg-white/5 text-muted-foreground hover:bg-accent/10 hover:text-accent transition-colors duration-300">
+            {spec}
+          </span>
+        ))}
+      </div>
+    </motion.div>
+  );
+}
+
 export default function Services() {
+  const heroRef = useRef(null);
+  const toolsRef = useRef(null);
+
+  // Hero parallax
+  const { scrollYProgress: heroProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"]
+  });
+  const springConfig = { stiffness: 100, damping: 30 };
+  const heroY = useSpring(useTransform(heroProgress, [0, 1], [0, 60]), springConfig);
+
+  // Tools section
+  const { scrollYProgress: toolsProgress } = useScroll({
+    target: toolsRef,
+    offset: ["start end", "start 0.4"]
+  });
+  const toolsY = useSpring(useTransform(toolsProgress, [0, 1], [100, 0]), springConfig);
+  const toolsOpacity = useSpring(useTransform(toolsProgress, [0, 0.5, 1], [0, 0.5, 1]), springConfig);
+
   return (
     <main className="relative bg-background text-foreground overflow-hidden pt-20">
 
       {/* Hero */}
-      <section className="pt-24 pb-20 md:pt-32 md:pb-28 px-6 lg:px-12">
-        <div className="max-w-[1200px] mx-auto">
+      <section ref={heroRef} className="pt-24 pb-20 md:pt-32 md:pb-28 px-6 lg:px-12 relative overflow-hidden">
+        {/* Subtle background gradient */}
+        <div className="absolute inset-0 bg-gradient-to-b from-accent/[0.03] via-transparent to-transparent pointer-events-none" />
+
+        <motion.div style={{ y: heroY }} className="max-w-[1200px] mx-auto relative z-10 will-change-transform">
           <ScrollReveal direction="up">
             <span className="block text-xs font-medium tracking-[0.3em] uppercase text-muted-foreground mb-6">Services</span>
             <h1 className="text-4xl md:text-6xl font-medium tracking-tight mb-8">
@@ -97,7 +207,7 @@ export default function Services() {
               Operations improvement, workflow automation, and technology implementation for healthcare practices and professional services firms.
             </p>
           </ScrollReveal>
-        </div>
+        </motion.div>
       </section>
 
       {/* Services List */}
@@ -112,36 +222,24 @@ export default function Services() {
       </div>
 
       {/* Tools Section */}
-      <section className="py-20 md:py-28 px-6 lg:px-12 border-t border-white/5">
-        <div className="max-w-[1200px] mx-auto">
-          <ScrollReveal direction="up">
+      <section ref={toolsRef} className="py-24 md:py-32 px-6 lg:px-12 border-t border-white/5 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-t from-accent/[0.02] via-transparent to-transparent pointer-events-none" />
+
+        <div className="max-w-[1200px] mx-auto relative z-10">
+          <motion.div
+            style={{ y: toolsY, opacity: toolsOpacity }}
+            className="mb-16 will-change-transform"
+          >
             <span className="block text-xs font-medium tracking-[0.3em] uppercase text-muted-foreground mb-6">Tools</span>
-            <h2 className="text-3xl md:text-5xl font-medium tracking-tight mb-16">
+            <h2 className="text-3xl md:text-5xl font-medium tracking-tight">
               What I use.
             </h2>
-          </ScrollReveal>
+            <div className="h-[2px] bg-gradient-to-r from-accent to-transparent mt-6 max-w-xs" />
+          </motion.div>
 
-          <div className="space-y-12">
+          <div className="space-y-16">
             {technicalIndex.map((row) => (
-              <div key={row.domain} className="pb-12 border-b border-white/5 last:border-b-0 last:pb-0">
-                <h3 className="text-sm font-medium text-accent mb-6">
-                  {row.domain}
-                </h3>
-                <div className="flex flex-wrap gap-3 mb-6">
-                  {row.tools.map(tool => (
-                    <span key={tool} className="text-lg md:text-xl font-light text-foreground">
-                      {tool}
-                    </span>
-                  ))}
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {row.specs.map(spec => (
-                    <span key={spec} className="text-xs px-3 py-1 rounded-full bg-white/5 text-muted-foreground">
-                      {spec}
-                    </span>
-                  ))}
-                </div>
-              </div>
+              <ToolDomain key={row.domain} domain={row} />
             ))}
           </div>
         </div>

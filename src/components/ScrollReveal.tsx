@@ -1,7 +1,7 @@
 'use client';
 
-import { motion, useInView } from 'framer-motion';
-import { useRef, ReactNode } from 'react';
+import { motion, useInView, useSpring } from 'framer-motion';
+import { useRef, ReactNode, useEffect } from 'react';
 
 interface ScrollRevealProps {
     children: ReactNode;
@@ -23,56 +23,51 @@ interface ScrollRevealProps {
 export default function ScrollReveal({
     children,
     direction = 'up',
-    distance = 25,
-    duration = 0.6,
+    distance = 30,
     delay = 0,
-    blur = 0, // Disabled by default for performance
     className = '',
     style = {},
-    staggerChildren = 0,
-    viewport = { once: true, margin: "0px 0px -50px 0px", amount: 0.1 }
+    viewport = { once: true, margin: "0px 0px -80px 0px", amount: 0.1 }
 }: ScrollRevealProps) {
     const ref = useRef<HTMLDivElement>(null);
-    // @ts-expect-error - Frame motion margin type is strict but string is valid at runtime
+    // @ts-expect-error - Framer motion margin type is strict but string is valid at runtime
     const isInView = useInView(ref, viewport);
 
-    const x = direction === 'left' ? -distance : direction === 'right' ? distance : 0;
-    const y = direction === 'up' ? distance : direction === 'down' ? -distance : 0;
+    // Spring config for smooth, fluid animations
+    const springConfig = { stiffness: 100, damping: 25 };
 
-    const variants = {
-        hidden: {
-            opacity: 0,
-            x: x,
-            y: y,
-            ...(blur > 0 && { filter: `blur(${blur}px)` }),
-        },
-        visible: {
-            opacity: 1,
-            x: 0,
-            y: 0,
-            ...(blur > 0 && { filter: 'blur(0px)' }),
-            transition: {
-                duration,
-                delay,
-                ease: [0.16, 1, 0.3, 1] as [number, number, number, number],
-                staggerChildren: staggerChildren,
-                staggerDirection: 1,
-            }
+    // Calculate initial values based on direction
+    const initialX = direction === 'left' ? -distance : direction === 'right' ? distance : 0;
+    const initialY = direction === 'up' ? distance : direction === 'down' ? -distance : 0;
+
+    // Spring-based motion values
+    const opacity = useSpring(0, springConfig);
+    const x = useSpring(initialX, springConfig);
+    const y = useSpring(initialY, springConfig);
+
+    // Trigger animation when in view
+    useEffect(() => {
+        if (isInView) {
+            const timer = setTimeout(() => {
+                opacity.set(1);
+                x.set(0);
+                y.set(0);
+            }, delay * 1000);
+            return () => clearTimeout(timer);
         }
-    };
+    }, [isInView, delay, opacity, x, y]);
 
     return (
         <motion.div
             ref={ref}
-            initial="hidden"
-            animate={isInView ? "visible" : "hidden"}
-            variants={variants}
-            className={className}
             style={{
                 ...style,
+                opacity,
+                x,
+                y,
                 willChange: 'transform, opacity',
-                backfaceVisibility: 'hidden',
             }}
+            className={className}
         >
             {children}
         </motion.div>

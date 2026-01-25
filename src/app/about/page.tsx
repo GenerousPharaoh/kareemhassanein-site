@@ -1,9 +1,11 @@
 'use client';
 
+import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import { Download } from 'lucide-react';
 import ScrollReveal from '@/components/ScrollReveal';
 import CharReveal from '@/components/CharReveal';
 import ParallaxImage from '@/components/ParallaxImage';
+import { useRef } from 'react';
 
 const experience = [
   {
@@ -32,24 +34,82 @@ const experience = [
   }
 ];
 
+function ExperienceItem({ item, index }: { item: typeof experience[0]; index: number }) {
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "center center"]
+  });
+
+  const springConfig = { stiffness: 100, damping: 30 };
+  const y = useSpring(useTransform(scrollYProgress, [0, 1], [60, 0]), springConfig);
+  const opacity = useSpring(useTransform(scrollYProgress, [0, 0.5, 1], [0, 0.5, 1]), springConfig);
+  const lineWidth = useSpring(useTransform(scrollYProgress, [0, 1], [0, 100]), springConfig);
+
+  return (
+    <motion.div
+      ref={ref}
+      style={{ y, opacity }}
+      className="pb-12 border-b border-white/5 last:border-b-0 last:pb-0 relative"
+    >
+      {/* Animated accent line */}
+      <motion.div
+        style={{ width: lineWidth }}
+        className="absolute -left-6 top-3 h-[2px] bg-gradient-to-r from-accent to-transparent"
+      />
+
+      <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1 mb-4">
+        <span className="text-accent font-mono text-sm opacity-60">0{index + 1}</span>
+        <h3 className="text-xl md:text-2xl font-medium">{item.role}</h3>
+        <span className="text-muted-foreground">at {item.company}</span>
+        <span className="text-sm text-muted-foreground/60">{item.period}</span>
+      </div>
+      <p className="text-muted-foreground leading-relaxed max-w-2xl pl-8">
+        {item.desc}
+      </p>
+    </motion.div>
+  );
+}
+
 export default function About() {
+  const heroRef = useRef(null);
+  const valuesRef = useRef(null);
+
+  // Hero parallax
+  const { scrollYProgress: heroProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"]
+  });
+  const springConfig = { stiffness: 100, damping: 30 };
+  const heroBgY = useSpring(useTransform(heroProgress, [0, 1], [0, 150]), springConfig);
+  const heroTextY = useSpring(useTransform(heroProgress, [0, 1], [0, 50]), springConfig);
+
+  // Values section parallax
+  const { scrollYProgress: valuesProgress } = useScroll({
+    target: valuesRef,
+    offset: ["start end", "center center"]
+  });
+  const valuesY = useSpring(useTransform(valuesProgress, [0, 1], [80, 0]), springConfig);
+  const valuesOpacity = useSpring(useTransform(valuesProgress, [0, 0.5, 1], [0, 0.5, 1]), springConfig);
+  const valuesScale = useSpring(useTransform(valuesProgress, [0, 1], [0.95, 1]), springConfig);
+
   return (
     <main className="bg-background text-foreground pt-20">
 
       {/* Hero */}
-      <section className="min-h-[70vh] flex items-center relative border-b border-white/5 overflow-hidden px-6 lg:px-12">
+      <section ref={heroRef} className="min-h-[80vh] flex items-center relative border-b border-white/5 overflow-hidden px-6 lg:px-12">
 
-        {/* Cinematic Background */}
-        <div className="absolute inset-0 z-0">
+        {/* Cinematic Background with Parallax */}
+        <motion.div style={{ y: heroBgY }} className="absolute inset-0 z-0 will-change-transform">
           <ParallaxImage
             src="/images/digital-cathedral.png"
             alt="Architecture"
             className="w-full h-full opacity-20"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background" />
-        </div>
+        </motion.div>
 
-        <div className="max-w-[900px] mx-auto relative z-10 py-32">
+        <motion.div style={{ y: heroTextY }} className="max-w-[900px] mx-auto relative z-10 py-32 will-change-transform">
           <ScrollReveal direction="up">
             <span className="block text-xs font-medium tracking-[0.3em] uppercase text-muted-foreground mb-6">Background</span>
             <h1 className="text-5xl md:text-7xl font-medium tracking-tight mb-10">
@@ -70,63 +130,56 @@ export default function About() {
               </p>
             </div>
           </ScrollReveal>
-        </div>
+        </motion.div>
       </section>
 
       {/* What I bring */}
-      <section className="py-16 md:py-24 px-6 lg:px-12 border-b border-white/5">
-        <div className="max-w-[900px] mx-auto">
-          <ScrollReveal direction="up">
-            <div className="grid md:grid-cols-2 gap-12 md:gap-16">
-              <div>
-                <h2 className="text-sm font-medium text-accent mb-4">Why it matters</h2>
-                <h3 className="text-2xl md:text-3xl font-medium tracking-tight mb-4">Operational experience.</h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  8,000+ hours of client-facing delivery. I know what it feels like when systems fight you instead of helping. That shapes how I map workflows, configure tools, and design automations that actually fit into real work.
-                </p>
-              </div>
-              <div>
-                <h2 className="text-sm font-medium text-accent mb-4">How I work</h2>
-                <h3 className="text-2xl md:text-3xl font-medium tracking-tight mb-4">I build things.</h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  I don&apos;t write reports and leave. I build the automation, configure the system, write the SOPs, train the team, and stick around for post-go-live support. When I&apos;m done, people are actually using it.
-                </p>
-              </div>
+      <section ref={valuesRef} className="py-20 md:py-32 px-6 lg:px-12 border-b border-white/5 overflow-hidden">
+        <motion.div
+          style={{ y: valuesY, opacity: valuesOpacity, scale: valuesScale }}
+          className="max-w-[900px] mx-auto will-change-transform"
+        >
+          <div className="grid md:grid-cols-2 gap-16 md:gap-20">
+            <div className="relative">
+              <motion.div className="absolute -left-4 top-0 w-[2px] h-full bg-gradient-to-b from-accent via-accent/20 to-transparent" />
+              <h2 className="text-sm font-medium text-accent mb-4">Why it matters</h2>
+              <h3 className="text-2xl md:text-3xl font-medium tracking-tight mb-4">Operational experience.</h3>
+              <p className="text-muted-foreground leading-relaxed">
+                8,000+ hours of client-facing delivery. I know what it feels like when systems fight you instead of helping. That shapes how I map workflows, configure tools, and design automations that actually fit into real work.
+              </p>
             </div>
-          </ScrollReveal>
-        </div>
+            <div className="relative">
+              <motion.div className="absolute -left-4 top-0 w-[2px] h-full bg-gradient-to-b from-accent via-accent/20 to-transparent" />
+              <h2 className="text-sm font-medium text-accent mb-4">How I work</h2>
+              <h3 className="text-2xl md:text-3xl font-medium tracking-tight mb-4">I build things.</h3>
+              <p className="text-muted-foreground leading-relaxed">
+                I don&apos;t write reports and leave. I build the automation, configure the system, write the SOPs, train the team, and stick around for post-go-live support. When I&apos;m done, people are actually using it.
+              </p>
+            </div>
+          </div>
+        </motion.div>
       </section>
 
       {/* Experience */}
-      <section className="py-16 md:py-24 px-6 lg:px-12">
+      <section className="py-20 md:py-32 px-6 lg:px-12">
         <div className="max-w-[900px] mx-auto">
           <ScrollReveal direction="up">
             <span className="block text-xs font-medium tracking-[0.3em] uppercase text-muted-foreground mb-6">Experience</span>
-            <h2 className="text-3xl md:text-4xl font-medium tracking-tight mb-12">Work history.</h2>
+            <h2 className="text-3xl md:text-4xl font-medium tracking-tight mb-16">Work history.</h2>
           </ScrollReveal>
 
-          <div className="space-y-12">
+          <div className="space-y-16">
             {experience.map((item, i) => (
-              <ScrollReveal key={item.role} direction="up" delay={i * 0.1}>
-                <div className="pb-12 border-b border-white/5 last:border-b-0 last:pb-0">
-                  <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1 mb-4">
-                    <h3 className="text-xl md:text-2xl font-medium">{item.role}</h3>
-                    <span className="text-muted-foreground">at {item.company}</span>
-                    <span className="text-sm text-muted-foreground/60">{item.period}</span>
-                  </div>
-                  <p className="text-muted-foreground leading-relaxed max-w-2xl">
-                    {item.desc}
-                  </p>
-                </div>
-              </ScrollReveal>
+              <ExperienceItem key={item.role} item={item} index={i} />
             ))}
           </div>
         </div>
       </section>
 
       {/* Resume CTA */}
-      <section className="py-16 md:py-24 px-6 lg:px-12 border-t border-white/5">
-        <div className="max-w-[900px] mx-auto text-center">
+      <section className="py-20 md:py-32 px-6 lg:px-12 border-t border-white/5 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-t from-accent/5 via-transparent to-transparent pointer-events-none" />
+        <div className="max-w-[900px] mx-auto text-center relative z-10">
           <ScrollReveal direction="up">
             <h2 className="text-2xl md:text-3xl font-medium tracking-tight mb-8">Want the full picture?</h2>
             <a
