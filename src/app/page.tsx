@@ -1,8 +1,7 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
-import ScrollReveal from '@/components/ScrollReveal';
 import TextReveal from '@/components/TextReveal';
 import ProjectList from '@/components/ProjectList';
 import ParallaxImage from '@/components/ParallaxImage';
@@ -18,6 +17,27 @@ const metrics = [
 
 export default function Home() {
   const transitionRef = useRef(null);
+  const portfolioRef = useRef(null);
+
+  const { scrollYProgress: portfolioProgress } = useScroll({
+    target: portfolioRef,
+    offset: ["start end", "start 0.3"]
+  });
+
+  const portfolioY = useTransform(portfolioProgress, [0, 1], [100, 0]);
+  const portfolioOpacity = useTransform(portfolioProgress, [0, 0.5, 1], [0, 0.5, 1]);
+  const portfolioScale = useTransform(portfolioProgress, [0, 1], [0.9, 1]);
+  const labelX = useTransform(portfolioProgress, [0, 1], [-50, 0]);
+
+  // Statement section scroll animations
+  const { scrollYProgress: statementProgress } = useScroll({
+    target: transitionRef,
+    offset: ["start end", "center center"]
+  });
+
+  const statementY = useTransform(statementProgress, [0, 1], [60, 0]);
+  const statementOpacity = useTransform(statementProgress, [0, 0.3, 1], [0, 0.3, 1]);
+  const statementScale = useTransform(statementProgress, [0, 1], [0.95, 1]);
 
   return (
     <main className="min-h-screen bg-background text-foreground overflow-hidden">
@@ -111,27 +131,36 @@ export default function Home() {
       <section ref={transitionRef} className="py-32 md:py-48 w-full relative overflow-hidden flex items-center justify-center">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/[0.02] to-transparent pointer-events-none" />
 
-        <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
-          <ScrollReveal direction="up">
-            <h2 className="text-3xl md:text-5xl lg:text-6xl font-medium tracking-tight leading-[1.2] mb-6">
-              The problem isn&apos;t the software.
-            </h2>
-            <p className="text-xl md:text-2xl font-light text-muted-foreground max-w-2xl mx-auto">
-              It&apos;s how it fits into the way people already work.
-            </p>
-          </ScrollReveal>
-        </div>
+        <motion.div
+          style={{ y: statementY, opacity: statementOpacity, scale: statementScale }}
+          className="relative z-10 text-center px-6 max-w-4xl mx-auto"
+        >
+          <h2 className="text-3xl md:text-5xl lg:text-6xl font-medium tracking-tight leading-[1.2] mb-6">
+            The problem isn&apos;t the software.
+          </h2>
+          <p className="text-xl md:text-2xl font-light text-muted-foreground max-w-2xl mx-auto">
+            It&apos;s how it fits into the way people already work.
+          </p>
+        </motion.div>
       </section>
 
       {/* Selected Projects */}
-      <section className="py-24 md:py-32 relative z-10 w-full px-6 md:px-12">
+      <section ref={portfolioRef} className="py-24 md:py-32 relative z-10 w-full px-6 md:px-12 overflow-hidden">
         <div className="max-w-[1400px] mx-auto">
-          <ScrollReveal direction="up" distance={40} blur={20}>
-            <div className="mb-16 md:mb-20">
-              <span className="text-xs font-medium tracking-[0.3em] uppercase text-muted-foreground mb-4 block">Portfolio</span>
-              <h2 className="text-3xl md:text-5xl font-medium tracking-tight">Recent Work</h2>
-            </div>
-          </ScrollReveal>
+          <div className="mb-16 md:mb-20">
+            <motion.span
+              style={{ x: labelX, opacity: portfolioOpacity }}
+              className="text-xs font-medium tracking-[0.3em] uppercase text-muted-foreground mb-4 block"
+            >
+              Portfolio
+            </motion.span>
+            <motion.h2
+              style={{ y: portfolioY, opacity: portfolioOpacity, scale: portfolioScale }}
+              className="text-3xl md:text-5xl font-medium tracking-tight origin-left"
+            >
+              Recent Work
+            </motion.h2>
+          </div>
 
           <ProjectList />
         </div>
