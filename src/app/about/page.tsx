@@ -3,7 +3,6 @@
 import { motion, useScroll, useTransform, useSpring, useInView } from 'framer-motion';
 import { Download } from 'lucide-react';
 import ScrollReveal from '@/components/ScrollReveal';
-import CharReveal from '@/components/CharReveal';
 import ParallaxImage from '@/components/ParallaxImage';
 import { useRef, useEffect } from 'react';
 
@@ -150,20 +149,23 @@ export default function About() {
         <motion.div style={{ y: heroTextY }} className="max-w-[1200px] mx-auto relative z-10 py-32 will-change-transform">
           {/* Title */}
           <div className="mb-12 md:mb-20">
-            <AnimatedBlock delay={0} className="overflow-hidden">
-              <span className="block text-xs font-medium tracking-[0.4em] uppercase text-accent/70 mb-6">About</span>
-            </AnimatedBlock>
+            <motion.span
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 0.5, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+              className="block text-xs font-medium tracking-[0.4em] uppercase text-muted-foreground mb-6"
+            >
+              About
+            </motion.span>
 
-            <div className="overflow-hidden">
-              <motion.h1
-                initial={{ y: 60, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-                className="text-4xl md:text-6xl lg:text-7xl font-medium tracking-tight leading-[1.1]"
-              >
-                The <CharReveal delay={0.5} className="text-accent italic font-serif">background.</CharReveal>
-              </motion.h1>
-            </div>
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+              className="text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight"
+            >
+              Kareem Hassanein
+            </motion.h1>
           </div>
 
           {/* Story grid - alternating layout */}
