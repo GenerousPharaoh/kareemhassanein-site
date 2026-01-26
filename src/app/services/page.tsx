@@ -96,17 +96,19 @@ function ServiceSection({ service, index }: { service: typeof services[0], index
   return (
     <section
       ref={ref}
-      className="py-28 md:py-40 px-6 lg:px-12 xl:px-20 relative"
+      className="py-28 md:py-40 px-6 lg:px-12 xl:px-20 relative overflow-hidden"
     >
-      {/* Background image - contained on the right, subtle */}
+      {/* Background image - clipped to section with fade */}
       <motion.div
         style={{ y: imgY, scale: imgScale }}
-        className="absolute inset-y-0 w-2/3 right-0 pointer-events-none will-change-transform opacity-25"
+        className="absolute inset-y-0 w-2/3 right-0 pointer-events-none will-change-transform"
       >
         <ParallaxImage
           src={service.image}
           alt={service.title}
-          className="w-full h-full"
+          className="w-full h-full opacity-40"
+          fadedSides={true}
+          fadedVertical={true}
         />
       </motion.div>
 
@@ -204,13 +206,14 @@ export default function Services() {
     <main className="relative bg-background text-foreground overflow-hidden pt-20">
 
       {/* Hero */}
-      <section ref={heroRef} className="pt-28 pb-32 md:pt-36 md:pb-40 px-6 lg:px-12 xl:px-20 relative">
-        {/* Background image - contained, subtle */}
+      <section ref={heroRef} className="pt-28 pb-32 md:pt-36 md:pb-40 px-6 lg:px-12 xl:px-20 relative overflow-hidden">
+        {/* Background image - contained with fade */}
         <motion.div style={{ y: heroY }} className="absolute inset-0 z-0 will-change-transform">
           <ParallaxImage
             src="/images/mapping.png"
             alt="Mapping"
-            className="w-full h-full opacity-25"
+            className="w-full h-full opacity-40"
+            fadedVertical={true}
           />
         </motion.div>
 
@@ -239,13 +242,15 @@ export default function Services() {
       </div>
 
       {/* Tools Section */}
-      <section ref={toolsRef} className="py-28 md:py-40 px-6 lg:px-12 xl:px-20 relative">
-        {/* Background image - contained, subtle */}
+      <section ref={toolsRef} className="py-28 md:py-40 px-6 lg:px-12 xl:px-20 relative overflow-hidden">
+        {/* Background image - clipped to section with fade */}
         <div className="absolute inset-0 z-0">
           <ParallaxImage
             src="/images/kh_section_divider_signal-to-system_02.png"
             alt="Signal to System"
-            className="w-full h-full opacity-20"
+            className="w-full h-full opacity-35"
+            fadedVertical={true}
+            fadedSides={true}
           />
         </div>
 
