@@ -46,7 +46,7 @@ const jsonLd = {
   name: "Kareem Hassanein",
   jobTitle: "Implementation Consultant",
   description: "Operations improvement, workflow automation, and technology implementation for healthcare practices and professional services firms.",
-  url: "https://kareemhassanein.com",
+  url: "https://khassanein.bio",
   sameAs: [
     "https://linkedin.com/in/kareemhassanein",
   ],
