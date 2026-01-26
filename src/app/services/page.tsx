@@ -249,8 +249,8 @@ export default function Services() {
         {/* Background image */}
         <div className="absolute inset-0 z-0">
           <ParallaxImage
-            src="/images/glow.png"
-            alt="Glow"
+            src="/images/kh_section_divider_signal-to-system_02.png"
+            alt="Signal to System"
             className="w-full h-full opacity-30"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-background" />
