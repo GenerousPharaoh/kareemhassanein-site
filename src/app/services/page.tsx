@@ -21,7 +21,7 @@ const services = [
     tagline: 'Get your team actually using the tools you paid for.',
     desc: 'I handle the full lifecycle from evaluation through sustained use. Mapping existing workflows, configuring the system to match them, training teams, and staying through post-go-live until things are actually working.',
     points: ['System configuration', 'Training enablement', 'Change management', 'Post-go-live support'],
-    image: '/images/catalyst_spark.png',
+    image: '/images/time-gears.png',
   },
   {
     index: '03',
