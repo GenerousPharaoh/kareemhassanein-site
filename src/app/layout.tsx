@@ -40,6 +40,44 @@ export const metadata: Metadata = {
   },
 };
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Kareem Hassanein",
+  jobTitle: "Implementation Consultant",
+  description: "Operations improvement, workflow automation, and technology implementation for healthcare practices and professional services firms.",
+  url: "https://kareemhassanein.com",
+  sameAs: [
+    "https://linkedin.com/in/kareemhassanein",
+  ],
+  knowsAbout: [
+    "Workflow Automation",
+    "Operations Improvement",
+    "Technology Implementation",
+    "Healthcare Operations",
+    "Change Management",
+    "AI Implementation"
+  ],
+  alumniOf: [
+    {
+      "@type": "CollegeOrUniversity",
+      name: "Robert Gordon University",
+      description: "MSc Physiotherapy"
+    },
+    {
+      "@type": "CollegeOrUniversity",
+      name: "McMaster University",
+      description: "BSc Kinesiology"
+    }
+  ],
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Burlington",
+    addressRegion: "Ontario",
+    addressCountry: "Canada"
+  }
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -47,6 +85,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="scroll-smooth">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} antialiased font-sans`}
       >
