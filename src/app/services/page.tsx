@@ -213,8 +213,8 @@ export default function Services() {
         {/* Background image */}
         <motion.div style={{ y: heroY }} className="absolute inset-0 z-0 will-change-transform">
           <ParallaxImage
-            src="/images/systems.png"
-            alt="Systems"
+            src="/images/mapping.png"
+            alt="Mapping"
             className="w-full h-full opacity-35"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-background via-background/40 to-background" />
