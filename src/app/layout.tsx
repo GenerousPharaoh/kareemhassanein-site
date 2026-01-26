@@ -48,7 +48,7 @@ const jsonLd = {
   description: "Operations improvement, workflow automation, and technology implementation for healthcare practices and professional services firms.",
   url: "https://khassanein.bio",
   sameAs: [
-    "https://linkedin.com/in/kareemhassanein",
+    "https://www.linkedin.com/in/kareem-hassanein-physiotherapy/",
   ],
   knowsAbout: [
     "Workflow Automation",
