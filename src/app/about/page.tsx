@@ -240,61 +240,37 @@ export default function About() {
             </motion.p>
           </div>
 
-          {/* Story grid - alternating layout */}
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20">
-            {/* Left column - The beginning */}
-            <div className="space-y-8">
+          {/* Story layout - Asymmetrical grid */}
+          <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-12 lg:gap-24 items-start">
+            {/* Left column - The beginning & core journey */}
+            <div className="space-y-16 md:space-y-20 relative">
+              {/* Vertical accent line */}
+              <div className="absolute -left-6 lg:-left-12 top-2 bottom-2 w-[1px] bg-gradient-to-b from-accent/40 via-accent/10 to-transparent" />
+
               <AnimatedBlock delay={0.5} direction="up">
-                <div className="flex items-center gap-4 mb-4">
-                  <span className="text-7xl font-light text-white/[0.03]">01</span>
-                  <div className="h-[1px] flex-1 bg-gradient-to-r from-accent/30 to-transparent" />
-                </div>
-                <div className="overflow-hidden">
-                  <motion.p
-                    initial={{ y: "100%", opacity: 0 }}
-                    whileInView={{ y: 0, opacity: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 1.2, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                    className="text-lg md:text-xl text-muted-foreground leading-relaxed"
-                  >
-                    I spent years as a physiotherapist. MSc from Robert Gordon, 6,000+ patient sessions, top revenue generator at a busy clinic for three consecutive years. Former semi-professional soccer player in Scotland and Canada.
-                  </motion.p>
-                </div>
+                <p className="text-xl md:text-2xl text-foreground/90 leading-relaxed font-light tracking-tight">
+                  I spent years as a physiotherapist. MSc from Robert Gordon, 6,000+ patient sessions, top revenue generator at a busy clinic for three consecutive years. Former semi-professional soccer player in Scotland and Canada.
+                </p>
               </AnimatedBlock>
 
-              <AnimatedBlock delay={0.7} direction="up">
-                <div className="flex items-center gap-4 mb-4">
-                  <span className="text-7xl font-light text-white/[0.03]">02</span>
-                  <div className="h-[1px] flex-1 bg-gradient-to-r from-accent/30 to-transparent" />
-                </div>
-                <div className="overflow-hidden">
-                  <motion.p
-                    initial={{ y: "100%", opacity: 0 }}
-                    whileInView={{ y: 0, opacity: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 1.2, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
-                    className="text-lg md:text-xl text-muted-foreground leading-relaxed"
-                  >
-                    But I kept getting pulled into the operational side. Why is the booking system losing referrals? Why are clinicians spending three hours a day on documentation? Why did we buy this software if nobody uses it?
-                  </motion.p>
-                </div>
+              <AnimatedBlock delay={0.7} direction="up" className="lg:pl-12">
+                <p className="text-lg md:text-xl text-muted-foreground leading-relaxed font-light">
+                  But I kept getting pulled into the operational side. Why is the booking system losing referrals? Why are clinicians spending three hours a day on documentation? Why did we buy this software if nobody uses it?
+                </p>
               </AnimatedBlock>
             </div>
 
-            {/* Right column - The transition */}
-            <div className="space-y-8 lg:pt-24">
+            {/* Right column - The transition & mission */}
+            <div className="space-y-12 lg:pt-32">
               <AnimatedBlock delay={0.9} direction="up">
-                <div className="flex items-center gap-4 mb-4">
-                  <span className="text-7xl font-light text-white/[0.03]">03</span>
-                  <div className="h-[1px] flex-1 bg-gradient-to-r from-accent/30 to-transparent" />
-                </div>
+                <div className="h-[1px] w-12 bg-accent/40 mb-8" />
                 <div className="overflow-hidden">
                   <motion.p
                     initial={{ y: "100%", opacity: 0 }}
                     whileInView={{ y: 0, opacity: 1 }}
                     viewport={{ once: true }}
                     transition={{ duration: 1.2, delay: 0.9, ease: [0.16, 1, 0.3, 1] }}
-                    className="text-lg md:text-xl text-muted-foreground leading-relaxed"
+                    className="text-lg md:text-xl text-muted-foreground leading-relaxed font-light"
                   >
                     So I started fixing those problems. Led an AI documentation rollout that hit 100% adoption in 8 weeks. Built web applications. Created automation systems that cut document generation time by 85%.
                   </motion.p>
@@ -302,8 +278,9 @@ export default function About() {
               </AnimatedBlock>
 
               <AnimatedBlock delay={1.1} direction="up">
-                <div className="p-8 rounded-2xl border border-accent/20 bg-accent/[0.03]">
-                  <p className="text-xl md:text-2xl text-foreground font-medium leading-relaxed">
+                <div className="p-8 rounded-2xl border border-white/5 bg-white/[0.02] backdrop-blur-sm relative overflow-hidden group">
+                  <div className="absolute inset-0 bg-gradient-to-br from-accent/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                  <p className="text-xl md:text-2xl text-foreground font-medium leading-relaxed relative z-10">
                     Now I help healthcare practices and professional services firms do the same. Find the bottlenecks, build the systems, drive the adoption.
                   </p>
                 </div>
