@@ -9,9 +9,9 @@ import Link from 'next/link';
 import { useRef } from 'react';
 
 const metrics = [
-  { label: 'Document generation time reduced', value: '85%' },
-  { label: 'Clinician adoption in 8 weeks', value: '100%' },
-  { label: 'Google review growth at a private clinic', value: '125%' },
+  { label: 'Reduction in document drafting time after deploying LLM automation at a legal services firm', value: '85%' },
+  { label: 'Clinician adoption of AI documentation tools within 8 weeks of go-live', value: '100%' },
+  { label: 'Increase in Google reviews after redesigning a clinic\'s review capture workflow', value: '125%' },
 ];
 
 const approach = [
