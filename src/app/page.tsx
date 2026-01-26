@@ -181,16 +181,9 @@ export default function Home() {
 
       {/* Statement Section */}
       <section ref={transitionRef} className="py-20 md:py-32 w-full relative overflow-hidden flex items-center justify-center bg-background">
-        {/* Background image */}
+        {/* Subtle gradient only - no image for cleaner transition */}
         <div className="absolute inset-0 z-0">
-          <ParallaxImage
-            src="/images/entropy_monolith.png"
-            alt="Entropy Monolith"
-            className="w-full h-full opacity-20"
-            fadedSides={true}
-            fadedVertical={true}
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-background via-background/50 to-background" />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-accent/[0.03] to-transparent" />
         </div>
 
         <motion.div
