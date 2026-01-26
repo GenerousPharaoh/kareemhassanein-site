@@ -21,7 +21,7 @@ const playfair = Playfair_Display({ subsets: ['latin'], variable: '--font-serif'
 export const metadata: Metadata = {
   title: "Kareem Hassanein | Implementation Consulting",
   description: "Operations improvement, workflow automation, and technology implementation for healthcare practices and professional services firms. I find bottlenecks and build systems people actually use.",
-  keywords: ["implementation consulting", "workflow automation", "operations improvement", "healthcare operations", "AI implementation", "change management"],
+  keywords: ["implementation consulting", "workflow automation", "operations improvement", "healthcare operations", "AI implementation", "change management", "digital transformation"],
   authors: [{ name: "Kareem Hassanein" }],
   openGraph: {
     title: "Kareem Hassanein | Implementation Consulting",
@@ -56,7 +56,8 @@ const jsonLd = {
     "Technology Implementation",
     "Healthcare Operations",
     "Change Management",
-    "AI Implementation"
+    "AI Implementation",
+    "Digital Transformation"
   ],
   alumniOf: [
     {
