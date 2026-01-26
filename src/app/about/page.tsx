@@ -65,8 +65,66 @@ const experience = [
   }
 ];
 
+function ValueCard({ title, subtitle, desc }: { title: string; subtitle: string; desc: string }) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const spotlightOpacity = useSpring(0, { stiffness: 100, damping: 30 });
+  const spotlightX = useSpring(0, { stiffness: 150, damping: 25 });
+  const spotlightY = useSpring(0, { stiffness: 150, damping: 25 });
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    spotlightX.set(x);
+    spotlightY.set(y);
+  };
+
+  const springScale = { stiffness: 400, damping: 30 };
+  const scale = useSpring(1, springScale);
+
+  return (
+    <motion.div
+      ref={containerRef}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={() => {
+        spotlightOpacity.set(0.15);
+        scale.set(1.02);
+      }}
+      onMouseLeave={() => {
+        spotlightOpacity.set(0);
+        scale.set(1);
+      }}
+      style={{ scale }}
+      className="group relative p-8 rounded-2xl border border-white/5 bg-white/[0.01] backdrop-blur-md hover:border-accent/20 transition-all duration-500 overflow-hidden"
+    >
+      <motion.div
+        className="absolute pointer-events-none z-0 w-64 h-64 rounded-full blur-3xl"
+        style={{
+          background: `radial-gradient(circle, hsl(var(--accent)) 0%, transparent 70%)`,
+          x: spotlightX,
+          y: spotlightY,
+          translateX: "-50%",
+          translateY: "-50%",
+          opacity: spotlightOpacity,
+        }}
+      />
+      <div className="relative z-10">
+        <h2 className="text-sm font-medium text-accent mb-4">{subtitle}</h2>
+        <h3 className="text-2xl md:text-3xl font-medium tracking-tight mb-4 group-hover:text-accent transition-colors duration-500">
+          {title}
+        </h3>
+        <p className="text-muted-foreground leading-relaxed">
+          {desc}
+        </p>
+      </div>
+    </motion.div>
+  );
+}
+
 function ExperienceItem({ item, index }: { item: typeof experience[0]; index: number }) {
   const ref = useRef(null);
+  const isInView = useInView(ref, { margin: "-40% 0% -40% 0%" });
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "center center"]
@@ -84,9 +142,13 @@ function ExperienceItem({ item, index }: { item: typeof experience[0]; index: nu
     >
       {/* Left column - Period and index */}
       <div className="flex md:flex-col items-baseline md:items-start gap-4 md:gap-2">
-        <span className="text-5xl md:text-6xl font-light text-white/[0.04] group-hover:text-accent/10 transition-colors duration-700 leading-none">
+        <motion.span
+          animate={{ opacity: isInView ? 0.15 : 0.04 }}
+          transition={{ duration: 0.8 }}
+          className="text-5xl md:text-6xl font-light text-white group-hover:text-accent/20 transition-colors duration-700 leading-none"
+        >
           0{index + 1}
-        </span>
+        </motion.span>
         <span className="text-sm text-muted-foreground/50 font-mono tracking-wide">
           {item.period}
         </span>
@@ -111,6 +173,7 @@ function ExperienceItem({ item, index }: { item: typeof experience[0]; index: nu
 export default function About() {
   const heroRef = useRef(null);
   const valuesRef = useRef(null);
+  const historyRef = useRef(null);
 
   // Hero parallax
   const { scrollYProgress: heroProgress } = useScroll({
@@ -142,6 +205,7 @@ export default function About() {
             src="/images/digital-cathedral.png"
             alt="Architecture"
             className="w-full h-full opacity-25"
+            fadedVertical={true}
           />
         </motion.div>
         <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background pointer-events-none z-[1]" />
@@ -170,7 +234,7 @@ export default function About() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 0.5, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-              className="text-lg text-muted-foreground font-light"
+              className="text-lg md:text-xl text-muted-foreground/60 font-medium tracking-wide"
             >
               MSc Physiotherapy · Implementation Consultant
             </motion.p>
@@ -185,9 +249,17 @@ export default function About() {
                   <span className="text-7xl font-light text-white/[0.03]">01</span>
                   <div className="h-[1px] flex-1 bg-gradient-to-r from-accent/30 to-transparent" />
                 </div>
-                <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
-                  I spent years as a physiotherapist. MSc from Robert Gordon, 6,000+ patient sessions, top revenue generator at a busy clinic for three consecutive years. Former semi-professional soccer player in Scotland and Canada.
-                </p>
+                <div className="overflow-hidden">
+                  <motion.p
+                    initial={{ y: "100%", opacity: 0 }}
+                    whileInView={{ y: 0, opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 1.2, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                    className="text-lg md:text-xl text-muted-foreground leading-relaxed"
+                  >
+                    I spent years as a physiotherapist. MSc from Robert Gordon, 6,000+ patient sessions, top revenue generator at a busy clinic for three consecutive years. Former semi-professional soccer player in Scotland and Canada.
+                  </motion.p>
+                </div>
               </AnimatedBlock>
 
               <AnimatedBlock delay={0.7} direction="up">
@@ -195,9 +267,17 @@ export default function About() {
                   <span className="text-7xl font-light text-white/[0.03]">02</span>
                   <div className="h-[1px] flex-1 bg-gradient-to-r from-accent/30 to-transparent" />
                 </div>
-                <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
-                  But I kept getting pulled into the operational side. Why is the booking system losing referrals? Why are clinicians spending three hours a day on documentation? Why did we buy this software if nobody uses it?
-                </p>
+                <div className="overflow-hidden">
+                  <motion.p
+                    initial={{ y: "100%", opacity: 0 }}
+                    whileInView={{ y: 0, opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 1.2, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                    className="text-lg md:text-xl text-muted-foreground leading-relaxed"
+                  >
+                    But I kept getting pulled into the operational side. Why is the booking system losing referrals? Why are clinicians spending three hours a day on documentation? Why did we buy this software if nobody uses it?
+                  </motion.p>
+                </div>
               </AnimatedBlock>
             </div>
 
@@ -208,9 +288,17 @@ export default function About() {
                   <span className="text-7xl font-light text-white/[0.03]">03</span>
                   <div className="h-[1px] flex-1 bg-gradient-to-r from-accent/30 to-transparent" />
                 </div>
-                <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
-                  So I started fixing those problems. Led an AI documentation rollout that hit 100% adoption in 8 weeks. Built web applications. Created automation systems that cut document generation time by 85%.
-                </p>
+                <div className="overflow-hidden">
+                  <motion.p
+                    initial={{ y: "100%", opacity: 0 }}
+                    whileInView={{ y: 0, opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 1.2, delay: 0.9, ease: [0.16, 1, 0.3, 1] }}
+                    className="text-lg md:text-xl text-muted-foreground leading-relaxed"
+                  >
+                    So I started fixing those problems. Led an AI documentation rollout that hit 100% adoption in 8 weeks. Built web applications. Created automation systems that cut document generation time by 85%.
+                  </motion.p>
+                </div>
               </AnimatedBlock>
 
               <AnimatedBlock delay={1.1} direction="up">
@@ -249,6 +337,7 @@ export default function About() {
               alt="Values"
               className="w-full h-full opacity-20 scale-110"
               fadedSides={true}
+              fadedVertical={true}
             />
           </div>
           <div className="absolute inset-0 bg-gradient-to-b from-background via-background/40 to-background" />
@@ -259,26 +348,22 @@ export default function About() {
           className="max-w-[900px] mx-auto will-change-transform relative z-10"
         >
           <div className="grid md:grid-cols-2 gap-12 md:gap-16">
-            <div className="group p-8 rounded-2xl border border-white/5 hover:border-accent/20 hover:bg-white/[0.01] transition-all duration-500">
-              <h2 className="text-sm font-medium text-accent mb-4">Why it matters</h2>
-              <h3 className="text-2xl md:text-3xl font-medium tracking-tight mb-4 group-hover:text-accent transition-colors duration-500">Operational experience.</h3>
-              <p className="text-muted-foreground leading-relaxed">
-                8,000+ hours of client-facing delivery. I know what it feels like when systems fight you instead of helping. That shapes how I map workflows, configure tools, and design automations that actually fit into real work.
-              </p>
-            </div>
-            <div className="group p-8 rounded-2xl border border-white/5 hover:border-accent/20 hover:bg-white/[0.01] transition-all duration-500">
-              <h2 className="text-sm font-medium text-accent mb-4">How I work</h2>
-              <h3 className="text-2xl md:text-3xl font-medium tracking-tight mb-4 group-hover:text-accent transition-colors duration-500">I build things.</h3>
-              <p className="text-muted-foreground leading-relaxed">
-                I don&apos;t write reports and leave. I build the automation, configure the system, write the SOPs, train the team, and stick around for post-go-live support. When I&apos;m done, people are actually using it.
-              </p>
-            </div>
+            <ValueCard
+              subtitle="Why it matters"
+              title="Operational experience."
+              desc="8,000+ hours of client-facing delivery. I know what it feels like when systems fight you instead of helping. That shapes how I map workflows, configure tools, and design automations that actually fit into real work."
+            />
+            <ValueCard
+              subtitle="How I work"
+              title="I build things."
+              desc="I don't write reports and leave. I build the automation, configure the system, write the SOPs, train the team, and stick around for post-go-live support. When I'm done, people are actually using it."
+            />
           </div>
         </motion.div>
       </section>
 
       {/* Experience */}
-      <section className="py-24 md:py-36 px-6 lg:px-12 xl:px-20 relative overflow-hidden">
+      <section ref={historyRef} className="py-24 md:py-36 px-6 lg:px-12 xl:px-20 relative overflow-hidden">
         {/* Background image - centered with soft fade */}
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0">
@@ -286,6 +371,8 @@ export default function About() {
               src="/images/experience_layers.png"
               alt="Experience"
               className="w-full h-full opacity-20"
+              fadedSides={true}
+              fadedVertical={true}
             />
           </div>
           <div className="absolute inset-0 bg-gradient-to-b from-background via-background/40 to-background" />
@@ -299,13 +386,22 @@ export default function About() {
             <div className="h-[1px] bg-gradient-to-r from-accent/50 to-transparent max-w-[200px] mb-16" />
           </ScrollReveal>
 
-          <div className="space-y-12 md:space-y-16">
+          <div className="relative space-y-12 md:space-y-16">
+            {/* Vertical timeline thread */}
+            <div className="absolute left-[70px] top-8 bottom-8 w-[1px] bg-white/[0.05] hidden md:block" />
+            <motion.div
+              className="absolute left-[70px] top-8 bottom-8 w-[1px] bg-accent/30 origin-top hidden md:block"
+              style={{
+                scaleY: useSpring(useTransform(useScroll({
+                  target: historyRef,
+                  offset: ["start center", "end center"]
+                }).scrollYProgress, [0, 1], [0, 1]), { stiffness: 100, damping: 30 })
+              }}
+            />
+
             {experience.map((item, i) => (
               <div key={item.role}>
                 <ExperienceItem item={item} index={i} />
-                {i < experience.length - 1 && (
-                  <div className="h-[1px] bg-white/5 mt-12 md:mt-16 md:ml-[180px]" />
-                )}
               </div>
             ))}
           </div>
@@ -320,6 +416,7 @@ export default function About() {
             src="/images/kh_section_divider_signal-to-system_02.png"
             alt="Signal to system"
             className="w-full h-full opacity-20"
+            fadedVertical={true}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-background" />
         </div>
@@ -329,10 +426,18 @@ export default function About() {
             <h2 className="text-2xl md:text-3xl font-medium tracking-tight mb-8">Want the full picture?</h2>
             <a
               href="/Kareem-Hassanein-Resume.pdf"
-              className="group inline-flex items-center gap-3 text-lg font-medium bg-foreground text-background px-8 py-4 rounded-full hover:bg-accent transition-all duration-500"
+              className="group relative inline-flex items-center gap-3 text-lg font-medium bg-foreground text-background px-8 py-4 rounded-full hover:bg-accent hover:text-white transition-all duration-500 overflow-hidden shadow-[inset_0_1px_rgba(255,255,255,0.2),0_0_20px_rgba(var(--accent-rgb),0)] hover:shadow-[inset_0_1px_rgba(255,255,255,0.4),0_0_30px_rgba(var(--accent-rgb),0.3)]"
             >
-              Download Resume
-              <Download size={20} className="group-hover:translate-y-0.5 transition-transform duration-500" />
+              {/* Shimmer effect */}
+              <motion.div
+                animate={{ x: ["-100%", "200%"] }}
+                transition={{ duration: 3, repeat: Infinity, ease: "linear", repeatDelay: 4 }}
+                className="absolute inset-0 w-1/3 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12"
+              />
+              <span className="relative z-10 flex items-center gap-3">
+                Download Resume
+                <Download size={20} className="group-hover:translate-y-0.5 transition-transform duration-500" />
+              </span>
             </a>
           </ScrollReveal>
         </div>
