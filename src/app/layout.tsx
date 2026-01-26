@@ -3,23 +3,22 @@ import localFont from "next/font/local";
 import "./globals.css";
 import LayoutWrapper from "@/components/LayoutWrapper";
 import Spotlight from "@/components/Spotlight";
+import { Inter, Libre_Baskerville } from 'next/font/google';
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
 const geistMono = localFont({
   src: "./fonts/GeistMonoVF.woff",
   variable: "--font-geist-mono",
   weight: "100 900",
 });
-
-import { Cormorant_Garamond } from 'next/font/google';
-const cormorant = Cormorant_Garamond({
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-sans',
+});
+const libreBaskerville = Libre_Baskerville({
   subsets: ['latin'],
   variable: '--font-serif',
-  weight: ['300', '400', '500', '600'],
+  weight: ['400', '700'],
+  style: ['normal', 'italic'],
 });
 
 export const metadata: Metadata = {
@@ -97,7 +96,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${cormorant.variable} antialiased font-sans`}
+        className={`${inter.variable} ${geistMono.variable} ${libreBaskerville.variable} antialiased font-sans`}
       >
         <div className="noise-overlay" />
         <Spotlight />

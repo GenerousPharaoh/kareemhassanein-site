@@ -23,9 +23,9 @@ const config: Config = {
         border: "hsl(var(--border))",
       },
       fontFamily: {
-        sans: ['var(--font-geist-sans)', 'system-ui', 'sans-serif'],
+        sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],
         mono: ['var(--font-geist-mono)', 'monospace'],
-        serif: ['var(--font-serif)', 'serif'],
+        serif: ['var(--font-serif)', 'Georgia', 'serif'],
       },
       transitionTimingFunction: {
         'smooth': 'cubic-bezier(0.4, 0, 0.2, 1)',

@@ -96,7 +96,7 @@ function ValueCard({ title, subtitle, desc }: { title: string; subtitle: string;
         scale.set(1);
       }}
       style={{ scale }}
-      className="group relative p-8 rounded-2xl border border-white/5 bg-white/[0.01] backdrop-blur-md hover:border-accent/20 transition-all duration-500 overflow-hidden"
+      className="group relative p-10 md:p-12 rounded-3xl border border-white/5 bg-white/[0.01] backdrop-blur-md hover:border-accent/20 transition-all duration-500 overflow-hidden"
     >
       <motion.div
         className="absolute pointer-events-none z-0 w-64 h-64 rounded-full blur-3xl"
@@ -110,11 +110,11 @@ function ValueCard({ title, subtitle, desc }: { title: string; subtitle: string;
         }}
       />
       <div className="relative z-10">
-        <h2 className="text-sm font-medium text-accent mb-4">{subtitle}</h2>
-        <h3 className="text-2xl md:text-3xl font-medium tracking-tight mb-4 group-hover:text-accent transition-colors duration-500">
+        <span className="text-xs font-medium tracking-[0.2em] uppercase text-accent/70 mb-6 block">{subtitle}</span>
+        <h3 className="text-3xl md:text-4xl font-medium tracking-tight mb-6 group-hover:text-accent transition-colors duration-500">
           {title}
         </h3>
-        <p className="text-muted-foreground leading-relaxed">
+        <p className="text-lg text-muted-foreground leading-relaxed">
           {desc}
         </p>
       </div>
@@ -334,14 +334,14 @@ export default function About() {
           style={{ y: valuesY, opacity: valuesOpacity, scale: valuesScale }}
           className="max-w-[900px] mx-auto will-change-transform relative z-10"
         >
-          <div className="grid md:grid-cols-2 gap-12 md:gap-16">
+          <div className="grid md:grid-cols-2 gap-8 md:gap-12">
             <ValueCard
-              subtitle="Why it matters"
+              subtitle="Perspective"
               title="I have been the end user."
               desc="Most consultants study workflows from the outside. I have used the systems I now help implement. That shapes how I think about configuration, training, and what actually makes people adopt something new."
             />
             <ValueCard
-              subtitle="How I work"
+              subtitle="Approach"
               title="I stay through adoption."
               desc="Go-live is not the finish line. It is where most implementations start to fail. I stick around through the first weeks and months, adjusting the system as real usage reveals what needs to change. The goal is not a successful launch. It is sustained use."
             />
