@@ -210,83 +210,93 @@ export default function About() {
         <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background pointer-events-none z-[1]" />
 
         <motion.div style={{ y: heroTextY }} className="max-w-[1200px] mx-auto relative z-10 py-32 will-change-transform">
-          {/* Title */}
-          <div className="mb-12 md:mb-20">
-            <motion.span
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 0.5, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-              className="block text-xs font-medium tracking-[0.4em] uppercase text-muted-foreground mb-6"
-            >
-              About
-            </motion.span>
+          <div className="grid lg:grid-cols-[0.8fr_1.2fr] gap-12 lg:gap-24 items-start">
 
-            <motion.h1
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-              className="text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight mb-4"
-            >
-              Kareem Hassanein
-            </motion.h1>
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 0.5, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-              className="text-lg md:text-xl text-muted-foreground/60 font-medium tracking-wide"
-            >
-              MSc Physiotherapy · Implementation Consultant
-            </motion.p>
-          </div>
+            {/* Identity Column (Left) */}
+            <div className="lg:sticky lg:top-48">
+              <motion.span
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 0.5, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+                className="block text-xs font-medium tracking-[0.4em] uppercase text-muted-foreground mb-6"
+              >
+                About
+              </motion.span>
 
-          {/* Story layout - Asymmetrical grid */}
-          <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-12 lg:gap-24 items-start">
-            {/* Left column - The beginning & core journey */}
-            <div className="space-y-16 md:space-y-20 relative">
-              {/* Vertical accent line */}
+              <motion.h1
+                initial={{ opacity: 0, x: -30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                className="text-4xl md:text-5xl lg:text-7xl font-medium tracking-tight mb-8 leading-[0.9]"
+              >
+                Kareem<br />Hassanein
+              </motion.h1>
+
+              <motion.div
+                initial={{ opacity: 0, scaleX: 0 }}
+                animate={{ opacity: 1, scaleX: 1 }}
+                transition={{ duration: 1, delay: 0.5 }}
+                className="h-[1px] w-12 bg-accent mb-8 origin-left"
+              />
+
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 0.6, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                className="text-lg md:text-xl text-muted-foreground font-medium tracking-wide max-w-[200px]"
+              >
+                MSc Physiotherapy <br />Implementation Consultant
+              </motion.p>
+            </div>
+
+            {/* Narrative Column (Right) */}
+            <div className="space-y-24 relative">
+              {/* Vertical accent "spine" */}
               <div className="absolute -left-6 lg:-left-12 top-2 bottom-2 w-[1px] bg-gradient-to-b from-accent/40 via-accent/10 to-transparent" />
 
-              <AnimatedBlock delay={0.5} direction="up">
+              <AnimatedBlock delay={0.6} direction="up">
                 <p className="text-xl md:text-2xl text-foreground/90 leading-relaxed font-light tracking-tight">
                   I spent years as a physiotherapist. MSc from Robert Gordon, 6,000+ patient sessions, top revenue generator at a busy clinic for three consecutive years. Former semi-professional soccer player in Scotland and Canada.
                 </p>
               </AnimatedBlock>
 
-              <AnimatedBlock delay={0.7} direction="up" className="lg:pl-12">
+              <AnimatedBlock delay={0.8} direction="up">
                 <p className="text-lg md:text-xl text-muted-foreground leading-relaxed font-light">
                   But I kept getting pulled into the operational side. Why is the booking system losing referrals? Why are clinicians spending three hours a day on documentation? Why did we buy this software if nobody uses it?
                 </p>
               </AnimatedBlock>
-            </div>
 
-            {/* Right column - The transition & mission */}
-            <div className="space-y-12 lg:pt-32">
-              <AnimatedBlock delay={0.9} direction="up">
+              <AnimatedBlock delay={1.0} direction="up">
                 <div className="h-[1px] w-12 bg-accent/40 mb-8" />
                 <div className="overflow-hidden">
                   <motion.p
                     initial={{ y: "100%", opacity: 0 }}
                     whileInView={{ y: 0, opacity: 1 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 1.2, delay: 0.9, ease: [0.16, 1, 0.3, 1] }}
+                    transition={{ duration: 1.2, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
                     className="text-lg md:text-xl text-muted-foreground leading-relaxed font-light"
                   >
                     So I started fixing those problems. Led an AI documentation rollout that hit 100% adoption in 8 weeks. Built web applications. Created automation systems that cut document generation time by 85%.
                   </motion.p>
                 </div>
               </AnimatedBlock>
-
-              <AnimatedBlock delay={1.1} direction="up">
-                <div className="p-8 rounded-2xl border border-white/5 bg-white/[0.02] backdrop-blur-sm relative overflow-hidden group">
-                  <div className="absolute inset-0 bg-gradient-to-br from-accent/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-                  <p className="text-xl md:text-2xl text-foreground font-medium leading-relaxed relative z-10">
-                    Now I help healthcare practices and professional services firms do the same. Find the bottlenecks, build the systems, drive the adoption.
-                  </p>
-                </div>
-              </AnimatedBlock>
             </div>
           </div>
         </motion.div>
+
+        {/* Transition / Mission Block */}
+        <section className="pb-32 px-6 lg:px-12 xl:px-20 relative z-10">
+          <div className="max-w-[700px] mx-auto">
+            <AnimatedBlock delay={0.2} direction="up">
+              <div className="p-10 md:p-16 rounded-3xl border border-white/5 bg-white/[0.02] backdrop-blur-sm relative overflow-hidden group text-center block">
+                <div className="absolute inset-0 bg-gradient-to-br from-accent/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                <p className="text-2xl md:text-3xl text-foreground font-medium leading-[1.3] relative z-10">
+                  Now I help healthcare practices and professional services firms do the same. Find the bottlenecks, build the systems, drive the adoption.
+                </p>
+              </div>
+            </AnimatedBlock>
+          </div>
+        </section>
 
         {/* Scroll indicator */}
         <motion.div
