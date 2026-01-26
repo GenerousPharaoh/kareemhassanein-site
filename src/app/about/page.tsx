@@ -199,11 +199,11 @@ export default function About() {
       <section ref={heroRef} className="min-h-screen relative overflow-hidden px-6 lg:px-12 xl:px-20 flex flex-col justify-center">
 
         {/* Cinematic Background with Parallax */}
-        <motion.div style={{ y: heroBgY }} className="absolute -inset-20 z-0 will-change-transform">
+        <motion.div style={{ y: heroBgY }} className="absolute inset-0 z-0 will-change-transform flex items-center justify-center">
           <ParallaxImage
             src="/images/mapping.png"
-            alt="Architecture"
-            className="w-full h-full opacity-25"
+            alt="Mapping workflows"
+            className="max-w-3xl w-full opacity-30"
             fadedVertical={true}
           />
         </motion.div>
