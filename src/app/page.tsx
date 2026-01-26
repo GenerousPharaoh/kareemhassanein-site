@@ -126,7 +126,7 @@ export default function Home() {
                   transition={{ duration: 1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
                   className="inline"
                 >
-                  systems to fix them.
+                  systems people actually use.
                 </motion.span>
               </h1>
 
