@@ -285,24 +285,6 @@ export default function About() {
           </div>
         </motion.div>
 
-        {/* Mission Statement */}
-        <section className="pb-32 px-6 lg:px-12 xl:px-20 relative z-10">
-          <div className="max-w-[900px] mx-auto">
-            <AnimatedBlock delay={0.2} direction="up">
-              <div className="relative">
-                <div className="absolute -left-4 md:-left-8 top-0 bottom-0 w-[2px] bg-gradient-to-b from-accent via-accent/50 to-transparent" />
-                <div className="pl-8 md:pl-12">
-                  <p className="text-3xl md:text-4xl lg:text-5xl text-foreground/90 font-light leading-[1.2] tracking-tight">
-                    I make systems work the way
-                  </p>
-                  <p className="text-3xl md:text-4xl lg:text-5xl text-accent font-medium leading-[1.2] tracking-tight mt-2 italic font-serif">
-                    people actually work.
-                  </p>
-                </div>
-              </div>
-            </AnimatedBlock>
-          </div>
-        </section>
 
         {/* Scroll indicator */}
         <motion.div
