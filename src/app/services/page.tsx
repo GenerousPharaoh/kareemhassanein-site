@@ -99,18 +99,20 @@ function ServiceSection({ service, index }: { service: typeof services[0], index
       ref={ref}
       className="py-24 md:py-36 px-6 lg:px-12 xl:px-20 relative"
     >
-      {/* Background image with soft fade */}
+      {/* Background image - extends beyond section for seamless blending */}
       <motion.div
         style={{ y: imgY, opacity: imgOpacity, scale: imgScale }}
-        className="absolute inset-y-0 w-2/3 right-0 pointer-events-none will-change-transform"
+        className="absolute -top-24 -bottom-24 w-3/4 -right-10 pointer-events-none will-change-transform"
       >
         <ParallaxImage
           src={service.image}
           alt={service.title}
           className="w-full h-full"
-          fadedSides={true}
-          fadedVertical={true}
         />
+        {/* Soft fade overlays */}
+        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/50 via-20% to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent via-30% to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-transparent via-30% to-transparent" />
       </motion.div>
 
       <motion.div
@@ -208,14 +210,15 @@ export default function Services() {
 
       {/* Hero */}
       <section ref={heroRef} className="pt-28 pb-20 md:pt-36 md:pb-28 px-6 lg:px-12 xl:px-20 relative">
-        {/* Background image */}
-        <motion.div style={{ y: heroY }} className="absolute inset-0 z-0 will-change-transform">
+        {/* Background image - extends beyond section */}
+        <motion.div style={{ y: heroY }} className="absolute -inset-x-10 -top-20 -bottom-32 z-0 will-change-transform">
           <ParallaxImage
             src="/images/mapping.png"
             alt="Mapping"
-            className="w-full h-full opacity-45"
-            fadedVertical={true}
+            className="w-full h-full opacity-40"
           />
+          <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent via-20% to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent via-30% to-transparent" />
         </motion.div>
 
         <motion.div style={{ y: heroY }} className="max-w-[1200px] mx-auto relative z-10 will-change-transform">
@@ -244,15 +247,15 @@ export default function Services() {
 
       {/* Tools Section */}
       <section ref={toolsRef} className="py-24 md:py-36 px-6 lg:px-12 xl:px-20 relative">
-        {/* Background image */}
-        <div className="absolute inset-0 z-0">
+        {/* Background image - extends beyond for blending */}
+        <div className="absolute -inset-x-10 -top-32 -bottom-20 z-0">
           <ParallaxImage
             src="/images/kh_section_divider_signal-to-system_02.png"
             alt="Signal to System"
-            className="w-full h-full opacity-40"
-            fadedVertical={true}
-            fadedSides={true}
+            className="w-full h-full opacity-35"
           />
+          <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent via-40% to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-transparent via-30% to-transparent" />
         </div>
 
         <div className="max-w-[1200px] mx-auto relative z-10">
