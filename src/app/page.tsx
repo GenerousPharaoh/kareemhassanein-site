@@ -117,7 +117,7 @@ export default function Home() {
                   transition={{ duration: 1.2, delay: 1.1, ease: [0.16, 1, 0.3, 1] }}
                   className="inline-block text-accent italic font-serif"
                 >
-                  build
+                  fix
                 </motion.span>
                 <br />
                 <motion.span
@@ -126,7 +126,7 @@ export default function Home() {
                   transition={{ duration: 1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
                   className="inline"
                 >
-                  systems people actually use.
+                  them.
                 </motion.span>
               </h1>
 
