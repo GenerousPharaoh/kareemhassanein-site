@@ -58,7 +58,6 @@ export default function Home() {
     offset: ["start end", "end start"]
   });
   const visualBgY = useSpring(useTransform(visualProgress, [0, 1], [0, -60]), springConfig);
-  const visualOpacity = useSpring(useTransform(visualProgress, [0, 0.3, 0.7, 1], [0, 1, 1, 0]), springConfig);
 
   // Portfolio section - smooth reveal with scale (initiates earlier)
   const { scrollYProgress: portfolioProgress } = useScroll({
@@ -203,30 +202,24 @@ export default function Home() {
       </section>
 
       {/* Visual Break - Approach Section */}
-      <section ref={visualRef} className="relative min-h-[70vh] md:h-[70vh] py-16 md:py-0">
-        {/* Parallax Background - Enhanced depth */}
+      <section ref={visualRef} className="relative py-24 md:py-32">
+        {/* Parallax Background - full bleed with soft fade */}
         <motion.div
           style={{ y: visualBgY }}
-          className="absolute inset-0 -top-32 -bottom-32 will-change-transform overflow-hidden"
+          className="absolute inset-0 will-change-transform"
         >
           <ParallaxImage
             src="/images/flow.png"
             alt="Workflow"
-            className="w-full h-full opacity-50 scale-110"
+            className="w-full h-full opacity-40"
+            fadedVertical={true}
           />
         </motion.div>
 
-        {/* Seamless edge blending */}
-        <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent via-20% to-transparent pointer-events-none" />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent via-20% to-transparent pointer-events-none" />
-
-        {/* Content */}
-        <motion.div
-          style={{ opacity: visualOpacity }}
-          className="relative z-10 h-full flex items-center justify-center px-6"
-        >
-          <div className="max-w-4xl mx-auto">
-            <div className="grid md:grid-cols-3 gap-10 md:gap-16">
+        {/* Content - no container, just text with subtle shadow for readability */}
+        <div className="relative z-10 px-6">
+          <div className="max-w-5xl mx-auto">
+            <div className="grid md:grid-cols-3 gap-12 md:gap-20">
               {approach.map((item, i) => (
                 <motion.div
                   key={item.title}
@@ -236,20 +229,20 @@ export default function Home() {
                   transition={{ duration: 0.6, delay: i * 0.15, ease: [0.16, 1, 0.3, 1] }}
                   className="text-center"
                 >
-                  <span className="text-5xl md:text-6xl font-light text-accent/30 block mb-3">
+                  <span className="text-5xl md:text-6xl font-light text-accent/40 block mb-4 drop-shadow-sm">
                     0{i + 1}
                   </span>
-                  <h3 className="text-xl md:text-2xl font-medium tracking-tight mb-3">
+                  <h3 className="text-xl md:text-2xl font-medium tracking-tight mb-3 drop-shadow-sm">
                     {item.title}
                   </h3>
-                  <p className="text-muted-foreground text-sm md:text-base leading-relaxed">
+                  <p className="text-foreground/70 text-sm md:text-base leading-relaxed drop-shadow-sm">
                     {item.desc}
                   </p>
                 </motion.div>
               ))}
             </div>
           </div>
-        </motion.div>
+        </div>
       </section>
 
       {/* Divider */}
