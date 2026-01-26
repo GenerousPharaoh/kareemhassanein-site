@@ -162,10 +162,18 @@ export default function About() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-              className="text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight"
+              className="text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight mb-4"
             >
               Kareem Hassanein
             </motion.h1>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 0.5, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+              className="text-lg text-muted-foreground font-light"
+            >
+              MSc Physiotherapy · Implementation Consultant
+            </motion.p>
           </div>
 
           {/* Story grid - alternating layout */}
