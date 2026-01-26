@@ -91,13 +91,6 @@ export default function Footer() {
           </a>
         </div>
 
-        {/* Brand Watermark (Moved to Background) */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full text-center pointer-events-none select-none z-0">
-          <h2 className="text-[10vw] font-bold tracking-[1em] text-white opacity-[0.03] leading-none uppercase">
-            HASSANEIN
-          </h2>
-        </div>
-
         {/* Bottom Bar */}
         <div className="absolute bottom-0 left-0 w-full border-t border-white/5 bg-white/[0.02] backdrop-blur-2xl">
           <div className="max-w-[1800px] mx-auto px-6 md:px-12 py-10 flex flex-col md:flex-row justify-between items-end gap-8">
