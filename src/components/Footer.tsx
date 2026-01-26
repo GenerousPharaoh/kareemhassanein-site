@@ -96,8 +96,14 @@ export default function Footer() {
         {/* Bottom Bar */}
         <div className="absolute bottom-0 left-0 w-full border-t border-white/5 bg-white/[0.02] backdrop-blur-2xl">
           <div className="max-w-[1800px] mx-auto px-6 md:px-12 py-10 flex flex-col md:flex-row justify-between items-end gap-8">
-            <div className="relative overflow-hidden group">
-              <h2 className="text-[80px] md:text-[140px] leading-[0.7] font-bold tracking-tighter opacity-[0.03] group-hover:opacity-[0.06] transition-opacity duration-1000 select-none pointer-events-none">
+            <div className="relative group">
+              <h2
+                className="text-[80px] md:text-[140px] font-bold tracking-tighter transition-all duration-1000 select-none pointer-events-none text-transparent"
+                style={{
+                  WebkitTextStroke: "1px rgba(255,255,255,0.08)",
+                  opacity: 0.8
+                }}
+              >
                 HASSANEIN
               </h2>
             </div>
