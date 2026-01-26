@@ -178,7 +178,7 @@ export default function About() {
                   <div className="h-[1px] flex-1 bg-gradient-to-r from-accent/30 to-transparent" />
                 </div>
                 <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
-                  Semi-professional soccer in Scotland and Canada. Then physiotherapy. MSc from Robert Gordon, 6,000+ patient sessions, top revenue generator at a busy clinic for three consecutive years.
+                  I spent years as a physiotherapist. MSc from Robert Gordon, 6,000+ patient sessions, top revenue generator at a busy clinic for three consecutive years. Former semi-professional soccer player in Scotland and Canada.
                 </p>
               </AnimatedBlock>
 
