@@ -322,7 +322,7 @@ export default function About() {
             <ParallaxImage
               src="/images/crystalline_structure.png"
               alt="Values"
-              className="w-full h-full opacity-20 scale-110"
+              className="w-full h-full opacity-30 scale-110"
               fadedSides={true}
               fadedVertical={true}
             />
@@ -357,7 +357,7 @@ export default function About() {
             <ParallaxImage
               src="/images/experience_layers.png"
               alt="Experience"
-              className="w-full h-full opacity-20"
+              className="w-full h-full opacity-30"
               fadedSides={true}
               fadedVertical={true}
             />

@@ -215,7 +215,7 @@ export default function Services() {
           <ParallaxImage
             src="/images/systems.png"
             alt="Systems"
-            className="w-full h-full opacity-25"
+            className="w-full h-full opacity-35"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-background via-background/40 to-background" />
         </motion.div>
@@ -251,7 +251,7 @@ export default function Services() {
           <ParallaxImage
             src="/images/glow.png"
             alt="Glow"
-            className="w-full h-full opacity-20"
+            className="w-full h-full opacity-30"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-background" />
         </div>

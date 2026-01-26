@@ -83,7 +83,7 @@ export default function Home() {
           <ParallaxImage
             src="/images/orchestrating.png"
             alt="Cinematic Core"
-            className="w-full h-full opacity-20"
+            className="w-full h-full opacity-30"
           />
         </motion.div>
         {/* Fixed gradient overlay - extends beyond section for seamless blend */}
@@ -264,7 +264,7 @@ export default function Home() {
             <ParallaxImage
               src="/images/flow of organized transformation.png"
               alt="Transformation"
-              className="w-full h-full opacity-20"
+              className="w-full h-full opacity-30"
             />
           </div>
           <div className="absolute inset-0 bg-gradient-to-b from-background via-background/60 to-background" />
