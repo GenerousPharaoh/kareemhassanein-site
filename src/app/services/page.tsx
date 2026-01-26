@@ -46,8 +46,13 @@ const technicalIndex = [
   },
   {
     domain: 'Development & Analytics',
-    tools: ['Next.js', 'GitHub', 'Vercel', 'Google Analytics'],
+    tools: ['Next.js', 'TypeScript', 'GitHub', 'Vercel', 'Google Analytics'],
     specs: ['Web applications', 'CI/CD pipelines', 'Local SEO', 'Conversion tracking']
+  },
+  {
+    domain: 'Project & Operations',
+    tools: ['Asana', 'Slack', 'Google Workspace', 'Notion'],
+    specs: ['Task management', 'Team coordination', 'Documentation systems', 'Process tracking']
   }
 ];
 

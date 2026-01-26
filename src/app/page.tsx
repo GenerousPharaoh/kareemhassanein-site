@@ -11,7 +11,7 @@ import { useRef } from 'react';
 const metrics = [
   { label: 'Document generation time reduced', value: '85%' },
   { label: 'Clinician adoption in 8 weeks', value: '100%' },
-  { label: 'Annual admin cost eliminated', value: '$20K' },
+  { label: 'Google review growth at a private clinic', value: '125%' },
 ];
 
 const approach = [
