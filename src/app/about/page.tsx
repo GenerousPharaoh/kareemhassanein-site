@@ -55,7 +55,7 @@ const experience = [
     period: '2025 - Present',
     role: 'Clinical Advisor',
     company: 'Neuro-Mod',
-    desc: 'Reviewing clinician workflows for a medical device startup. Documenting usability friction points and delivering workflow integration recommendations to support deployment readiness.',
+    desc: 'Clinical workflow analysis for a medical device startup. Identifying usability friction points and delivering workflow integration recommendations for deployment readiness.',
   },
   {
     period: '2021 - 2024',
