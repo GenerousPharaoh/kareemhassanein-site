@@ -143,37 +143,31 @@ function ServiceSection({ service, index }: { service: typeof services[0], index
   );
 }
 
-function ToolDomain({ domain }: { domain: typeof technicalIndex[0] }) {
+function ToolDomain({ domain, index }: { domain: typeof technicalIndex[0]; index: number }) {
   const ref = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "center center"]
-  });
-
-  const springConfig = { stiffness: 100, damping: 30 };
-  const y = useSpring(useTransform(scrollYProgress, [0, 1], [50, 0]), springConfig);
-  const opacity = useSpring(useTransform(scrollYProgress, [0, 0.5, 1], [0, 0.5, 1]), springConfig);
+  const isInView = useInView(ref, { once: true, margin: "-50px" });
 
   return (
     <motion.div
       ref={ref}
-      style={{ y, opacity }}
-      className="pb-12 last:pb-0 relative will-change-transform"
+      initial={{ opacity: 0, y: 30 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.6, delay: index * 0.15, ease: [0.16, 1, 0.3, 1] }}
+      className="group p-8 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-accent/20 hover:bg-white/[0.04] transition-all duration-500"
     >
-      <h3 className="text-sm font-medium text-accent mb-6">
+      <span className="text-xs font-medium tracking-widest uppercase text-accent/70 mb-4 block">
         {domain.domain}
-      </h3>
-      <div className="flex flex-wrap gap-x-6 gap-y-2 mb-6">
-        {domain.tools.map((tool, i) => (
-          <span key={tool} className="text-lg md:text-xl font-light text-foreground">
+      </span>
+      <div className="flex flex-wrap gap-3 mb-6">
+        {domain.tools.map((tool) => (
+          <span key={tool} className="text-lg md:text-xl font-light text-foreground/90">
             {tool}
-            {i < domain.tools.length - 1 && <span className="text-white/20 ml-6">·</span>}
           </span>
         ))}
       </div>
       <div className="flex flex-wrap gap-2">
         {domain.specs.map(spec => (
-          <span key={spec} className="text-xs px-3 py-1 rounded-full bg-white/5 text-muted-foreground hover:bg-accent/10 hover:text-accent transition-colors duration-300">
+          <span key={spec} className="text-xs px-3 py-1.5 rounded-full bg-white/5 text-muted-foreground/80 group-hover:text-muted-foreground transition-colors duration-300">
             {spec}
           </span>
         ))}
@@ -243,23 +237,21 @@ export default function Services() {
 
       {/* Tools Section */}
       <section ref={toolsRef} className="py-28 md:py-40 px-6 lg:px-12 xl:px-20 relative overflow-hidden">
-        {/* Background image - centered and constrained */}
-        <div className="absolute inset-0 z-0 flex items-center justify-center">
-          <div className="w-full max-w-3xl h-auto aspect-video">
-            <ParallaxImage
-              src="/images/kh_section_divider_signal-to-system_02.png"
-              alt="Signal to System"
-              className="w-full h-full opacity-30"
-              fadedVertical={true}
-              fadedSides={true}
-            />
-          </div>
+        {/* Background image - positioned right like service sections */}
+        <div className="absolute inset-y-0 w-1/2 right-0 z-0">
+          <ParallaxImage
+            src="/images/kh_section_divider_signal-to-system_02.png"
+            alt="Signal to System"
+            className="w-full h-full opacity-35"
+            fadedSides={true}
+            fadedVertical={true}
+          />
         </div>
 
         <div className="max-w-[1200px] mx-auto relative z-10">
           <motion.div
             style={{ y: toolsY, opacity: toolsOpacity }}
-            className="mb-16 will-change-transform"
+            className="mb-12 will-change-transform"
           >
             <span className="block text-xs font-medium tracking-[0.3em] uppercase text-muted-foreground mb-6">Tools</span>
             <h2 className="text-3xl md:text-5xl font-medium tracking-tight">
@@ -268,9 +260,9 @@ export default function Services() {
             <AnimatedDivider direction="left" accent maxWidth="280px" className="mt-6" />
           </motion.div>
 
-          <div className="space-y-16">
-            {technicalIndex.map((row) => (
-              <ToolDomain key={row.domain} domain={row} />
+          <div className="grid md:grid-cols-3 gap-6">
+            {technicalIndex.map((row, idx) => (
+              <ToolDomain key={row.domain} domain={row} index={idx} />
             ))}
           </div>
         </div>
