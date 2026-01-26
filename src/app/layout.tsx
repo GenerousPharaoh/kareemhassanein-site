@@ -15,8 +15,12 @@ const geistMono = localFont({
   weight: "100 900",
 });
 
-import { Playfair_Display } from 'next/font/google';
-const playfair = Playfair_Display({ subsets: ['latin'], variable: '--font-serif' });
+import { Cormorant_Garamond } from 'next/font/google';
+const cormorant = Cormorant_Garamond({
+  subsets: ['latin'],
+  variable: '--font-serif',
+  weight: ['300', '400', '500', '600'],
+});
 
 export const metadata: Metadata = {
   title: "Kareem Hassanein | Implementation Consulting",
@@ -93,7 +97,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} antialiased font-sans`}
+        className={`${geistSans.variable} ${geistMono.variable} ${cormorant.variable} antialiased font-sans`}
       >
         <div className="noise-overlay" />
         <Spotlight />

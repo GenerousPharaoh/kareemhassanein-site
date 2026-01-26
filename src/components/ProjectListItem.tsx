@@ -43,7 +43,7 @@ export default function ProjectListItem({ project, index }: ProjectListItemProps
             href={project.href}
             target="_blank"
             rel="noopener noreferrer"
-            className="group relative flex items-center justify-between py-8 md:py-10 px-6 md:px-8 -mx-6 md:-mx-8 rounded-2xl cursor-pointer hover:bg-white/[0.02] transition-colors duration-500 border-b border-white/5 last:border-b-0"
+            className="group relative flex items-center justify-between py-8 md:py-10 px-6 md:px-8 -mx-6 md:-mx-8 rounded-2xl cursor-pointer hover:bg-white/[0.02] transition-all duration-500 border-b border-white/5 last:border-b-0 hover:border-accent/20"
             style={{ opacity, y }}
         >
             {/* Accent line */}
@@ -67,7 +67,7 @@ export default function ProjectListItem({ project, index }: ProjectListItemProps
                 <span className="text-muted-foreground/70 text-sm hidden md:block opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     View
                 </span>
-                <div className="w-11 h-11 md:w-12 md:h-12 rounded-full border border-white/10 flex items-center justify-center group-hover:bg-accent group-hover:border-accent transition-all duration-500">
+                <div className="w-11 h-11 md:w-12 md:h-12 rounded-full border border-white/10 flex items-center justify-center group-hover:bg-accent group-hover:border-accent group-hover:shadow-lg group-hover:shadow-accent/20 transition-all duration-500">
                     <ArrowUpRight className="w-4 h-4 md:w-5 md:h-5 text-muted-foreground group-hover:text-background transition-colors duration-500" />
                 </div>
             </div>

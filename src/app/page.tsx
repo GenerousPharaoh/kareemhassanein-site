@@ -6,6 +6,7 @@ import TextReveal from '@/components/TextReveal';
 import ProjectList from '@/components/ProjectList';
 import ParallaxImage from '@/components/ParallaxImage';
 import Link from 'next/link';
+import MagneticButton from '@/components/MagneticButton';
 import { useRef } from 'react';
 
 const metrics = [
@@ -146,7 +147,7 @@ export default function Home() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 1.4 + i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-                    className="group relative p-6 rounded-2xl border border-white/5 hover:border-white/10 hover:bg-white/[0.02] transition-colors duration-500"
+                    className="group relative p-6 rounded-2xl gradient-border hover-lift hover:bg-white/[0.02] transition-colors duration-500"
                   >
                     <p className="text-4xl md:text-5xl font-serif italic text-accent mb-3">{m.value}</p>
                     <p className="text-xs text-muted-foreground leading-relaxed">{m.label}</p>
@@ -160,13 +161,13 @@ export default function Home() {
                 transition={{ duration: 0.6, delay: 1.8, ease: [0.16, 1, 0.3, 1] }}
                 className="flex gap-6 items-center justify-center pt-10"
               >
-                <Link
+                <MagneticButton
                   href="/contact"
-                  className="group flex items-center gap-4 text-lg font-medium tracking-tight bg-foreground text-background px-8 py-4 rounded-full hover:bg-accent hover:text-background transition-all duration-500"
+                  className="group flex items-center gap-4 text-lg font-medium tracking-tight bg-foreground text-background px-8 py-4 rounded-full hover:bg-accent hover:text-background transition-colors duration-500"
                 >
                   Let&apos;s talk
                   <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform duration-500" />
-                </Link>
+                </MagneticButton>
                 <Link
                   href="/about"
                   className="text-lg font-medium tracking-tight text-foreground/80 hover:text-foreground px-6 py-4 transition-colors duration-500"

@@ -296,3 +296,85 @@ button:focus-visible {
     filter: blur(0);
   }
 }
+
+/* Premium gradient border effect */
+.gradient-border {
+  position: relative;
+  background: transparent;
+}
+
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  border-radius: inherit;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.05) 50%,
+    rgba(255, 255, 255, 0.1) 100%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.gradient-border:hover::before {
+  background: linear-gradient(
+    135deg,
+    hsl(var(--accent) / 0.3) 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    hsl(var(--accent) / 0.3) 100%
+  );
+}
+
+/* Subtle lift on hover */
+.hover-lift {
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hover-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.3);
+}
+
+/* Premium text selection */
+::selection {
+  background-color: hsl(var(--accent) / 0.3);
+  color: hsl(var(--foreground));
+}
+
+/* Refined focus ring */
+*:focus-visible {
+  outline: 1px solid hsl(var(--accent) / 0.5);
+  outline-offset: 3px;
+}
+
+/* Smooth image loading */
+img {
+  transition: opacity 0.5s ease;
+}
+
+/* Premium link hover */
+.link-premium {
+  position: relative;
+  display: inline-block;
+}
+
+.link-premium::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: linear-gradient(90deg, hsl(var(--accent)), transparent);
+  transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.link-premium:hover::after {
+  width: 100%;
+}
