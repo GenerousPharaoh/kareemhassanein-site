@@ -256,13 +256,13 @@ export default function About() {
 
               <AnimatedBlock delay={0.6} direction="up">
                 <p className="text-xl md:text-2xl text-foreground/90 leading-relaxed font-light tracking-tight">
-                  I started out as a physiotherapist. Spent years treating patients, running a busy caseload, figuring out how clinics work from the inside.
+                  I spent years as a physiotherapist, treating patients and watching how clinics actually work. Not from a consulting report, but from inside the room, using the systems every day.
                 </p>
               </AnimatedBlock>
 
               <AnimatedBlock delay={0.8} direction="up">
                 <p className="text-lg md:text-xl text-muted-foreground leading-relaxed font-light">
-                  Along the way, I kept getting pulled into operational problems. Referrals slipping through the cracks. Clinicians buried in paperwork. Software purchases that gathered dust.
+                  I saw why software rollouts fail. It is rarely the technology. It is the gap between how the tool expects you to work and how the work actually happens. Clinicians ignore systems that add friction to their day, no matter how good the feature set is.
                 </p>
               </AnimatedBlock>
 
@@ -276,7 +276,7 @@ export default function About() {
                     transition={{ duration: 1.2, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
                     className="text-lg md:text-xl text-muted-foreground leading-relaxed font-light"
                   >
-                    I started fixing them. Not just recommending solutions, but actually building and implementing them. That became the work I do now.
+                    That perspective shapes everything I do now. I map workflows before touching configuration. I talk to the people who will use the system. And I stay through adoption, because go-live is where most implementations fall apart.
                   </motion.p>
                 </div>
               </AnimatedBlock>
@@ -291,7 +291,7 @@ export default function About() {
               <div className="p-10 md:p-16 rounded-3xl border border-white/5 bg-white/[0.02] backdrop-blur-sm relative overflow-hidden group text-center block">
                 <div className="absolute inset-0 bg-gradient-to-br from-accent/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
                 <p className="text-2xl md:text-3xl text-foreground font-medium leading-[1.3] relative z-10">
-                  I help healthcare practices and professional services firms with the same kinds of problems. Operations, workflows, tools that need to actually work.
+                  That is the difference between installation and adoption. Between buying software and getting value from it. Between a process on paper and one that actually runs.
                 </p>
               </div>
             </AnimatedBlock>
@@ -336,13 +336,13 @@ export default function About() {
           <div className="grid md:grid-cols-2 gap-12 md:gap-16">
             <ValueCard
               subtitle="Why it matters"
-              title="Operational experience."
-              desc="8,000+ hours of client-facing delivery. I know what it feels like when systems fight you instead of helping. That shapes how I map workflows, configure tools, and design automations that actually fit into real work."
+              title="I have been the end user."
+              desc="Most consultants study workflows from the outside. I have lived them. I know how it feels when a system adds 15 minutes to every patient visit, or when a new tool breaks the rhythm of your day. That changes how I approach implementation."
             />
             <ValueCard
               subtitle="How I work"
-              title="I build things."
-              desc="I don't write reports and leave. I build the automation, configure the system, write the SOPs, train the team, and stick around for post-go-live support. When I'm done, people are actually using it."
+              title="I stay through adoption."
+              desc="Go-live is not the finish line. It is where most implementations start to fail. I stick around through the first weeks and months, adjusting the system as real usage reveals what needs to change. The goal is not a successful launch. It is sustained use."
             />
           </div>
         </motion.div>

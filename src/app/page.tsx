@@ -15,9 +15,9 @@ const metrics = [
 ];
 
 const approach = [
-  { title: 'Map', desc: 'Understand how work actually flows' },
-  { title: 'Build', desc: 'Create systems that fit the workflow' },
-  { title: 'Launch', desc: 'Drive adoption, not just installation' },
+  { title: 'Map', desc: 'Before configuring anything, I watch how work actually moves. Where do things slow down? What steps get skipped? What workarounds have people built?' },
+  { title: 'Build', desc: 'The system has to fit the workflow, not the other way around. I configure tools around how your team already operates, not how a manual says they should.' },
+  { title: 'Launch', desc: 'Go-live is the beginning, not the end. I stay through the first weeks, adjusting based on real usage until the new way becomes the default way.' },
 ];
 
 export default function Home() {
@@ -187,11 +187,11 @@ export default function Home() {
           className="relative z-10 text-center px-6 max-w-5xl mx-auto will-change-transform"
         >
           <h2 className="text-4xl md:text-6xl lg:text-7xl font-medium tracking-tight leading-[1.1] mb-6">
-            The problem isn&apos;t the software.
+            Most software fails at adoption, not installation.
           </h2>
           <div className="h-[1px] w-32 bg-accent/30 mx-auto mb-6" />
           <p className="text-xl md:text-2xl lg:text-3xl font-light text-muted-foreground max-w-3xl mx-auto">
-            It&apos;s how it fits into the way people already work.
+            The tool works fine. The rollout went smoothly. But three months later, half the team is back to spreadsheets. The problem is never the feature set. It is the gap between how the system wants you to work and how your work actually happens.
           </p>
         </motion.div>
       </section>
