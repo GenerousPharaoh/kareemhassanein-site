@@ -337,7 +337,7 @@ export default function About() {
             <ValueCard
               subtitle="Why it matters"
               title="I have been the end user."
-              desc="Most consultants study workflows from the outside. I have lived them. I know how it feels when a system adds 15 minutes to every patient visit, or when a new tool breaks the rhythm of your day. That changes how I approach implementation."
+              desc="Most consultants study workflows from the outside. I have used the systems I now help implement. That shapes how I think about configuration, training, and what actually makes people adopt something new."
             />
             <ValueCard
               subtitle="How I work"
