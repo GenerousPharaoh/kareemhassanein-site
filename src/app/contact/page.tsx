@@ -1,16 +1,13 @@
 'use client';
 
 import { motion, useScroll, useTransform, useSpring, useInView } from 'framer-motion';
-import { Mail, Linkedin, Globe, ArrowUpRight } from 'lucide-react';
+import { Linkedin, ArrowUpRight } from 'lucide-react';
 import MaskedReveal from '@/components/MaskedReveal';
 import ParallaxImage from '@/components/ParallaxImage';
 import { useRef, useEffect } from 'react';
 
 const socialLinks = [
-  { label: 'Email', href: 'mailto:kareem.hassanein@gmail.com', icon: <Mail className="w-5 h-5" /> },
-  { label: 'LinkedIn', href: 'https://linkedin.com/in/kareemhassanein', icon: <Linkedin className="w-5 h-5" /> },
-  { label: 'Kinetikare Physio', href: 'https://www.kinetikarephysio.com', icon: <Globe className="w-5 h-5" /> },
-  { label: 'Endorphins Health', href: 'https://www.endorphinshealth.com', icon: <Globe className="w-5 h-5" /> },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/kareem-hassanein-physiotherapy/', icon: <Linkedin className="w-5 h-5" /> },
 ];
 
 function ContactLink({ link, index }: { link: typeof socialLinks[0]; index: number }) {

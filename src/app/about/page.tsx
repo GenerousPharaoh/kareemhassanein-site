@@ -1,7 +1,6 @@
 'use client';
 
 import { motion, useScroll, useTransform, useSpring, useInView } from 'framer-motion';
-import { Download } from 'lucide-react';
 import ScrollReveal from '@/components/ScrollReveal';
 import ParallaxImage from '@/components/ParallaxImage';
 import { useRef, useEffect } from 'react';
@@ -382,41 +381,6 @@ export default function About() {
               </div>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* Resume CTA */}
-      <section className="py-24 md:py-36 px-6 lg:px-12 xl:px-20 border-t border-white/5 relative overflow-hidden">
-        {/* Background image */}
-        <div className="absolute inset-0 z-0">
-          <ParallaxImage
-            src="/images/kh_section_divider_signal-to-system_02.png"
-            alt="Signal to system"
-            className="w-full h-full opacity-20"
-            fadedVertical={true}
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-background" />
-        </div>
-        <div className="absolute inset-0 bg-gradient-to-t from-accent/10 via-transparent to-transparent pointer-events-none z-[1]" />
-        <div className="max-w-[900px] mx-auto text-center relative z-10">
-          <ScrollReveal direction="up">
-            <h2 className="text-2xl md:text-3xl font-medium tracking-tight mb-8">Want the full picture?</h2>
-            <a
-              href="/Kareem-Hassanein-Resume.pdf"
-              className="group relative inline-flex items-center gap-3 text-lg font-medium bg-foreground text-background px-8 py-4 rounded-full hover:bg-accent hover:text-white transition-all duration-500 overflow-hidden shadow-[inset_0_1px_rgba(255,255,255,0.2),0_0_20px_rgba(var(--accent-rgb),0)] hover:shadow-[inset_0_1px_rgba(255,255,255,0.4),0_0_30px_rgba(var(--accent-rgb),0.3)]"
-            >
-              {/* Shimmer effect */}
-              <motion.div
-                animate={{ x: ["-100%", "200%"] }}
-                transition={{ duration: 3, repeat: Infinity, ease: "linear", repeatDelay: 4 }}
-                className="absolute inset-0 w-1/3 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12"
-              />
-              <span className="relative z-10 flex items-center gap-3">
-                Download Resume
-                <Download size={20} className="group-hover:translate-y-0.5 transition-transform duration-500" />
-              </span>
-            </a>
-          </ScrollReveal>
         </div>
       </section>
 
