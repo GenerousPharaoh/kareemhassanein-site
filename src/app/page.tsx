@@ -216,8 +216,9 @@ export default function Home() {
           />
         </motion.div>
 
-        {/* Lighter gradient overlays */}
-        <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background pointer-events-none" />
+        {/* Subtle edge blending */}
+        <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-transparent via-30% to-transparent to-70% pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent via-30% to-transparent pointer-events-none" />
 
         {/* Content */}
         <motion.div
