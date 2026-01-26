@@ -293,10 +293,10 @@ export default function About() {
                 <div className="absolute -left-4 md:-left-8 top-0 bottom-0 w-[2px] bg-gradient-to-b from-accent via-accent/50 to-transparent" />
                 <div className="pl-8 md:pl-12">
                   <p className="text-3xl md:text-4xl lg:text-5xl text-foreground/90 font-light leading-[1.2] tracking-tight">
-                    Most implementations fail after go-live.
+                    I make systems work the way
                   </p>
-                  <p className="text-3xl md:text-4xl lg:text-5xl text-accent font-medium leading-[1.2] tracking-tight mt-2">
-                    I make sure yours doesn&apos;t.
+                  <p className="text-3xl md:text-4xl lg:text-5xl text-accent font-medium leading-[1.2] tracking-tight mt-2 italic font-serif">
+                    people actually work.
                   </p>
                 </div>
               </div>
