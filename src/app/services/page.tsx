@@ -97,12 +97,12 @@ function ServiceSection({ service, index }: { service: typeof services[0], index
   return (
     <section
       ref={ref}
-      className="py-24 md:py-36 px-6 lg:px-12 xl:px-20 border-b border-white/5 last:border-b-0 relative overflow-hidden"
+      className="py-24 md:py-36 px-6 lg:px-12 xl:px-20 relative"
     >
-      {/* Background image with enhanced parallax */}
+      {/* Background image with soft fade */}
       <motion.div
         style={{ y: imgY, opacity: imgOpacity, scale: imgScale }}
-        className="absolute inset-y-0 w-1/2 right-0 pointer-events-none will-change-transform"
+        className="absolute inset-y-0 w-2/3 right-0 pointer-events-none will-change-transform"
       >
         <ParallaxImage
           src={service.image}
@@ -111,8 +111,6 @@ function ServiceSection({ service, index }: { service: typeof services[0], index
           fadedSides={true}
           fadedVertical={true}
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/40 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/10 via-transparent to-background/10" />
       </motion.div>
 
       <motion.div
@@ -161,7 +159,7 @@ function ToolDomain({ domain }: { domain: typeof technicalIndex[0] }) {
     <motion.div
       ref={ref}
       style={{ y, opacity }}
-      className="pb-12 border-b border-white/5 last:border-b-0 last:pb-0 relative will-change-transform"
+      className="pb-12 last:pb-0 relative will-change-transform"
     >
       <h3 className="text-sm font-medium text-accent mb-6">
         {domain.domain}
@@ -209,15 +207,15 @@ export default function Services() {
     <main className="relative bg-background text-foreground overflow-hidden pt-20">
 
       {/* Hero */}
-      <section ref={heroRef} className="pt-28 pb-20 md:pt-36 md:pb-28 px-6 lg:px-12 xl:px-20 relative overflow-hidden">
+      <section ref={heroRef} className="pt-28 pb-20 md:pt-36 md:pb-28 px-6 lg:px-12 xl:px-20 relative">
         {/* Background image */}
         <motion.div style={{ y: heroY }} className="absolute inset-0 z-0 will-change-transform">
           <ParallaxImage
             src="/images/mapping.png"
             alt="Mapping"
-            className="w-full h-full opacity-50"
+            className="w-full h-full opacity-45"
+            fadedVertical={true}
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-background via-background/40 to-background" />
         </motion.div>
 
         <motion.div style={{ y: heroY }} className="max-w-[1200px] mx-auto relative z-10 will-change-transform">
@@ -245,15 +243,16 @@ export default function Services() {
       </div>
 
       {/* Tools Section */}
-      <section ref={toolsRef} className="py-24 md:py-36 px-6 lg:px-12 xl:px-20 border-t border-white/5 relative overflow-hidden">
+      <section ref={toolsRef} className="py-24 md:py-36 px-6 lg:px-12 xl:px-20 relative">
         {/* Background image */}
         <div className="absolute inset-0 z-0">
           <ParallaxImage
             src="/images/kh_section_divider_signal-to-system_02.png"
             alt="Signal to System"
-            className="w-full h-full opacity-45"
+            className="w-full h-full opacity-40"
+            fadedVertical={true}
+            fadedSides={true}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-background" />
         </div>
 
         <div className="max-w-[1200px] mx-auto relative z-10">
