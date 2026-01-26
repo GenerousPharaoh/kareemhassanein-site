@@ -375,9 +375,9 @@ export default function About() {
 
           <div className="relative space-y-12 md:space-y-16">
             {/* Vertical timeline thread */}
-            <div className="absolute left-[70px] top-8 bottom-8 w-[1px] bg-white/[0.05] hidden md:block" />
+            <div className="absolute left-[155px] top-8 bottom-8 w-[1px] bg-white/[0.05] hidden md:block" />
             <motion.div
-              className="absolute left-[70px] top-8 bottom-8 w-[1px] bg-accent/30 origin-top hidden md:block"
+              className="absolute left-[155px] top-8 bottom-8 w-[1px] bg-accent/30 origin-top hidden md:block"
               style={{
                 scaleY: useSpring(useTransform(useScroll({
                   target: historyRef,
