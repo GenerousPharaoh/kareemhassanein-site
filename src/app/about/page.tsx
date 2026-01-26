@@ -49,7 +49,7 @@ const experience = [
     period: '2024 - Present',
     role: 'Digital Strategy & Operations',
     company: 'Endorphins Health',
-    desc: 'Redesigned booking architecture across 6 specialties, reducing intake friction. Built and deployed a 60+ page web application with booking integration and Google Reviews API. Executed local SEO across 8 GTA municipalities.',
+    desc: 'Redesigned booking architecture across 6 specialties, reducing intake friction. Executed local SEO across 8 GTA municipalities.',
   },
   {
     period: '2025 - Present',
