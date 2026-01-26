@@ -201,7 +201,7 @@ export default function About() {
         {/* Cinematic Background with Parallax */}
         <motion.div style={{ y: heroBgY }} className="absolute -inset-20 z-0 will-change-transform">
           <ParallaxImage
-            src="/images/digital-cathedral.png"
+            src="/images/mapping.png"
             alt="Architecture"
             className="w-full h-full opacity-25"
             fadedVertical={true}
