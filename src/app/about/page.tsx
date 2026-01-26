@@ -3,6 +3,7 @@
 import { motion, useScroll, useTransform, useSpring, useInView } from 'framer-motion';
 import ScrollReveal from '@/components/ScrollReveal';
 import ParallaxImage from '@/components/ParallaxImage';
+import AnimatedDivider from '@/components/AnimatedDivider';
 import { useRef, useEffect } from 'react';
 
 // Animated text block with spring physics
@@ -369,7 +370,7 @@ export default function About() {
           <ScrollReveal direction="up">
             <span className="block text-xs font-medium tracking-[0.3em] uppercase text-muted-foreground mb-6">Experience</span>
             <h2 className="text-3xl md:text-4xl font-medium tracking-tight mb-6">Work history.</h2>
-            <div className="h-[1px] bg-gradient-to-r from-accent/50 to-transparent max-w-[200px] mb-16" />
+            <AnimatedDivider direction="left" accent maxWidth="200px" className="mb-16" />
           </ScrollReveal>
 
           <div className="relative space-y-12 md:space-y-16">

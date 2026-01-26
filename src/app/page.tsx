@@ -4,9 +4,9 @@ import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import TextReveal from '@/components/TextReveal';
 import ProjectList from '@/components/ProjectList';
+import AnimatedDivider from '@/components/AnimatedDivider';
 import ParallaxImage from '@/components/ParallaxImage';
 import Link from 'next/link';
-import MagneticButton from '@/components/MagneticButton';
 import { useRef } from 'react';
 
 const metrics = [
@@ -161,13 +161,13 @@ export default function Home() {
                 transition={{ duration: 0.6, delay: 1.8, ease: [0.16, 1, 0.3, 1] }}
                 className="flex gap-6 items-center justify-center pt-10"
               >
-                <MagneticButton
+                <Link
                   href="/contact"
                   className="group flex items-center gap-4 text-lg font-medium tracking-tight bg-foreground text-background px-8 py-4 rounded-full hover:bg-accent hover:text-background transition-colors duration-500"
                 >
                   Let&apos;s talk
                   <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform duration-500" />
-                </MagneticButton>
+                </Link>
                 <Link
                   href="/about"
                   className="text-lg font-medium tracking-tight text-foreground/80 hover:text-foreground px-6 py-4 transition-colors duration-500"
@@ -179,6 +179,11 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Divider */}
+      <div className="px-6 md:px-12 xl:px-20">
+        <AnimatedDivider direction="center" maxWidth="400px" />
+      </div>
 
       {/* Statement Section */}
       <section ref={transitionRef} className="py-20 md:py-32 w-full relative flex items-center justify-center bg-background">
@@ -246,8 +251,13 @@ export default function Home() {
         </motion.div>
       </section>
 
+      {/* Divider */}
+      <div className="px-6 md:px-12 xl:px-20 py-8">
+        <AnimatedDivider direction="left" accent maxWidth="300px" />
+      </div>
+
       {/* Selected Projects */}
-      <section ref={portfolioRef} className="py-24 md:py-36 relative z-10 w-full px-6 md:px-12 xl:px-20 overflow-hidden">
+      <section ref={portfolioRef} className="py-16 md:py-28 relative z-10 w-full px-6 md:px-12 xl:px-20 overflow-hidden">
         {/* Background image - positioned for visual interest */}
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 -right-1/4 top-0">
@@ -271,7 +281,7 @@ export default function Home() {
             <h2 className="text-4xl md:text-6xl font-medium tracking-tight">
               Recent Work
             </h2>
-            <div className="h-[2px] bg-gradient-to-r from-accent to-transparent mt-6 max-w-xs" />
+            <AnimatedDivider direction="left" accent maxWidth="280px" className="mt-6" />
           </motion.div>
 
           <ProjectList />

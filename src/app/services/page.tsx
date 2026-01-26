@@ -4,6 +4,7 @@ import { motion, useScroll, useTransform, useSpring, useInView } from 'framer-mo
 import ScrollReveal from '@/components/ScrollReveal';
 import CharReveal from '@/components/CharReveal';
 import ParallaxImage from '@/components/ParallaxImage';
+import AnimatedDivider from '@/components/AnimatedDivider';
 import { useRef, useEffect } from 'react';
 
 const services = [
@@ -264,7 +265,7 @@ export default function Services() {
             <h2 className="text-3xl md:text-5xl font-medium tracking-tight">
               What I use.
             </h2>
-            <div className="h-[2px] bg-gradient-to-r from-accent to-transparent mt-6 max-w-xs" />
+            <AnimatedDivider direction="left" accent maxWidth="280px" className="mt-6" />
           </motion.div>
 
           <div className="space-y-16">
