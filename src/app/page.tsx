@@ -77,7 +77,7 @@ export default function Home() {
         {/* Cinematic Background Layer - Simple Parallax */}
         <motion.div
           style={{ y: heroBgY }}
-          className="absolute -inset-x-0 -top-32 -bottom-48 z-0 will-change-transform"
+          className="absolute -inset-x-0 -top-32 -bottom-64 z-0 will-change-transform"
         >
           <ParallaxImage
             src="/images/orchestrating.png"
@@ -86,7 +86,7 @@ export default function Home() {
           />
         </motion.div>
         {/* Fixed gradient overlay - extends beyond section for seamless blend */}
-        <div className="absolute inset-x-0 -top-10 -bottom-32 z-[1] bg-gradient-to-b from-background via-background/0 via-30% to-background pointer-events-none" />
+        <div className="absolute inset-x-0 -top-10 -bottom-64 z-[1] bg-gradient-to-b from-background via-background/0 via-30% to-background pointer-events-none" />
 
         <div className="relative z-10 w-full max-w-[1400px] h-full flex flex-col justify-center py-20">
           <div className="grid lg:grid-cols-1 items-center justify-center text-center">
@@ -180,11 +180,7 @@ export default function Home() {
       </section>
 
       {/* Statement Section */}
-      <section ref={transitionRef} className="py-20 md:py-32 w-full relative overflow-hidden flex items-center justify-center bg-background">
-        {/* Subtle gradient only - no image for cleaner transition */}
-        <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-accent/[0.03] to-transparent" />
-        </div>
+      <section ref={transitionRef} className="py-20 md:py-32 w-full relative flex items-center justify-center bg-background">
 
         <motion.div
           style={{ y: statementY, opacity: statementOpacity, scale: statementScale }}
