@@ -27,7 +27,7 @@ export default function Footer() {
       className="fixed bottom-0 left-0 w-full h-[800px] z-0 flex flex-col justify-end pointer-events-none"
       style={{ clipPath: "polygon(0% 0, 100% 0%, 100% 100%, 0 100%)" }}
     >
-      <div className="relative h-full w-full bg-[#0a0c10] flex flex-col justify-center items-center text-center pointer-events-auto overflow-hidden">
+      <div className="relative h-full w-full bg-[#0f1318] flex flex-col justify-center items-center text-center pointer-events-auto overflow-hidden">
 
         {/* Noise Overlay */}
         <div className="absolute inset-0 opacity-[0.03] pointer-events-none z-[1] bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />

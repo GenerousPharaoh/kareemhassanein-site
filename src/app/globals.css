@@ -3,29 +3,29 @@
 @tailwind utilities;
 
 :root {
-  --background: 220 20% 4%;
-  /* Nocturnal Onyx - Deepest Slate */
+  --background: 220 18% 7%;
+  /* Lifted slate - less oppressive */
   --foreground: 40 10% 98%;
   /* Crisp Off-White */
-  --card: 220 20% 6% / 0.4;
+  --card: 220 18% 10% / 0.5;
   --card-foreground: 40 10% 98%;
-  --popover: 220 20% 4%;
+  --popover: 220 18% 8%;
   --popover-foreground: 40 10% 98%;
   --primary: 40 10% 98%;
-  --primary-foreground: 220 20% 4%;
-  --secondary: 220 10% 12%;
+  --primary-foreground: 220 18% 7%;
+  --secondary: 220 12% 16%;
   --secondary-foreground: 40 10% 98%;
-  --muted: 220 10% 15%;
-  --muted-foreground: 220 8% 68%;
-  /* Steel Slate - brightened for readability */
+  --muted: 220 12% 20%;
+  --muted-foreground: 220 10% 72%;
+  /* Brightened for readability */
   --accent: 38 30% 75%;
   /* Champagne Gold */
   --accent-secondary: 38 20% 60%;
-  --accent-foreground: 220 20% 4%;
+  --accent-foreground: 220 18% 7%;
   --destructive: 0 62.8% 30.6%;
   --destructive-foreground: 40 10% 98%;
-  --border: 220 10% 12%;
-  --input: 220 10% 12%;
+  --border: 220 12% 18%;
+  --input: 220 12% 16%;
   --ring: 38 30% 75%;
   --radius: 3.5rem;
 }
