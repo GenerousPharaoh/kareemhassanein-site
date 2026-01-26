@@ -15,16 +15,6 @@ const projects = [
         description: 'Clinic website for 8 practitioners across 6 specialties. Booking architecture and local SEO across 8 municipalities.',
         href: 'https://www.endorphinshealth.com',
     },
-    {
-        title: 'Tax Relief Counsel',
-        category: 'Workflow Automation',
-        description: 'LLM-powered document drafting system. 85% reduction in generation time. Reusable template library.',
-    },
-    {
-        title: 'Private Physio Clinic',
-        category: 'AI Implementation',
-        description: 'Heidi AI rollout from evaluation to go-live. 100% clinician adoption in 8 weeks.',
-    }
 ];
 
 export default function ProjectList() {
