@@ -109,15 +109,7 @@ export default function Home() {
                   transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
                   className="inline"
                 >
-                  I find bottlenecks and{" "}
-                </motion.span>
-                <motion.span
-                  initial={{ opacity: 0, scale: 0.8, filter: "blur(12px)" }}
-                  animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-                  transition={{ duration: 1.2, delay: 1.1, ease: [0.16, 1, 0.3, 1] }}
-                  className="inline-block text-accent italic font-serif"
-                >
-                  fix
+                  I find friction, solve it,{" "}
                 </motion.span>
                 <br />
                 <motion.span
@@ -126,7 +118,15 @@ export default function Home() {
                   transition={{ duration: 1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
                   className="inline"
                 >
-                  them.
+                  and make it{" "}
+                </motion.span>
+                <motion.span
+                  initial={{ opacity: 0, scale: 0.8, filter: "blur(12px)" }}
+                  animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+                  transition={{ duration: 1.2, delay: 1.1, ease: [0.16, 1, 0.3, 1] }}
+                  className="inline-block text-accent italic font-serif"
+                >
+                  stick.
                 </motion.span>
               </h1>
 
