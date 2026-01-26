@@ -134,7 +134,7 @@ export default function Contact() {
               style={{ opacity: descOpacity, y: descY }}
               className="text-xl md:text-2xl text-muted-foreground font-light leading-relaxed mb-16 md:mb-24 italic border-l-2 border-accent/20 pl-8 md:pl-12 max-w-xl"
             >
-              Whether you have a project in mind or just want to connect, I&apos;d be happy to hear from you.
+              Have a workflow that needs fixing? A system that nobody uses? Let&apos;s figure it out.
             </motion.p>
           </div>
 
