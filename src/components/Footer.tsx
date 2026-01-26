@@ -67,15 +67,13 @@ export default function Footer() {
             className="text-7xl md:text-[160px] font-medium tracking-tighter mb-20 leading-[0.8]"
           >
             Let&apos;s <br />
-            <span className="relative inline-block mt-4">
-              <span className="opacity-40 italic font-light font-serif">talk.</span>
-              {/* Shimmer line */}
-              <motion.div
-                animate={{ x: ["-100%", "200%"] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", repeatDelay: 2 }}
-                className="absolute inset-0 w-1/2 bg-gradient-to-r from-transparent via-accent/30 to-transparent skew-x-12 pointer-events-none"
-              />
-            </span>
+            <motion.span
+              animate={{ opacity: [0.3, 0.5, 0.3] }}
+              transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+              className="mt-4 italic font-light font-serif"
+            >
+              talk.
+            </motion.span>
           </motion.h2>
 
           <a
@@ -93,19 +91,18 @@ export default function Footer() {
           </a>
         </div>
 
+        {/* Brand Watermark (Moved to Background) */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full text-center pointer-events-none select-none z-0">
+          <h2 className="text-[10vw] font-bold tracking-[1em] text-white opacity-[0.03] leading-none uppercase">
+            HASSANEIN
+          </h2>
+        </div>
+
         {/* Bottom Bar */}
         <div className="absolute bottom-0 left-0 w-full border-t border-white/5 bg-white/[0.02] backdrop-blur-2xl">
           <div className="max-w-[1800px] mx-auto px-6 md:px-12 py-10 flex flex-col md:flex-row justify-between items-end gap-8">
-            <div className="relative group">
-              <h2
-                className="text-[80px] md:text-[140px] font-bold tracking-tighter transition-all duration-1000 select-none pointer-events-none text-transparent"
-                style={{
-                  WebkitTextStroke: "1px rgba(255,255,255,0.08)",
-                  opacity: 0.8
-                }}
-              >
-                HASSANEIN
-              </h2>
+            <div className="flex flex-col items-start gap-4">
+              <span className="text-xs font-medium tracking-widest text-accent/50">KAREEM HASSANEIN</span>
             </div>
             <div className="flex flex-col items-end gap-2 text-[10px] uppercase tracking-[0.3em] font-medium text-muted-foreground/50 pb-2">
               <div className="flex gap-8">
