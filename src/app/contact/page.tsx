@@ -57,15 +57,15 @@ function ContactLink({ link }: { link: typeof socialLinks[0]; index: number }) {
         className="relative z-10 flex items-center justify-between p-8 md:p-10"
       >
         <div className="flex items-center gap-8 md:gap-10">
-          <div className="w-12 h-12 rounded-2xl bg-white/[0.02] border border-white/10 flex items-center justify-center group-hover:bg-accent/10 group-hover:border-accent/30 transition-all duration-500 text-foreground/50 group-hover:text-accent">
+          <div className="w-12 h-12 rounded-2xl bg-white/[0.02] border border-white/10 flex items-center justify-center group-hover:bg-accent/10 group-hover:border-accent/30 transition-all duration-500 text-foreground/70 group-hover:text-accent">
             {link.icon}
           </div>
           <div className="flex flex-col">
-            <span className="text-xl font-medium tracking-tight opacity-60 group-hover:opacity-100 transition-all duration-500 leading-none mb-1">{link.label}</span>
-            <span className="text-[10px] uppercase tracking-widest opacity-30 group-hover:opacity-50 group-hover:text-accent transition-all duration-500 font-medium">Link</span>
+            <span className="text-xl font-medium tracking-tight opacity-80 group-hover:opacity-100 transition-all duration-500 leading-none mb-1">{link.label}</span>
+            <span className="text-[10px] uppercase tracking-widest opacity-50 group-hover:opacity-70 group-hover:text-accent transition-all duration-500 font-medium">Link</span>
           </div>
         </div>
-        <ArrowUpRight className="opacity-20 group-hover:opacity-100 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-500 text-accent" />
+        <ArrowUpRight className="opacity-40 group-hover:opacity-100 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-500 text-accent" />
       </a>
     </motion.div>
   );
@@ -139,7 +139,7 @@ export default function Contact() {
               className="text-6xl md:text-[100px] lg:text-[120px] font-medium tracking-tighter mb-16 leading-[0.85]"
             >
               Get in <br />
-              <span className="opacity-40 italic font-light font-serif">
+              <span className="opacity-60 italic font-light font-serif">
                 <MaskedReveal delay={0.4} className="py-2">touch.</MaskedReveal>
               </span>
             </motion.h1>
@@ -177,7 +177,7 @@ export default function Contact() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 0.4 }}
             transition={{ duration: 0.8, delay: 1 }}
-            className="flex flex-col items-end gap-2 text-[10px] uppercase tracking-[0.3em] font-medium text-muted-foreground/50 pb-2"
+            className="flex flex-col items-end gap-2 text-[10px] uppercase tracking-[0.3em] font-medium text-muted-foreground/70 pb-2"
           >
             <div className="flex gap-8">
               <span>Burlington, ON</span>

@@ -169,7 +169,7 @@ export default function Home() {
                 </Link>
                 <Link
                   href="/about"
-                  className="text-lg font-medium tracking-tight text-foreground/60 hover:text-foreground px-6 py-4 transition-all duration-500"
+                  className="text-lg font-medium tracking-tight text-foreground/80 hover:text-foreground px-6 py-4 transition-colors duration-500"
                 >
                   Learn more
                 </Link>

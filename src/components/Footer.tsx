@@ -97,7 +97,7 @@ export default function Footer() {
             <div className="flex flex-col items-start gap-4">
               <span className="text-xs font-medium tracking-widest text-accent/50">KAREEM HASSANEIN</span>
             </div>
-            <div className="flex flex-col items-end gap-2 text-[10px] uppercase tracking-[0.3em] font-medium text-muted-foreground/50 pb-2">
+            <div className="flex flex-col items-end gap-2 text-[10px] uppercase tracking-[0.3em] font-medium text-muted-foreground/70 pb-2">
               <div className="flex gap-8">
                 <span>Burlington, ON</span>
                 <span>Available remotely</span>

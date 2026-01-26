@@ -148,7 +148,7 @@ function ExperienceItem({ item, index }: { item: typeof experience[0]; index: nu
         >
           0{index + 1}
         </motion.span>
-        <span className="text-sm text-muted-foreground/50 font-mono tracking-wide">
+        <span className="text-sm text-muted-foreground/70 font-mono tracking-wide">
           {item.period}
         </span>
       </div>

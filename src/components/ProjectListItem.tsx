@@ -53,22 +53,22 @@ export default function ProjectListItem({ project, index }: ProjectListItemProps
                 <h3 className="text-3xl md:text-5xl font-medium tracking-tight text-foreground/90 group-hover:text-foreground group-hover:translate-x-3 transition-all duration-500">
                     {project.title}
                 </h3>
-                <span className="text-sm tracking-wide text-muted-foreground/60 group-hover:text-accent group-hover:translate-x-3 transition-all duration-500">
+                <span className="text-sm tracking-wide text-muted-foreground group-hover:text-accent group-hover:translate-x-3 transition-all duration-500">
                     {project.category}
                 </span>
                 {project.description && (
-                    <p className="text-sm text-muted-foreground/40 leading-relaxed group-hover:text-muted-foreground/60 group-hover:translate-x-3 transition-all duration-500 mt-1">
+                    <p className="text-sm text-muted-foreground/70 leading-relaxed group-hover:text-muted-foreground group-hover:translate-x-3 transition-all duration-500 mt-1">
                         {project.description}
                     </p>
                 )}
             </div>
 
             <div className="flex items-center gap-4 z-30">
-                <span className="text-muted-foreground/40 text-sm hidden md:block opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <span className="text-muted-foreground/70 text-sm hidden md:block opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     View
                 </span>
                 <div className="w-11 h-11 md:w-12 md:h-12 rounded-full border border-white/10 flex items-center justify-center group-hover:bg-accent group-hover:border-accent transition-all duration-500">
-                    <ArrowUpRight className="w-4 h-4 md:w-5 md:h-5 text-muted-foreground/50 group-hover:text-background transition-colors duration-500" />
+                    <ArrowUpRight className="w-4 h-4 md:w-5 md:h-5 text-muted-foreground group-hover:text-background transition-colors duration-500" />
                 </div>
             </div>
         </motion.a>
