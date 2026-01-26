@@ -1,7 +1,6 @@
 'use client';
 
-import Link from 'next/link';
-import { ArrowRight } from 'lucide-react';
+import { Linkedin } from 'lucide-react';
 import ParallaxImage from './ParallaxImage';
 
 export default function Footer() {
@@ -26,13 +25,15 @@ export default function Footer() {
           <h2 className="text-8xl md:text-[180px] font-medium tracking-tighter mb-16 leading-[0.75]">
             Let&apos;s <br /><span className="opacity-40 italic font-light font-serif">talk.</span>
           </h2>
-          <Link
-            href="/contact"
+          <a
+            href="https://www.linkedin.com/in/kareem-hassanein-physiotherapy/"
+            target="_blank"
+            rel="noopener noreferrer"
             className="group inline-flex items-center gap-8 text-3xl md:text-5xl font-light border border-white/20 rounded-full px-12 py-6 hover:bg-white hover:text-black transition-all duration-500"
           >
             Get in touch
-            <ArrowRight size={40} className="group-hover:translate-x-2 transition-transform duration-500" />
-          </Link>
+            <Linkedin size={36} className="group-hover:scale-110 transition-transform duration-500" />
+          </a>
         </div>
 
         <div className="absolute bottom-0 left-0 w-full border-t border-white/5 bg-black/20 backdrop-blur-md">
