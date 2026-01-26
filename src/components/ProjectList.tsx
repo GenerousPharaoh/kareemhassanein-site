@@ -6,13 +6,13 @@ const projects = [
     {
         title: 'KinetiKare Physio',
         category: 'Web Development',
-        description: '60+ page web application with booking integration, SEO optimization, and Google Reviews API.',
+        description: '60+ page web application including 55 condition pages, 6 treatment pages, booking integration, and Google Reviews.',
         href: 'https://www.kinetikarephysio.com',
     },
     {
         title: 'Endorphins Health',
         category: 'Digital Operations',
-        description: 'Booking architecture redesign across 6 specialties. Local SEO across 8 municipalities.',
+        description: 'Clinic website for 8 practitioners across 6 specialties. Booking architecture and local SEO across 8 municipalities.',
         href: 'https://www.endorphinshealth.com',
     },
     {
