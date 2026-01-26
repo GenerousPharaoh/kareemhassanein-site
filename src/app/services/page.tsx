@@ -91,7 +91,7 @@ function ServiceSection({ service, index }: { service: typeof services[0], index
   const y = useSpring(useTransform(scrollYProgress, [0, 1], [80, 0]), springConfig);
   const opacity = useSpring(useTransform(scrollYProgress, [0, 0.4, 1], [0, 0.4, 1]), springConfig);
   const imgY = useSpring(useTransform(scrollYProgress, [0, 1], [50, -50]), springConfig);
-  const imgOpacity = useSpring(useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0, 0.3, 0.35, 0.25]), springConfig);
+  const imgOpacity = useSpring(useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0, 0.45, 0.5, 0.4]), springConfig);
   const imgScale = useSpring(useTransform(scrollYProgress, [0, 1], [1.1, 1]), springConfig);
 
   return (
@@ -111,8 +111,8 @@ function ServiceSection({ service, index }: { service: typeof services[0], index
           fadedSides={true}
           fadedVertical={true}
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/60 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/20 via-transparent to-background/20" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/40 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/10 via-transparent to-background/10" />
       </motion.div>
 
       <motion.div
@@ -215,7 +215,7 @@ export default function Services() {
           <ParallaxImage
             src="/images/mapping.png"
             alt="Mapping"
-            className="w-full h-full opacity-35"
+            className="w-full h-full opacity-50"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-background via-background/40 to-background" />
         </motion.div>
@@ -251,7 +251,7 @@ export default function Services() {
           <ParallaxImage
             src="/images/kh_section_divider_signal-to-system_02.png"
             alt="Signal to System"
-            className="w-full h-full opacity-30"
+            className="w-full h-full opacity-45"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-background" />
         </div>

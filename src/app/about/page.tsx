@@ -204,7 +204,7 @@ export default function About() {
           <ParallaxImage
             src="/images/mapping.png"
             alt="Mapping workflows"
-            className="max-w-3xl w-full opacity-30"
+            className="max-w-3xl w-full opacity-50"
             fadedVertical={true}
           />
         </motion.div>
@@ -309,12 +309,12 @@ export default function About() {
             <ParallaxImage
               src="/images/crystalline_structure.png"
               alt="Values"
-              className="w-full h-full opacity-30 scale-110"
+              className="w-full h-full opacity-50 scale-110"
               fadedSides={true}
               fadedVertical={true}
             />
           </div>
-          <div className="absolute inset-0 bg-gradient-to-b from-background via-background/40 to-background" />
+          <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-transparent to-background/80" />
         </div>
 
         <motion.div
@@ -344,13 +344,13 @@ export default function About() {
             <ParallaxImage
               src="/images/experience_layers.png"
               alt="Experience"
-              className="w-full h-full opacity-30"
+              className="w-full h-full opacity-50"
               fadedSides={true}
               fadedVertical={true}
             />
           </div>
-          <div className="absolute inset-0 bg-gradient-to-b from-background via-background/40 to-background" />
-          <div className="absolute inset-0 bg-gradient-to-r from-background via-transparent to-background" />
+          <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-transparent to-background/80" />
+          <div className="absolute inset-0 bg-gradient-to-r from-background/60 via-transparent to-background/60" />
         </div>
 
         <div className="max-w-[1000px] mx-auto relative z-10">

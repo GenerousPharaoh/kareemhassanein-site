@@ -65,7 +65,7 @@ export default function ParallaxImage({
                     alt={alt}
                     fill
                     priority={priority}
-                    className="object-cover object-center"
+                    className="object-cover object-center saturate-[1.15] contrast-[1.05]"
                 />
             </motion.div>
         </div>
