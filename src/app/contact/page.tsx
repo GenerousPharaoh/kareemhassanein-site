@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, useScroll, useTransform, useSpring, useInView } from 'framer-motion';
+import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import { Linkedin, ArrowUpRight } from 'lucide-react';
 import MaskedReveal from '@/components/MaskedReveal';
 import ParallaxImage from '@/components/ParallaxImage';
@@ -10,35 +10,51 @@ const socialLinks = [
   { label: 'LinkedIn', href: 'https://www.linkedin.com/in/kareem-hassanein-physiotherapy/', icon: <Linkedin className="w-5 h-5" /> },
 ];
 
-function ContactLink({ link, index }: { link: typeof socialLinks[0]; index: number }) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-50px" });
+function ContactLink({ link }: { link: typeof socialLinks[0]; index: number }) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const spotlightOpacity = useSpring(0, { stiffness: 100, damping: 30 });
+  const spotlightX = useSpring(0, { stiffness: 150, damping: 25 });
+  const spotlightY = useSpring(0, { stiffness: 150, damping: 25 });
+  const scale = useSpring(1, { stiffness: 400, damping: 30 });
 
-  const springConfig = { stiffness: 80, damping: 20 };
-  const opacity = useSpring(0, springConfig);
-  const x = useSpring(40, springConfig);
-
-  useEffect(() => {
-    if (isInView) {
-      const timer = setTimeout(() => {
-        opacity.set(1);
-        x.set(0);
-      }, 0.5 * 1000 + index * 100);
-      return () => clearTimeout(timer);
-    }
-  }, [isInView, index, opacity, x]);
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    spotlightX.set(e.clientX - rect.left);
+    spotlightY.set(e.clientY - rect.top);
+  };
 
   return (
     <motion.div
-      ref={ref}
-      style={{ opacity, x }}
-      className="group w-full"
+      ref={containerRef}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={() => {
+        spotlightOpacity.set(0.15);
+        scale.set(1.02);
+      }}
+      onMouseLeave={() => {
+        spotlightOpacity.set(0);
+        scale.set(1);
+      }}
+      style={{ scale }}
+      className="group relative w-full overflow-hidden rounded-2xl border border-white/5 bg-white/[0.01] backdrop-blur-md hover:border-accent/20 transition-all duration-500"
     >
+      <motion.div
+        className="absolute pointer-events-none z-0 w-64 h-64 rounded-full blur-3xl"
+        style={{
+          background: `radial-gradient(circle, hsl(var(--accent)) 0%, transparent 70%)`,
+          x: spotlightX,
+          y: spotlightY,
+          translateX: "-50%",
+          translateY: "-50%",
+          opacity: spotlightOpacity,
+        }}
+      />
       <a
         href={link.href}
         target="_blank"
         rel="noopener noreferrer"
-        className="flex items-center justify-between p-8 md:p-10 transition-all duration-500 rounded-2xl bg-white/[0.02] hover:bg-white/[0.05] border border-white/5 hover:border-accent/20 group-hover:-translate-y-1"
+        className="relative z-10 flex items-center justify-between p-8 md:p-10"
       >
         <div className="flex items-center gap-8 md:gap-10">
           <div className="w-12 h-12 rounded-2xl bg-white/[0.02] border border-white/10 flex items-center justify-center group-hover:bg-accent/10 group-hover:border-accent/30 transition-all duration-500 text-foreground/50 group-hover:text-accent">
@@ -100,26 +116,27 @@ export default function Contact() {
           src="/images/contact_signals.png"
           alt="Flow"
           className="w-full h-full opacity-30"
+          fadedVertical={true}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-background" />
       </motion.div>
 
       <motion.div
         style={{ y: textY }}
-        className="section-container relative z-10 w-full pt-32 pb-12 flex-grow flex items-center will-change-transform"
+        className="section-container relative z-10 w-full pt-48 pb-24 flex-grow flex items-center will-change-transform"
       >
-        <div className="grid lg:grid-cols-[1.3fr_0.7fr] gap-20 lg:gap-32 items-center w-full">
+        <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-20 lg:gap-32 items-start w-full">
           <div>
             <motion.span
               style={{ opacity: labelOpacity, y: labelY }}
-              className="block text-[10px] font-bold tracking-[0.6em] opacity-30 uppercase mb-10"
+              className="block text-[10px] font-bold tracking-[0.6em] text-accent/60 uppercase mb-8"
             >
               Contact
             </motion.span>
 
             <motion.h1
               style={{ opacity: headingOpacity, y: headingY }}
-              className="text-6xl md:text-[120px] lg:text-[140px] font-medium tracking-tighter mb-16 md:mb-20 leading-[0.8]"
+              className="text-6xl md:text-[100px] lg:text-[120px] font-medium tracking-tighter mb-16 leading-[0.85]"
             >
               Get in <br />
               <span className="opacity-40 italic font-light font-serif">
@@ -127,15 +144,22 @@ export default function Contact() {
               </span>
             </motion.h1>
 
+            <motion.div
+              initial={{ opacity: 0, scaleX: 0 }}
+              animate={{ opacity: 1, scaleX: 1 }}
+              transition={{ duration: 1, delay: 0.6 }}
+              className="h-[1px] w-24 bg-accent/30 mb-8 origin-left"
+            />
+
             <motion.p
               style={{ opacity: descOpacity, y: descY }}
-              className="text-xl md:text-2xl text-muted-foreground font-light leading-relaxed mb-16 md:mb-24 italic border-l-2 border-accent/20 pl-8 md:pl-12 max-w-xl"
+              className="text-xl md:text-2xl text-muted-foreground font-light leading-relaxed mb-12 italic max-w-xl"
             >
               Have a workflow that needs fixing? A system that nobody uses? Let&apos;s figure it out.
             </motion.p>
           </div>
 
-          <div className="space-y-4 md:space-y-6">
+          <div className="space-y-6 lg:pt-32">
             {socialLinks.map((link, i) => (
               <ContactLink key={link.label} link={link} index={i} />
             ))}
@@ -144,27 +168,23 @@ export default function Contact() {
       </motion.div>
 
       {/* Premium Anchor Footer */}
-      <footer className="relative z-10 w-full border-t border-white/5 bg-background/80 backdrop-blur-sm">
+      <footer className="relative z-10 w-full border-t border-white/5 bg-white/[0.02] backdrop-blur-2xl">
         <div className="section-container flex flex-col md:flex-row justify-between items-end py-12 gap-8">
-          <div className="overflow-hidden">
-            <motion.h2
-              initial={{ y: 100 }}
-              animate={{ y: 0 }}
-              transition={{ duration: 1, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="text-[80px] md:text-[120px] leading-[0.7] font-bold tracking-tighter opacity-[0.03] select-none pointer-events-none"
-            >
-              HASSANEIN
-            </motion.h2>
+          <div className="flex flex-col items-start gap-4">
+            <span className="text-xs font-medium tracking-widest text-accent/50 uppercase">Kareem Hassanein</span>
           </div>
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 0.4 }}
             transition={{ duration: 0.8, delay: 1 }}
-            className="flex gap-8 text-[10px] uppercase tracking-[0.2em] font-mono pb-2"
+            className="flex flex-col items-end gap-2 text-[10px] uppercase tracking-[0.3em] font-medium text-muted-foreground/50 pb-2"
           >
-            <span>Burlington, ON</span>
-            <span>Available remotely</span>
-            <span>© 2026</span>
+            <div className="flex gap-8">
+              <span>Burlington, ON</span>
+              <span>Available remotely</span>
+            </div>
+            <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-white/10 to-transparent my-2" />
+            <span>© 2026 · All Rights Reserved</span>
           </motion.div>
         </div>
       </footer>
