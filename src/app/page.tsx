@@ -103,7 +103,7 @@ export default function Home() {
                 Digital Transformation & Implementation Consulting
               </motion.span>
 
-              <h1 className="text-5xl md:text-7xl lg:text-8xl font-medium leading-[0.9] tracking-tighter mb-16 text-balance">
+              <h1 className="text-4xl md:text-6xl lg:text-7xl font-medium leading-[0.9] tracking-tighter mb-16 text-balance">
                 <motion.span
                   initial={{ opacity: 0, y: 20, filter: "blur(10px)" }}
                   animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
@@ -134,7 +134,7 @@ export default function Home() {
               <div className="max-w-2xl mx-auto">
                 <TextReveal
                   text="Operations improvement, workflow automation, and technology implementation for healthcare practices and professional services firms. I map out where time and money are leaking, then build the systems, automations, and processes to stop it."
-                  className="text-xl md:text-2xl text-muted-foreground font-light leading-relaxed"
+                  className="text-lg md:text-xl text-muted-foreground font-light leading-relaxed"
                   delay={1.0}
                 />
               </div>
@@ -149,7 +149,7 @@ export default function Home() {
                     transition={{ duration: 0.6, delay: 1.4 + i * 0.1, ease: [0.16, 1, 0.3, 1] }}
                     className="group relative p-6 rounded-2xl gradient-border hover-lift hover:bg-white/[0.02] transition-colors duration-500"
                   >
-                    <p className="text-4xl md:text-5xl font-serif italic text-accent mb-3">{m.value}</p>
+                    <p className="text-3xl md:text-4xl font-serif italic text-accent mb-3">{m.value}</p>
                     <p className="text-xs text-muted-foreground leading-relaxed">{m.label}</p>
                   </motion.div>
                 ))}
@@ -192,11 +192,11 @@ export default function Home() {
           style={{ y: statementY, opacity: statementOpacity, scale: statementScale }}
           className="relative z-10 text-center px-6 max-w-5xl mx-auto will-change-transform"
         >
-          <h2 className="text-4xl md:text-6xl lg:text-7xl font-medium tracking-tight leading-[1.1] mb-6">
+          <h2 className="text-3xl md:text-5xl lg:text-6xl font-medium tracking-tight leading-[1.1] mb-6">
             The problem is rarely the software.
           </h2>
           <div className="h-[1px] w-32 bg-accent/30 mx-auto mb-6" />
-          <p className="text-xl md:text-2xl lg:text-3xl font-light text-muted-foreground max-w-3xl mx-auto">
+          <p className="text-lg md:text-xl lg:text-2xl font-light text-muted-foreground max-w-3xl mx-auto">
             It is the gap between how the tool expects you to work and how your work actually happens.
           </p>
         </motion.div>
@@ -235,10 +235,10 @@ export default function Home() {
                   transition={{ duration: 0.6, delay: i * 0.15, ease: [0.16, 1, 0.3, 1] }}
                   className="text-center"
                 >
-                  <span className="text-6xl md:text-7xl font-light text-accent/30 block mb-3">
+                  <span className="text-5xl md:text-6xl font-light text-accent/30 block mb-3">
                     0{i + 1}
                   </span>
-                  <h3 className="text-2xl md:text-3xl font-medium tracking-tight mb-3">
+                  <h3 className="text-xl md:text-2xl font-medium tracking-tight mb-3">
                     {item.title}
                   </h3>
                   <p className="text-muted-foreground text-sm md:text-base leading-relaxed">
@@ -278,7 +278,7 @@ export default function Home() {
             <span className="text-xs font-medium tracking-[0.4em] uppercase text-accent mb-4 block">
               Portfolio
             </span>
-            <h2 className="text-4xl md:text-6xl font-medium tracking-tight">
+            <h2 className="text-3xl md:text-5xl font-medium tracking-tight">
               Recent Work
             </h2>
             <AnimatedDivider direction="left" accent maxWidth="280px" className="mt-6" />
