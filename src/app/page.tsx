@@ -60,13 +60,13 @@ export default function Home() {
   const visualBgY = useSpring(useTransform(visualProgress, [0, 1], [0, -60]), springConfig);
   const visualOpacity = useSpring(useTransform(visualProgress, [0, 0.3, 0.7, 1], [0, 1, 1, 0]), springConfig);
 
-  // Portfolio section - smooth reveal with scale
+  // Portfolio section - smooth reveal with scale (initiates earlier)
   const { scrollYProgress: portfolioProgress } = useScroll({
     target: portfolioRef,
-    offset: ["start end", "start 0.3"]
+    offset: ["start end", "start 0.6"]
   });
-  const portfolioYRaw = useTransform(portfolioProgress, [0, 1], [100, 0]);
-  const portfolioOpacityRaw = useTransform(portfolioProgress, [0, 0.4, 1], [0, 0.5, 1]);
+  const portfolioYRaw = useTransform(portfolioProgress, [0, 1], [80, 0]);
+  const portfolioOpacityRaw = useTransform(portfolioProgress, [0, 0.3, 1], [0, 0.6, 1]);
   const portfolioY = useSpring(portfolioYRaw, springConfig);
   const portfolioOpacity = useSpring(portfolioOpacityRaw, springConfig);
 
@@ -203,11 +203,11 @@ export default function Home() {
       </section>
 
       {/* Visual Break - Approach Section */}
-      <section ref={visualRef} className="relative h-[60vh] md:h-[70vh] overflow-hidden">
+      <section ref={visualRef} className="relative min-h-[70vh] md:h-[70vh] py-16 md:py-0">
         {/* Parallax Background - Enhanced depth */}
         <motion.div
           style={{ y: visualBgY }}
-          className="absolute inset-0 -top-32 -bottom-32 will-change-transform"
+          className="absolute inset-0 -top-32 -bottom-32 will-change-transform overflow-hidden"
         >
           <ParallaxImage
             src="/images/flow.png"
