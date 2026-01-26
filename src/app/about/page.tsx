@@ -256,13 +256,13 @@ export default function About() {
 
               <AnimatedBlock delay={0.6} direction="up">
                 <p className="text-xl md:text-2xl text-foreground/90 leading-relaxed font-light tracking-tight">
-                  I spent years as a physiotherapist. MSc from Robert Gordon, 6,000+ patient sessions, top revenue generator at a busy clinic for three consecutive years. Former semi-professional soccer player in Scotland and Canada.
+                  I trained as a physiotherapist and spent years in clinical practice. Loved the work, was good at it. But somewhere along the way, I started noticing the cracks in how clinics actually run.
                 </p>
               </AnimatedBlock>
 
               <AnimatedBlock delay={0.8} direction="up">
                 <p className="text-lg md:text-xl text-muted-foreground leading-relaxed font-light">
-                  But I kept getting pulled into the operational side. Why is the booking system losing referrals? Why are clinicians spending three hours a day on documentation? Why did we buy this software if nobody uses it?
+                  Why is the booking system losing referrals? Why are clinicians spending hours on documentation instead of with patients? Why did we pay for software that nobody uses?
                 </p>
               </AnimatedBlock>
 
@@ -276,7 +276,7 @@ export default function About() {
                     transition={{ duration: 1.2, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
                     className="text-lg md:text-xl text-muted-foreground leading-relaxed font-light"
                   >
-                    So I started fixing those problems. Led an AI documentation rollout that hit 100% adoption in 8 weeks. Built web applications. Created automation systems that cut document generation time by 85%.
+                    So I started fixing those problems. Rolled out tools that people actually adopted. Built systems that stuck. Turned out I was better at that than I expected.
                   </motion.p>
                 </div>
               </AnimatedBlock>
@@ -291,7 +291,7 @@ export default function About() {
               <div className="p-10 md:p-16 rounded-3xl border border-white/5 bg-white/[0.02] backdrop-blur-sm relative overflow-hidden group text-center block">
                 <div className="absolute inset-0 bg-gradient-to-br from-accent/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
                 <p className="text-2xl md:text-3xl text-foreground font-medium leading-[1.3] relative z-10">
-                  Now I help healthcare practices and professional services firms do the same. Find the bottlenecks, build the systems, drive the adoption.
+                  Now I do the same for healthcare practices and professional services firms. Find the friction, build the fix, make sure it actually gets used.
                 </p>
               </div>
             </AnimatedBlock>
