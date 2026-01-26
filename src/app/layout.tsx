@@ -19,14 +19,24 @@ import { Playfair_Display } from 'next/font/google';
 const playfair = Playfair_Display({ subsets: ['latin'], variable: '--font-serif' });
 
 export const metadata: Metadata = {
-  title: "Kareem Hassanein | Implementation & Workflow Optimization",
-  description: "Implementation specialist driving AI adoption, workflow automation, and operational efficiency across healthcare, legal, and technology sectors.",
-  keywords: ["implementation", "workflow optimization", "AI adoption", "operations", "consulting"],
+  title: "Kareem Hassanein | Implementation Consulting",
+  description: "Operations improvement, workflow automation, and technology implementation for healthcare practices and professional services firms. I find bottlenecks and build systems people actually use.",
+  keywords: ["implementation consulting", "workflow automation", "operations improvement", "healthcare operations", "AI implementation", "change management"],
   authors: [{ name: "Kareem Hassanein" }],
   openGraph: {
-    title: "Kareem Hassanein | Implementation & Workflow Optimization",
-    description: "Implementation specialist driving AI adoption, workflow automation, and operational efficiency.",
+    title: "Kareem Hassanein | Implementation Consulting",
+    description: "Operations improvement, workflow automation, and technology implementation. I find bottlenecks and build systems people actually use.",
     type: "website",
+    locale: "en_CA",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Kareem Hassanein | Implementation Consulting",
+    description: "Operations improvement, workflow automation, and technology implementation for healthcare and professional services.",
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 
