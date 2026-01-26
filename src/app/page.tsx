@@ -146,7 +146,7 @@ export default function Home() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 1.4 + i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-                    className="group relative p-6 rounded-2xl border border-white/5 hover:border-white/10 hover:bg-white/[0.02] transition-all duration-500"
+                    className="group relative p-6 rounded-2xl border border-white/5 hover:border-white/10 hover:bg-white/[0.02] transition-colors duration-500"
                   >
                     <p className="text-4xl md:text-5xl font-serif italic text-accent mb-3">{m.value}</p>
                     <p className="text-xs text-muted-foreground leading-relaxed">{m.label}</p>
