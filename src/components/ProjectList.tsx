@@ -21,7 +21,7 @@ const projects = [
         description: 'LLM-powered document drafting system. 85% reduction in generation time. Reusable template library.',
     },
     {
-        title: 'Movement Solutions',
+        title: 'Private Physio Clinic',
         category: 'AI Implementation',
         description: 'Heidi AI rollout from evaluation to go-live. 100% clinician adoption in 8 weeks.',
     }
