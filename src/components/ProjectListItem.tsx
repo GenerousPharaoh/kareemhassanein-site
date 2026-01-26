@@ -7,6 +7,7 @@ import { useRef, useEffect } from 'react';
 interface Project {
     title: string;
     category: string;
+    description?: string;
     href?: string;
 }
 
@@ -48,13 +49,18 @@ export default function ProjectListItem({ project, index }: ProjectListItemProps
             {/* Accent line */}
             <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[2px] h-0 group-hover:h-12 bg-accent rounded-full transition-all duration-500" />
 
-            <div className="flex flex-col gap-2 z-30">
+            <div className="flex flex-col gap-2 z-30 max-w-2xl">
                 <h3 className="text-3xl md:text-5xl font-medium tracking-tight text-foreground/90 group-hover:text-foreground group-hover:translate-x-3 transition-all duration-500">
                     {project.title}
                 </h3>
                 <span className="text-sm tracking-wide text-muted-foreground/60 group-hover:text-accent group-hover:translate-x-3 transition-all duration-500">
                     {project.category}
                 </span>
+                {project.description && (
+                    <p className="text-sm text-muted-foreground/40 leading-relaxed group-hover:text-muted-foreground/60 group-hover:translate-x-3 transition-all duration-500 mt-1">
+                        {project.description}
+                    </p>
+                )}
             </div>
 
             <div className="flex items-center gap-4 z-30">

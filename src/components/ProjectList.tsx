@@ -6,20 +6,24 @@ const projects = [
     {
         title: 'KinetiKare Physio',
         category: 'Web Development',
+        description: 'Full-stack web application with booking integration, SEO optimization, and Google Reviews API.',
         href: 'https://www.kinetikarephysio.com',
     },
     {
         title: 'Endorphins Health',
         category: 'Digital Operations',
+        description: '60+ page web application. Booking architecture across 6 specialties. Local SEO across 8 municipalities.',
         href: 'https://www.endorphinshealth.com',
     },
     {
         title: 'Tax Relief Counsel',
         category: 'Workflow Automation',
+        description: 'LLM-powered document drafting system. 85% reduction in generation time. Reusable template library.',
     },
     {
         title: 'Movement Solutions',
         category: 'AI Implementation',
+        description: 'Heidi AI rollout from evaluation to go-live. 100% clinician adoption in 8 weeks.',
     }
 ];
 
