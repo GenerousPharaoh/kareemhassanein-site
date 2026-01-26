@@ -4,7 +4,6 @@ import { motion, useScroll, useTransform, useSpring, useInView } from 'framer-mo
 import ScrollReveal from '@/components/ScrollReveal';
 import CharReveal from '@/components/CharReveal';
 import ParallaxImage from '@/components/ParallaxImage';
-import AnimatedDivider from '@/components/AnimatedDivider';
 import { useRef, useEffect } from 'react';
 
 const services = [
@@ -144,34 +143,22 @@ function ServiceSection({ service, index }: { service: typeof services[0], index
 }
 
 function ToolDomain({ domain, index }: { domain: typeof technicalIndex[0]; index: number }) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-50px" });
-
   return (
     <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 30 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, delay: index * 0.15, ease: [0.16, 1, 0.3, 1] }}
-      className="group p-8 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-accent/20 hover:bg-white/[0.04] transition-all duration-500"
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ duration: 0.5, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
     >
-      <span className="text-xs font-medium tracking-widest uppercase text-accent/70 mb-4 block">
+      <h3 className="text-accent text-sm font-medium tracking-wide mb-4">
         {domain.domain}
-      </span>
-      <div className="flex flex-wrap gap-3 mb-6">
-        {domain.tools.map((tool) => (
-          <span key={tool} className="text-lg md:text-xl font-light text-foreground/90">
-            {tool}
-          </span>
-        ))}
-      </div>
-      <div className="flex flex-wrap gap-2">
-        {domain.specs.map(spec => (
-          <span key={spec} className="text-xs px-3 py-1.5 rounded-full bg-white/5 text-muted-foreground/80 group-hover:text-muted-foreground transition-colors duration-300">
-            {spec}
-          </span>
-        ))}
-      </div>
+      </h3>
+      <p className="text-2xl md:text-3xl font-light text-foreground/90 leading-relaxed mb-4">
+        {domain.tools.join(' · ')}
+      </p>
+      <p className="text-sm text-muted-foreground">
+        {domain.specs.join(' · ')}
+      </p>
     </motion.div>
   );
 }
@@ -237,30 +224,29 @@ export default function Services() {
 
       {/* Tools Section */}
       <section ref={toolsRef} className="py-28 md:py-40 px-6 lg:px-12 xl:px-20 relative overflow-hidden">
-        {/* Background image - positioned right like service sections */}
-        <div className="absolute inset-y-0 w-1/2 right-0 z-0">
+        {/* Subtle centered background */}
+        <div className="absolute inset-0 z-0 flex items-center justify-center opacity-20">
           <ParallaxImage
             src="/images/kh_section_divider_signal-to-system_02.png"
             alt="Signal to System"
-            className="w-full h-full opacity-35"
+            className="w-full h-full"
             fadedSides={true}
             fadedVertical={true}
           />
         </div>
 
-        <div className="max-w-[1200px] mx-auto relative z-10">
+        <div className="max-w-[900px] mx-auto relative z-10">
           <motion.div
             style={{ y: toolsY, opacity: toolsOpacity }}
-            className="mb-12 will-change-transform"
+            className="mb-16 text-center will-change-transform"
           >
             <span className="block text-xs font-medium tracking-[0.3em] uppercase text-muted-foreground mb-6">Tools</span>
             <h2 className="text-3xl md:text-5xl font-medium tracking-tight">
               What I use.
             </h2>
-            <AnimatedDivider direction="left" accent maxWidth="280px" className="mt-6" />
           </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="space-y-16">
             {technicalIndex.map((row, idx) => (
               <ToolDomain key={row.domain} domain={row} index={idx} />
             ))}
