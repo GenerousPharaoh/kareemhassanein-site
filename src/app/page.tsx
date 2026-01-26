@@ -216,9 +216,9 @@ export default function Home() {
           />
         </motion.div>
 
-        {/* Subtle edge blending */}
-        <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-transparent via-30% to-transparent to-70% pointer-events-none" />
-        <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent via-30% to-transparent pointer-events-none" />
+        {/* Seamless edge blending */}
+        <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent via-20% to-transparent pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent via-20% to-transparent pointer-events-none" />
 
         {/* Content */}
         <motion.div
@@ -259,16 +259,18 @@ export default function Home() {
 
       {/* Selected Projects */}
       <section ref={portfolioRef} className="py-16 md:py-28 relative z-10 w-full px-6 md:px-12 xl:px-20 overflow-hidden">
-        {/* Background image - positioned for visual interest */}
-        <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 -right-1/4 top-0">
+        {/* Background image - constrained and faded */}
+        <div className="absolute inset-0 z-0 overflow-hidden">
+          <div className="absolute inset-0 flex items-center justify-center">
             <ParallaxImage
               src="/images/flow of organized transformation.png"
               alt="Transformation"
-              className="w-full h-full opacity-45"
+              className="w-[80%] max-w-4xl h-auto opacity-40"
+              fadedSides={true}
+              fadedVertical={true}
             />
           </div>
-          <div className="absolute inset-0 bg-gradient-to-b from-background via-background/60 to-background" />
+          <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-transparent to-background/60" />
         </div>
 
         <div className="max-w-[1400px] mx-auto relative z-10">
