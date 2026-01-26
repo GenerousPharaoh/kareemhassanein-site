@@ -32,16 +32,16 @@ export default function ParallaxImage({
     const y = useTransform(scrollYProgress, [0, 1], ["-3%", "3%"]);
     const smoothY = useSpring(y, { stiffness: 80, damping: 25 });
 
-    // Construct mask image based on props
+    // Construct mask image based on props - very gradual fades
     let maskImage = '';
 
     if (fadedSides && fadedVertical) {
-        // Radial mask for all-around fade
-        maskImage = 'radial-gradient(circle at center, black 40%, transparent 100%)';
+        // Radial mask for all-around fade - very soft elliptical
+        maskImage = 'radial-gradient(ellipse 80% 70% at center, black 20%, rgba(0,0,0,0.6) 50%, rgba(0,0,0,0.2) 75%, transparent 100%)';
     } else if (fadedSides) {
-        maskImage = 'linear-gradient(to right, transparent, black 15%, black 85%, transparent)';
+        maskImage = 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.3) 10%, rgba(0,0,0,0.7) 25%, black 40%, black 60%, rgba(0,0,0,0.7) 75%, rgba(0,0,0,0.3) 90%, transparent 100%)';
     } else if (fadedVertical) {
-        maskImage = 'linear-gradient(to bottom, transparent, black 20%, black 80%, transparent)';
+        maskImage = 'linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.3) 10%, rgba(0,0,0,0.7) 25%, black 40%, black 60%, rgba(0,0,0,0.7) 75%, rgba(0,0,0,0.3) 90%, transparent 100%)';
     }
 
     return (
