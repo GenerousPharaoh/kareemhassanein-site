@@ -243,15 +243,17 @@ export default function Services() {
 
       {/* Tools Section */}
       <section ref={toolsRef} className="py-28 md:py-40 px-6 lg:px-12 xl:px-20 relative overflow-hidden">
-        {/* Background image - clipped to section with fade */}
-        <div className="absolute inset-0 z-0">
-          <ParallaxImage
-            src="/images/kh_section_divider_signal-to-system_02.png"
-            alt="Signal to System"
-            className="w-full h-full opacity-35"
-            fadedVertical={true}
-            fadedSides={true}
-          />
+        {/* Background image - centered and constrained */}
+        <div className="absolute inset-0 z-0 flex items-center justify-center">
+          <div className="w-full max-w-3xl h-auto aspect-video">
+            <ParallaxImage
+              src="/images/kh_section_divider_signal-to-system_02.png"
+              alt="Signal to System"
+              className="w-full h-full opacity-30"
+              fadedVertical={true}
+              fadedSides={true}
+            />
+          </div>
         </div>
 
         <div className="max-w-[1200px] mx-auto relative z-10">
