@@ -285,15 +285,20 @@ export default function About() {
           </div>
         </motion.div>
 
-        {/* Transition / Mission Block */}
+        {/* Mission Statement */}
         <section className="pb-32 px-6 lg:px-12 xl:px-20 relative z-10">
-          <div className="max-w-[700px] mx-auto">
+          <div className="max-w-[900px] mx-auto">
             <AnimatedBlock delay={0.2} direction="up">
-              <div className="p-10 md:p-16 rounded-3xl border border-white/5 bg-white/[0.02] backdrop-blur-sm relative overflow-hidden group text-center block">
-                <div className="absolute inset-0 bg-gradient-to-br from-accent/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-                <p className="text-2xl md:text-3xl text-foreground font-medium leading-[1.3] relative z-10">
-                  That is the difference between installation and adoption. Between buying software and getting value from it. Between a process on paper and one that actually runs.
-                </p>
+              <div className="relative">
+                <div className="absolute -left-4 md:-left-8 top-0 bottom-0 w-[2px] bg-gradient-to-b from-accent via-accent/50 to-transparent" />
+                <div className="pl-8 md:pl-12">
+                  <p className="text-3xl md:text-4xl lg:text-5xl text-foreground/90 font-light leading-[1.2] tracking-tight">
+                    Most implementations fail after go-live.
+                  </p>
+                  <p className="text-3xl md:text-4xl lg:text-5xl text-accent font-medium leading-[1.2] tracking-tight mt-2">
+                    I make sure yours doesn&apos;t.
+                  </p>
+                </div>
               </div>
             </AnimatedBlock>
           </div>
