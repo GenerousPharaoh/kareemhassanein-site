@@ -165,7 +165,7 @@ export default function Home() {
                   href="/contact"
                   className="group flex items-center gap-4 text-lg font-medium tracking-tight bg-foreground text-background px-8 py-4 rounded-full hover:bg-accent hover:text-background transition-colors duration-500"
                 >
-                  Let&apos;s talk
+                  Get in touch
                   <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform duration-500" />
                 </Link>
                 <Link
