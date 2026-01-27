@@ -77,12 +77,12 @@ export default function Home() {
         {/* Cinematic Background Layer - Simple Parallax */}
         <motion.div
           style={{ y: heroBgY }}
-          className="absolute -inset-x-0 -top-32 -bottom-64 z-0 will-change-transform"
+          className="absolute inset-x-0 -top-16 md:-top-32 -bottom-32 md:-bottom-64 z-0 will-change-transform"
         >
           <ParallaxImage
             src="/images/orchestrating.png"
             alt="Cinematic Core"
-            className="w-full h-full opacity-50"
+            className="w-full h-full opacity-30 md:opacity-50"
           />
         </motion.div>
         {/* Fixed gradient overlay - extends beyond section for seamless blend */}
@@ -211,7 +211,7 @@ export default function Home() {
           <ParallaxImage
             src="/images/flow.png"
             alt="Workflow"
-            className="w-full h-full opacity-40"
+            className="w-full h-full opacity-25 md:opacity-40"
             fadedVertical={true}
           />
         </motion.div>
@@ -258,7 +258,7 @@ export default function Home() {
             <ParallaxImage
               src="/images/flow of organized transformation.png"
               alt="Transformation"
-              className="w-full h-full opacity-40"
+              className="w-full h-full opacity-20 md:opacity-40"
               fadedSides={true}
               fadedVertical={true}
             />

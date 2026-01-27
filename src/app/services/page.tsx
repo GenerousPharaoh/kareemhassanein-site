@@ -100,12 +100,12 @@ function ServiceSection({ service, index }: { service: typeof services[0], index
       {/* Background image - clipped to section with fade */}
       <motion.div
         style={{ y: imgY, scale: imgScale }}
-        className="absolute inset-y-0 w-full md:w-2/3 right-0 pointer-events-none will-change-transform"
+        className="absolute inset-y-0 w-3/4 md:w-2/3 right-0 pointer-events-none will-change-transform"
       >
         <ParallaxImage
           src={service.image}
           alt={service.title}
-          className="w-full h-full opacity-40"
+          className="w-full h-full opacity-20 md:opacity-40"
           fadedSides={true}
           fadedVertical={true}
         />
@@ -193,7 +193,7 @@ export default function Services() {
           <ParallaxImage
             src="/images/mapping.png"
             alt="Mapping"
-            className="w-full h-full opacity-40"
+            className="w-full h-full opacity-20 md:opacity-40"
             fadedVertical={true}
           />
         </motion.div>
@@ -225,7 +225,7 @@ export default function Services() {
       {/* Tools Section */}
       <section ref={toolsRef} className="py-28 md:py-40 px-6 lg:px-12 xl:px-20 relative overflow-hidden">
         {/* Subtle centered background */}
-        <div className="absolute inset-0 z-0 flex items-center justify-center opacity-20">
+        <div className="absolute inset-0 z-0 flex items-center justify-center opacity-10 md:opacity-20">
           <ParallaxImage
             src="/images/kh_section_divider_signal-to-system_02.png"
             alt="Signal to System"
