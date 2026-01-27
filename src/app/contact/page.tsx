@@ -239,16 +239,8 @@ export default function Contact() {
   return (
     <main ref={heroRef} className="min-h-screen relative overflow-hidden flex flex-col justify-between bg-background">
 
-      {/* Cinematic Background Layer with Parallax */}
-      <motion.div style={{ y: bgY }} className="absolute inset-0 z-0 will-change-transform">
-        <ParallaxImage
-          src="/images/contact.png"
-          alt="Flow"
-          className="w-full h-full opacity-30"
-          fadedVertical={true}
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-background" />
-      </motion.div>
+      {/* Subtle ambient background */}
+      <div className="absolute inset-0 z-0 bg-gradient-to-b from-background via-background to-background" />
 
       <motion.div
         style={{ y: textY }}
@@ -256,6 +248,20 @@ export default function Contact() {
       >
         <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-20 lg:gap-32 items-start w-full">
           <div>
+            {/* Contact illustration */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+              className="mb-10 w-48 md:w-56 opacity-80"
+            >
+              <img
+                src="/images/contact.png"
+                alt="Contact"
+                className="w-full h-auto rounded-2xl"
+              />
+            </motion.div>
+
             <motion.span
               style={{ opacity: labelOpacity, y: labelY }}
               className="block text-[10px] font-bold tracking-[0.6em] text-accent/60 uppercase mb-8"
