@@ -41,7 +41,7 @@ export default function Header() {
 
   return (
     <>
-      <div className="fixed top-6 left-0 right-0 z-50 flex justify-center px-6 pointer-events-none">
+      <div className="fixed top-6 left-0 right-0 z-50 flex justify-center px-6 pointer-events-none mt-safe">
         <motion.header
           variants={{
             visible: { y: 0, opacity: 1, scale: 1 },
@@ -91,12 +91,20 @@ export default function Header() {
           {/* Mobile Menu Toggle */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden relative z-50 p-2 text-white/50 hover:text-white transition-colors"
+            className="md:hidden relative z-50 p-3 -m-1 min-w-[44px] min-h-[44px] flex items-center justify-center text-white/50 hover:text-white active:scale-90 transition-all"
             aria-label="Toggle menu"
           >
-            <div className="space-y-1.5 w-4">
-              <div className={`h-[1px] bg-current transition-all duration-500 ${isMenuOpen ? 'rotate-45 translate-y-1.5' : ''}`} />
-              <div className={`h-[1px] bg-current transition-all duration-500 ${isMenuOpen ? '-rotate-45 -translate-y-0.5' : ''}`} />
+            <div className="relative w-5 h-4 flex flex-col justify-between">
+              <motion.div
+                animate={isMenuOpen ? { rotate: 45, y: 7 } : { rotate: 0, y: 0 }}
+                transition={{ type: "spring", stiffness: 260, damping: 20 }}
+                className="h-[1.5px] w-full bg-current origin-center"
+              />
+              <motion.div
+                animate={isMenuOpen ? { rotate: -45, y: -7 } : { rotate: 0, y: 0 }}
+                transition={{ type: "spring", stiffness: 260, damping: 20 }}
+                className="h-[1.5px] w-full bg-current origin-center"
+              />
             </div>
           </button>
         </motion.header>
@@ -109,27 +117,34 @@ export default function Header() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.6, ease }}
-            className="fixed inset-0 z-[45] bg-[#0d1117]/95 backdrop-blur-3xl md:hidden flex flex-col justify-center px-12"
+            transition={{ duration: 0.4 }}
+            className="fixed inset-0 z-[45] bg-[#0d1117]/95 backdrop-blur-3xl md:hidden flex flex-col justify-center px-12 safe-x safe-y"
           >
-            <div className="flex flex-col gap-10">
+            <nav className="flex flex-col gap-8">
               {navItems.map((item, i) => (
                 <motion.div
                   key={item.href}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.1, duration: 0.8, ease }}
+                  initial={{ opacity: 0, x: -30 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 100,
+                    damping: 15,
+                    delay: i * 0.08,
+                  }}
                 >
                   <Link
                     href={item.href}
-                    className={`text-5xl font-light tracking-tighter ${pathname === item.href ? 'text-foreground italic' : 'text-foreground/30'
-                      }`}
+                    className={`block text-5xl font-light tracking-tighter active:scale-95 active:opacity-70 transition-transform ${
+                      pathname === item.href ? 'text-foreground italic' : 'text-foreground/30'
+                    }`}
                   >
                     {item.label}
                   </Link>
                 </motion.div>
               ))}
-            </div>
+            </nav>
           </motion.div>
         )}
       </AnimatePresence>
