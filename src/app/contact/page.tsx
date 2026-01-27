@@ -4,6 +4,7 @@ import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import { Linkedin, ArrowUpRight, Send, Check } from 'lucide-react';
 import MaskedReveal from '@/components/MaskedReveal';
 import ParallaxImage from '@/components/ParallaxImage';
+import Image from 'next/image';
 import { useRef, useEffect, useState } from 'react';
 
 function ContactForm() {
@@ -49,7 +50,7 @@ function ContactForm() {
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-        className="rounded-2xl border border-accent/20 bg-accent/[0.03] p-10 md:p-14 text-center"
+        className="rounded-2xl border border-accent/20 bg-accent/[0.03] p-10 text-center"
       >
         <div className="w-12 h-12 rounded-full bg-accent/10 border border-accent/20 flex items-center justify-center mx-auto mb-6">
           <Check className="w-5 h-5 text-accent" />
@@ -67,37 +68,35 @@ function ContactForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="grid md:grid-cols-2 gap-6">
-        <div>
-          <label htmlFor="name" className="block text-[10px] font-bold tracking-[0.4em] uppercase text-muted-foreground mb-3">
-            Name
-          </label>
-          <input
-            id="name"
-            type="text"
-            required
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-5 py-4 text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-accent/50 focus:bg-white/[0.07] transition-colors duration-500"
-            placeholder="Your name"
-          />
-        </div>
+    <form onSubmit={handleSubmit} className="space-y-5">
+      <div>
+        <label htmlFor="name" className="block text-[10px] font-bold tracking-[0.4em] uppercase text-muted-foreground mb-3">
+          Name
+        </label>
+        <input
+          id="name"
+          type="text"
+          required
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-5 py-4 text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-accent/50 focus:bg-white/[0.07] transition-colors duration-500"
+          placeholder="Your name"
+        />
+      </div>
 
-        <div>
-          <label htmlFor="email" className="block text-[10px] font-bold tracking-[0.4em] uppercase text-muted-foreground mb-3">
-            Email
-          </label>
-          <input
-            id="email"
-            type="email"
-            required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-5 py-4 text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-accent/50 focus:bg-white/[0.07] transition-colors duration-500"
-            placeholder="you@example.com"
-          />
-        </div>
+      <div>
+        <label htmlFor="email" className="block text-[10px] font-bold tracking-[0.4em] uppercase text-muted-foreground mb-3">
+          Email
+        </label>
+        <input
+          id="email"
+          type="email"
+          required
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-5 py-4 text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-accent/50 focus:bg-white/[0.07] transition-colors duration-500"
+          placeholder="you@example.com"
+        />
       </div>
 
       <div>
@@ -109,7 +108,7 @@ function ContactForm() {
           required
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-          rows={6}
+          rows={5}
           className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-5 py-4 text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-accent/50 focus:bg-white/[0.07] transition-colors duration-500 resize-none"
           placeholder="What can I help with?"
         />
@@ -125,27 +124,14 @@ function ContactForm() {
         </motion.p>
       )}
 
-      <div className="flex items-center justify-between pt-2">
-        <button
-          type="submit"
-          disabled={status === 'sending'}
-          className="group flex items-center gap-3 text-base font-medium tracking-tight bg-foreground text-background px-8 py-4 rounded-full hover:bg-accent hover:text-background transition-colors duration-500 disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          {status === 'sending' ? 'Sending...' : 'Send message'}
-          <Send size={16} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-500" />
-        </button>
-
-        <a
-          href="https://www.linkedin.com/in/kareemhassanein"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="group flex items-center gap-3 text-sm text-muted-foreground hover:text-accent transition-colors duration-500"
-        >
-          <Linkedin size={18} className="opacity-60 group-hover:opacity-100 transition-opacity duration-500" />
-          <span className="hidden md:inline">Connect on LinkedIn</span>
-          <ArrowUpRight size={14} className="opacity-40 group-hover:opacity-100 transition-opacity duration-500" />
-        </a>
-      </div>
+      <button
+        type="submit"
+        disabled={status === 'sending'}
+        className="group flex items-center gap-3 text-base font-medium tracking-tight bg-foreground text-background px-8 py-4 rounded-full hover:bg-accent hover:text-background transition-colors duration-500 disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        {status === 'sending' ? 'Sending...' : 'Send message'}
+        <Send size={16} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-500" />
+      </button>
     </form>
   );
 }
@@ -182,54 +168,100 @@ export default function Contact() {
         <ParallaxImage
           src="/images/bridging_soft.png"
           alt="Connection"
-          className="w-full h-full opacity-40"
+          className="w-full h-full opacity-25"
           fadedVertical={true}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-background/80" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-background/80" />
       </motion.div>
 
       <motion.div
         style={{ y: textY }}
-        className="relative z-10 w-full pt-40 md:pt-48 pb-20 flex-grow will-change-transform"
+        className="section-container relative z-10 w-full pt-44 md:pt-48 pb-24 flex-grow flex items-center will-change-transform"
       >
-        {/* Centered Heading */}
-        <div className="max-w-3xl mx-auto text-center px-6 mb-16 md:mb-20">
-          <motion.span
-            style={{ opacity: labelOpacity, y: labelY }}
-            className="block text-[10px] font-bold tracking-[0.6em] text-accent/60 uppercase mb-8"
-          >
-            Contact
-          </motion.span>
+        <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-16 lg:gap-24 items-start w-full">
+          {/* Left Column - Heading + Illustration */}
+          <div>
+            <motion.span
+              style={{ opacity: labelOpacity, y: labelY }}
+              className="block text-[10px] font-bold tracking-[0.6em] text-accent/60 uppercase mb-8"
+            >
+              Contact
+            </motion.span>
 
-          <motion.h1
-            style={{ opacity: headingOpacity, y: headingY }}
-            className="text-5xl md:text-7xl lg:text-8xl font-medium tracking-tighter mb-8 leading-[0.85]"
-          >
-            Get in{" "}
-            <span className="opacity-60 italic font-light font-serif">
-              <MaskedReveal delay={0.4} className="py-2">touch.</MaskedReveal>
-            </span>
-          </motion.h1>
+            <motion.h1
+              style={{ opacity: headingOpacity, y: headingY }}
+              className="text-6xl md:text-[100px] lg:text-[120px] font-medium tracking-tighter mb-10 leading-[0.85]"
+            >
+              Get in <br />
+              <span className="opacity-60 italic font-light font-serif">
+                <MaskedReveal delay={0.4} className="py-2">touch.</MaskedReveal>
+              </span>
+            </motion.h1>
 
-          <motion.p
-            style={{ opacity: descOpacity, y: descY }}
-            className="text-lg md:text-xl text-muted-foreground font-light leading-relaxed italic max-w-xl mx-auto"
-          >
-            Have a workflow that needs fixing? A system that nobody uses? Let&apos;s figure it out.
-          </motion.p>
-        </div>
+            <motion.div
+              initial={{ opacity: 0, scaleX: 0 }}
+              animate={{ opacity: 1, scaleX: 1 }}
+              transition={{ duration: 1, delay: 0.6 }}
+              className="h-[1px] w-24 bg-accent/30 mb-8 origin-left"
+            />
 
-        {/* Form */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-          className="max-w-2xl mx-auto px-6"
-        >
-          <div className="rounded-2xl border border-white/[0.08] bg-white/[0.02] backdrop-blur-sm p-8 md:p-10">
-            <ContactForm />
+            <motion.p
+              style={{ opacity: descOpacity, y: descY }}
+              className="text-xl md:text-2xl text-muted-foreground font-light leading-relaxed italic max-w-xl mb-12"
+            >
+              Have a workflow that needs fixing? A system that nobody uses? Let&apos;s figure it out.
+            </motion.p>
+
+            {/* Illustration - below description, natural flow */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
+              className="hidden lg:block max-w-sm"
+            >
+              <Image
+                src="/images/contact.png"
+                alt="Contact"
+                width={500}
+                height={350}
+                className="w-full h-auto rounded-2xl opacity-90"
+              />
+            </motion.div>
           </div>
-        </motion.div>
+
+          {/* Right Column - Form + LinkedIn */}
+          <div className="lg:pt-24">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+              className="rounded-2xl border border-white/[0.08] bg-white/[0.02] backdrop-blur-sm p-7 md:p-9"
+            >
+              <ContactForm />
+            </motion.div>
+
+            {/* LinkedIn - subtle below form */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.8 }}
+              className="mt-6 flex items-center justify-center gap-3"
+            >
+              <div className="h-[1px] flex-1 bg-white/5" />
+              <a
+                href="https://www.linkedin.com/in/kareemhassanein"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-center gap-2.5 text-sm text-muted-foreground/60 hover:text-accent transition-colors duration-500 px-4"
+              >
+                <Linkedin size={16} className="opacity-60 group-hover:opacity-100 transition-opacity duration-500" />
+                <span>LinkedIn</span>
+                <ArrowUpRight size={12} className="opacity-40 group-hover:opacity-100 transition-opacity duration-500" />
+              </a>
+              <div className="h-[1px] flex-1 bg-white/5" />
+            </motion.div>
+          </div>
+        </div>
       </motion.div>
 
       {/* Footer */}
