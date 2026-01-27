@@ -192,11 +192,11 @@ export default function Home() {
           className="relative z-10 text-center px-6 max-w-5xl mx-auto will-change-transform"
         >
           <h2 className="text-3xl md:text-5xl lg:text-6xl font-medium tracking-tight leading-[1.1] mb-6">
-            The problem is rarely the software.
+            Good plans fail without good execution.
           </h2>
           <div className="h-[1px] w-32 bg-accent/30 mx-auto mb-6" />
           <p className="text-lg md:text-xl lg:text-2xl font-light text-muted-foreground max-w-3xl mx-auto">
-            It is the gap between how the tool expects you to work and how your work actually happens.
+            Implementation is where most efforts stall. Not from lack of strategy, but from friction in the systems, workflows, and habits that need to change.
           </p>
         </motion.div>
       </section>
