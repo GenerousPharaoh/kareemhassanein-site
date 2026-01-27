@@ -67,9 +67,9 @@ function ContactForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-5">
+    <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <label htmlFor="name" className="block text-[10px] font-bold tracking-[0.4em] uppercase text-muted-foreground mb-3">
+        <label htmlFor="name" className="block text-[10px] font-bold tracking-[0.4em] uppercase text-muted-foreground mb-2">
           Name
         </label>
         <input
@@ -78,13 +78,13 @@ function ContactForm() {
           required
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-5 py-4 text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-accent/50 focus:bg-white/[0.07] transition-colors duration-500"
+          className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-4 py-3 text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-accent/50 focus:bg-white/[0.07] transition-colors duration-500"
           placeholder="Your name"
         />
       </div>
 
       <div>
-        <label htmlFor="email" className="block text-[10px] font-bold tracking-[0.4em] uppercase text-muted-foreground mb-3">
+        <label htmlFor="email" className="block text-[10px] font-bold tracking-[0.4em] uppercase text-muted-foreground mb-2">
           Email
         </label>
         <input
@@ -93,13 +93,13 @@ function ContactForm() {
           required
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-5 py-4 text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-accent/50 focus:bg-white/[0.07] transition-colors duration-500"
+          className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-4 py-3 text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-accent/50 focus:bg-white/[0.07] transition-colors duration-500"
           placeholder="you@example.com"
         />
       </div>
 
       <div>
-        <label htmlFor="message" className="block text-[10px] font-bold tracking-[0.4em] uppercase text-muted-foreground mb-3">
+        <label htmlFor="message" className="block text-[10px] font-bold tracking-[0.4em] uppercase text-muted-foreground mb-2">
           Message
         </label>
         <textarea
@@ -107,8 +107,8 @@ function ContactForm() {
           required
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-          rows={5}
-          className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-5 py-4 text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-accent/50 focus:bg-white/[0.07] transition-colors duration-500 resize-none"
+          rows={4}
+          className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-4 py-3 text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-accent/50 focus:bg-white/[0.07] transition-colors duration-500 resize-none"
           placeholder="What can I help with?"
         />
       </div>
@@ -126,7 +126,7 @@ function ContactForm() {
       <button
         type="submit"
         disabled={status === 'sending'}
-        className="group flex items-center gap-3 text-base font-medium tracking-tight bg-foreground text-background px-8 py-4 rounded-full hover:bg-accent hover:text-background transition-colors duration-500 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="group flex items-center gap-3 text-sm font-medium tracking-tight bg-foreground text-background px-7 py-3.5 rounded-full hover:bg-accent hover:text-background transition-colors duration-500 disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {status === 'sending' ? 'Sending...' : 'Send message'}
         <Send size={16} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-500" />
@@ -169,21 +169,21 @@ export default function Contact() {
 
       <motion.div
         style={{ y: textY }}
-        className="section-container relative z-10 w-full pt-44 md:pt-48 pb-24 flex-grow flex items-center will-change-transform"
+        className="section-container relative z-10 w-full pt-32 md:pt-36 pb-16 flex-grow flex items-center will-change-transform"
       >
-        <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-16 lg:gap-24 items-start w-full">
+        <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-12 lg:gap-20 items-start w-full">
           {/* Left Column - Heading + Illustration */}
           <div>
             <motion.span
               style={{ opacity: labelOpacity, y: labelY }}
-              className="block text-[10px] font-bold tracking-[0.6em] text-accent/60 uppercase mb-8"
+              className="block text-[10px] font-bold tracking-[0.6em] text-accent/60 uppercase mb-5"
             >
               Contact
             </motion.span>
 
             <motion.h1
               style={{ opacity: headingOpacity, y: headingY }}
-              className="text-6xl md:text-[100px] lg:text-[120px] font-medium tracking-tighter mb-10 leading-[0.85]"
+              className="text-5xl md:text-[80px] lg:text-[100px] font-medium tracking-tighter mb-7 leading-[0.85]"
             >
               Get in <br />
               <span className="opacity-60 italic font-light font-serif">
@@ -195,12 +195,12 @@ export default function Contact() {
               initial={{ opacity: 0, scaleX: 0 }}
               animate={{ opacity: 1, scaleX: 1 }}
               transition={{ duration: 1, delay: 0.6 }}
-              className="h-[1px] w-24 bg-accent/30 mb-8 origin-left"
+              className="h-[1px] w-24 bg-accent/30 mb-6 origin-left"
             />
 
             <motion.p
               style={{ opacity: descOpacity, y: descY }}
-              className="text-xl md:text-2xl text-muted-foreground font-light leading-relaxed italic max-w-xl mb-12"
+              className="text-lg md:text-xl text-muted-foreground font-light leading-relaxed italic max-w-xl mb-8"
             >
               Have a workflow that needs fixing? A system that nobody uses? Let&apos;s figure it out.
             </motion.p>
@@ -223,12 +223,12 @@ export default function Contact() {
           </div>
 
           {/* Right Column - Form + LinkedIn */}
-          <div className="lg:pt-24">
+          <div className="lg:pt-16">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-              className="rounded-2xl border border-white/[0.08] bg-white/[0.02] backdrop-blur-sm p-7 md:p-9"
+              className="rounded-2xl border border-white/[0.08] bg-white/[0.02] backdrop-blur-sm p-6 md:p-7"
             >
               <ContactForm />
             </motion.div>
@@ -238,7 +238,7 @@ export default function Contact() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.8 }}
-              className="mt-6 flex items-center justify-center gap-3"
+              className="mt-4 flex items-center justify-center gap-3"
             >
               <div className="h-[1px] flex-1 bg-white/5" />
               <a
@@ -259,7 +259,7 @@ export default function Contact() {
 
       {/* Footer */}
       <footer className="relative z-10 w-full border-t border-white/5 bg-white/[0.02] backdrop-blur-2xl">
-        <div className="section-container flex flex-col md:flex-row justify-between items-end py-12 gap-8">
+        <div className="section-container flex flex-col md:flex-row justify-between items-end py-8 gap-6">
           <div className="flex flex-col items-start gap-4">
             <span className="text-xs font-medium tracking-widest text-accent/50 uppercase">Kareem Hassanein</span>
           </div>
