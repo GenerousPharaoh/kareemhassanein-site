@@ -242,7 +242,7 @@ export default function Contact() {
       {/* Cinematic Background Layer with Parallax */}
       <motion.div style={{ y: bgY }} className="absolute inset-0 z-0 will-change-transform">
         <ParallaxImage
-          src="/images/bridging_soft.png"
+          src="/images/contact.png"
           alt="Flow"
           className="w-full h-full opacity-30"
           fadedVertical={true}
