@@ -124,14 +124,14 @@ export default function Header() {
               {navItems.map((item, i) => (
                 <motion.div
                   key={item.href}
-                  initial={{ opacity: 0, x: -30 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -20 }}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 10 }}
                   transition={{
                     type: "spring",
-                    stiffness: 100,
-                    damping: 15,
-                    delay: i * 0.08,
+                    stiffness: 120,
+                    damping: 18,
+                    delay: i * 0.06,
                   }}
                 >
                   <Link
