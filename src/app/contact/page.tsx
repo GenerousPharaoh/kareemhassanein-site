@@ -123,7 +123,7 @@ export default function Contact() {
 
       <motion.div
         style={{ y: textY }}
-        className="section-container relative z-10 w-full pt-48 pb-24 flex-grow flex items-center will-change-transform"
+        className="section-container relative z-10 w-full pt-28 md:pt-48 pb-16 md:pb-24 flex-grow flex items-center will-change-transform"
       >
         <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-20 lg:gap-32 items-start w-full">
           <div>
@@ -136,7 +136,7 @@ export default function Contact() {
 
             <motion.h1
               style={{ opacity: headingOpacity, y: headingY }}
-              className="text-6xl md:text-[100px] lg:text-[120px] font-medium tracking-tighter mb-16 leading-[0.85]"
+              className="text-5xl sm:text-6xl md:text-[100px] lg:text-[120px] font-medium tracking-tighter mb-10 md:mb-16 leading-[0.85]"
             >
               Get in <br />
               <span className="opacity-60 italic font-light font-serif">
@@ -177,7 +177,7 @@ export default function Contact() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 0.4 }}
             transition={{ duration: 0.8, delay: 1 }}
-            className="flex flex-col items-end gap-2 text-[10px] uppercase tracking-[0.3em] font-medium text-muted-foreground/70 pb-2"
+            className="flex flex-col items-end gap-2 text-xs md:text-[10px] uppercase tracking-[0.2em] md:tracking-[0.3em] font-medium text-muted-foreground/70 pb-2"
           >
             <div className="flex gap-8">
               <span>Burlington, ON</span>

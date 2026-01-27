@@ -91,12 +91,12 @@ export default function Header() {
           {/* Mobile Menu Toggle */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden relative z-50 p-2 text-white/50 hover:text-white transition-colors"
+            className="md:hidden relative z-50 p-3 -m-1 min-w-[44px] min-h-[44px] flex items-center justify-center text-white/50 hover:text-white transition-colors"
             aria-label="Toggle menu"
           >
-            <div className="space-y-1.5 w-4">
-              <div className={`h-[1px] bg-current transition-all duration-500 ${isMenuOpen ? 'rotate-45 translate-y-1.5' : ''}`} />
-              <div className={`h-[1px] bg-current transition-all duration-500 ${isMenuOpen ? '-rotate-45 -translate-y-0.5' : ''}`} />
+            <div className="space-y-1.5 w-5">
+              <div className={`h-[1.5px] bg-current transition-all duration-500 ${isMenuOpen ? 'rotate-45 translate-y-[7px]' : ''}`} />
+              <div className={`h-[1.5px] bg-current transition-all duration-500 ${isMenuOpen ? '-rotate-45 -translate-y-[1px]' : ''}`} />
             </div>
           </button>
         </motion.header>

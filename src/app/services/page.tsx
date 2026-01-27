@@ -72,7 +72,7 @@ function ServiceTag({ tag, index }: { tag: string; index: number }) {
     <motion.span
       ref={ref}
       style={{ opacity, y }}
-      className="text-sm px-4 py-2 rounded-full border border-white/10 text-muted-foreground hover:border-accent/30 hover:text-accent transition-colors duration-500"
+      className="text-sm px-5 py-2.5 rounded-full border border-white/10 text-muted-foreground hover:border-accent/30 hover:text-accent transition-colors duration-500"
     >
       {tag}
     </motion.span>
