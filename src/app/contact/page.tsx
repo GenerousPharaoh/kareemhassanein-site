@@ -1,10 +1,10 @@
 'use client';
 
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
-import { Linkedin, ArrowUpRight } from 'lucide-react';
+import { Linkedin, ArrowUpRight, Send, Check } from 'lucide-react';
 import MaskedReveal from '@/components/MaskedReveal';
 import ParallaxImage from '@/components/ParallaxImage';
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 
 const socialLinks = [
   { label: 'LinkedIn', href: 'https://www.linkedin.com/in/kareemhassanein', icon: <Linkedin className="w-5 h-5" /> },
@@ -68,6 +68,135 @@ function ContactLink({ link }: { link: typeof socialLinks[0]; index: number }) {
         <ArrowUpRight className="opacity-40 group-hover:opacity-100 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-500 text-accent" />
       </a>
     </motion.div>
+  );
+}
+
+function ContactForm() {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [message, setMessage] = useState('');
+  const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
+  const [errorMsg, setErrorMsg] = useState('');
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus('sending');
+    setErrorMsg('');
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, message }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setErrorMsg(data.error || 'Something went wrong.');
+        setStatus('error');
+        return;
+      }
+
+      setStatus('sent');
+      setName('');
+      setEmail('');
+      setMessage('');
+    } catch {
+      setErrorMsg('Something went wrong. Please try again.');
+      setStatus('error');
+    }
+  };
+
+  if (status === 'sent') {
+    return (
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        className="rounded-2xl border border-accent/20 bg-accent/[0.03] p-10 text-center"
+      >
+        <div className="w-12 h-12 rounded-full bg-accent/10 border border-accent/20 flex items-center justify-center mx-auto mb-6">
+          <Check className="w-5 h-5 text-accent" />
+        </div>
+        <p className="text-xl font-medium tracking-tight mb-2">Message sent.</p>
+        <p className="text-sm text-muted-foreground">I will get back to you shortly.</p>
+        <button
+          onClick={() => setStatus('idle')}
+          className="mt-8 text-sm text-accent/70 hover:text-accent transition-colors duration-300"
+        >
+          Send another message
+        </button>
+      </motion.div>
+    );
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-5">
+      <div>
+        <label htmlFor="name" className="block text-[10px] font-bold tracking-[0.4em] uppercase text-muted-foreground/60 mb-3">
+          Name
+        </label>
+        <input
+          id="name"
+          type="text"
+          required
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          className="w-full bg-white/[0.02] border border-white/10 rounded-xl px-5 py-4 text-foreground placeholder:text-muted-foreground/30 focus:outline-none focus:border-accent/40 transition-colors duration-500"
+          placeholder="Your name"
+        />
+      </div>
+
+      <div>
+        <label htmlFor="email" className="block text-[10px] font-bold tracking-[0.4em] uppercase text-muted-foreground/60 mb-3">
+          Email
+        </label>
+        <input
+          id="email"
+          type="email"
+          required
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className="w-full bg-white/[0.02] border border-white/10 rounded-xl px-5 py-4 text-foreground placeholder:text-muted-foreground/30 focus:outline-none focus:border-accent/40 transition-colors duration-500"
+          placeholder="you@example.com"
+        />
+      </div>
+
+      <div>
+        <label htmlFor="message" className="block text-[10px] font-bold tracking-[0.4em] uppercase text-muted-foreground/60 mb-3">
+          Message
+        </label>
+        <textarea
+          id="message"
+          required
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          rows={5}
+          className="w-full bg-white/[0.02] border border-white/10 rounded-xl px-5 py-4 text-foreground placeholder:text-muted-foreground/30 focus:outline-none focus:border-accent/40 transition-colors duration-500 resize-none"
+          placeholder="What can I help with?"
+        />
+      </div>
+
+      {status === 'error' && (
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="text-sm text-red-400/80"
+        >
+          {errorMsg}
+        </motion.p>
+      )}
+
+      <button
+        type="submit"
+        disabled={status === 'sending'}
+        className="group flex items-center gap-3 text-base font-medium tracking-tight bg-foreground text-background px-8 py-4 rounded-full hover:bg-accent hover:text-background transition-colors duration-500 disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        {status === 'sending' ? 'Sending...' : 'Send message'}
+        <Send size={16} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-500" />
+      </button>
+    </form>
   );
 }
 
@@ -159,10 +288,36 @@ export default function Contact() {
             </motion.p>
           </div>
 
-          <div className="space-y-6 lg:pt-32">
-            {socialLinks.map((link, i) => (
-              <ContactLink key={link.label} link={link} index={i} />
-            ))}
+          <div className="space-y-8 lg:pt-32">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <ContactForm />
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <div className="flex items-center gap-4 my-2">
+                <div className="h-[1px] flex-1 bg-white/5" />
+                <span className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground/40 font-medium">or</span>
+                <div className="h-[1px] flex-1 bg-white/5" />
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            >
+              {socialLinks.map((link, i) => (
+                <ContactLink key={link.label} link={link} index={i} />
+              ))}
+            </motion.div>
           </div>
         </div>
       </motion.div>
@@ -184,7 +339,7 @@ export default function Contact() {
               <span>Available remotely</span>
             </div>
             <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-white/10 to-transparent my-2" />
-            <span>© 2026 · All Rights Reserved</span>
+            <span>&copy; 2026 &middot; All Rights Reserved</span>
           </motion.div>
         </div>
       </footer>
