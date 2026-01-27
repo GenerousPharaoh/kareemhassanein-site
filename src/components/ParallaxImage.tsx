@@ -81,7 +81,7 @@ export default function ParallaxImage({
                     priority={priority}
                     placeholder="blur"
                     blurDataURL={shimmerPlaceholder}
-                    className="object-contain md:object-cover object-center saturate-[1.15] contrast-[1.05] transition-opacity duration-700"
+                    className="object-cover object-center saturate-[1.15] contrast-[1.05] transition-opacity duration-700"
                 />
             </motion.div>
         </div>
