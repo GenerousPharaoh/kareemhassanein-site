@@ -305,11 +305,11 @@ export default function About() {
       <section ref={valuesRef} className="py-24 md:py-36 px-6 lg:px-12 xl:px-20 border-b border-white/5 overflow-hidden relative">
         {/* Background image - offset for asymmetric interest */}
         <div className="absolute inset-0 z-0">
-          <div className="absolute -inset-x-20 inset-y-0 -top-20 -bottom-20">
+          <div className="absolute -inset-x-4 md:-inset-x-20 inset-y-0 -top-10 md:-top-20 -bottom-10 md:-bottom-20">
             <ParallaxImage
               src="/images/crystalline_structure.png"
               alt="Values"
-              className="w-full h-full opacity-50 scale-110"
+              className="w-full h-full opacity-50 scale-105 md:scale-110"
               fadedSides={true}
               fadedVertical={true}
             />

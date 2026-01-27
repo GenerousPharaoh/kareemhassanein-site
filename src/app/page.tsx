@@ -254,11 +254,11 @@ export default function Home() {
       <section ref={portfolioRef} className="py-16 md:py-28 relative z-10 w-full px-6 md:px-12 xl:px-20 overflow-hidden">
         {/* Background image - constrained and faded */}
         <div className="absolute inset-0 z-0 overflow-hidden">
-          <div className="absolute inset-0 flex items-center justify-center">
+          <div className="absolute inset-0">
             <ParallaxImage
               src="/images/flow of organized transformation.png"
               alt="Transformation"
-              className="w-[80%] max-w-4xl h-auto opacity-40"
+              className="w-full h-full opacity-40"
               fadedSides={true}
               fadedVertical={true}
             />
