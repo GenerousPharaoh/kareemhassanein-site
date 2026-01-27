@@ -3,7 +3,6 @@
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import { Linkedin, ArrowUpRight, Send, Check } from 'lucide-react';
 import MaskedReveal from '@/components/MaskedReveal';
-import ParallaxImage from '@/components/ParallaxImage';
 import Image from 'next/image';
 import { useRef, useEffect, useState } from 'react';
 
@@ -144,7 +143,6 @@ export default function Contact() {
     offset: ["start start", "end start"]
   });
   const springConfig = { stiffness: 100, damping: 30 };
-  const bgY = useSpring(useTransform(scrollYProgress, [0, 1], [0, 80]), springConfig);
   const textY = useSpring(useTransform(scrollYProgress, [0, 1], [0, 30]), springConfig);
 
   const labelOpacity = useSpring(0, springConfig);
@@ -163,16 +161,11 @@ export default function Contact() {
   return (
     <main ref={heroRef} className="min-h-screen relative overflow-hidden flex flex-col justify-between bg-background">
 
-      {/* Atmospheric Background */}
-      <motion.div style={{ y: bgY }} className="absolute inset-0 z-0 will-change-transform">
-        <ParallaxImage
-          src="/images/bridging_soft.png"
-          alt="Connection"
-          className="w-full h-full opacity-25"
-          fadedVertical={true}
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-background/80" />
-      </motion.div>
+      {/* Subtle Gradient Background */}
+      <div className="absolute inset-0 z-0">
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[600px] rounded-full bg-accent/[0.04] blur-[120px]" />
+        <div className="absolute bottom-0 left-1/4 w-[500px] h-[400px] rounded-full bg-accent/[0.03] blur-[100px]" />
+      </div>
 
       <motion.div
         style={{ y: textY }}
