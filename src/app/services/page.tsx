@@ -100,7 +100,7 @@ function ServiceSection({ service, index }: { service: typeof services[0], index
       {/* Background image - clipped to section with fade */}
       <motion.div
         style={{ y: imgY, scale: imgScale }}
-        className="absolute inset-y-0 w-2/3 right-0 pointer-events-none will-change-transform"
+        className="absolute inset-y-0 w-full md:w-2/3 right-0 pointer-events-none will-change-transform"
       >
         <ParallaxImage
           src={service.image}
