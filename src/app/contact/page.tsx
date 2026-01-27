@@ -17,27 +17,43 @@ function ContactLink({ link }: { link: typeof socialLinks[0]; index: number }) {
   const spotlightY = useSpring(0, { stiffness: 150, damping: 25 });
   const scale = useSpring(1, { stiffness: 400, damping: 30 });
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
     spotlightX.set(e.clientX - rect.left);
     spotlightY.set(e.clientY - rect.top);
   };
 
+  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (!containerRef.current || !e.touches[0]) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    spotlightX.set(e.touches[0].clientX - rect.left);
+    spotlightY.set(e.touches[0].clientY - rect.top);
+  };
+
   return (
     <motion.div
       ref={containerRef}
-      onMouseMove={handleMouseMove}
-      onMouseEnter={() => {
+      onPointerMove={handlePointerMove}
+      onPointerEnter={() => {
         spotlightOpacity.set(0.15);
         scale.set(1.02);
       }}
-      onMouseLeave={() => {
+      onPointerLeave={() => {
+        spotlightOpacity.set(0);
+        scale.set(1);
+      }}
+      onTouchMove={handleTouchMove}
+      onTouchStart={() => {
+        spotlightOpacity.set(0.15);
+        scale.set(1.02);
+      }}
+      onTouchEnd={() => {
         spotlightOpacity.set(0);
         scale.set(1);
       }}
       style={{ scale }}
-      className="group relative w-full overflow-hidden rounded-2xl border border-white/5 bg-white/[0.01] backdrop-blur-md hover:border-accent/20 transition-all duration-500"
+      className="group relative w-full overflow-hidden rounded-2xl border border-white/5 bg-white/[0.01] backdrop-blur-md hover:border-accent/20 active:scale-[0.98] transition-all duration-500"
     >
       <motion.div
         className="absolute pointer-events-none z-0 w-64 h-64 rounded-full blur-3xl"
