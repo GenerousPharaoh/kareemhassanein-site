@@ -3,7 +3,7 @@
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import { Linkedin, ArrowUpRight, Send, Check } from 'lucide-react';
 import MaskedReveal from '@/components/MaskedReveal';
-import ParallaxImage from '@/components/ParallaxImage';
+import Image from 'next/image';
 import { useRef, useEffect, useState } from 'react';
 
 const socialLinks = [
@@ -209,7 +209,6 @@ export default function Contact() {
     offset: ["start start", "end start"]
   });
   const springConfig = { stiffness: 100, damping: 30 };
-  const bgY = useSpring(useTransform(scrollYProgress, [0, 1], [0, 100]), springConfig);
   const textY = useSpring(useTransform(scrollYProgress, [0, 1], [0, 30]), springConfig);
 
   // Initial entrance animations
@@ -255,9 +254,11 @@ export default function Contact() {
               transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
               className="mb-10 w-48 md:w-56 opacity-80"
             >
-              <img
+              <Image
                 src="/images/contact.png"
                 alt="Contact"
+                width={400}
+                height={280}
                 className="w-full h-auto rounded-2xl"
               />
             </motion.div>
