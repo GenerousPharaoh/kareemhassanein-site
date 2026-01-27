@@ -252,7 +252,7 @@ export default function Contact() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-              className="mb-10 w-48 md:w-56 opacity-80"
+              className="mb-10 w-72 md:w-80 opacity-85"
             >
               <Image
                 src="/images/contact.png"
