@@ -17,43 +17,27 @@ function ContactLink({ link }: { link: typeof socialLinks[0]; index: number }) {
   const spotlightY = useSpring(0, { stiffness: 150, damping: 25 });
   const scale = useSpring(1, { stiffness: 400, damping: 30 });
 
-  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
     spotlightX.set(e.clientX - rect.left);
     spotlightY.set(e.clientY - rect.top);
   };
 
-  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
-    if (!containerRef.current || !e.touches[0]) return;
-    const rect = containerRef.current.getBoundingClientRect();
-    spotlightX.set(e.touches[0].clientX - rect.left);
-    spotlightY.set(e.touches[0].clientY - rect.top);
-  };
-
   return (
     <motion.div
       ref={containerRef}
-      onPointerMove={handlePointerMove}
-      onPointerEnter={() => {
+      onMouseMove={handleMouseMove}
+      onMouseEnter={() => {
         spotlightOpacity.set(0.15);
         scale.set(1.02);
       }}
-      onPointerLeave={() => {
-        spotlightOpacity.set(0);
-        scale.set(1);
-      }}
-      onTouchMove={handleTouchMove}
-      onTouchStart={() => {
-        spotlightOpacity.set(0.15);
-        scale.set(1.02);
-      }}
-      onTouchEnd={() => {
+      onMouseLeave={() => {
         spotlightOpacity.set(0);
         scale.set(1);
       }}
       style={{ scale }}
-      className="group relative w-full overflow-hidden rounded-2xl border border-white/5 bg-white/[0.01] backdrop-blur-md hover:border-accent/20 active:scale-[0.98] transition-all duration-500"
+      className="group relative w-full overflow-hidden rounded-2xl border border-white/5 bg-white/[0.01] backdrop-blur-md hover:border-accent/20 transition-all duration-500"
     >
       <motion.div
         className="absolute pointer-events-none z-0 w-64 h-64 rounded-full blur-3xl"
@@ -139,7 +123,7 @@ export default function Contact() {
 
       <motion.div
         style={{ y: textY }}
-        className="section-container relative z-10 w-full pt-28 md:pt-48 pb-16 md:pb-24 flex-grow flex items-center will-change-transform"
+        className="section-container relative z-10 w-full pt-48 pb-24 flex-grow flex items-center will-change-transform"
       >
         <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-20 lg:gap-32 items-start w-full">
           <div>
@@ -152,7 +136,7 @@ export default function Contact() {
 
             <motion.h1
               style={{ opacity: headingOpacity, y: headingY }}
-              className="text-5xl sm:text-6xl md:text-[100px] lg:text-[120px] font-medium tracking-tighter mb-10 md:mb-16 leading-[0.85]"
+              className="text-6xl md:text-[100px] lg:text-[120px] font-medium tracking-tighter mb-16 leading-[0.85]"
             >
               Get in <br />
               <span className="opacity-60 italic font-light font-serif">
@@ -193,7 +177,7 @@ export default function Contact() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 0.4 }}
             transition={{ duration: 0.8, delay: 1 }}
-            className="flex flex-col items-end gap-2 text-xs md:text-[10px] uppercase tracking-[0.2em] md:tracking-[0.3em] font-medium text-muted-foreground/70 pb-2"
+            className="flex flex-col items-end gap-2 text-[10px] uppercase tracking-[0.3em] font-medium text-muted-foreground/70 pb-2"
           >
             <div className="flex gap-8">
               <span>Burlington, ON</span>

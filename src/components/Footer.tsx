@@ -11,30 +11,20 @@ export default function Footer() {
   const spotlightY = useSpring(0, { stiffness: 100, damping: 30 });
   const spotlightOpacity = useSpring(0, { stiffness: 100, damping: 30 });
 
-  const handlePointerMove = (e: React.PointerEvent) => {
+  const handleMouseMove = (e: React.MouseEvent) => {
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
     spotlightX.set(e.clientX - rect.left);
     spotlightY.set(e.clientY - rect.top);
   };
 
-  const handleTouchMove = (e: React.TouchEvent) => {
-    if (!containerRef.current || !e.touches[0]) return;
-    const rect = containerRef.current.getBoundingClientRect();
-    spotlightX.set(e.touches[0].clientX - rect.left);
-    spotlightY.set(e.touches[0].clientY - rect.top);
-  };
-
   return (
     <div
       ref={containerRef}
-      onPointerMove={handlePointerMove}
-      onPointerEnter={() => spotlightOpacity.set(1)}
-      onPointerLeave={() => spotlightOpacity.set(0)}
-      onTouchMove={handleTouchMove}
-      onTouchStart={() => spotlightOpacity.set(1)}
-      onTouchEnd={() => spotlightOpacity.set(0)}
-      className="fixed bottom-0 left-0 w-full h-[500px] md:h-[800px] z-0 flex flex-col justify-end pointer-events-none"
+      onMouseMove={handleMouseMove}
+      onMouseEnter={() => spotlightOpacity.set(1)}
+      onMouseLeave={() => spotlightOpacity.set(0)}
+      className="fixed bottom-0 left-0 w-full h-[800px] z-0 flex flex-col justify-end pointer-events-none"
       style={{ clipPath: "polygon(0% 0, 100% 0%, 100% 100%, 0 100%)" }}
     >
       <div className="relative h-full w-full bg-[#0f1318] flex flex-col justify-center items-center text-center pointer-events-auto overflow-hidden">
@@ -102,12 +92,12 @@ export default function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="absolute bottom-0 left-0 w-full border-t border-white/5 bg-white/[0.02] backdrop-blur-2xl safe-bottom">
-          <div className="max-w-[1800px] mx-auto px-6 md:px-12 py-8 md:py-10 flex flex-col md:flex-row justify-between items-end gap-8">
+        <div className="absolute bottom-0 left-0 w-full border-t border-white/5 bg-white/[0.02] backdrop-blur-2xl">
+          <div className="max-w-[1800px] mx-auto px-6 md:px-12 py-10 flex flex-col md:flex-row justify-between items-end gap-8">
             <div className="flex flex-col items-start gap-4">
               <span className="text-xs font-medium tracking-widest text-accent/50">KAREEM HASSANEIN</span>
             </div>
-            <div className="flex flex-col items-end gap-2 text-xs md:text-[10px] uppercase tracking-[0.2em] md:tracking-[0.3em] font-medium text-muted-foreground/70 pb-2">
+            <div className="flex flex-col items-end gap-2 text-[10px] uppercase tracking-[0.3em] font-medium text-muted-foreground/70 pb-2">
               <div className="flex gap-8">
                 <span>Burlington, ON</span>
                 <span>Available remotely</span>

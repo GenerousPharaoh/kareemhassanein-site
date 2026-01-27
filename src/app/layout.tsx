@@ -21,12 +21,6 @@ const libreBaskerville = Libre_Baskerville({
   style: ['normal', 'italic'],
 });
 
-export const viewport = {
-  width: 'device-width',
-  initialScale: 1,
-  viewportFit: 'cover',
-};
-
 export const metadata: Metadata = {
   title: "Kareem Hassanein | Implementation Consulting",
   description: "Operations improvement, workflow automation, and technology implementation for healthcare practices and professional services firms. I find bottlenecks and build systems people actually use.",
