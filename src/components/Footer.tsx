@@ -77,7 +77,7 @@ export default function Footer() {
           </motion.h2>
 
           <a
-            href="https://www.linkedin.com/in/kareem-hassanein-physiotherapy/"
+            href="https://www.linkedin.com/in/kareemhassanein"
             target="_blank"
             rel="noopener noreferrer"
             className="group relative inline-flex items-center gap-6 text-2xl md:text-3xl font-light px-12 py-5 rounded-full overflow-hidden transition-all duration-700 bg-white/5 backdrop-blur-sm border border-white/10 hover:border-accent/50 hover:bg-white/[0.08]"

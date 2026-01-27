@@ -7,7 +7,7 @@ import ParallaxImage from '@/components/ParallaxImage';
 import { useRef, useEffect } from 'react';
 
 const socialLinks = [
-  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/kareem-hassanein-physiotherapy/', icon: <Linkedin className="w-5 h-5" /> },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/kareemhassanein', icon: <Linkedin className="w-5 h-5" /> },
 ];
 
 function ContactLink({ link }: { link: typeof socialLinks[0]; index: number }) {
