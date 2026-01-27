@@ -134,7 +134,7 @@ function ContactForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
       <div>
-        <label htmlFor="name" className="block text-[10px] font-bold tracking-[0.4em] uppercase text-muted-foreground/60 mb-3">
+        <label htmlFor="name" className="block text-[10px] font-bold tracking-[0.4em] uppercase text-muted-foreground mb-3">
           Name
         </label>
         <input
@@ -143,13 +143,13 @@ function ContactForm() {
           required
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="w-full bg-white/[0.02] border border-white/10 rounded-xl px-5 py-4 text-foreground placeholder:text-muted-foreground/30 focus:outline-none focus:border-accent/40 transition-colors duration-500"
+          className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-5 py-4 text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-accent/50 focus:bg-white/[0.07] transition-colors duration-500"
           placeholder="Your name"
         />
       </div>
 
       <div>
-        <label htmlFor="email" className="block text-[10px] font-bold tracking-[0.4em] uppercase text-muted-foreground/60 mb-3">
+        <label htmlFor="email" className="block text-[10px] font-bold tracking-[0.4em] uppercase text-muted-foreground mb-3">
           Email
         </label>
         <input
@@ -158,13 +158,13 @@ function ContactForm() {
           required
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full bg-white/[0.02] border border-white/10 rounded-xl px-5 py-4 text-foreground placeholder:text-muted-foreground/30 focus:outline-none focus:border-accent/40 transition-colors duration-500"
+          className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-5 py-4 text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-accent/50 focus:bg-white/[0.07] transition-colors duration-500"
           placeholder="you@example.com"
         />
       </div>
 
       <div>
-        <label htmlFor="message" className="block text-[10px] font-bold tracking-[0.4em] uppercase text-muted-foreground/60 mb-3">
+        <label htmlFor="message" className="block text-[10px] font-bold tracking-[0.4em] uppercase text-muted-foreground mb-3">
           Message
         </label>
         <textarea
@@ -173,7 +173,7 @@ function ContactForm() {
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           rows={5}
-          className="w-full bg-white/[0.02] border border-white/10 rounded-xl px-5 py-4 text-foreground placeholder:text-muted-foreground/30 focus:outline-none focus:border-accent/40 transition-colors duration-500 resize-none"
+          className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-5 py-4 text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-accent/50 focus:bg-white/[0.07] transition-colors duration-500 resize-none"
           placeholder="What can I help with?"
         />
       </div>
@@ -303,9 +303,9 @@ export default function Contact() {
               transition={{ duration: 0.8, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
             >
               <div className="flex items-center gap-4 my-2">
-                <div className="h-[1px] flex-1 bg-white/5" />
-                <span className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground/40 font-medium">or</span>
-                <div className="h-[1px] flex-1 bg-white/5" />
+                <div className="h-[1px] flex-1 bg-white/10" />
+                <span className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground/60 font-medium">or</span>
+                <div className="h-[1px] flex-1 bg-white/10" />
               </div>
             </motion.div>
 
