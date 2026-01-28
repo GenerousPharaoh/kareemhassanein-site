@@ -24,7 +24,7 @@ export default function Footer() {
       onMouseMove={handleMouseMove}
       onMouseEnter={() => spotlightOpacity.set(1)}
       onMouseLeave={() => spotlightOpacity.set(0)}
-      className="fixed bottom-0 left-0 w-full h-[800px] z-0 flex flex-col justify-end pointer-events-none"
+      className="fixed bottom-0 left-0 w-full h-[500px] md:h-[800px] z-0 flex flex-col justify-end pointer-events-none"
       style={{ clipPath: "polygon(0% 0, 100% 0%, 100% 100%, 0 100%)" }}
     >
       <div className="relative h-full w-full bg-[#0f1318] flex flex-col justify-center items-center text-center pointer-events-auto overflow-hidden">
