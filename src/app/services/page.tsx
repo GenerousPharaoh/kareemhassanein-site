@@ -41,13 +41,13 @@ const technicalIndex = [
   },
   {
     domain: 'Healthcare Operations',
-    tools: ['Jane App', 'Practice Management Systems', 'EHR Platforms'],
+    tools: ['Jane App', 'Google Workspace', 'Microsoft Office'],
     specs: ['Multi-provider scheduling', 'Intake optimization', 'Referral tracking', 'Review capture']
   },
   {
     domain: 'Development & Analytics',
-    tools: ['Next.js', 'TypeScript', 'GitHub', 'Vercel', 'Google Analytics'],
-    specs: ['Web applications', 'CI/CD pipelines', 'Local SEO', 'Conversion tracking']
+    tools: ['Next.js', 'GitHub', 'Vercel', 'Google Analytics'],
+    specs: ['Web applications', 'CI/CD pipelines', 'Google Business Profile', 'Search Console']
   }
 ];
 

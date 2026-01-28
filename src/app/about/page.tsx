@@ -40,28 +40,28 @@ function AnimatedBlock({ children, delay, direction = "up", className = "" }: {
 
 const experience = [
   {
-    period: '2025 - Present',
-    role: 'Workflow Automation',
-    company: 'Tax Relief Counsel',
-    desc: 'Built an LLM-based drafting automation system that reduced document generation time by 85%. Mapped intake and client communication workflows, identified bottlenecks, and created a reusable template library for repeatable output at scale.',
-  },
-  {
     period: '2024 - Present',
     role: 'Digital Strategy & Operations',
     company: 'Endorphins Health',
-    desc: 'Redesigned booking architecture across 6 specialties, reducing intake friction. Executed local SEO across 8 GTA municipalities.',
+    desc: 'Leading digital operations for a multidisciplinary clinic with 8 practitioners across 6 specialties. Redesigned booking architecture for multi-provider scheduling, built conversion flows from service pages to booking, and deployed a local SEO engine across 8 GTA municipalities.',
+  },
+  {
+    period: '2025 - Present',
+    role: 'Workflow Automation',
+    company: 'Tax Relief Counsel',
+    desc: 'Built an LLM-based drafting automation system that reduced document generation time by 85%. Mapped intake and client communication workflows to surface bottlenecks, created SOPs for consistency, and built a reusable template library for scalable output.',
   },
   {
     period: '2025 - Present',
     role: 'Clinical Advisor',
     company: 'Neuro-Mod',
-    desc: 'Clinical workflow analysis for a medical device startup. Identifying usability friction points and delivering workflow integration recommendations for deployment readiness.',
+    desc: 'Reviewing clinical deployment strategies for a medical device startup. Documenting usability friction in clinician workflows and delivering integration recommendations to support deployment readiness.',
   },
   {
     period: '2021 - 2024',
     role: 'Registered Physiotherapist',
     company: 'Private Physiotherapy Clinic',
-    desc: 'Top revenue-generating clinician for 3 consecutive years. Led the rollout of Heidi AI from evaluation through go-live, achieving 100% adoption in 8 weeks, reducing documentation by 3 hours/week per practitioner, and eliminating $20K in annual admin cost.',
+    desc: 'Top revenue-generating clinician for 3 consecutive years on a team of 6, generating $600K+ through retention workflows and high rebooking rates. Led the Heidi AI rollout from evaluation through go-live, achieving 100% adoption in 8 weeks, cutting documentation by 3 hours/week per clinician, and eliminating $20K in annual admin cost.',
   }
 ];
 
@@ -244,9 +244,17 @@ export default function About() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 0.6, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                className="text-lg md:text-xl text-muted-foreground font-medium tracking-wide max-w-[200px]"
+                className="text-lg md:text-xl text-foreground/80 font-medium tracking-wide max-w-[240px]"
               >
-                MSc Physiotherapy <br />Implementation Consultant
+                Implementation Consultant
+              </motion.p>
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 0.4 }}
+                transition={{ duration: 0.6, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                className="text-sm text-muted-foreground tracking-wide mt-3"
+              >
+                MSc PT · BSc Kin
               </motion.p>
             </div>
 
@@ -257,13 +265,13 @@ export default function About() {
 
               <AnimatedBlock delay={0.6} direction="up">
                 <p className="text-xl md:text-2xl text-foreground/90 leading-relaxed font-light tracking-tight">
-                  I spent years as a physiotherapist, treating patients and watching how clinics actually work. Not from a consulting report, but from inside the room, using the systems every day.
+                  I spent years on the frontline. Personal trainer, fitness manager, physiotherapist. I built caseloads, managed operations for a 25-person team, and was the highest-revenue clinician at my practice for three consecutive years. I did not learn about operations from a slide deck. I learned by doing the work.
                 </p>
               </AnimatedBlock>
 
               <AnimatedBlock delay={0.8} direction="up">
                 <p className="text-lg md:text-xl text-muted-foreground leading-relaxed font-light">
-                  I saw why software rollouts fail. It is rarely the technology. It is the gap between how the tool expects you to work and how the work actually happens. Clinicians ignore systems that add friction to their day, no matter how good the feature set is.
+                  That background shaped how I think about implementation. Teams do not resist change because they are difficult. They resist systems that add friction to their day. The gap between how a tool is designed to work and how the work actually happens is where most rollouts fall apart.
                 </p>
               </AnimatedBlock>
 
@@ -277,7 +285,7 @@ export default function About() {
                     transition={{ duration: 1.2, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
                     className="text-lg md:text-xl text-muted-foreground leading-relaxed font-light"
                   >
-                    That perspective shapes everything I do now. I map workflows before touching configuration. I talk to the people who will use the system. And I stay through adoption, because go-live is where most implementations fall apart.
+                    Now I work across healthcare, legal, and med-tech environments. I map workflows before touching configuration, talk to the people who will use the system, and stay through adoption. Go-live is where most implementations start to fail, not where they end.
                   </motion.p>
                 </div>
               </AnimatedBlock>
