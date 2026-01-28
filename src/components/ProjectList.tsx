@@ -1,5 +1,7 @@
 'use client';
 
+import { useScroll, useTransform, useSpring, MotionValue } from 'framer-motion';
+import { useRef } from 'react';
 import ProjectListItem from './ProjectListItem';
 
 const projects = [
@@ -22,14 +24,46 @@ const projects = [
     },
 ];
 
-export default function ProjectList() {
+const TOTAL = projects.length;
+
+function StaggeredItem({ project, index, progress }: {
+    project: typeof projects[0];
+    index: number;
+    progress: MotionValue<number>;
+}) {
+    const segment = 1 / (TOTAL + 1);
+    const start = index * segment;
+    const end = start + segment * 2;
+    const opacity = useSpring(
+        useTransform(progress, [start, end], [0, 1]),
+        { stiffness: 100, damping: 30 }
+    );
+
     return (
-        <div className="w-full flex flex-col relative group/list">
+        <ProjectListItem
+            project={project}
+            index={index}
+            opacity={opacity}
+        />
+    );
+}
+
+export default function ProjectList() {
+    const ref = useRef<HTMLDivElement>(null);
+
+    const { scrollYProgress } = useScroll({
+        target: ref,
+        offset: ["start end", "start 0.3"]
+    });
+
+    return (
+        <div ref={ref} className="w-full flex flex-col relative group/list">
             {projects.map((project, index) => (
-                <ProjectListItem
+                <StaggeredItem
                     key={index}
                     project={project}
                     index={index}
+                    progress={scrollYProgress}
                 />
             ))}
         </div>
