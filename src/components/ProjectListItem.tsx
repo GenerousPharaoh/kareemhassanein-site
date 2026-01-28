@@ -1,7 +1,8 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
+import { useRef } from 'react';
 
 interface Project {
     title: string;
@@ -15,7 +16,17 @@ interface ProjectListItemProps {
     index: number;
 }
 
-export default function ProjectListItem({ project, index }: ProjectListItemProps) {
+export default function ProjectListItem({ project }: ProjectListItemProps) {
+    const ref = useRef<HTMLDivElement>(null);
+
+    const { scrollYProgress } = useScroll({
+        target: ref,
+        offset: ["start end", "start 0.75"]
+    });
+
+    const springConfig = { stiffness: 100, damping: 30 };
+    const opacity = useSpring(useTransform(scrollYProgress, [0, 1], [0, 1]), springConfig);
+
     const className = `group relative flex items-center justify-between py-8 md:py-10 px-6 md:px-8 -mx-6 md:-mx-8 rounded-2xl hover:bg-white/[0.02] transition-all duration-500 border-b border-white/5 last:border-b-0 hover:border-accent/20 ${project.href ? 'cursor-pointer' : ''}`;
 
     const content = (
@@ -50,16 +61,9 @@ export default function ProjectListItem({ project, index }: ProjectListItemProps
         </>
     );
 
-    const motionProps = {
-        initial: { opacity: 0, filter: "blur(6px)" },
-        whileInView: { opacity: 1, filter: "blur(0px)" },
-        viewport: { once: true, margin: "-50px" },
-        transition: { duration: 0.8, delay: index * 0.12, ease: [0.16, 1, 0.3, 1] as const },
-    };
-
     if (project.href) {
         return (
-            <motion.div {...motionProps}>
+            <motion.div ref={ref} style={{ opacity }}>
                 <a
                     href={project.href}
                     target="_blank"
@@ -74,7 +78,7 @@ export default function ProjectListItem({ project, index }: ProjectListItemProps
     }
 
     return (
-        <motion.div {...motionProps} className={className}>
+        <motion.div ref={ref} style={{ opacity }} className={className}>
             {content}
         </motion.div>
     );
