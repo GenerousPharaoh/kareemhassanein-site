@@ -51,10 +51,10 @@ export default function ProjectListItem({ project, index }: ProjectListItemProps
     );
 
     const motionProps = {
-        initial: { opacity: 0, y: 30 },
-        whileInView: { opacity: 1, y: 0 },
+        initial: { opacity: 0, filter: "blur(6px)" },
+        whileInView: { opacity: 1, filter: "blur(0px)" },
         viewport: { once: true, margin: "-50px" },
-        transition: { duration: 0.5, delay: index * 0.15, ease: [0.16, 1, 0.3, 1] as const },
+        transition: { duration: 0.8, delay: index * 0.12, ease: [0.16, 1, 0.3, 1] as const },
     };
 
     if (project.href) {
