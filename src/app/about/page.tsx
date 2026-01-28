@@ -331,14 +331,14 @@ export default function About() {
         >
           <div className="grid md:grid-cols-2 gap-8 md:gap-12">
             <ValueCard
-              subtitle="Perspective"
-              title="Frontline experience."
-              desc="I have logged the clinical notes, configured the scheduling software, and onboarded the new hires. That background shapes how I set things up."
+              subtitle="Why it matters"
+              title="I have been on the receiving end."
+              desc="I have had new software dropped on me mid-caseload with no warning and bad training. That is exactly what I try not to do to other people."
             />
             <ValueCard
-              subtitle="Approach"
-              title="Past go-live."
-              desc="Things break after launch, not before. I stay through the first few weeks to fix what comes up in real use."
+              subtitle="How I work"
+              title="I do not hand off a plan and leave."
+              desc="The first week of real use always surfaces things nobody planned for. I would rather be there when that happens than hear about it later."
             />
           </div>
         </motion.div>
