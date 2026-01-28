@@ -68,8 +68,10 @@ export default function ProjectListItem({ project, opacity }: ProjectListItemPro
     }
 
     return (
-        <motion.div style={{ opacity }} className={className}>
-            {content}
+        <motion.div style={{ opacity }}>
+            <div className={className}>
+                {content}
+            </div>
         </motion.div>
     );
 }
