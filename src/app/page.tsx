@@ -59,13 +59,13 @@ export default function Home() {
   });
   const visualBgY = useSpring(useTransform(visualProgress, [0, 1], [0, -60]), springConfig);
 
-  // Portfolio section - smooth reveal with scale (initiates earlier)
+  // Portfolio section - smooth reveal (triggers early)
   const { scrollYProgress: portfolioProgress } = useScroll({
     target: portfolioRef,
-    offset: ["start end", "start 0.6"]
+    offset: ["start end", "start 0.85"]
   });
-  const portfolioYRaw = useTransform(portfolioProgress, [0, 1], [80, 0]);
-  const portfolioOpacityRaw = useTransform(portfolioProgress, [0, 0.3, 1], [0, 0.6, 1]);
+  const portfolioYRaw = useTransform(portfolioProgress, [0, 1], [50, 0]);
+  const portfolioOpacityRaw = useTransform(portfolioProgress, [0, 0.2, 1], [0, 0.8, 1]);
   const portfolioY = useSpring(portfolioYRaw, springConfig);
   const portfolioOpacity = useSpring(portfolioOpacityRaw, springConfig);
 
