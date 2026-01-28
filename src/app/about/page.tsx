@@ -333,7 +333,7 @@ export default function About() {
             <ValueCard
               subtitle="Background"
               title="Clinical, operational, and technical."
-              desc="I have run a $600K clinical caseload, managed operations for a 25-person multidisciplinary team, redesigned booking architecture across 6 specialties, and built LLM-powered automation for document generation. The range means I can move between the clinical floor, the back office, and the codebase."
+              desc="I have run a $200K clinical caseload, managed operations for a 25-person multidisciplinary team, redesigned booking architecture across 6 specialties, and built LLM-powered automation for document generation. The range means I can move between the clinical floor, the back office, and the codebase."
             />
             <ValueCard
               subtitle="Process"
