@@ -88,6 +88,9 @@ export default function Home() {
         {/* Fixed gradient overlay - extends beyond section for seamless blend */}
         <div className="absolute inset-x-0 -top-10 -bottom-64 z-[1] bg-gradient-to-b from-background via-background/0 via-30% to-background pointer-events-none" />
 
+        {/* Ambient glow orb for depth */}
+        <div className="absolute top-[40%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] md:w-[700px] md:h-[700px] rounded-full bg-accent/[0.06] blur-[120px] md:blur-[180px] pointer-events-none z-[2]" />
+
         <div className="relative z-10 w-full max-w-[1400px] h-full flex flex-col justify-center py-20">
           <div className="grid lg:grid-cols-1 items-center justify-center text-center">
 
@@ -95,9 +98,9 @@ export default function Home() {
             <div className="space-y-12 mx-auto max-w-4xl">
               <motion.span
                 initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 0.4, y: 0 }}
+                animate={{ opacity: 0.5, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-                className="inline-block text-sm font-medium tracking-[0.4em] uppercase mb-4 border border-white/10 px-6 py-2 rounded-full backdrop-blur-sm shadow-inner mt-10 md:mt-0"
+                className="inline-block text-[11px] md:text-sm font-medium tracking-[0.25em] md:tracking-[0.4em] uppercase mb-4 border border-white/[0.08] px-5 md:px-6 py-2.5 rounded-full backdrop-blur-md bg-white/[0.03] mt-10 md:mt-0"
               >
                 Digital Transformation & Implementation Consulting
               </motion.span>
@@ -138,18 +141,24 @@ export default function Home() {
                 />
               </div>
 
-              {/* Metrics Row */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-6 max-w-3xl mx-auto pt-4">
+              {/* Metrics Row - Premium Glass Cards */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-5 max-w-3xl mx-auto pt-4">
                 {metrics.map((m, i) => (
                   <motion.div
                     key={m.label}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 1.4 + i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-                    className="group relative p-6 rounded-2xl gradient-border hover-lift hover:bg-white/[0.02] transition-colors duration-500"
+                    initial={{ opacity: 0, y: 30, scale: 0.96 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    transition={{ duration: 0.8, delay: 1.4 + i * 0.15, ease: [0.16, 1, 0.3, 1] }}
+                    className="group relative p-6 md:p-7 rounded-2xl bg-white/[0.03] backdrop-blur-xl border border-white/[0.06] hover:border-white/[0.12] transition-all duration-700 overflow-hidden"
                   >
-                    <p className="text-3xl md:text-4xl font-serif italic text-accent mb-3">{m.value}</p>
-                    <p className="text-xs text-muted-foreground leading-relaxed">{m.label}</p>
+                    {/* Top accent gradient line */}
+                    <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-accent/30 to-transparent" />
+                    {/* Inner corner glow */}
+                    <div className="absolute -top-12 -right-12 w-24 h-24 rounded-full bg-accent/[0.08] blur-2xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                    {/* Hover glow overlay */}
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 bg-gradient-to-b from-accent/[0.04] via-transparent to-transparent pointer-events-none" />
+                    <p className="text-4xl md:text-4xl font-serif italic text-accent mb-3 relative">{m.value}</p>
+                    <p className="text-xs text-muted-foreground leading-relaxed relative">{m.label}</p>
                   </motion.div>
                 ))}
               </div>
@@ -158,18 +167,18 @@ export default function Home() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 1.8, ease: [0.16, 1, 0.3, 1] }}
-                className="flex gap-6 items-center justify-center pt-10"
+                className="flex flex-col sm:flex-row gap-4 sm:gap-6 items-center justify-center pt-10"
               >
                 <Link
                   href="/contact"
-                  className="group flex items-center gap-4 text-lg font-medium tracking-tight bg-foreground text-background px-8 py-4 rounded-full hover:bg-accent hover:text-background transition-colors duration-500"
+                  className="group flex items-center justify-center gap-4 text-lg font-medium tracking-tight bg-foreground text-background w-full sm:w-auto px-8 py-4 rounded-full hover:bg-accent hover:text-background transition-all duration-500 shadow-[0_0_60px_-15px_hsl(var(--accent)/0.3)] hover:shadow-[0_0_80px_-10px_hsl(var(--accent)/0.5)]"
                 >
                   Get in touch
                   <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform duration-500" />
                 </Link>
                 <Link
                   href="/about"
-                  className="text-lg font-medium tracking-tight text-foreground/80 hover:text-foreground px-6 py-4 transition-colors duration-500"
+                  className="text-lg font-medium tracking-tight text-foreground/70 hover:text-foreground w-full sm:w-auto text-center px-8 py-4 rounded-full border border-white/[0.06] hover:border-white/[0.15] hover:bg-white/[0.03] backdrop-blur-sm transition-all duration-500"
                 >
                   Learn more
                 </Link>
