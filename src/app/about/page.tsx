@@ -61,7 +61,7 @@ const experience = [
     period: '2021 - 2024',
     role: 'Registered Physiotherapist',
     company: 'Private Physiotherapy Clinic',
-    desc: 'Top revenue-generating clinician for 3 consecutive years on a team of 6, generating $600K+ through retention workflows and high rebooking rates. Led the Heidi AI rollout from evaluation through go-live, achieving 100% adoption in 8 weeks, cutting documentation by 3 hours/week per clinician, and eliminating $20K in annual admin cost.',
+    desc: 'Top revenue-generating clinician for 3 consecutive years on a team of 6, generating $200K+ annually through retention workflows and high rebooking rates. Led the Heidi AI rollout from evaluation through go-live, achieving 100% adoption in 8 weeks, cutting documentation by 3 hours/week per clinician, and eliminating $20K in annual admin cost.',
   }
 ];
 
