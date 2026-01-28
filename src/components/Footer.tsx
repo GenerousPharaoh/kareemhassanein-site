@@ -67,13 +67,9 @@ export default function Footer() {
             className="text-7xl md:text-[160px] font-medium tracking-tighter mb-20 leading-[0.8]"
           >
             Reach <br />
-            <motion.span
-              animate={{ opacity: [0.3, 0.5, 0.3] }}
-              transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-              className="mt-4 italic font-light font-serif"
-            >
+            <span className="mt-4 italic font-light font-serif opacity-50">
               out.
-            </motion.span>
+            </span>
           </motion.h2>
 
           <a

@@ -132,7 +132,7 @@ export default function Home() {
 
               <div className="max-w-2xl mx-auto">
                 <TextReveal
-                  text="Operations improvement, workflow automation, and technology implementation for healthcare practices and professional services firms. I map out where time and money are leaking, then build the systems, automations, and processes to stop it."
+                  text="Operations improvement, workflow automation, and technology implementation for healthcare practices and professional services firms. I map out where things break down, build the systems to fix them, and stay through adoption until the new way sticks."
                   className="text-lg md:text-xl text-muted-foreground font-light leading-relaxed"
                   delay={1.0}
                 />

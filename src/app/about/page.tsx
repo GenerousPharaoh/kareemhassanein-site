@@ -265,13 +265,13 @@ export default function About() {
 
               <AnimatedBlock delay={0.6} direction="up">
                 <p className="text-xl md:text-2xl text-foreground/90 leading-relaxed font-light tracking-tight">
-                  I spent years on the frontline. Personal trainer, fitness manager, physiotherapist. I built caseloads, managed operations for a 25-person team, and was the highest-revenue clinician at my practice for three consecutive years. I did not learn about operations from a slide deck. I learned by doing the work.
+                  I spent years on the frontline. Personal trainer, fitness manager, physiotherapist. I built caseloads, managed operations for a 25-person team, and was the highest-revenue clinician at my practice for three consecutive years. The through-line has always been the same: getting people to adopt and stick with new systems, routines, or behaviours.
                 </p>
               </AnimatedBlock>
 
               <AnimatedBlock delay={0.8} direction="up">
                 <p className="text-lg md:text-xl text-muted-foreground leading-relaxed font-light">
-                  That background shaped how I think about implementation. Teams do not resist change because they are difficult. They resist systems that add friction to their day. The gap between how a tool is designed to work and how the work actually happens is where most rollouts fall apart.
+                  Whether it was a patient following through on a home exercise program, a trainer learning a sales process, or a clinician adopting new documentation software, the challenge was always the same. People resist systems that add friction to their day. The gap between how a tool is designed to work and how the work actually happens is where most rollouts fall apart.
                 </p>
               </AnimatedBlock>
 
