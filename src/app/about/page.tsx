@@ -332,13 +332,13 @@ export default function About() {
           <div className="grid md:grid-cols-2 gap-8 md:gap-12">
             <ValueCard
               subtitle="Background"
-              title="Operations and clinical, not just consulting."
-              desc="I ran a caseload generating over $600K annually, managed operations for a 25-person multidisciplinary team, and built booking systems across 6 specialties. When I look at a workflow, I am drawing on years of doing the work itself, not just studying it."
+              title="Clinical, operational, and technical."
+              desc="I have run a $600K clinical caseload, managed operations for a 25-person multidisciplinary team, redesigned booking architecture across 6 specialties, and built LLM-powered automation for document generation. The range means I can move between the clinical floor, the back office, and the codebase."
             />
             <ValueCard
-              subtitle="Capability"
-              title="I find the problem and build the fix."
-              desc="Most consultants diagnose issues and hand you a report. I also write the automation, configure the software, build the templates, and wire up the integrations. The same person who maps the workflow builds the solution, which means less gets lost in translation."
+              subtitle="Process"
+              title="Map, build, and stay."
+              desc="I start by understanding how the work actually moves before touching any configuration. Then I build the system to match that workflow, whether that means writing automation, configuring software, or wiring up integrations. Then I stay through the first stretch of real use to adjust what needs adjusting."
             />
           </div>
         </motion.div>
