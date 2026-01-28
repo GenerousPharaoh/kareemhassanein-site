@@ -332,13 +332,13 @@ export default function About() {
           <div className="grid md:grid-cols-2 gap-8 md:gap-12">
             <ValueCard
               subtitle="Perspective"
-              title="I have been the end user."
-              desc="Most consultants study workflows from the outside. I have used the systems I now help implement. That shapes how I think about configuration, training, and what actually makes people adopt something new."
+              title="I have used these systems."
+              desc="I have been the clinician logging notes at 9pm, the manager configuring scheduling software, the trainer onboarding new hires. That changes how I approach implementation."
             />
             <ValueCard
               subtitle="Approach"
-              title="I stay through adoption."
-              desc="Go-live is not the finish line. It is where most implementations start to fail. I stick around through the first weeks and months, adjusting the system as real usage reveals what needs to change. The goal is not a successful launch. It is sustained use."
+              title="I stay past go-live."
+              desc="Most of the problems show up in the first few weeks of real use. I stick around to adjust the setup based on what actually happens, not what was planned."
             />
           </div>
         </motion.div>
