@@ -88,9 +88,6 @@ export default function Home() {
         {/* Fixed gradient overlay - extends beyond section for seamless blend */}
         <div className="absolute inset-x-0 -top-10 -bottom-64 z-[1] bg-gradient-to-b from-background via-background/0 via-30% to-background pointer-events-none" />
 
-        {/* Ambient glow orb for depth */}
-        <div className="absolute top-[40%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] md:w-[700px] md:h-[700px] rounded-full bg-accent/[0.06] blur-[120px] md:blur-[180px] pointer-events-none z-[2]" />
-
         <div className="relative z-10 w-full max-w-[1400px] h-full flex flex-col justify-center py-20">
           <div className="grid lg:grid-cols-1 items-center justify-center text-center">
 
@@ -141,24 +138,18 @@ export default function Home() {
                 />
               </div>
 
-              {/* Metrics Row - Premium Glass Cards */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-5 max-w-3xl mx-auto pt-4">
+              {/* Metrics Row */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-6 max-w-3xl mx-auto pt-4">
                 {metrics.map((m, i) => (
                   <motion.div
                     key={m.label}
-                    initial={{ opacity: 0, y: 30, scale: 0.96 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    transition={{ duration: 0.8, delay: 1.4 + i * 0.15, ease: [0.16, 1, 0.3, 1] }}
-                    className="group relative p-6 md:p-7 rounded-2xl bg-white/[0.03] backdrop-blur-xl border border-white/[0.06] hover:border-white/[0.12] transition-all duration-700 overflow-hidden"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 1.4 + i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                    className="group relative p-6 rounded-2xl gradient-border hover-lift hover:bg-white/[0.02] transition-colors duration-500"
                   >
-                    {/* Top accent gradient line */}
-                    <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-accent/30 to-transparent" />
-                    {/* Inner corner glow */}
-                    <div className="absolute -top-12 -right-12 w-24 h-24 rounded-full bg-accent/[0.08] blur-2xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-                    {/* Hover glow overlay */}
-                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 bg-gradient-to-b from-accent/[0.04] via-transparent to-transparent pointer-events-none" />
-                    <p className="text-4xl md:text-4xl font-serif italic text-accent mb-3 relative">{m.value}</p>
-                    <p className="text-xs text-muted-foreground leading-relaxed relative">{m.label}</p>
+                    <p className="text-3xl md:text-4xl font-serif italic text-accent mb-3">{m.value}</p>
+                    <p className="text-xs text-muted-foreground leading-relaxed">{m.label}</p>
                   </motion.div>
                 ))}
               </div>
@@ -171,7 +162,7 @@ export default function Home() {
               >
                 <Link
                   href="/contact"
-                  className="group flex items-center justify-center gap-4 text-lg font-medium tracking-tight bg-foreground text-background w-full sm:w-auto px-8 py-4 rounded-full hover:bg-accent hover:text-background transition-all duration-500 shadow-[0_0_60px_-15px_hsl(var(--accent)/0.3)] hover:shadow-[0_0_80px_-10px_hsl(var(--accent)/0.5)]"
+                  className="group flex items-center justify-center gap-4 text-lg font-medium tracking-tight bg-foreground text-background w-full sm:w-auto px-8 py-4 rounded-full hover:bg-accent hover:text-background transition-colors duration-500"
                 >
                   Get in touch
                   <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform duration-500" />
