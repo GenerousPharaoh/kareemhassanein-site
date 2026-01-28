@@ -331,14 +331,14 @@ export default function About() {
         >
           <div className="grid md:grid-cols-2 gap-8 md:gap-12">
             <ValueCard
-              subtitle="Why it matters"
-              title="I have been on the receiving end."
-              desc="I have had new software dropped on me mid-caseload with no warning and bad training. That is exactly what I try not to do to other people."
+              subtitle="Background"
+              title="Operations and clinical, not just consulting."
+              desc="I ran a caseload generating over $600K annually, managed operations for a 25-person multidisciplinary team, and built booking systems across 6 specialties. When I look at a workflow, I am drawing on years of doing the work itself, not just studying it."
             />
             <ValueCard
-              subtitle="How I work"
-              title="I do not hand off a plan and leave."
-              desc="The first week of real use always surfaces things nobody planned for. I would rather be there when that happens than hear about it later."
+              subtitle="Capability"
+              title="I find the problem and build the fix."
+              desc="Most consultants diagnose issues and hand you a report. I also write the automation, configure the software, build the templates, and wire up the integrations. The same person who maps the workflow builds the solution, which means less gets lost in translation."
             />
           </div>
         </motion.div>
