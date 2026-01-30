@@ -59,12 +59,12 @@ export default function Footer() {
           <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-background/70" />
         </div>
 
-        <div className="relative z-10 px-6">
+        <div className="relative z-10 px-6 pb-32 md:pb-0">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-            className="text-7xl md:text-[160px] font-medium tracking-tighter mb-20 leading-[0.8]"
+            className="text-5xl md:text-[160px] font-medium tracking-tighter mb-8 md:mb-20 leading-[0.8]"
           >
             Reach <br />
             <span className="mt-4 italic font-light font-serif opacity-50">
@@ -76,11 +76,11 @@ export default function Footer() {
             href="https://www.linkedin.com/in/kareemhassanein"
             target="_blank"
             rel="noopener noreferrer"
-            className="group relative inline-flex items-center gap-6 text-2xl md:text-3xl font-light px-12 py-5 rounded-full overflow-hidden transition-all duration-700 bg-white/5 backdrop-blur-sm border border-white/10 hover:border-accent/50 hover:bg-white/[0.08]"
+            className="group relative inline-flex items-center gap-4 md:gap-6 text-lg md:text-3xl font-light px-8 md:px-12 py-4 md:py-5 rounded-full overflow-hidden transition-all duration-700 bg-white/5 backdrop-blur-sm border border-white/10 hover:border-accent/50 hover:bg-white/[0.08]"
           >
-            <span className="relative z-10 flex items-center gap-6">
+            <span className="relative z-10 flex items-center gap-4 md:gap-6">
               Get in touch
-              <Linkedin size={28} className="group-hover:text-accent group-hover:scale-110 transition-all duration-500" />
+              <Linkedin size={22} className="md:w-7 md:h-7 group-hover:text-accent group-hover:scale-110 transition-all duration-500" />
             </span>
             {/* Inner glow on hover */}
             <div className="absolute inset-0 bg-gradient-to-r from-accent/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
@@ -89,17 +89,14 @@ export default function Footer() {
 
         {/* Bottom Bar */}
         <div className="absolute bottom-0 left-0 w-full border-t border-white/5 bg-white/[0.02] backdrop-blur-2xl">
-          <div className="max-w-[1800px] mx-auto px-6 md:px-12 py-10 flex flex-col md:flex-row justify-between items-end gap-8">
-            <div className="flex flex-col items-start gap-4">
-              <span className="text-xs font-medium tracking-widest text-accent/50">KAREEM HASSANEIN</span>
-            </div>
-            <div className="flex flex-col items-end gap-2 text-[10px] uppercase tracking-[0.3em] font-medium text-muted-foreground/70 pb-2">
-              <div className="flex gap-8">
+          <div className="max-w-[1800px] mx-auto px-6 md:px-12 py-6 md:py-10 flex flex-col md:flex-row justify-between items-center md:items-end gap-4 md:gap-8">
+            <span className="text-xs font-medium tracking-widest text-accent/50">KAREEM HASSANEIN</span>
+            <div className="flex flex-col items-center md:items-end gap-2 text-[10px] uppercase tracking-[0.2em] md:tracking-[0.3em] font-medium text-muted-foreground/70">
+              <div className="flex gap-4 md:gap-8">
                 <span>Burlington, ON</span>
                 <span>Available remotely</span>
               </div>
-              <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-white/10 to-transparent my-2" />
-              <span>© 2026 · All Rights Reserved</span>
+              <span className="mt-1">© 2026</span>
             </div>
           </div>
         </div>
