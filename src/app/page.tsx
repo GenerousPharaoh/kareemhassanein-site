@@ -10,9 +10,18 @@ import Link from 'next/link';
 import { useRef } from 'react';
 
 const metrics = [
-  { label: 'Reduction in document drafting time via LLM automation for a solo law firm, replacing manual workflows with a reusable template library', value: '85%' },
-  { label: 'Clinician adoption of AI documentation within 8 weeks across a 6-person team, cutting documentation by 3 hours/week per clinician', value: '100%' },
-  { label: 'Increase in Google reviews over 12 months after embedding QR-based feedback capture into the patient visit flow', value: '125%' },
+  {
+    value: 'Hours → Minutes',
+    label: 'Document drafting at a solo law firm after replacing manual workflows with an AI-powered template library'
+  },
+  {
+    value: 'Full Adoption',
+    label: 'Entire clinical team using AI documentation within weeks, each saving hours weekly on notes'
+  },
+  {
+    value: 'Sustained Growth',
+    label: 'Patient reviews after embedding QR-based feedback capture into every visit'
+  },
 ];
 
 const approach = [
@@ -132,7 +141,7 @@ export default function Home() {
 
               <div className="max-w-2xl mx-auto">
                 <TextReveal
-                  text="Operations improvement, workflow automation, and technology implementation for healthcare practices and professional services firms. I map out where things break down, build the systems to fix them, and stay through adoption until the new way sticks."
+                  text="I help healthcare practices and professional services firms remove operational friction. Whether it's automating documentation, redesigning workflows, or rolling out new tools, I stay through adoption until it actually works."
                   className="text-lg md:text-xl text-muted-foreground font-light leading-relaxed"
                   delay={1.0}
                 />
