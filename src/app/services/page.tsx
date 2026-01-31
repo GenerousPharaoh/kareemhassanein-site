@@ -36,18 +36,18 @@ const services = [
 const technicalIndex = [
   {
     domain: 'Automation & AI',
-    tools: ['Claude Code', 'Heidi AI', 'REST APIs', 'Webhooks'],
-    specs: ['LLM document generation', 'Clinical documentation', 'Workflow triggers', 'System integrations']
+    tools: ['Claude', 'Python', 'REST APIs', 'Webhooks'],
+    specs: ['LLM document generation', 'Workflow automation', 'System integrations', 'Data processing']
   },
   {
     domain: 'Healthcare Operations',
-    tools: ['Jane App', 'Google Workspace', 'Microsoft Office'],
+    tools: ['EHR/EMR Systems', 'Practice Management Software', 'Google Workspace'],
     specs: ['Multi-provider scheduling', 'Intake optimization', 'Referral tracking', 'Review capture']
   },
   {
     domain: 'Development & Analytics',
     tools: ['Next.js', 'GitHub', 'Vercel', 'Google Analytics'],
-    specs: ['Web applications', 'CI/CD pipelines', 'Google Business Profile', 'Search Console']
+    specs: ['Web applications', 'CI/CD pipelines', 'SEO optimization', 'Performance tracking']
   }
 ];
 
