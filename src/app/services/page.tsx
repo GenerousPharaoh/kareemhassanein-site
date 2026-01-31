@@ -241,14 +241,12 @@ export default function Services() {
                 The specific tools matter less than understanding how they fit together. Here&apos;s what I typically work with.
               </p>
 
-              {/* Smaller decorative image */}
-              <div className="hidden lg:block relative w-full max-w-[280px] aspect-square rounded-2xl overflow-hidden opacity-60">
+              {/* Decorative image */}
+              <div className="hidden lg:block relative w-full aspect-[4/3] rounded-2xl overflow-hidden opacity-50">
                 <ParallaxImage
                   src="/images/kh_section_divider_signal-to-system_02.png"
                   alt="Signal to System"
                   className="w-full h-full"
-                  fadedSides={true}
-                  fadedVertical={true}
                 />
               </div>
             </motion.div>
