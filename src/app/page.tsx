@@ -80,9 +80,9 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-background text-foreground overflow-hidden">
       {/* Hero Section */}
-      <section ref={heroRef} className="min-h-screen flex items-center justify-center relative px-6 md:px-12 xl:px-20 pt-20 md:pt-24 bg-background overflow-hidden">
+      <section ref={heroRef} className="min-h-screen flex items-center justify-center relative px-6 md:px-12 xl:px-20 pt-24 md:pt-28 bg-background overflow-hidden">
 
-        {/* Cinematic Background Layer - Simple Parallax */}
+        {/* Cinematic Background Layer */}
         <motion.div
           style={{ y: heroBgY }}
           className="absolute -inset-x-0 -top-32 -bottom-64 z-0 will-change-transform"
@@ -90,110 +90,93 @@ export default function Home() {
           <ParallaxImage
             src="/images/orchestrating.png"
             alt="Cinematic Core"
-            className="w-full h-full opacity-40"
+            className="w-full h-full opacity-35"
           />
         </motion.div>
 
-        {/* Refined gradient overlay with stronger vignette */}
-        <div className="absolute inset-0 z-[1] bg-gradient-to-b from-background via-background/30 via-20% to-background pointer-events-none" />
-        <div className="absolute inset-0 z-[1] bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,transparent_0%,hsl(var(--background))_100%)] pointer-events-none" />
+        {/* Gradient overlays */}
+        <div className="absolute inset-0 z-[1] bg-gradient-to-b from-background via-background/20 via-30% to-background pointer-events-none" />
 
-        <div className="relative z-10 w-full max-w-[1400px] h-full flex flex-col justify-center py-16 md:py-20">
+        <div className="relative z-10 w-full max-w-[1400px] flex flex-col justify-center py-12 md:py-16">
           <div className="flex flex-col items-center text-center">
 
-            {/* Text Content */}
-            <div className="space-y-8 md:space-y-10 mx-auto max-w-4xl">
+            <div className="space-y-6 md:space-y-8 mx-auto max-w-4xl">
 
-              {/* Enhanced tagline badge */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
+              {/* Tagline badge */}
+              <motion.span
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 0.7, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-                className="inline-flex items-center gap-2 text-[11px] md:text-xs font-medium tracking-[0.2em] md:tracking-[0.3em] uppercase text-foreground/60 border border-white/[0.08] px-4 md:px-5 py-2 md:py-2.5 rounded-full backdrop-blur-sm bg-white/[0.02]"
+                className="inline-block text-[10px] md:text-xs font-medium tracking-[0.2em] md:tracking-[0.3em] uppercase text-foreground/50 mb-2"
               >
-                <span className="w-1.5 h-1.5 rounded-full bg-accent/80" />
-                Digital Transformation & Implementation Consulting
-              </motion.div>
+                Implementation Consulting
+              </motion.span>
 
-              {/* Headline with improved spacing and sizing */}
-              <div className="pt-4 md:pt-6">
-                <h1 className="text-[2.5rem] md:text-6xl lg:text-[5.5rem] font-medium leading-[0.95] md:leading-[0.9] tracking-[-0.04em] md:tracking-[-0.05em] text-balance">
-                  <motion.span
-                    initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
-                    animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                    transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                    className="block"
-                  >
-                    I find friction, solve it,
-                  </motion.span>
-                  <motion.span
-                    initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
-                    animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                    transition={{ duration: 1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                    className="block"
-                  >
-                    and make it{" "}
-                    <motion.span
-                      initial={{ opacity: 0, scale: 0.9, filter: "blur(12px)" }}
-                      animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-                      transition={{ duration: 1.2, delay: 0.9, ease: [0.16, 1, 0.3, 1] }}
-                      className="inline-block text-accent italic font-serif relative"
-                    >
-                      stick
-                      <span className="absolute -bottom-1 left-0 right-0 h-[2px] bg-accent/30 rounded-full" />
-                    </motion.span>
-                    <span className="text-accent">.</span>
-                  </motion.span>
-                </h1>
-              </div>
+              {/* Headline */}
+              <h1 className="text-[2.75rem] md:text-6xl lg:text-7xl font-medium leading-[1] tracking-[-0.03em]">
+                <motion.span
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.9, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                  className="block"
+                >
+                  I find friction, solve it,
+                </motion.span>
+                <motion.span
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.9, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                  className="block"
+                >
+                  and make it{" "}
+                  <span className="text-accent italic font-serif">stick</span>
+                  <span className="text-accent">.</span>
+                </motion.span>
+              </h1>
 
-              {/* Description with refined styling */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
+              {/* Description */}
+              <motion.p
+                initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 1.0, ease: [0.16, 1, 0.3, 1] }}
-                className="max-w-2xl mx-auto pt-2"
+                transition={{ duration: 0.8, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                className="max-w-2xl mx-auto text-base md:text-lg text-muted-foreground font-light leading-relaxed"
               >
-                <p className="text-base md:text-lg lg:text-xl text-muted-foreground/90 font-light leading-relaxed">
-                  I help healthcare practices and professional services firms remove operational friction. Whether it&apos;s automating documentation, redesigning workflows, or rolling out new tools, I stay through adoption until it actually works.
-                </p>
-              </motion.div>
+                I help healthcare practices and professional services firms remove operational friction. Whether it&apos;s automating documentation, redesigning workflows, or rolling out new tools, I stay through adoption until it actually works.
+              </motion.p>
 
-              {/* Metrics Row - Enhanced cards */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5 max-w-3xl mx-auto pt-8 md:pt-10">
+              {/* Metrics Row */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-3xl mx-auto pt-6 md:pt-8">
                 {metrics.map((m, i) => (
                   <motion.div
                     key={m.label}
-                    initial={{ opacity: 0, y: 25 }}
+                    initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.7, delay: 1.2 + i * 0.12, ease: [0.16, 1, 0.3, 1] }}
-                    className="group relative p-5 md:p-6 rounded-2xl bg-white/[0.02] border border-white/[0.06] hover:border-accent/20 hover:bg-white/[0.04] transition-all duration-500"
+                    transition={{ duration: 0.6, delay: 0.9 + i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                    className="group p-5 md:p-6 rounded-xl bg-white/[0.03] border border-white/[0.06] hover:border-white/[0.12] transition-colors duration-300"
                   >
-                    <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-accent/[0.03] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                    <p className="relative text-2xl md:text-3xl font-serif italic text-accent mb-2">{m.value}</p>
-                    <p className="relative text-[11px] md:text-xs text-muted-foreground/80 leading-relaxed">{m.label}</p>
+                    <p className="text-2xl md:text-[1.75rem] font-serif italic text-accent mb-2">{m.value}</p>
+                    <p className="text-[11px] md:text-xs text-muted-foreground/70 leading-relaxed">{m.label}</p>
                   </motion.div>
                 ))}
               </div>
 
-              {/* CTAs - Enhanced styling */}
+              {/* CTAs */}
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 1.6, ease: [0.16, 1, 0.3, 1] }}
-                className="flex flex-col sm:flex-row gap-4 items-center justify-center pt-8 md:pt-10"
+                transition={{ duration: 0.6, delay: 1.3, ease: [0.16, 1, 0.3, 1] }}
+                className="flex flex-col sm:flex-row gap-4 items-center justify-center pt-6 md:pt-8"
               >
                 <Link
                   href="/contact"
-                  className="group relative flex items-center justify-center gap-3 text-base md:text-lg font-medium tracking-tight bg-foreground text-background w-full sm:w-auto px-7 md:px-8 py-3.5 md:py-4 rounded-full overflow-hidden transition-all duration-500 hover:shadow-[0_0_30px_rgba(255,255,255,0.1)]"
+                  className="group flex items-center justify-center gap-3 text-base font-medium bg-foreground text-background w-full sm:w-auto px-7 py-3.5 rounded-full hover:bg-accent transition-colors duration-300"
                 >
-                  <span className="absolute inset-0 bg-accent translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out" />
-                  <span className="relative">Get in touch</span>
-                  <ArrowRight size={18} className="relative group-hover:translate-x-1 transition-transform duration-500" />
+                  Get in touch
+                  <ArrowRight size={18} className="group-hover:translate-x-0.5 transition-transform duration-300" />
                 </Link>
                 <Link
                   href="/about"
-                  className="text-base md:text-lg font-medium tracking-tight text-foreground/60 hover:text-foreground w-full sm:w-auto text-center px-7 md:px-8 py-3.5 md:py-4 rounded-full border border-white/[0.08] hover:border-white/[0.15] hover:bg-white/[0.03] transition-all duration-500"
+                  className="text-base font-medium text-foreground/60 hover:text-foreground w-full sm:w-auto text-center px-7 py-3.5 rounded-full border border-white/[0.08] hover:border-white/[0.15] transition-all duration-300"
                 >
                   Learn more
                 </Link>
@@ -201,9 +184,6 @@ export default function Home() {
             </div>
           </div>
         </div>
-
-        {/* Subtle bottom fade for section transition */}
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent z-[2] pointer-events-none" />
       </section>
 
       {/* Divider */}
