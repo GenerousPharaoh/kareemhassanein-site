@@ -32,7 +32,6 @@ const approach = [
 export default function Home() {
   const heroRef = useRef(null);
   const transitionRef = useRef(null);
-  const visualRef = useRef(null);
   const portfolioRef = useRef(null);
 
   // Spring config for smooth, fluid animations
@@ -60,12 +59,6 @@ export default function Home() {
     springConfig
   );
 
-  // Visual break section - parallax image
-  const { scrollYProgress: visualProgress } = useScroll({
-    target: visualRef,
-    offset: ["start end", "end start"]
-  });
-  const visualBgY = useSpring(useTransform(visualProgress, [0, 1], [0, -60]), springConfig);
 
   // Portfolio section - smooth reveal (triggers early)
   const { scrollYProgress: portfolioProgress } = useScroll({
@@ -243,46 +236,58 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* Visual Break - Approach Section */}
-      <section ref={visualRef} className="relative py-24 md:py-32">
-        {/* Parallax Background - full bleed with soft fade */}
-        <motion.div
-          style={{ y: visualBgY }}
-          className="absolute inset-0 will-change-transform"
-        >
-          <ParallaxImage
-            src="/images/flow.png"
-            alt="Workflow"
-            className="w-full h-full opacity-40"
-            fadedVertical={true}
-          />
-        </motion.div>
+      {/* Approach Section */}
+      <section className="relative py-20 md:py-28 px-6 md:px-12 xl:px-20">
+        <div className="max-w-5xl mx-auto">
+          {/* Section header */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="mb-12 md:mb-16"
+          >
+            <span className="text-[10px] md:text-xs font-medium tracking-[0.25em] uppercase text-accent mb-3 block">
+              Approach
+            </span>
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-medium tracking-tight">
+              How I work
+            </h2>
+          </motion.div>
 
-        {/* Content - no container, just text with subtle shadow for readability */}
-        <div className="relative z-10 px-6">
-          <div className="max-w-5xl mx-auto">
-            <div className="grid md:grid-cols-3 gap-12 md:gap-20">
-              {approach.map((item, i) => (
-                <motion.div
-                  key={item.title}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  transition={{ duration: 0.6, delay: i * 0.15, ease: [0.16, 1, 0.3, 1] }}
-                  className="text-center"
-                >
-                  <span className="text-5xl md:text-6xl font-light text-accent/40 block mb-4 drop-shadow-sm">
-                    0{i + 1}
-                  </span>
-                  <h3 className="text-xl md:text-2xl font-medium tracking-tight mb-3 drop-shadow-sm">
-                    {item.title}
-                  </h3>
-                  <p className="text-foreground/70 text-sm md:text-base leading-relaxed drop-shadow-sm">
+          {/* Steps */}
+          <div className="space-y-4 md:space-y-0 md:grid md:grid-cols-3 md:gap-6">
+            {approach.map((item, i) => (
+              <motion.div
+                key={item.title}
+                initial={{ opacity: 0, y: 25 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.7, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                className="group relative"
+              >
+                {/* Card */}
+                <div className="relative p-6 md:p-7 rounded-2xl bg-[hsl(220,18%,9%)] border border-white/[0.06] hover:border-white/[0.1] transition-all duration-500 h-full">
+                  {/* Number + Title row */}
+                  <div className="flex items-baseline gap-3 mb-3">
+                    <span className="text-sm font-medium text-accent/50">
+                      0{i + 1}
+                    </span>
+                    <h3 className="text-lg md:text-xl font-medium tracking-tight text-foreground">
+                      {item.title}
+                    </h3>
+                  </div>
+
+                  {/* Description */}
+                  <p className="text-sm text-muted-foreground/70 leading-relaxed">
                     {item.desc}
                   </p>
-                </motion.div>
-              ))}
-            </div>
+
+                  {/* Subtle accent line at top */}
+                  <div className="absolute top-0 left-6 right-6 h-[1px] bg-gradient-to-r from-transparent via-accent/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                </div>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
