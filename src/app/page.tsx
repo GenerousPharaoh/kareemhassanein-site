@@ -175,31 +175,25 @@ export default function Home() {
                 ))}
               </div>
 
-              {/* Compact CTAs */}
+              {/* CTAs */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 1.4, ease: [0.16, 1, 0.3, 1] }}
-                className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-center justify-center pt-3"
+                className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-center justify-center pt-4"
               >
                 <Link
                   href="/contact"
-                  className="group relative flex items-center justify-center gap-2.5 text-sm md:text-base font-medium w-full sm:w-auto px-6 py-3 rounded-full overflow-hidden transition-all duration-500"
+                  className="group flex items-center justify-center gap-2.5 text-sm md:text-base font-medium w-full sm:w-auto px-7 py-3.5 rounded-full bg-accent text-background hover:bg-accent/90 transition-all duration-300"
                 >
-                  {/* Button background layers */}
-                  <span className="absolute inset-0 bg-foreground" />
-                  <span className="absolute inset-0 bg-accent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-                  {/* Button content */}
-                  <span className="relative text-background">Get in touch</span>
-                  <ArrowRight size={16} className="relative text-background group-hover:translate-x-1 transition-transform duration-500" />
+                  Get in touch
+                  <ArrowRight size={16} className="group-hover:translate-x-0.5 transition-transform duration-300" />
                 </Link>
                 <Link
                   href="/about"
-                  className="group relative text-sm md:text-base font-medium text-foreground/60 w-full sm:w-auto text-center px-6 py-3 rounded-full border border-white/[0.08] overflow-hidden transition-all duration-500 hover:text-foreground hover:border-white/[0.15]"
+                  className="text-sm md:text-base font-medium text-foreground/70 w-full sm:w-auto text-center px-7 py-3.5 rounded-full border border-white/[0.1] hover:text-foreground hover:border-white/[0.2] hover:bg-white/[0.03] transition-all duration-300"
                 >
-                  <span className="absolute inset-0 bg-white/[0.02] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  <span className="relative">Learn more</span>
+                  Learn more
                 </Link>
               </motion.div>
             </div>
