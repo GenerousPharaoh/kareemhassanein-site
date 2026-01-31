@@ -4,6 +4,7 @@ import { motion, useScroll, useTransform, useSpring, useInView } from 'framer-mo
 import ScrollReveal from '@/components/ScrollReveal';
 import CharReveal from '@/components/CharReveal';
 import ParallaxImage from '@/components/ParallaxImage';
+import Image from 'next/image';
 import { useRef, useEffect } from 'react';
 
 const services = [
@@ -242,11 +243,13 @@ export default function Services() {
               </p>
 
               {/* Decorative image */}
-              <div className="hidden lg:block relative w-full aspect-[4/3] rounded-2xl overflow-hidden opacity-50">
-                <ParallaxImage
+              <div className="hidden lg:block relative w-full opacity-50">
+                <Image
                   src="/images/kh_section_divider_signal-to-system_02.png"
                   alt="Signal to System"
-                  className="w-full h-full"
+                  width={600}
+                  height={400}
+                  className="w-full h-auto rounded-2xl"
                 />
               </div>
             </motion.div>
