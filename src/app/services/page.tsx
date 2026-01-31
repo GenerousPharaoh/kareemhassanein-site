@@ -29,7 +29,7 @@ const services = [
     tagline: 'Figure out where things are slowing down.',
     desc: 'Before building anything new, I map how your practice actually runs. Where do referrals get lost? Which steps take longer than they should? What workarounds have people created?',
     points: ['Workflow mapping', 'Process optimization', 'SOPs and playbooks', 'Capacity planning'],
-    image: '/images/order.png',
+    image: '/images/flow.png',
   }
 ];
 
