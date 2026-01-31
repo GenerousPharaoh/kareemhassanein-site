@@ -80,6 +80,7 @@ export default function Home() {
             src="/images/orchestrating.png"
             alt="Cinematic Core"
             className="w-full h-full opacity-50"
+            priority={true}
           />
         </motion.div>
 
@@ -153,24 +154,18 @@ export default function Home() {
                 </p>
               </motion.div>
 
-              {/* Compact Metrics Cards */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4 max-w-3xl mx-auto pt-2">
+              {/* Metrics */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 max-w-3xl mx-auto pt-4">
                 {metrics.map((m, i) => (
                   <motion.div
                     key={m.label}
-                    initial={{ opacity: 0, y: 25 }}
+                    initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 1.0 + i * 0.12, ease: [0.16, 1, 0.3, 1] }}
-                    className="group relative p-4 md:p-5 rounded-xl bg-[hsl(220,18%,9%)] border border-white/[0.07] hover:border-accent/20 transition-colors duration-700"
+                    transition={{ duration: 0.7, delay: 1.0 + i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                    className="text-center"
                   >
-                    {/* Subtle inner glow on hover */}
-                    <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 bg-gradient-to-br from-accent/[0.05] via-transparent to-transparent pointer-events-none" />
-
-                    {/* Content */}
-                    <div className="relative">
-                      <p className="text-xl md:text-2xl font-serif italic text-accent mb-1.5 whitespace-nowrap group-hover:translate-x-0.5 transition-transform duration-500">{m.value}</p>
-                      <p className="text-[10px] md:text-[11px] text-muted-foreground/60 leading-relaxed group-hover:text-muted-foreground/80 transition-colors duration-500">{m.label}</p>
-                    </div>
+                    <p className="text-2xl md:text-3xl font-serif italic text-accent mb-2 whitespace-nowrap">{m.value}</p>
+                    <p className="text-[11px] md:text-xs text-muted-foreground/60 leading-relaxed">{m.label}</p>
                   </motion.div>
                 ))}
               </div>
