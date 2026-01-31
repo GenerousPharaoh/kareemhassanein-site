@@ -1,38 +1,25 @@
 'use client';
 
-import { motion, useScroll, useTransform, useSpring, useInView } from 'framer-motion';
+import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import ScrollReveal from '@/components/ScrollReveal';
 import ParallaxImage from '@/components/ParallaxImage';
 import AnimatedDivider from '@/components/AnimatedDivider';
-import { useRef, useEffect } from 'react';
+import { useRef } from 'react';
 
-// Animated text block with spring physics
-function AnimatedBlock({ children, delay, direction = "up", className = "" }: {
+// Animated text block - simplified for snappier feel
+function AnimatedBlock({ children, delay, className = "" }: {
   children: React.ReactNode;
   delay: number;
-  direction?: "up" | "left" | "right";
   className?: string;
 }) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-50px" });
-  const springConfig = { stiffness: 80, damping: 20 };
-  const opacity = useSpring(0, springConfig);
-  const y = useSpring(direction === "up" ? 40 : 0, springConfig);
-  const x = useSpring(direction === "left" ? -40 : direction === "right" ? 40 : 0, springConfig);
-
-  useEffect(() => {
-    if (isInView) {
-      const timer = setTimeout(() => {
-        opacity.set(1);
-        y.set(0);
-        x.set(0);
-      }, delay * 1000);
-      return () => clearTimeout(timer);
-    }
-  }, [isInView, delay, opacity, y, x]);
-
   return (
-    <motion.div ref={ref} style={{ opacity, y, x }} className={className}>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ duration: 0.5, delay: delay * 0.3, ease: [0.16, 1, 0.3, 1] }}
+      className={className}
+    >
       {children}
     </motion.div>
   );
@@ -66,103 +53,53 @@ const experience = [
 ];
 
 function ValueCard({ title, subtitle, desc }: { title: string; subtitle: string; desc: string }) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const spotlightOpacity = useSpring(0, { stiffness: 100, damping: 30 });
-  const spotlightX = useSpring(0, { stiffness: 150, damping: 25 });
-  const spotlightY = useSpring(0, { stiffness: 150, damping: 25 });
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!containerRef.current) return;
-    const rect = containerRef.current.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    spotlightX.set(x);
-    spotlightY.set(y);
-  };
-
-  const springScale = { stiffness: 400, damping: 30 };
-  const scale = useSpring(1, springScale);
-
   return (
     <motion.div
-      ref={containerRef}
-      onMouseMove={handleMouseMove}
-      onMouseEnter={() => {
-        spotlightOpacity.set(0.15);
-        scale.set(1.02);
-      }}
-      onMouseLeave={() => {
-        spotlightOpacity.set(0);
-        scale.set(1);
-      }}
-      style={{ scale }}
-      className="group relative p-10 md:p-12 rounded-3xl border border-white/5 bg-white/[0.01] backdrop-blur-md hover:border-accent/20 transition-all duration-500 overflow-hidden"
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+      className="group relative p-8 md:p-10 rounded-2xl bg-[hsl(220,18%,9%)] border border-white/[0.06] hover:border-white/[0.1] transition-colors duration-500"
     >
-      <motion.div
-        className="absolute pointer-events-none z-0 w-64 h-64 rounded-full blur-3xl"
-        style={{
-          background: `radial-gradient(circle, hsl(var(--accent)) 0%, transparent 70%)`,
-          x: spotlightX,
-          y: spotlightY,
-          translateX: "-50%",
-          translateY: "-50%",
-          opacity: spotlightOpacity,
-        }}
-      />
-      <div className="relative z-10">
-        <span className="text-xs font-medium tracking-[0.2em] uppercase text-accent/70 mb-6 block">{subtitle}</span>
-        <h3 className="text-3xl md:text-4xl font-medium tracking-tight mb-6 group-hover:text-accent transition-colors duration-500">
-          {title}
-        </h3>
-        <p className="text-lg text-muted-foreground leading-relaxed">
-          {desc}
-        </p>
-      </div>
+      <span className="text-[10px] md:text-xs font-medium tracking-[0.2em] uppercase text-accent/60 mb-4 block">{subtitle}</span>
+      <h3 className="text-xl md:text-2xl font-medium tracking-tight mb-4 group-hover:text-accent transition-colors duration-500">
+        {title}
+      </h3>
+      <p className="text-sm md:text-base text-muted-foreground/80 leading-relaxed">
+        {desc}
+      </p>
     </motion.div>
   );
 }
 
 function ExperienceItem({ item, index }: { item: typeof experience[0]; index: number }) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { margin: "-40% 0% -40% 0%" });
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "center center"]
-  });
-
-  const springConfig = { stiffness: 100, damping: 30 };
-  const y = useSpring(useTransform(scrollYProgress, [0, 1], [50, 0]), springConfig);
-  const opacity = useSpring(useTransform(scrollYProgress, [0, 0.5, 1], [0, 0.5, 1]), springConfig);
-
   return (
     <motion.div
-      ref={ref}
-      style={{ y, opacity }}
-      className="group relative grid md:grid-cols-[140px_1fr] gap-6 md:gap-10"
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-30px" }}
+      transition={{ duration: 0.5, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
+      className="group relative grid md:grid-cols-[140px_1fr] gap-4 md:gap-8"
     >
       {/* Left column - Period and index */}
-      <div className="flex md:flex-col items-baseline md:items-start gap-4 md:gap-2">
-        <motion.span
-          animate={{ opacity: isInView ? 0.15 : 0.04 }}
-          transition={{ duration: 0.8 }}
-          className="text-5xl md:text-6xl font-light text-white group-hover:text-accent/20 transition-colors duration-700 leading-none"
-        >
+      <div className="flex md:flex-col items-baseline md:items-start gap-3 md:gap-1">
+        <span className="text-3xl md:text-4xl font-light text-accent/20 leading-none">
           0{index + 1}
-        </motion.span>
-        <span className="text-sm text-muted-foreground/70 font-mono tracking-wide">
+        </span>
+        <span className="text-xs text-muted-foreground/60 font-mono tracking-wide">
           {item.period}
         </span>
       </div>
 
       {/* Right column - Content */}
-      <div className="md:pt-2">
-        <div className="mb-3">
-          <h3 className="text-xl md:text-2xl font-medium tracking-tight group-hover:text-accent transition-colors duration-500">
+      <div className="md:pt-1">
+        <div className="mb-2">
+          <h3 className="text-lg md:text-xl font-medium tracking-tight group-hover:text-accent transition-colors duration-300">
             {item.role}
           </h3>
-          <span className="text-muted-foreground/70 text-sm">{item.company}</span>
+          <span className="text-muted-foreground/60 text-sm">{item.company}</span>
         </div>
-        <p className="text-muted-foreground leading-relaxed">
+        <p className="text-sm md:text-base text-muted-foreground/80 leading-relaxed">
           {item.desc}
         </p>
       </div>
@@ -172,7 +109,6 @@ function ExperienceItem({ item, index }: { item: typeof experience[0]; index: nu
 
 export default function About() {
   const heroRef = useRef(null);
-  const valuesRef = useRef(null);
   const historyRef = useRef(null);
 
   // Hero parallax
@@ -183,15 +119,6 @@ export default function About() {
   const springConfig = { stiffness: 100, damping: 30 };
   const heroBgY = useSpring(useTransform(heroProgress, [0, 1], [0, 150]), springConfig);
   const heroTextY = useSpring(useTransform(heroProgress, [0, 1], [0, 50]), springConfig);
-
-  // Values section parallax
-  const { scrollYProgress: valuesProgress } = useScroll({
-    target: valuesRef,
-    offset: ["start end", "center center"]
-  });
-  const valuesY = useSpring(useTransform(valuesProgress, [0, 1], [80, 0]), springConfig);
-  const valuesOpacity = useSpring(useTransform(valuesProgress, [0, 0.5, 1], [0, 0.5, 1]), springConfig);
-  const valuesScale = useSpring(useTransform(valuesProgress, [0, 1], [0.95, 1]), springConfig);
 
   return (
     <main className="bg-background text-foreground pt-20">
@@ -263,19 +190,19 @@ export default function About() {
               {/* Vertical accent "spine" */}
               <div className="absolute -left-6 lg:-left-12 top-2 bottom-2 w-[1px] bg-gradient-to-b from-accent/40 via-accent/10 to-transparent" />
 
-              <AnimatedBlock delay={0.6} direction="up">
+              <AnimatedBlock delay={0.5}>
                 <p className="text-xl md:text-2xl text-foreground/90 leading-relaxed font-light tracking-tight">
                   I spent years on the frontline. Personal trainer, fitness manager, physiotherapist. I built caseloads, managed operations for a 25-person team, and was the highest-revenue clinician at my practice for three consecutive years. The through-line has always been the same: getting people to adopt and stick with new systems, routines, or behaviours.
                 </p>
               </AnimatedBlock>
 
-              <AnimatedBlock delay={0.8} direction="up">
+              <AnimatedBlock delay={0.7}>
                 <p className="text-lg md:text-xl text-muted-foreground leading-relaxed font-light">
                   Whether it was a patient following through on a home exercise program, a trainer learning a sales process, or a clinician adopting new documentation software, the challenge was always the same. People resist systems that add friction to their day. The gap between how a tool is designed to work and how the work actually happens is where most rollouts fall apart.
                 </p>
               </AnimatedBlock>
 
-              <AnimatedBlock delay={1.0} direction="up">
+              <AnimatedBlock delay={0.9}>
                 <div className="h-[1px] w-12 bg-accent/40 mb-8" />
                 <div className="overflow-hidden">
                   <motion.p
@@ -310,26 +237,25 @@ export default function About() {
       </section>
 
       {/* What I bring */}
-      <section ref={valuesRef} className="py-24 md:py-36 px-6 lg:px-12 xl:px-20 border-b border-white/5 overflow-hidden relative">
-        {/* Background image - offset for asymmetric interest */}
-        <div className="absolute inset-0 z-0">
-          <div className="absolute -inset-x-20 inset-y-0 -top-20 -bottom-20">
-            <ParallaxImage
-              src="/images/crystalline_structure.png"
-              alt="Values"
-              className="w-full h-full opacity-50 scale-110"
-              fadedSides={true}
-              fadedVertical={true}
-            />
-          </div>
-          <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-transparent to-background/80" />
-        </div>
+      <section className="py-20 md:py-28 px-6 lg:px-12 xl:px-20">
+        <div className="max-w-[900px] mx-auto">
+          {/* Section header */}
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            className="mb-10 md:mb-12"
+          >
+            <span className="text-[10px] md:text-xs font-medium tracking-[0.25em] uppercase text-accent mb-3 block">
+              What I Bring
+            </span>
+            <h2 className="text-2xl md:text-3xl font-medium tracking-tight">
+              Two perspectives, one focus.
+            </h2>
+          </motion.div>
 
-        <motion.div
-          style={{ y: valuesY, opacity: valuesOpacity, scale: valuesScale }}
-          className="max-w-[900px] mx-auto will-change-transform relative z-10"
-        >
-          <div className="grid md:grid-cols-2 gap-8 md:gap-12">
+          <div className="grid md:grid-cols-2 gap-4 md:gap-6">
             <ValueCard
               subtitle="Background"
               title="Clinical, operational, and technical."
@@ -341,7 +267,7 @@ export default function About() {
               desc="I start by understanding how the work actually moves before touching any configuration. Then I build the system to match that workflow, whether that means writing automation, configuring software, or wiring up integrations. Then I stay through the first stretch of real use to adjust what needs adjusting."
             />
           </div>
-        </motion.div>
+        </div>
       </section>
 
       {/* Experience */}
