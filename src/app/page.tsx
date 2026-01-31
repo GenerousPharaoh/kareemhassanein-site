@@ -80,7 +80,7 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-background text-foreground overflow-hidden">
       {/* Hero Section */}
-      <section ref={heroRef} className="min-h-screen flex items-center justify-center relative px-6 md:px-12 xl:px-20 pt-24 md:pt-32 bg-background overflow-hidden">
+      <section ref={heroRef} className="h-screen flex items-center justify-center relative px-6 md:px-12 xl:px-20 bg-background overflow-hidden">
 
         {/* Cinematic Background Layer */}
         <motion.div
@@ -99,109 +99,107 @@ export default function Home() {
         <div className="absolute inset-0 z-[1] bg-[radial-gradient(ellipse_80%_60%_at_50%_40%,transparent_0%,hsl(var(--background)/0.8)_100%)] pointer-events-none" />
 
         {/* Subtle accent glow */}
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-accent/[0.03] rounded-full blur-[120px] z-0 pointer-events-none" />
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-accent/[0.03] rounded-full blur-[100px] z-0 pointer-events-none" />
 
-        <div className="relative z-10 w-full max-w-[1400px] flex flex-col justify-center py-16 md:py-20">
+        <div className="relative z-10 w-full max-w-[1400px] flex flex-col justify-center">
           <div className="flex flex-col items-center text-center">
 
-            <div className="space-y-10 md:space-y-12 mx-auto max-w-4xl">
+            <div className="space-y-5 md:space-y-6 mx-auto max-w-4xl">
 
               {/* Premium tagline badge */}
               <motion.div
-                initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                initial={{ opacity: 0, y: 15, scale: 0.95 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 transition={{ duration: 1, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
               >
-                <span className="inline-flex items-center gap-3 text-[10px] md:text-xs font-medium tracking-[0.25em] uppercase text-foreground/50 px-5 py-2.5 rounded-full border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm">
+                <span className="inline-flex items-center gap-2.5 text-[10px] md:text-[11px] font-medium tracking-[0.2em] uppercase text-foreground/50 px-4 py-2 rounded-full border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm">
                   <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
                   Implementation Consulting
                 </span>
               </motion.div>
 
-              {/* Headline with elegant reveal */}
-              <div className="space-y-2">
-                <h1 className="text-[2.75rem] md:text-6xl lg:text-[5rem] xl:text-[5.5rem] font-medium leading-[0.95] tracking-[-0.035em]">
+              {/* Headline - more compact */}
+              <h1 className="text-[2.25rem] md:text-5xl lg:text-6xl xl:text-[4.25rem] font-medium leading-[1] tracking-[-0.03em]">
+                <motion.span
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                  className="block"
+                >
+                  I find friction, solve it,
+                </motion.span>
+                <motion.span
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                  className="block"
+                >
+                  and make it{" "}
                   <motion.span
-                    initial={{ opacity: 0, y: 40 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 1.1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                    className="block"
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 1.2, delay: 0.9, ease: [0.16, 1, 0.3, 1] }}
+                    className="inline-block text-accent italic font-serif"
                   >
-                    I find friction, solve it,
+                    stick
                   </motion.span>
                   <motion.span
-                    initial={{ opacity: 0, y: 40 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 1.1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                    className="block"
-                  >
-                    and make it{" "}
-                    <motion.span
-                      initial={{ opacity: 0, scale: 0.9 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ duration: 1.2, delay: 0.9, ease: [0.16, 1, 0.3, 1] }}
-                      className="inline-block text-accent italic font-serif"
-                    >
-                      stick
-                    </motion.span>
-                    <motion.span
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ duration: 0.8, delay: 1.1, ease: [0.16, 1, 0.3, 1] }}
-                      className="text-accent"
-                    >.</motion.span>
-                  </motion.span>
-                </h1>
-              </div>
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.8, delay: 1.1, ease: [0.16, 1, 0.3, 1] }}
+                    className="text-accent"
+                  >.</motion.span>
+                </motion.span>
+              </h1>
 
-              {/* Description with refined appearance */}
+              {/* Description - tighter */}
               <motion.div
-                initial={{ opacity: 0, y: 25 }}
+                initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                className="max-w-2xl mx-auto"
+                className="max-w-xl mx-auto"
               >
-                <p className="text-base md:text-lg lg:text-xl text-muted-foreground/80 font-light leading-[1.8]">
+                <p className="text-sm md:text-base lg:text-lg text-muted-foreground/80 font-light leading-relaxed">
                   I help healthcare practices and professional services firms remove operational friction. Whether it&apos;s automating documentation, redesigning workflows, or rolling out new tools, I stay through adoption until it actually works.
                 </p>
               </motion.div>
 
-              {/* Premium Metrics Cards */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5 max-w-3xl mx-auto pt-4">
+              {/* Compact Metrics Cards */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4 max-w-3xl mx-auto pt-2">
                 {metrics.map((m, i) => (
                   <motion.div
                     key={m.label}
-                    initial={{ opacity: 0, y: 30 }}
+                    initial={{ opacity: 0, y: 25 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 1.1 + i * 0.15, ease: [0.16, 1, 0.3, 1] }}
-                    className="group relative p-6 md:p-7 rounded-2xl overflow-hidden"
+                    transition={{ duration: 0.8, delay: 1.0 + i * 0.12, ease: [0.16, 1, 0.3, 1] }}
+                    className="group relative p-4 md:p-5 rounded-xl overflow-hidden"
                   >
                     {/* Card background with glass effect */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/[0.05] to-white/[0.02] backdrop-blur-sm" />
-                    <div className="absolute inset-0 border border-white/[0.08] rounded-2xl group-hover:border-accent/20 transition-colors duration-700" />
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/[0.04] to-white/[0.01] backdrop-blur-sm" />
+                    <div className="absolute inset-0 border border-white/[0.07] rounded-xl group-hover:border-accent/20 transition-colors duration-700" />
 
                     {/* Subtle inner glow on hover */}
                     <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 bg-gradient-to-br from-accent/[0.05] via-transparent to-transparent" />
 
                     {/* Content */}
                     <div className="relative">
-                      <p className="text-[1.75rem] md:text-3xl font-serif italic text-accent mb-3 group-hover:translate-x-0.5 transition-transform duration-500">{m.value}</p>
-                      <p className="text-[11px] md:text-xs text-muted-foreground/60 leading-relaxed group-hover:text-muted-foreground/80 transition-colors duration-500">{m.label}</p>
+                      <p className="text-xl md:text-2xl font-serif italic text-accent mb-1.5 whitespace-nowrap group-hover:translate-x-0.5 transition-transform duration-500">{m.value}</p>
+                      <p className="text-[10px] md:text-[11px] text-muted-foreground/60 leading-relaxed group-hover:text-muted-foreground/80 transition-colors duration-500">{m.label}</p>
                     </div>
                   </motion.div>
                 ))}
               </div>
 
-              {/* Premium CTAs */}
+              {/* Compact CTAs */}
               <motion.div
-                initial={{ opacity: 0, y: 25 }}
+                initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 1.6, ease: [0.16, 1, 0.3, 1] }}
-                className="flex flex-col sm:flex-row gap-4 sm:gap-5 items-center justify-center pt-6"
+                transition={{ duration: 0.8, delay: 1.4, ease: [0.16, 1, 0.3, 1] }}
+                className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-center justify-center pt-3"
               >
                 <Link
                   href="/contact"
-                  className="group relative flex items-center justify-center gap-3 text-base md:text-lg font-medium w-full sm:w-auto px-8 py-4 rounded-full overflow-hidden transition-all duration-500"
+                  className="group relative flex items-center justify-center gap-2.5 text-sm md:text-base font-medium w-full sm:w-auto px-6 py-3 rounded-full overflow-hidden transition-all duration-500"
                 >
                   {/* Button background layers */}
                   <span className="absolute inset-0 bg-foreground" />
@@ -209,11 +207,11 @@ export default function Home() {
 
                   {/* Button content */}
                   <span className="relative text-background">Get in touch</span>
-                  <ArrowRight size={18} className="relative text-background group-hover:translate-x-1 transition-transform duration-500" />
+                  <ArrowRight size={16} className="relative text-background group-hover:translate-x-1 transition-transform duration-500" />
                 </Link>
                 <Link
                   href="/about"
-                  className="group relative text-base md:text-lg font-medium text-foreground/60 w-full sm:w-auto text-center px-8 py-4 rounded-full border border-white/[0.08] overflow-hidden transition-all duration-500 hover:text-foreground hover:border-white/[0.15]"
+                  className="group relative text-sm md:text-base font-medium text-foreground/60 w-full sm:w-auto text-center px-6 py-3 rounded-full border border-white/[0.08] overflow-hidden transition-all duration-500 hover:text-foreground hover:border-white/[0.15]"
                 >
                   <span className="absolute inset-0 bg-white/[0.02] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   <span className="relative">Learn more</span>
@@ -224,7 +222,7 @@ export default function Home() {
         </div>
 
         {/* Bottom gradient for seamless transition */}
-        <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-background via-background/50 to-transparent z-[2] pointer-events-none" />
+        <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background to-transparent z-[2] pointer-events-none" />
       </section>
 
       {/* Divider */}
