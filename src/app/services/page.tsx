@@ -225,41 +225,38 @@ export default function Services() {
       </div>
 
       {/* Tools Section */}
-      <section ref={toolsRef} className="py-24 md:py-32 px-6 lg:px-12 xl:px-20">
-        <div className="max-w-5xl mx-auto">
-          <div className="grid lg:grid-cols-[1fr_1.5fr] gap-12 lg:gap-16 items-start">
+      <section ref={toolsRef} className="py-24 md:py-32 px-6 lg:px-12 xl:px-20 relative overflow-hidden">
+        {/* Background image - large, offset to the left */}
+        <div className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/4 w-[500px] h-[500px] opacity-[0.15] pointer-events-none hidden lg:block">
+          <Image
+            src="/images/kh_section_divider_signal-to-system_02.png"
+            alt=""
+            width={500}
+            height={500}
+            className="w-full h-full object-contain"
+          />
+        </div>
 
-            {/* Left: Header + Image */}
-            <motion.div
-              style={{ y: toolsY, opacity: toolsOpacity }}
-              className="lg:sticky lg:top-32"
-            >
-              <span className="block text-[10px] md:text-xs font-medium tracking-[0.25em] uppercase text-accent/70 mb-4">Tools</span>
-              <h2 className="text-2xl md:text-3xl lg:text-4xl font-medium tracking-tight mb-6">
-                What I use.
-              </h2>
-              <p className="text-sm md:text-base text-muted-foreground/70 leading-relaxed mb-8">
-                The specific tools matter less than understanding how they fit together. Here&apos;s what I typically work with.
-              </p>
+        <div className="max-w-5xl mx-auto relative z-10">
+          {/* Header */}
+          <motion.div
+            style={{ y: toolsY, opacity: toolsOpacity }}
+            className="mb-12 md:mb-16"
+          >
+            <span className="block text-[10px] md:text-xs font-medium tracking-[0.25em] uppercase text-accent/70 mb-4">Tools</span>
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-medium tracking-tight mb-4">
+              What I use.
+            </h2>
+            <p className="text-sm md:text-base text-muted-foreground/70 leading-relaxed max-w-lg">
+              The specific tools matter less than understanding how they fit together.
+            </p>
+          </motion.div>
 
-              {/* Decorative image */}
-              <div className="hidden lg:block relative w-full opacity-50">
-                <Image
-                  src="/images/kh_section_divider_signal-to-system_02.png"
-                  alt="Signal to System"
-                  width={600}
-                  height={400}
-                  className="w-full h-auto rounded-2xl"
-                />
-              </div>
-            </motion.div>
-
-            {/* Right: Tool cards */}
-            <div className="space-y-4">
-              {technicalIndex.map((row, idx) => (
-                <ToolDomain key={row.domain} domain={row} index={idx} />
-              ))}
-            </div>
+          {/* Tool cards in a grid */}
+          <div className="grid md:grid-cols-3 gap-4">
+            {technicalIndex.map((row, idx) => (
+              <ToolDomain key={row.domain} domain={row} index={idx} />
+            ))}
           </div>
         </div>
       </section>
