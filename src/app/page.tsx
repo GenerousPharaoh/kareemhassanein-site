@@ -112,7 +112,7 @@ export default function Home() {
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 transition={{ duration: 1, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
               >
-                <span className="inline-flex items-center gap-2.5 text-[10px] md:text-[11px] font-medium tracking-[0.2em] uppercase text-foreground/50 px-4 py-2 rounded-full border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm">
+                <span className="inline-flex items-center gap-2.5 text-[10px] md:text-[11px] font-medium tracking-[0.2em] uppercase text-foreground/50 px-4 py-2 rounded-full border border-white/[0.06] bg-[hsl(220,18%,10%)]">
                   <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
                   Implementation Consulting
                 </span>
@@ -172,14 +172,10 @@ export default function Home() {
                     initial={{ opacity: 0, y: 25 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 1.0 + i * 0.12, ease: [0.16, 1, 0.3, 1] }}
-                    className="group relative p-4 md:p-5 rounded-xl overflow-hidden"
+                    className="group relative p-4 md:p-5 rounded-xl bg-[hsl(220,18%,9%)] border border-white/[0.07] hover:border-accent/20 transition-colors duration-700"
                   >
-                    {/* Card background with glass effect */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/[0.04] to-white/[0.01] backdrop-blur-sm" />
-                    <div className="absolute inset-0 border border-white/[0.07] rounded-xl group-hover:border-accent/20 transition-colors duration-700" />
-
                     {/* Subtle inner glow on hover */}
-                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 bg-gradient-to-br from-accent/[0.05] via-transparent to-transparent" />
+                    <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 bg-gradient-to-br from-accent/[0.05] via-transparent to-transparent pointer-events-none" />
 
                     {/* Content */}
                     <div className="relative">
