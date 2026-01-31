@@ -50,14 +50,10 @@ export default function Home() {
     target: transitionRef,
     offset: ["start end", "center center"]
   });
-  const statementYRaw = useTransform(statementProgress, [0, 1], [80, 0]);
-  const statementOpacityRaw = useTransform(statementProgress, [0, 0.3, 1], [0, 0.3, 1]);
+  const statementYRaw = useTransform(statementProgress, [0, 1], [40, 0]);
+  const statementOpacityRaw = useTransform(statementProgress, [0, 0.3, 1], [0, 0.5, 1]);
   const statementY = useSpring(statementYRaw, springConfig);
   const statementOpacity = useSpring(statementOpacityRaw, springConfig);
-  const statementScale = useSpring(
-    useTransform(statementProgress, [0, 1], [0.95, 1]),
-    springConfig
-  );
 
 
   // Portfolio section - smooth reveal (triggers early)
@@ -214,80 +210,74 @@ export default function Home() {
         <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background to-transparent z-[2] pointer-events-none" />
       </section>
 
-      {/* Divider */}
-      <div className="px-6 md:px-12 xl:px-20">
-        <AnimatedDivider direction="center" maxWidth="400px" />
-      </div>
+      {/* Approach Section - Combined statement + steps */}
+      <section ref={transitionRef} className="py-24 md:py-32 px-6 md:px-12 xl:px-20 relative">
+        <div className="max-w-6xl mx-auto">
 
-      {/* Statement Section */}
-      <section ref={transitionRef} className="py-20 md:py-32 w-full relative flex items-center justify-center bg-background">
+          {/* Two-column layout: Statement left, Steps right */}
+          <div className="grid lg:grid-cols-[1fr_1.2fr] gap-16 lg:gap-20 items-start">
 
-        <motion.div
-          style={{ y: statementY, opacity: statementOpacity, scale: statementScale }}
-          className="relative z-10 text-center px-6 max-w-5xl mx-auto will-change-transform"
-        >
-          <h2 className="text-3xl md:text-5xl lg:text-6xl font-medium tracking-tight leading-[1.1] mb-6">
-            Good plans fail without good execution.
-          </h2>
-          <div className="h-[1px] w-32 bg-accent/30 mx-auto mb-6" />
-          <p className="text-lg md:text-xl lg:text-2xl font-light text-muted-foreground max-w-3xl mx-auto">
-            Implementation is where most efforts stall. Not from lack of strategy, but from friction in the systems, workflows, and habits that need to change.
-          </p>
-        </motion.div>
-      </section>
+            {/* Left: Statement */}
+            <motion.div
+              style={{ y: statementY, opacity: statementOpacity }}
+              className="lg:sticky lg:top-32"
+            >
+              <span className="text-[10px] md:text-xs font-medium tracking-[0.25em] uppercase text-accent/70 mb-6 block">
+                The Problem
+              </span>
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight leading-[1.1] mb-6">
+                Good plans fail without good execution.
+              </h2>
+              <p className="text-base md:text-lg text-muted-foreground/80 leading-relaxed">
+                Implementation is where most efforts stall. Not from lack of strategy, but from friction in the systems, workflows, and habits that need to change.
+              </p>
+            </motion.div>
 
-      {/* Approach Section */}
-      <section className="relative py-20 md:py-28 px-6 md:px-12 xl:px-20">
-        <div className="max-w-5xl mx-auto">
-          {/* Section header */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="mb-12 md:mb-16"
-          >
-            <span className="text-[10px] md:text-xs font-medium tracking-[0.25em] uppercase text-accent mb-3 block">
-              Approach
-            </span>
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-medium tracking-tight">
-              How I work
-            </h2>
-          </motion.div>
-
-          {/* Steps */}
-          <div className="space-y-4 md:space-y-0 md:grid md:grid-cols-3 md:gap-6">
-            {approach.map((item, i) => (
+            {/* Right: Steps */}
+            <div className="space-y-6">
               <motion.div
-                key={item.title}
-                initial={{ opacity: 0, y: 25 }}
+                initial={{ opacity: 0, y: 15 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.7, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-                className="group relative"
+                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                className="mb-8"
               >
-                {/* Card */}
-                <div className="relative p-6 md:p-7 rounded-2xl bg-[hsl(220,18%,9%)] border border-white/[0.06] hover:border-white/[0.1] transition-all duration-500 h-full">
-                  {/* Number + Title row */}
-                  <div className="flex items-baseline gap-3 mb-3">
-                    <span className="text-sm font-medium text-accent/50">
-                      0{i + 1}
+                <span className="text-[10px] md:text-xs font-medium tracking-[0.25em] uppercase text-accent/70 mb-3 block">
+                  The Approach
+                </span>
+                <h3 className="text-xl md:text-2xl font-medium tracking-tight text-foreground/90">
+                  How I work
+                </h3>
+              </motion.div>
+
+              {approach.map((item, i) => (
+                <motion.div
+                  key={item.title}
+                  initial={{ opacity: 0, x: 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, margin: "-30px" }}
+                  transition={{ duration: 0.5, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                  className="group flex gap-5 md:gap-6"
+                >
+                  {/* Number */}
+                  <div className="flex-shrink-0 w-10 h-10 md:w-12 md:h-12 rounded-full border border-white/[0.08] flex items-center justify-center group-hover:border-accent/30 group-hover:bg-accent/5 transition-all duration-500">
+                    <span className="text-sm md:text-base font-medium text-accent/60 group-hover:text-accent transition-colors duration-500">
+                      {i + 1}
                     </span>
-                    <h3 className="text-lg md:text-xl font-medium tracking-tight text-foreground">
-                      {item.title}
-                    </h3>
                   </div>
 
-                  {/* Description */}
-                  <p className="text-sm text-muted-foreground/70 leading-relaxed">
-                    {item.desc}
-                  </p>
-
-                  {/* Subtle accent line at top */}
-                  <div className="absolute top-0 left-6 right-6 h-[1px] bg-gradient-to-r from-transparent via-accent/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                </div>
-              </motion.div>
-            ))}
+                  {/* Content */}
+                  <div className="flex-1 pt-1.5">
+                    <h4 className="text-lg md:text-xl font-medium tracking-tight mb-2 group-hover:text-accent transition-colors duration-500">
+                      {item.title}
+                    </h4>
+                    <p className="text-sm md:text-base text-muted-foreground/70 leading-relaxed">
+                      {item.desc}
+                    </p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
