@@ -145,18 +145,19 @@ function ServiceSection({ service, index }: { service: typeof services[0], index
 function ToolDomain({ domain, index }: { domain: typeof technicalIndex[0]; index: number }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 15 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.5, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
+      viewport={{ once: true, margin: "-30px" }}
+      transition={{ duration: 0.5, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
+      className="p-6 rounded-xl bg-[hsl(220,18%,9%)] border border-white/[0.06] hover:border-white/[0.1] transition-colors duration-300"
     >
-      <h3 className="text-accent text-sm font-medium tracking-wide mb-4">
+      <h3 className="text-accent text-xs font-medium tracking-[0.15em] uppercase mb-3">
         {domain.domain}
       </h3>
-      <p className="text-2xl md:text-3xl font-light text-foreground/90 leading-relaxed mb-4">
+      <p className="text-lg md:text-xl font-medium text-foreground/90 leading-relaxed mb-3">
         {domain.tools.join(' · ')}
       </p>
-      <p className="text-sm text-muted-foreground">
+      <p className="text-xs md:text-sm text-muted-foreground/70">
         {domain.specs.join(' · ')}
       </p>
     </motion.div>
@@ -223,33 +224,41 @@ export default function Services() {
       </div>
 
       {/* Tools Section */}
-      <section ref={toolsRef} className="py-28 md:py-40 px-6 lg:px-12 xl:px-20 relative overflow-hidden">
-        {/* Subtle centered background */}
-        <div className="absolute inset-0 z-0 flex items-center justify-center opacity-20">
-          <ParallaxImage
-            src="/images/kh_section_divider_signal-to-system_02.png"
-            alt="Signal to System"
-            className="w-full h-full"
-            fadedSides={true}
-            fadedVertical={true}
-          />
-        </div>
+      <section ref={toolsRef} className="py-24 md:py-32 px-6 lg:px-12 xl:px-20">
+        <div className="max-w-5xl mx-auto">
+          <div className="grid lg:grid-cols-[1fr_1.5fr] gap-12 lg:gap-16 items-start">
 
-        <div className="max-w-[900px] mx-auto relative z-10">
-          <motion.div
-            style={{ y: toolsY, opacity: toolsOpacity }}
-            className="mb-16 text-center will-change-transform"
-          >
-            <span className="block text-xs font-medium tracking-[0.3em] uppercase text-muted-foreground mb-6">Tools</span>
-            <h2 className="text-3xl md:text-5xl font-medium tracking-tight">
-              What I use.
-            </h2>
-          </motion.div>
+            {/* Left: Header + Image */}
+            <motion.div
+              style={{ y: toolsY, opacity: toolsOpacity }}
+              className="lg:sticky lg:top-32"
+            >
+              <span className="block text-[10px] md:text-xs font-medium tracking-[0.25em] uppercase text-accent/70 mb-4">Tools</span>
+              <h2 className="text-2xl md:text-3xl lg:text-4xl font-medium tracking-tight mb-6">
+                What I use.
+              </h2>
+              <p className="text-sm md:text-base text-muted-foreground/70 leading-relaxed mb-8">
+                The specific tools matter less than understanding how they fit together. Here&apos;s what I typically work with.
+              </p>
 
-          <div className="space-y-16">
-            {technicalIndex.map((row, idx) => (
-              <ToolDomain key={row.domain} domain={row} index={idx} />
-            ))}
+              {/* Smaller decorative image */}
+              <div className="hidden lg:block relative w-full max-w-[280px] aspect-square rounded-2xl overflow-hidden opacity-60">
+                <ParallaxImage
+                  src="/images/kh_section_divider_signal-to-system_02.png"
+                  alt="Signal to System"
+                  className="w-full h-full"
+                  fadedSides={true}
+                  fadedVertical={true}
+                />
+              </div>
+            </motion.div>
+
+            {/* Right: Tool cards */}
+            <div className="space-y-4">
+              {technicalIndex.map((row, idx) => (
+                <ToolDomain key={row.domain} domain={row} index={idx} />
+              ))}
+            </div>
           </div>
         </div>
       </section>
