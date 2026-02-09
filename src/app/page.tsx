@@ -69,7 +69,7 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-background text-foreground overflow-hidden">
       {/* Hero Section */}
-      <section ref={heroRef} className="h-screen flex items-center justify-center relative px-6 md:px-12 xl:px-20 bg-background overflow-hidden">
+      <section ref={heroRef} className="h-screen flex items-center justify-center relative pt-20 md:pt-6 px-6 md:px-12 xl:px-20 bg-background overflow-hidden">
 
         {/* Cinematic Background Layer */}
         <motion.div
