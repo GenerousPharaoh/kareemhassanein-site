@@ -34,7 +34,7 @@ export default function ScrollReveal({
     const isInView = useInView(ref, viewport);
 
     // Spring config for smooth, fluid animations
-    const springConfig = { stiffness: 100, damping: 25 };
+    const springConfig = { stiffness: 100, damping: 30 };
 
     // Calculate initial values based on direction
     const initialX = direction === 'left' ? -distance : direction === 'right' ? distance : 0;

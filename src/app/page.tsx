@@ -113,7 +113,7 @@ export default function Home() {
                 <motion.span
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                  transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
                   className="block"
                 >
                   I find friction, solve it,
@@ -121,14 +121,14 @@ export default function Home() {
                 <motion.span
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                  transition={{ duration: 1, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
                   className="block"
                 >
                   and make it{" "}
                   <motion.span
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 1.2, delay: 0.9, ease: [0.16, 1, 0.3, 1] }}
+                    transition={{ duration: 1.2, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
                     className="inline-block text-accent italic font-serif"
                   >
                     stick
@@ -136,7 +136,7 @@ export default function Home() {
                   <motion.span
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    transition={{ duration: 0.8, delay: 1.1, ease: [0.16, 1, 0.3, 1] }}
+                    transition={{ duration: 0.8, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
                     className="text-accent"
                   >.</motion.span>
                 </motion.span>
@@ -146,7 +146,7 @@ export default function Home() {
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: 1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
                 className="max-w-xl mx-auto"
               >
                 <p className="text-sm md:text-base lg:text-lg text-muted-foreground/80 font-light leading-relaxed">
@@ -155,16 +155,16 @@ export default function Home() {
               </motion.div>
 
               {/* Metrics */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 max-w-3xl mx-auto pt-4">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 md:gap-8 max-w-3xl mx-auto pt-4">
                 {metrics.map((m, i) => (
                   <motion.div
                     key={m.label}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.7, delay: 1.0 + i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                    transition={{ duration: 0.7, delay: 0.6 + i * 0.08, ease: [0.16, 1, 0.3, 1] }}
                     className="text-center"
                   >
-                    <p className="text-2xl md:text-3xl font-serif italic text-accent mb-2 whitespace-nowrap">{m.value}</p>
+                    <p className="text-xl sm:text-2xl md:text-3xl font-serif italic text-accent mb-2 whitespace-nowrap">{m.value}</p>
                     <p className="text-[11px] md:text-xs text-muted-foreground/60 leading-relaxed">{m.label}</p>
                   </motion.div>
                 ))}
@@ -174,7 +174,7 @@ export default function Home() {
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 1.4, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: 0.8, delay: 0.85, ease: [0.16, 1, 0.3, 1] }}
                 className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-center justify-center pt-4"
               >
                 <Link
@@ -277,7 +277,7 @@ export default function Home() {
       </div>
 
       {/* Selected Projects */}
-      <section ref={portfolioRef} className="py-16 md:py-28 relative z-10 w-full px-6 md:px-12 xl:px-20 overflow-hidden">
+      <section ref={portfolioRef} className="py-20 md:py-28 relative z-10 w-full px-6 md:px-12 xl:px-20 overflow-hidden">
         {/* Background image - constrained and faded */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <div className="absolute inset-0 flex items-center justify-center">

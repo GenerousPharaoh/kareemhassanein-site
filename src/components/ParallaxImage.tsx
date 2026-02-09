@@ -44,7 +44,7 @@ export default function ParallaxImage({
 
     // Gentle parallax - GPU accelerated transforms only
     const y = useTransform(scrollYProgress, [0, 1], ["-3%", "3%"]);
-    const smoothY = useSpring(y, { stiffness: 80, damping: 25 });
+    const smoothY = useSpring(y, { stiffness: 100, damping: 30 });
 
     // Construct mask image based on props - very gradual fades
     let maskImage = '';

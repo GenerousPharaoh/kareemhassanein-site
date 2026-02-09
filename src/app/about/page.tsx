@@ -186,7 +186,7 @@ export default function About() {
             </div>
 
             {/* Narrative Column (Right) */}
-            <div className="space-y-24 relative">
+            <div className="space-y-16 md:space-y-20 relative">
               {/* Vertical accent "spine" */}
               <div className="absolute -left-6 lg:-left-12 top-2 bottom-2 w-[1px] bg-gradient-to-b from-accent/40 via-accent/10 to-transparent" />
 
@@ -220,20 +220,6 @@ export default function About() {
           </div>
         </motion.div>
 
-
-        {/* Scroll indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 0.4 }}
-          transition={{ delay: 1.5, duration: 1 }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10"
-        >
-          <motion.div
-            animate={{ y: [0, 8, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            className="w-[1px] h-12 bg-gradient-to-b from-accent to-transparent"
-          />
-        </motion.div>
       </section>
 
       {/* What I bring */}
@@ -271,7 +257,7 @@ export default function About() {
       </section>
 
       {/* Experience */}
-      <section ref={historyRef} className="py-24 md:py-36 px-6 lg:px-12 xl:px-20 relative overflow-hidden">
+      <section ref={historyRef} className="py-24 md:py-32 px-6 lg:px-12 xl:px-20 relative overflow-hidden">
         {/* Background image - centered with soft fade */}
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0">

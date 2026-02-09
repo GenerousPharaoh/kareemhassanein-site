@@ -39,6 +39,18 @@ export default function Header() {
     setIsMenuOpen(false);
   }, [pathname]);
 
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMenuOpen]);
+
   return (
     <>
       <div className="fixed top-6 left-0 right-0 z-50 flex justify-center px-6 pointer-events-none">
@@ -57,7 +69,7 @@ export default function Header() {
             className="group flex items-center gap-3 pr-8 border-r border-white/10 transition-transform active:scale-95"
           >
             <div className="w-2 h-2 rounded-full bg-foreground opacity-40 group-hover:opacity-100 transition-opacity" />
-            <span className="text-[10px] font-bold tracking-[0.3em] uppercase opacity-40 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+            <span className="text-[11px] font-bold tracking-[0.25em] uppercase opacity-40 group-hover:opacity-100 transition-opacity whitespace-nowrap">
               K. Hassanein
             </span>
           </Link>
@@ -72,7 +84,7 @@ export default function Header() {
                   href={item.href}
                   className="relative group py-1"
                 >
-                  <span className={`text-[10px] font-bold tracking-[0.2em] uppercase transition-all duration-500 ${isActive ? 'text-white scale-110' : 'text-white/40 group-hover:text-white group-hover:translate-y-[-1px]'
+                  <span className={`text-[11px] font-bold tracking-[0.15em] uppercase transition-all duration-500 ${isActive ? 'text-white scale-110' : 'text-white/40 group-hover:text-white group-hover:translate-y-[-1px]'
                     }`}>
                     {item.label}
                   </span>
@@ -122,10 +134,13 @@ export default function Header() {
                 >
                   <Link
                     href={item.href}
-                    className={`text-5xl font-light tracking-tighter ${pathname === item.href ? 'text-foreground italic' : 'text-foreground/30'
+                    className={`text-5xl font-light tracking-tighter ${pathname === item.href ? 'text-foreground' : 'text-foreground/30'
                       }`}
                   >
                     {item.label}
+                    {pathname === item.href && (
+                      <div className="h-[1px] w-12 bg-accent/60 mt-2" />
+                    )}
                   </Link>
                 </motion.div>
               ))}

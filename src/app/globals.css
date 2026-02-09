@@ -52,26 +52,10 @@ body::before {
   z-index: -1;
 }
 
-/* Microscopic Texture Overlay */
-body::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image: url("/noise.png");
-  opacity: 0.05;
-  pointer-events: none;
-  z-index: 50;
-}
-
 @layer base {
   body {
     background-color: hsl(var(--background));
     color: hsl(var(--foreground));
-  }
-
-  ::selection {
-    background-color: hsl(var(--foreground));
-    color: hsl(var(--background));
   }
 
   h1,
@@ -225,39 +209,6 @@ button:focus-visible {
   outline-offset: 2px;
 }
 
-/* High-Intensity Light Flares */
-.glow-blob {
-  position: absolute;
-  width: 800px;
-  height: 800px;
-  border-radius: 50%;
-  background: radial-gradient(circle, hsl(var(--accent) / 0.25) 0%, hsl(var(--accent-secondary) / 0.1) 40%, transparent 80%);
-  filter: blur(140px);
-  pointer-events: none;
-  z-index: -1;
-  animation: pulse-glow 10s ease-in-out infinite alternate;
-}
-
-@keyframes pulse-glow {
-  from {
-    opacity: 0.5;
-    scale: 1;
-  }
-
-  to {
-    opacity: 0.8;
-    scale: 1.1;
-  }
-}
-
-/* Text gradient for accents */
-.text-gradient-accent {
-  background: linear-gradient(135deg, hsl(var(--accent)) 0%, hsl(var(--accent-secondary)) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
 /* Subtle divider line */
 .divider-subtle {
   height: 1px;
@@ -274,7 +225,7 @@ button:focus-visible {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
   opacity: 0.02;
   pointer-events: none;
-  z-index: 9999;
+  z-index: 100;
   mix-blend-mode: overlay;
 }
 
@@ -345,12 +296,6 @@ button:focus-visible {
 ::selection {
   background-color: hsl(var(--accent) / 0.3);
   color: hsl(var(--foreground));
-}
-
-/* Refined focus ring */
-*:focus-visible {
-  outline: 1px solid hsl(var(--accent) / 0.5);
-  outline-offset: 3px;
 }
 
 /* Smooth image loading */

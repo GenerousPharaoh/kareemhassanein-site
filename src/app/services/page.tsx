@@ -96,7 +96,7 @@ function ServiceSection({ service, index }: { service: typeof services[0], index
   return (
     <section
       ref={ref}
-      className="py-28 md:py-40 px-6 lg:px-12 xl:px-20 relative overflow-hidden"
+      className="py-24 md:py-32 px-6 lg:px-12 xl:px-20 relative overflow-hidden"
     >
       {/* Background image - clipped to section with fade */}
       <motion.div
