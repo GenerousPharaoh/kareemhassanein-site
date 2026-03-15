@@ -4,7 +4,7 @@ import { motion, useScroll, useTransform, useSpring, useInView } from 'framer-mo
 import ScrollReveal from '@/components/ScrollReveal';
 import CharReveal from '@/components/CharReveal';
 import ParallaxImage from '@/components/ParallaxImage';
-import Image from 'next/image';
+
 import { useRef, useEffect } from 'react';
 
 const services = [
@@ -226,16 +226,19 @@ export default function Services() {
 
       {/* Tools Section */}
       <section ref={toolsRef} className="py-24 md:py-32 px-6 lg:px-12 xl:px-20 relative overflow-hidden">
-        {/* Background image - large, offset to the left */}
-        <div className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/4 w-[500px] h-[500px] opacity-[0.15] pointer-events-none hidden lg:block">
-          <Image
+        {/* Background image - full width with parallax and faded edges */}
+        <motion.div
+          style={{ y: toolsY }}
+          className="absolute inset-0 z-0 pointer-events-none will-change-transform"
+        >
+          <ParallaxImage
             src="/images/kh_section_divider_signal-to-system_02.png"
             alt=""
-            width={500}
-            height={500}
-            className="w-full h-full object-contain"
+            className="w-full h-full opacity-[0.2]"
+            fadedSides={true}
+            fadedVertical={true}
           />
-        </div>
+        </motion.div>
 
         <div className="max-w-5xl mx-auto relative z-10">
           {/* Header */}
