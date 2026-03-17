@@ -203,9 +203,10 @@ export default function Home() {
 
       {/* Approach Section - Combined statement + steps */}
       <section ref={transitionRef} className="py-16 md:py-24 px-6 md:px-12 xl:px-20 relative">
-        {/* Top gradient blend from hero */}
+        {/* Subtle ambient glow */}
         <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-background to-transparent pointer-events-none z-0" />
-        <div className="max-w-6xl mx-auto">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-[radial-gradient(ellipse_at_center,hsl(var(--accent)/0.04)_0%,transparent_70%)] pointer-events-none z-0" />
+        <div className="max-w-6xl mx-auto relative z-10">
 
           {/* Two-column layout: Statement left, Steps right */}
           <div className="grid lg:grid-cols-[1fr_1.2fr] gap-16 lg:gap-20 items-start">
@@ -289,16 +290,15 @@ export default function Home() {
 
       {/* Selected Projects */}
       <section ref={portfolioRef} className="py-28 md:py-40 relative z-10 w-full px-6 md:px-12 xl:px-20 overflow-hidden">
-        {/* Background image - full bleed with faded edges */}
+        {/* Designed atmospheric background */}
         <div className="absolute inset-0 z-0 overflow-hidden">
-          <ParallaxImage
-            src="/images/flow of organized transformation.png"
-            alt="Transformation"
-            className="w-full h-full opacity-30"
-            fadedSides={true}
-            fadedVertical={true}
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-transparent to-background/70" />
+          {/* Accent mesh gradient */}
+          <div className="absolute top-0 right-0 w-[70%] h-[60%] bg-[radial-gradient(ellipse_at_top_right,hsl(var(--accent)/0.08)_0%,transparent_60%)]" />
+          <div className="absolute bottom-0 left-0 w-[50%] h-[50%] bg-[radial-gradient(ellipse_at_bottom_left,hsl(var(--accent-secondary)/0.06)_0%,transparent_60%)]" />
+          {/* Subtle horizontal line pattern */}
+          <div className="absolute inset-0 opacity-[0.015]" style={{ backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 79px, rgba(255,255,255,0.5) 79px, rgba(255,255,255,0.5) 80px)' }} />
+          {/* Top/bottom fade into background */}
+          <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background" />
         </div>
 
         <div className="max-w-[1400px] mx-auto relative z-10">

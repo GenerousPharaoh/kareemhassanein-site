@@ -17,12 +17,12 @@ interface ProjectListItemProps {
 }
 
 export default function ProjectListItem({ project, index, opacity }: ProjectListItemProps) {
-    const className = `group relative flex items-start md:items-center justify-between py-8 md:py-10 px-6 md:px-8 -mx-6 md:-mx-8 rounded-2xl hover:bg-white/[0.02] transition-all duration-500 border-b border-white/5 last:border-b-0 hover:border-accent/20 focus-visible:bg-white/[0.02] focus-visible:border-accent/20 focus-visible:outline-none ${project.href ? 'cursor-pointer' : ''}`;
+    const className = `group relative flex items-start md:items-center justify-between py-8 md:py-10 pl-8 md:pl-10 pr-6 md:pr-8 -mx-2 rounded-lg hover:bg-white/[0.02] transition-all duration-500 border-b border-white/[0.04] last:border-b-0 focus-visible:bg-white/[0.02] focus-visible:outline-none ${project.href ? 'cursor-pointer' : ''}`;
 
     const content = (
         <>
-            {/* Accent line */}
-            <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[2px] h-0 group-hover:h-12 bg-accent rounded-full transition-all duration-500" />
+            {/* Persistent accent left border */}
+            <div className="absolute left-0 top-4 bottom-4 w-[2px] bg-accent/15 group-hover:bg-accent/50 transition-colors duration-500 rounded-full" />
 
             <div className="flex gap-5 md:gap-8 z-30 max-w-2xl">
                 {/* Index number */}

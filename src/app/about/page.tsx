@@ -265,19 +265,17 @@ export default function About() {
 
       {/* Experience */}
       <section ref={historyRef} className="py-28 md:py-40 px-6 lg:px-12 xl:px-20 relative overflow-hidden">
-        {/* Background image - centered with soft fade */}
+        {/* Designed atmospheric background */}
         <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0">
-            <ParallaxImage
-              src="/images/experience_layers.png"
-              alt="Experience"
-              className="w-full h-full opacity-50"
-              fadedSides={true}
-              fadedVertical={true}
-            />
-          </div>
-          <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-transparent to-background/80" />
-          <div className="absolute inset-0 bg-gradient-to-r from-background/60 via-transparent to-background/60" />
+          {/* Warm accent glow - offset left */}
+          <div className="absolute top-1/3 -left-[10%] w-[60%] h-[60%] bg-[radial-gradient(ellipse_at_center,hsl(var(--accent)/0.06)_0%,transparent_70%)]" />
+          {/* Secondary glow - bottom right */}
+          <div className="absolute bottom-0 right-0 w-[40%] h-[40%] bg-[radial-gradient(ellipse_at_bottom_right,hsl(var(--accent-secondary)/0.04)_0%,transparent_60%)]" />
+          {/* Vertical line accent */}
+          <div className="absolute inset-0 opacity-[0.012]" style={{ backgroundImage: 'repeating-linear-gradient(90deg, transparent, transparent 119px, rgba(255,255,255,0.5) 119px, rgba(255,255,255,0.5) 120px)' }} />
+          {/* Edge fade */}
+          <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background" />
+          <div className="absolute inset-0 bg-gradient-to-r from-background/40 via-transparent to-background/40" />
         </div>
 
         <div className="max-w-[1000px] mx-auto relative z-10">
