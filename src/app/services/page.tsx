@@ -121,19 +121,22 @@ function ServiceSection({ service, index }: { service: typeof services[0], index
         className="max-w-[1200px] mx-auto relative z-10 will-change-transform grid md:grid-cols-2 gap-12 items-center"
       >
         <div className={isReversed ? 'md:col-start-2' : ''}>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight mb-4">
-            {service.title}
-          </h2>
+          <div className="flex items-baseline gap-6 mb-8">
+            <span className="text-accent font-mono text-sm">0{index + 1}</span>
+            <h2 className="text-3xl md:text-5xl font-medium tracking-tight">
+              {service.title}
+            </h2>
+          </div>
 
-          <p className="text-lg md:text-xl text-foreground/70 font-light mb-5 font-serif italic">
+          <p className="text-xl md:text-2xl text-foreground/80 font-light mb-6">
             {service.tagline}
           </p>
 
-          <p className="text-base md:text-lg text-muted-foreground/70 leading-relaxed mb-8">
+          <p className="text-lg text-muted-foreground leading-relaxed mb-10">
             {service.desc}
           </p>
 
-          <div className="flex flex-wrap gap-2.5">
+          <div className="flex flex-wrap gap-3">
             {service.points.map((point, i) => (
               <ServiceTag key={point} tag={point} index={i} />
             ))}
@@ -208,7 +211,7 @@ export default function Services() {
         <motion.div style={{ y: heroY }} className="max-w-[1200px] mx-auto relative z-10 will-change-transform">
           <ScrollReveal direction="up">
             <span className="block text-xs font-medium tracking-[0.3em] uppercase text-muted-foreground mb-6">Services</span>
-            <h1 className="font-medium tracking-tight mb-8">
+            <h1 className="text-4xl md:text-6xl font-medium tracking-tight mb-8">
               What I <CharReveal delay={0.4} className="text-accent italic font-serif">do.</CharReveal>
             </h1>
             <p className="text-xl md:text-2xl text-muted-foreground font-light leading-relaxed max-w-2xl">

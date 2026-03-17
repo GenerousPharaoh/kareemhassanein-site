@@ -201,57 +201,89 @@ export default function Home() {
         <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-background via-background/80 to-transparent z-[2] pointer-events-none" />
       </section>
 
-      {/* Approach Section — editorial layout, not a template list */}
-      <section ref={transitionRef} className="py-16 md:py-28 px-6 md:px-12 xl:px-20 relative">
+      {/* Approach Section - Combined statement + steps */}
+      <section ref={transitionRef} className="py-16 md:py-24 px-6 md:px-12 xl:px-20 relative">
+        {/* Top gradient blend from hero */}
         <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-background to-transparent pointer-events-none z-0" />
-        <div className="max-w-[1400px] mx-auto">
+        <div className="max-w-6xl mx-auto">
 
-          {/* Problem statement — full width, editorial */}
-          <motion.div
-            style={{ y: statementY, opacity: statementOpacity }}
-            className="max-w-3xl mb-20 md:mb-28"
-          >
-            <span className="text-[10px] md:text-xs font-medium tracking-[0.25em] uppercase text-accent/70 mb-6 block">
-              The Problem
-            </span>
-            <h2 className="font-medium tracking-tight leading-[1.1] mb-6">
-              Good plans fail without good execution.
-            </h2>
-            <p className="text-base md:text-lg text-muted-foreground/80 leading-relaxed max-w-2xl">
-              Implementation is where most efforts stall. Not from lack of strategy, but from friction in the systems, workflows, and habits that need to change.
-            </p>
-          </motion.div>
+          {/* Two-column layout: Statement left, Steps right */}
+          <div className="grid lg:grid-cols-[1fr_1.2fr] gap-16 lg:gap-20 items-start">
 
-          {/* Approach — three columns, each a distinct visual block */}
-          <div className="grid md:grid-cols-3 gap-0">
-            {approach.map((item, i) => (
+            {/* Left: Statement */}
+            <motion.div
+              style={{ y: statementY, opacity: statementOpacity }}
+              className="lg:sticky lg:top-32"
+            >
+              <span className="text-[10px] md:text-xs font-medium tracking-[0.25em] uppercase text-accent/70 mb-6 block">
+                The Problem
+              </span>
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight leading-[1.1] mb-6">
+                Good plans fail without good execution.
+              </h2>
+              <p className="text-base md:text-lg text-muted-foreground/80 leading-relaxed">
+                Implementation is where most efforts stall. Not from lack of strategy, but from friction in the systems, workflows, and habits that need to change.
+              </p>
+            </motion.div>
+
+            {/* Right: Steps */}
+            <div className="space-y-6">
               <motion.div
-                key={item.title}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 15 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.6, delay: i * 0.12, ease: [0.16, 1, 0.3, 1] }}
-                className="group relative py-8 md:py-0 md:px-8 first:md:pl-0 last:md:pr-0 border-t md:border-t-0 md:border-l border-white/[0.06] first:border-t-0 first:md:border-l-0"
+                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                className="mb-8"
               >
-                {/* Large decorative number */}
-                <span className="block text-[5rem] md:text-[6rem] font-serif italic leading-none text-accent/[0.07] select-none -mb-6 md:-mb-8">
-                  0{i + 1}
+                <span className="text-[10px] md:text-xs font-medium tracking-[0.25em] uppercase text-accent/70 mb-3 block">
+                  The Approach
                 </span>
-
-                <h3 className="text-2xl md:text-3xl font-medium tracking-tight mb-3 group-hover:text-accent transition-colors duration-500">
-                  {item.title}
+                <h3 className="text-xl md:text-2xl font-medium tracking-tight text-foreground/90">
+                  How I work
                 </h3>
-                <p className="text-sm md:text-base text-muted-foreground/70 leading-relaxed">
-                  {item.desc}
-                </p>
               </motion.div>
-            ))}
+
+              <div className="relative">
+                {/* Vertical connecting line */}
+                <div className="absolute left-5 md:left-6 top-5 bottom-5 w-[1px] bg-gradient-to-b from-white/[0.06] via-white/[0.04] to-transparent pointer-events-none" />
+
+                <div className="space-y-8">
+                  {approach.map((item, i) => (
+                    <motion.div
+                      key={item.title}
+                      initial={{ opacity: 0, x: 20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true, margin: "-30px" }}
+                      transition={{ duration: 0.5, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                      className="group flex gap-5 md:gap-6 relative"
+                    >
+                      {/* Number */}
+                      <div className="flex-shrink-0 w-10 h-10 md:w-12 md:h-12 rounded-full border border-white/[0.08] flex items-center justify-center group-hover:border-accent/30 group-hover:bg-accent/5 transition-all duration-500 bg-background relative z-10">
+                        <span className="text-sm md:text-base font-medium text-accent/60 group-hover:text-accent transition-colors duration-500">
+                          {i + 1}
+                        </span>
+                      </div>
+
+                      {/* Content */}
+                      <div className="flex-1 pt-1.5">
+                        <h4 className="text-lg md:text-xl font-medium tracking-tight mb-2 group-hover:text-accent transition-colors duration-500">
+                          {item.title}
+                        </h4>
+                        <p className="text-sm md:text-base text-muted-foreground/70 leading-relaxed">
+                          {item.desc}
+                        </p>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Divider */}
-      <div className="px-6 md:px-12 xl:px-20 py-6">
+      <div className="px-6 md:px-12 xl:px-20 py-8">
         <AnimatedDivider direction="left" accent maxWidth="300px" />
       </div>
 
