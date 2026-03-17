@@ -212,7 +212,7 @@ export default function Contact() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
-              className="hidden lg:block max-w-sm"
+              className="hidden md:block max-w-xs lg:max-w-sm"
             >
               <Image
                 src="/images/contact.png"

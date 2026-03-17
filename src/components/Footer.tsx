@@ -64,7 +64,7 @@ export default function Footer() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-            className="text-5xl md:text-[160px] font-medium tracking-tighter mb-8 md:mb-20 leading-[0.8]"
+            className="text-5xl sm:text-7xl md:text-[120px] lg:text-[160px] font-medium tracking-tighter mb-8 md:mb-16 lg:mb-20 leading-[0.8]"
           >
             Reach <br />
             <span className="mt-4 italic font-light font-serif opacity-50">
@@ -76,7 +76,7 @@ export default function Footer() {
             href="https://www.linkedin.com/in/kareemhassanein"
             target="_blank"
             rel="noopener noreferrer"
-            className="group relative inline-flex items-center gap-4 md:gap-6 text-lg md:text-3xl font-light px-8 md:px-12 py-4 md:py-5 rounded-full overflow-hidden transition-all duration-700 bg-white/5 backdrop-blur-sm border border-white/10 hover:border-accent/50 hover:bg-white/[0.08]"
+            className="group relative inline-flex items-center gap-3 md:gap-6 text-base sm:text-lg md:text-2xl lg:text-3xl font-light px-6 sm:px-8 md:px-12 py-3.5 md:py-5 rounded-full overflow-hidden transition-all duration-700 bg-white/5 backdrop-blur-sm border border-white/10 hover:border-accent/50 hover:bg-white/[0.08]"
           >
             <span className="relative z-10 flex items-center gap-4 md:gap-6">
               Get in touch

@@ -154,7 +154,7 @@ function ToolDomain({ domain, index }: { domain: typeof technicalIndex[0]; index
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-30px" }}
       transition={{ duration: 0.5, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
-      className="p-6 rounded-xl bg-[hsl(220,18%,9%)] border border-white/[0.06] hover:border-white/[0.1] transition-colors duration-300"
+      className="p-6 rounded-xl bg-[hsl(220,18%,9%)] border border-white/[0.06] hover:border-accent/20 hover:-translate-y-1 hover:shadow-lg hover:shadow-black/20 transition-all duration-500"
     >
       <h3 className="text-accent text-xs font-medium tracking-[0.15em] uppercase mb-3">
         {domain.domain}
@@ -220,11 +220,17 @@ export default function Services() {
       {/* Services List */}
       <div>
         {services.map((service, idx) => (
-          <ServiceSection
-            key={service.index}
-            service={service}
-            index={idx}
-          />
+          <div key={service.index}>
+            {idx > 0 && (
+              <div className="max-w-[1200px] mx-auto px-6 lg:px-12 xl:px-20">
+                <div className="h-[1px] bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />
+              </div>
+            )}
+            <ServiceSection
+              service={service}
+              index={idx}
+            />
+          </div>
         ))}
       </div>
 

@@ -61,7 +61,7 @@ function ValueCard({ title, subtitle, desc }: { title: string; subtitle: string;
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-      className="group relative p-8 md:p-10 rounded-2xl bg-[hsl(220,18%,9%)] border border-white/[0.06] hover:border-white/[0.1] transition-colors duration-500"
+      className="group relative p-8 md:p-10 rounded-2xl bg-[hsl(220,18%,9%)] border border-white/[0.06] hover:border-accent/20 hover:-translate-y-1 hover:shadow-xl hover:shadow-black/20 transition-all duration-500"
     >
       <span className="text-[10px] md:text-xs font-medium tracking-[0.2em] uppercase text-accent/60 mb-4 block">{subtitle}</span>
       <h3 className="text-xl md:text-2xl font-medium tracking-tight mb-4 group-hover:text-accent transition-colors duration-500">
@@ -81,7 +81,7 @@ function ExperienceItem({ item, index }: { item: typeof experience[0]; index: nu
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-30px" }}
       transition={{ duration: 0.5, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
-      className="group relative grid md:grid-cols-[140px_1fr] gap-4 md:gap-8"
+      className="group relative grid md:grid-cols-[140px_1fr] gap-4 md:gap-8 p-4 md:p-6 -mx-4 md:-mx-6 rounded-xl hover:bg-white/[0.02] transition-all duration-500"
     >
       {/* Left column - Period and index */}
       <div className="flex md:flex-col items-baseline md:items-start gap-3 md:gap-1">

@@ -198,11 +198,13 @@ export default function Home() {
         </div>
 
         {/* Bottom gradient for seamless transition */}
-        <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background to-transparent z-[2] pointer-events-none" />
+        <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-background via-background/80 to-transparent z-[2] pointer-events-none" />
       </section>
 
       {/* Approach Section - Combined statement + steps */}
       <section ref={transitionRef} className="py-24 md:py-32 px-6 md:px-12 xl:px-20 relative">
+        {/* Top gradient blend from hero */}
+        <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-background to-transparent pointer-events-none z-0" />
         <div className="max-w-6xl mx-auto">
 
           {/* Two-column layout: Statement left, Steps right */}
@@ -241,33 +243,40 @@ export default function Home() {
                 </h3>
               </motion.div>
 
-              {approach.map((item, i) => (
-                <motion.div
-                  key={item.title}
-                  initial={{ opacity: 0, x: 20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, margin: "-30px" }}
-                  transition={{ duration: 0.5, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-                  className="group flex gap-5 md:gap-6"
-                >
-                  {/* Number */}
-                  <div className="flex-shrink-0 w-10 h-10 md:w-12 md:h-12 rounded-full border border-white/[0.08] flex items-center justify-center group-hover:border-accent/30 group-hover:bg-accent/5 transition-all duration-500">
-                    <span className="text-sm md:text-base font-medium text-accent/60 group-hover:text-accent transition-colors duration-500">
-                      {i + 1}
-                    </span>
-                  </div>
+              <div className="relative">
+                {/* Vertical connecting line */}
+                <div className="absolute left-5 md:left-6 top-5 bottom-5 w-[1px] bg-gradient-to-b from-white/[0.06] via-white/[0.04] to-transparent pointer-events-none" />
 
-                  {/* Content */}
-                  <div className="flex-1 pt-1.5">
-                    <h4 className="text-lg md:text-xl font-medium tracking-tight mb-2 group-hover:text-accent transition-colors duration-500">
-                      {item.title}
-                    </h4>
-                    <p className="text-sm md:text-base text-muted-foreground/70 leading-relaxed">
-                      {item.desc}
-                    </p>
-                  </div>
-                </motion.div>
-              ))}
+                <div className="space-y-8">
+                  {approach.map((item, i) => (
+                    <motion.div
+                      key={item.title}
+                      initial={{ opacity: 0, x: 20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true, margin: "-30px" }}
+                      transition={{ duration: 0.5, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                      className="group flex gap-5 md:gap-6 relative"
+                    >
+                      {/* Number */}
+                      <div className="flex-shrink-0 w-10 h-10 md:w-12 md:h-12 rounded-full border border-white/[0.08] flex items-center justify-center group-hover:border-accent/30 group-hover:bg-accent/5 transition-all duration-500 bg-background relative z-10">
+                        <span className="text-sm md:text-base font-medium text-accent/60 group-hover:text-accent transition-colors duration-500">
+                          {i + 1}
+                        </span>
+                      </div>
+
+                      {/* Content */}
+                      <div className="flex-1 pt-1.5">
+                        <h4 className="text-lg md:text-xl font-medium tracking-tight mb-2 group-hover:text-accent transition-colors duration-500">
+                          {item.title}
+                        </h4>
+                        <p className="text-sm md:text-base text-muted-foreground/70 leading-relaxed">
+                          {item.desc}
+                        </p>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -280,18 +289,16 @@ export default function Home() {
 
       {/* Selected Projects */}
       <section ref={portfolioRef} className="py-20 md:py-28 relative z-10 w-full px-6 md:px-12 xl:px-20 overflow-hidden">
-        {/* Background image - constrained and faded */}
+        {/* Background image - full bleed with faded edges */}
         <div className="absolute inset-0 z-0 overflow-hidden">
-          <div className="absolute inset-0 flex items-center justify-center">
-            <ParallaxImage
-              src="/images/flow of organized transformation.png"
-              alt="Transformation"
-              className="w-[80%] max-w-4xl h-auto opacity-40"
-              fadedSides={true}
-              fadedVertical={true}
-            />
-          </div>
-          <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-transparent to-background/60" />
+          <ParallaxImage
+            src="/images/flow of organized transformation.png"
+            alt="Transformation"
+            className="w-full h-full opacity-30"
+            fadedSides={true}
+            fadedVertical={true}
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-transparent to-background/70" />
         </div>
 
         <div className="max-w-[1400px] mx-auto relative z-10">
