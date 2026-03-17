@@ -32,12 +32,14 @@ const experience = [
     period: '2024 - Present',
     role: 'Digital Strategy & Operations',
     company: 'Endorphins Health',
+    metric: '8 municipalities',
     desc: 'Leading digital operations for a multidisciplinary clinic with 8 practitioners across 6 specialties. Redesigned booking architecture for multi-provider scheduling, built conversion flows from service pages to booking, and deployed a local SEO engine across 8 GTA municipalities.',
   },
   {
     period: '2025 - Present',
     role: 'Workflow Automation',
     company: 'Tax Relief Counsel',
+    metric: '85% faster',
     desc: 'Built an LLM-based drafting automation system that reduced document generation time by 85%. Mapped intake and client communication workflows to surface bottlenecks, created SOPs for consistency, and built a reusable template library for scalable output.',
   },
   {
@@ -50,6 +52,7 @@ const experience = [
     period: '2021 - 2024',
     role: 'Registered Physiotherapist',
     company: 'Private Physiotherapy Clinic',
+    metric: '100% adoption',
     desc: 'Top revenue-generating clinician for 3 consecutive years on a team of 6, generating $200K+ annually through retention workflows and high rebooking rates. Led the Heidi AI rollout from evaluation through go-live, achieving 100% adoption in 8 weeks, cutting documentation by 3 hours/week per clinician, and eliminating $20K in annual admin cost.',
   }
 ];
@@ -81,27 +84,29 @@ function ExperienceItem({ item, index }: { item: typeof experience[0]; index: nu
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-30px" }}
       transition={{ duration: 0.5, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
-      className="group relative grid md:grid-cols-[140px_1fr] gap-4 md:gap-8 p-4 md:p-6 -mx-4 md:-mx-6 rounded-xl hover:bg-white/[0.02] transition-all duration-500"
+      className="group relative grid md:grid-cols-[160px_1fr] gap-4 md:gap-8 p-4 md:p-6 -mx-4 md:-mx-6 rounded-lg hover:bg-white/[0.02] transition-all duration-500"
     >
-      {/* Left column - Period and index */}
-      <div className="flex md:flex-col items-baseline md:items-start gap-3 md:gap-1">
-        <span className="text-3xl md:text-4xl font-light text-accent/20 leading-none">
-          0{index + 1}
-        </span>
-        <span className="text-xs text-muted-foreground/60 font-mono tracking-wide">
+      {/* Left column - Period and metric */}
+      <div className="flex md:flex-col items-baseline md:items-start gap-3 md:gap-2">
+        <span className="text-xs text-muted-foreground/50 font-mono tracking-wide">
           {item.period}
         </span>
+        {item.metric && (
+          <span className="text-sm md:text-base font-serif italic text-accent/70 group-hover:text-accent transition-colors duration-500">
+            {item.metric}
+          </span>
+        )}
       </div>
 
       {/* Right column - Content */}
-      <div className="md:pt-1">
+      <div>
         <div className="mb-2">
           <h3 className="text-lg md:text-xl font-medium tracking-tight group-hover:text-accent transition-colors duration-300">
             {item.role}
           </h3>
-          <span className="text-muted-foreground/60 text-sm">{item.company}</span>
+          <span className="text-muted-foreground/50 text-sm">{item.company}</span>
         </div>
-        <p className="text-sm md:text-base text-muted-foreground/80 leading-relaxed">
+        <p className="text-sm text-muted-foreground/70 leading-relaxed">
           {item.desc}
         </p>
       </div>

@@ -184,8 +184,8 @@ export default function Contact() {
             </motion.span>
 
             <motion.h1
-              style={{ opacity: headingOpacity, y: headingY }}
-              className="text-5xl md:text-[64px] lg:text-[80px] xl:text-[100px] font-medium tracking-tighter mb-7 leading-[0.85]"
+              style={{ opacity: headingOpacity, y: headingY, fontSize: 'clamp(3rem, 8vw, 6.5rem)' }}
+              className="font-medium tracking-tighter mb-7 leading-[0.85]"
             >
               Get in <br />
               <span className="opacity-60 italic font-light font-serif">
@@ -235,25 +235,30 @@ export default function Contact() {
               <ContactForm />
             </motion.div>
 
-            {/* LinkedIn - subtle below form */}
+            {/* Trust signals + LinkedIn */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.8 }}
-              className="mt-4 flex items-center justify-center gap-3"
+              className="mt-5 space-y-3"
             >
-              <div className="h-[1px] flex-1 bg-white/5" />
-              <a
-                href="https://www.linkedin.com/in/kareemhassanein"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group flex items-center gap-2.5 text-sm text-muted-foreground/60 hover:text-accent transition-colors duration-500 px-4"
-              >
-                <Linkedin size={16} className="opacity-60 group-hover:opacity-100 transition-opacity duration-500" />
-                <span>LinkedIn</span>
-                <ArrowUpRight size={12} className="opacity-40 group-hover:opacity-100 transition-opacity duration-500" />
-              </a>
-              <div className="h-[1px] flex-1 bg-white/5" />
+              <p className="text-[11px] text-center text-muted-foreground/40 tracking-wide">
+                Typically responds within one business day.
+              </p>
+              <div className="flex items-center justify-center gap-3">
+                <div className="h-[1px] flex-1 bg-white/5" />
+                <a
+                  href="https://www.linkedin.com/in/kareemhassanein"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex items-center gap-2.5 text-sm text-muted-foreground/50 hover:text-accent transition-colors duration-500 px-4"
+                >
+                  <Linkedin size={15} className="opacity-50 group-hover:opacity-100 transition-opacity duration-500" />
+                  <span>LinkedIn</span>
+                  <ArrowUpRight size={11} className="opacity-30 group-hover:opacity-100 transition-opacity duration-500" />
+                </a>
+                <div className="h-[1px] flex-1 bg-white/5" />
+              </div>
             </motion.div>
           </div>
         </div>
