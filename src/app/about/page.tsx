@@ -61,7 +61,7 @@ function ValueCard({ title, subtitle, desc }: { title: string; subtitle: string;
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-      className="group relative p-8 md:p-10 rounded-2xl bg-[hsl(220,18%,9%)] border border-white/[0.06] hover:border-accent/20 hover:-translate-y-1 hover:shadow-xl hover:shadow-black/20 transition-all duration-500"
+      className="group relative p-8 md:p-10 rounded-lg bg-gradient-to-br from-[hsl(222,14%,10%)] to-[hsl(222,14%,8%)] border border-white/[0.06] hover:border-accent/20 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-black/20 transition-all duration-500"
     >
       <span className="text-[10px] md:text-xs font-medium tracking-[0.2em] uppercase text-accent/60 mb-4 block">{subtitle}</span>
       <h3 className="text-xl md:text-2xl font-medium tracking-tight mb-4 group-hover:text-accent transition-colors duration-500">
@@ -230,7 +230,7 @@ export default function About() {
       </div>
 
       {/* What I bring */}
-      <section className="py-20 md:py-28 px-6 lg:px-12 xl:px-20">
+      <section className="py-14 md:py-20 px-6 lg:px-12 xl:px-20">
         <div className="max-w-[900px] mx-auto">
           {/* Section header */}
           <motion.div
@@ -264,7 +264,7 @@ export default function About() {
       </section>
 
       {/* Experience */}
-      <section ref={historyRef} className="py-24 md:py-32 px-6 lg:px-12 xl:px-20 relative overflow-hidden">
+      <section ref={historyRef} className="py-28 md:py-40 px-6 lg:px-12 xl:px-20 relative overflow-hidden">
         {/* Background image - centered with soft fade */}
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0">

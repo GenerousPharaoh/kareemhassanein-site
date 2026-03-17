@@ -102,7 +102,7 @@ export default function Home() {
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 transition={{ duration: 1, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
               >
-                <span className="inline-flex items-center gap-2.5 text-[10px] md:text-[11px] font-medium tracking-[0.2em] uppercase text-foreground/50 px-4 py-2 rounded-full border border-white/[0.06] bg-[hsl(220,18%,10%)]">
+                <span className="inline-flex items-center gap-2.5 text-[10px] md:text-[11px] font-medium tracking-[0.2em] uppercase text-foreground/50 px-4 py-2 rounded-full border border-white/[0.06] bg-[hsl(222,14%,10%)]">
                   <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
                   Implementation Consulting
                 </span>
@@ -202,7 +202,7 @@ export default function Home() {
       </section>
 
       {/* Approach Section - Combined statement + steps */}
-      <section ref={transitionRef} className="py-24 md:py-32 px-6 md:px-12 xl:px-20 relative">
+      <section ref={transitionRef} className="py-16 md:py-24 px-6 md:px-12 xl:px-20 relative">
         {/* Top gradient blend from hero */}
         <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-background to-transparent pointer-events-none z-0" />
         <div className="max-w-6xl mx-auto">
@@ -288,7 +288,7 @@ export default function Home() {
       </div>
 
       {/* Selected Projects */}
-      <section ref={portfolioRef} className="py-20 md:py-28 relative z-10 w-full px-6 md:px-12 xl:px-20 overflow-hidden">
+      <section ref={portfolioRef} className="py-28 md:py-40 relative z-10 w-full px-6 md:px-12 xl:px-20 overflow-hidden">
         {/* Background image - full bleed with faded edges */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <ParallaxImage

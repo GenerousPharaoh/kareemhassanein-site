@@ -3,29 +3,29 @@
 @tailwind utilities;
 
 :root {
-  --background: 220 18% 7%;
-  /* Lifted slate - less oppressive */
-  --foreground: 40 10% 98%;
-  /* Crisp Off-White */
-  --card: 220 18% 10% / 0.5;
-  --card-foreground: 40 10% 98%;
-  --popover: 220 18% 8%;
-  --popover-foreground: 40 10% 98%;
-  --primary: 40 10% 98%;
-  --primary-foreground: 220 18% 7%;
-  --secondary: 220 12% 16%;
-  --secondary-foreground: 40 10% 98%;
-  --muted: 220 12% 20%;
-  --muted-foreground: 220 10% 72%;
-  /* Brightened for readability */
+  --background: 222 16% 7%;
+  /* Deep midnight with subtle warmth */
+  --foreground: 38 8% 97%;
+  /* Warm off-white */
+  --card: 222 14% 10% / 0.5;
+  --card-foreground: 38 8% 97%;
+  --popover: 222 14% 8%;
+  --popover-foreground: 38 8% 97%;
+  --primary: 38 8% 97%;
+  --primary-foreground: 222 16% 7%;
+  --secondary: 225 8% 16%;
+  --secondary-foreground: 38 8% 97%;
+  --muted: 225 8% 20%;
+  --muted-foreground: 222 6% 68%;
+  /* Warm gray - tinted toward gold */
   --accent: 38 30% 75%;
   /* Champagne Gold */
   --accent-secondary: 38 20% 60%;
-  --accent-foreground: 220 18% 7%;
+  --accent-foreground: 222 16% 7%;
   --destructive: 0 62.8% 30.6%;
-  --destructive-foreground: 40 10% 98%;
-  --border: 220 12% 18%;
-  --input: 220 12% 16%;
+  --destructive-foreground: 38 8% 97%;
+  --border: 225 8% 18%;
+  --input: 225 8% 16%;
   --ring: 38 30% 75%;
   --radius: 3.5rem;
 }
@@ -156,21 +156,27 @@ body::before {
   }
 }
 
-/* Sophisticated Typography Adjustments */
+/* Sophisticated Typography — Urbanist + Cormorant Garamond */
 h1 {
-  letter-spacing: -0.06em;
-  line-height: 0.82;
+  letter-spacing: -0.04em;
+  line-height: 0.88;
+  font-size: clamp(2.25rem, 6vw, 4.5rem);
 }
 
-h2,
+h2 {
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  font-size: clamp(1.75rem, 4vw, 3rem);
+}
+
 h3 {
-  letter-spacing: -0.04em;
-  line-height: 1.1;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
 }
 
 p {
-  line-height: 1.7;
-  letter-spacing: 0.015em;
+  line-height: 1.75;
+  letter-spacing: 0.01em;
 }
 
 /* Refined Interaction States */

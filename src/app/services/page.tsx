@@ -147,22 +147,26 @@ function ServiceSection({ service, index }: { service: typeof services[0], index
   );
 }
 
-function ToolDomain({ domain, index }: { domain: typeof technicalIndex[0]; index: number }) {
+function ToolDomain({ domain, index, featured = false }: { domain: typeof technicalIndex[0]; index: number; featured?: boolean }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 15 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-30px" }}
       transition={{ duration: 0.5, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
-      className="p-6 rounded-xl bg-[hsl(220,18%,9%)] border border-white/[0.06] hover:border-accent/20 hover:-translate-y-1 hover:shadow-lg hover:shadow-black/20 transition-all duration-500"
+      className={`rounded-lg border border-white/[0.06] hover:border-accent/20 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-black/20 transition-all duration-500 ${
+        featured
+          ? 'p-8 md:p-10 bg-gradient-to-br from-[hsl(222,14%,10%)] to-[hsl(222,14%,8%)]'
+          : 'p-6 bg-[hsl(222,14%,9%)]'
+      }`}
     >
-      <h3 className="text-accent text-xs font-medium tracking-[0.15em] uppercase mb-3">
+      <h3 className={`text-accent font-medium tracking-[0.15em] uppercase ${featured ? 'text-sm mb-4' : 'text-xs mb-3'}`}>
         {domain.domain}
       </h3>
-      <p className="text-lg md:text-xl font-medium text-foreground/90 leading-relaxed mb-3">
+      <p className={`font-medium text-foreground/90 leading-relaxed ${featured ? 'text-xl md:text-2xl mb-4' : 'text-lg md:text-xl mb-3'}`}>
         {domain.tools.join(' · ')}
       </p>
-      <p className="text-xs md:text-sm text-muted-foreground/70">
+      <p className={`text-muted-foreground/70 ${featured ? 'text-sm md:text-base max-w-xl' : 'text-xs md:text-sm'}`}>
         {domain.specs.join(' · ')}
       </p>
     </motion.div>
@@ -235,7 +239,7 @@ export default function Services() {
       </div>
 
       {/* Tools Section */}
-      <section ref={toolsRef} className="py-24 md:py-32 px-6 lg:px-12 xl:px-20 relative overflow-hidden">
+      <section ref={toolsRef} className="py-28 md:py-36 px-6 lg:px-12 xl:px-20 relative overflow-hidden">
         {/* Background image - full width with parallax and faded edges */}
         <motion.div
           style={{ y: toolsY }}
@@ -265,11 +269,13 @@ export default function Services() {
             </p>
           </motion.div>
 
-          {/* Tool cards in a grid */}
-          <div className="grid md:grid-cols-3 gap-4">
-            {technicalIndex.map((row, idx) => (
-              <ToolDomain key={row.domain} domain={row} index={idx} />
-            ))}
+          {/* Tool cards - asymmetric grid */}
+          <div className="grid md:grid-cols-2 gap-4">
+            <div className="md:col-span-2">
+              <ToolDomain domain={technicalIndex[0]} index={0} featured />
+            </div>
+            <ToolDomain domain={technicalIndex[1]} index={1} />
+            <ToolDomain domain={technicalIndex[2]} index={2} />
           </div>
         </div>
       </section>
