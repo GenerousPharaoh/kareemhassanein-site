@@ -155,17 +155,19 @@ export default function Home() {
               </motion.div>
 
               {/* Metrics */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 md:gap-8 max-w-3xl mx-auto pt-4">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 md:gap-10 max-w-3xl mx-auto pt-6">
                 {metrics.map((m, i) => (
                   <motion.div
                     key={m.label}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.7, delay: 0.6 + i * 0.08, ease: [0.16, 1, 0.3, 1] }}
-                    className="text-center"
+                    className="text-center relative"
                   >
-                    <p className="text-xl sm:text-2xl md:text-3xl font-serif italic text-accent mb-2 whitespace-nowrap">{m.value}</p>
-                    <p className="text-[11px] md:text-xs text-muted-foreground/60 leading-relaxed">{m.label}</p>
+                    {/* Vertical divider between metrics on desktop */}
+                    {i > 0 && <div className="hidden sm:block absolute -left-4 md:-left-5 top-1/2 -translate-y-1/2 h-12 w-[1px] bg-white/[0.08]" />}
+                    <p className="text-xl sm:text-2xl md:text-3xl font-serif italic text-accent mb-2.5 whitespace-nowrap">{m.value}</p>
+                    <p className="text-[11px] md:text-xs text-muted-foreground/60 leading-relaxed max-w-[200px] mx-auto">{m.label}</p>
                   </motion.div>
                 ))}
               </div>

@@ -5,6 +5,8 @@ import ScrollReveal from '@/components/ScrollReveal';
 import CharReveal from '@/components/CharReveal';
 import ParallaxImage from '@/components/ParallaxImage';
 
+import Link from 'next/link';
+import { ArrowRight } from 'lucide-react';
 import { useRef, useEffect } from 'react';
 
 const services = [
@@ -93,15 +95,17 @@ function ServiceSection({ service, index }: { service: typeof services[0], index
   const imgY = useSpring(useTransform(scrollYProgress, [0, 1], [50, -50]), springConfig);
   const imgScale = useSpring(useTransform(scrollYProgress, [0, 1], [1.1, 1]), springConfig);
 
+  const isReversed = index % 2 !== 0;
+
   return (
     <section
       ref={ref}
       className="py-24 md:py-32 px-6 lg:px-12 xl:px-20 relative overflow-hidden"
     >
-      {/* Background image - clipped to section with fade */}
+      {/* Background image - alternates sides */}
       <motion.div
         style={{ y: imgY, scale: imgScale }}
-        className="absolute inset-y-0 w-2/3 right-0 pointer-events-none will-change-transform"
+        className={`absolute inset-y-0 w-2/3 pointer-events-none will-change-transform ${isReversed ? 'left-0' : 'right-0'}`}
       >
         <ParallaxImage
           src={service.image}
@@ -116,7 +120,7 @@ function ServiceSection({ service, index }: { service: typeof services[0], index
         style={{ y, opacity }}
         className="max-w-[1200px] mx-auto relative z-10 will-change-transform grid md:grid-cols-2 gap-12 items-center"
       >
-        <div>
+        <div className={isReversed ? 'md:col-start-2' : ''}>
           <div className="flex items-baseline gap-6 mb-8">
             <span className="text-accent font-mono text-sm">0{index + 1}</span>
             <h2 className="text-3xl md:text-5xl font-medium tracking-tight">
@@ -261,6 +265,33 @@ export default function Services() {
               <ToolDomain key={row.domain} domain={row} index={idx} />
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-24 md:py-32 px-6 lg:px-12 xl:px-20 relative">
+        <div className="max-w-3xl mx-auto text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <div className="h-[1px] w-16 bg-accent/40 mx-auto mb-10" />
+            <h2 className="text-3xl md:text-4xl font-medium tracking-tight mb-6">
+              Have something that fits?
+            </h2>
+            <p className="text-lg text-muted-foreground/80 font-light leading-relaxed mb-10 max-w-xl mx-auto">
+              If you have a workflow problem, a tool rollout, or just need someone to figure out why things aren&apos;t working, let&apos;s talk.
+            </p>
+            <Link
+              href="/contact"
+              className="group inline-flex items-center gap-3 text-sm md:text-base font-medium px-8 py-4 rounded-full bg-accent text-background hover:bg-accent/90 transition-all duration-300"
+            >
+              Get in touch
+              <ArrowRight size={16} className="group-hover:translate-x-0.5 transition-transform duration-300" />
+            </Link>
+          </motion.div>
         </div>
       </section>
     </main>

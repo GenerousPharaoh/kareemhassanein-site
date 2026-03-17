@@ -4,6 +4,8 @@ import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import ScrollReveal from '@/components/ScrollReveal';
 import ParallaxImage from '@/components/ParallaxImage';
 import AnimatedDivider from '@/components/AnimatedDivider';
+import Link from 'next/link';
+import { ArrowRight } from 'lucide-react';
 import { useRef } from 'react';
 
 // Animated text block - simplified for snappier feel
@@ -222,6 +224,11 @@ export default function About() {
 
       </section>
 
+      {/* Divider */}
+      <div className="px-6 lg:px-12 xl:px-20">
+        <AnimatedDivider direction="left" accent maxWidth="200px" />
+      </div>
+
       {/* What I bring */}
       <section className="py-20 md:py-28 px-6 lg:px-12 xl:px-20">
         <div className="max-w-[900px] mx-auto">
@@ -299,6 +306,41 @@ export default function About() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-24 md:py-32 px-6 lg:px-12 xl:px-20 relative">
+        <div className="max-w-3xl mx-auto text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <div className="h-[1px] w-16 bg-accent/40 mx-auto mb-10" />
+            <h2 className="text-3xl md:text-4xl font-medium tracking-tight mb-6">
+              Want to see what I do?
+            </h2>
+            <p className="text-lg text-muted-foreground/80 font-light leading-relaxed mb-10 max-w-xl mx-auto">
+              Take a look at the services I offer, or reach out directly if you already know what you need.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 items-center justify-center">
+              <Link
+                href="/services"
+                className="group inline-flex items-center gap-3 text-sm md:text-base font-medium px-8 py-4 rounded-full bg-accent text-background hover:bg-accent/90 transition-all duration-300"
+              >
+                View services
+                <ArrowRight size={16} className="group-hover:translate-x-0.5 transition-transform duration-300" />
+              </Link>
+              <Link
+                href="/contact"
+                className="text-sm md:text-base font-medium text-foreground/70 px-8 py-4 rounded-full border border-white/[0.1] hover:text-foreground hover:border-white/[0.2] hover:bg-white/[0.03] transition-all duration-300"
+              >
+                Get in touch
+              </Link>
+            </div>
+          </motion.div>
         </div>
       </section>
 

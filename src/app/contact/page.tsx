@@ -67,9 +67,9 @@ function ContactForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit} className="space-y-5">
       <div>
-        <label htmlFor="name" className="block text-[11px] font-bold tracking-[0.3em] uppercase text-muted-foreground mb-2">
+        <label htmlFor="name" className="block text-[11px] font-bold tracking-[0.3em] uppercase text-muted-foreground mb-2.5">
           Name
         </label>
         <input
@@ -78,13 +78,13 @@ function ContactForm() {
           required
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-4 py-3.5 text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-accent/50 focus:bg-white/[0.07] transition-colors duration-500"
+          className="w-full bg-white/[0.05] border border-white/[0.1] rounded-xl px-5 py-3.5 text-foreground placeholder:text-muted-foreground/40 focus:outline-none focus:border-accent/50 focus:bg-white/[0.07] focus:ring-1 focus:ring-accent/20 transition-all duration-500"
           placeholder="Your name"
         />
       </div>
 
       <div>
-        <label htmlFor="email" className="block text-[11px] font-bold tracking-[0.3em] uppercase text-muted-foreground mb-2">
+        <label htmlFor="email" className="block text-[11px] font-bold tracking-[0.3em] uppercase text-muted-foreground mb-2.5">
           Email
         </label>
         <input
@@ -93,13 +93,13 @@ function ContactForm() {
           required
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-4 py-3.5 text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-accent/50 focus:bg-white/[0.07] transition-colors duration-500"
+          className="w-full bg-white/[0.05] border border-white/[0.1] rounded-xl px-5 py-3.5 text-foreground placeholder:text-muted-foreground/40 focus:outline-none focus:border-accent/50 focus:bg-white/[0.07] focus:ring-1 focus:ring-accent/20 transition-all duration-500"
           placeholder="you@example.com"
         />
       </div>
 
       <div>
-        <label htmlFor="message" className="block text-[11px] font-bold tracking-[0.3em] uppercase text-muted-foreground mb-2">
+        <label htmlFor="message" className="block text-[11px] font-bold tracking-[0.3em] uppercase text-muted-foreground mb-2.5">
           Message
         </label>
         <textarea
@@ -107,8 +107,8 @@ function ContactForm() {
           required
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-          rows={4}
-          className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-4 py-3.5 text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-accent/50 focus:bg-white/[0.07] transition-colors duration-500 resize-none"
+          rows={5}
+          className="w-full bg-white/[0.05] border border-white/[0.1] rounded-xl px-5 py-3.5 text-foreground placeholder:text-muted-foreground/40 focus:outline-none focus:border-accent/50 focus:bg-white/[0.07] focus:ring-1 focus:ring-accent/20 transition-all duration-500 resize-none"
           placeholder="What can I help with?"
         />
       </div>
@@ -123,14 +123,16 @@ function ContactForm() {
         </motion.p>
       )}
 
-      <button
-        type="submit"
-        disabled={status === 'sending'}
-        className="group flex items-center gap-3 text-sm font-medium tracking-tight bg-foreground text-background px-7 py-3.5 rounded-full hover:bg-accent hover:text-background transition-colors duration-500 disabled:opacity-50 disabled:cursor-wait"
-      >
-        {status === 'sending' ? 'Sending...' : 'Send message'}
-        <Send size={16} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-500" />
-      </button>
+      <div className="pt-1">
+        <button
+          type="submit"
+          disabled={status === 'sending'}
+          className="group w-full sm:w-auto flex items-center justify-center gap-3 text-sm font-medium tracking-tight bg-accent text-background px-8 py-4 rounded-full hover:bg-accent/90 transition-all duration-500 disabled:opacity-50 disabled:cursor-wait"
+        >
+          {status === 'sending' ? 'Sending...' : 'Send message'}
+          <Send size={16} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-500" />
+        </button>
+      </div>
     </form>
   );
 }

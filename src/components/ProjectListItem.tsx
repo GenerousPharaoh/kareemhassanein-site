@@ -16,30 +16,37 @@ interface ProjectListItemProps {
     opacity: MotionValue<number>;
 }
 
-export default function ProjectListItem({ project, opacity }: ProjectListItemProps) {
-    const className = `group relative flex items-center justify-between py-8 md:py-10 px-6 md:px-8 -mx-6 md:-mx-8 rounded-2xl hover:bg-white/[0.02] transition-all duration-500 border-b border-white/5 last:border-b-0 hover:border-accent/20 focus-visible:bg-white/[0.02] focus-visible:border-accent/20 focus-visible:outline-none ${project.href ? 'cursor-pointer' : ''}`;
+export default function ProjectListItem({ project, index, opacity }: ProjectListItemProps) {
+    const className = `group relative flex items-start md:items-center justify-between py-8 md:py-10 px-6 md:px-8 -mx-6 md:-mx-8 rounded-2xl hover:bg-white/[0.02] transition-all duration-500 border-b border-white/5 last:border-b-0 hover:border-accent/20 focus-visible:bg-white/[0.02] focus-visible:border-accent/20 focus-visible:outline-none ${project.href ? 'cursor-pointer' : ''}`;
 
     const content = (
         <>
             {/* Accent line */}
             <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[2px] h-0 group-hover:h-12 bg-accent rounded-full transition-all duration-500" />
 
-            <div className="flex flex-col gap-2 z-30 max-w-2xl">
-                <h3 className="text-3xl md:text-5xl font-medium tracking-tight text-foreground/90 group-hover:text-foreground group-hover:translate-x-3 transition-all duration-500">
-                    {project.title}
-                </h3>
-                <span className="text-sm tracking-wide text-muted-foreground group-hover:text-accent group-hover:translate-x-3 transition-all duration-500">
-                    {project.category}
+            <div className="flex gap-5 md:gap-8 z-30 max-w-2xl">
+                {/* Index number */}
+                <span className="text-4xl md:text-5xl font-light text-accent/15 group-hover:text-accent/30 transition-colors duration-500 leading-none pt-1 select-none hidden sm:block">
+                    0{index + 1}
                 </span>
-                {project.description && (
-                    <p className="text-sm text-muted-foreground/70 leading-relaxed group-hover:text-muted-foreground group-hover:translate-x-3 transition-all duration-500 mt-1">
-                        {project.description}
-                    </p>
-                )}
+
+                <div className="flex flex-col gap-2">
+                    <h3 className="text-3xl md:text-5xl font-medium tracking-tight text-foreground/90 group-hover:text-foreground transition-all duration-500">
+                        {project.title}
+                    </h3>
+                    <span className="text-sm tracking-wide text-muted-foreground group-hover:text-accent transition-all duration-500">
+                        {project.category}
+                    </span>
+                    {project.description && (
+                        <p className="text-sm text-muted-foreground/70 leading-relaxed group-hover:text-muted-foreground/90 transition-all duration-500 mt-1">
+                            {project.description}
+                        </p>
+                    )}
+                </div>
             </div>
 
             {project.href && (
-                <div className="flex items-center gap-4 z-30">
+                <div className="flex items-center gap-4 z-30 flex-shrink-0">
                     <span className="text-muted-foreground/70 text-sm hidden md:block opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                         View
                     </span>
