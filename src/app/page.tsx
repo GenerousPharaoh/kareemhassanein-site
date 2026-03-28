@@ -203,9 +203,12 @@ export default function Home() {
 
       {/* Approach Section - Combined statement + steps */}
       <section ref={transitionRef} className="py-16 md:py-24 px-6 md:px-12 xl:px-20 relative">
-        {/* Subtle ambient glow */}
+        {/* Atmospheric background */}
         <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-background to-transparent pointer-events-none z-0" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-[radial-gradient(ellipse_at_center,hsl(var(--accent)/0.04)_0%,transparent_70%)] pointer-events-none z-0" />
+        <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[500px] bg-[radial-gradient(ellipse_at_center,rgba(176,141,87,0.06)_0%,transparent_60%)]" />
+          <div className="absolute bottom-0 right-[10%] w-[400px] h-[300px] bg-[radial-gradient(ellipse_at_center,rgba(212,175,55,0.04)_0%,transparent_60%)]" />
+        </div>
         <div className="max-w-6xl mx-auto relative z-10">
 
           {/* Two-column layout: Statement left, Steps right */}
@@ -290,14 +293,33 @@ export default function Home() {
 
       {/* Selected Projects */}
       <section ref={portfolioRef} className="py-28 md:py-40 relative z-10 w-full px-6 md:px-12 xl:px-20 overflow-hidden">
-        {/* Designed atmospheric background */}
+        {/* Premium layered background */}
         <div className="absolute inset-0 z-0 overflow-hidden">
-          {/* Accent mesh gradient */}
-          <div className="absolute top-0 right-0 w-[70%] h-[60%] bg-[radial-gradient(ellipse_at_top_right,hsl(var(--accent)/0.08)_0%,transparent_60%)]" />
-          <div className="absolute bottom-0 left-0 w-[50%] h-[50%] bg-[radial-gradient(ellipse_at_bottom_left,hsl(var(--accent-secondary)/0.06)_0%,transparent_60%)]" />
-          {/* Subtle horizontal line pattern */}
-          <div className="absolute inset-0 opacity-[0.015]" style={{ backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 79px, rgba(255,255,255,0.5) 79px, rgba(255,255,255,0.5) 80px)' }} />
-          {/* Top/bottom fade into background */}
+          {/* Layer 1: Multi-point mesh gradient */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background: `
+                radial-gradient(ellipse at 15% 80%, rgba(176,141,87,0.12) 0px, transparent 50%),
+                radial-gradient(ellipse at 85% 15%, rgba(212,175,55,0.09) 0px, transparent 50%),
+                radial-gradient(ellipse at 60% 60%, rgba(152,120,72,0.07) 0px, transparent 50%),
+                radial-gradient(ellipse at 30% 20%, rgba(176,141,87,0.05) 0px, transparent 50%)
+              `
+            }}
+          />
+          {/* Layer 2: Dot pattern with radial mask fade */}
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundImage: 'radial-gradient(rgba(176,141,87,0.18) 1px, transparent 1px)',
+              backgroundSize: '28px 28px',
+              maskImage: 'radial-gradient(ellipse 60% 50% at 50% 50%, black 30%, transparent 80%)',
+              WebkitMaskImage: 'radial-gradient(ellipse 60% 50% at 50% 50%, black 30%, transparent 80%)',
+            }}
+          />
+          {/* Layer 3: Top glow */}
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80%] h-[400px] bg-[radial-gradient(ellipse_at_50%_0%,rgba(176,141,87,0.10)_0%,transparent_70%)]" />
+          {/* Layer 4: Edge fade */}
           <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background" />
         </div>
 

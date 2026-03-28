@@ -227,7 +227,7 @@ export default function Services() {
           <div key={service.index}>
             {idx > 0 && (
               <div className="max-w-[1200px] mx-auto px-6 lg:px-12 xl:px-20">
-                <div className="h-[1px] bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />
+                <div className="h-[1px] bg-gradient-to-r from-transparent via-[rgba(176,141,87,0.2)] to-transparent" style={{ boxShadow: '0 0 12px rgba(176,141,87,0.06)' }} />
               </div>
             )}
             <ServiceSection
@@ -281,15 +281,19 @@ export default function Services() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-24 md:py-32 px-6 lg:px-12 xl:px-20 relative">
-        <div className="max-w-3xl mx-auto text-center">
+      <section className="py-24 md:py-32 px-6 lg:px-12 xl:px-20 relative overflow-hidden">
+        {/* Atmospheric glow */}
+        <div className="absolute inset-0 z-0 pointer-events-none">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-[radial-gradient(ellipse_at_center,rgba(176,141,87,0.07)_0%,transparent_65%)]" />
+        </div>
+        <div className="max-w-3xl mx-auto text-center relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           >
-            <div className="h-[1px] w-16 bg-accent/40 mx-auto mb-10" />
+            <div className="h-[1px] w-20 mx-auto mb-10 bg-gradient-to-r from-transparent via-accent/50 to-transparent" style={{ boxShadow: '0 0 16px rgba(176,141,87,0.12)' }} />
             <h2 className="text-3xl md:text-4xl font-medium tracking-tight mb-6">
               Have something that fits?
             </h2>

@@ -265,17 +265,34 @@ export default function About() {
 
       {/* Experience */}
       <section ref={historyRef} className="py-28 md:py-40 px-6 lg:px-12 xl:px-20 relative overflow-hidden">
-        {/* Designed atmospheric background */}
+        {/* Premium layered background */}
         <div className="absolute inset-0 z-0">
-          {/* Warm accent glow - offset left */}
-          <div className="absolute top-1/3 -left-[10%] w-[60%] h-[60%] bg-[radial-gradient(ellipse_at_center,hsl(var(--accent)/0.06)_0%,transparent_70%)]" />
-          {/* Secondary glow - bottom right */}
-          <div className="absolute bottom-0 right-0 w-[40%] h-[40%] bg-[radial-gradient(ellipse_at_bottom_right,hsl(var(--accent-secondary)/0.04)_0%,transparent_60%)]" />
-          {/* Vertical line accent */}
-          <div className="absolute inset-0 opacity-[0.012]" style={{ backgroundImage: 'repeating-linear-gradient(90deg, transparent, transparent 119px, rgba(255,255,255,0.5) 119px, rgba(255,255,255,0.5) 120px)' }} />
-          {/* Edge fade */}
+          {/* Layer 1: Asymmetric mesh gradient */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background: `
+                radial-gradient(ellipse at 10% 40%, rgba(176,141,87,0.10) 0px, transparent 50%),
+                radial-gradient(ellipse at 90% 70%, rgba(212,175,55,0.08) 0px, transparent 50%),
+                radial-gradient(ellipse at 50% 10%, rgba(139,109,63,0.06) 0px, transparent 50%)
+              `
+            }}
+          />
+          {/* Layer 2: Fine dot pattern with offset mask */}
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundImage: 'radial-gradient(rgba(176,141,87,0.14) 1px, transparent 1px)',
+              backgroundSize: '32px 32px',
+              maskImage: 'radial-gradient(ellipse 50% 60% at 30% 50%, black 20%, transparent 75%)',
+              WebkitMaskImage: 'radial-gradient(ellipse 50% 60% at 30% 50%, black 20%, transparent 75%)',
+            }}
+          />
+          {/* Layer 3: Concentrated glow at left */}
+          <div className="absolute top-1/4 left-0 w-[500px] h-[500px] bg-[radial-gradient(ellipse_at_center,rgba(176,141,87,0.08)_0%,transparent_70%)]" />
+          {/* Layer 4: Edge fade */}
           <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background" />
-          <div className="absolute inset-0 bg-gradient-to-r from-background/40 via-transparent to-background/40" />
+          <div className="absolute inset-0 bg-gradient-to-r from-background/30 via-transparent to-background/30" />
         </div>
 
         <div className="max-w-[1000px] mx-auto relative z-10">
@@ -316,7 +333,7 @@ export default function About() {
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           >
-            <div className="h-[1px] w-16 bg-accent/40 mx-auto mb-10" />
+            <div className="h-[1px] w-20 mx-auto mb-10 bg-gradient-to-r from-transparent via-accent/50 to-transparent" style={{ boxShadow: '0 0 16px rgba(176,141,87,0.12)' }} />
             <h2 className="text-3xl md:text-4xl font-medium tracking-tight mb-6">
               Want to see what I do?
             </h2>
