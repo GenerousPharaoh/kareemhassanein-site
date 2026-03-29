@@ -157,8 +157,8 @@ function ToolDomain({ domain, index, featured = false }: { domain: typeof techni
       transition={{ duration: 0.5, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
       className={`relative rounded-lg border border-white/[0.06] hover:border-accent/20 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-black/20 transition-all duration-500 overflow-hidden ${
         featured
-          ? 'p-8 md:p-10 bg-gradient-to-br from-[hsl(222,14%,10%)] to-[hsl(222,14%,8%)]'
-          : 'p-6 bg-[hsl(222,14%,9%)]'
+          ? 'p-8 md:p-10 bg-gradient-to-br from-[hsl(222,12%,13%)] to-[hsl(222,12%,11%)]'
+          : 'p-6 bg-[hsl(222,12%,12%)]'
       }`}
     >
       <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-accent/25 via-accent/10 to-transparent" />

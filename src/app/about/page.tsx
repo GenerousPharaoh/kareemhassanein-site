@@ -61,7 +61,7 @@ function ValueCard({ title, subtitle, desc }: { title: string; subtitle: string;
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-      className="group relative p-8 md:p-10 rounded-lg bg-gradient-to-br from-[hsl(222,14%,10%)] to-[hsl(222,14%,8%)] border border-white/[0.06] hover:border-accent/20 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-black/20 transition-all duration-500 overflow-hidden"
+      className="group relative p-8 md:p-10 rounded-lg bg-gradient-to-br from-[hsl(222,12%,13%)] to-[hsl(222,12%,11%)] border border-white/[0.06] hover:border-accent/20 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-black/20 transition-all duration-500 overflow-hidden"
     >
       {/* Accent top edge */}
       <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-accent/30 via-accent/10 to-transparent" />
@@ -83,7 +83,7 @@ function ExperienceItem({ item, index }: { item: { period: string; role: string;
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-30px" }}
       transition={{ duration: 0.5, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
-      className="group relative grid md:grid-cols-[140px_1fr] gap-4 md:gap-8 p-4 md:p-6 -mx-4 md:-mx-6 rounded-xl hover:bg-white/[0.02] transition-all duration-500"
+      className="group relative grid md:grid-cols-[140px_1fr] gap-4 md:gap-8 p-4 md:p-6 -mx-4 md:-mx-6 rounded-xl hover:bg-white/[0.03] transition-all duration-500"
     >
       {/* Timeline dot — visible on desktop, offset accounts for -mx-6 (24px) on the parent */}
       <div className="absolute left-[175px] top-8 w-[9px] h-[9px] rounded-full border-2 border-accent/40 bg-background z-10 hidden md:block group-hover:border-accent group-hover:bg-accent/20 transition-all duration-500" />

@@ -122,7 +122,7 @@ export default function Header() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.6, ease }}
-            className="fixed inset-0 z-[45] bg-[#0d1117]/95 backdrop-blur-3xl md:hidden flex flex-col justify-center px-12"
+            className="fixed inset-0 z-[45] bg-[#141920]/95 backdrop-blur-3xl md:hidden flex flex-col justify-center px-12"
           >
             <div className="flex flex-col gap-10">
               {navItems.map((item, i) => (

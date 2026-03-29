@@ -17,7 +17,7 @@ interface ProjectListItemProps {
 }
 
 export default function ProjectListItem({ project, index, opacity }: ProjectListItemProps) {
-    const className = `group relative flex items-start md:items-center justify-between py-8 md:py-10 pl-8 md:pl-10 pr-6 md:pr-8 -mx-2 rounded-lg hover:bg-white/[0.02] transition-all duration-500 border-b border-white/[0.04] last:border-b-0 focus-visible:bg-white/[0.02] focus-visible:outline-none ${project.href ? 'cursor-pointer' : ''}`;
+    const className = `group relative flex items-start md:items-center justify-between py-8 md:py-10 pl-8 md:pl-10 pr-6 md:pr-8 -mx-2 rounded-lg hover:bg-white/[0.03] transition-all duration-500 border-b border-white/[0.04] last:border-b-0 focus-visible:bg-white/[0.02] focus-visible:outline-none ${project.href ? 'cursor-pointer' : ''}`;
 
     const content = (
         <>

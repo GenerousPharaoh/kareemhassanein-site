@@ -3,29 +3,29 @@
 @tailwind utilities;
 
 :root {
-  --background: 222 16% 7%;
-  /* Deep midnight with subtle warmth */
+  --background: 222 14% 9%;
+  /* Lifted dark — breathable without going light */
   --foreground: 38 8% 97%;
   /* Warm off-white */
-  --card: 222 14% 10% / 0.5;
+  --card: 222 12% 12% / 0.5;
   --card-foreground: 38 8% 97%;
-  --popover: 222 14% 8%;
+  --popover: 222 12% 10%;
   --popover-foreground: 38 8% 97%;
   --primary: 38 8% 97%;
-  --primary-foreground: 222 16% 7%;
-  --secondary: 225 8% 16%;
+  --primary-foreground: 222 14% 9%;
+  --secondary: 225 7% 18%;
   --secondary-foreground: 38 8% 97%;
-  --muted: 225 8% 20%;
-  --muted-foreground: 222 6% 68%;
-  /* Warm gray - tinted toward gold */
+  --muted: 225 7% 22%;
+  --muted-foreground: 222 6% 72%;
+  /* Warm gray — brighter for readability */
   --accent: 38 30% 75%;
   /* Champagne Gold */
   --accent-secondary: 38 20% 60%;
-  --accent-foreground: 222 16% 7%;
+  --accent-foreground: 222 14% 9%;
   --destructive: 0 62.8% 30.6%;
   --destructive-foreground: 38 8% 97%;
-  --border: 225 8% 18%;
-  --input: 225 8% 16%;
+  --border: 225 7% 20%;
+  --input: 225 7% 18%;
   --ring: 38 30% 75%;
   --radius: 3.5rem;
 }

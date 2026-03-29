@@ -18,9 +18,9 @@ const shimmerPlaceholder = `data:image/svg+xml;base64,${Buffer.from(
     `<svg width="400" height="300" xmlns="http://www.w3.org/2000/svg">
         <defs>
             <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" style="stop-color:#0f1318;stop-opacity:1" />
+                <stop offset="0%" style="stop-color:#141920;stop-opacity:1" />
                 <stop offset="50%" style="stop-color:#1a1f26;stop-opacity:1" />
-                <stop offset="100%" style="stop-color:#0f1318;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#141920;stop-opacity:1" />
             </linearGradient>
         </defs>
         <rect width="400" height="300" fill="url(#g)"/>

@@ -102,7 +102,7 @@ export default function Home() {
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 transition={{ duration: 1, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
               >
-                <span className="inline-flex items-center gap-2.5 text-[10px] md:text-[11px] font-medium tracking-[0.2em] uppercase text-foreground/50 px-4 py-2 rounded-full border border-white/[0.06] bg-[hsl(222,14%,10%)]">
+                <span className="inline-flex items-center gap-2.5 text-[10px] md:text-[11px] font-medium tracking-[0.2em] uppercase text-foreground/50 px-4 py-2 rounded-full border border-white/[0.06] bg-[hsl(222,12%,13%)]">
                   <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
                   Implementation Consulting
                 </span>
@@ -162,7 +162,7 @@ export default function Home() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.7, delay: 0.6 + i * 0.08, ease: [0.16, 1, 0.3, 1] }}
-                    className="text-center relative px-5 py-5 rounded-lg bg-white/[0.02] border border-white/[0.05] backdrop-blur-sm"
+                    className="text-center relative px-5 py-5 rounded-lg bg-white/[0.03] border border-white/[0.06] backdrop-blur-sm"
                   >
                     {/* Accent top line */}
                     <div className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-[2px] bg-accent/30 rounded-full" />
@@ -259,7 +259,7 @@ export default function Home() {
                       whileInView={{ opacity: 1, x: 0 }}
                       viewport={{ once: true, margin: "-30px" }}
                       transition={{ duration: 0.5, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-                      className="group flex gap-5 md:gap-6 relative p-4 -mx-4 rounded-lg hover:bg-white/[0.02] transition-all duration-500"
+                      className="group flex gap-5 md:gap-6 relative p-4 -mx-4 rounded-lg hover:bg-white/[0.03] transition-all duration-500"
                     >
                       {/* Number */}
                       <div className="flex-shrink-0 w-10 h-10 md:w-12 md:h-12 rounded-full border border-white/[0.08] flex items-center justify-center group-hover:border-accent/30 group-hover:bg-accent/5 transition-all duration-500 bg-background relative z-10">
