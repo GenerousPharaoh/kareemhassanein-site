@@ -241,8 +241,13 @@ export default function Services() {
         ))}
       </div>
 
+      {/* Divider before tools */}
+      <div className="max-w-[1200px] mx-auto px-6 lg:px-12 xl:px-20">
+        <div className="h-[1px] bg-gradient-to-r from-transparent via-[rgba(176,141,87,0.15)] to-transparent" />
+      </div>
+
       {/* Tools Section */}
-      <section ref={toolsRef} className="py-28 md:py-36 px-6 lg:px-12 xl:px-20 relative overflow-hidden">
+      <section ref={toolsRef} className="py-24 md:py-32 px-6 lg:px-12 xl:px-20 relative overflow-hidden">
         {/* Background image - full width with parallax and faded edges */}
         <motion.div
           style={{ y: toolsY }}

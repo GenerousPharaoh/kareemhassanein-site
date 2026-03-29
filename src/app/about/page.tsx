@@ -231,12 +231,12 @@ export default function About() {
       </section>
 
       {/* Divider */}
-      <div className="px-6 lg:px-12 xl:px-20">
+      <div className="px-6 lg:px-12 xl:px-20 py-4">
         <AnimatedDivider direction="left" accent maxWidth="200px" />
       </div>
 
       {/* What I bring */}
-      <section className="py-14 md:py-20 px-6 lg:px-12 xl:px-20">
+      <section className="py-16 md:py-24 px-6 lg:px-12 xl:px-20">
         <div className="max-w-[900px] mx-auto">
           {/* Section header */}
           <motion.div
@@ -254,7 +254,7 @@ export default function About() {
             </h2>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 gap-4 md:gap-6">
+          <div className="grid md:grid-cols-2 gap-5 md:gap-6">
             <ValueCard
               subtitle="Background"
               title="Clinical, operational, and technical."
@@ -305,7 +305,7 @@ export default function About() {
           <ScrollReveal direction="up">
             <span className="block text-xs font-medium tracking-[0.3em] uppercase text-muted-foreground mb-6">Experience</span>
             <h2 className="text-3xl md:text-4xl font-medium tracking-tight mb-6">Work history.</h2>
-            <AnimatedDivider direction="left" accent maxWidth="200px" className="mb-16" />
+            <AnimatedDivider direction="left" accent maxWidth="200px" className="mb-12" />
           </ScrollReveal>
 
           <div className="relative space-y-12 md:space-y-16">

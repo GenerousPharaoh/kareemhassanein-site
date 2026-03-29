@@ -94,7 +94,7 @@ export default function Home() {
         <div className="relative z-10 w-full max-w-[1400px] flex flex-col justify-center">
           <div className="flex flex-col items-center text-center">
 
-            <div className="space-y-5 md:space-y-6 mx-auto max-w-4xl">
+            <div className="space-y-6 md:space-y-8 mx-auto max-w-4xl">
 
               {/* Premium tagline badge */}
               <motion.div
@@ -155,7 +155,7 @@ export default function Home() {
               </motion.div>
 
               {/* Metrics */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-5 max-w-3xl mx-auto pt-6">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-5 max-w-3xl mx-auto pt-8">
                 {metrics.map((m, i) => (
                   <motion.div
                     key={m.label}
@@ -177,7 +177,7 @@ export default function Home() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.85, ease: [0.16, 1, 0.3, 1] }}
-                className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-center justify-center pt-4"
+                className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-center justify-center pt-6"
               >
                 <Link
                   href="/contact"
@@ -202,7 +202,7 @@ export default function Home() {
       </section>
 
       {/* Approach Section - Combined statement + steps */}
-      <section ref={transitionRef} className="py-16 md:py-24 px-6 md:px-12 xl:px-20 relative">
+      <section ref={transitionRef} className="py-20 md:py-28 px-6 md:px-12 xl:px-20 relative">
         {/* Atmospheric background */}
         <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-background to-transparent pointer-events-none z-0" />
         <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
@@ -293,7 +293,7 @@ export default function Home() {
       </section>
 
       {/* Divider */}
-      <div className="px-6 md:px-12 xl:px-20 py-8">
+      <div className="px-6 md:px-12 xl:px-20 py-4">
         <AnimatedDivider direction="left" accent maxWidth="300px" />
       </div>
 
@@ -332,7 +332,7 @@ export default function Home() {
         <div className="max-w-[1400px] mx-auto relative z-10">
           <motion.div
             style={{ y: portfolioY, opacity: portfolioOpacity }}
-            className="mb-16 md:mb-20 will-change-transform"
+            className="mb-12 md:mb-16 will-change-transform"
           >
             <span className="text-xs font-medium tracking-[0.4em] uppercase text-accent mb-4 block">
               Portfolio

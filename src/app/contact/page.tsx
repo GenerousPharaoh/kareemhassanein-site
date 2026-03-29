@@ -171,7 +171,7 @@ export default function Contact() {
 
       <motion.div
         style={{ y: textY }}
-        className="section-container relative z-10 w-full pt-32 md:pt-36 pb-16 flex-grow flex items-center will-change-transform"
+        className="section-container relative z-10 w-full pt-36 md:pt-40 pb-16 flex-grow flex items-center will-change-transform"
       >
         <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-12 lg:gap-20 items-start w-full">
           {/* Left Column - Heading + Illustration */}
