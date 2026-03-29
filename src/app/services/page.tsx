@@ -129,7 +129,7 @@ function ServiceSection({ service, index }: { service: { index: string; title: s
             </h2>
           </div>
 
-          <p className="text-xl md:text-2xl text-foreground/80 font-light mb-6">
+          <p className="text-xl md:text-2xl text-foreground/70 font-light font-serif italic mb-6">
             {service.tagline}
           </p>
 
@@ -155,12 +155,13 @@ function ToolDomain({ domain, index, featured = false }: { domain: typeof techni
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-30px" }}
       transition={{ duration: 0.5, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
-      className={`rounded-lg border border-white/[0.06] hover:border-accent/20 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-black/20 transition-all duration-500 ${
+      className={`relative rounded-lg border border-white/[0.06] hover:border-accent/20 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-black/20 transition-all duration-500 overflow-hidden ${
         featured
           ? 'p-8 md:p-10 bg-gradient-to-br from-[hsl(222,14%,10%)] to-[hsl(222,14%,8%)]'
           : 'p-6 bg-[hsl(222,14%,9%)]'
       }`}
     >
+      <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-accent/25 via-accent/10 to-transparent" />
       <h3 className={`text-accent font-medium tracking-[0.15em] uppercase ${featured ? 'text-sm mb-4' : 'text-xs mb-3'}`}>
         {domain.domain}
       </h3>
@@ -295,7 +296,7 @@ export default function Services() {
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           >
             <div className="h-[1px] w-20 mx-auto mb-10 bg-gradient-to-r from-transparent via-accent/50 to-transparent" style={{ boxShadow: '0 0 16px rgba(176,141,87,0.12)' }} />
-            <h2 className="text-3xl md:text-4xl font-medium tracking-tight mb-6">
+            <h2 className="text-3xl md:text-4xl font-medium tracking-tight mb-6 text-balance">
               Have something that fits?
             </h2>
             <p className="text-lg text-muted-foreground/80 font-light leading-relaxed mb-10 max-w-xl mx-auto">

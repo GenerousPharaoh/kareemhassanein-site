@@ -188,7 +188,7 @@ export default function Home() {
                 </Link>
                 <Link
                   href="/about"
-                  className="text-sm md:text-base font-medium text-foreground/70 w-full sm:w-auto text-center px-7 py-3.5 rounded-full border border-white/[0.1] hover:text-foreground hover:border-white/[0.2] hover:bg-white/[0.03] transition-all duration-300"
+                  className="text-sm md:text-base font-medium text-foreground/70 w-full sm:w-auto text-center px-7 py-3.5 rounded-full border border-white/[0.1] hover:text-foreground hover:border-accent/30 hover:bg-white/[0.03] hover:shadow-[0_0_20px_rgba(176,141,87,0.06)] transition-all duration-300"
                 >
                   Learn more
                 </Link>
@@ -222,7 +222,7 @@ export default function Home() {
               <span className="text-[10px] md:text-xs font-medium tracking-[0.25em] uppercase text-accent/70 mb-6 block">
                 The Problem
               </span>
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight leading-[1.1] mb-6">
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight leading-[1.1] mb-6 text-balance">
                 Good plans fail without good execution.
               </h2>
               <p className="text-base md:text-lg text-muted-foreground/80 leading-relaxed">
@@ -337,7 +337,7 @@ export default function Home() {
             <span className="text-xs font-medium tracking-[0.4em] uppercase text-accent mb-4 block">
               Portfolio
             </span>
-            <h2 className="text-3xl md:text-5xl font-medium tracking-tight">
+            <h2 className="text-3xl md:text-5xl font-medium tracking-tight text-balance">
               Recent Work
             </h2>
             <AnimatedDivider direction="left" accent maxWidth="280px" className="mt-6" />

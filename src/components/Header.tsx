@@ -68,7 +68,7 @@ export default function Header() {
             href="/"
             className="group flex items-center gap-3 pr-8 border-r border-white/10 transition-transform active:scale-95"
           >
-            <div className="w-2 h-2 rounded-full bg-foreground opacity-40 group-hover:opacity-100 transition-opacity" />
+            <div className="w-2 h-2 rounded-full bg-accent opacity-50 group-hover:opacity-100 transition-opacity" />
             <span className="text-[11px] font-bold tracking-[0.25em] uppercase opacity-40 group-hover:opacity-100 transition-opacity whitespace-nowrap">
               K. Hassanein
             </span>
@@ -134,13 +134,16 @@ export default function Header() {
                 >
                   <Link
                     href={item.href}
-                    className={`text-5xl font-light tracking-tighter ${pathname === item.href ? 'text-accent' : 'text-foreground/30'
+                    className={`flex items-baseline gap-4 text-5xl font-light tracking-tighter ${pathname === item.href ? 'text-accent' : 'text-foreground/30'
                       }`}
                   >
-                    {item.label}
-                    {pathname === item.href && (
-                      <div className="h-[2px] w-10 bg-accent/50 mt-3 rounded-full" />
-                    )}
+                    <span className="text-sm font-mono text-accent/30">{String(i + 1).padStart(2, '0')}</span>
+                    <span>
+                      {item.label}
+                      {pathname === item.href && (
+                        <div className="h-[2px] w-10 bg-accent/50 mt-3 rounded-full" />
+                      )}
+                    </span>
                   </Link>
                 </motion.div>
               ))}

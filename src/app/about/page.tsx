@@ -331,8 +331,11 @@ export default function About() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-24 md:py-32 px-6 lg:px-12 xl:px-20 relative">
-        <div className="max-w-3xl mx-auto text-center">
+      <section className="py-24 md:py-32 px-6 lg:px-12 xl:px-20 relative overflow-hidden">
+        <div className="absolute inset-0 z-0 pointer-events-none">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-[radial-gradient(ellipse_at_center,rgba(176,141,87,0.06)_0%,transparent_65%)]" />
+        </div>
+        <div className="max-w-3xl mx-auto text-center relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -340,7 +343,7 @@ export default function About() {
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           >
             <div className="h-[1px] w-20 mx-auto mb-10 bg-gradient-to-r from-transparent via-accent/50 to-transparent" style={{ boxShadow: '0 0 16px rgba(176,141,87,0.12)' }} />
-            <h2 className="text-3xl md:text-4xl font-medium tracking-tight mb-6">
+            <h2 className="text-3xl md:text-4xl font-medium tracking-tight mb-6 text-balance">
               Want to see what I do?
             </h2>
             <p className="text-lg text-muted-foreground/80 font-light leading-relaxed mb-10 max-w-xl mx-auto">
@@ -356,7 +359,7 @@ export default function About() {
               </Link>
               <Link
                 href="/contact"
-                className="text-sm md:text-base font-medium text-foreground/70 px-8 py-4 rounded-full border border-white/[0.1] hover:text-foreground hover:border-white/[0.2] hover:bg-white/[0.03] transition-all duration-300"
+                className="text-sm md:text-base font-medium text-foreground/70 px-8 py-4 rounded-full border border-white/[0.1] hover:text-foreground hover:border-accent/30 hover:bg-white/[0.03] hover:shadow-[0_0_20px_rgba(176,141,87,0.06)] transition-all duration-300"
               >
                 Get in touch
               </Link>
