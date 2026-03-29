@@ -32,29 +32,29 @@ const experience = [
     period: '2024 - Present',
     role: 'Digital Strategy & Operations',
     company: 'Endorphins Health',
-    desc: 'Leading digital operations for a multidisciplinary clinic with 8 practitioners across 6 specialties. Redesigned booking architecture for multi-provider scheduling, built conversion flows from service pages to booking, and deployed a local SEO engine across 8 GTA municipalities.',
+    desc: <>Leading digital operations for a multidisciplinary clinic with <span className="text-accent/80">8 practitioners across 6 specialties</span>. Redesigned booking architecture for multi-provider scheduling, built conversion flows from service pages to booking, and deployed a local SEO engine across <span className="text-foreground/90">8 GTA municipalities</span>.</>,
   },
   {
     period: '2025 - Present',
     role: 'Workflow Automation',
     company: 'Tax Relief Counsel',
-    desc: 'Built an LLM-based drafting automation system that reduced document generation time by 85%. Mapped intake and client communication workflows to surface bottlenecks, created SOPs for consistency, and built a reusable template library for scalable output.',
+    desc: <>Built an LLM-based drafting automation system that reduced document generation time by <span className="text-accent/80">85%</span>. Mapped intake and client communication workflows to surface bottlenecks, created SOPs for consistency, and built a <span className="text-foreground/90">reusable template library</span> for scalable output.</>,
   },
   {
     period: '2025 - Present',
     role: 'Clinical Advisor',
     company: 'Neuro-Mod',
-    desc: 'Reviewing clinical deployment strategies for a medical device startup. Documenting usability friction in clinician workflows and delivering integration recommendations to support deployment readiness.',
+    desc: <>Reviewing clinical deployment strategies for a medical device startup. Documenting <span className="text-foreground/90">usability friction</span> in clinician workflows and delivering integration recommendations to support deployment readiness.</>,
   },
   {
     period: '2021 - 2024',
     role: 'Registered Physiotherapist',
     company: 'Private Physiotherapy Clinic',
-    desc: 'Top revenue-generating clinician for 3 consecutive years on a team of 6, generating $200K+ annually through retention workflows and high rebooking rates. Led the Heidi AI rollout from evaluation through go-live, achieving 100% adoption in 8 weeks, cutting documentation by 3 hours/week per clinician, and eliminating $20K in annual admin cost.',
+    desc: <>Top revenue-generating clinician for <span className="text-foreground/90">3 consecutive years</span> on a team of 6, generating <span className="text-accent/80">$200K+ annually</span> through retention workflows and high rebooking rates. Led the Heidi AI rollout from evaluation through go-live, achieving <span className="text-accent/80">100% adoption in 8 weeks</span>, cutting documentation by <span className="text-foreground/90">3 hours/week per clinician</span>, and eliminating $20K in annual admin cost.</>,
   }
 ];
 
-function ValueCard({ title, subtitle, desc }: { title: string; subtitle: string; desc: string }) {
+function ValueCard({ title, subtitle, desc }: { title: string; subtitle: string; desc: React.ReactNode }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -74,7 +74,7 @@ function ValueCard({ title, subtitle, desc }: { title: string; subtitle: string;
   );
 }
 
-function ExperienceItem({ item, index }: { item: typeof experience[0]; index: number }) {
+function ExperienceItem({ item, index }: { item: { period: string; role: string; company: string; desc: React.ReactNode }; index: number }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -193,14 +193,14 @@ export default function About() {
               <div className="absolute -left-6 lg:-left-12 top-2 bottom-2 w-[1px] bg-gradient-to-b from-accent/40 via-accent/10 to-transparent" />
 
               <AnimatedBlock delay={0.5}>
-                <p className="text-xl md:text-2xl text-foreground/90 leading-relaxed font-light tracking-tight">
-                  I spent years on the frontline. Personal trainer, fitness manager, physiotherapist. I built caseloads, managed operations for a 25-person team, and was the highest-revenue clinician at my practice for three consecutive years. The through-line has always been the same: getting people to adopt and stick with new systems, routines, or behaviours.
+                <p className="text-xl md:text-2xl text-foreground/70 leading-relaxed font-light tracking-tight">
+                  I spent years on the frontline. Personal trainer, fitness manager, physiotherapist. I built caseloads, managed operations for a <span className="text-foreground">25-person team</span>, and was the <span className="text-foreground">highest-revenue clinician</span> at my practice for three consecutive years. The through-line has always been the same: <span className="text-accent/90 font-normal">getting people to adopt and stick with</span> new systems, routines, or behaviours.
                 </p>
               </AnimatedBlock>
 
               <AnimatedBlock delay={0.7}>
-                <p className="text-lg md:text-xl text-muted-foreground leading-relaxed font-light">
-                  Whether it was a patient following through on a home exercise program, a trainer learning a sales process, or a clinician adopting new documentation software, the challenge was always the same. People resist systems that add friction to their day. The gap between how a tool is designed to work and how the work actually happens is where most rollouts fall apart.
+                <p className="text-lg md:text-xl text-muted-foreground/80 leading-relaxed font-light">
+                  Whether it was a patient following through on a home exercise program, a trainer learning a sales process, or a clinician adopting new documentation software, the challenge was always the same. <span className="text-foreground/90">People resist systems that add friction to their day.</span> The gap between how a tool is designed to work and <span className="text-accent/80">how the work actually happens</span> is where most rollouts fall apart.
                 </p>
               </AnimatedBlock>
 
@@ -212,9 +212,9 @@ export default function About() {
                     whileInView={{ y: 0, opacity: 1 }}
                     viewport={{ once: true }}
                     transition={{ duration: 1.2, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                    className="text-lg md:text-xl text-muted-foreground leading-relaxed font-light"
+                    className="text-lg md:text-xl text-muted-foreground/80 leading-relaxed font-light"
                   >
-                    Now I work across healthcare, legal, and med-tech environments. I map workflows before touching configuration, talk to the people who will use the system, and stay through adoption. Go-live is where most implementations start to fail, not where they end.
+                    Now I work across healthcare, legal, and med-tech environments. I <span className="text-foreground/90">map workflows before touching configuration</span>, talk to the people who will use the system, and <span className="text-foreground/90">stay through adoption</span>. Go-live is where most implementations <span className="text-accent/80">start to fail</span>, not where they end.
                   </motion.p>
                 </div>
               </AnimatedBlock>
@@ -252,12 +252,12 @@ export default function About() {
             <ValueCard
               subtitle="Background"
               title="Clinical, operational, and technical."
-              desc="I have run a $200K clinical caseload, managed operations for a 25-person multidisciplinary team, redesigned booking architecture across 6 specialties, and built LLM-powered automation for document generation. The range means I can move between the clinical floor, the back office, and the codebase."
+              desc={<>I have run a <span className="text-accent/80">$200K clinical caseload</span>, managed operations for a <span className="text-foreground/90">25-person multidisciplinary team</span>, redesigned booking architecture across 6 specialties, and built LLM-powered automation for document generation. The range means I can move between <span className="text-foreground/90">the clinical floor, the back office, and the codebase</span>.</>}
             />
             <ValueCard
               subtitle="Process"
               title="Map, build, and stay."
-              desc="I start by understanding how the work actually moves before touching any configuration. Then I build the system to match that workflow, whether that means writing automation, configuring software, or wiring up integrations. Then I stay through the first stretch of real use to adjust what needs adjusting."
+              desc={<>I start by understanding how the work <span className="text-foreground/90">actually moves</span> before touching any configuration. Then I build the system to match that workflow, whether that means writing automation, configuring software, or wiring up integrations. Then I <span className="text-accent/80">stay through the first stretch of real use</span> to adjust what needs adjusting.</>}
             />
           </div>
         </div>

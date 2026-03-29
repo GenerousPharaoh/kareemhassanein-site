@@ -24,9 +24,9 @@ const metrics = [
 ];
 
 const approach = [
-  { title: 'Map', desc: 'Understand how the work actually moves before touching any configuration.' },
-  { title: 'Build', desc: 'Fit the system to the workflow, not the other way around.' },
-  { title: 'Launch', desc: 'Stay through the first weeks until the new way becomes the default.' },
+  { title: 'Map', desc: 'Understand how the work actually moves before touching any configuration.', em: 'actually moves' },
+  { title: 'Build', desc: 'Fit the system to the workflow, not the other way around.', em: 'not the other way around' },
+  { title: 'Launch', desc: 'Stay through the first weeks until the new way becomes the default.', em: 'becomes the default' },
 ];
 
 export default function Home() {
@@ -150,7 +150,7 @@ export default function Home() {
                 className="max-w-xl mx-auto"
               >
                 <p className="text-sm md:text-base lg:text-lg text-muted-foreground/80 font-light leading-relaxed">
-                  I help healthcare practices and professional services firms remove operational friction. Whether it&apos;s automating documentation, redesigning workflows, or rolling out new tools, I stay through adoption until it actually works.
+                  I help healthcare practices and professional services firms <span className="text-foreground/95">remove operational friction</span>. Whether it&apos;s automating documentation, redesigning workflows, or rolling out new tools, I stay through adoption until <span className="text-foreground/95">it actually works</span>.
                 </p>
               </motion.div>
 
@@ -226,7 +226,7 @@ export default function Home() {
                 Good plans fail without good execution.
               </h2>
               <p className="text-base md:text-lg text-muted-foreground/80 leading-relaxed">
-                Implementation is where most efforts stall. Not from lack of strategy, but from friction in the systems, workflows, and habits that need to change.
+                Implementation is where most efforts stall. Not from lack of strategy, but from <span className="text-foreground/90">friction in the systems, workflows, and habits</span> that need to change.
               </p>
             </motion.div>
 
@@ -274,7 +274,13 @@ export default function Home() {
                           {item.title}
                         </h4>
                         <p className="text-sm md:text-base text-muted-foreground/70 leading-relaxed">
-                          {item.desc}
+                          {item.em ? (
+                            <>
+                              {item.desc.split(item.em)[0]}
+                              <span className="text-foreground/90">{item.em}</span>
+                              {item.desc.split(item.em)[1]}
+                            </>
+                          ) : item.desc}
                         </p>
                       </div>
                     </motion.div>

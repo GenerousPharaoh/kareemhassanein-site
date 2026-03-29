@@ -14,7 +14,7 @@ const services = [
     index: '01',
     title: 'Workflow Automation',
     tagline: 'Stop doing manually what a computer should handle.',
-    desc: 'If you do something the same way every time, it can probably be automated. I build LLM-powered systems for document generation, intake processing, and client communications.',
+    desc: <>If you do something the same way every time, it can probably be automated. I build <span className="text-foreground/90">LLM-powered systems</span> for document generation, intake processing, and client communications.</>,
     points: ['LLM document generation', 'Intake automation', 'API integrations', 'Template libraries'],
     image: '/images/chaos-to-order.png',
   },
@@ -22,7 +22,7 @@ const services = [
     index: '02',
     title: 'Software Implementation',
     tagline: 'Get your team actually using the tools you paid for.',
-    desc: 'I handle the full lifecycle from evaluation through sustained use. Mapping existing workflows, configuring the system to match them, training teams, and staying through post-go-live until things are actually working.',
+    desc: <>I handle the <span className="text-foreground/90">full lifecycle</span> from evaluation through sustained use. Mapping existing workflows, configuring the system to match them, training teams, and <span className="text-foreground/90">staying through post-go-live</span> until things are actually working.</>,
     points: ['System configuration', 'Training enablement', 'Change management', 'Post-go-live support'],
     image: '/images/time-gears.png',
   },
@@ -30,7 +30,7 @@ const services = [
     index: '03',
     title: 'Operations Improvement',
     tagline: 'Figure out where things are slowing down.',
-    desc: 'Before building anything new, I map how your practice actually runs. Where do referrals get lost? Which steps take longer than they should? What workarounds have people created?',
+    desc: <>Before building anything new, I map <span className="text-foreground/90">how your practice actually runs</span>. Where do referrals get lost? Which steps take longer than they should? What workarounds have people created?</>,
     points: ['Workflow mapping', 'Process optimization', 'SOPs and playbooks', 'Capacity planning'],
     image: '/images/flow.png',
   }
@@ -82,7 +82,7 @@ function ServiceTag({ tag, index }: { tag: string; index: number }) {
   );
 }
 
-function ServiceSection({ service, index }: { service: typeof services[0], index: number }) {
+function ServiceSection({ service, index }: { service: { index: string; title: string; tagline: string; desc: React.ReactNode; points: string[]; image: string }, index: number }) {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({
     target: ref,
