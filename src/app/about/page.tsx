@@ -79,10 +79,10 @@ function ValueCard({ title, subtitle, desc }: { title: string; subtitle: string;
 function ExperienceItem({ item, index }: { item: { period: string; role: string; company: string; desc: React.ReactNode }; index: number }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 15 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-30px" }}
-      transition={{ duration: 0.5, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
+      viewport={{ once: true, margin: "-80px" }}
+      transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
       className="group relative grid md:grid-cols-[140px_1fr] gap-4 md:gap-8 p-4 md:p-6 -mx-4 md:-mx-6 rounded-xl hover:bg-white/[0.03] transition-all duration-500"
     >
       {/* Timeline dot — visible on desktop, offset accounts for -mx-6 (24px) on the parent */}
