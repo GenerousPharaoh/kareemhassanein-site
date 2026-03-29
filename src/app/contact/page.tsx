@@ -78,7 +78,7 @@ function ContactForm() {
           required
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="w-full bg-white/[0.05] border border-white/[0.1] rounded-xl px-5 py-3.5 text-foreground placeholder:text-muted-foreground/40 focus:outline-none focus:border-accent/50 focus:bg-white/[0.07] focus:ring-1 focus:ring-accent/20 transition-all duration-500"
+          className="w-full bg-white/[0.04] border border-white/[0.08] rounded-lg px-5 py-3.5 text-foreground placeholder:text-muted-foreground/30 focus:outline-none focus:border-accent/40 focus:bg-white/[0.06] focus:shadow-[0_1px_0_0_hsl(var(--accent)/0.4)] transition-all duration-500"
           placeholder="Your name"
         />
       </div>
@@ -93,7 +93,7 @@ function ContactForm() {
           required
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full bg-white/[0.05] border border-white/[0.1] rounded-xl px-5 py-3.5 text-foreground placeholder:text-muted-foreground/40 focus:outline-none focus:border-accent/50 focus:bg-white/[0.07] focus:ring-1 focus:ring-accent/20 transition-all duration-500"
+          className="w-full bg-white/[0.04] border border-white/[0.08] rounded-lg px-5 py-3.5 text-foreground placeholder:text-muted-foreground/30 focus:outline-none focus:border-accent/40 focus:bg-white/[0.06] focus:shadow-[0_1px_0_0_hsl(var(--accent)/0.4)] transition-all duration-500"
           placeholder="you@example.com"
         />
       </div>
@@ -108,7 +108,7 @@ function ContactForm() {
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           rows={5}
-          className="w-full bg-white/[0.05] border border-white/[0.1] rounded-xl px-5 py-3.5 text-foreground placeholder:text-muted-foreground/40 focus:outline-none focus:border-accent/50 focus:bg-white/[0.07] focus:ring-1 focus:ring-accent/20 transition-all duration-500 resize-none"
+          className="w-full bg-white/[0.04] border border-white/[0.08] rounded-lg px-5 py-3.5 text-foreground placeholder:text-muted-foreground/30 focus:outline-none focus:border-accent/40 focus:bg-white/[0.06] focus:shadow-[0_1px_0_0_hsl(var(--accent)/0.4)] transition-all duration-500 resize-none"
           placeholder="What can I help with?"
         />
       </div>
@@ -230,8 +230,10 @@ export default function Contact() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-              className="rounded-2xl border border-white/[0.08] bg-white/[0.02] backdrop-blur-sm p-6 md:p-7"
+              className="relative rounded-xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm p-6 md:p-8 overflow-hidden"
             >
+              {/* Accent top edge */}
+              <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-accent/40 via-accent/20 to-transparent" />
               <ContactForm />
             </motion.div>
 

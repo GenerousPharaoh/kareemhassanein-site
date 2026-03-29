@@ -155,17 +155,17 @@ export default function Home() {
               </motion.div>
 
               {/* Metrics */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 md:gap-10 max-w-3xl mx-auto pt-6">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-5 max-w-3xl mx-auto pt-6">
                 {metrics.map((m, i) => (
                   <motion.div
                     key={m.label}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.7, delay: 0.6 + i * 0.08, ease: [0.16, 1, 0.3, 1] }}
-                    className="text-center relative"
+                    className="text-center relative px-5 py-5 rounded-lg bg-white/[0.02] border border-white/[0.05] backdrop-blur-sm"
                   >
-                    {/* Vertical divider between metrics on desktop */}
-                    {i > 0 && <div className="hidden sm:block absolute -left-4 md:-left-5 top-1/2 -translate-y-1/2 h-12 w-[1px] bg-white/[0.08]" />}
+                    {/* Accent top line */}
+                    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-[2px] bg-accent/30 rounded-full" />
                     <p className="text-xl sm:text-2xl md:text-3xl font-serif italic text-accent mb-2.5 whitespace-nowrap">{m.value}</p>
                     <p className="text-[11px] md:text-xs text-muted-foreground/60 leading-relaxed max-w-[200px] mx-auto">{m.label}</p>
                   </motion.div>
@@ -259,7 +259,7 @@ export default function Home() {
                       whileInView={{ opacity: 1, x: 0 }}
                       viewport={{ once: true, margin: "-30px" }}
                       transition={{ duration: 0.5, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-                      className="group flex gap-5 md:gap-6 relative"
+                      className="group flex gap-5 md:gap-6 relative p-4 -mx-4 rounded-lg hover:bg-white/[0.02] transition-all duration-500"
                     >
                       {/* Number */}
                       <div className="flex-shrink-0 w-10 h-10 md:w-12 md:h-12 rounded-full border border-white/[0.08] flex items-center justify-center group-hover:border-accent/30 group-hover:bg-accent/5 transition-all duration-500 bg-background relative z-10">

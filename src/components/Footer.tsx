@@ -88,15 +88,18 @@ export default function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="absolute bottom-0 left-0 w-full border-t border-white/5 bg-white/[0.02] backdrop-blur-2xl">
-          <div className="max-w-[1800px] mx-auto px-6 md:px-12 py-6 md:py-10 flex flex-col md:flex-row justify-between items-center md:items-end gap-4 md:gap-8">
-            <span className="text-xs font-medium tracking-widest text-accent/50">KAREEM HASSANEIN</span>
-            <div className="flex flex-col items-center md:items-end gap-2 text-[10px] uppercase tracking-[0.2em] md:tracking-[0.3em] font-medium text-muted-foreground/70">
-              <div className="flex gap-4 md:gap-8">
-                <span>Burlington, ON</span>
-                <span>Available remotely</span>
-              </div>
-              <span className="mt-1">© 2026</span>
+        <div className="absolute bottom-0 left-0 w-full border-t border-white/[0.06] bg-white/[0.02] backdrop-blur-2xl">
+          <div className="max-w-[1800px] mx-auto px-6 md:px-12 py-5 md:py-6 flex flex-col md:flex-row justify-between items-center md:items-center gap-3 md:gap-8">
+            <div className="flex items-center gap-3">
+              <span className="w-1.5 h-1.5 rounded-full bg-accent/40" />
+              <span className="text-xs font-medium tracking-[0.2em] text-accent/50 uppercase">Kareem Hassanein</span>
+            </div>
+            <div className="flex items-center gap-4 md:gap-6 text-[10px] uppercase tracking-[0.2em] font-medium text-muted-foreground/50">
+              <span>Burlington, ON</span>
+              <span className="w-[3px] h-[3px] rounded-full bg-white/10" />
+              <span>Remote</span>
+              <span className="w-[3px] h-[3px] rounded-full bg-white/10" />
+              <span>© 2026</span>
             </div>
           </div>
         </div>

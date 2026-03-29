@@ -61,8 +61,10 @@ function ValueCard({ title, subtitle, desc }: { title: string; subtitle: string;
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-      className="group relative p-8 md:p-10 rounded-lg bg-gradient-to-br from-[hsl(222,14%,10%)] to-[hsl(222,14%,8%)] border border-white/[0.06] hover:border-accent/20 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-black/20 transition-all duration-500"
+      className="group relative p-8 md:p-10 rounded-lg bg-gradient-to-br from-[hsl(222,14%,10%)] to-[hsl(222,14%,8%)] border border-white/[0.06] hover:border-accent/20 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-black/20 transition-all duration-500 overflow-hidden"
     >
+      {/* Accent top edge */}
+      <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-accent/30 via-accent/10 to-transparent" />
       <span className="text-[10px] md:text-xs font-medium tracking-[0.2em] uppercase text-accent/60 mb-4 block">{subtitle}</span>
       <h3 className="text-xl md:text-2xl font-medium tracking-tight mb-4 group-hover:text-accent transition-colors duration-500">
         {title}
@@ -83,12 +85,15 @@ function ExperienceItem({ item, index }: { item: { period: string; role: string;
       transition={{ duration: 0.5, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
       className="group relative grid md:grid-cols-[140px_1fr] gap-4 md:gap-8 p-4 md:p-6 -mx-4 md:-mx-6 rounded-xl hover:bg-white/[0.02] transition-all duration-500"
     >
+      {/* Timeline dot — visible on desktop */}
+      <div className="absolute left-[151px] top-8 w-[9px] h-[9px] rounded-full border-2 border-accent/40 bg-background z-10 hidden md:block group-hover:border-accent group-hover:bg-accent/20 transition-all duration-500" />
+
       {/* Left column - Period and index */}
-      <div className="flex md:flex-col items-baseline md:items-start gap-3 md:gap-1">
-        <span className="text-3xl md:text-4xl font-light text-accent/20 leading-none">
+      <div className="flex md:flex-col items-baseline md:items-start gap-3 md:gap-1.5">
+        <span className="text-3xl md:text-4xl font-light text-accent/20 leading-none group-hover:text-accent/35 transition-colors duration-500">
           0{index + 1}
         </span>
-        <span className="text-xs text-muted-foreground/60 font-mono tracking-wide">
+        <span className="text-xs text-muted-foreground/50 font-mono tracking-wide">
           {item.period}
         </span>
       </div>

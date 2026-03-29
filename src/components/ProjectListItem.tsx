@@ -34,7 +34,8 @@ export default function ProjectListItem({ project, index, opacity }: ProjectList
                     <h3 className="text-3xl md:text-5xl font-medium tracking-tight text-foreground/90 group-hover:text-foreground transition-all duration-500">
                         {project.title}
                     </h3>
-                    <span className="text-sm tracking-wide text-muted-foreground group-hover:text-accent transition-all duration-500">
+                    <span className="flex items-center gap-2 text-sm tracking-wide text-muted-foreground group-hover:text-accent transition-all duration-500">
+                        <span className="w-1 h-1 rounded-full bg-accent/50 group-hover:bg-accent transition-colors duration-500 flex-shrink-0" />
                         {project.category}
                     </span>
                     {project.description && (
