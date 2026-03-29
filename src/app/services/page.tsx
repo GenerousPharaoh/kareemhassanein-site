@@ -303,7 +303,7 @@ export default function Services() {
           >
             <div className="h-[1px] w-20 mx-auto mb-10 bg-gradient-to-r from-transparent via-accent/50 to-transparent" style={{ boxShadow: '0 0 16px rgba(176,141,87,0.12)' }} />
             <h2 className="text-3xl md:text-4xl font-medium tracking-tight mb-6 text-balance">
-              Let's map it out.
+              Let&apos;s map it out.
             </h2>
             <p className="text-lg text-muted-foreground/80 font-light leading-relaxed mb-10 max-w-xl mx-auto">
               If you have a workflow problem, a tool rollout, or just need someone to figure out why things aren&apos;t working, let&apos;s talk.
