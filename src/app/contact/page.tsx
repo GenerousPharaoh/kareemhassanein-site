@@ -184,8 +184,8 @@ export default function Contact() {
             </motion.span>
 
             <motion.h1
-              style={{ opacity: headingOpacity, y: headingY }}
-              className="text-5xl md:text-[64px] lg:text-[80px] xl:text-[100px] font-medium tracking-tighter mb-7 leading-[0.85]"
+              style={{ opacity: headingOpacity, y: headingY, fontSize: 'clamp(3rem, 8vw, 6.5rem)' }}
+              className="font-medium tracking-tighter mb-7 leading-[0.85]"
             >
               Get in <br />
               <span className="opacity-60 italic font-light font-serif">
@@ -262,24 +262,19 @@ export default function Contact() {
       </motion.div>
 
       {/* Footer */}
-      <footer className="relative z-10 w-full border-t border-white/5 bg-white/[0.02] backdrop-blur-2xl">
-        <div className="section-container flex flex-col md:flex-row justify-between items-end py-8 gap-6">
-          <div className="flex flex-col items-start gap-4">
-            <span className="text-xs font-medium tracking-widest text-accent/50 uppercase">Kareem Hassanein</span>
+      <footer className="relative z-10 w-full border-t border-white/[0.06] bg-white/[0.02] backdrop-blur-2xl">
+        <div className="section-container flex flex-col md:flex-row justify-between items-center py-5 gap-4">
+          <div className="flex items-center gap-3">
+            <span className="w-1.5 h-1.5 rounded-full bg-accent/40" />
+            <span className="text-xs font-medium tracking-[0.2em] text-accent/50 uppercase">Kareem Hassanein</span>
           </div>
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 0.4 }}
-            transition={{ duration: 0.8, delay: 1 }}
-            className="flex flex-col items-end gap-2 text-[11px] uppercase tracking-[0.25em] font-medium text-muted-foreground/70 pb-2"
-          >
-            <div className="flex gap-8">
-              <span>Burlington, ON</span>
-              <span>Available remotely</span>
-            </div>
-            <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-white/10 to-transparent my-2" />
-            <span>&copy; 2026 &middot; All Rights Reserved</span>
-          </motion.div>
+          <div className="flex items-center gap-4 md:gap-6 text-[10px] uppercase tracking-[0.2em] font-medium text-muted-foreground/50">
+            <span>Burlington, ON</span>
+            <span className="w-[3px] h-[3px] rounded-full bg-white/10" />
+            <span>Remote</span>
+            <span className="w-[3px] h-[3px] rounded-full bg-white/10" />
+            <span>&copy; 2026</span>
+          </div>
         </div>
       </footer>
     </main>

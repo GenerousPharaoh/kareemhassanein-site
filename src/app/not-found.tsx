@@ -12,7 +12,7 @@ export default function NotFound() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 0.3, y: 0 }}
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="block text-[200px] md:text-[300px] font-medium tracking-tighter leading-none text-white/[0.03]"
+          className="block text-[200px] md:text-[300px] font-medium tracking-tighter leading-none text-accent/[0.06]"
         >
           404
         </motion.span>
@@ -42,7 +42,7 @@ export default function NotFound() {
         >
           <Link
             href="/"
-            className="group inline-flex items-center gap-3 text-lg font-medium bg-foreground text-background px-8 py-4 rounded-full hover:bg-accent transition-all duration-500"
+            className="group inline-flex items-center gap-3 text-base font-medium bg-accent text-background px-8 py-4 rounded-full hover:bg-accent/90 transition-all duration-300"
           >
             <ArrowLeft size={20} className="group-hover:-translate-x-1 transition-transform duration-500" />
             Back to home

@@ -85,8 +85,8 @@ function ExperienceItem({ item, index }: { item: { period: string; role: string;
       transition={{ duration: 0.5, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
       className="group relative grid md:grid-cols-[140px_1fr] gap-4 md:gap-8 p-4 md:p-6 -mx-4 md:-mx-6 rounded-xl hover:bg-white/[0.02] transition-all duration-500"
     >
-      {/* Timeline dot — visible on desktop */}
-      <div className="absolute left-[151px] top-8 w-[9px] h-[9px] rounded-full border-2 border-accent/40 bg-background z-10 hidden md:block group-hover:border-accent group-hover:bg-accent/20 transition-all duration-500" />
+      {/* Timeline dot — visible on desktop, offset accounts for -mx-6 (24px) on the parent */}
+      <div className="absolute left-[175px] top-8 w-[9px] h-[9px] rounded-full border-2 border-accent/40 bg-background z-10 hidden md:block group-hover:border-accent group-hover:bg-accent/20 transition-all duration-500" />
 
       {/* Left column - Period and index */}
       <div className="flex md:flex-col items-baseline md:items-start gap-3 md:gap-1.5">
@@ -162,7 +162,8 @@ export default function About() {
                 initial={{ opacity: 0, x: -30 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-                className="text-4xl md:text-5xl lg:text-7xl font-medium tracking-tight mb-8 leading-[0.9]"
+                className="font-medium tracking-tight mb-8 leading-[0.9]"
+                style={{ fontSize: 'clamp(2.5rem, 6vw, 4.5rem)' }}
               >
                 Kareem<br />Hassanein
               </motion.h1>

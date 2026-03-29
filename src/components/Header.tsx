@@ -84,15 +84,15 @@ export default function Header() {
                   href={item.href}
                   className="relative group py-1"
                 >
-                  <span className={`text-[11px] font-bold tracking-[0.15em] uppercase transition-all duration-500 ${isActive ? 'text-white scale-110' : 'text-white/40 group-hover:text-white group-hover:translate-y-[-1px]'
+                  <span className={`text-[11px] font-bold tracking-[0.15em] uppercase transition-all duration-500 ${isActive ? 'text-accent' : 'text-white/40 group-hover:text-white/80 group-hover:translate-y-[-1px]'
                     }`}>
                     {item.label}
                   </span>
                   {isActive && (
                     <motion.div
                       layoutId="header-active-blob"
-                      className="absolute -bottom-1 left-0 right-0 h-[2px] bg-foreground/40 blur-[1px] rounded-full"
-                      transition={{ duration: 0.8, ease }}
+                      className="absolute -bottom-1 left-0 right-0 h-[2px] bg-accent/60 rounded-full"
+                      transition={{ duration: 0.6, ease }}
                     />
                   )}
                 </Link>
@@ -134,12 +134,12 @@ export default function Header() {
                 >
                   <Link
                     href={item.href}
-                    className={`text-5xl font-light tracking-tighter ${pathname === item.href ? 'text-foreground' : 'text-foreground/30'
+                    className={`text-5xl font-light tracking-tighter ${pathname === item.href ? 'text-accent' : 'text-foreground/30'
                       }`}
                   >
                     {item.label}
                     {pathname === item.href && (
-                      <div className="h-[1px] w-12 bg-accent/60 mt-2" />
+                      <div className="h-[2px] w-10 bg-accent/50 mt-3 rounded-full" />
                     )}
                   </Link>
                 </motion.div>

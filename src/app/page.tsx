@@ -109,7 +109,7 @@ export default function Home() {
               </motion.div>
 
               {/* Headline - more compact */}
-              <h1 className="text-[2.25rem] md:text-5xl lg:text-6xl xl:text-[4.25rem] font-medium leading-[1] tracking-[-0.03em]">
+              <h1 className="font-medium leading-[1] tracking-[-0.03em]" style={{ fontSize: 'clamp(2.25rem, 5.5vw, 4.25rem)' }}>
                 <motion.span
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
