@@ -192,8 +192,9 @@ export default function Services() {
     target: toolsRef,
     offset: ["start end", "start 0.4"]
   });
-  const toolsY = useSpring(useTransform(toolsProgress, [0, 1], [100, 0]), springConfig);
-  const toolsOpacity = useSpring(useTransform(toolsProgress, [0, 0.5, 1], [0, 0.5, 1]), springConfig);
+  const tightSpring = { stiffness: 80, damping: 35 };
+  const toolsY = useSpring(useTransform(toolsProgress, [0, 1], [60, 0]), tightSpring);
+  const toolsOpacity = useSpring(useTransform(toolsProgress, [0, 0.5, 1], [0.05, 0.5, 1]), tightSpring);
 
   return (
     <main className="relative bg-background text-foreground overflow-hidden pt-20">

@@ -123,9 +123,9 @@ export default function About() {
     target: heroRef,
     offset: ["start start", "end start"]
   });
-  const springConfig = { stiffness: 100, damping: 30 };
-  const heroBgY = useSpring(useTransform(heroProgress, [0, 1], [0, 150]), springConfig);
-  const heroTextY = useSpring(useTransform(heroProgress, [0, 1], [0, 50]), springConfig);
+  const springConfig = { stiffness: 80, damping: 35 };
+  const heroBgY = useSpring(useTransform(heroProgress, [0, 1], [0, 100]), springConfig);
+  const heroTextY = useSpring(useTransform(heroProgress, [0, 1], [0, 40]), springConfig);
 
   return (
     <main className="bg-background text-foreground pt-20">

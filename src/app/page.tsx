@@ -34,8 +34,8 @@ export default function Home() {
   const transitionRef = useRef(null);
   const portfolioRef = useRef(null);
 
-  // Spring config for smooth, fluid animations
-  const springConfig = { stiffness: 100, damping: 30, restDelta: 0.001 };
+  // Spring config — high damping prevents overshoot/flicker
+  const springConfig = { stiffness: 80, damping: 35, restDelta: 0.001 };
 
   // Hero parallax - background moves UP (slower than scroll) for depth effect
   const { scrollYProgress: heroProgress } = useScroll({
@@ -51,7 +51,7 @@ export default function Home() {
     offset: ["start end", "center center"]
   });
   const statementYRaw = useTransform(statementProgress, [0, 1], [40, 0]);
-  const statementOpacityRaw = useTransform(statementProgress, [0, 0.3, 1], [0, 0.5, 1]);
+  const statementOpacityRaw = useTransform(statementProgress, [0, 0.3, 1], [0.05, 0.5, 1]);
   const statementY = useSpring(statementYRaw, springConfig);
   const statementOpacity = useSpring(statementOpacityRaw, springConfig);
 
@@ -62,7 +62,7 @@ export default function Home() {
     offset: ["start end", "start 0.85"]
   });
   const portfolioYRaw = useTransform(portfolioProgress, [0, 1], [50, 0]);
-  const portfolioOpacityRaw = useTransform(portfolioProgress, [0, 0.2, 1], [0, 0.8, 1]);
+  const portfolioOpacityRaw = useTransform(portfolioProgress, [0, 0.2, 1], [0.05, 0.8, 1]);
   const portfolioY = useSpring(portfolioYRaw, springConfig);
   const portfolioOpacity = useSpring(portfolioOpacityRaw, springConfig);
 
@@ -162,7 +162,7 @@ export default function Home() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.7, delay: 0.6 + i * 0.08, ease: [0.16, 1, 0.3, 1] }}
-                    className="text-center relative px-5 py-5 rounded-lg bg-white/[0.03] border border-white/[0.06] backdrop-blur-sm"
+                    className="text-center relative px-5 py-5 rounded-lg bg-white/[0.03] border border-white/[0.06]"
                   >
                     {/* Accent top line */}
                     <div className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-[2px] bg-accent/30 rounded-full" />

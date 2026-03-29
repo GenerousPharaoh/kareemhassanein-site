@@ -35,8 +35,8 @@ function StaggeredItem({ project, index, progress }: {
     const start = index * segment;
     const end = start + segment * 2;
     const opacity = useSpring(
-        useTransform(progress, [start, end], [0, 1]),
-        { stiffness: 100, damping: 30 }
+        useTransform(progress, [start, end], [0.03, 1]),
+        { stiffness: 80, damping: 30 }
     );
 
     return (

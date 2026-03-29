@@ -65,7 +65,6 @@ export default function ScrollReveal({
                 opacity,
                 x,
                 y,
-                willChange: 'transform, opacity',
             }}
             className={className}
         >
