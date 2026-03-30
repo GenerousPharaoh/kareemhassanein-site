@@ -50,7 +50,7 @@ const experience = [
     period: '2021 - 2024',
     role: 'Registered Physiotherapist',
     company: 'Private Physiotherapy Clinic',
-    desc: <>Top revenue-generating clinician for <span className="text-foreground/90">3 consecutive years</span> on a team of 6, generating <span className="text-accent/80">$200K+ annually</span> through retention workflows and high rebooking rates. Led the Heidi AI rollout from evaluation through go-live, achieving <span className="text-accent/80">100% adoption in 8 weeks</span>, cutting documentation by <span className="text-foreground/90">3 hours/week per clinician</span>, and eliminating $20K in annual admin cost.</>,
+    desc: <>Top revenue-generating clinician for <span className="text-foreground/90">3 consecutive years</span> on a team of 6, generating <span className="text-accent/80">$200K+ annually</span> through retention workflows and high rebooking rates. Led the rollout of an AI clinical documentation tool (Heidi AI) from evaluation through go-live, achieving <span className="text-accent/80">100% adoption in 8 weeks</span>, cutting documentation by <span className="text-foreground/90">3 hours/week per clinician</span>, and eliminating $20K in annual admin cost.</>,
   }
 ];
 
@@ -220,7 +220,7 @@ export default function About() {
                     transition={{ duration: 1.2, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
                     className="text-lg md:text-xl text-muted-foreground/80 leading-relaxed font-light"
                   >
-                    Now I work across healthcare, legal, and med-tech environments. I <span className="text-foreground/90">map workflows before touching configuration</span>, talk to the people who will use the system, and <span className="text-foreground/90">stay through adoption</span>. Go-live is where most implementations <span className="text-accent/80">start to fail</span>, not where they end.
+                    Now I work across healthcare, legal, and med-tech environments. I <span className="text-foreground/90">map workflows before touching configuration</span>, talk to the people who will use the system, and <span className="text-foreground/90">stay through adoption</span>.
                   </motion.p>
                 </div>
               </AnimatedBlock>
