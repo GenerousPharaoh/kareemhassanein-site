@@ -51,7 +51,7 @@ export default function Footer() {
         {/* Cinematic Background */}
         <div className="absolute inset-0 z-0">
           <ParallaxImage
-            src="/images/finale_horizon.png"
+            src="/images/footer-image.png"
             alt="Footer Atmosphere"
             className="w-full h-full object-cover opacity-[0.4]"
             fadedVertical={true}
