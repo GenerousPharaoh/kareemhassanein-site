@@ -32,7 +32,7 @@ const experience = [
     period: '2024 - Present',
     role: 'Digital Strategy & Operations',
     company: 'Endorphins Health',
-    desc: <>Leading digital operations for a multidisciplinary clinic with <span className="text-accent/80">8 practitioners across 6 specialties</span>. Redesigned booking architecture for multi-provider scheduling, built conversion flows from service pages to booking, and deployed a local SEO engine across <span className="text-foreground/90">8 GTA municipalities</span>.</>,
+    desc: <>Led operational and digital infrastructure buildout for a <span className="text-accent/80">6-specialty multidisciplinary clinic</span> while launching the physiotherapy service line as sole clinician. Redesigned and relaunched the clinic website, consolidating fragmented provider booking into a single patient-facing experience. Built out local SEO across <span className="text-foreground/90">8 GTA municipalities</span>, improving search position from 30 to 10 and increasing organic clicks by 3x.</>,
   },
   {
     period: '2025 - Present',
@@ -258,7 +258,7 @@ export default function About() {
             <ValueCard
               subtitle="Background"
               title="Clinical, operational, and technical."
-              desc={<>I have run a <span className="text-accent/80">$200K clinical caseload</span>, managed operations for a <span className="text-foreground/90">25-person multidisciplinary team</span>, redesigned booking architecture across 6 specialties, and built LLM-powered automation for document generation. The range means I can move between <span className="text-foreground/90">the clinical floor, the back office, and the codebase</span>.</>}
+              desc={<>I have generated <span className="text-accent/80">$600K+ in clinical revenue</span>, managed a <span className="text-foreground/90">25-person team</span>, rebuilt a clinic website consolidating 6 service lines into one booking experience, and built LLM-powered automation for document generation. The range means I can move between <span className="text-foreground/90">the clinical floor, the back office, and the codebase</span>.</>}
             />
             <ValueCard
               subtitle="Process"

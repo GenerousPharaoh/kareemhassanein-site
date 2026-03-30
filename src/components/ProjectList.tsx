@@ -13,7 +13,7 @@ const projects = [
     {
         title: 'Endorphins Health',
         category: 'Digital Operations',
-        description: 'Led digital operations for a multidisciplinary clinic with 8 practitioners across 6 specialties. Redesigned booking architecture for multi-provider scheduling, built service-to-booking conversion flows, and deployed local SEO across 8 municipalities.',
+        description: 'Led operational and digital infrastructure buildout for a 6-specialty multidisciplinary clinic. Redesigned and relaunched the clinic website, consolidating fragmented booking into a unified experience. Built out local SEO across 8 municipalities, improving search position from 30 to 10.',
         href: 'https://www.endorphinshealth.com',
     },
     {
