@@ -258,7 +258,7 @@ export default function About() {
             <ValueCard
               subtitle="Background"
               title="Clinical, operational, and technical."
-              desc={<>I have generated <span className="text-accent/80">$600K+ in clinical revenue</span>, managed a <span className="text-foreground/90">25-person team</span>, rebuilt a clinic website, and built LLM-powered automation for document generation. The range means I can move between <span className="text-foreground/90">the clinical floor, the back office, and the codebase</span>.</>}
+              desc={<>I have generated <span className="text-accent/80">$600K+ in clinical revenue</span>, managed a <span className="text-foreground/90">25-person team</span>, rebuilt a clinic website, and built LLM-powered automation for document generation.</>}
             />
             <ValueCard
               subtitle="Process"
