@@ -8,24 +8,6 @@ import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { useRef } from 'react';
 
-// Animated text block - simplified for snappier feel
-function AnimatedBlock({ children, className = "" }: {
-  children: React.ReactNode;
-  delay?: number;
-  className?: string;
-}) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 10 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "0px 0px -40px 0px" }}
-      transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-      className={className}
-    >
-      {children}
-    </motion.div>
-  );
-}
 
 const experience = [
   {
