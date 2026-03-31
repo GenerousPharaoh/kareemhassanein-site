@@ -104,7 +104,7 @@ export default function Home() {
               >
                 <span className="inline-flex items-center gap-2.5 text-[10px] md:text-[11px] font-medium tracking-[0.2em] uppercase text-foreground/50 px-4 py-2 rounded-full border border-white/[0.06] bg-[hsl(222,12%,13%)]">
                   <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
-                  Implementation &amp; Operations
+                  Implementation &amp; Operations &amp; Digital Transformation
                 </span>
               </motion.div>
 
