@@ -128,15 +128,23 @@ export default function Home() {
                 </motion.span>
               </h1>
 
+              {/* Accent divider */}
+              <motion.div
+                initial={{ opacity: 0, scaleX: 0 }}
+                animate={{ opacity: 1, scaleX: 1 }}
+                transition={{ duration: 1, delay: 0.45 }}
+                className="h-[1px] w-16 bg-accent/40 mx-auto origin-center"
+              />
+
               {/* Description — carries the substance */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                className="max-w-2xl mx-auto"
+                className="max-w-2xl mx-auto px-6 py-5 md:px-8 md:py-6 rounded-xl bg-white/[0.03] border border-white/[0.05]"
               >
-                <p className="text-sm md:text-base lg:text-lg text-muted-foreground/80 font-light leading-relaxed">
-                  I help healthcare practices and professional services firms <span className="text-foreground/95">remove operational friction</span>. Whether it&apos;s automating documentation, redesigning workflows, rolling out new tools, or rebuilding digital infrastructure, I map what&apos;s actually happening, build what fits, and <span className="text-foreground/95">stay through adoption</span>.
+                <p className="text-sm md:text-base lg:text-lg text-foreground/70 font-light leading-relaxed">
+                  I help healthcare practices and professional services firms <span className="text-foreground">remove operational friction</span>. Whether it&apos;s automating documentation, redesigning workflows, rolling out new tools, or rebuilding digital infrastructure, I map what&apos;s actually happening, build what fits, and <span className="text-foreground">stay through adoption</span>.
                 </p>
               </motion.div>
 
@@ -248,8 +256,8 @@ export default function Home() {
                       className="group flex gap-5 md:gap-6 relative p-4 -mx-4 rounded-lg hover:bg-white/[0.03] transition-all duration-500"
                     >
                       {/* Number */}
-                      <div className="flex-shrink-0 w-10 h-10 md:w-12 md:h-12 rounded-full border border-white/[0.08] flex items-center justify-center group-hover:border-accent/30 group-hover:bg-accent/5 transition-all duration-500 bg-background relative z-10">
-                        <span className="text-sm md:text-base font-medium text-accent/60 group-hover:text-accent transition-colors duration-500">
+                      <div className="flex-shrink-0 w-11 h-11 md:w-13 md:h-13 rounded-full border border-accent/20 flex items-center justify-center group-hover:border-accent/40 group-hover:bg-accent/5 group-hover:shadow-[0_0_16px_rgba(176,141,87,0.08)] transition-all duration-500 bg-background relative z-10">
+                        <span className="text-sm md:text-base font-mono font-medium text-accent/70 group-hover:text-accent transition-colors duration-500">
                           {i + 1}
                         </span>
                       </div>
@@ -324,7 +332,7 @@ export default function Home() {
               Portfolio
             </span>
             <h2 className="text-3xl md:text-5xl font-medium tracking-tight text-balance">
-              Recent Work
+              Recent <span className="text-accent/90 italic font-serif">Work</span>
             </h2>
             <AnimatedDivider direction="left" accent maxWidth="280px" className="mt-6" />
           </motion.div>

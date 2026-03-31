@@ -183,14 +183,15 @@ export default function About() {
               >
                 Implementation Consultant
               </motion.p>
-              <motion.p
+              <motion.div
                 initial={{ opacity: 0 }}
-                animate={{ opacity: 0.4 }}
+                animate={{ opacity: 1 }}
                 transition={{ duration: 0.6, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                className="text-sm text-muted-foreground tracking-wide mt-3"
+                className="flex gap-2 mt-4"
               >
-                MSc PT · BSc Kin
-              </motion.p>
+                <span className="text-[10px] font-medium tracking-[0.15em] uppercase text-muted-foreground/50 px-3 py-1 rounded-full border border-white/[0.06]">MSc PT</span>
+                <span className="text-[10px] font-medium tracking-[0.15em] uppercase text-muted-foreground/50 px-3 py-1 rounded-full border border-white/[0.06]">BSc Kin</span>
+              </motion.div>
             </div>
 
             {/* Narrative Column (Right) */}
@@ -250,7 +251,7 @@ export default function About() {
               What I Bring
             </span>
             <h2 className="text-2xl md:text-3xl font-medium tracking-tight">
-              Two perspectives, one focus.
+              Two perspectives, one <span className="text-accent/90 italic font-serif">focus.</span>
             </h2>
           </motion.div>
 
@@ -304,7 +305,7 @@ export default function About() {
         <div className="max-w-[1000px] mx-auto relative z-10">
           <ScrollReveal direction="up">
             <span className="block text-xs font-medium tracking-[0.3em] uppercase text-muted-foreground mb-6">Experience</span>
-            <h2 className="text-3xl md:text-4xl font-medium tracking-tight mb-6">Work history.</h2>
+            <h2 className="text-3xl md:text-4xl font-medium tracking-tight mb-6">Work <span className="text-accent/90 italic font-serif">history.</span></h2>
             <AnimatedDivider direction="left" accent maxWidth="200px" className="mb-12" />
           </ScrollReveal>
 

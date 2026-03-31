@@ -256,7 +256,7 @@ export default function Services() {
           >
             <span className="block text-[10px] md:text-xs font-medium tracking-[0.25em] uppercase text-accent/70 mb-4">Tools</span>
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-medium tracking-tight mb-4">
-              What I use.
+              What I <span className="text-accent/90 italic font-serif">use.</span>
             </h2>
             <p className="text-sm md:text-base text-muted-foreground/70 leading-relaxed max-w-lg">
               The specific tools matter less than understanding how they fit together.
