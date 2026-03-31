@@ -69,7 +69,7 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-background text-foreground overflow-hidden">
       {/* Hero Section */}
-      <section ref={heroRef} className="h-screen flex items-center justify-center relative pt-24 px-6 md:px-12 xl:px-20 bg-background overflow-hidden">
+      <section ref={heroRef} className="min-h-screen flex items-center justify-center relative pt-28 pb-12 md:pt-24 md:pb-0 px-6 md:px-12 xl:px-20 bg-background overflow-hidden">
 
         {/* Cinematic Background Layer */}
         <motion.div
@@ -233,10 +233,10 @@ export default function Home() {
             {/* Right: Steps */}
             <div className="space-y-6">
               <motion.div
-                initial={{ opacity: 0, y: 15 }}
+                initial={{ opacity: 0, y: 10 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                viewport={{ once: true, margin: "0px 0px -20px 0px" }}
+                transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                 className="mb-8"
               >
                 <span className="text-[10px] md:text-xs font-medium tracking-[0.25em] uppercase text-accent/70 mb-3 block">
@@ -255,10 +255,10 @@ export default function Home() {
                   {approach.map((item, i) => (
                     <motion.div
                       key={item.title}
-                      initial={{ opacity: 0, x: 20 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true, margin: "-30px" }}
-                      transition={{ duration: 0.5, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                      initial={{ opacity: 0, y: 12 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, margin: "0px 0px -20px 0px" }}
+                      transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                       className="group flex gap-5 md:gap-6 relative p-4 -mx-4 rounded-lg hover:bg-white/[0.03] transition-all duration-500"
                     >
                       {/* Number */}

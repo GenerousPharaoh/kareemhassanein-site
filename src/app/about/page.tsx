@@ -57,10 +57,10 @@ const experience = [
 function ValueCard({ title, subtitle, desc }: { title: string; subtitle: string; desc: React.ReactNode }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 12 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+      viewport={{ once: true, margin: "0px 0px -20px 0px" }}
+      transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
       className="group relative p-8 md:p-10 rounded-lg bg-gradient-to-br from-[hsl(222,12%,13%)] to-[hsl(222,12%,11%)] border border-white/[0.06] hover:border-accent/20 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-black/20 transition-all duration-500 overflow-hidden"
     >
       {/* Accent top edge */}
@@ -240,10 +240,10 @@ export default function About() {
         <div className="max-w-[900px] mx-auto">
           {/* Section header */}
           <motion.div
-            initial={{ opacity: 0, y: 15 }}
+            initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            viewport={{ once: true, margin: "0px 0px -20px 0px" }}
+            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
             className="mb-10 md:mb-12"
           >
             <span className="text-[10px] md:text-xs font-medium tracking-[0.25em] uppercase text-accent mb-3 block">
@@ -337,10 +337,10 @@ export default function About() {
         </div>
         <div className="max-w-3xl mx-auto text-center relative z-10">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            viewport={{ once: true, margin: "0px 0px -20px 0px" }}
+            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
           >
             <div className="h-[1px] w-20 mx-auto mb-10 bg-gradient-to-r from-transparent via-accent/50 to-transparent" style={{ boxShadow: '0 0 16px rgba(176,141,87,0.12)' }} />
             <h2 className="text-3xl md:text-4xl font-medium tracking-tight mb-6 text-balance">

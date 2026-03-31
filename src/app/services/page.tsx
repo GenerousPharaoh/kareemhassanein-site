@@ -1,13 +1,13 @@
 'use client';
 
-import { motion, useScroll, useTransform, useSpring, useInView } from 'framer-motion';
+import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import ScrollReveal from '@/components/ScrollReveal';
 import CharReveal from '@/components/CharReveal';
 import ParallaxImage from '@/components/ParallaxImage';
 
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
-import { useRef, useEffect } from 'react';
+import { useRef } from 'react';
 
 const services = [
   {
@@ -55,26 +55,12 @@ const technicalIndex = [
 ];
 
 function ServiceTag({ tag, index }: { tag: string; index: number }) {
-  const springConfig = { stiffness: 120, damping: 20 };
-  const opacity = useSpring(0, springConfig);
-  const y = useSpring(15, springConfig);
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-50px" });
-
-  useEffect(() => {
-    if (isInView) {
-      const timer = setTimeout(() => {
-        opacity.set(1);
-        y.set(0);
-      }, 0.4 * 1000 + index * 80);
-      return () => clearTimeout(timer);
-    }
-  }, [isInView, index, opacity, y]);
-
   return (
     <motion.span
-      ref={ref}
-      style={{ opacity, y }}
+      initial={{ opacity: 0, y: 8 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "0px 0px -10px 0px" }}
+      transition={{ duration: 0.3, delay: index * 0.05, ease: [0.16, 1, 0.3, 1] }}
       className="inline-flex items-center gap-2 text-sm px-4 py-2 rounded-full border border-white/[0.08] text-muted-foreground hover:border-accent/30 hover:text-accent transition-colors duration-500"
     >
       <span className="w-1 h-1 rounded-full bg-accent/40 flex-shrink-0" />
@@ -296,10 +282,10 @@ export default function Services() {
         </div>
         <div className="max-w-3xl mx-auto text-center relative z-10">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            viewport={{ once: true, margin: "0px 0px -20px 0px" }}
+            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
           >
             <div className="h-[1px] w-20 mx-auto mb-10 bg-gradient-to-r from-transparent via-accent/50 to-transparent" style={{ boxShadow: '0 0 16px rgba(176,141,87,0.12)' }} />
             <h2 className="text-3xl md:text-4xl font-medium tracking-tight mb-6 text-balance">
