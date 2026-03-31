@@ -199,24 +199,36 @@ export default function About() {
               {/* Vertical accent "spine" */}
               <div className="absolute -left-6 lg:-left-12 top-2 bottom-2 w-[1px] bg-gradient-to-b from-accent/40 via-accent/10 to-transparent" />
 
-              <AnimatedBlock delay={0.5}>
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+              >
                 <p className="text-xl md:text-2xl text-foreground/70 leading-relaxed font-light tracking-tight">
                   I spent years on the frontline. Personal trainer, fitness manager, physiotherapist. I built caseloads, managed operations for a <span className="text-foreground">25-person team</span>, and was the <span className="text-foreground">highest-revenue clinician</span> at my practice for three consecutive years. The through-line has always been the same: <span className="text-accent/90 font-normal">getting people to adopt and stick with</span> new systems, routines, or behaviours.
                 </p>
-              </AnimatedBlock>
+              </motion.div>
 
-              <AnimatedBlock delay={0.7}>
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
+              >
                 <p className="text-lg md:text-xl text-muted-foreground/80 leading-relaxed font-light">
                   Whether it was a patient following through on a home exercise program, a trainer learning a sales process, or a clinician adopting new documentation software, the challenge was always the same. <span className="text-foreground/90">People resist systems that add friction to their day.</span> The gap between how a tool is designed to work and <span className="text-accent/80">how the work actually happens</span> is where most rollouts fall apart.
                 </p>
-              </AnimatedBlock>
+              </motion.div>
 
-              <AnimatedBlock>
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.9, ease: [0.16, 1, 0.3, 1] }}
+              >
                 <div className="h-[1px] w-12 bg-accent/40 mb-8" />
                 <p className="text-lg md:text-xl text-muted-foreground/80 leading-relaxed font-light">
                   Now I work across healthcare, legal, and med-tech environments. I <span className="text-foreground/90">map workflows before touching configuration</span>, talk to the people who will use the system, and <span className="text-foreground/90">stay through adoption</span>.
                 </p>
-              </AnimatedBlock>
+              </motion.div>
             </div>
           </div>
         </motion.div>
