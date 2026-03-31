@@ -76,11 +76,11 @@ function ServiceSection({ service, index }: { service: { index: string; title: s
     offset: ["start end", "center center"]
   });
 
-  const springConfig = { stiffness: 100, damping: 30 };
-  const y = useSpring(useTransform(scrollYProgress, [0, 1], [80, 0]), springConfig);
-  const opacity = useSpring(useTransform(scrollYProgress, [0, 0.4, 1], [0, 0.4, 1]), springConfig);
-  const imgY = useSpring(useTransform(scrollYProgress, [0, 1], [50, -50]), springConfig);
-  const imgScale = useSpring(useTransform(scrollYProgress, [0, 1], [1.1, 1]), springConfig);
+  const springConfig = { stiffness: 80, damping: 35 };
+  const y = useSpring(useTransform(scrollYProgress, [0, 1], [40, 0]), springConfig);
+  const opacity = useSpring(useTransform(scrollYProgress, [0, 0.3, 1], [0.05, 0.5, 1]), springConfig);
+  const imgY = useSpring(useTransform(scrollYProgress, [0, 1], [30, -30]), springConfig);
+  const imgScale = useSpring(useTransform(scrollYProgress, [0, 1], [1.05, 1]), springConfig);
 
   const isReversed = index % 2 !== 0;
 
@@ -134,13 +134,13 @@ function ServiceSection({ service, index }: { service: { index: string; title: s
   );
 }
 
-function ToolDomain({ domain, index, featured = false }: { domain: typeof technicalIndex[0]; index: number; featured?: boolean }) {
+function ToolDomain({ domain, featured = false }: { domain: typeof technicalIndex[0]; index?: number; featured?: boolean }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 15 }}
+      initial={{ opacity: 0, y: 10 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-30px" }}
-      transition={{ duration: 0.5, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
+      viewport={{ once: true, margin: "0px 0px -20px 0px" }}
+      transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
       className={`relative rounded-lg border border-white/[0.06] hover:border-accent/20 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-black/20 transition-all duration-500 overflow-hidden ${
         featured
           ? 'p-8 md:p-10 bg-gradient-to-br from-[hsl(222,12%,13%)] to-[hsl(222,12%,11%)]'

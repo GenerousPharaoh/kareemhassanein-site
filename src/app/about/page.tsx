@@ -9,17 +9,17 @@ import { ArrowRight } from 'lucide-react';
 import { useRef } from 'react';
 
 // Animated text block - simplified for snappier feel
-function AnimatedBlock({ children, delay, className = "" }: {
+function AnimatedBlock({ children, className = "" }: {
   children: React.ReactNode;
-  delay: number;
+  delay?: number;
   className?: string;
 }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 10 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.5, delay: delay * 0.3, ease: [0.16, 1, 0.3, 1] }}
+      viewport={{ once: true, margin: "0px 0px -40px 0px" }}
+      transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
       className={className}
     >
       {children}
@@ -211,19 +211,11 @@ export default function About() {
                 </p>
               </AnimatedBlock>
 
-              <AnimatedBlock delay={0.9}>
+              <AnimatedBlock>
                 <div className="h-[1px] w-12 bg-accent/40 mb-8" />
-                <div className="overflow-hidden">
-                  <motion.p
-                    initial={{ y: "100%", opacity: 0 }}
-                    whileInView={{ y: 0, opacity: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 1.2, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                    className="text-lg md:text-xl text-muted-foreground/80 leading-relaxed font-light"
-                  >
-                    Now I work across healthcare, legal, and med-tech environments. I <span className="text-foreground/90">map workflows before touching configuration</span>, talk to the people who will use the system, and <span className="text-foreground/90">stay through adoption</span>.
-                  </motion.p>
-                </div>
+                <p className="text-lg md:text-xl text-muted-foreground/80 leading-relaxed font-light">
+                  Now I work across healthcare, legal, and med-tech environments. I <span className="text-foreground/90">map workflows before touching configuration</span>, talk to the people who will use the system, and <span className="text-foreground/90">stay through adoption</span>.
+                </p>
               </AnimatedBlock>
             </div>
           </div>

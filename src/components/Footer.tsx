@@ -61,9 +61,10 @@ export default function Footer() {
 
         <div className="relative z-10 px-6 pb-32 md:pb-0">
           <motion.h2
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+            viewport={{ once: true, margin: "0px 0px -20px 0px" }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
             className="text-5xl sm:text-7xl md:text-[120px] lg:text-[160px] font-medium tracking-tighter mb-8 md:mb-16 lg:mb-20 leading-[0.8]"
           >
             Reach <br />
