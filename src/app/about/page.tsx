@@ -250,9 +250,6 @@ export default function About() {
             <span className="text-[10px] md:text-xs font-medium tracking-[0.25em] uppercase text-accent mb-3 block">
               What I Bring
             </span>
-            <h2 className="text-2xl md:text-3xl font-medium tracking-tight">
-              Two perspectives, one <span className="text-accent/90 italic font-serif">focus.</span>
-            </h2>
           </motion.div>
 
           <div className="grid md:grid-cols-2 gap-5 md:gap-6">
