@@ -96,7 +96,7 @@ export default function Home() {
 
             <div className="space-y-5 md:space-y-6 mx-auto max-w-4xl">
 
-              {/* Premium tagline badge */}
+              {/* Badge */}
               <motion.div
                 initial={{ opacity: 0, y: 15, scale: 0.95 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -104,53 +104,39 @@ export default function Home() {
               >
                 <span className="inline-flex items-center gap-2.5 text-[10px] md:text-[11px] font-medium tracking-[0.2em] uppercase text-foreground/50 px-4 py-2 rounded-full border border-white/[0.06] bg-[hsl(222,12%,13%)]">
                   <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
-                  Implementation Consulting
+                  Implementation &amp; Operations
                 </span>
               </motion.div>
 
-              {/* Headline - more compact */}
-              <h1 className="font-medium leading-[1] tracking-[-0.03em]" style={{ fontSize: 'clamp(2.25rem, 5.5vw, 4.25rem)' }}>
+              {/* Name as headline */}
+              <h1 className="font-medium leading-[0.9] tracking-[-0.04em]" style={{ fontSize: 'clamp(2.75rem, 7vw, 5.5rem)' }}>
                 <motion.span
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
                   className="block"
                 >
-                  I find friction, solve it,
+                  Kareem
                 </motion.span>
                 <motion.span
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 1, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                  className="block"
+                  className="block text-accent/90 italic font-serif"
                 >
-                  and make it{" "}
-                  <motion.span
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 1.2, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                    className="inline-block text-accent italic font-serif"
-                  >
-                    stick
-                  </motion.span>
-                  <motion.span
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.8, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                    className="text-accent"
-                  >.</motion.span>
+                  Hassanein
                 </motion.span>
               </h1>
 
-              {/* Description - tighter */}
+              {/* Description — carries the substance */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                className="max-w-xl mx-auto"
+                className="max-w-2xl mx-auto"
               >
                 <p className="text-sm md:text-base lg:text-lg text-muted-foreground/80 font-light leading-relaxed">
-                  I help healthcare practices and professional services firms <span className="text-foreground/95">remove operational friction</span>. Whether it&apos;s automating documentation, redesigning workflows, or rolling out new tools, I stay through adoption until <span className="text-foreground/95">it actually works</span>.
+                  I help healthcare practices and professional services firms <span className="text-foreground/95">remove operational friction</span>. Whether it&apos;s automating documentation, redesigning workflows, rolling out new tools, or rebuilding digital infrastructure, I map what&apos;s actually happening, build what fits, and <span className="text-foreground/95">stay through adoption</span>.
                 </p>
               </motion.div>
 
