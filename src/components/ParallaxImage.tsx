@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
+import { motion, useScroll, useTransform, useSpring, useReducedMotion } from 'framer-motion';
 import Image from 'next/image';
 import { useRef } from 'react';
 
@@ -36,6 +36,7 @@ export default function ParallaxImage({
     fadedVertical = false
 }: ParallaxImageProps) {
     const containerRef = useRef<HTMLDivElement>(null);
+    const shouldReduceMotion = useReducedMotion();
 
     const { scrollYProgress } = useScroll({
         target: containerRef,
@@ -62,6 +63,7 @@ export default function ParallaxImage({
         <div
             ref={containerRef}
             className={`relative overflow-hidden ${className}`}
+            aria-hidden={alt === '' ? true : undefined}
             style={maskImage ? {
                 maskImage: maskImage,
                 WebkitMaskImage: maskImage
@@ -69,7 +71,7 @@ export default function ParallaxImage({
         >
             <motion.div
                 style={{
-                    y: smoothY,
+                    y: shouldReduceMotion ? 0 : smoothY,
                     willChange: 'transform',
                 }}
                 className="absolute inset-0 w-full h-[106%]"

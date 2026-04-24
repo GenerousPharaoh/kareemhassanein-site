@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, useSpring, useInView } from 'framer-motion';
+import { motion, useSpring, useInView, useReducedMotion } from 'framer-motion';
 import { useEffect, useRef } from 'react';
 
 interface CharRevealProps {
@@ -55,6 +55,11 @@ export default function CharReveal({
     const chars = children.split('');
     const ref = useRef(null);
     const isInView = useInView(ref, { once: true, margin: "-10%" });
+    const shouldReduceMotion = useReducedMotion();
+
+    if (shouldReduceMotion) {
+        return <span className={`inline-block ${className}`}>{children}</span>;
+    }
 
     return (
         <span ref={ref} className={`inline-block ${className}`}>

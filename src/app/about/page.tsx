@@ -32,7 +32,7 @@ const experience = [
     period: '2021 - 2024',
     role: 'Registered Physiotherapist',
     company: 'Private Physiotherapy Clinic',
-    desc: <>Top revenue-generating clinician for <span className="text-foreground/90">3 consecutive years</span> on a team of 6, generating <span className="text-accent/80">$200K+ annually</span> through retention workflows and high rebooking rates. Led the rollout of an AI clinical documentation tool (Heidi AI) from evaluation through go-live, achieving <span className="text-accent/80">100% adoption in 8 weeks</span>, cutting documentation by <span className="text-foreground/90">3 hours/week per clinician</span>, and eliminating $20K in annual admin cost.</>,
+    desc: <>Top revenue-generating clinician for <span className="text-foreground/90">3 consecutive years</span> on a team of 6, generating <span className="text-accent/80">$600K+ annually</span> through retention workflows and high rebooking rates. Led the rollout of an AI clinical documentation tool (Heidi AI) from evaluation through go-live, achieving <span className="text-accent/80">100% adoption in 8 weeks</span>, cutting documentation by <span className="text-foreground/90">3 hours/week per clinician</span>, and eliminating $20K in annual admin cost.</>,
   }
 ];
 
@@ -67,7 +67,7 @@ function ExperienceItem({ item, index }: { item: { period: string; role: string;
       transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
       className="group relative grid md:grid-cols-[140px_1fr] gap-4 md:gap-8 p-4 md:p-6 -mx-4 md:-mx-6 rounded-xl hover:bg-white/[0.03] transition-all duration-500"
     >
-      {/* Timeline dot — visible on desktop, offset accounts for -mx-6 (24px) on the parent */}
+      {/* Timeline dot, visible on desktop with offset for the parent spacing */}
       <div className="absolute left-[175px] top-8 w-[9px] h-[9px] rounded-full border-2 border-accent/40 bg-background z-10 hidden md:block group-hover:border-accent group-hover:bg-accent/20 transition-all duration-500" />
 
       {/* Left column - Period and index */}
@@ -119,7 +119,7 @@ export default function About() {
         <motion.div style={{ y: heroBgY }} className="absolute inset-0 z-0 will-change-transform flex items-center justify-center">
           <ParallaxImage
             src="/images/mapping.png"
-            alt="Mapping workflows"
+            alt=""
             className="max-w-3xl w-full opacity-50"
             fadedVertical={true}
           />
@@ -255,35 +255,7 @@ export default function About() {
 
       {/* Experience */}
       <section ref={historyRef} className="py-28 md:py-40 px-6 lg:px-12 xl:px-20 relative overflow-hidden">
-        {/* Premium layered background */}
-        <div className="absolute inset-0 z-0">
-          {/* Layer 1: Asymmetric mesh gradient */}
-          <div
-            className="absolute inset-0"
-            style={{
-              background: `
-                radial-gradient(ellipse at 10% 40%, rgba(176,141,87,0.10) 0px, transparent 50%),
-                radial-gradient(ellipse at 90% 70%, rgba(212,175,55,0.08) 0px, transparent 50%),
-                radial-gradient(ellipse at 50% 10%, rgba(139,109,63,0.06) 0px, transparent 50%)
-              `
-            }}
-          />
-          {/* Layer 2: Fine dot pattern with offset mask */}
-          <div
-            className="absolute inset-0"
-            style={{
-              backgroundImage: 'radial-gradient(rgba(176,141,87,0.14) 1px, transparent 1px)',
-              backgroundSize: '32px 32px',
-              maskImage: 'radial-gradient(ellipse 50% 60% at 30% 50%, black 20%, transparent 75%)',
-              WebkitMaskImage: 'radial-gradient(ellipse 50% 60% at 30% 50%, black 20%, transparent 75%)',
-            }}
-          />
-          {/* Layer 3: Concentrated glow at left */}
-          <div className="absolute top-1/4 left-0 w-[500px] h-[500px] bg-[radial-gradient(ellipse_at_center,rgba(176,141,87,0.08)_0%,transparent_70%)]" />
-          {/* Layer 4: Edge fade */}
-          <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background" />
-          <div className="absolute inset-0 bg-gradient-to-r from-background/30 via-transparent to-background/30" />
-        </div>
+        <div className="absolute inset-0 z-0 bg-[hsl(222,14%,10%)]/35" />
 
         <div className="max-w-[1000px] mx-auto relative z-10">
           <ScrollReveal direction="up">
@@ -316,9 +288,6 @@ export default function About() {
 
       {/* CTA Section */}
       <section className="py-24 md:py-32 px-6 lg:px-12 xl:px-20 relative overflow-hidden">
-        <div className="absolute inset-0 z-0 pointer-events-none">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-[radial-gradient(ellipse_at_center,rgba(176,141,87,0.06)_0%,transparent_65%)]" />
-        </div>
         <div className="max-w-3xl mx-auto text-center relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 12 }}

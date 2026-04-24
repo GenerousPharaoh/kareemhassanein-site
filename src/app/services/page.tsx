@@ -39,17 +39,17 @@ const services = [
 const technicalIndex = [
   {
     domain: 'Automation & AI',
-    tools: ['Claude', 'Python', 'REST APIs', 'Webhooks'],
+    tools: ['Codex', 'Cursor', 'Claude Code', 'Webhooks'],
     specs: ['LLM document generation', 'Workflow automation', 'System integrations', 'Data processing']
   },
   {
     domain: 'Healthcare Operations',
-    tools: ['EHR/EMR Systems', 'Practice Management Software', 'Google Workspace'],
+    tools: ['Jane App', 'JotForm', 'Practice Management Workflows'],
     specs: ['Multi-provider scheduling', 'Intake optimization', 'Referral tracking', 'Review capture']
   },
   {
     domain: 'Development & Analytics',
-    tools: ['Next.js', 'GitHub', 'Vercel', 'Google Analytics'],
+    tools: ['Next.js', 'React', 'Vercel', 'GitHub', 'Google Analytics'],
     specs: ['Web applications', 'CI/CD pipelines', 'SEO optimization', 'Performance tracking']
   }
 ];
@@ -96,7 +96,7 @@ function ServiceSection({ service, index }: { service: { index: string; title: s
       >
         <ParallaxImage
           src={service.image}
-          alt={service.title}
+          alt=""
           className="w-full h-full opacity-40"
           fadedSides={true}
           fadedVertical={true}
@@ -191,7 +191,7 @@ export default function Services() {
         <motion.div style={{ y: heroY }} className="absolute inset-0 z-0 will-change-transform">
           <ParallaxImage
             src="/images/mapping.png"
-            alt="Mapping"
+            alt=""
             className="w-full h-full opacity-40"
             fadedVertical={true}
           />
@@ -234,20 +234,6 @@ export default function Services() {
 
       {/* Tools Section */}
       <section ref={toolsRef} className="py-24 md:py-32 px-6 lg:px-12 xl:px-20 relative overflow-hidden">
-        {/* Background image - full width with parallax and faded edges */}
-        <motion.div
-          style={{ y: toolsY }}
-          className="absolute inset-0 z-0 pointer-events-none will-change-transform"
-        >
-          <ParallaxImage
-            src="/images/kh_section_divider_signal-to-system_02.png"
-            alt=""
-            className="w-full h-full opacity-[0.2]"
-            fadedSides={true}
-            fadedVertical={true}
-          />
-        </motion.div>
-
         <div className="max-w-5xl mx-auto relative z-10">
           {/* Header */}
           <motion.div
@@ -276,10 +262,6 @@ export default function Services() {
 
       {/* CTA Section */}
       <section className="py-24 md:py-32 px-6 lg:px-12 xl:px-20 relative overflow-hidden">
-        {/* Atmospheric glow */}
-        <div className="absolute inset-0 z-0 pointer-events-none">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-[radial-gradient(ellipse_at_center,rgba(176,141,87,0.07)_0%,transparent_65%)]" />
-        </div>
         <div className="max-w-3xl mx-auto text-center relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 12 }}

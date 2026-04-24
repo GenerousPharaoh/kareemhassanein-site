@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 
 interface MaskedRevealProps {
     children: string;
@@ -17,6 +17,7 @@ export default function MaskedReveal({
     delay = 0,
     direction = 'up'
 }: MaskedRevealProps) {
+    const shouldReduceMotion = useReducedMotion();
 
     const variants = {
         hidden: {
@@ -40,7 +41,7 @@ export default function MaskedReveal({
         <span className={`inline-block overflow-hidden relative leading-[1.1] ${className}`}>
             <motion.span
                 variants={variants}
-                initial="hidden"
+                initial={shouldReduceMotion ? false : "hidden"}
                 whileInView="visible"
                 viewport={{ once: true, margin: "-10%" }}
                 className={`inline-block ${textClassName}`}

@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import LayoutWrapper from "@/components/LayoutWrapper";
-import Spotlight from "@/components/Spotlight";
 import { Urbanist, Cormorant_Garamond } from 'next/font/google';
 
 const geistMono = localFont({
@@ -24,12 +23,12 @@ const cormorant = Cormorant_Garamond({
 
 export const metadata: Metadata = {
   title: "Kareem Hassanein | Implementation Consulting",
-  description: "Operations improvement, workflow automation, and technology implementation for healthcare practices and professional services firms. I find bottlenecks and build systems people actually use.",
+  description: "Operations improvement, workflow automation, and technology implementation for healthcare practices and professional services firms. I find friction, solve it, and make it stick.",
   keywords: ["implementation consulting", "workflow automation", "operations improvement", "healthcare operations", "AI implementation", "change management", "digital transformation"],
   authors: [{ name: "Kareem Hassanein" }],
   openGraph: {
     title: "Kareem Hassanein | Implementation Consulting",
-    description: "Operations improvement, workflow automation, and technology implementation. I find bottlenecks and build systems people actually use.",
+    description: "Operations improvement, workflow automation, and technology implementation. I find friction, solve it, and make it stick.",
     type: "website",
     locale: "en_CA",
   },
@@ -103,7 +102,6 @@ export default function RootLayout({
         className={`${urbanist.variable} ${geistMono.variable} ${cormorant.variable} antialiased font-sans`}
       >
         <div className="noise-overlay" />
-        <Spotlight />
         <LayoutWrapper>
           {children}
         </LayoutWrapper>

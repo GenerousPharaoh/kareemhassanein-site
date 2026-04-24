@@ -34,7 +34,7 @@ export default function Home() {
   const transitionRef = useRef(null);
   const portfolioRef = useRef(null);
 
-  // Spring config — high damping prevents overshoot/flicker
+  // High damping prevents overshoot and flicker.
   const springConfig = { stiffness: 80, damping: 35, restDelta: 0.001 };
 
   // Hero parallax - background moves UP (slower than scroll) for depth effect
@@ -78,7 +78,7 @@ export default function Home() {
         >
           <ParallaxImage
             src="/images/orchestrating.png"
-            alt="Cinematic Core"
+            alt=""
             className="w-full h-full opacity-50"
             priority={true}
           />
@@ -86,10 +86,7 @@ export default function Home() {
 
         {/* Layered gradient overlays for depth */}
         <div className="absolute inset-0 z-[1] bg-gradient-to-b from-background via-transparent via-40% to-background pointer-events-none" />
-        <div className="absolute inset-0 z-[1] bg-[radial-gradient(ellipse_80%_60%_at_50%_40%,transparent_0%,hsl(var(--background)/0.8)_100%)] pointer-events-none" />
-
-        {/* Subtle accent glow */}
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-accent/[0.03] rounded-full blur-[100px] z-0 pointer-events-none" />
+        <div className="absolute inset-0 z-[1] bg-background/20 pointer-events-none" />
 
         <div className="relative z-10 w-full max-w-[1400px] flex flex-col justify-center">
           <div className="flex flex-col items-center text-center">
@@ -103,7 +100,7 @@ export default function Home() {
                 transition={{ duration: 1, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
               >
                 <span className="inline-flex items-center gap-2.5 text-[10px] md:text-[11px] font-medium tracking-[0.2em] uppercase text-foreground/50 px-4 py-2 rounded-full border border-white/[0.06] bg-[hsl(222,12%,13%)]">
-                  <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-accent" />
                   Implementation · Operations · Digital Transformation
                 </span>
               </motion.div>
@@ -136,7 +133,7 @@ export default function Home() {
                 className="h-[1px] w-16 bg-accent/40 mx-auto origin-center"
               />
 
-              {/* Description — carries the substance */}
+              {/* Description carries the substance. */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -144,8 +141,30 @@ export default function Home() {
                 className="max-w-2xl mx-auto px-6 py-5 md:px-8 md:py-6 rounded-xl bg-white/[0.03] border border-white/[0.05]"
               >
                 <p className="text-sm md:text-base lg:text-lg text-foreground/70 font-light leading-relaxed">
-                  I help healthcare practices and professional services firms <span className="text-foreground">remove operational friction</span>. Whether it&apos;s automating documentation, redesigning workflows, rolling out new tools, or rebuilding digital infrastructure, I map what&apos;s actually happening, build what fits, and <span className="text-foreground">stay through adoption</span>.
+                  I help healthcare practices and professional services firms <span className="text-foreground">remove operational friction</span>. I map how work actually happens, build practical fixes, and <span className="text-foreground">stay through adoption</span>.
                 </p>
+              </motion.div>
+
+              {/* CTAs */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-center justify-center pt-1"
+              >
+                <Link
+                  href="/contact"
+                  className="group flex items-center justify-center gap-2.5 text-sm md:text-base font-medium w-full sm:w-auto px-7 py-3.5 rounded-full bg-accent text-background hover:bg-accent/90 transition-all duration-300"
+                >
+                  Get in touch
+                  <ArrowRight size={16} className="group-hover:translate-x-0.5 transition-transform duration-300" />
+                </Link>
+                <Link
+                  href="/about"
+                  className="text-sm md:text-base font-medium text-foreground/80 w-full sm:w-auto text-center px-7 py-3.5 rounded-full border border-white/[0.14] hover:text-foreground hover:border-accent/35 hover:bg-white/[0.03] transition-all duration-300"
+                >
+                  Learn more
+                </Link>
               </motion.div>
 
               {/* Metrics */}
@@ -161,32 +180,10 @@ export default function Home() {
                     {/* Accent top line */}
                     <div className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-[2px] bg-accent/30 rounded-full" />
                     <p className="text-xl sm:text-2xl md:text-3xl font-serif italic text-accent mb-2.5 whitespace-nowrap">{m.value}</p>
-                    <p className="text-[11px] md:text-xs text-muted-foreground/60 leading-relaxed max-w-[200px] mx-auto">{m.label}</p>
+                    <p className="text-[11px] md:text-xs text-muted-foreground/75 leading-relaxed max-w-[200px] mx-auto">{m.label}</p>
                   </motion.div>
                 ))}
               </div>
-
-              {/* CTAs */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.85, ease: [0.16, 1, 0.3, 1] }}
-                className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-center justify-center pt-2"
-              >
-                <Link
-                  href="/contact"
-                  className="group flex items-center justify-center gap-2.5 text-sm md:text-base font-medium w-full sm:w-auto px-7 py-3.5 rounded-full bg-accent text-background hover:bg-accent/90 transition-all duration-300"
-                >
-                  Get in touch
-                  <ArrowRight size={16} className="group-hover:translate-x-0.5 transition-transform duration-300" />
-                </Link>
-                <Link
-                  href="/about"
-                  className="text-sm md:text-base font-medium text-foreground/70 w-full sm:w-auto text-center px-7 py-3.5 rounded-full border border-white/[0.1] hover:text-foreground hover:border-accent/30 hover:bg-white/[0.03] hover:shadow-[0_0_20px_rgba(176,141,87,0.06)] transition-all duration-300"
-                >
-                  Learn more
-                </Link>
-              </motion.div>
             </div>
           </div>
         </div>
@@ -199,10 +196,6 @@ export default function Home() {
       <section ref={transitionRef} className="py-20 md:py-28 px-6 md:px-12 xl:px-20 relative">
         {/* Atmospheric background */}
         <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-background to-transparent pointer-events-none z-0" />
-        <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[500px] bg-[radial-gradient(ellipse_at_center,rgba(176,141,87,0.06)_0%,transparent_60%)]" />
-          <div className="absolute bottom-0 right-[10%] w-[400px] h-[300px] bg-[radial-gradient(ellipse_at_center,rgba(212,175,55,0.04)_0%,transparent_60%)]" />
-        </div>
         <div className="max-w-6xl mx-auto relative z-10">
 
           {/* Two-column layout: Statement left, Steps right */}
@@ -293,35 +286,7 @@ export default function Home() {
 
       {/* Selected Projects */}
       <section ref={portfolioRef} className="py-28 md:py-40 relative z-10 w-full px-6 md:px-12 xl:px-20 overflow-hidden">
-        {/* Premium layered background */}
-        <div className="absolute inset-0 z-0 overflow-hidden">
-          {/* Layer 1: Multi-point mesh gradient */}
-          <div
-            className="absolute inset-0"
-            style={{
-              background: `
-                radial-gradient(ellipse at 15% 80%, rgba(176,141,87,0.12) 0px, transparent 50%),
-                radial-gradient(ellipse at 85% 15%, rgba(212,175,55,0.09) 0px, transparent 50%),
-                radial-gradient(ellipse at 60% 60%, rgba(152,120,72,0.07) 0px, transparent 50%),
-                radial-gradient(ellipse at 30% 20%, rgba(176,141,87,0.05) 0px, transparent 50%)
-              `
-            }}
-          />
-          {/* Layer 2: Dot pattern with radial mask fade */}
-          <div
-            className="absolute inset-0"
-            style={{
-              backgroundImage: 'radial-gradient(rgba(176,141,87,0.18) 1px, transparent 1px)',
-              backgroundSize: '28px 28px',
-              maskImage: 'radial-gradient(ellipse 60% 50% at 50% 50%, black 30%, transparent 80%)',
-              WebkitMaskImage: 'radial-gradient(ellipse 60% 50% at 50% 50%, black 30%, transparent 80%)',
-            }}
-          />
-          {/* Layer 3: Top glow */}
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80%] h-[400px] bg-[radial-gradient(ellipse_at_50%_0%,rgba(176,141,87,0.10)_0%,transparent_70%)]" />
-          {/* Layer 4: Edge fade */}
-          <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background" />
-        </div>
+        <div className="absolute inset-0 z-0 bg-[hsl(222,14%,10%)]/35" />
 
         <div className="max-w-[1400px] mx-auto relative z-10">
           <motion.div
