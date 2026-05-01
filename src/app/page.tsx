@@ -101,7 +101,7 @@ export default function Home() {
               >
                 <span className="inline-flex items-center gap-2.5 text-[10px] md:text-[11px] font-medium tracking-[0.2em] uppercase text-foreground/50 px-4 py-2 rounded-full border border-white/[0.06] bg-[hsl(222,12%,13%)]">
                   <span className="w-1.5 h-1.5 rounded-full bg-accent" />
-                  Implementation · Operations · Digital Transformation
+                  Implementation · Operations · Adoption
                 </span>
               </motion.div>
 
@@ -141,7 +141,7 @@ export default function Home() {
                 className="max-w-2xl mx-auto px-6 py-5 md:px-8 md:py-6 rounded-xl bg-white/[0.03] border border-white/[0.05]"
               >
                 <p className="text-sm md:text-base lg:text-lg text-foreground/70 font-light leading-relaxed">
-                  I help healthcare practices and professional services firms <span className="text-foreground">remove operational friction</span>. I map how work actually happens, build practical fixes, and <span className="text-foreground">stay through adoption</span>.
+                  I help healthcare practices and professional-services firms <span className="text-foreground">remove operational friction</span>, and advise health-tech founders on how their tools land with clinicians and patients. I map how work actually happens, build practical fixes, and <span className="text-foreground">stay through adoption</span>.
                 </p>
               </motion.div>
 

@@ -33,6 +33,14 @@ const services = [
     desc: <>Before building anything new, I map <span className="text-foreground/90">how your practice actually runs</span>. Where do referrals get lost? Which steps take longer than they should? What workarounds have people created?</>,
     points: ['Workflow mapping', 'Process optimization', 'SOPs and playbooks', 'Capacity planning'],
     image: '/images/flow.png',
+  },
+  {
+    index: '04',
+    title: 'Health-Tech Advisory',
+    tagline: 'A tool only counts if clinicians and patients keep using it.',
+    desc: <>For founders building <span className="text-foreground/90">rehabilitation, patient engagement, clinical workflow, or AI tools</span>. I look at how a product fits the routines of clinicians, patients, and teams, where the design or rollout asks too much, and what to adjust so it has a real chance of becoming part of how the work gets done.</>,
+    points: ['Clinical fit review', 'Adoption strategy', 'Workflow integration', 'Rollout planning'],
+    image: '/images/bridging.png',
   }
 ];
 
@@ -204,7 +212,7 @@ export default function Services() {
               What I <CharReveal delay={0.4} className="text-accent italic font-serif">do.</CharReveal>
             </h1>
             <p className="text-xl md:text-2xl text-muted-foreground font-light leading-relaxed max-w-2xl">
-              Operations improvement, workflow automation, and technology implementation for healthcare practices and professional services firms.
+              Operations improvement, workflow automation, and technology implementation for healthcare practices and professional-services firms. Advisory work for health-tech founders building tools clinicians and patients have to actually use.
             </p>
           </ScrollReveal>
         </motion.div>

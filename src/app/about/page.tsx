@@ -208,7 +208,7 @@ export default function About() {
               >
                 <div className="h-[1px] w-12 bg-accent/40 mb-8" />
                 <p className="text-lg md:text-xl text-muted-foreground/80 leading-relaxed font-light">
-                  Now I work across healthcare, legal, and med-tech environments. I <span className="text-foreground/90">map workflows before touching configuration</span>, talk to the people who will use the system, and <span className="text-foreground/90">stay through adoption</span>.
+                  Now I work across healthcare, legal, and med-tech environments, running implementations inside practices and advising founders building tools that <span className="text-foreground/90">clinicians and patients will actually use</span>. I <span className="text-foreground/90">map workflows before touching configuration</span>, talk to the people who will use the system, and <span className="text-foreground/90">stay through adoption</span>.
                 </p>
               </motion.div>
             </div>
@@ -250,6 +250,28 @@ export default function About() {
               desc={<>I start by understanding how the work <span className="text-foreground/90">actually moves</span> before touching any configuration. Then I build the system to match that workflow, whether that means writing automation, configuring software, or wiring up integrations. Then I <span className="text-accent/80">stay through the first stretch of real use</span> to adjust what needs adjusting.</>}
             />
           </div>
+        </div>
+      </section>
+
+      {/* Mentorship */}
+      <section className="py-12 md:py-16 px-6 lg:px-12 xl:px-20">
+        <div className="max-w-[900px] mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "0px 0px -20px 0px" }}
+            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <span className="text-[10px] md:text-xs font-medium tracking-[0.25em] uppercase text-accent mb-4 block">
+              Mentorship
+            </span>
+            <h3 className="text-2xl md:text-3xl font-medium tracking-tight mb-5">
+              Lab2Market Validate <span className="text-accent/90 italic font-serif">at</span> McMaster University
+            </h3>
+            <p className="text-base md:text-lg text-muted-foreground/80 leading-relaxed max-w-2xl font-light">
+              Volunteer mentor for the <span className="text-foreground/90">June 2026 cohort</span>, supporting Canadian researchers as they test and commercialize <span className="text-foreground/90">MedTech innovations</span> through the McMaster Industry Liaison Office&apos;s Lab2Market program.
+            </p>
+          </motion.div>
         </div>
       </section>
 

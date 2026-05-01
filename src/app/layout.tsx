@@ -23,19 +23,19 @@ const cormorant = Cormorant_Garamond({
 
 export const metadata: Metadata = {
   title: "Kareem Hassanein | Implementation Consulting",
-  description: "Operations improvement, workflow automation, and technology implementation for healthcare practices and professional services firms. I find friction, solve it, and make it stick.",
-  keywords: ["implementation consulting", "workflow automation", "operations improvement", "healthcare operations", "AI implementation", "change management", "digital transformation"],
+  description: "Implementation, operations, and adoption work for healthcare practices, professional-services firms, and health-tech founders. I find friction, solve it, and make it stick.",
+  keywords: ["implementation consulting", "workflow automation", "operations improvement", "healthcare operations", "AI adoption", "change management", "clinical implementation", "health-tech advisory"],
   authors: [{ name: "Kareem Hassanein" }],
   openGraph: {
     title: "Kareem Hassanein | Implementation Consulting",
-    description: "Operations improvement, workflow automation, and technology implementation. I find friction, solve it, and make it stick.",
+    description: "Implementation, operations, and adoption work for healthcare practices, professional-services firms, and health-tech founders. I find friction, solve it, and make it stick.",
     type: "website",
     locale: "en_CA",
   },
   twitter: {
     card: "summary_large_image",
     title: "Kareem Hassanein | Implementation Consulting",
-    description: "Operations improvement, workflow automation, and technology implementation for healthcare and professional services.",
+    description: "Implementation, operations, and adoption work for healthcare, professional services, and health-tech founders.",
   },
   robots: {
     index: true,
@@ -51,7 +51,7 @@ const jsonLd = {
   "@type": "Person",
   name: "Kareem Hassanein",
   jobTitle: "Implementation Consultant",
-  description: "Operations improvement, workflow automation, and technology implementation for healthcare practices and professional services firms.",
+  description: "Implementation, operations, and adoption work for healthcare practices, professional-services firms, and health-tech founders.",
   url: "https://khassanein.bio",
   sameAs: [
     "https://www.linkedin.com/in/kareemhassanein",
@@ -62,14 +62,15 @@ const jsonLd = {
     "Technology Implementation",
     "Healthcare Operations",
     "Change Management",
-    "AI Implementation",
-    "Digital Transformation"
+    "AI Adoption",
+    "Clinical Implementation",
+    "Health-Tech Advisory"
   ],
   alumniOf: [
     {
       "@type": "CollegeOrUniversity",
       name: "Robert Gordon University",
-      description: "MSc Physiotherapy"
+      description: "MSc Physiotherapy with Distinction"
     },
     {
       "@type": "CollegeOrUniversity",
@@ -77,6 +78,11 @@ const jsonLd = {
       description: "BSc Kinesiology"
     }
   ],
+  affiliation: {
+    "@type": "Organization",
+    name: "Lab2Market Validate, McMaster University Industry Liaison Office",
+    description: "Volunteer mentor, June 2026 cohort"
+  },
   address: {
     "@type": "PostalAddress",
     addressLocality: "Burlington",
