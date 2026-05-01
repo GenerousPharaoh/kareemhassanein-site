@@ -1,6 +1,7 @@
 'use client';
 
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
+import { motion, useScroll, useTransform, useSpring, useReducedMotion } from 'framer-motion';
+import useIsMobile from '@/hooks/useIsMobile';
 import { Linkedin, ArrowUpRight, Send, Check } from 'lucide-react';
 import MaskedReveal from '@/components/MaskedReveal';
 import Image from 'next/image';
@@ -143,12 +144,16 @@ function ContactForm() {
 export default function Contact() {
   const heroRef = useRef(null);
 
+  const shouldReduceMotion = useReducedMotion();
+  const isMobile = useIsMobile();
+  const disableScrollMotion = shouldReduceMotion || isMobile;
+
   const { scrollYProgress } = useScroll({
     target: heroRef,
     offset: ["start start", "end start"]
   });
   const springConfig = { stiffness: 100, damping: 30 };
-  const textY = useSpring(useTransform(scrollYProgress, [0, 1], [0, 30]), springConfig);
+  const textY = useSpring(useTransform(scrollYProgress, [0, 1], [0, disableScrollMotion ? 0 : 30]), springConfig);
 
   const labelOpacity = useSpring(0, springConfig);
   const labelY = useSpring(20, springConfig);

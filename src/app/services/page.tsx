@@ -1,9 +1,10 @@
 'use client';
 
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
+import { motion, useScroll, useTransform, useSpring, useReducedMotion } from 'framer-motion';
 import ScrollReveal from '@/components/ScrollReveal';
 import CharReveal from '@/components/CharReveal';
 import ParallaxImage from '@/components/ParallaxImage';
+import useIsMobile from '@/hooks/useIsMobile';
 
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
@@ -79,16 +80,23 @@ function ServiceTag({ tag, index }: { tag: string; index: number }) {
 
 function ServiceSection({ service, index }: { service: { index: string; title: string; tagline: string; desc: React.ReactNode; points: string[]; image: string }, index: number }) {
   const ref = useRef(null);
+  const shouldReduceMotion = useReducedMotion();
+  const isMobile = useIsMobile();
+  const disableScrollMotion = shouldReduceMotion || isMobile;
+
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "center center"]
   });
 
   const springConfig = { stiffness: 80, damping: 35 };
-  const y = useSpring(useTransform(scrollYProgress, [0, 1], [40, 0]), springConfig);
-  const opacity = useSpring(useTransform(scrollYProgress, [0, 0.3, 1], [0.05, 0.5, 1]), springConfig);
-  const imgY = useSpring(useTransform(scrollYProgress, [0, 1], [30, -30]), springConfig);
-  const imgScale = useSpring(useTransform(scrollYProgress, [0, 1], [1.05, 1]), springConfig);
+  const y = useSpring(useTransform(scrollYProgress, [0, 1], [disableScrollMotion ? 0 : 40, 0]), springConfig);
+  const opacity = useSpring(
+    useTransform(scrollYProgress, [0, 0.3, 1], disableScrollMotion ? [1, 1, 1] : [0.05, 0.5, 1]),
+    springConfig
+  );
+  const imgY = useSpring(useTransform(scrollYProgress, [0, 1], [disableScrollMotion ? 0 : 30, disableScrollMotion ? 0 : -30]), springConfig);
+  const imgScale = useSpring(useTransform(scrollYProgress, [0, 1], [disableScrollMotion ? 1 : 1.05, 1]), springConfig);
 
   const isReversed = index % 2 !== 0;
 
@@ -172,6 +180,9 @@ function ToolDomain({ domain, featured = false }: { domain: typeof technicalInde
 export default function Services() {
   const heroRef = useRef(null);
   const toolsRef = useRef(null);
+  const shouldReduceMotion = useReducedMotion();
+  const isMobile = useIsMobile();
+  const disableScrollMotion = shouldReduceMotion || isMobile;
 
   // Hero parallax
   const { scrollYProgress: heroProgress } = useScroll({
@@ -179,7 +190,7 @@ export default function Services() {
     offset: ["start start", "end start"]
   });
   const springConfig = { stiffness: 100, damping: 30 };
-  const heroY = useSpring(useTransform(heroProgress, [0, 1], [0, 60]), springConfig);
+  const heroY = useSpring(useTransform(heroProgress, [0, 1], [0, disableScrollMotion ? 0 : 60]), springConfig);
 
   // Tools section
   const { scrollYProgress: toolsProgress } = useScroll({
@@ -187,8 +198,11 @@ export default function Services() {
     offset: ["start end", "start 0.4"]
   });
   const tightSpring = { stiffness: 80, damping: 35 };
-  const toolsY = useSpring(useTransform(toolsProgress, [0, 1], [60, 0]), tightSpring);
-  const toolsOpacity = useSpring(useTransform(toolsProgress, [0, 0.5, 1], [0.05, 0.5, 1]), tightSpring);
+  const toolsY = useSpring(useTransform(toolsProgress, [0, 1], [disableScrollMotion ? 0 : 60, 0]), tightSpring);
+  const toolsOpacity = useSpring(
+    useTransform(toolsProgress, [0, 0.5, 1], disableScrollMotion ? [1, 1, 1] : [0.05, 0.5, 1]),
+    tightSpring
+  );
 
   return (
     <main className="relative bg-background text-foreground overflow-hidden pt-20">

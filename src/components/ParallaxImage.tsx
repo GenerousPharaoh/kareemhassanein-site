@@ -3,6 +3,7 @@
 import { motion, useScroll, useTransform, useSpring, useReducedMotion } from 'framer-motion';
 import Image from 'next/image';
 import { useRef } from 'react';
+import useIsMobile from '@/hooks/useIsMobile';
 
 interface ParallaxImageProps {
     src: string;
@@ -37,6 +38,8 @@ export default function ParallaxImage({
 }: ParallaxImageProps) {
     const containerRef = useRef<HTMLDivElement>(null);
     const shouldReduceMotion = useReducedMotion();
+    const isMobile = useIsMobile();
+    const disableParallax = shouldReduceMotion || isMobile;
 
     const { scrollYProgress } = useScroll({
         target: containerRef,
@@ -71,7 +74,7 @@ export default function ParallaxImage({
         >
             <motion.div
                 style={{
-                    y: shouldReduceMotion ? 0 : smoothY,
+                    y: disableParallax ? 0 : smoothY,
                     willChange: 'transform',
                 }}
                 className="absolute inset-0 w-full h-[106%]"

@@ -1,9 +1,10 @@
 'use client';
 
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
+import { motion, useScroll, useTransform, useSpring, useReducedMotion } from 'framer-motion';
 import ScrollReveal from '@/components/ScrollReveal';
 import ParallaxImage from '@/components/ParallaxImage';
 import AnimatedDivider from '@/components/AnimatedDivider';
+import useIsMobile from '@/hooks/useIsMobile';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { useRef } from 'react';
@@ -99,6 +100,9 @@ function ExperienceItem({ item, index }: { item: { period: string; role: string;
 export default function About() {
   const heroRef = useRef(null);
   const historyRef = useRef(null);
+  const shouldReduceMotion = useReducedMotion();
+  const isMobile = useIsMobile();
+  const disableScrollMotion = shouldReduceMotion || isMobile;
 
   // Hero parallax
   const { scrollYProgress: heroProgress } = useScroll({
@@ -106,8 +110,8 @@ export default function About() {
     offset: ["start start", "end start"]
   });
   const springConfig = { stiffness: 80, damping: 35 };
-  const heroBgY = useSpring(useTransform(heroProgress, [0, 1], [0, 100]), springConfig);
-  const heroTextY = useSpring(useTransform(heroProgress, [0, 1], [0, 40]), springConfig);
+  const heroBgY = useSpring(useTransform(heroProgress, [0, 1], [0, disableScrollMotion ? 0 : 100]), springConfig);
+  const heroTextY = useSpring(useTransform(heroProgress, [0, 1], [0, disableScrollMotion ? 0 : 40]), springConfig);
 
   return (
     <main className="bg-background text-foreground pt-20">

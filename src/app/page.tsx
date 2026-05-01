@@ -1,10 +1,11 @@
 'use client';
 
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
+import { motion, useScroll, useTransform, useSpring, useReducedMotion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import ProjectList from '@/components/ProjectList';
 import AnimatedDivider from '@/components/AnimatedDivider';
 import ParallaxImage from '@/components/ParallaxImage';
+import useIsMobile from '@/hooks/useIsMobile';
 import Link from 'next/link';
 import { useRef } from 'react';
 
@@ -33,6 +34,9 @@ export default function Home() {
   const heroRef = useRef(null);
   const transitionRef = useRef(null);
   const portfolioRef = useRef(null);
+  const shouldReduceMotion = useReducedMotion();
+  const isMobile = useIsMobile();
+  const disableScrollMotion = shouldReduceMotion || isMobile;
 
   // High damping prevents overshoot and flicker.
   const springConfig = { stiffness: 80, damping: 35, restDelta: 0.001 };
@@ -42,7 +46,7 @@ export default function Home() {
     target: heroRef,
     offset: ["start start", "end start"]
   });
-  const heroBgYRaw = useTransform(heroProgress, [0, 1], [0, -80]);
+  const heroBgYRaw = useTransform(heroProgress, [0, 1], [0, disableScrollMotion ? 0 : -80]);
   const heroBgY = useSpring(heroBgYRaw, springConfig);
 
   // Statement section - smooth fade and slide
@@ -50,8 +54,12 @@ export default function Home() {
     target: transitionRef,
     offset: ["start end", "center center"]
   });
-  const statementYRaw = useTransform(statementProgress, [0, 1], [40, 0]);
-  const statementOpacityRaw = useTransform(statementProgress, [0, 0.3, 1], [0.05, 0.5, 1]);
+  const statementYRaw = useTransform(statementProgress, [0, 1], [disableScrollMotion ? 0 : 40, 0]);
+  const statementOpacityRaw = useTransform(
+    statementProgress,
+    [0, 0.3, 1],
+    disableScrollMotion ? [1, 1, 1] : [0.05, 0.5, 1]
+  );
   const statementY = useSpring(statementYRaw, springConfig);
   const statementOpacity = useSpring(statementOpacityRaw, springConfig);
 
@@ -61,8 +69,12 @@ export default function Home() {
     target: portfolioRef,
     offset: ["start end", "start 0.85"]
   });
-  const portfolioYRaw = useTransform(portfolioProgress, [0, 1], [50, 0]);
-  const portfolioOpacityRaw = useTransform(portfolioProgress, [0, 0.2, 1], [0.05, 0.8, 1]);
+  const portfolioYRaw = useTransform(portfolioProgress, [0, 1], [disableScrollMotion ? 0 : 50, 0]);
+  const portfolioOpacityRaw = useTransform(
+    portfolioProgress,
+    [0, 0.2, 1],
+    disableScrollMotion ? [1, 1, 1] : [0.05, 0.8, 1]
+  );
   const portfolioY = useSpring(portfolioYRaw, springConfig);
   const portfolioOpacity = useSpring(portfolioOpacityRaw, springConfig);
 

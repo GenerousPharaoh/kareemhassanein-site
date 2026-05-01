@@ -1,8 +1,9 @@
 'use client';
 
-import { useScroll, useTransform, useSpring, MotionValue } from 'framer-motion';
+import { useScroll, useTransform, useSpring, useReducedMotion, MotionValue } from 'framer-motion';
 import { useRef } from 'react';
 import ProjectListItem from './ProjectListItem';
+import useIsMobile from '@/hooks/useIsMobile';
 
 const projects = [
     {
@@ -26,16 +27,17 @@ const projects = [
 
 const TOTAL = projects.length;
 
-function StaggeredItem({ project, index, progress }: {
+function StaggeredItem({ project, index, progress, disableScrollMotion }: {
     project: typeof projects[0];
     index: number;
     progress: MotionValue<number>;
+    disableScrollMotion: boolean;
 }) {
     const segment = 1 / (TOTAL + 1);
     const start = index * segment;
     const end = start + segment * 2;
     const opacity = useSpring(
-        useTransform(progress, [start, end], [0.03, 1]),
+        useTransform(progress, [start, end], disableScrollMotion ? [1, 1] : [0.03, 1]),
         { stiffness: 80, damping: 30 }
     );
 
@@ -50,6 +52,9 @@ function StaggeredItem({ project, index, progress }: {
 
 export default function ProjectList() {
     const ref = useRef<HTMLDivElement>(null);
+    const shouldReduceMotion = useReducedMotion();
+    const isMobile = useIsMobile();
+    const disableScrollMotion = !!(shouldReduceMotion || isMobile);
 
     const { scrollYProgress } = useScroll({
         target: ref,
@@ -64,6 +69,7 @@ export default function ProjectList() {
                     project={project}
                     index={index}
                     progress={scrollYProgress}
+                    disableScrollMotion={disableScrollMotion}
                 />
             ))}
         </div>
