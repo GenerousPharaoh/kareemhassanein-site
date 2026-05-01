@@ -25,7 +25,7 @@ const metrics = [
 ];
 
 const approach = [
-  { title: 'Map', desc: 'Watch the workflow run from start to finish before touching any settings.', em: 'before touching any settings' },
+  { title: 'Map', desc: 'Watch the workflow run before changing anything.', em: 'before changing anything' },
   { title: 'Build', desc: 'Fit the system to the workflow, not the other way around.', em: 'not the other way around' },
   { title: 'Launch', desc: 'Stay through the first weeks until the new way becomes the default.', em: 'becomes the default' },
 ];

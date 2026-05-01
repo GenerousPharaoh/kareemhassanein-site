@@ -201,7 +201,7 @@ export default function About() {
                 transition={{ duration: 0.6, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
               >
                 <p className="text-lg md:text-xl text-muted-foreground/80 leading-relaxed font-light">
-                  Whether it was a patient following through on a home exercise program, a trainer learning a sales process, or a clinician adopting new documentation software, the challenge was always the same. <span className="text-foreground/90">People resist systems that add friction to their day.</span> The gap between how a tool is designed and <span className="text-accent/80">the workday it has to fit into</span> is where most rollouts fall apart.
+                  Whether it was a patient following through on a home exercise program, a trainer learning a sales process, or a clinician adopting new documentation software, the challenge was always the same. <span className="text-foreground/90">People resist systems that add friction to their day.</span> The gap between how a tool is designed and <span className="text-accent/80">how it gets used</span> is where most rollouts fall apart.
                 </p>
               </motion.div>
 
@@ -251,7 +251,7 @@ export default function About() {
             <ValueCard
               subtitle="Process"
               title="Map, build, and stay."
-              desc={<>I sit with the team and watch the workflow run before changing any settings. Then I build the system to match it, whether that means writing automation, configuring software, or wiring up integrations. After launch, I <span className="text-accent/80">stay through the first weeks</span> and clean up whatever the team runs into.</>}
+              desc={<>I sit with the team and watch the workflow run before changing anything. Then I build the system to match it, whether that means writing automation, configuring software, or wiring up integrations. After launch, I <span className="text-accent/80">stay through the first weeks</span> and clean up whatever the team runs into.</>}
             />
           </div>
         </div>

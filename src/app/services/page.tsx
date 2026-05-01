@@ -22,7 +22,7 @@ const services = [
   {
     index: '02',
     title: 'Software Implementation',
-    tagline: 'Make the tools you paid for stick.',
+    tagline: 'Get your team using the tools you paid for.',
     desc: <>From evaluation to live use: I map the existing workflow, configure the system to match it, train the team, and <span className="text-foreground/90">stay through the first weeks</span> until people stop thinking about it.</>,
     points: ['System configuration', 'Team training', 'Change management', 'Launch support'],
     image: '/images/time-gears.png',
