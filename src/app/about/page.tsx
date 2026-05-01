@@ -21,7 +21,7 @@ const experience = [
     period: '2025 - Present',
     role: 'Workflow Automation',
     company: 'Tax Relief Counsel',
-    desc: <>Built an LLM-based drafting automation system that reduced document generation time by <span className="text-accent/80">85%</span>. Mapped intake and client communication workflows to surface bottlenecks, created SOPs for consistency, and built a <span className="text-foreground/90">reusable template library</span> for scalable output.</>,
+    desc: <>Built an LLM-based drafting automation system that reduced document generation time by <span className="text-accent/80">85%</span>. Mapped intake and client communication workflows to surface bottlenecks, created SOPs for consistency, and built a <span className="text-foreground/90">reusable template library</span> the firm can run repeatedly without rebuilding from scratch.</>,
   },
   {
     period: '2025 - Present',
@@ -117,7 +117,7 @@ export default function About() {
     <main className="bg-background text-foreground pt-20">
 
       {/* Hero */}
-      <section ref={heroRef} className="min-h-screen relative overflow-hidden px-6 lg:px-12 xl:px-20 flex flex-col justify-center">
+      <section ref={heroRef} className="min-h-svh relative overflow-hidden px-6 lg:px-12 xl:px-20 flex flex-col justify-center">
 
         {/* Cinematic Background with Parallax */}
         <motion.div style={{ y: heroBgY }} className="absolute inset-0 z-0 will-change-transform flex items-center justify-center">
@@ -201,7 +201,7 @@ export default function About() {
                 transition={{ duration: 0.6, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
               >
                 <p className="text-lg md:text-xl text-muted-foreground/80 leading-relaxed font-light">
-                  Whether it was a patient following through on a home exercise program, a trainer learning a sales process, or a clinician adopting new documentation software, the challenge was always the same. <span className="text-foreground/90">People resist systems that add friction to their day.</span> The gap between how a tool is designed to work and <span className="text-accent/80">how the work actually happens</span> is where most rollouts fall apart.
+                  Whether it was a patient following through on a home exercise program, a trainer learning a sales process, or a clinician adopting new documentation software, the challenge was always the same. <span className="text-foreground/90">People resist systems that add friction to their day.</span> The gap between how a tool is designed and <span className="text-accent/80">the workday it has to fit into</span> is where most rollouts fall apart.
                 </p>
               </motion.div>
 
@@ -212,7 +212,7 @@ export default function About() {
               >
                 <div className="h-[1px] w-12 bg-accent/40 mb-8" />
                 <p className="text-lg md:text-xl text-muted-foreground/80 leading-relaxed font-light">
-                  Now I work across healthcare, legal, and med-tech environments, running implementations inside practices and advising founders building tools that <span className="text-foreground/90">clinicians and patients will actually use</span>. I <span className="text-foreground/90">map workflows before touching configuration</span>, talk to the people who will use the system, and <span className="text-foreground/90">stay through adoption</span>.
+                  Now I work across healthcare, legal, and med-tech environments, running implementations inside practices and advising founders on how their tools <span className="text-foreground/90">fit into the routines of clinicians and patients</span>. I <span className="text-foreground/90">map workflows before touching configuration</span>, talk to the people who will use the system, and <span className="text-foreground/90">stay through adoption</span>.
                 </p>
               </motion.div>
             </div>
@@ -251,7 +251,7 @@ export default function About() {
             <ValueCard
               subtitle="Process"
               title="Map, build, and stay."
-              desc={<>I start by understanding how the work <span className="text-foreground/90">actually moves</span> before touching any configuration. Then I build the system to match that workflow, whether that means writing automation, configuring software, or wiring up integrations. Then I <span className="text-accent/80">stay through the first stretch of real use</span> to adjust what needs adjusting.</>}
+              desc={<>I sit with the team and watch the workflow run before changing any settings. Then I build the system to match it, whether that means writing automation, configuring software, or wiring up integrations. After launch, I <span className="text-accent/80">stay through the first weeks</span> and clean up whatever the team runs into.</>}
             />
           </div>
         </div>

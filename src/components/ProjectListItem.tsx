@@ -39,7 +39,7 @@ export default function ProjectListItem({ project, index, opacity }: ProjectList
                         {project.category}
                     </span>
                     {project.description && (
-                        <p className="text-sm text-muted-foreground/70 leading-relaxed group-hover:text-muted-foreground/90 transition-all duration-500 mt-1">
+                        <p className="text-sm text-muted-foreground/85 leading-relaxed group-hover:text-muted-foreground transition-all duration-500 mt-1">
                             {project.description}
                         </p>
                     )}

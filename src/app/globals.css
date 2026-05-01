@@ -202,6 +202,31 @@ textarea:focus-visible,
 select:focus-visible {
   outline: 2px solid hsl(var(--accent));
   outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Skip to main content link for keyboard users.
+   Hidden until focused; appears at top-left when tabbed to. */
+.skip-link {
+  position: fixed;
+  top: -100px;
+  left: 16px;
+  z-index: 100;
+  padding: 12px 20px;
+  border-radius: 999px;
+  background: hsl(var(--accent));
+  color: hsl(var(--accent-foreground));
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  transition: top 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.skip-link:focus,
+.skip-link:focus-visible {
+  top: 16px;
+  outline-offset: 4px;
 }
 
 /* Subtle divider line */

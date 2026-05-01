@@ -15,9 +15,12 @@ export default function LayoutWrapper({
 
     return (
         <>
+            <a href="#main-content" className="skip-link">
+                Skip to main content
+            </a>
             <div className={`relative z-10 bg-background shadow-2xl ${isContactPage ? 'mb-0' : 'mb-[500px] md:mb-[800px]'}`}>
                 <Header />
-                <main className="min-h-screen">
+                <main id="main-content" className="min-h-svh">
                     <PageTransition>
                         {children}
                     </PageTransition>

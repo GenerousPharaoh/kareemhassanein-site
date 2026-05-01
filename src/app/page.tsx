@@ -25,7 +25,7 @@ const metrics = [
 ];
 
 const approach = [
-  { title: 'Map', desc: 'Understand how the work actually moves before touching any configuration.', em: 'actually moves' },
+  { title: 'Map', desc: 'Watch the workflow run from start to finish before touching any settings.', em: 'before touching any settings' },
   { title: 'Build', desc: 'Fit the system to the workflow, not the other way around.', em: 'not the other way around' },
   { title: 'Launch', desc: 'Stay through the first weeks until the new way becomes the default.', em: 'becomes the default' },
 ];
@@ -79,9 +79,9 @@ export default function Home() {
   const portfolioOpacity = useSpring(portfolioOpacityRaw, springConfig);
 
   return (
-    <main className="min-h-screen bg-background text-foreground overflow-hidden">
+    <main className="min-h-svh bg-background text-foreground overflow-hidden">
       {/* Hero Section */}
-      <section ref={heroRef} className="min-h-screen flex items-center justify-center relative pt-28 pb-12 md:pt-24 md:pb-0 px-6 md:px-12 xl:px-20 bg-background overflow-hidden">
+      <section ref={heroRef} className="min-h-svh flex items-center justify-center relative pt-28 pb-12 md:pt-24 md:pb-0 px-6 md:px-12 xl:px-20 bg-background overflow-hidden">
 
         {/* Cinematic Background Layer */}
         <motion.div
@@ -153,7 +153,7 @@ export default function Home() {
                 className="max-w-2xl mx-auto px-6 py-5 md:px-8 md:py-6 rounded-xl bg-white/[0.03] border border-white/[0.05]"
               >
                 <p className="text-sm md:text-base lg:text-lg text-foreground/70 font-light leading-relaxed">
-                  I help healthcare practices and professional-services firms <span className="text-foreground">remove operational friction</span>, and advise health-tech founders on how their tools land with clinicians and patients. I map how work actually happens, build practical fixes, and <span className="text-foreground">stay through adoption</span>.
+                  I help healthcare practices and professional-services firms <span className="text-foreground">remove operational friction</span>, and advise health-tech founders on how their tools fit into the routines of clinicians and patients. I learn the workflow, build practical fixes, and <span className="text-foreground">stay through adoption</span>.
                 </p>
               </motion.div>
 
@@ -192,7 +192,7 @@ export default function Home() {
                     {/* Accent top line */}
                     <div className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-[2px] bg-accent/30 rounded-full" />
                     <p className="text-xl sm:text-2xl md:text-3xl font-serif italic text-accent mb-2.5 whitespace-nowrap">{m.value}</p>
-                    <p className="text-[11px] md:text-xs text-muted-foreground/75 leading-relaxed max-w-[200px] mx-auto">{m.label}</p>
+                    <p className="text-[11px] md:text-xs text-muted-foreground/85 leading-relaxed max-w-[200px] mx-auto">{m.label}</p>
                   </motion.div>
                 ))}
               </div>
@@ -272,7 +272,7 @@ export default function Home() {
                         <h4 className="text-lg md:text-xl font-medium tracking-tight mb-2 group-hover:text-accent transition-colors duration-500">
                           {item.title}
                         </h4>
-                        <p className="text-sm md:text-base text-muted-foreground/70 leading-relaxed">
+                        <p className="text-sm md:text-base text-muted-foreground/85 leading-relaxed">
                           {item.em ? (
                             <>
                               {item.desc.split(item.em)[0]}

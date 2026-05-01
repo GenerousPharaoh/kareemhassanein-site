@@ -73,12 +73,14 @@ function ContactForm() {
     <form onSubmit={handleSubmit} className="space-y-5">
       <div>
         <label htmlFor="name" className="block text-[11px] font-bold tracking-[0.3em] uppercase text-muted-foreground mb-2.5">
-          Name
+          Name<span aria-hidden="true" className="text-accent/70 ml-1">*</span>
         </label>
         <input
           id="name"
           type="text"
           required
+          autoComplete="name"
+          aria-describedby={status === 'error' ? 'form-error' : undefined}
           value={name}
           onChange={(e) => setName(e.target.value)}
           className="w-full bg-white/[0.04] border border-white/[0.08] rounded-lg px-5 py-3.5 text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-accent/40 focus:bg-white/[0.06] focus:shadow-[0_1px_0_0_hsl(var(--accent)/0.4)] transition-all duration-500"
@@ -88,12 +90,15 @@ function ContactForm() {
 
       <div>
         <label htmlFor="email" className="block text-[11px] font-bold tracking-[0.3em] uppercase text-muted-foreground mb-2.5">
-          Email
+          Email<span aria-hidden="true" className="text-accent/70 ml-1">*</span>
         </label>
         <input
           id="email"
           type="email"
           required
+          autoComplete="email"
+          inputMode="email"
+          aria-describedby={status === 'error' ? 'form-error' : undefined}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           className="w-full bg-white/[0.04] border border-white/[0.08] rounded-lg px-5 py-3.5 text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-accent/40 focus:bg-white/[0.06] focus:shadow-[0_1px_0_0_hsl(var(--accent)/0.4)] transition-all duration-500"
@@ -103,11 +108,12 @@ function ContactForm() {
 
       <div>
         <label htmlFor="message" className="block text-[11px] font-bold tracking-[0.3em] uppercase text-muted-foreground mb-2.5">
-          Message
+          Message<span aria-hidden="true" className="text-accent/70 ml-1">*</span>
         </label>
         <textarea
           id="message"
           required
+          aria-describedby={status === 'error' ? 'form-error' : undefined}
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           rows={5}
@@ -118,9 +124,10 @@ function ContactForm() {
 
       {status === 'error' && (
         <motion.p
+          id="form-error"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="text-sm text-red-300/70"
+          className="text-sm text-red-300/80"
           role="alert"
         >
           {errorMsg}
@@ -169,7 +176,7 @@ export default function Contact() {
   }, [labelOpacity, labelY, headingOpacity, headingY, descOpacity, descY]);
 
   return (
-    <main ref={heroRef} className="min-h-screen relative overflow-hidden flex flex-col justify-between bg-background">
+    <main ref={heroRef} className="min-h-svh relative overflow-hidden flex flex-col justify-between bg-background">
 
       <motion.div
         style={{ y: textY }}

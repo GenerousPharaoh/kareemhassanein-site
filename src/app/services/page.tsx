@@ -22,16 +22,16 @@ const services = [
   {
     index: '02',
     title: 'Software Implementation',
-    tagline: 'Get your team actually using the tools you paid for.',
-    desc: <>I handle the <span className="text-foreground/90">full lifecycle</span> from evaluation through sustained use. Mapping existing workflows, configuring the system to match them, training teams, and <span className="text-foreground/90">staying through post-go-live</span> until things are actually working.</>,
-    points: ['System configuration', 'Training enablement', 'Change management', 'Post-go-live support'],
+    tagline: 'Make the tools you paid for stick.',
+    desc: <>From evaluation to live use: I map the existing workflow, configure the system to match it, train the team, and <span className="text-foreground/90">stay through the first weeks</span> until people stop thinking about it.</>,
+    points: ['System configuration', 'Team training', 'Change management', 'Launch support'],
     image: '/images/time-gears.png',
   },
   {
     index: '03',
     title: 'Operations Improvement',
     tagline: 'Figure out where things are slowing down.',
-    desc: <>Before building anything new, I map <span className="text-foreground/90">how your practice actually runs</span>. Where do referrals get lost? Which steps take longer than they should? What workarounds have people created?</>,
+    desc: <>Before building anything new, I map <span className="text-foreground/90">how your practice runs day to day</span>. Where do referrals get lost? Which steps take longer than they should? What workarounds have people built?</>,
     points: ['Workflow mapping', 'Process optimization', 'SOPs and playbooks', 'Capacity planning'],
     image: '/images/flow.png',
   },
@@ -39,7 +39,7 @@ const services = [
     index: '04',
     title: 'Health-Tech Advisory',
     tagline: 'A tool only counts if clinicians and patients keep using it.',
-    desc: <>For founders building <span className="text-foreground/90">rehabilitation, patient engagement, clinical workflow, or AI tools</span>. I look at how a product fits the routines of clinicians, patients, and teams, where the design or rollout asks too much, and what to adjust so it has a real chance of becoming part of how the work gets done.</>,
+    desc: <>For founders building <span className="text-foreground/90">rehabilitation, patient engagement, clinical workflow, or AI tools</span>. I look at how a product fits into the routines of clinicians, patients, and teams, where the design or rollout asks too much, and what to change so it stops being another tab nobody opens.</>,
     points: ['Clinical fit review', 'Adoption strategy', 'Workflow integration', 'Rollout planning'],
     image: '/images/bridging.png',
   }
@@ -170,7 +170,7 @@ function ToolDomain({ domain, featured = false }: { domain: typeof technicalInde
       <p className={`font-medium text-foreground/90 leading-relaxed ${featured ? 'text-xl md:text-2xl mb-4' : 'text-lg md:text-xl mb-3'}`}>
         {domain.tools.join(' · ')}
       </p>
-      <p className={`text-muted-foreground/70 ${featured ? 'text-sm md:text-base max-w-xl' : 'text-xs md:text-sm'}`}>
+      <p className={`text-muted-foreground/85 ${featured ? 'text-sm md:text-base max-w-xl' : 'text-xs md:text-sm'}`}>
         {domain.specs.join(' · ')}
       </p>
     </motion.div>
@@ -226,7 +226,7 @@ export default function Services() {
               What I <CharReveal delay={0.4} className="text-accent italic font-serif">do.</CharReveal>
             </h1>
             <p className="text-xl md:text-2xl text-muted-foreground font-light leading-relaxed max-w-2xl">
-              Operations improvement, workflow automation, and technology implementation for healthcare practices and professional-services firms. Advisory work for health-tech founders building tools clinicians and patients have to actually use.
+              Operations improvement, workflow automation, and technology implementation for healthcare practices and professional-services firms. Advisory work for health-tech founders whose tools have to fit into the routines of clinicians and patients.
             </p>
           </ScrollReveal>
         </motion.div>
@@ -266,7 +266,7 @@ export default function Services() {
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-medium tracking-tight mb-4">
               What I <span className="text-accent/90 italic font-serif">use.</span>
             </h2>
-            <p className="text-sm md:text-base text-muted-foreground/70 leading-relaxed max-w-lg">
+            <p className="text-sm md:text-base text-muted-foreground/85 leading-relaxed max-w-lg">
               The specific tools matter less than understanding how they fit together.
             </p>
           </motion.div>
