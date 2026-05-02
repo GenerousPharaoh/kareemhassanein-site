@@ -1,9 +1,7 @@
 'use client';
 
-import { useScroll, useTransform, useSpring, useReducedMotion, MotionValue } from 'framer-motion';
-import { useRef } from 'react';
+import { motion } from 'framer-motion';
 import ProjectListItem from './ProjectListItem';
-import useIsMobile from '@/hooks/useIsMobile';
 
 const projects = [
     {
@@ -25,53 +23,21 @@ const projects = [
     },
 ];
 
-const TOTAL = projects.length;
-
-function StaggeredItem({ project, index, progress, disableScrollMotion }: {
-    project: typeof projects[0];
-    index: number;
-    progress: MotionValue<number>;
-    disableScrollMotion: boolean;
-}) {
-    const segment = 1 / (TOTAL + 1);
-    const start = index * segment;
-    const end = start + segment * 2;
-    const opacity = useSpring(
-        useTransform(progress, [start, end], disableScrollMotion ? [1, 1] : [0.03, 1]),
-        { stiffness: 80, damping: 30 }
-    );
-
-    return (
-        <ProjectListItem
-            project={project}
-            index={index}
-            opacity={opacity}
-        />
-    );
-}
-
 export default function ProjectList() {
-    const ref = useRef<HTMLDivElement>(null);
-    const shouldReduceMotion = useReducedMotion();
-    const isMobile = useIsMobile();
-    const disableScrollMotion = !!(shouldReduceMotion || isMobile);
-
-    const { scrollYProgress } = useScroll({
-        target: ref,
-        offset: ["start end", "start 0.3"]
-    });
-
     return (
-        <div ref={ref} className="w-full flex flex-col relative group/list">
+        <div className="w-full flex flex-col relative group/list">
             {projects.map((project, index) => (
-                <StaggeredItem
+                <motion.div
                     key={index}
-                    project={project}
-                    index={index}
-                    progress={scrollYProgress}
-                    disableScrollMotion={disableScrollMotion}
-                />
+                    initial={{ opacity: 0, y: 16 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: '0px 0px -10% 0px' }}
+                    transition={{ duration: 0.7, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
+                >
+                    <ProjectListItem project={project} index={index} />
+                </motion.div>
             ))}
         </div>
     );
 }
+
