@@ -1,9 +1,11 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
+import { MotionConfig } from 'framer-motion';
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
+import useIsMobile from "@/hooks/useIsMobile";
 
 export default function LayoutWrapper({
     children,
@@ -12,9 +14,13 @@ export default function LayoutWrapper({
 }) {
     const pathname = usePathname();
     const isContactPage = pathname === '/contact';
+    const isMobile = useIsMobile();
 
+    // On mobile, force every framer-motion entrance/whileInView animation
+    // to resolve immediately. iOS Safari's compositor flickers when many
+    // small fade/slide reveals run during scroll-driven URL-bar resize.
     return (
-        <>
+        <MotionConfig reducedMotion={isMobile ? 'always' : 'user'}>
             <a href="#main-content" className="skip-link">
                 Skip to main content
             </a>
@@ -27,6 +33,6 @@ export default function LayoutWrapper({
                 </main>
             </div>
             {!isContactPage && <Footer />}
-        </>
+        </MotionConfig>
     );
 }
