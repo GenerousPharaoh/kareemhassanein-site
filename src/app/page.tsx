@@ -9,21 +9,6 @@ import useIsMobile from '@/hooks/useIsMobile';
 import Link from 'next/link';
 import { useRef } from 'react';
 
-const metrics = [
-  {
-    value: 'Hours → Minutes',
-    label: 'Document drafting at a solo law firm after replacing manual workflows with an AI-powered template library'
-  },
-  {
-    value: 'Full Adoption',
-    label: 'Entire clinical team using AI documentation within weeks, each saving hours weekly on notes'
-  },
-  {
-    value: 'More Reviews',
-    label: 'Patient reviews after embedding QR-based feedback capture into every visit'
-  },
-];
-
 const approach = [
   { title: 'Map', desc: 'Watch the workflow run before changing anything.', em: 'before changing anything' },
   { title: 'Build', desc: 'Fit the system to the workflow, not the other way around.', em: 'not the other way around' },
@@ -145,17 +130,15 @@ export default function Home() {
                 className="h-[1px] w-16 bg-accent/40 mx-auto origin-center"
               />
 
-              {/* Description carries the substance. */}
-              <motion.div
+              {/* Editorial subhead — flows free, no card framing */}
+              <motion.p
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                className="max-w-2xl mx-auto px-6 py-5 md:px-8 md:py-6 rounded-xl bg-white/[0.03] border border-white/[0.05]"
+                className="max-w-2xl mx-auto text-base md:text-lg lg:text-xl text-foreground/75 font-light leading-relaxed"
               >
-                <p className="text-sm md:text-base lg:text-lg text-foreground/70 font-light leading-relaxed">
-                  I help healthcare practices and professional-services firms <span className="text-foreground">remove operational friction</span>, and advise health-tech founders on how their tools fit into the routines of clinicians and patients. I see how the day runs, build practical fixes, and <span className="text-foreground">stay through adoption</span>.
-                </p>
-              </motion.div>
+                I help healthcare practices and professional-services firms <span className="text-foreground">remove operational friction</span>, and advise health-tech founders on how their tools fit into the routines of clinicians and patients. I see how the day runs, build practical fixes, and <span className="text-foreground">stay through adoption</span>.
+              </motion.p>
 
               {/* CTAs */}
               <motion.div
@@ -179,23 +162,19 @@ export default function Home() {
                 </Link>
               </motion.div>
 
-              {/* Metrics */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-5 max-w-3xl mx-auto pt-4">
-                {metrics.map((m, i) => (
-                  <motion.div
-                    key={m.label}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.7, delay: 0.6 + i * 0.08, ease: [0.16, 1, 0.3, 1] }}
-                    className="text-center relative px-5 py-5 rounded-lg bg-white/[0.03] border border-white/[0.06]"
-                  >
-                    {/* Accent top line */}
-                    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-[2px] bg-accent/30 rounded-full" />
-                    <p className="text-xl sm:text-2xl md:text-3xl font-serif italic text-accent mb-2.5 whitespace-nowrap">{m.value}</p>
-                    <p className="text-[11px] md:text-xs text-muted-foreground/85 leading-relaxed max-w-[200px] mx-auto">{m.label}</p>
-                  </motion.div>
-                ))}
-              </div>
+              {/* Editorial status strip — quiet ground-truth detail in place of marketing metrics */}
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 0.7, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.75, ease: [0.16, 1, 0.3, 1] }}
+                className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 pt-6 text-[10px] md:text-[11px] font-medium tracking-[0.25em] uppercase text-muted-foreground/85"
+              >
+                <span>Burlington, Ontario</span>
+                <span aria-hidden="true" className="w-[3px] h-[3px] rounded-full bg-accent/50" />
+                <span>Remote across North America</span>
+                <span aria-hidden="true" className="w-[3px] h-[3px] rounded-full bg-accent/50" />
+                <span>Available for projects</span>
+              </motion.div>
             </div>
           </div>
         </div>
@@ -222,7 +201,7 @@ export default function Home() {
                 The Problem
               </span>
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight leading-[1.1] mb-6 text-balance">
-                Good plans fail without good execution.
+                Good plans fail without good <span className="text-accent/90 italic font-serif">execution.</span>
               </h2>
               <p className="text-base md:text-lg text-muted-foreground/80 leading-relaxed">
                 Implementation is where most efforts stall. Not from lack of strategy, but from <span className="text-foreground/90">friction in the systems, workflows, and habits</span> that need to change.
@@ -262,7 +241,7 @@ export default function Home() {
                     >
                       {/* Number */}
                       <div className="flex-shrink-0 w-11 h-11 md:w-13 md:h-13 rounded-full border border-accent/20 flex items-center justify-center group-hover:border-accent/40 group-hover:bg-accent/5 group-hover:shadow-[0_0_16px_rgba(176,141,87,0.08)] transition-all duration-500 bg-background relative z-10">
-                        <span className="text-sm md:text-base font-mono font-medium text-accent/70 group-hover:text-accent transition-colors duration-500">
+                        <span className="text-base md:text-lg font-serif italic text-accent/80 group-hover:text-accent transition-colors duration-500">
                           {i + 1}
                         </span>
                       </div>
