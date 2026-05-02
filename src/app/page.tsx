@@ -15,22 +15,24 @@ const approach = [
   { title: 'Launch', desc: 'Stay through the first weeks until the new way becomes the default.', em: 'becomes the default' },
 ];
 
-// Editorial chapter break — hairline rule with a section index and label
-// floating at center. Used between the major sections of the homepage.
-function ChapterBreak({ index, label }: { index: string; label: string }) {
+// Editorial chapter break — magazine-spread treatment. A pull quote
+// set in serif italic display, with the section folio beneath. Each
+// one is a moment of arrival, not just a divider.
+function ChapterBreak({ index, label, quote }: { index: string; label: string; quote: React.ReactNode }) {
   return (
-    <div className="py-10 md:py-16 px-6 md:px-12 xl:px-20">
-      <div className="max-w-[900px] mx-auto flex items-center gap-5 md:gap-8">
-        <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent to-white/[0.12]" />
-        <div className="flex items-baseline gap-3 shrink-0">
-          <span className="text-[10px] md:text-xs font-medium tracking-[0.4em] uppercase text-accent/75 whitespace-nowrap">
-            §&nbsp;{index}.
-          </span>
-          <span className="text-xs md:text-sm font-serif italic text-foreground/55 whitespace-nowrap">
-            {label}
-          </span>
+    <div className="py-24 md:py-36 lg:py-44 px-6 md:px-12 xl:px-20 relative">
+      <div className="max-w-[1100px] mx-auto">
+        <div className="text-3xl md:text-5xl lg:text-[3.75rem] font-serif italic leading-[1.15] tracking-tight text-balance text-foreground/85">
+          <span aria-hidden="true" className="text-accent/40 mr-1">&ldquo;</span>
+          {quote}
+          <span aria-hidden="true" className="text-accent/40 ml-1">&rdquo;</span>
         </div>
-        <div className="h-[1px] flex-1 bg-gradient-to-l from-transparent to-white/[0.12]" />
+        <div className="mt-10 md:mt-14 flex items-center gap-4 md:gap-5">
+          <div className="h-[1px] w-12 md:w-16 bg-accent/45 shrink-0" />
+          <p className="text-[10px] md:text-xs font-medium tracking-[0.4em] uppercase text-accent/75 whitespace-nowrap">
+            §&nbsp;{index} &middot; {label}
+          </p>
+        </div>
       </div>
     </div>
   );
@@ -106,16 +108,18 @@ export default function Home() {
         <div className="absolute inset-0 z-[1] bg-gradient-to-b from-background via-transparent via-40% to-background pointer-events-none" />
         <div className="absolute inset-0 z-[1] bg-background/20 pointer-events-none" />
 
-        <div className="relative z-10 w-full max-w-[1400px] flex flex-col justify-center">
-          <div className="flex flex-col items-center text-center">
+        <div className="relative z-10 w-full max-w-[1400px] mx-auto">
+          <div className="grid lg:grid-cols-12 gap-10 lg:gap-16 items-start">
 
-            <div className="space-y-5 md:space-y-6 mx-auto max-w-4xl">
+            {/* LEFT: editorial main content */}
+            <div className="lg:col-span-8 space-y-7 md:space-y-8 text-left">
 
               {/* Badge */}
               <motion.div
                 initial={{ opacity: 0, y: 15, scale: 0.95 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 transition={{ duration: 1, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+                className="flex"
               >
                 <span className="inline-flex items-center gap-2.5 text-[10px] md:text-[11px] font-medium tracking-[0.2em] uppercase text-foreground/50 px-4 py-2 rounded-full border border-white/[0.06] bg-[hsl(222,12%,13%)]">
                   <span className="w-1.5 h-1.5 rounded-full bg-accent" />
@@ -123,8 +127,8 @@ export default function Home() {
                 </span>
               </motion.div>
 
-              {/* Name as headline */}
-              <h1 className="font-medium leading-[0.88] tracking-[-0.045em]" style={{ fontSize: 'clamp(3rem, 9vw, 7rem)' }}>
+              {/* Name as display headline — bigger, left-aligned */}
+              <h1 className="font-medium leading-[0.85] tracking-[-0.05em]" style={{ fontSize: 'clamp(3.5rem, 11vw, 8.5rem)' }}>
                 <motion.span
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -139,24 +143,24 @@ export default function Home() {
                   transition={{ duration: 1, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
                   className="block text-accent/90 italic font-serif"
                 >
-                  Hassanein
+                  Hassanein.
                 </motion.span>
               </h1>
 
-              {/* Accent divider */}
+              {/* Accent divider — left-anchored */}
               <motion.div
                 initial={{ opacity: 0, scaleX: 0 }}
                 animate={{ opacity: 1, scaleX: 1 }}
                 transition={{ duration: 1, delay: 0.45 }}
-                className="h-[1px] w-16 bg-accent/40 mx-auto origin-center"
+                className="h-[1px] w-20 bg-accent/40 origin-left"
               />
 
-              {/* Editorial subhead — flows free, no card framing */}
+              {/* Editorial subhead — left-aligned, larger measure */}
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                className="max-w-2xl mx-auto text-base md:text-lg lg:text-xl text-foreground/75 font-light leading-relaxed"
+                className="max-w-[36rem] text-base md:text-lg lg:text-xl text-foreground/75 font-light leading-relaxed"
               >
                 I help healthcare practices and professional-services firms <span className="text-foreground">remove operational friction</span>, and advise health-tech founders on how their tools fit into the routines of clinicians and patients. I see how the day runs, build practical fixes, and <span className="text-foreground">stay through adoption</span>.
               </motion.p>
@@ -166,7 +170,7 @@ export default function Home() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-center justify-center pt-1"
+                className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-2"
               >
                 <Link
                   href="/contact"
@@ -183,20 +187,65 @@ export default function Home() {
                 </Link>
               </motion.div>
 
-              {/* Editorial status strip — quiet ground-truth detail in place of marketing metrics */}
+              {/* Mobile-only condensed status strip — sidebar info collapses to one line below the fold */}
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 0.7, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.75, ease: [0.16, 1, 0.3, 1] }}
-                className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 pt-6 text-[10px] md:text-[11px] font-medium tracking-[0.25em] uppercase text-muted-foreground/85"
+                className="lg:hidden flex flex-wrap items-center gap-x-3 gap-y-2 pt-6 text-[10px] font-medium tracking-[0.25em] uppercase text-muted-foreground/85"
               >
-                <span>Burlington, Ontario</span>
-                <span aria-hidden="true" className="w-[3px] h-[3px] rounded-full bg-accent/50" />
-                <span>Remote across North America</span>
-                <span aria-hidden="true" className="w-[3px] h-[3px] rounded-full bg-accent/50" />
-                <span>Available for projects</span>
+                <span className="flex items-center gap-2">
+                  <span aria-hidden="true" className="w-1.5 h-1.5 rounded-full bg-accent" />
+                  Available for projects
+                </span>
+                <span aria-hidden="true" className="w-[3px] h-[3px] rounded-full bg-white/15" />
+                <span>Burlington, ON</span>
+                <span aria-hidden="true" className="w-[3px] h-[3px] rounded-full bg-white/15" />
+                <span>Remote</span>
               </motion.div>
             </div>
+
+            {/* RIGHT: editorial sidebar — masthead-style metadata, desktop only */}
+            <motion.aside
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
+              className="hidden lg:block lg:col-span-4 lg:pt-6"
+              aria-label="Currently working on, location, and availability"
+            >
+              <div className="space-y-7 lg:pl-6 lg:border-l lg:border-white/[0.06]">
+                <div>
+                  <p className="text-[10px] font-bold tracking-[0.45em] uppercase text-accent/65 mb-4">
+                    Currently
+                  </p>
+                  <ul className="space-y-1.5 text-base text-foreground/85 font-light leading-snug">
+                    <li>Endorphins Health</li>
+                    <li>Tax Relief Counsel</li>
+                    <li>Neuro-Mod</li>
+                  </ul>
+                </div>
+                <div className="h-[1px] w-12 bg-white/[0.1]" />
+                <div>
+                  <p className="text-[10px] font-bold tracking-[0.45em] uppercase text-accent/65 mb-4">
+                    Based in
+                  </p>
+                  <p className="text-sm text-foreground/80 font-light leading-relaxed">
+                    Burlington, Ontario.<br />
+                    Remote across North America.
+                  </p>
+                </div>
+                <div className="h-[1px] w-12 bg-white/[0.1]" />
+                <div>
+                  <p className="text-[10px] font-bold tracking-[0.45em] uppercase text-accent/65 mb-4">
+                    Status
+                  </p>
+                  <p className="flex items-center gap-2.5 text-sm text-foreground/85 font-light">
+                    <span aria-hidden="true" className="w-1.5 h-1.5 rounded-full bg-accent shadow-[0_0_8px_rgba(176,141,87,0.5)]" />
+                    Open for projects
+                  </p>
+                </div>
+              </div>
+            </motion.aside>
           </div>
         </div>
 
@@ -204,7 +253,11 @@ export default function Home() {
         <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-background via-background/80 to-transparent z-[2] pointer-events-none" />
       </section>
 
-      <ChapterBreak index="I" label="Method" />
+      <ChapterBreak
+        index="I"
+        label="Method"
+        quote={<>Sit with the team. Build to fit. <span className="text-accent/90">Stay through.</span></>}
+      />
 
       {/* Approach Section - Combined statement + steps */}
       <section ref={transitionRef} className="pt-8 pb-20 md:pt-12 md:pb-28 px-6 md:px-12 xl:px-20 relative">
@@ -231,20 +284,8 @@ export default function Home() {
               </p>
             </motion.div>
 
-            {/* Right: Steps */}
+            {/* Right: Steps — flows directly from chapter break, no inner header */}
             <div className="space-y-6">
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "0px 0px -20px 0px" }}
-                transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                className="mb-8"
-              >
-                <span className="text-[10px] md:text-xs font-medium tracking-[0.25em] uppercase text-accent/70 block">
-                  The Approach
-                </span>
-              </motion.div>
-
               <div className="relative">
                 {/* Vertical connecting line */}
                 <div className="absolute left-5 md:left-6 top-5 bottom-5 w-[1px] bg-gradient-to-b from-white/[0.06] via-white/[0.04] to-transparent pointer-events-none" />
@@ -290,7 +331,11 @@ export default function Home() {
         </div>
       </section>
 
-      <ChapterBreak index="II" label="Selected Work" />
+      <ChapterBreak
+        index="II"
+        label="Selected Work"
+        quote={<>The gap between how a tool is designed and <span className="text-accent/90">how it gets used</span> is where most rollouts fall apart.</>}
+      />
 
       {/* Selected Projects */}
       <section ref={portfolioRef} className="pt-8 pb-28 md:pt-12 md:pb-40 relative z-10 w-full px-6 md:px-12 xl:px-20 overflow-hidden">
