@@ -190,7 +190,7 @@ export default function About() {
               {/* Vertical accent "spine" */}
               <div className="absolute -left-6 lg:-left-12 top-2 bottom-2 w-[1px] bg-gradient-to-b from-accent/40 via-accent/10 to-transparent" />
 
-              {/* Formal bio — third person, sets credentials and scope */}
+              {/* Bio — first person throughout, sets credentials and scope */}
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -198,17 +198,17 @@ export default function About() {
                 className="space-y-6 md:space-y-7"
               >
                 <p className="text-lg md:text-xl text-foreground/85 leading-relaxed font-light tracking-tight">
-                  Kareem Hassanein is a practicing <span className="text-foreground">physiotherapist and clinical implementation advisor</span> who works with health-tech and health innovation startups on digital adoption, product rollout, and the practical realities of bringing new tools into care delivery and service operations. He brings a McMaster background in kinesiology and graduate training in physiotherapy from Robert Gordon University, where he completed his <span className="text-foreground">MSc with Distinction</span>.
+                  I&apos;m a practicing <span className="text-foreground">physiotherapist and clinical implementation advisor</span> working with health-tech and health innovation startups on digital adoption, product rollout, and the practical realities of bringing new tools into care delivery and service operations. I bring a McMaster background in kinesiology and graduate training in physiotherapy from Robert Gordon University, where I completed my <span className="text-foreground">MSc with Distinction</span>.
                 </p>
                 <p className="text-base md:text-lg text-muted-foreground/85 leading-relaxed font-light">
-                  His perspective is grounded in <span className="text-foreground/90">thousands of hours of coaching and patient care</span>, along with hands-on clinic operations and experience introducing digital tools into clinical and professional settings. Kareem helps founders understand how their product fits into existing routines, what it asks of clinicians, patients, and teams, and how to adjust the design, workflow, or rollout so it has a better chance of becoming part of routine use.
+                  My perspective is grounded in <span className="text-foreground/90">thousands of hours of coaching and patient care</span>, along with hands-on clinic operations and experience introducing digital tools into clinical and professional settings. I help founders understand how their product fits into existing routines, what it asks of clinicians, patients, and teams, and how to adjust the design, workflow, or rollout so it has a better chance of becoming part of routine use.
                 </p>
                 <p className="text-base md:text-lg text-muted-foreground/85 leading-relaxed font-light">
-                  His advisory work is especially relevant to teams building <span className="text-foreground/90">rehabilitation, patient engagement, AI documentation, clinical workflow, and service innovation</span> tools.
+                  My advisory work is especially relevant to teams building <span className="text-foreground/90">rehabilitation, patient engagement, AI documentation, clinical workflow, and service innovation</span> tools.
                 </p>
               </motion.div>
 
-              {/* Visual break before personal voice */}
+              {/* Hairline accent before the personal narrative continuation */}
               <motion.div
                 initial={{ opacity: 0, scaleX: 0 }}
                 animate={{ opacity: 1, scaleX: 1 }}
@@ -216,7 +216,7 @@ export default function About() {
                 className="h-[1px] w-16 bg-accent/35 origin-left"
               />
 
-              {/* Personal voice — first-person continuation */}
+              {/* Continued narrative */}
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}

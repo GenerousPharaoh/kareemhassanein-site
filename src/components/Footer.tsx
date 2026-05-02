@@ -7,7 +7,7 @@ import ParallaxImage from './ParallaxImage';
 export default function Footer() {
   return (
     <div
-      className="fixed bottom-0 left-0 w-full h-[500px] md:h-[800px] z-0 flex flex-col justify-end pointer-events-none"
+      className="fixed bottom-0 left-0 w-full h-svh md:h-[800px] z-0 flex flex-col justify-end pointer-events-none"
       style={{ clipPath: "polygon(0% 0, 100% 0%, 100% 100%, 0 100%)" }}
     >
       <div className="relative h-full w-full bg-[#141920] flex flex-col justify-center items-center text-center pointer-events-auto overflow-hidden">
