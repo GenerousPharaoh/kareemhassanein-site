@@ -101,7 +101,7 @@ export default function Home() {
                 transition={{ duration: 1, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
                 className="max-w-[34rem] text-[15px] sm:text-base md:text-lg text-foreground/70 font-light leading-relaxed"
               >
-                I&rsquo;m a practicing physiotherapist who works with health-tech founders, clinics, and professional-services firms. Some of that is advisory: looking at how a new tool fits real clinical and service routines, what it asks of patients and staff, and where a rollout is likely to stall. Some is hands-on: the websites, intake and booking flows, referral pathways, and AI workflow automations these teams rely on day to day.
+                I&rsquo;m a practicing physiotherapist who can ship software. That combination puts me in two kinds of rooms. Founders hire me to figure out whether their product can land in a real clinic and what to fix so it does. Clinics and professional-services firms hire me to build the rest: websites, booking and intake flows, referral pathways, AI workflow automation.
               </motion.p>
 
               {/* CTAs */}
