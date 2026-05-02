@@ -95,14 +95,13 @@ export default function Home() {
                 Clinical implementation, digital adoption, and operational systems for healthcare and health-tech teams.
               </motion.p>
 
-              {/* Body — supporting detail */}
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
                 className="max-w-[34rem] text-[15px] sm:text-base md:text-lg text-foreground/70 font-light leading-relaxed"
               >
-                I help clinics, professional-services firms, and health-tech founders bring new tools, services, and systems into real-world use — combining frontline clinical experience, operations leadership, and technical implementation to design, launch, and adopt things that fit the way people actually work.
+                I work with clinics, professional-services firms, and health-tech founders on the part most teams skip: getting new tools, services, and systems out of slide decks and into routine daily use. I&rsquo;ve worked the clinical floor, run operations, and shipped the software, so I can sit in any of those rooms and keep the rollout moving.
               </motion.p>
 
               {/* CTAs */}
@@ -203,7 +202,7 @@ export default function Home() {
                 transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                 className="text-[10px] md:text-xs font-medium tracking-[0.25em] uppercase text-accent/70 mb-8"
               >
-                The Approach &mdash; Three Steps
+                The Approach
               </motion.p>
 
               <div className="relative">
@@ -306,7 +305,7 @@ export default function Home() {
             Have a project that needs to <span className="text-accent/90 italic font-serif">land</span>?
           </h2>
           <p className="mt-6 max-w-xl mx-auto text-base md:text-lg text-muted-foreground/85 leading-relaxed">
-            Whether it&rsquo;s a clinical workflow rollout, a software adoption, or a service redesign &mdash; if it has to actually work in the real world, let&rsquo;s talk.
+            Clinical workflow rollouts, software adoption, service redesign. If it has to hold up after the launch deck closes, let&rsquo;s talk.
           </p>
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
             <Link
