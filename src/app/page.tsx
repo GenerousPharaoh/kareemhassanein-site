@@ -4,7 +4,7 @@ import { motion, useScroll, useTransform, useSpring, useReducedMotion } from 'fr
 import { ArrowRight } from 'lucide-react';
 import ProjectList from '@/components/ProjectList';
 import AnimatedDivider from '@/components/AnimatedDivider';
-import ParallaxImage from '@/components/ParallaxImage';
+import HeroCarousel from '@/components/HeroCarousel';
 import useIsMobile from '@/hooks/useIsMobile';
 import Link from 'next/link';
 import { useRef } from 'react';
@@ -13,6 +13,12 @@ const approach = [
   { title: 'Map', desc: 'Watch the workflow run before changing anything.', em: 'before changing anything' },
   { title: 'Build', desc: 'Fit the system to the workflow, not the other way around.', em: 'not the other way around' },
   { title: 'Launch', desc: 'Stay through the first weeks until the new way becomes the default.', em: 'becomes the default' },
+];
+
+const heroSlides = [
+  { src: '/images/hero-1.webp', alt: 'Clinical implementation advisor with tablet — frontline practice meets digital tools' },
+  { src: '/images/hero-2.webp', alt: 'Cross-functional team mapping a healthcare workflow together' },
+  { src: '/images/hero-3.webp', alt: 'Workflow path connecting clinical practice with modern systems and dashboards' },
 ];
 
 export default function Home() {
@@ -25,14 +31,6 @@ export default function Home() {
 
   // High damping prevents overshoot and flicker.
   const springConfig = { stiffness: 80, damping: 35, restDelta: 0.001 };
-
-  // Hero parallax - background moves UP (slower than scroll) for depth effect
-  const { scrollYProgress: heroProgress } = useScroll({
-    target: heroRef,
-    offset: ["start start", "end start"]
-  });
-  const heroBgYRaw = useTransform(heroProgress, [0, 1], [0, disableScrollMotion ? 0 : -80]);
-  const heroBgY = useSpring(heroBgYRaw, springConfig);
 
   // Statement section - smooth fade and slide
   const { scrollYProgress: statementProgress } = useScroll({
@@ -66,30 +64,20 @@ export default function Home() {
   return (
     <main className="min-h-svh bg-background text-foreground overflow-hidden">
       {/* Hero Section */}
-      <section ref={heroRef} className="min-h-svh flex items-center justify-center relative pt-28 pb-12 md:pt-24 md:pb-0 px-6 md:px-12 xl:px-20 bg-background overflow-hidden">
+      <section ref={heroRef} className="relative min-h-svh flex items-center pt-24 pb-16 md:pt-28 md:pb-24 px-5 sm:px-6 md:px-12 xl:px-20 bg-background overflow-hidden">
 
-        {/* Cinematic Background Layer */}
-        <motion.div
-          style={{ y: heroBgY }}
-          className="absolute -inset-x-0 -top-32 -bottom-64 z-0"
-        >
-          <ParallaxImage
-            src="/images/orchestrating.webp"
-            alt=""
-            className="w-full h-full opacity-50"
-            priority={true}
-          />
-        </motion.div>
-
-        {/* Layered gradient overlays for depth */}
-        <div className="absolute inset-0 z-[1] bg-gradient-to-b from-background via-transparent via-40% to-background pointer-events-none" />
-        <div className="absolute inset-0 z-[1] bg-background/20 pointer-events-none" />
+        {/* Soft atmospheric ambient — subtle gradient orbs, no full-bleed photo backdrop */}
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0">
+          <div className="absolute -top-32 -left-32 w-[42rem] h-[42rem] rounded-full bg-accent/[0.06] blur-3xl" />
+          <div className="absolute -bottom-40 -right-24 w-[36rem] h-[36rem] rounded-full bg-accent/[0.04] blur-3xl" />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background" />
+        </div>
 
         <div className="relative z-10 w-full max-w-[1400px] mx-auto">
-          <div className="grid lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+          <div className="grid lg:grid-cols-12 gap-y-12 gap-x-10 lg:gap-x-16 items-center">
 
             {/* LEFT: editorial main content */}
-            <div className="lg:col-span-8 space-y-7 md:space-y-8 text-left">
+            <div className="lg:col-span-7 text-left order-2 lg:order-1 space-y-6 md:space-y-7">
 
               {/* Badge */}
               <motion.div
@@ -98,14 +86,14 @@ export default function Home() {
                 transition={{ duration: 1, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
                 className="flex"
               >
-                <span className="inline-flex items-center gap-2.5 text-[10px] md:text-[11px] font-medium tracking-[0.2em] uppercase text-foreground/55 px-4 py-2 rounded-full border border-white/[0.06] bg-[hsl(222,12%,13%)] whitespace-nowrap">
-                  <span className="w-1.5 h-1.5 rounded-full bg-accent" />
+                <span className="inline-flex items-center gap-2 text-[9.5px] sm:text-[10px] md:text-[11px] font-medium tracking-[0.18em] sm:tracking-[0.2em] uppercase text-foreground/65 px-3.5 py-2 rounded-full border border-white/[0.07] bg-[hsl(222,12%,13%)]/80 backdrop-blur-sm">
+                  <span className="w-1.5 h-1.5 rounded-full bg-accent shadow-[0_0_8px_rgba(176,141,87,0.5)]" />
                   Healthcare · Health-Tech · Service Innovation
                 </span>
               </motion.div>
 
-              {/* Name as display headline — bigger, left-aligned */}
-              <h1 className="font-medium leading-[0.85] tracking-[-0.05em]" style={{ fontSize: 'clamp(3.5rem, 11vw, 8.5rem)' }}>
+              {/* Name as display headline */}
+              <h1 className="font-medium leading-[0.86] tracking-[-0.045em]" style={{ fontSize: 'clamp(3rem, 13vw, 8.5rem)' }}>
                 <motion.span
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -124,12 +112,12 @@ export default function Home() {
                 </motion.span>
               </h1>
 
-              {/* Accent divider — left-anchored */}
+              {/* Accent divider */}
               <motion.div
                 initial={{ opacity: 0, scaleX: 0 }}
                 animate={{ opacity: 1, scaleX: 1 }}
                 transition={{ duration: 1, delay: 0.45 }}
-                className="h-[1px] w-20 bg-accent/40 origin-left"
+                className="h-[1px] w-16 bg-accent/40 origin-left"
               />
 
               {/* Lead positioning statement */}
@@ -137,7 +125,7 @@ export default function Home() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                className="max-w-[36rem] text-xl md:text-2xl lg:text-[1.65rem] text-foreground/90 font-light leading-[1.3] tracking-tight"
+                className="max-w-[34rem] text-[1.15rem] sm:text-xl md:text-2xl lg:text-[1.65rem] text-foreground/90 font-light leading-[1.3] tracking-tight"
               >
                 Clinical implementation, digital adoption, and operational systems for healthcare and health-tech teams.
               </motion.p>
@@ -147,17 +135,17 @@ export default function Home() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                className="max-w-[36rem] text-base md:text-lg text-foreground/70 font-light leading-relaxed"
+                className="max-w-[34rem] text-[15px] sm:text-base md:text-lg text-foreground/70 font-light leading-relaxed"
               >
-                I help clinics, professional-services firms, and health-tech founders bring new tools, services, and systems into real-world use. I combine frontline clinical experience, operations leadership, and technical implementation to help teams design, launch, and adopt things that actually fit the way people work.
+                I help clinics, professional-services firms, and health-tech founders bring new tools, services, and systems into real-world use — combining frontline clinical experience, operations leadership, and technical implementation to design, launch, and adopt things that fit the way people actually work.
               </motion.p>
 
               {/* CTAs */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-2"
+                transition={{ duration: 0.8, delay: 0.65, ease: [0.16, 1, 0.3, 1] }}
+                className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-1"
               >
                 <Link
                   href="/contact"
@@ -174,15 +162,15 @@ export default function Home() {
                 </Link>
               </motion.div>
 
-              {/* Mobile-only condensed status strip — sidebar info collapses to one line below the fold */}
+              {/* Status strip — visible on all sizes, replaces desktop sidebar */}
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 0.7, y: 0 }}
+                animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.75, ease: [0.16, 1, 0.3, 1] }}
-                className="lg:hidden flex flex-wrap items-center gap-x-3 gap-y-2 pt-6 text-[10px] font-medium tracking-[0.25em] uppercase text-muted-foreground/85"
+                className="flex flex-wrap items-center gap-x-3 gap-y-2 pt-5 text-[10px] sm:text-[11px] font-medium tracking-[0.22em] uppercase text-muted-foreground/85"
               >
                 <span className="flex items-center gap-2">
-                  <span aria-hidden="true" className="w-1.5 h-1.5 rounded-full bg-accent" />
+                  <span aria-hidden="true" className="w-1.5 h-1.5 rounded-full bg-accent shadow-[0_0_8px_rgba(176,141,87,0.5)]" />
                   Available for projects
                 </span>
                 <span aria-hidden="true" className="w-[3px] h-[3px] rounded-full bg-white/15" />
@@ -192,52 +180,24 @@ export default function Home() {
               </motion.div>
             </div>
 
-            {/* RIGHT: editorial sidebar — masthead-style metadata, desktop only */}
-            <motion.aside
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
-              className="hidden lg:block lg:col-span-4 lg:pt-6"
-              aria-label="Currently working on, location, and availability"
+            {/* RIGHT: hero image carousel */}
+            <motion.div
+              initial={{ opacity: 0, y: 24, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: 1.1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              className="lg:col-span-5 order-1 lg:order-2 w-full"
             >
-              <div className="space-y-7 lg:pl-6 lg:border-l lg:border-white/[0.06]">
-                <div>
-                  <p className="text-[10px] font-bold tracking-[0.45em] uppercase text-accent/65 mb-4">
-                    Currently
-                  </p>
-                  <ul className="space-y-1.5 text-base text-foreground/85 font-light leading-snug">
-                    <li>Endorphins Health</li>
-                    <li>Tax Relief Counsel</li>
-                    <li>Neuro-Mod</li>
-                  </ul>
-                </div>
-                <div className="h-[1px] w-12 bg-white/[0.1]" />
-                <div>
-                  <p className="text-[10px] font-bold tracking-[0.45em] uppercase text-accent/65 mb-4">
-                    Based in
-                  </p>
-                  <p className="text-sm text-foreground/80 font-light leading-relaxed">
-                    Burlington, Ontario.<br />
-                    Remote across North America.
-                  </p>
-                </div>
-                <div className="h-[1px] w-12 bg-white/[0.1]" />
-                <div>
-                  <p className="text-[10px] font-bold tracking-[0.45em] uppercase text-accent/65 mb-4">
-                    Status
-                  </p>
-                  <p className="flex items-center gap-2.5 text-sm text-foreground/85 font-light">
-                    <span aria-hidden="true" className="w-1.5 h-1.5 rounded-full bg-accent shadow-[0_0_8px_rgba(176,141,87,0.5)]" />
-                    Open for projects
-                  </p>
-                </div>
+              <div className="relative aspect-[4/5] sm:aspect-[5/4] md:aspect-[4/5] lg:aspect-[4/5] w-full max-w-[560px] mx-auto">
+                <HeroCarousel slides={heroSlides} priority />
+                {/* Soft glow behind */}
+                <div aria-hidden="true" className="absolute -inset-6 -z-10 rounded-[40px] bg-accent/[0.06] blur-2xl" />
               </div>
-            </motion.aside>
+            </motion.div>
           </div>
         </div>
 
-        {/* Bottom gradient for seamless transition */}
-        <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-background via-background/80 to-transparent z-[2] pointer-events-none" />
+        {/* Bottom gradient for seamless transition into next section */}
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent z-[2] pointer-events-none" />
       </section>
 
       {/* Approach Section - Combined statement + steps */}
