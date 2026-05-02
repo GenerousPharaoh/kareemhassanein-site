@@ -21,7 +21,7 @@ const experience = [
     period: '2025 - Present',
     role: 'Workflow Automation',
     company: 'Tax Relief Counsel',
-    desc: <>Built an LLM-based drafting automation system that reduced document generation time by <span className="text-accent/80">85%</span>. Mapped intake and client communication workflows to surface bottlenecks, created SOPs for consistency, and built a <span className="text-foreground/90">reusable template library</span> the firm can run repeatedly without rebuilding from scratch.</>,
+    desc: <>Built an LLM-based drafting automation system that reduced document generation time by <span className="text-accent/80">85%</span>. Mapped intake and client communication workflows to surface bottlenecks, created SOPs for consistency, and built a <span className="text-foreground/90">reusable template library</span> the firm can run without starting from scratch each time.</>,
   },
   {
     period: '2025 - Present',
@@ -122,7 +122,7 @@ export default function About() {
         {/* Cinematic Background with Parallax */}
         <motion.div style={{ y: heroBgY }} className="absolute inset-0 z-0 will-change-transform flex items-center justify-center">
           <ParallaxImage
-            src="/images/mapping.png"
+            src="/images/mapping.webp"
             alt=""
             className="max-w-3xl w-full opacity-50"
             fadedVertical={true}
@@ -251,7 +251,7 @@ export default function About() {
             <ValueCard
               subtitle="Process"
               title="Map, build, and stay."
-              desc={<>I sit with the team and watch the workflow run before changing anything. Then I build the system to match it, whether that means writing automation, configuring software, or wiring up integrations. After launch, I <span className="text-accent/80">stay through the first weeks</span> and clean up whatever the team runs into.</>}
+              desc={<>I sit with the team and watch the workflow run before changing anything. Then I build the system to match it, whether that means writing automation, configuring software, or wiring up integrations. After launch, I <span className="text-accent/80">stay through the first weeks</span> and fix what comes up.</>}
             />
           </div>
         </div>
@@ -323,10 +323,10 @@ export default function About() {
           >
             <div className="h-[1px] w-20 mx-auto mb-10 bg-gradient-to-r from-transparent via-accent/50 to-transparent" style={{ boxShadow: '0 0 16px rgba(176,141,87,0.12)' }} />
             <h2 className="text-3xl md:text-4xl font-medium tracking-tight mb-6 text-balance">
-              Want to see what I do?
+              What that looks like in practice.
             </h2>
             <p className="text-lg text-muted-foreground/80 font-light leading-relaxed mb-10 max-w-xl mx-auto">
-              Take a look at the services I offer, or reach out directly if you already know what you need.
+              See the services I offer, or reach out if you already know what you need.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 items-center justify-center">
               <Link

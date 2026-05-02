@@ -19,7 +19,7 @@ const metrics = [
     label: 'Entire clinical team using AI documentation within weeks, each saving hours weekly on notes'
   },
   {
-    value: 'Sustained Growth',
+    value: 'More Reviews',
     label: 'Patient reviews after embedding QR-based feedback capture into every visit'
   },
 ];
@@ -89,7 +89,7 @@ export default function Home() {
           className="absolute -inset-x-0 -top-32 -bottom-64 z-0"
         >
           <ParallaxImage
-            src="/images/orchestrating.png"
+            src="/images/orchestrating.webp"
             alt=""
             className="w-full h-full opacity-50"
             priority={true}
@@ -153,7 +153,7 @@ export default function Home() {
                 className="max-w-2xl mx-auto px-6 py-5 md:px-8 md:py-6 rounded-xl bg-white/[0.03] border border-white/[0.05]"
               >
                 <p className="text-sm md:text-base lg:text-lg text-foreground/70 font-light leading-relaxed">
-                  I help healthcare practices and professional-services firms <span className="text-foreground">remove operational friction</span>, and advise health-tech founders on how their tools fit into the routines of clinicians and patients. I learn the workflow, build practical fixes, and <span className="text-foreground">stay through adoption</span>.
+                  I help healthcare practices and professional-services firms <span className="text-foreground">remove operational friction</span>, and advise health-tech founders on how their tools fit into the routines of clinicians and patients. I see how the day runs, build practical fixes, and <span className="text-foreground">stay through adoption</span>.
                 </p>
               </motion.div>
 

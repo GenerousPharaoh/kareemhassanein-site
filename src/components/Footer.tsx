@@ -18,7 +18,7 @@ export default function Footer() {
         {/* Cinematic Background */}
         <div className="absolute inset-0 z-0">
           <ParallaxImage
-            src="/images/footer-image.png"
+            src="/images/footer-image.webp"
             alt=""
             className="w-full h-full object-cover opacity-[0.4]"
             fadedVertical={true}

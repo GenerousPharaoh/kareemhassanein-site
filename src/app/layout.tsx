@@ -31,11 +31,22 @@ export const metadata: Metadata = {
     description: "Implementation, operations, and adoption work for healthcare practices, professional-services firms, and health-tech founders. I find friction, solve it, and make it stick.",
     type: "website",
     locale: "en_CA",
+    url: "https://khassanein.bio",
+    siteName: "Kareem Hassanein",
+    images: [
+      {
+        url: "https://khassanein.bio/og-image.webp",
+        width: 1200,
+        height: 630,
+        alt: "Kareem Hassanein — Implementation Consulting",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Kareem Hassanein | Implementation Consulting",
     description: "Implementation, operations, and adoption work for healthcare, professional services, and health-tech founders.",
+    images: ["https://khassanein.bio/og-image.webp"],
   },
   robots: {
     index: true,

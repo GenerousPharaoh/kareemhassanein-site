@@ -17,7 +17,7 @@ const services = [
     tagline: 'Stop doing manually what a computer should handle.',
     desc: <>If you do something the same way every time, it can probably be automated. I build <span className="text-foreground/90">LLM-powered systems</span> for document generation, intake processing, and client communications.</>,
     points: ['LLM document generation', 'Intake automation', 'API integrations', 'Template libraries'],
-    image: '/images/chaos-to-order.png',
+    image: '/images/chaos-to-order.webp',
   },
   {
     index: '02',
@@ -25,7 +25,7 @@ const services = [
     tagline: 'Get your team using the tools you paid for.',
     desc: <>From evaluation to live use: I map the existing workflow, configure the system to match it, train the team, and <span className="text-foreground/90">stay through the first weeks</span> until people stop thinking about it.</>,
     points: ['System configuration', 'Team training', 'Change management', 'Launch support'],
-    image: '/images/time-gears.png',
+    image: '/images/time-gears.webp',
   },
   {
     index: '03',
@@ -33,7 +33,7 @@ const services = [
     tagline: 'Figure out where things are slowing down.',
     desc: <>Before building anything new, I map <span className="text-foreground/90">how your practice runs day to day</span>. Where do referrals get lost? Which steps take longer than they should? What workarounds have people built?</>,
     points: ['Workflow mapping', 'Process optimization', 'SOPs and playbooks', 'Capacity planning'],
-    image: '/images/flow.png',
+    image: '/images/flow.webp',
   },
   {
     index: '04',
@@ -41,7 +41,7 @@ const services = [
     tagline: 'A tool only counts if clinicians and patients keep using it.',
     desc: <>For founders building <span className="text-foreground/90">rehabilitation, patient engagement, clinical workflow, or AI tools</span>. I look at how a product fits into the routines of clinicians, patients, and teams, where the design or rollout asks too much, and what to change so it stops being another tab nobody opens.</>,
     points: ['Clinical fit review', 'Adoption strategy', 'Workflow integration', 'Rollout planning'],
-    image: '/images/bridging.png',
+    image: '/images/bridging.webp',
   }
 ];
 
@@ -212,7 +212,7 @@ export default function Services() {
         {/* Background image - contained with fade */}
         <motion.div style={{ y: heroY }} className="absolute inset-0 z-0 will-change-transform">
           <ParallaxImage
-            src="/images/mapping.png"
+            src="/images/mapping.webp"
             alt=""
             className="w-full h-full opacity-40"
             fadedVertical={true}

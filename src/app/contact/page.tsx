@@ -224,7 +224,7 @@ export default function Contact() {
               className="hidden md:block max-w-xs lg:max-w-sm"
             >
               <Image
-                src="/images/contact.png"
+                src="/images/contact.webp"
                 alt=""
                 width={500}
                 height={350}
