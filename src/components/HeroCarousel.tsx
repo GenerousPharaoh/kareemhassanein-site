@@ -95,7 +95,7 @@ export default function HeroCarousel({
     return (
         <div
             ref={containerRef}
-            className={`relative ${className}`}
+            className={`relative w-full h-full ${className}`}
             onMouseEnter={() => setIsPaused(true)}
             onMouseLeave={() => setIsPaused(false)}
             onTouchStart={handleTouchStart}
