@@ -15,6 +15,27 @@ const approach = [
   { title: 'Launch', desc: 'Stay through the first weeks until the new way becomes the default.', em: 'becomes the default' },
 ];
 
+// Editorial chapter break — hairline rule with a section index and label
+// floating at center. Used between the major sections of the homepage.
+function ChapterBreak({ index, label }: { index: string; label: string }) {
+  return (
+    <div className="py-10 md:py-16 px-6 md:px-12 xl:px-20">
+      <div className="max-w-[900px] mx-auto flex items-center gap-5 md:gap-8">
+        <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent to-white/[0.12]" />
+        <div className="flex items-baseline gap-3 shrink-0">
+          <span className="text-[10px] md:text-xs font-medium tracking-[0.4em] uppercase text-accent/75 whitespace-nowrap">
+            §&nbsp;{index}.
+          </span>
+          <span className="text-xs md:text-sm font-serif italic text-foreground/55 whitespace-nowrap">
+            {label}
+          </span>
+        </div>
+        <div className="h-[1px] flex-1 bg-gradient-to-l from-transparent to-white/[0.12]" />
+      </div>
+    </div>
+  );
+}
+
 export default function Home() {
   const heroRef = useRef(null);
   const transitionRef = useRef(null);
@@ -103,7 +124,7 @@ export default function Home() {
               </motion.div>
 
               {/* Name as headline */}
-              <h1 className="font-medium leading-[0.9] tracking-[-0.04em]" style={{ fontSize: 'clamp(2.75rem, 7vw, 5.5rem)' }}>
+              <h1 className="font-medium leading-[0.88] tracking-[-0.045em]" style={{ fontSize: 'clamp(3rem, 9vw, 7rem)' }}>
                 <motion.span
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -183,8 +204,10 @@ export default function Home() {
         <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-background via-background/80 to-transparent z-[2] pointer-events-none" />
       </section>
 
+      <ChapterBreak index="I" label="Method" />
+
       {/* Approach Section - Combined statement + steps */}
-      <section ref={transitionRef} className="py-20 md:py-28 px-6 md:px-12 xl:px-20 relative">
+      <section ref={transitionRef} className="pt-8 pb-20 md:pt-12 md:pb-28 px-6 md:px-12 xl:px-20 relative">
         {/* Atmospheric background */}
         <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-background to-transparent pointer-events-none z-0" />
         <div className="max-w-6xl mx-auto relative z-10">
@@ -217,12 +240,9 @@ export default function Home() {
                 transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                 className="mb-8"
               >
-                <span className="text-[10px] md:text-xs font-medium tracking-[0.25em] uppercase text-accent/70 mb-3 block">
+                <span className="text-[10px] md:text-xs font-medium tracking-[0.25em] uppercase text-accent/70 block">
                   The Approach
                 </span>
-                <h3 className="text-xl md:text-2xl font-medium tracking-tight text-foreground/90">
-                  How I work
-                </h3>
               </motion.div>
 
               <div className="relative">
@@ -270,13 +290,10 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Divider */}
-      <div className="px-6 md:px-12 xl:px-20 py-4">
-        <AnimatedDivider direction="left" accent maxWidth="300px" />
-      </div>
+      <ChapterBreak index="II" label="Selected Work" />
 
       {/* Selected Projects */}
-      <section ref={portfolioRef} className="py-28 md:py-40 relative z-10 w-full px-6 md:px-12 xl:px-20 overflow-hidden">
+      <section ref={portfolioRef} className="pt-8 pb-28 md:pt-12 md:pb-40 relative z-10 w-full px-6 md:px-12 xl:px-20 overflow-hidden">
         <div className="absolute inset-0 z-0 bg-[hsl(222,14%,10%)]/35" />
 
         <div className="max-w-[1400px] mx-auto relative z-10">
@@ -284,13 +301,13 @@ export default function Home() {
             style={{ y: portfolioY, opacity: portfolioOpacity }}
             className="mb-12 md:mb-16 will-change-transform"
           >
-            <span className="text-xs font-medium tracking-[0.4em] uppercase text-accent mb-4 block">
-              Portfolio
-            </span>
-            <h2 className="text-3xl md:text-5xl font-medium tracking-tight text-balance">
-              Recent <span className="text-accent/90 italic font-serif">Work</span>
+            <h2 className="text-3xl md:text-5xl lg:text-6xl font-medium tracking-tight text-balance leading-[1.05]">
+              Recent <span className="text-accent/90 italic font-serif">Work.</span>
             </h2>
-            <AnimatedDivider direction="left" accent maxWidth="280px" className="mt-6" />
+            <p className="mt-5 text-[11px] md:text-xs font-medium tracking-[0.4em] uppercase text-muted-foreground/70">
+              2024 &ndash; 2026
+            </p>
+            <AnimatedDivider direction="left" accent maxWidth="200px" className="mt-6" />
           </motion.div>
 
           <ProjectList />
