@@ -92,7 +92,7 @@ export default function Home() {
                 transition={{ duration: 1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
                 className="max-w-[34rem] text-[1.15rem] sm:text-xl md:text-2xl lg:text-[1.65rem] text-foreground/90 font-light leading-[1.3] tracking-tight"
               >
-                Clinical implementation, digital adoption, and operational systems for healthcare and health-tech teams.
+                I&rsquo;m a practicing physiotherapist with experience across patient care, clinic operations, digital health, and automation.
               </motion.p>
 
               <motion.p
@@ -101,7 +101,16 @@ export default function Home() {
                 transition={{ duration: 1, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
                 className="max-w-[34rem] text-[15px] sm:text-base md:text-lg text-foreground/70 font-light leading-relaxed"
               >
-                I&rsquo;m a practicing physiotherapist who also writes software. With health-tech founders, my work is usually figuring out how a new product would behave inside a real clinic and where it&rsquo;ll struggle. With clinics and professional-services firms, it&rsquo;s building the day-to-day systems behind their work: websites, intake and booking flows, referral pathways, AI workflow automation.
+                My work is focused on the parts of healthcare and service delivery where clinical judgment, patient engagement, technology, and operations meet. I help health-tech founders understand how their products affect the people using them, from patients and clinicians to admin staff and operators. I also help clinics and service businesses improve the digital systems around their work, including websites, intake and booking flows, referral pathways, documentation, automation, and tools for tracking engagement and outcomes.
+              </motion.p>
+
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, delay: 0.65, ease: [0.16, 1, 0.3, 1] }}
+                className="max-w-[34rem] text-[15px] sm:text-base md:text-lg text-foreground/70 font-light leading-relaxed"
+              >
+                The perspective comes from working directly with patients, running services, introducing new tools into care settings, and building the infrastructure behind them. I can assess a product or service through its clinical value, its operational demands, and the experience it creates for the people expected to use it.
               </motion.p>
 
               {/* CTAs */}
