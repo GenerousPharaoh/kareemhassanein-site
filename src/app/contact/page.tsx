@@ -213,7 +213,7 @@ export default function Contact() {
               style={{ opacity: descOpacity, y: descY }}
               className="text-lg md:text-xl text-muted-foreground font-light leading-relaxed italic max-w-xl mb-8"
             >
-              Have a workflow that needs fixing? A system that nobody uses? Let&apos;s figure it out.
+              Building, launching, or fixing a healthcare tool, service, or operating system? Let&apos;s figure out what it needs to work in practice.
             </motion.p>
 
             {/* Illustration - below description, natural flow */}

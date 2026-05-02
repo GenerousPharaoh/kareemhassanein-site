@@ -2,7 +2,6 @@
 
 import { motion, useScroll, useTransform, useSpring, useReducedMotion } from 'framer-motion';
 import ScrollReveal from '@/components/ScrollReveal';
-import CharReveal from '@/components/CharReveal';
 import ParallaxImage from '@/components/ParallaxImage';
 import useIsMobile from '@/hooks/useIsMobile';
 
@@ -223,10 +222,10 @@ export default function Services() {
           <ScrollReveal direction="up">
             <span className="block text-xs font-medium tracking-[0.3em] uppercase text-muted-foreground mb-6">Services</span>
             <h1 className="text-4xl md:text-6xl font-medium tracking-tight mb-8">
-              What I <CharReveal delay={0.4} className="text-accent italic font-serif">do.</CharReveal>
+              What I <span className="text-accent italic font-serif">do.</span>
             </h1>
             <p className="text-xl md:text-2xl text-muted-foreground font-light leading-relaxed max-w-2xl">
-              Operations improvement, workflow automation, and technology implementation for healthcare practices and professional-services firms. Advisory work for health-tech founders whose tools have to fit into the routines of clinicians and patients.
+              Clinical implementation, digital adoption, and operational systems for healthcare practices, health-tech founders, and professional-services firms.
             </p>
           </ScrollReveal>
         </motion.div>

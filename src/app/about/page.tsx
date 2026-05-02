@@ -161,14 +161,19 @@ export default function About() {
                 className="h-[1px] w-12 bg-accent mb-8 origin-left"
               />
 
-              <motion.p
+              <motion.div
                 initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 0.6, y: 0 }}
+                animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                className="text-lg md:text-xl text-foreground/80 font-medium tracking-wide max-w-[240px]"
+                className="space-y-1.5 max-w-[280px]"
               >
-                Implementation Consultant
-              </motion.p>
+                <p className="text-lg md:text-xl text-foreground/85 font-medium tracking-wide leading-tight">
+                  Clinical Implementation Advisor
+                </p>
+                <p className="text-sm md:text-base text-muted-foreground/80 italic font-serif font-light leading-snug">
+                  for Health-Tech &amp; Service Innovation
+                </p>
+              </motion.div>
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -181,14 +186,41 @@ export default function About() {
             </div>
 
             {/* Narrative Column (Right) */}
-            <div className="space-y-16 md:space-y-20 relative">
+            <div className="space-y-12 md:space-y-14 relative">
               {/* Vertical accent "spine" */}
               <div className="absolute -left-6 lg:-left-12 top-2 bottom-2 w-[1px] bg-gradient-to-b from-accent/40 via-accent/10 to-transparent" />
 
+              {/* Formal bio — third person, sets credentials and scope */}
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                className="space-y-6 md:space-y-7"
+              >
+                <p className="text-lg md:text-xl text-foreground/85 leading-relaxed font-light tracking-tight">
+                  Kareem Hassanein is a practicing <span className="text-foreground">physiotherapist and clinical implementation advisor</span> who works with health-tech and health innovation startups on digital adoption, product rollout, and the practical realities of bringing new tools into care delivery and service operations. He brings a McMaster background in kinesiology and graduate training in physiotherapy from Robert Gordon University, where he completed his <span className="text-foreground">MSc with Distinction</span>.
+                </p>
+                <p className="text-base md:text-lg text-muted-foreground/85 leading-relaxed font-light">
+                  His perspective is grounded in <span className="text-foreground/90">thousands of hours of coaching and patient care</span>, along with hands-on clinic operations and experience introducing digital tools into clinical and professional settings. Kareem helps founders understand how their product fits into existing routines, what it asks of clinicians, patients, and teams, and how to adjust the design, workflow, or rollout so it has a better chance of becoming part of routine use.
+                </p>
+                <p className="text-base md:text-lg text-muted-foreground/85 leading-relaxed font-light">
+                  His advisory work is especially relevant to teams building <span className="text-foreground/90">rehabilitation, patient engagement, AI documentation, clinical workflow, and service innovation</span> tools.
+                </p>
+              </motion.div>
+
+              {/* Visual break before personal voice */}
+              <motion.div
+                initial={{ opacity: 0, scaleX: 0 }}
+                animate={{ opacity: 1, scaleX: 1 }}
+                transition={{ duration: 0.8, delay: 0.65, ease: [0.16, 1, 0.3, 1] }}
+                className="h-[1px] w-16 bg-accent/35 origin-left"
+              />
+
+              {/* Personal voice — first-person continuation */}
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
               >
                 <p className="text-xl md:text-2xl text-foreground/70 leading-relaxed font-light tracking-tight">
                   I spent years on the frontline. Personal trainer, fitness manager, physiotherapist. I built caseloads, managed operations for a <span className="text-foreground">25-person team</span>, and was the <span className="text-foreground">highest-revenue clinician</span> at my practice for three consecutive years. The through-line has always been the same: <span className="text-accent/90 font-normal">getting people to adopt and stick with</span> new systems, routines, or behaviours.

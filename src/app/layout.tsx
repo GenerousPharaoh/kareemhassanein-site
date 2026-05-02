@@ -22,13 +22,13 @@ const cormorant = Cormorant_Garamond({
 });
 
 export const metadata: Metadata = {
-  title: "Kareem Hassanein | Implementation Consulting",
-  description: "Implementation, operations, and adoption work for healthcare practices, professional-services firms, and health-tech founders. I find friction, solve it, and make it stick.",
-  keywords: ["implementation consulting", "workflow automation", "operations improvement", "healthcare operations", "AI adoption", "change management", "clinical implementation", "health-tech advisory"],
+  title: "Kareem Hassanein | Clinical Implementation Advisor",
+  description: "Clinical implementation, digital adoption, and operational systems for healthcare practices, health-tech founders, and professional-services firms.",
+  keywords: ["clinical implementation", "digital adoption", "operational systems", "health-tech advisory", "healthcare operations", "AI adoption", "change management", "service innovation"],
   authors: [{ name: "Kareem Hassanein" }],
   openGraph: {
-    title: "Kareem Hassanein | Implementation Consulting",
-    description: "Implementation, operations, and adoption work for healthcare practices, professional-services firms, and health-tech founders. I find friction, solve it, and make it stick.",
+    title: "Kareem Hassanein | Clinical Implementation Advisor",
+    description: "Clinical implementation, digital adoption, and operational systems for healthcare practices, health-tech founders, and professional-services firms.",
     type: "website",
     locale: "en_CA",
     url: "https://khassanein.bio",
@@ -38,14 +38,14 @@ export const metadata: Metadata = {
         url: "https://khassanein.bio/og-image.webp",
         width: 1200,
         height: 630,
-        alt: "Kareem Hassanein — Implementation Consulting",
+        alt: "Kareem Hassanein, Clinical Implementation Advisor",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Kareem Hassanein | Implementation Consulting",
-    description: "Implementation, operations, and adoption work for healthcare, professional services, and health-tech founders.",
+    title: "Kareem Hassanein | Clinical Implementation Advisor",
+    description: "Clinical implementation, digital adoption, and operational systems for healthcare, health-tech, and service innovation.",
     images: ["https://khassanein.bio/og-image.webp"],
   },
   robots: {
@@ -61,21 +61,21 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Person",
   name: "Kareem Hassanein",
-  jobTitle: "Implementation Consultant",
-  description: "Implementation, operations, and adoption work for healthcare practices, professional-services firms, and health-tech founders.",
+  jobTitle: "Clinical Implementation Advisor",
+  description: "Kareem Hassanein advises healthcare, health-tech, and service businesses on clinical implementation, digital adoption, operational systems, and practical rollout.",
   url: "https://khassanein.bio",
   sameAs: [
     "https://www.linkedin.com/in/kareemhassanein",
   ],
   knowsAbout: [
-    "Workflow Automation",
-    "Operations Improvement",
-    "Technology Implementation",
+    "Clinical Implementation",
+    "Digital Adoption",
+    "Operational Systems",
     "Healthcare Operations",
+    "Health-Tech Advisory",
     "Change Management",
     "AI Adoption",
-    "Clinical Implementation",
-    "Health-Tech Advisory"
+    "Service Innovation"
   ],
   alumniOf: [
     {

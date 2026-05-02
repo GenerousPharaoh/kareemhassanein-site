@@ -15,29 +15,6 @@ const approach = [
   { title: 'Launch', desc: 'Stay through the first weeks until the new way becomes the default.', em: 'becomes the default' },
 ];
 
-// Editorial chapter break — magazine-spread treatment. A pull quote
-// set in serif italic display, with the section folio beneath. Each
-// one is a moment of arrival, not just a divider.
-function ChapterBreak({ index, label, quote }: { index: string; label: string; quote: React.ReactNode }) {
-  return (
-    <div className="py-24 md:py-36 lg:py-44 px-6 md:px-12 xl:px-20 relative">
-      <div className="max-w-[1100px] mx-auto">
-        <div className="text-3xl md:text-5xl lg:text-[3.75rem] font-serif italic leading-[1.15] tracking-tight text-balance text-foreground/85">
-          <span aria-hidden="true" className="text-accent/40 mr-1">&ldquo;</span>
-          {quote}
-          <span aria-hidden="true" className="text-accent/40 ml-1">&rdquo;</span>
-        </div>
-        <div className="mt-10 md:mt-14 flex items-center gap-4 md:gap-5">
-          <div className="h-[1px] w-12 md:w-16 bg-accent/45 shrink-0" />
-          <p className="text-[10px] md:text-xs font-medium tracking-[0.4em] uppercase text-accent/75 whitespace-nowrap">
-            §&nbsp;{index} &middot; {label}
-          </p>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 export default function Home() {
   const heroRef = useRef(null);
   const transitionRef = useRef(null);
@@ -121,9 +98,9 @@ export default function Home() {
                 transition={{ duration: 1, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
                 className="flex"
               >
-                <span className="inline-flex items-center gap-2.5 text-[10px] md:text-[11px] font-medium tracking-[0.2em] uppercase text-foreground/50 px-4 py-2 rounded-full border border-white/[0.06] bg-[hsl(222,12%,13%)]">
+                <span className="inline-flex items-center gap-2.5 text-[10px] md:text-[11px] font-medium tracking-[0.2em] uppercase text-foreground/55 px-4 py-2 rounded-full border border-white/[0.06] bg-[hsl(222,12%,13%)] whitespace-nowrap">
                   <span className="w-1.5 h-1.5 rounded-full bg-accent" />
-                  Implementation · Operations · Adoption
+                  Healthcare · Health-Tech · Service Innovation
                 </span>
               </motion.div>
 
@@ -155,14 +132,24 @@ export default function Home() {
                 className="h-[1px] w-20 bg-accent/40 origin-left"
               />
 
-              {/* Editorial subhead — left-aligned, larger measure */}
+              {/* Lead positioning statement */}
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                className="max-w-[36rem] text-base md:text-lg lg:text-xl text-foreground/75 font-light leading-relaxed"
+                className="max-w-[36rem] text-xl md:text-2xl lg:text-[1.65rem] text-foreground/90 font-light leading-[1.3] tracking-tight"
               >
-                I help healthcare practices and professional-services firms <span className="text-foreground">remove operational friction</span>, and advise health-tech founders on how their tools fit into the routines of clinicians and patients. I see how the day runs, build practical fixes, and <span className="text-foreground">stay through adoption</span>.
+                Clinical implementation, digital adoption, and operational systems for healthcare and health-tech teams.
+              </motion.p>
+
+              {/* Body — supporting detail */}
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                className="max-w-[36rem] text-base md:text-lg text-foreground/70 font-light leading-relaxed"
+              >
+                I help clinics, professional-services firms, and health-tech founders bring new tools, services, and systems into real-world use. I combine frontline clinical experience, operations leadership, and technical implementation to help teams design, launch, and adopt things that actually fit the way people work.
               </motion.p>
 
               {/* CTAs */}
@@ -253,14 +240,8 @@ export default function Home() {
         <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-background via-background/80 to-transparent z-[2] pointer-events-none" />
       </section>
 
-      <ChapterBreak
-        index="I"
-        label="Method"
-        quote={<>Sit with the team. Build to fit. <span className="text-accent/90">Stay through.</span></>}
-      />
-
       {/* Approach Section - Combined statement + steps */}
-      <section ref={transitionRef} className="pt-8 pb-20 md:pt-12 md:pb-28 px-6 md:px-12 xl:px-20 relative">
+      <section ref={transitionRef} className="py-20 md:py-28 px-6 md:px-12 xl:px-20 relative">
         {/* Atmospheric background */}
         <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-background to-transparent pointer-events-none z-0" />
         <div className="max-w-6xl mx-auto relative z-10">
@@ -331,14 +312,13 @@ export default function Home() {
         </div>
       </section>
 
-      <ChapterBreak
-        index="II"
-        label="Selected Work"
-        quote={<>The gap between how a tool is designed and <span className="text-accent/90">how it gets used</span> is where most rollouts fall apart.</>}
-      />
+      {/* Divider */}
+      <div className="px-6 md:px-12 xl:px-20 py-4">
+        <AnimatedDivider direction="left" accent maxWidth="300px" />
+      </div>
 
       {/* Selected Projects */}
-      <section ref={portfolioRef} className="pt-8 pb-28 md:pt-12 md:pb-40 relative z-10 w-full px-6 md:px-12 xl:px-20 overflow-hidden">
+      <section ref={portfolioRef} className="py-28 md:py-40 relative z-10 w-full px-6 md:px-12 xl:px-20 overflow-hidden">
         <div className="absolute inset-0 z-0 bg-[hsl(222,14%,10%)]/35" />
 
         <div className="max-w-[1400px] mx-auto relative z-10">
