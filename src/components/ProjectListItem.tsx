@@ -6,6 +6,7 @@ interface Project {
     title: string;
     category: string;
     description?: string;
+    outcome?: string;
     href?: string;
 }
 
@@ -15,14 +16,14 @@ interface ProjectListItemProps {
 }
 
 export default function ProjectListItem({ project, index }: ProjectListItemProps) {
-    const className = `group relative flex items-start md:items-center justify-between py-8 md:py-10 pl-8 md:pl-10 pr-6 md:pr-8 -mx-2 rounded-lg hover:bg-white/[0.03] transition-all duration-500 border-b border-white/[0.04] last:border-b-0 focus-visible:bg-white/[0.02] focus-visible:outline-none ${project.href ? 'cursor-pointer' : ''}`;
+    const className = `group relative grid gap-6 md:grid-cols-[1fr_220px] py-8 md:py-10 pl-8 md:pl-10 pr-6 md:pr-8 -mx-2 rounded-lg hover:bg-white/[0.03] transition-all duration-500 border-b border-white/[0.04] last:border-b-0 focus-visible:bg-white/[0.02] focus-visible:outline-none ${project.href ? 'cursor-pointer' : ''}`;
 
     const content = (
         <>
             {/* Persistent accent left border */}
             <div className="absolute left-0 top-4 bottom-4 w-[2px] bg-accent/15 group-hover:bg-accent/50 transition-colors duration-500 rounded-full" />
 
-            <div className="flex gap-5 md:gap-8 z-30 max-w-2xl">
+            <div className="flex gap-5 md:gap-8 z-30 max-w-3xl">
                 {/* Index number */}
                 <span className="text-4xl md:text-5xl font-light text-accent/15 group-hover:text-accent/30 transition-colors duration-500 leading-none pt-1 select-none hidden sm:block">
                     0{index + 1}
@@ -44,16 +45,23 @@ export default function ProjectListItem({ project, index }: ProjectListItemProps
                 </div>
             </div>
 
-            {project.href && (
-                <div className="flex items-center gap-4 z-30 flex-shrink-0">
-                    <span className="text-muted-foreground/70 text-sm hidden md:block opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        View
-                    </span>
-                    <div className="w-11 h-11 md:w-12 md:h-12 rounded-full border border-white/10 flex items-center justify-center group-hover:bg-accent group-hover:border-accent group-hover:shadow-lg group-hover:shadow-accent/20 transition-all duration-500">
-                        <ArrowUpRight className="w-4 h-4 md:w-5 md:h-5 text-muted-foreground group-hover:text-background transition-colors duration-500" />
+            <div className="z-30 flex items-start md:items-center justify-between md:justify-end gap-5">
+                {project.outcome && (
+                    <p className="max-w-[180px] text-xs md:text-sm text-foreground/70 leading-relaxed md:text-right">
+                        {project.outcome}
+                    </p>
+                )}
+                {project.href && (
+                    <div className="flex items-center gap-4 flex-shrink-0">
+                        <span className="text-muted-foreground/70 text-sm hidden md:block opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            View
+                        </span>
+                        <div className="w-11 h-11 md:w-12 md:h-12 rounded-full border border-white/10 flex items-center justify-center group-hover:bg-accent group-hover:border-accent group-hover:shadow-lg group-hover:shadow-accent/20 transition-all duration-500">
+                            <ArrowUpRight className="w-4 h-4 md:w-5 md:h-5 text-muted-foreground group-hover:text-background transition-colors duration-500" />
+                        </div>
                     </div>
-                </div>
-            )}
+                )}
+            </div>
         </>
     );
 
@@ -77,4 +85,3 @@ export default function ProjectListItem({ project, index }: ProjectListItemProps
         </div>
     );
 }
-

@@ -7,18 +7,21 @@ const projects = [
     {
         title: 'Tax Relief Counsel',
         category: 'Workflow Automation',
-        description: 'Built an LLM-powered drafting automation system for a solo law firm using Claude Code. Mapped intake and communication workflows, surfaced bottlenecks, and created a template library that reduced document generation time by 85%.',
+        description: 'Built an LLM-powered drafting automation system for a solo law firm using Codex. Mapped intake and communication workflows, surfaced bottlenecks, and created a template library that reduced document generation time by 85%.',
+        outcome: '85% document generation time reduction',
     },
     {
         title: 'Endorphins Health',
         category: 'Digital Operations',
         description: 'Led operational and digital infrastructure buildout for a 6-specialty multidisciplinary clinic. Redesigned and relaunched the clinic website, managed referral pathways across 5 disciplines, and built out local SEO across 8 municipalities.',
+        outcome: '8 practitioners across 6 specialties',
         href: 'https://www.endorphinshealth.com',
     },
     {
         title: 'KinetiKare Physio',
         category: 'Healthcare Platform',
         description: 'Designed and launched a 60+ page healthcare web platform with integrated Jane App booking, condition-specific SEO content for 55 conditions, and a live Google Reviews feed. Deployed via CI/CD through GitHub and Vercel.',
+        outcome: '60+ page healthcare platform',
         href: 'https://www.kinetikarephysio.com',
     },
 ];

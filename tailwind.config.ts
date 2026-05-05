@@ -23,7 +23,7 @@ const config: Config = {
         border: "hsl(var(--border))",
       },
       fontFamily: {
-        sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],
+        sans: ['var(--font-geist-sans)', 'system-ui', 'sans-serif'],
         mono: ['var(--font-geist-mono)', 'monospace'],
         serif: ['var(--font-serif)', 'Georgia', 'serif'],
       },

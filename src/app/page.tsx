@@ -8,15 +8,30 @@ import HeroCarousel from '@/components/HeroCarousel';
 import Link from 'next/link';
 
 const approach = [
-  { title: 'Map', desc: 'Watch the workflow run before changing anything.', em: 'before changing anything' },
-  { title: 'Build', desc: 'Fit the system to the workflow, not the other way around.', em: 'not the other way around' },
-  { title: 'Launch', desc: 'Stay through the first weeks until the new way becomes the default.', em: 'becomes the default' },
+  { title: 'Map the real workflow', desc: 'Watch how the work actually moves before changing the system.', em: 'actually moves' },
+  { title: 'Shape the operating layer', desc: 'Configure, automate, or rebuild only around the behavior people can sustain.', em: 'people can sustain' },
+  { title: 'Hold through adoption', desc: 'Stay close after launch so the new way becomes routine instead of another abandoned tool.', em: 'becomes routine' },
+];
+
+const proofPoints = [
+  {
+    value: '100%',
+    label: 'Heidi AI adoption across the clinic within 8 weeks.',
+  },
+  {
+    value: '85%',
+    label: 'Reduction in document generation time for Tax Relief Counsel.',
+  },
+  {
+    value: '60+',
+    label: 'Page healthcare platform launched for KinetiKare Physio.',
+  },
 ];
 
 const heroSlides = [
-  { src: '/images/hero-1.webp', alt: 'Clinical implementation advisor with tablet — frontline practice meets digital tools' },
-  { src: '/images/hero-2.webp', alt: 'Cross-functional team mapping a healthcare workflow together' },
-  { src: '/images/hero-3.webp', alt: 'Workflow path connecting clinical practice with modern systems and dashboards' },
+  { src: '/images/kh-home-implementation-workspace.webp', alt: 'Clinical operations workspace with laptop, tablet, intake forms, and physiotherapy equipment' },
+  { src: '/images/kh-about-clinic-workflow.webp', alt: 'Clinical workspace with laptop, tablet, notebook, and rehabilitation tools' },
+  { src: '/images/kh-services-workflow-desk.webp', alt: 'Workflow planning desk with tablets, laptop, process maps, and notes' },
 ];
 
 const reveal = {
@@ -31,10 +46,9 @@ export default function Home() {
       {/* Hero Section */}
       <section className="relative min-h-svh flex items-center pt-24 pb-16 md:pt-28 md:pb-24 px-5 sm:px-6 md:px-12 xl:px-20 bg-background overflow-hidden">
 
-        {/* Soft atmospheric ambient — subtle gradient orbs, no full-bleed photo backdrop */}
+        {/* Soft atmospheric ambient */}
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0">
-          <div className="absolute -top-32 -left-32 w-[42rem] h-[42rem] rounded-full bg-accent/[0.06] blur-3xl" />
-          <div className="absolute -bottom-40 -right-24 w-[36rem] h-[36rem] rounded-full bg-accent/[0.04] blur-3xl" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_20%_18%,rgba(var(--accent-rgb),0.08),transparent_34%)]" />
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background" />
         </div>
 
@@ -52,13 +66,13 @@ export default function Home() {
                 className="flex"
               >
                 <span className="inline-flex items-center gap-2 text-[9.5px] sm:text-[10px] md:text-[11px] font-medium tracking-[0.18em] sm:tracking-[0.2em] uppercase text-foreground/65 px-3.5 py-2 rounded-full border border-white/[0.07] bg-[hsl(222,12%,13%)]/80 backdrop-blur-sm">
-                  <span className="w-1.5 h-1.5 rounded-full bg-accent shadow-[0_0_8px_rgba(176,141,87,0.5)]" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-accent shadow-[0_0_8px_rgba(var(--accent-rgb),0.45)]" />
                   Healthcare · Health-Tech · Service Innovation
                 </span>
               </motion.div>
 
               {/* Name as display headline */}
-              <h1 className="font-medium leading-[0.86] tracking-[-0.045em]" style={{ fontSize: 'clamp(3rem, 13vw, 8.5rem)' }}>
+              <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[9.5rem] font-medium leading-[0.86]">
                 <motion.span
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -135,7 +149,7 @@ export default function Home() {
                 </Link>
               </motion.div>
 
-              {/* Status strip — visible on all sizes, replaces desktop sidebar */}
+              {/* Status strip */}
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -143,7 +157,7 @@ export default function Home() {
                 className="flex flex-wrap items-center gap-x-3 gap-y-2 pt-5 text-[10px] sm:text-[11px] font-medium tracking-[0.22em] uppercase text-muted-foreground/85"
               >
                 <span className="flex items-center gap-2">
-                  <span aria-hidden="true" className="w-1.5 h-1.5 rounded-full bg-accent shadow-[0_0_8px_rgba(176,141,87,0.5)]" />
+                  <span aria-hidden="true" className="w-1.5 h-1.5 rounded-full bg-accent shadow-[0_0_8px_rgba(var(--accent-rgb),0.45)]" />
                   Available for projects
                 </span>
                 <span aria-hidden="true" className="w-[3px] h-[3px] rounded-full bg-white/15" />
@@ -160,10 +174,18 @@ export default function Home() {
               transition={{ duration: 1.1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
               className="lg:col-span-5 order-1 lg:order-2 w-full"
             >
-              <div className="relative aspect-[4/3] sm:aspect-[5/4] lg:aspect-[5/4] w-full max-w-[640px] mx-auto">
-                <HeroCarousel slides={heroSlides} priority />
-                {/* Soft glow behind */}
-                <div aria-hidden="true" className="absolute -inset-6 -z-10 rounded-[40px] bg-accent/[0.06] blur-2xl" />
+              <div className="relative w-full max-w-[640px] mx-auto space-y-4">
+                <div className="relative aspect-[4/3] sm:aspect-[5/4] lg:aspect-[5/4]">
+                  <HeroCarousel slides={heroSlides} priority />
+                </div>
+                <div className="grid grid-cols-3 overflow-hidden rounded-lg border border-white/[0.07] bg-white/[0.035] backdrop-blur-sm">
+                  {proofPoints.map((point) => (
+                    <div key={point.value} className="p-4 border-r border-white/[0.06] last:border-r-0">
+                      <p className="text-xl md:text-2xl font-medium text-accent leading-none mb-2">{point.value}</p>
+                      <p className="text-[11px] md:text-[12px] text-muted-foreground/85 leading-relaxed">{point.label}</p>
+                    </div>
+                  ))}
+                </div>
               </div>
             </motion.div>
           </div>
@@ -215,7 +237,7 @@ export default function Home() {
               </motion.p>
 
               <div className="relative">
-                {/* Vertical connecting line — accent-tinted, longer */}
+                {/* Vertical connecting line */}
                 <div className="absolute left-[27px] md:left-[31px] top-6 bottom-6 w-px bg-gradient-to-b from-accent/25 via-white/[0.08] to-transparent pointer-events-none" />
 
                 <div className="space-y-3 md:space-y-4">
@@ -229,7 +251,7 @@ export default function Home() {
                       className="group relative flex gap-5 md:gap-6 items-start p-4 md:p-5 -mx-4 md:-mx-5 rounded-2xl hover:bg-white/[0.025] border border-transparent hover:border-white/[0.05] transition-all duration-500"
                     >
                       {/* Number badge */}
-                      <div className="flex-shrink-0 w-[54px] h-[54px] md:w-[62px] md:h-[62px] rounded-full border border-accent/25 flex items-center justify-center bg-[hsl(222,14%,10%)] relative z-10 group-hover:border-accent/50 group-hover:shadow-[0_0_24px_rgba(176,141,87,0.12)] transition-all duration-500">
+                      <div className="flex-shrink-0 w-[54px] h-[54px] md:w-[62px] md:h-[62px] rounded-full border border-accent/25 flex items-center justify-center bg-[hsl(216,16%,10%)] relative z-10 group-hover:border-accent/50 group-hover:shadow-[0_0_24px_rgba(var(--accent-rgb),0.12)] transition-all duration-500">
                         <span className="text-xl md:text-2xl font-serif italic text-accent/85 group-hover:text-accent transition-colors duration-500">
                           {i + 1}
                         </span>
@@ -284,7 +306,7 @@ export default function Home() {
               Recent <span className="text-accent/90 italic font-serif">work.</span>
             </h2>
             <p className="mt-5 text-[11px] md:text-xs font-medium tracking-[0.4em] uppercase text-muted-foreground/70">
-              2024 &ndash; 2026
+              2024 to 2026
             </p>
             <AnimatedDivider direction="left" accent maxWidth="200px" className="mt-6" />
           </motion.div>
@@ -296,7 +318,7 @@ export default function Home() {
       {/* Closing CTA */}
       <section className="relative px-6 md:px-12 xl:px-20 py-24 md:py-32 overflow-hidden">
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60rem] h-[40rem] rounded-full bg-accent/[0.05] blur-3xl" />
+          <div className="absolute inset-x-0 top-1/2 h-px bg-gradient-to-r from-transparent via-accent/20 to-transparent" />
         </div>
 
         <motion.div
