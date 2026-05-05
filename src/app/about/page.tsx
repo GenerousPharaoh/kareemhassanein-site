@@ -233,7 +233,7 @@ export default function About() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                className="grid xl:grid-cols-[1fr_0.72fr] gap-8 xl:gap-10 items-start"
+                className="space-y-8 md:space-y-10"
               >
                 <div className="space-y-6 md:space-y-7">
                   <p className="text-lg md:text-xl text-foreground/85 leading-relaxed font-light tracking-tight">
