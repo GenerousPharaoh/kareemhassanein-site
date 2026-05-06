@@ -2,17 +2,17 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import LayoutWrapper from "@/components/LayoutWrapper";
-import { Cormorant_Garamond } from 'next/font/google';
+import { Urbanist, Cormorant_Garamond } from 'next/font/google';
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
 const geistMono = localFont({
   src: "./fonts/GeistMonoVF.woff",
   variable: "--font-geist-mono",
   weight: "100 900",
+});
+const urbanist = Urbanist({
+  subsets: ['latin'],
+  variable: '--font-sans',
+  weight: ['300', '400', '500', '600', '700'],
 });
 const cormorant = Cormorant_Garamond({
   subsets: ['latin'],
@@ -116,7 +116,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${cormorant.variable} antialiased font-sans`}
+        className={`${urbanist.variable} ${geistMono.variable} ${cormorant.variable} antialiased font-sans`}
       >
         <div className="noise-overlay" />
         <LayoutWrapper>

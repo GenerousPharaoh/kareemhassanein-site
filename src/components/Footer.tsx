@@ -7,10 +7,10 @@ import ParallaxImage from './ParallaxImage';
 export default function Footer() {
   return (
     <div
-      className="fixed bottom-0 left-0 w-full h-[68svh] min-h-[460px] md:h-[560px] z-0 flex flex-col justify-end pointer-events-none"
+      className="fixed bottom-0 left-0 w-full h-svh md:h-[800px] z-0 flex flex-col justify-end pointer-events-none"
       style={{ clipPath: "polygon(0% 0, 100% 0%, 100% 100%, 0 100%)" }}
     >
-      <div className="relative h-full w-full bg-[#10161d] flex flex-col justify-center items-center text-center pointer-events-auto overflow-hidden">
+      <div className="relative h-full w-full bg-[#141920] flex flex-col justify-center items-center text-center pointer-events-auto overflow-hidden">
 
         {/* Noise Overlay */}
         <div className="absolute inset-0 opacity-[0.03] pointer-events-none z-[1]" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")` }} />
@@ -18,13 +18,12 @@ export default function Footer() {
         {/* Cinematic Background */}
         <div className="absolute inset-0 z-0">
           <ParallaxImage
-            src="/images/kh-footer-workflow.webp"
+            src="/images/footer-image.webp"
             alt=""
-            className="w-full h-full object-cover opacity-[0.58]"
+            className="w-full h-full object-cover opacity-[0.4]"
             fadedVertical={true}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-background/92 via-background/36 to-background/78" />
-          <div className="absolute inset-0 bg-gradient-to-r from-background/40 via-transparent to-background/45" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-background/70" />
         </div>
 
         <div className="relative z-10 px-6 pb-32 md:pb-0">
@@ -33,7 +32,7 @@ export default function Footer() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "0px 0px -20px 0px" }}
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-medium tracking-tighter mb-8 md:mb-12 leading-[0.8]"
+            className="text-5xl sm:text-7xl md:text-[120px] lg:text-[160px] font-medium tracking-tighter mb-8 md:mb-16 lg:mb-20 leading-[0.8]"
           >
             Reach <br />
             <span className="mt-4 italic font-light font-serif opacity-50">

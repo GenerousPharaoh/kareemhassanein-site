@@ -16,8 +16,7 @@ const services = [
     tagline: 'Stop doing manually what a computer should handle.',
     desc: <>If you do something the same way every time, it can probably be automated. I build <span className="text-foreground/90">LLM-powered systems</span> for document generation, intake processing, and client communications.</>,
     points: ['LLM document generation', 'Intake automation', 'API integrations', 'Template libraries'],
-    result: 'Reusable workflows that remove repeat work without forcing a team into a new operating style.',
-    image: '/images/kh-services-workflow-desk.webp',
+    image: '/images/chaos-to-order.webp',
   },
   {
     index: '02',
@@ -25,8 +24,7 @@ const services = [
     tagline: 'Get your team using the tools you paid for.',
     desc: <>From evaluation to live use: I map the existing workflow, configure the system to match it, train the team, and <span className="text-foreground/90">stay through the first weeks</span> until people stop thinking about it.</>,
     points: ['System configuration', 'Team training', 'Change management', 'Launch support'],
-    result: 'A practical rollout path from evaluation to normal use.',
-    image: '/images/kh-about-rollout-planning.webp',
+    image: '/images/time-gears.webp',
   },
   {
     index: '03',
@@ -34,8 +32,7 @@ const services = [
     tagline: 'Figure out where things are slowing down.',
     desc: <>Before building anything new, I map <span className="text-foreground/90">how your practice runs day to day</span>. Where do referrals get lost? Which steps take longer than they should? What workarounds have people built?</>,
     points: ['Workflow mapping', 'Process optimization', 'SOPs and playbooks', 'Capacity planning'],
-    result: 'A clearer view of what is slowing intake, referrals, booking, documentation, or follow-up.',
-    image: '/images/kh-about-clinic-workflow.webp',
+    image: '/images/flow.webp',
   },
   {
     index: '04',
@@ -43,15 +40,14 @@ const services = [
     tagline: 'A tool only counts if clinicians and patients keep using it.',
     desc: <>For founders building <span className="text-foreground/90">rehabilitation, patient engagement, clinical workflow, or AI tools</span>. I look at how a product fits into the routines of clinicians, patients, and teams, where the design or rollout asks too much, and what to change so it stops being another tab nobody opens.</>,
     points: ['Clinical fit review', 'Adoption strategy', 'Workflow integration', 'Rollout planning'],
-    result: 'Clinical and operational feedback before rollout friction becomes expensive.',
-    image: '/images/kh-home-implementation-workspace.webp',
+    image: '/images/bridging.webp',
   }
 ];
 
 const technicalIndex = [
   {
     domain: 'Automation & AI',
-    tools: ['Codex', 'Cursor', 'Webhooks'],
+    tools: ['Codex', 'Cursor', 'Claude Code', 'Webhooks'],
     specs: ['LLM document generation', 'Workflow automation', 'System integrations', 'Data processing']
   },
   {
@@ -81,96 +77,71 @@ function ServiceTag({ tag, index }: { tag: string; index: number }) {
   );
 }
 
-function ServiceSection({ service, index }: { service: { index: string; title: string; tagline: string; desc: React.ReactNode; points: string[]; result: string; image: string }, index: number }) {
+function ServiceSection({ service, index }: { service: { index: string; title: string; tagline: string; desc: React.ReactNode; points: string[]; image: string }, index: number }) {
+  const ref = useRef(null);
+  const shouldReduceMotion = useReducedMotion();
+  const isMobile = useIsMobile();
+  const disableScrollMotion = shouldReduceMotion || isMobile;
+
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "center center"]
+  });
+
+  const springConfig = { stiffness: 80, damping: 35 };
+  const y = useSpring(useTransform(scrollYProgress, [0, 1], [disableScrollMotion ? 0 : 40, 0]), springConfig);
+  const opacity = useSpring(
+    useTransform(scrollYProgress, [0, 0.3, 1], disableScrollMotion ? [1, 1, 1] : [0.05, 0.5, 1]),
+    springConfig
+  );
+  const imgY = useSpring(useTransform(scrollYProgress, [0, 1], [disableScrollMotion ? 0 : 30, disableScrollMotion ? 0 : -30]), springConfig);
+  const imgScale = useSpring(useTransform(scrollYProgress, [0, 1], [disableScrollMotion ? 1 : 1.05, 1]), springConfig);
+
+  const isReversed = index % 2 !== 0;
+
   return (
-    <motion.article
-      initial={{ opacity: 0, y: 14 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "0px 0px -40px 0px" }}
-      transition={{ duration: 0.5, delay: index * 0.06, ease: [0.16, 1, 0.3, 1] }}
-      className="group relative overflow-hidden rounded-lg border border-white/[0.07] bg-white/[0.025] transition-all duration-500 hover:border-accent/25 hover:bg-white/[0.04]"
+    <section
+      ref={ref}
+      className="py-24 md:py-32 px-6 lg:px-12 xl:px-20 relative overflow-hidden"
     >
-      <div className="relative h-52 overflow-hidden border-b border-white/[0.06]">
+      {/* Background image - alternates sides */}
+      <motion.div
+        style={{ y: imgY, scale: imgScale }}
+        className={`absolute inset-y-0 w-2/3 pointer-events-none will-change-transform ${isReversed ? 'left-0' : 'right-0'}`}
+      >
         <ParallaxImage
           src={service.image}
           alt=""
-          className="h-full w-full opacity-[0.54] transition-opacity duration-500 group-hover:opacity-70"
+          className="w-full h-full opacity-40"
+          fadedSides={true}
           fadedVertical={true}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-background/92 via-background/34 to-transparent" />
-        <div className="absolute left-6 top-6 text-xs font-mono text-accent/80">{service.index}</div>
-      </div>
+      </motion.div>
 
-      <div className="p-6 md:p-8">
-        <div className="mb-7">
-          <h2 className="text-2xl md:text-3xl font-medium tracking-tight mb-3">
-            {service.title}
-          </h2>
-          <p className="text-base md:text-lg text-foreground/72 font-light font-serif italic">
+      <motion.div
+        style={{ y, opacity }}
+        className="max-w-[1200px] mx-auto relative z-10 will-change-transform grid md:grid-cols-2 gap-12 items-center"
+      >
+        <div className={isReversed ? 'md:col-start-2' : ''}>
+          <div className="flex items-baseline gap-6 mb-8">
+            <span className="text-accent font-mono text-sm">0{index + 1}</span>
+            <h2 className="text-3xl md:text-5xl font-medium tracking-tight">
+              {service.title}
+            </h2>
+          </div>
+
+          <p className="text-xl md:text-2xl text-foreground/70 font-light font-serif italic mb-6">
             {service.tagline}
           </p>
-        </div>
 
-        <p className="text-sm md:text-base text-muted-foreground/88 leading-relaxed mb-7">
-          {service.desc}
-        </p>
-
-        <div className="mb-7 rounded-md border border-accent/15 bg-accent/[0.045] p-4">
-          <p className="text-[10px] font-bold tracking-[0.24em] uppercase text-accent/75 mb-2">
-            Practical Result
+          <p className="text-lg text-muted-foreground leading-relaxed mb-10">
+            {service.desc}
           </p>
-          <p className="text-sm text-foreground/78 leading-relaxed">
-            {service.result}
-          </p>
-        </div>
 
-        <div className="flex flex-wrap gap-2.5">
-          {service.points.map((point, i) => (
-            <ServiceTag key={point} tag={point} index={i} />
-          ))}
-        </div>
-      </div>
-    </motion.article>
-  );
-}
-
-function ServiceSpotlight() {
-  return (
-    <section className="px-6 lg:px-12 xl:px-20 pb-20 md:pb-28">
-      <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "0px 0px -40px 0px" }}
-        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-        className="max-w-[1200px] mx-auto overflow-hidden rounded-lg border border-white/[0.07] bg-[hsl(216,16%,10%)]"
-      >
-        <div className="grid lg:grid-cols-[0.9fr_1.1fr]">
-          <div className="relative min-h-[320px]">
-            <ParallaxImage
-              src="/images/kh-about-clinic-workflow.webp"
-              alt=""
-              className="absolute inset-0 h-full w-full opacity-[0.68]"
-              fadedVertical={true}
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-background/20 via-background/34 to-background/88" />
-          </div>
-          <div className="p-8 md:p-12 lg:p-14">
-            <p className="text-[10px] md:text-xs font-medium tracking-[0.25em] uppercase text-accent/70 mb-5">
-              How engagements usually start
-            </p>
-            <h2 className="text-3xl md:text-4xl font-medium tracking-tight mb-6">
-              A short diagnostic before anyone starts building.
-            </h2>
-            <p className="text-base md:text-lg text-muted-foreground/85 leading-relaxed mb-8">
-              I look at the actual workflow, the tools already in place, the people who will use them, and the point where adoption is most likely to fail. From there we decide whether the right next move is automation, implementation support, service redesign, or product feedback.
-            </p>
-            <Link
-              href="/contact"
-              className="group inline-flex items-center gap-3 text-sm md:text-base font-medium px-7 py-3.5 rounded-full bg-accent text-background hover:bg-accent/90 transition-all duration-300"
-            >
-              Start a conversation
-              <ArrowRight size={16} className="group-hover:translate-x-0.5 transition-transform duration-300" />
-            </Link>
+          <div className="flex flex-wrap gap-3">
+            {service.points.map((point, i) => (
+              <ServiceTag key={point} tag={point} index={i} />
+            ))}
           </div>
         </div>
       </motion.div>
@@ -240,13 +211,12 @@ export default function Services() {
         {/* Background image - contained with fade */}
         <motion.div style={{ y: heroY }} className="absolute inset-0 z-0 will-change-transform">
           <ParallaxImage
-            src="/images/kh-services-workflow-desk.webp"
+            src="/images/mapping.webp"
             alt=""
-            className="w-full h-full opacity-[0.34]"
+            className="w-full h-full opacity-40"
             fadedVertical={true}
           />
         </motion.div>
-        <div className="absolute inset-0 z-[1] bg-gradient-to-b from-background via-background/72 to-background pointer-events-none" />
 
         <motion.div style={{ y: heroY }} className="max-w-[1200px] mx-auto relative z-10 will-change-transform">
           <ScrollReveal direction="up">
@@ -262,19 +232,26 @@ export default function Services() {
       </section>
 
       {/* Services List */}
-      <section className="px-6 lg:px-12 xl:px-20 pb-20 md:pb-28">
-        <div className="max-w-[1200px] mx-auto grid md:grid-cols-2 gap-5 md:gap-6">
-          {services.map((service, idx) => (
+      <div>
+        {services.map((service, idx) => (
+          <div key={service.index}>
+            {idx > 0 && (
+              <div className="max-w-[1200px] mx-auto px-6 lg:px-12 xl:px-20">
+                <div className="h-[1px] bg-gradient-to-r from-transparent via-[rgba(176,141,87,0.2)] to-transparent" style={{ boxShadow: '0 0 12px rgba(176,141,87,0.06)' }} />
+              </div>
+            )}
             <ServiceSection
-              key={service.index}
               service={service}
               index={idx}
             />
-          ))}
-        </div>
-      </section>
+          </div>
+        ))}
+      </div>
 
-      <ServiceSpotlight />
+      {/* Divider before tools */}
+      <div className="max-w-[1200px] mx-auto px-6 lg:px-12 xl:px-20">
+        <div className="h-[1px] bg-gradient-to-r from-transparent via-[rgba(176,141,87,0.15)] to-transparent" />
+      </div>
 
       {/* Tools Section */}
       <section ref={toolsRef} className="py-24 md:py-32 px-6 lg:px-12 xl:px-20 relative overflow-hidden">
@@ -293,7 +270,7 @@ export default function Services() {
             </p>
           </motion.div>
 
-          {/* Tool cards */}
+          {/* Tool cards - asymmetric grid */}
           <div className="grid md:grid-cols-2 gap-4">
             <div className="md:col-span-2">
               <ToolDomain domain={technicalIndex[0]} index={0} featured />
@@ -313,7 +290,7 @@ export default function Services() {
             viewport={{ once: true, margin: "0px 0px -20px 0px" }}
             transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
           >
-            <div className="h-[1px] w-20 mx-auto mb-10 bg-gradient-to-r from-transparent via-accent/50 to-transparent" style={{ boxShadow: '0 0 16px rgba(var(--accent-rgb),0.12)' }} />
+            <div className="h-[1px] w-20 mx-auto mb-10 bg-gradient-to-r from-transparent via-accent/50 to-transparent" style={{ boxShadow: '0 0 16px rgba(176,141,87,0.12)' }} />
             <h2 className="text-3xl md:text-4xl font-medium tracking-tight mb-6 text-balance">
               Let&apos;s map it out.
             </h2>
