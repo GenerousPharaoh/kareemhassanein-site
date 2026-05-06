@@ -7,7 +7,6 @@ import AnimatedDivider from '@/components/AnimatedDivider';
 import useIsMobile from '@/hooks/useIsMobile';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
-import Image from 'next/image';
 import { useRef } from 'react';
 
 
@@ -57,44 +56,6 @@ function ValueCard({ title, subtitle, desc }: { title: string; subtitle: string;
         {desc}
       </p>
     </motion.div>
-  );
-}
-
-function ImagePanel({
-  src,
-  alt,
-  caption,
-  orientation = 'landscape',
-}: {
-  src: string;
-  alt: string;
-  caption: string;
-  orientation?: 'landscape' | 'portrait';
-}) {
-  return (
-    <motion.figure
-      initial={{ opacity: 0, y: 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "0px 0px -40px 0px" }}
-      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-      className="group relative overflow-hidden rounded-lg border border-white/[0.07] bg-white/[0.025] p-2"
-    >
-      <div className={`relative overflow-hidden rounded-md ${orientation === 'portrait' ? 'aspect-[4/5]' : 'aspect-[4/3]'}`}>
-        <Image
-          src={src}
-          alt={alt}
-          fill
-          sizes={orientation === 'portrait' ? '(min-width: 1024px) 380px, 100vw' : '(min-width: 1024px) 720px, 100vw'}
-          className="object-cover transition-transform duration-700 ease-out-expo group-hover:scale-[1.025]"
-          quality={90}
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-background/72 via-transparent to-transparent" />
-      </div>
-      <figcaption className="px-3 py-3 text-xs leading-relaxed text-muted-foreground/78">
-        {caption}
-      </figcaption>
-      <div className="absolute inset-x-2 top-2 h-[2px] rounded-full bg-gradient-to-r from-accent/70 via-accent/20 to-transparent" />
-    </motion.figure>
   );
 }
 
@@ -161,9 +122,9 @@ export default function About() {
         {/* Cinematic Background with Parallax */}
         <motion.div style={{ y: heroBgY }} className="absolute inset-0 z-0 will-change-transform flex items-center justify-center">
           <ParallaxImage
-            src="/images/kh-about-clinic-workflow.webp"
+            src="/images/mapping.webp"
             alt=""
-            className="max-w-5xl w-full opacity-[0.12]"
+            className="max-w-3xl w-full opacity-50"
             fadedVertical={true}
           />
         </motion.div>
@@ -187,7 +148,8 @@ export default function About() {
                 initial={{ opacity: 0, x: -30 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-                className="text-5xl md:text-6xl lg:text-7xl font-medium tracking-tight mb-8 leading-[0.9]"
+                className="font-medium tracking-tight mb-8 leading-[0.9]"
+                style={{ fontSize: 'clamp(2.5rem, 6vw, 4.5rem)' }}
               >
                 Kareem<br />Hassanein
               </motion.h1>
@@ -228,31 +190,22 @@ export default function About() {
               {/* Vertical accent "spine" */}
               <div className="absolute -left-6 lg:-left-12 top-2 bottom-2 w-[1px] bg-gradient-to-b from-accent/40 via-accent/10 to-transparent" />
 
-              {/* Bio, first person throughout, sets credentials and scope */}
+              {/* Bio — first person throughout, sets credentials and scope */}
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                className="grid xl:grid-cols-[1fr_0.72fr] gap-8 xl:gap-10 items-start"
+                className="space-y-6 md:space-y-7"
               >
-                <div className="space-y-6 md:space-y-7">
-                  <p className="text-lg md:text-xl text-foreground/85 leading-relaxed font-light tracking-tight">
-                    I&apos;m a practicing <span className="text-foreground">physiotherapist and clinical implementation advisor</span> working with health-tech and health innovation startups on digital adoption, product rollout, and the practical realities of bringing new tools into care delivery and service operations. I bring a McMaster background in kinesiology and graduate training in physiotherapy from Robert Gordon University, where I completed my <span className="text-foreground">MSc with Distinction</span>.
-                  </p>
-                  <p className="text-base md:text-lg text-muted-foreground/85 leading-relaxed font-light">
-                    My perspective is grounded in <span className="text-foreground/90">thousands of hours of coaching and patient care</span>, along with hands-on clinic operations and experience introducing digital tools into clinical and professional settings. I help founders understand how their product fits into existing routines, what it asks of clinicians, patients, and teams, and how to adjust the design, workflow, or rollout so it has a better chance of becoming part of routine use.
-                  </p>
-                  <p className="text-base md:text-lg text-muted-foreground/85 leading-relaxed font-light">
-                    My advisory work is especially relevant to teams building <span className="text-foreground/90">rehabilitation, patient engagement, AI documentation, clinical workflow, and service innovation</span> tools.
-                  </p>
-                </div>
-
-                <ImagePanel
-                  src="/images/kh-about-clinic-workflow.webp"
-                  alt="Clinical workspace with laptop, tablet, notebook, and physiotherapy equipment"
-                  caption="Clinical context, workflow mapping, and digital implementation in the same frame."
-                  orientation="landscape"
-                />
+                <p className="text-lg md:text-xl text-foreground/85 leading-relaxed font-light tracking-tight">
+                  I&apos;m a practicing <span className="text-foreground">physiotherapist and clinical implementation advisor</span> working with health-tech and health innovation startups on digital adoption, product rollout, and the practical realities of bringing new tools into care delivery and service operations. I bring a McMaster background in kinesiology and graduate training in physiotherapy from Robert Gordon University, where I completed my <span className="text-foreground">MSc with Distinction</span>.
+                </p>
+                <p className="text-base md:text-lg text-muted-foreground/85 leading-relaxed font-light">
+                  My perspective is grounded in <span className="text-foreground/90">thousands of hours of coaching and patient care</span>, along with hands-on clinic operations and experience introducing digital tools into clinical and professional settings. I help founders understand how their product fits into existing routines, what it asks of clinicians, patients, and teams, and how to adjust the design, workflow, or rollout so it has a better chance of becoming part of routine use.
+                </p>
+                <p className="text-base md:text-lg text-muted-foreground/85 leading-relaxed font-light">
+                  My advisory work is especially relevant to teams building <span className="text-foreground/90">rehabilitation, patient engagement, AI documentation, clinical workflow, and service innovation</span> tools.
+                </p>
               </motion.div>
 
               {/* Hairline accent before the personal narrative continuation */}
@@ -307,15 +260,7 @@ export default function About() {
 
       {/* What I bring */}
       <section className="py-16 md:py-24 px-6 lg:px-12 xl:px-20">
-        <div className="max-w-[1100px] mx-auto grid lg:grid-cols-[0.8fr_1.1fr] gap-8 lg:gap-12 items-start">
-          <ImagePanel
-            src="/images/kh-about-rollout-planning.webp"
-            alt="Rollout planning table with tablet checklist, paper workflow plan, pen, and clinical tools"
-            caption="The work is practical: translate a rollout into daily routines people can actually keep using."
-            orientation="portrait"
-          />
-
-          <div>
+        <div className="max-w-[900px] mx-auto">
           {/* Section header */}
           <motion.div
             initial={{ opacity: 0, y: 10 }}
@@ -340,7 +285,6 @@ export default function About() {
               title="Map, build, and stay."
               desc={<>I sit with the team and watch the workflow run before changing anything. Then I build the system to match it, whether that means writing automation, configuring software, or wiring up integrations. After launch, I <span className="text-accent/80">stay through the first weeks</span> and fix what comes up.</>}
             />
-          </div>
           </div>
         </div>
       </section>
@@ -409,7 +353,7 @@ export default function About() {
             viewport={{ once: true, margin: "0px 0px -20px 0px" }}
             transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
           >
-            <div className="h-[1px] w-20 mx-auto mb-10 bg-gradient-to-r from-transparent via-accent/50 to-transparent" style={{ boxShadow: '0 0 16px rgba(var(--accent-rgb),0.12)' }} />
+            <div className="h-[1px] w-20 mx-auto mb-10 bg-gradient-to-r from-transparent via-accent/50 to-transparent" style={{ boxShadow: '0 0 16px rgba(176,141,87,0.12)' }} />
             <h2 className="text-3xl md:text-4xl font-medium tracking-tight mb-6 text-balance">
               What that looks like in practice.
             </h2>
@@ -426,7 +370,7 @@ export default function About() {
               </Link>
               <Link
                 href="/contact"
-                className="text-sm md:text-base font-medium text-foreground/70 px-8 py-4 rounded-full border border-white/[0.1] hover:text-foreground hover:border-accent/30 hover:bg-white/[0.03] hover:shadow-[0_0_20px_rgba(var(--accent-rgb),0.08)] transition-all duration-300"
+                className="text-sm md:text-base font-medium text-foreground/70 px-8 py-4 rounded-full border border-white/[0.1] hover:text-foreground hover:border-accent/30 hover:bg-white/[0.03] hover:shadow-[0_0_20px_rgba(176,141,87,0.06)] transition-all duration-300"
               >
                 Get in touch
               </Link>

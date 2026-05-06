@@ -193,8 +193,8 @@ export default function Contact() {
             </motion.span>
 
             <motion.h1
-              style={{ opacity: headingOpacity, y: headingY }}
-              className="text-6xl md:text-8xl lg:text-9xl font-medium tracking-tighter mb-7 leading-[0.85]"
+              style={{ opacity: headingOpacity, y: headingY, fontSize: 'clamp(3rem, 8vw, 6.5rem)' }}
+              className="font-medium tracking-tighter mb-7 leading-[0.85]"
             >
               Get in <br />
               <span className="opacity-60 italic font-light font-serif">
@@ -224,11 +224,11 @@ export default function Contact() {
               className="hidden md:block max-w-xs lg:max-w-sm"
             >
               <Image
-                src="/images/kh-footer-workflow.webp"
+                src="/images/contact.webp"
                 alt=""
                 width={500}
                 height={350}
-                className="w-full h-auto rounded-lg border border-white/[0.07] opacity-90"
+                className="w-full h-auto rounded-2xl opacity-90"
               />
             </motion.div>
           </div>
