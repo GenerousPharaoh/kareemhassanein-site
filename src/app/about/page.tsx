@@ -60,14 +60,9 @@ function ValueCard({ title, subtitle, desc }: { title: string; subtitle: string;
 }
 
 function ExperienceItem({ item, index }: { item: { period: string; role: string; company: string; desc: React.ReactNode }; index: number }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 15 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-      className="group relative grid md:grid-cols-[140px_1fr] gap-4 md:gap-8 p-4 md:p-6 -mx-4 md:-mx-6 rounded-xl hover:bg-white/[0.03] transition-all duration-500"
-    >
+  const isMobile = useIsMobile();
+  const content = (
+    <>
       {/* Timeline dot, visible on desktop with offset for the parent spacing */}
       <div className="absolute left-[175px] top-8 w-[9px] h-[9px] rounded-full border-2 border-accent/40 bg-background z-10 hidden md:block group-hover:border-accent group-hover:bg-accent/20 transition-all duration-500" />
 
@@ -93,6 +88,26 @@ function ExperienceItem({ item, index }: { item: { period: string; role: string;
           {item.desc}
         </p>
       </div>
+    </>
+  );
+
+  if (isMobile) {
+    return (
+      <div className="group relative grid md:grid-cols-[140px_1fr] gap-4 md:gap-8 p-4 md:p-6 -mx-4 md:-mx-6 rounded-xl hover:bg-white/[0.03] transition-all duration-500">
+        {content}
+      </div>
+    );
+  }
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 15 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-80px" }}
+      transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+      className="group relative grid md:grid-cols-[140px_1fr] gap-4 md:gap-8 p-4 md:p-6 -mx-4 md:-mx-6 rounded-xl hover:bg-white/[0.03] transition-all duration-500"
+    >
+      {content}
     </motion.div>
   );
 }

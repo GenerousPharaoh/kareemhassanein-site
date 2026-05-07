@@ -6,6 +6,7 @@ import ProjectList from '@/components/ProjectList';
 import AnimatedDivider from '@/components/AnimatedDivider';
 import HeroCarousel from '@/components/HeroCarousel';
 import Link from 'next/link';
+import useIsMobile from '@/hooks/useIsMobile';
 
 const approach = [
   { title: 'Map', desc: 'Watch the workflow run before changing anything.', em: 'before changing anything' },
@@ -25,6 +26,7 @@ const reveal = {
 };
 
 export default function Home() {
+  const isMobile = useIsMobile();
 
   return (
     <main className="min-h-svh bg-background text-foreground overflow-hidden">
@@ -269,14 +271,28 @@ export default function Home() {
         <div className="absolute inset-0 z-0 bg-[hsl(222,14%,10%)]/35" />
 
         <div className="max-w-[1400px] mx-auto relative z-10">
-          <motion.div
-            variants={reveal}
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true, margin: '0px 0px -10% 0px' }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="mb-12 md:mb-16"
-          >
+          {isMobile ? (
+            <div className="mb-12 md:mb-16">
+              <p className="text-[10px] md:text-xs font-medium tracking-[0.3em] uppercase text-accent/70 mb-4">
+                Selected Work
+              </p>
+              <h2 className="text-3xl md:text-5xl lg:text-6xl font-medium tracking-tight text-balance leading-[1.05]">
+                Recent <span className="text-accent/90 italic font-serif">work.</span>
+              </h2>
+              <p className="mt-5 text-[11px] md:text-xs font-medium tracking-[0.4em] uppercase text-muted-foreground/70">
+                2024 &ndash; 2026
+              </p>
+              <AnimatedDivider direction="left" accent maxWidth="200px" className="mt-6" />
+            </div>
+          ) : (
+            <motion.div
+              variants={reveal}
+              initial="initial"
+              whileInView="animate"
+              viewport={{ once: true, margin: '0px 0px -10% 0px' }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              className="mb-12 md:mb-16"
+            >
             <p className="text-[10px] md:text-xs font-medium tracking-[0.3em] uppercase text-accent/70 mb-4">
               Selected Work
             </p>
@@ -287,7 +303,8 @@ export default function Home() {
               2024 &ndash; 2026
             </p>
             <AnimatedDivider direction="left" accent maxWidth="200px" className="mt-6" />
-          </motion.div>
+            </motion.div>
+          )}
 
           <ProjectList />
         </div>

@@ -2,6 +2,7 @@
 
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import { useRef } from 'react';
+import useIsMobile from '@/hooks/useIsMobile';
 
 interface AnimatedDividerProps {
   className?: string;
@@ -16,6 +17,46 @@ export default function AnimatedDivider({
   accent = false,
   maxWidth = '200px',
 }: AnimatedDividerProps) {
+  const isMobile = useIsMobile();
+  const originClass = getOriginClass(direction);
+  const alignClass = getAlignClass(direction);
+
+  if (isMobile) {
+    return (
+      <DividerLine
+        className={className}
+        originClass={originClass}
+        alignClass={alignClass}
+        accent={accent}
+        maxWidth={maxWidth}
+      />
+    );
+  }
+
+  return (
+    <AnimatedDividerLine
+      className={className}
+      originClass={originClass}
+      alignClass={alignClass}
+      accent={accent}
+      maxWidth={maxWidth}
+    />
+  );
+}
+
+function AnimatedDividerLine({
+  className,
+  originClass,
+  alignClass,
+  accent,
+  maxWidth,
+}: {
+  className: string;
+  originClass: string;
+  alignClass: string;
+  accent: boolean;
+  maxWidth: string;
+}) {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -26,18 +67,6 @@ export default function AnimatedDivider({
   const scaleX = useSpring(useTransform(scrollYProgress, [0, 1], [0, 1]), springConfig);
   const opacity = useSpring(useTransform(scrollYProgress, [0, 0.3], [0, 1]), springConfig);
 
-  const originClass = direction === 'left'
-    ? 'origin-left'
-    : direction === 'right'
-      ? 'origin-right'
-      : 'origin-center';
-
-  const alignClass = direction === 'left'
-    ? ''
-    : direction === 'right'
-      ? 'ml-auto'
-      : 'mx-auto';
-
   return (
     <motion.div
       ref={ref}
@@ -45,13 +74,62 @@ export default function AnimatedDivider({
       className={`h-[1px] ${originClass} ${alignClass} ${className}`}
       aria-hidden="true"
     >
-      <div
-        className={`h-full w-full ${accent
-          ? 'bg-gradient-to-r from-accent via-accent/50 to-transparent'
-          : 'bg-gradient-to-r from-white/20 via-white/10 to-transparent'
-        }`}
-        style={{ maxWidth }}
-      />
+      <DividerInner accent={accent} maxWidth={maxWidth} />
     </motion.div>
   );
+}
+
+function DividerLine({
+  className,
+  originClass,
+  alignClass,
+  accent,
+  maxWidth,
+}: {
+  className: string;
+  originClass: string;
+  alignClass: string;
+  accent: boolean;
+  maxWidth: string;
+}) {
+  return (
+    <div
+      className={`h-[1px] ${originClass} ${alignClass} ${className}`}
+      aria-hidden="true"
+    >
+      <DividerInner accent={accent} maxWidth={maxWidth} />
+    </div>
+  );
+}
+
+function DividerInner({ accent, maxWidth }: { accent: boolean; maxWidth: string }) {
+  return (
+    <div
+      className={`h-full w-full ${accent
+        ? 'bg-gradient-to-r from-accent via-accent/50 to-transparent'
+        : 'bg-gradient-to-r from-white/20 via-white/10 to-transparent'
+        }`}
+      style={{ maxWidth }}
+    />
+  );
+}
+
+function getOriginClass(direction: AnimatedDividerProps['direction']) {
+  const originClass = direction === 'left'
+    ? 'origin-left'
+    : direction === 'right'
+      ? 'origin-right'
+      : 'origin-center';
+
+  return originClass;
+}
+
+function getAlignClass(direction: AnimatedDividerProps['direction']) {
+  const alignClass = direction === 'left'
+    ? ''
+    : direction === 'right'
+      ? 'ml-auto'
+      : 'mx-auto';
+
+  return alignClass;
 }

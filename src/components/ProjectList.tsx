@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import ProjectListItem from './ProjectListItem';
+import useIsMobile from '@/hooks/useIsMobile';
 
 const projects = [
     {
@@ -24,20 +25,27 @@ const projects = [
 ];
 
 export default function ProjectList() {
+    const isMobile = useIsMobile();
+
     return (
         <div className="w-full flex flex-col relative group/list">
             {projects.map((project, index) => (
-                <motion.div
-                    key={index}
-                    initial={{ opacity: 0, y: 16 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: '0px 0px -10% 0px' }}
-                    transition={{ duration: 0.7, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
-                >
-                    <ProjectListItem project={project} index={index} />
-                </motion.div>
+                isMobile ? (
+                    <div key={index}>
+                        <ProjectListItem project={project} index={index} />
+                    </div>
+                ) : (
+                    <motion.div
+                        key={index}
+                        initial={{ opacity: 0, y: 16 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, margin: '0px 0px -10% 0px' }}
+                        transition={{ duration: 0.7, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
+                    >
+                        <ProjectListItem project={project} index={index} />
+                    </motion.div>
+                )
             ))}
         </div>
     );
 }
-
