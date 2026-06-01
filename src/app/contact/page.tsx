@@ -11,6 +11,7 @@ function ContactForm() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
+  const [company, setCompany] = useState(''); // honeypot: must stay empty for real users
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
   const [errorMsg, setErrorMsg] = useState('');
 
@@ -23,7 +24,7 @@ function ContactForm() {
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, message }),
+        body: JSON.stringify({ name, email, message, company }),
       });
 
       const data = await res.json();
@@ -38,6 +39,7 @@ function ContactForm() {
       setName('');
       setEmail('');
       setMessage('');
+      setCompany('');
     } catch {
       setErrorMsg('Something went wrong. Please try again.');
       setStatus('error');
@@ -143,6 +145,20 @@ function ContactForm() {
           {status === 'sending' ? 'Sending...' : 'Send message'}
           <Send size={16} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-500" />
         </button>
+      </div>
+
+      {/* Honeypot: hidden from users and assistive tech. Bots that fill it are dropped server-side. */}
+      <div aria-hidden="true" className="absolute left-[-9999px] top-[-9999px] h-0 w-0 overflow-hidden">
+        <label htmlFor="company">Company</label>
+        <input
+          id="company"
+          name="company"
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+          value={company}
+          onChange={(e) => setCompany(e.target.value)}
+        />
       </div>
     </form>
   );

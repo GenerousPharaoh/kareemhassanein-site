@@ -14,9 +14,9 @@ interface ParallaxImageProps {
     fadedVertical?: boolean;
 }
 
-// Simple blur placeholder - dark gradient that matches site theme
-const shimmerPlaceholder = `data:image/svg+xml;base64,${Buffer.from(
-    `<svg width="400" height="300" xmlns="http://www.w3.org/2000/svg">
+// Simple blur placeholder - dark gradient that matches site theme.
+// URL-encoded (not base64) so it stays browser-safe with no Node Buffer/polyfill.
+const shimmerSvg = `<svg width="400" height="300" xmlns="http://www.w3.org/2000/svg">
         <defs>
             <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" style="stop-color:#141920;stop-opacity:1" />
@@ -25,8 +25,8 @@ const shimmerPlaceholder = `data:image/svg+xml;base64,${Buffer.from(
             </linearGradient>
         </defs>
         <rect width="400" height="300" fill="url(#g)"/>
-    </svg>`
-).toString('base64')}`;
+    </svg>`;
+const shimmerPlaceholder = `data:image/svg+xml,${encodeURIComponent(shimmerSvg)}`;
 
 export default function ParallaxImage({
     src,
