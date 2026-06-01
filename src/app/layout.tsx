@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     siteName: "Kareem Hassanein",
     images: [
       {
-        url: "https://khassanein.bio/og-image.webp",
+        url: "https://khassanein.bio/og-image.png",
         width: 1200,
         height: 630,
         alt: "Kareem Hassanein, Clinical Implementation Advisor",
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Kareem Hassanein | Clinical Implementation Advisor",
     description: "Clinical implementation, digital adoption, and operational systems for healthcare, health-tech, and service innovation.",
-    images: ["https://khassanein.bio/og-image.webp"],
+    images: ["https://khassanein.bio/og-image.png"],
   },
   robots: {
     index: true,
