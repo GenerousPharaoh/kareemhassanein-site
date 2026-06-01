@@ -136,7 +136,7 @@ export default function HeroCarousel({
             </div>
 
             {/* Dot indicators */}
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 flex items-center gap-2">
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 flex items-center gap-1">
                 {slides.map((_, i) => {
                     const isActive = i === index;
                     return (
@@ -146,13 +146,14 @@ export default function HeroCarousel({
                             onClick={() => goTo(i)}
                             aria-label={`Go to slide ${i + 1}`}
                             aria-current={isActive}
-                            className="group relative h-2 rounded-full transition-all duration-500 outline-none focus-visible:ring-2 focus-visible:ring-accent/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-                            style={{ width: isActive ? 28 : 8 }}
+                            className="group relative flex h-6 items-center justify-center outline-none focus-visible:ring-2 focus-visible:ring-accent/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                            style={{ width: isActive ? 32 : 24 }}
                         >
                             <span
-                                className={`absolute inset-0 rounded-full transition-colors duration-500 ${
+                                className={`block h-2 rounded-full transition-all duration-500 ${
                                     isActive ? 'bg-accent' : 'bg-white/40 group-hover:bg-white/70'
                                 }`}
+                                style={{ width: isActive ? 28 : 8 }}
                             />
                         </button>
                     );

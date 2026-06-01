@@ -131,6 +131,7 @@ export default function Home() {
                 </Link>
                 <Link
                   href="/about"
+                  aria-label="Learn more about Kareem Hassanein"
                   className="text-sm md:text-base font-medium text-foreground/80 w-full sm:w-auto text-center px-7 py-3.5 rounded-full border border-white/[0.14] hover:text-foreground hover:border-accent/35 hover:bg-white/[0.03] transition-all duration-300"
                 >
                   Learn more

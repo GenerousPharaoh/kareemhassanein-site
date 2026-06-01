@@ -63,10 +63,10 @@ export default function ProjectListItem({ project, index }: ProjectListItemProps
                 href={project.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label={`View ${project.title} (opens in new tab)`}
                 className={className}
             >
                 {content}
+                <span className="sr-only"> (opens in new tab)</span>
             </a>
         );
     }
