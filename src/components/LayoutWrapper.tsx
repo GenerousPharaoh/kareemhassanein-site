@@ -25,9 +25,9 @@ export default function LayoutWrapper({
             </a>
             <div className={`relative z-10 bg-background shadow-2xl ${isContactPage ? 'mb-0' : 'mb-[100svh] md:mb-[800px]'}`}>
                 <Header />
-                <main id="main-content" className="min-h-svh">
+                <div id="main-content" className="min-h-svh">
                     {children}
-                </main>
+                </div>
             </div>
             {!isContactPage && <Footer />}
         </MotionConfig>

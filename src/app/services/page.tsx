@@ -112,7 +112,7 @@ function ServiceSection({ service, index }: { service: { index: string; title: s
         <ParallaxImage
           src={service.image}
           alt=""
-          className="w-full h-full opacity-40"
+          className="w-full h-full opacity-30"
           fadedSides={true}
           fadedVertical={true}
         />
@@ -207,7 +207,7 @@ export default function Services() {
     <main className="relative bg-background text-foreground overflow-hidden pt-20">
 
       {/* Hero */}
-      <section ref={heroRef} className="pt-28 pb-32 md:pt-36 md:pb-40 px-6 lg:px-12 xl:px-20 relative overflow-hidden">
+      <section ref={heroRef} className="pt-28 pb-20 md:pt-32 md:pb-24 px-6 lg:px-12 xl:px-20 relative overflow-hidden">
         {/* Background image - contained with fade */}
         <motion.div style={{ y: heroY }} className="absolute inset-0 z-0 will-change-transform">
           <ParallaxImage

@@ -28,7 +28,7 @@ export default function ProjectList() {
     const isMobile = useIsMobile();
 
     return (
-        <div className="w-full flex flex-col relative group/list">
+        <div className="w-full max-w-5xl flex flex-col relative group/list">
             {projects.map((project, index) => (
                 isMobile ? (
                     <div key={index}>

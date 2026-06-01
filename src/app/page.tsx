@@ -31,7 +31,7 @@ export default function Home() {
   return (
     <main className="min-h-svh bg-background text-foreground overflow-hidden">
       {/* Hero Section */}
-      <section className="relative min-h-svh flex items-center pt-24 pb-16 md:pt-28 md:pb-24 px-5 sm:px-6 md:px-12 xl:px-20 bg-background overflow-hidden">
+      <section className="relative min-h-svh flex items-center pt-24 pb-12 md:pt-28 md:pb-16 px-5 sm:px-6 md:px-12 xl:px-20 bg-background overflow-hidden">
 
         {/* Soft atmospheric ambient — subtle gradient orbs, no full-bleed photo backdrop */}
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0">
@@ -176,7 +176,7 @@ export default function Home() {
       </section>
 
       {/* Approach Section - Combined statement + steps */}
-      <section className="py-20 md:py-28 px-6 md:px-12 xl:px-20 relative">
+      <section className="py-16 md:py-20 px-6 md:px-12 xl:px-20 relative">
         {/* Atmospheric background */}
         <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-background to-transparent pointer-events-none z-0" />
         <div className="max-w-6xl mx-auto relative z-10">
@@ -267,7 +267,7 @@ export default function Home() {
       </div>
 
       {/* Selected Projects */}
-      <section className="py-24 md:py-36 relative z-10 w-full px-6 md:px-12 xl:px-20 overflow-hidden">
+      <section className="py-20 md:py-28 relative z-10 w-full px-6 md:px-12 xl:px-20 overflow-hidden">
         <div className="absolute inset-0 z-0 bg-[hsl(222,14%,10%)]/35" />
 
         <div className="max-w-[1400px] mx-auto relative z-10">

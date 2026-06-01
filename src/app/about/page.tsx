@@ -132,7 +132,7 @@ export default function About() {
     <main className="bg-background text-foreground pt-20">
 
       {/* Hero */}
-      <section ref={heroRef} className="min-h-svh relative overflow-hidden px-6 lg:px-12 xl:px-20 flex flex-col justify-center">
+      <section ref={heroRef} className="relative overflow-hidden px-6 lg:px-12 xl:px-20">
 
         {/* Cinematic Background with Parallax */}
         <motion.div style={{ y: heroBgY }} className="absolute inset-0 z-0 will-change-transform flex items-center justify-center">
@@ -145,7 +145,7 @@ export default function About() {
         </motion.div>
         <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background pointer-events-none z-[1]" />
 
-        <motion.div style={{ y: heroTextY }} className="max-w-[1200px] mx-auto relative z-10 py-32 will-change-transform">
+        <motion.div style={{ y: heroTextY }} className="max-w-[1200px] mx-auto relative z-10 pt-28 pb-20 md:pt-32 md:pb-24 will-change-transform">
           <div className="grid lg:grid-cols-[0.8fr_1.2fr] gap-12 lg:gap-24 items-start">
 
             {/* Identity Column (Left) */}
@@ -327,7 +327,7 @@ export default function About() {
       </section>
 
       {/* Experience */}
-      <section ref={historyRef} className="py-28 md:py-40 px-6 lg:px-12 xl:px-20 relative overflow-hidden">
+      <section ref={historyRef} className="py-24 md:py-28 px-6 lg:px-12 xl:px-20 relative overflow-hidden">
         <div className="absolute inset-0 z-0 bg-[hsl(222,14%,10%)]/35" />
 
         <div className="max-w-[1000px] mx-auto relative z-10">
