@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import LayoutWrapper from "@/components/LayoutWrapper";
@@ -22,6 +22,7 @@ const cormorant = Cormorant_Garamond({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://khassanein.bio"),
   title: "Kareem Hassanein | Clinical Implementation Advisor",
   description: "Clinical implementation, digital adoption, and operational systems for healthcare practices, health-tech founders, and professional-services firms.",
   keywords: ["clinical implementation", "digital adoption", "operational systems", "health-tech advisory", "healthcare operations", "AI adoption", "change management", "service innovation"],
@@ -55,6 +56,10 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://khassanein.bio",
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#14161a",
 };
 
 const jsonLd = {

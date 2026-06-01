@@ -239,9 +239,9 @@ export default function Home() {
 
                       {/* Content */}
                       <div className="flex-1 pt-2 md:pt-2.5 min-w-0">
-                        <h4 className="text-xl md:text-2xl font-medium tracking-tight mb-2 group-hover:text-accent transition-colors duration-500">
+                        <h3 className="text-xl md:text-2xl font-medium tracking-tight mb-2 group-hover:text-accent transition-colors duration-500">
                           {item.title}
-                        </h4>
+                        </h3>
                         <p className="text-[15px] md:text-base text-muted-foreground/85 leading-relaxed">
                           {item.em ? (
                             <>
