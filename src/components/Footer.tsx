@@ -20,10 +20,17 @@ export default function Footer() {
           <ParallaxImage
             src="/images/footer-image.png"
             alt=""
-            className="w-full h-full object-cover opacity-[0.4]"
+            className="w-full h-full object-cover opacity-[0.72]"
+            imgClassName="object-[70%_center] md:object-center"
             fadedVertical={true}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-background/70" />
+          {/* Base scrim: keeps cohesion with the dark site and the bottom bar legible */}
+          <div className="absolute inset-0 bg-gradient-to-t from-background/75 via-background/10 to-background/40" />
+          {/* Focused scrim behind the headline so the warm image shows at the edges while white text stays legible */}
+          <div
+            className="absolute inset-0"
+            style={{ background: "radial-gradient(ellipse 78% 60% at 50% 46%, rgba(13,16,20,0.72) 0%, rgba(13,16,20,0.32) 50%, transparent 75%)" }}
+          />
         </div>
 
         <div className="relative z-10 px-6 pb-32 md:pb-0">
@@ -33,6 +40,7 @@ export default function Footer() {
             viewport={{ once: true, margin: "0px 0px -20px 0px" }}
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
             className="text-5xl sm:text-7xl md:text-[120px] lg:text-[160px] font-medium tracking-tighter mb-8 md:mb-16 lg:mb-20 leading-[0.8]"
+            style={{ textShadow: '0 2px 28px rgba(0,0,0,0.5)' }}
           >
             Reach <br />
             <span className="mt-4 italic font-light font-serif opacity-50">

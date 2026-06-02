@@ -9,6 +9,7 @@ interface ParallaxImageProps {
     src: string;
     alt: string;
     className?: string;
+    imgClassName?: string;
     priority?: boolean;
     fadedSides?: boolean;
     fadedVertical?: boolean;
@@ -32,6 +33,7 @@ export default function ParallaxImage({
     src,
     alt,
     className = "",
+    imgClassName = "object-center",
     priority = false,
     fadedSides = false,
     fadedVertical = false
@@ -87,7 +89,7 @@ export default function ParallaxImage({
                     quality={90}
                     placeholder="blur"
                     blurDataURL={shimmerPlaceholder}
-                    className="object-cover object-center"
+                    className={`object-cover ${imgClassName}`}
                 />
             </motion.div>
         </div>
