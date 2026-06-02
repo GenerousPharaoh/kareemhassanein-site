@@ -15,17 +15,17 @@ export default function Footer() {
         {/* Noise Overlay */}
         <div className="absolute inset-0 opacity-[0.03] pointer-events-none z-[1]" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")` }} />
 
-        {/* Image — contained to the right, bleeding off the right edge and faded into the dark
-            on its left so the left-aligned headline reads cleanly */}
-        <div className="absolute inset-y-0 right-0 w-full md:w-[50%] z-0">
+        {/* Image — full-bleed so the headline overlays it; a left-to-right scrim keeps the
+            left-aligned text legible while the warm detail stays visible on the right */}
+        <div className="absolute inset-0 z-0">
           <ParallaxImage
             src="/images/footer-image.webp"
             alt=""
-            className="w-full h-full object-cover opacity-[0.45] md:opacity-[0.78]"
-            imgClassName="object-[72%_center]"
+            className="w-full h-full object-cover opacity-[0.55] md:opacity-[0.7]"
+            imgClassName="object-[70%_center] md:object-center"
             fadedVertical={true}
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#141920] via-[#141920]/55 to-transparent md:via-[#141920]/25" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#141920] via-[#141920]/55 to-transparent" />
         </div>
         {/* Bottom scrim so the footer bar stays legible over the image */}
         <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-background/85 to-transparent z-[2] pointer-events-none" />
