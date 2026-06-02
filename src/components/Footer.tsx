@@ -17,11 +17,11 @@ export default function Footer() {
 
         {/* Image — contained to the right, bleeding off the right edge and faded into the dark
             on its left so the left-aligned headline reads cleanly */}
-        <div className="absolute inset-y-0 right-0 w-full md:w-[56%] z-0">
+        <div className="absolute inset-y-0 right-0 w-full md:w-[50%] z-0">
           <ParallaxImage
             src="/images/footer-image.webp"
             alt=""
-            className="w-full h-full object-cover opacity-[0.5] md:opacity-[0.85]"
+            className="w-full h-full object-cover opacity-[0.45] md:opacity-[0.78]"
             imgClassName="object-[72%_center]"
             fadedVertical={true}
           />
