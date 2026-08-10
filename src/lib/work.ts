@@ -221,11 +221,11 @@ export const projects: Project[] = [
       'Service structure, patient journeys, content, and analytics led by me; the site implementation was built and maintained through agentic development tools.',
     liveUrl: 'https://endorphinshealth.com',
     card: {
-      src: '/images/work/endorphins-services.webp',
-      alt: 'Endorphins services index showing six disciplines with practitioners',
+      src: '/images/work/endorphins-home.webp',
+      alt: 'Endorphins Health and Wellness Centre homepage',
       ...DESKTOP,
       frame: 'browser',
-      url: 'endorphinshealth.com/services',
+      url: 'endorphinshealth.com',
     },
     size: 'large',
   },
@@ -338,8 +338,8 @@ export const projects: Project[] = [
     delivery:
       'Information architecture, content structure, and journey design led by me; the site was built, tested, and refined through agentic development tools.',
     card: {
-      src: '/images/work/wedding-day.webp',
-      alt: 'Wedding day schedule with venue details, maps, and calendar actions',
+      src: '/images/work/wedding-travel.webp',
+      alt: 'Travel section of the wedding site with an aerial photo of Miraflores, Lima',
       ...DESKTOP,
       frame: 'browser',
     },

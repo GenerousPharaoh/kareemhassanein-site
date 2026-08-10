@@ -34,8 +34,8 @@ const heroShots = {
   kinetikare: projects.find((p) => p.slug === 'kinetikare')?.card,
   endorphins: projects.find((p) => p.slug === 'endorphins')?.card,
   wedding: {
-    src: '/images/work/wedding-mobile.webp',
-    alt: 'Destination wedding site schedule on a phone',
+    src: '/images/work/wedding-travel-mobile.webp',
+    alt: 'Destination wedding site travel guide on a phone',
     width: 390,
     height: 844,
     frame: 'phone' as const,
