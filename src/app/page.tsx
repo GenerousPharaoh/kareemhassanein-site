@@ -2,356 +2,318 @@
 
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
-import ProjectList from '@/components/ProjectList';
-import AnimatedDivider from '@/components/AnimatedDivider';
-import HeroCarousel from '@/components/HeroCarousel';
 import Link from 'next/link';
-import useIsMobile from '@/hooks/useIsMobile';
+import ScreenFrame from '@/components/ScreenFrame';
+import WorkCard from '@/components/WorkCard';
+import ScrollReveal from '@/components/ScrollReveal';
+import AnimatedDivider from '@/components/AnimatedDivider';
+import { projects, advisory, areasOfWork } from '@/lib/work';
+
+const ease = [0.16, 1, 0.3, 1] as const;
 
 const approach = [
-  { title: 'Map', desc: 'Watch the workflow run before changing anything.', em: 'before changing anything' },
-  { title: 'Build', desc: 'Fit the system to the workflow, not the other way around.', em: 'not the other way around' },
-  { title: 'Launch', desc: 'Stay through the first weeks until the new way becomes the default.', em: 'becomes the default' },
+  {
+    title: 'Understand',
+    desc: 'See how the work actually happens and what users are already doing around the formal process.',
+  },
+  {
+    title: 'Structure',
+    desc: 'Turn the workflow, content, edge cases, and user needs into a coherent system.',
+  },
+  {
+    title: 'Deliver',
+    desc: 'Configure, build, or implement the solution using the tools appropriate to the project.',
+  },
+  {
+    title: 'Refine',
+    desc: 'Test it in use, identify what still creates friction, and improve it until the experience holds together.',
+  },
 ];
 
-const heroSlides = [
-  { src: '/images/hero-1.webp', alt: 'Clinical implementation advisor with tablet — frontline practice meets digital tools' },
-  { src: '/images/hero-2.webp', alt: 'Cross-functional team mapping a healthcare workflow together' },
-  { src: '/images/hero-3.webp', alt: 'Workflow path connecting clinical practice with modern systems and dashboards' },
-];
-
-const reveal = {
-  initial: { opacity: 0, y: 18 },
-  animate: { opacity: 1, y: 0 },
+const heroShots = {
+  kinetikare: projects.find((p) => p.slug === 'kinetikare')?.card,
+  endorphins: projects.find((p) => p.slug === 'endorphins')?.card,
+  wedding: {
+    src: '/images/work/wedding-mobile.webp',
+    alt: 'Destination wedding site schedule on a phone',
+    width: 390,
+    height: 844,
+    frame: 'phone' as const,
+  },
 };
 
 export default function Home() {
-  const isMobile = useIsMobile();
+  const large = projects.filter((p) => p.size === 'large');
+  const small = projects.filter((p) => p.size === 'small');
 
   return (
     <main className="min-h-svh bg-background text-foreground overflow-hidden">
-      {/* Hero Section */}
-      <section className="relative min-h-svh flex items-center pt-24 pb-12 md:pt-28 md:pb-16 px-5 sm:px-6 md:px-12 xl:px-20 bg-background overflow-hidden">
-
-        {/* Soft atmospheric ambient — subtle gradient orbs, no full-bleed photo backdrop */}
+      {/* Hero */}
+      <section className="relative flex items-center pt-32 pb-16 md:pt-40 md:pb-24 px-5 sm:px-6 md:px-12 xl:px-20 bg-background overflow-hidden">
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0">
-          <div className="absolute -top-32 -left-32 w-[42rem] h-[42rem] rounded-full bg-accent/[0.06] blur-3xl" />
+          <div className="absolute -top-32 -left-32 w-[42rem] h-[42rem] rounded-full bg-accent/[0.05] blur-3xl" />
           <div className="absolute -bottom-40 -right-24 w-[36rem] h-[36rem] rounded-full bg-accent/[0.04] blur-3xl" />
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background" />
         </div>
 
         <div className="relative z-10 w-full max-w-[1400px] mx-auto">
-          <div className="grid lg:grid-cols-12 gap-y-12 gap-x-10 lg:gap-x-16 items-center">
-
-            {/* LEFT: editorial main content */}
-            <div className="lg:col-span-7 text-left order-2 lg:order-1 space-y-6 md:space-y-7">
-
-              {/* Badge */}
+          <div className="grid lg:grid-cols-12 gap-y-14 gap-x-10 lg:gap-x-14 items-center">
+            {/* Editorial column */}
+            <div className="lg:col-span-6 text-left order-2 lg:order-1 space-y-6 md:space-y-7">
               <motion.div
-                initial={{ opacity: 0, y: 15, scale: 0.95 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                transition={{ duration: 1, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, delay: 0.1, ease }}
                 className="flex"
               >
                 <span className="inline-flex items-center gap-2 text-[9.5px] sm:text-[10px] md:text-[11px] font-medium tracking-[0.18em] sm:tracking-[0.2em] uppercase text-foreground/65 px-3.5 py-2 rounded-full border border-white/[0.07] bg-[hsl(222,12%,13%)]/80 backdrop-blur-sm">
                   <span className="w-1.5 h-1.5 rounded-full bg-accent shadow-[0_0_8px_rgba(176,141,87,0.5)]" />
-                  Healthcare · Health-Tech · Service Innovation
+                  Healthcare · Workflow · Digital Systems
                 </span>
               </motion.div>
 
-              {/* Name as display headline */}
-              <h1 className="font-medium leading-[0.86] tracking-[-0.045em]" style={{ fontSize: 'clamp(3rem, 13vw, 8.5rem)' }}>
+              <h1 className="font-medium leading-[0.88] tracking-[-0.04em]" style={{ fontSize: 'clamp(2.6rem, 7.5vw, 5rem)' }}>
                 <motion.span
-                  initial={{ opacity: 0, y: 30 }}
+                  initial={{ opacity: 0, y: 26 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                  transition={{ duration: 1, delay: 0.2, ease }}
                   className="block"
                 >
                   Kareem
                 </motion.span>
                 <motion.span
-                  initial={{ opacity: 0, y: 30 }}
+                  initial={{ opacity: 0, y: 26 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 1, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                  transition={{ duration: 1, delay: 0.32, ease }}
                   className="block text-accent/90 italic font-serif"
                 >
                   Hassanein.
                 </motion.span>
               </h1>
 
-              {/* Accent divider */}
               <motion.div
                 initial={{ opacity: 0, scaleX: 0 }}
                 animate={{ opacity: 1, scaleX: 1 }}
-                transition={{ duration: 1, delay: 0.45 }}
+                transition={{ duration: 1, delay: 0.42 }}
                 className="h-[1px] w-16 bg-accent/40 origin-left"
               />
 
-              {/* Lead positioning statement */}
               <motion.p
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 18 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                className="max-w-[34rem] text-[1.15rem] sm:text-xl md:text-2xl lg:text-[1.65rem] text-foreground/90 font-light leading-[1.3] tracking-tight"
+                transition={{ duration: 1, delay: 0.48, ease }}
+                className="max-w-[32rem] text-xl sm:text-2xl md:text-[1.7rem] text-foreground/90 font-light leading-[1.25] tracking-tight"
               >
-                I&rsquo;m a practicing physiotherapist with experience across patient care, clinic operations, digital health, and automation.
+                Selected work across healthcare, operations, and digital experience.
               </motion.p>
 
               <motion.p
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 18 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                className="max-w-[34rem] text-[15px] sm:text-base md:text-lg text-foreground/70 font-light leading-relaxed"
+                transition={{ duration: 1, delay: 0.58, ease }}
+                className="max-w-[33rem] text-[15px] sm:text-base md:text-lg text-foreground/70 font-light leading-relaxed"
               >
-                My work is focused on the parts of healthcare and service delivery where clinical judgment, patient engagement, technology, and operations meet. I help health-tech founders understand how their products affect the people using them, from patients and clinicians to admin staff and operators. I also help clinics and service businesses improve the digital systems around their work, including websites, intake and booking flows, referral pathways, documentation, automation, and tools for tracking engagement and outcomes.
+                I&rsquo;m a practicing physiotherapist whose work extends into clinical implementation, service design,
+                workflow automation, product advisory, and AI-enabled digital delivery. This portfolio shows how I
+                translate real clinical and operational needs into clear, usable systems.
               </motion.p>
 
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1, delay: 0.65, ease: [0.16, 1, 0.3, 1] }}
-                className="max-w-[34rem] text-[15px] sm:text-base md:text-lg text-foreground/70 font-light leading-relaxed"
-              >
-                The perspective comes from working directly with patients, running services, introducing new tools into care settings, and building the infrastructure behind them. I can assess a product or service through its clinical value, its operational demands, and the experience it creates for the people expected to use it.
-              </motion.p>
-
-              {/* CTAs */}
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 18 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.65, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: 0.8, delay: 0.66, ease }}
                 className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-1"
               >
                 <Link
-                  href="/contact"
+                  href="/work"
                   className="group flex items-center justify-center gap-2.5 text-sm md:text-base font-medium w-full sm:w-auto px-7 py-3.5 rounded-full bg-accent text-background hover:bg-accent/90 transition-all duration-300"
                 >
-                  Get in touch
+                  View selected work
                   <ArrowRight size={16} className="group-hover:translate-x-0.5 transition-transform duration-300" />
                 </Link>
-                <Link
-                  href="/about"
-                  aria-label="Learn more about Kareem Hassanein"
+                <a
+                  href="#approach"
                   className="text-sm md:text-base font-medium text-foreground/80 w-full sm:w-auto text-center px-7 py-3.5 rounded-full border border-white/[0.14] hover:text-foreground hover:border-accent/35 hover:bg-white/[0.03] transition-all duration-300"
                 >
-                  Learn more
-                </Link>
-              </motion.div>
-
-              {/* Status strip — visible on all sizes, replaces desktop sidebar */}
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.75, ease: [0.16, 1, 0.3, 1] }}
-                className="flex flex-wrap items-center gap-x-3 gap-y-2 pt-5 text-[10px] sm:text-[11px] font-medium tracking-[0.22em] uppercase text-muted-foreground/85"
-              >
-                <span className="flex items-center gap-2">
-                  <span aria-hidden="true" className="w-1.5 h-1.5 rounded-full bg-accent shadow-[0_0_8px_rgba(176,141,87,0.5)]" />
-                  Available for projects
-                </span>
-                <span aria-hidden="true" className="w-[3px] h-[3px] rounded-full bg-white/15" />
-                <span>Burlington, ON</span>
-                <span aria-hidden="true" className="w-[3px] h-[3px] rounded-full bg-white/15" />
-                <span>Remote</span>
+                  About my approach
+                </a>
               </motion.div>
             </div>
 
-            {/* RIGHT: hero image carousel */}
+            {/* Project screens collage */}
             <motion.div
-              initial={{ opacity: 0, y: 24, scale: 0.98 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ duration: 1.1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-              className="lg:col-span-5 order-1 lg:order-2 w-full"
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1.1, delay: 0.35, ease }}
+              className="lg:col-span-6 order-1 lg:order-2 w-full"
             >
-              <div className="relative aspect-[4/3] sm:aspect-[5/4] lg:aspect-[5/4] w-full max-w-[640px] mx-auto">
-                <HeroCarousel slides={heroSlides} priority />
-                {/* Soft glow behind */}
-                <div aria-hidden="true" className="absolute -inset-6 -z-10 rounded-[40px] bg-accent/[0.06] blur-2xl" />
-              </div>
-            </motion.div>
-          </div>
-        </div>
-
-        {/* Bottom gradient for seamless transition into next section */}
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent z-[2] pointer-events-none" />
-      </section>
-
-      {/* Approach Section - Combined statement + steps */}
-      <section className="py-16 md:py-20 px-6 md:px-12 xl:px-20 relative">
-        {/* Atmospheric background */}
-        <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-background to-transparent pointer-events-none z-0" />
-        <div className="max-w-6xl mx-auto relative z-10">
-
-          {/* Two-column layout: Statement left, Steps right */}
-          <div className="grid lg:grid-cols-[1fr_1.2fr] gap-16 lg:gap-20 items-start">
-
-            {/* Left: Statement */}
-            <motion.div
-              variants={reveal}
-              initial="initial"
-              whileInView="animate"
-              viewport={{ once: true, margin: '0px 0px -10% 0px' }}
-              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="lg:sticky lg:top-32"
-            >
-              <span className="text-[10px] md:text-xs font-medium tracking-[0.25em] uppercase text-accent/70 mb-6 block">
-                The Problem
-              </span>
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight leading-[1.1] mb-6 text-balance">
-                Good plans fail without good <span className="text-accent/90 italic font-serif">execution.</span>
-              </h2>
-              <p className="text-base md:text-lg text-muted-foreground/80 leading-relaxed">
-                Implementation is where most efforts stall. Not from lack of strategy, but from <span className="text-foreground/90">friction in the systems, workflows, and habits</span> that need to change.
-              </p>
-            </motion.div>
-
-            {/* Right: Steps */}
-            <div>
-              <motion.p
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '0px 0px -10% 0px' }}
-                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                className="text-[10px] md:text-xs font-medium tracking-[0.25em] uppercase text-accent/70 mb-8"
-              >
-                The Approach
-              </motion.p>
-
-              <div className="relative">
-                {/* Vertical connecting line — accent-tinted, longer */}
-                <div className="absolute left-[27px] md:left-[31px] top-6 bottom-6 w-px bg-gradient-to-b from-accent/25 via-white/[0.08] to-transparent pointer-events-none" />
-
-                <div className="space-y-3 md:space-y-4">
-                  {approach.map((item, i) => (
-                    <motion.div
-                      key={item.title}
-                      initial={{ opacity: 0, y: 14 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true, margin: '0px 0px -10% 0px' }}
-                      transition={{ duration: 0.6, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
-                      className="group relative flex gap-5 md:gap-6 items-start p-4 md:p-5 -mx-4 md:-mx-5 rounded-2xl hover:bg-white/[0.025] border border-transparent hover:border-white/[0.05] transition-all duration-500"
-                    >
-                      {/* Number badge */}
-                      <div className="flex-shrink-0 w-[54px] h-[54px] md:w-[62px] md:h-[62px] rounded-full border border-accent/25 flex items-center justify-center bg-[hsl(222,14%,10%)] relative z-10 group-hover:border-accent/50 group-hover:shadow-[0_0_24px_rgba(176,141,87,0.12)] transition-all duration-500">
-                        <span className="text-xl md:text-2xl font-serif italic text-accent/85 group-hover:text-accent transition-colors duration-500">
-                          {i + 1}
-                        </span>
-                      </div>
-
-                      {/* Content */}
-                      <div className="flex-1 pt-2 md:pt-2.5 min-w-0">
-                        <h3 className="text-xl md:text-2xl font-medium tracking-tight mb-2 group-hover:text-accent transition-colors duration-500">
-                          {item.title}
-                        </h3>
-                        <p className="text-[15px] md:text-base text-muted-foreground/85 leading-relaxed">
-                          {item.em ? (
-                            <>
-                              {item.desc.split(item.em)[0]}
-                              <span className="text-foreground/90">{item.em}</span>
-                              {item.desc.split(item.em)[1]}
-                            </>
-                          ) : item.desc}
-                        </p>
-                      </div>
-                    </motion.div>
-                  ))}
+              <div className="relative max-w-[680px] mx-auto pb-10 md:pb-14 pr-6 sm:pr-10">
+                {heroShots.kinetikare && (
+                  <div className="w-[88%]">
+                    <ScreenFrame
+                      shot={heroShots.kinetikare}
+                      priority
+                      sizes="(max-width: 768px) 88vw, 560px"
+                    />
+                  </div>
+                )}
+                {heroShots.endorphins && (
+                  <div className="absolute right-0 -bottom-2 sm:-bottom-4 w-[58%] hidden sm:block">
+                    <ScreenFrame shot={heroShots.endorphins} sizes="380px" />
+                  </div>
+                )}
+                <div className="absolute -bottom-6 left-[4%] sm:left-auto sm:right-[52%] w-[24%] max-w-[150px] sm:block">
+                  <ScreenFrame shot={heroShots.wedding} sizes="150px" />
                 </div>
+                <div aria-hidden="true" className="absolute -inset-8 -z-10 rounded-[48px] bg-accent/[0.05] blur-2xl" />
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
+
+        <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background to-transparent z-[2] pointer-events-none" />
       </section>
 
-      {/* Divider */}
-      <div className="px-6 md:px-12 xl:px-20 py-4">
-        <AnimatedDivider direction="left" accent maxWidth="300px" />
-      </div>
-
-      {/* Selected Projects */}
+      {/* Featured projects */}
       <section className="py-20 md:py-28 relative z-10 w-full px-6 md:px-12 xl:px-20 overflow-hidden">
         <div className="absolute inset-0 z-0 bg-[hsl(222,14%,10%)]/35" />
-
-        <div className="max-w-[1400px] mx-auto relative z-10">
-          {isMobile ? (
-            <div className="mb-12 md:mb-16">
-              <p className="text-[10px] md:text-xs font-medium tracking-[0.3em] uppercase text-accent/70 mb-4">
-                Selected Work
-              </p>
-              <h2 className="text-3xl md:text-5xl lg:text-6xl font-medium tracking-tight text-balance leading-[1.05]">
-                Recent <span className="text-accent/90 italic font-serif">work.</span>
-              </h2>
-              <p className="mt-5 text-[11px] md:text-xs font-medium tracking-[0.4em] uppercase text-muted-foreground/70">
-                2024 &ndash; 2026
-              </p>
-              <AnimatedDivider direction="left" accent maxWidth="200px" className="mt-6" />
-            </div>
-          ) : (
-            <motion.div
-              variants={reveal}
-              initial="initial"
-              whileInView="animate"
-              viewport={{ once: true, margin: '0px 0px -10% 0px' }}
-              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="mb-12 md:mb-16"
-            >
+        <div className="max-w-[1200px] mx-auto relative z-10">
+          <ScrollReveal direction="up" className="mb-12 md:mb-16">
             <p className="text-[10px] md:text-xs font-medium tracking-[0.3em] uppercase text-accent/70 mb-4">
               Selected Work
             </p>
-            <h2 className="text-3xl md:text-5xl lg:text-6xl font-medium tracking-tight text-balance leading-[1.05]">
-              Recent <span className="text-accent/90 italic font-serif">work.</span>
+            <h2 className="text-3xl md:text-5xl font-medium tracking-tight text-balance leading-[1.05]">
+              Four projects, <span className="text-accent/90 italic font-serif">in depth.</span>
             </h2>
-            <p className="mt-5 text-[11px] md:text-xs font-medium tracking-[0.4em] uppercase text-muted-foreground/70">
-              2024 &ndash; 2026
-            </p>
             <AnimatedDivider direction="left" accent maxWidth="200px" className="mt-6" />
-            </motion.div>
-          )}
+          </ScrollReveal>
 
-          <ProjectList />
-        </div>
-      </section>
-
-      {/* Closing CTA */}
-      <section className="relative px-6 md:px-12 xl:px-20 py-24 md:py-32 overflow-hidden">
-        <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60rem] h-[40rem] rounded-full bg-accent/[0.05] blur-3xl" />
-        </div>
-
-        <motion.div
-          variants={reveal}
-          initial="initial"
-          whileInView="animate"
-          viewport={{ once: true, margin: '0px 0px -10% 0px' }}
-          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-          className="relative z-10 max-w-4xl mx-auto text-center"
-        >
-          <p className="text-[10px] md:text-xs font-medium tracking-[0.3em] uppercase text-accent/70 mb-6">
-            Let&rsquo;s build something that sticks
-          </p>
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-medium tracking-tight leading-[1.05] text-balance">
-            Have a project that needs to <span className="text-accent/90 italic font-serif">land</span>?
-          </h2>
-          <p className="mt-6 max-w-xl mx-auto text-base md:text-lg text-muted-foreground/85 leading-relaxed">
-            Clinical workflow rollouts, software adoption, service redesign. If it has to hold up after the launch deck closes, let&rsquo;s talk.
-          </p>
-          <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
-            <Link
-              href="/contact"
-              className="group flex items-center justify-center gap-2.5 text-sm md:text-base font-medium w-full sm:w-auto px-7 py-3.5 rounded-full bg-accent text-background hover:bg-accent/90 transition-all duration-300"
-            >
-              Get in touch
-              <ArrowRight size={16} className="group-hover:translate-x-0.5 transition-transform duration-300" />
-            </Link>
-            <Link
-              href="/services"
-              className="text-sm md:text-base font-medium text-foreground/80 w-full sm:w-auto text-center px-7 py-3.5 rounded-full border border-white/[0.14] hover:text-foreground hover:border-accent/35 hover:bg-white/[0.03] transition-all duration-300"
-            >
-              See what I do
-            </Link>
+          <div className="grid gap-14 md:gap-20">
+            {large.map((project, i) => (
+              <WorkCard key={project.slug} project={project} index={i} />
+            ))}
           </div>
-        </motion.div>
+          <div className="grid md:grid-cols-2 gap-14 md:gap-12 mt-14 md:mt-20">
+            {small.map((project, i) => (
+              <WorkCard key={project.slug} project={project} index={i} />
+            ))}
+          </div>
+        </div>
       </section>
 
+      {/* Supporting advisory work */}
+      <section className="py-20 md:py-24 px-6 md:px-12 xl:px-20">
+        <div className="max-w-[1200px] mx-auto">
+          <ScrollReveal direction="up">
+            <p className="text-[10px] md:text-xs font-medium tracking-[0.25em] uppercase text-accent/70 mb-4">
+              Beyond the case studies
+            </p>
+            <h2 className="text-2xl md:text-3xl font-medium tracking-tight mb-10 md:mb-12">
+              Selected implementation &amp; advisory <span className="text-accent/90 italic font-serif">work.</span>
+            </h2>
+          </ScrollReveal>
+          <div className="grid md:grid-cols-3 gap-5 md:gap-6">
+            {advisory.map((item, i) => (
+              <ScrollReveal key={item.title} direction="up" delay={i * 0.06}>
+                <div className="h-full p-7 md:p-8 rounded-lg border border-white/[0.06] bg-[hsl(222,12%,11.5%)] hover:border-accent/20 transition-colors duration-500">
+                  <h3 className="text-lg md:text-xl font-medium tracking-tight mb-3">{item.title}</h3>
+                  <p className="text-sm md:text-[15px] text-muted-foreground/85 leading-relaxed">{item.desc}</p>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Approach */}
+      <section id="approach" className="py-20 md:py-28 px-6 md:px-12 xl:px-20 relative overflow-hidden scroll-mt-24">
+        <div className="absolute inset-0 z-0 bg-[hsl(222,14%,10%)]/35" />
+        <div className="max-w-[1200px] mx-auto relative z-10">
+          <div className="grid lg:grid-cols-[0.9fr_1.4fr] gap-12 lg:gap-20 items-start">
+            <ScrollReveal direction="up" className="lg:sticky lg:top-32">
+              <p className="text-[10px] md:text-xs font-medium tracking-[0.25em] uppercase text-accent/70 mb-6">
+                How I approach the work
+              </p>
+              <h2 className="text-3xl md:text-4xl font-medium tracking-tight leading-[1.1] mb-6 text-balance">
+                Fit the system to the workflow, <span className="text-accent/90 italic font-serif">not the other way around.</span>
+              </h2>
+              <p className="text-base md:text-lg text-muted-foreground/80 leading-relaxed">
+                Systems fail when they add friction to the days of the people expected to use them. The projects above
+                hold up because the workflow came first and the tools came second.
+              </p>
+            </ScrollReveal>
+
+            <div className="grid sm:grid-cols-2 gap-4 md:gap-5">
+              {approach.map((item, i) => (
+                <ScrollReveal key={item.title} direction="up" delay={i * 0.06}>
+                  <div className="h-full p-7 md:p-8 rounded-lg border border-white/[0.06] bg-[hsl(222,12%,11.5%)] hover:border-accent/20 transition-colors duration-500">
+                    <span className="block text-xl font-serif italic text-accent/80 mb-4">0{i + 1}</span>
+                    <h3 className="text-xl md:text-2xl font-medium tracking-tight mb-3">{item.title}</h3>
+                    <p className="text-sm md:text-[15px] text-muted-foreground/85 leading-relaxed">{item.desc}</p>
+                  </div>
+                </ScrollReveal>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Areas of work */}
+      <section className="py-20 md:py-24 px-6 md:px-12 xl:px-20">
+        <div className="max-w-[1200px] mx-auto">
+          <ScrollReveal direction="up">
+            <p className="text-[10px] md:text-xs font-medium tracking-[0.25em] uppercase text-accent/70 mb-4">
+              Areas of work
+            </p>
+            <h2 className="text-2xl md:text-3xl font-medium tracking-tight mb-10 md:mb-12">
+              Where the projects <span className="text-accent/90 italic font-serif">come from.</span>
+            </h2>
+          </ScrollReveal>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
+            {areasOfWork.map((item, i) => (
+              <ScrollReveal key={item.title} direction="up" delay={i * 0.05}>
+                <div className="h-full p-6 md:p-7 rounded-lg border border-white/[0.06] bg-[hsl(222,12%,11.5%)] hover:border-accent/20 transition-colors duration-500">
+                  <h3 className="text-base md:text-lg font-medium tracking-tight mb-2.5">{item.title}</h3>
+                  <p className="text-[13px] md:text-sm text-muted-foreground/85 leading-relaxed">{item.desc}</p>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* About preview */}
+      <section className="py-20 md:py-28 px-6 md:px-12 xl:px-20 relative overflow-hidden">
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60rem] h-[40rem] rounded-full bg-accent/[0.04] blur-3xl" />
+        </div>
+        <div className="relative z-10 max-w-3xl mx-auto text-center">
+          <ScrollReveal direction="up">
+            <p className="text-[10px] md:text-xs font-medium tracking-[0.3em] uppercase text-accent/70 mb-6">About</p>
+            <h2 className="text-3xl md:text-5xl font-medium tracking-tight leading-[1.08] text-balance mb-6">
+              A clinical background applied <span className="text-accent/90 italic font-serif">beyond the treatment room.</span>
+            </h2>
+            <p className="text-base md:text-lg text-muted-foreground/85 leading-relaxed max-w-xl mx-auto mb-10">
+              Working close to patients and providers made me interested in the systems around care: how people find a
+              service, how information moves, and why some workflows become routine while others create friction.
+            </p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
+              <Link
+                href="/about"
+                className="group flex items-center justify-center gap-2.5 text-sm md:text-base font-medium w-full sm:w-auto px-7 py-3.5 rounded-full bg-accent text-background hover:bg-accent/90 transition-all duration-300"
+              >
+                More about me
+                <ArrowRight size={16} className="group-hover:translate-x-0.5 transition-transform duration-300" />
+              </Link>
+              <Link
+                href="/contact"
+                className="text-sm md:text-base font-medium text-foreground/80 w-full sm:w-auto text-center px-7 py-3.5 rounded-full border border-white/[0.14] hover:text-foreground hover:border-accent/35 hover:bg-white/[0.03] transition-all duration-300"
+              >
+                Get in touch
+              </Link>
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
     </main>
   );
 }

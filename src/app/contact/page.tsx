@@ -2,7 +2,7 @@
 
 import { motion, useScroll, useTransform, useSpring, useReducedMotion } from 'framer-motion';
 import useIsMobile from '@/hooks/useIsMobile';
-import { Linkedin, ArrowUpRight, Send, Check } from 'lucide-react';
+import { Linkedin, Mail, ArrowUpRight, Send, Check } from 'lucide-react';
 import MaskedReveal from '@/components/MaskedReveal';
 import Image from 'next/image';
 import { useRef, useEffect, useState } from 'react';
@@ -10,6 +10,7 @@ import { useRef, useEffect, useState } from 'react';
 function ContactForm() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [organization, setOrganization] = useState('');
   const [message, setMessage] = useState('');
   const [company, setCompany] = useState(''); // honeypot: must stay empty for real users
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
@@ -24,7 +25,7 @@ function ContactForm() {
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, message, company }),
+        body: JSON.stringify({ name, email, organization, message, company }),
       });
 
       const data = await res.json();
@@ -38,6 +39,7 @@ function ContactForm() {
       setStatus('sent');
       setName('');
       setEmail('');
+      setOrganization('');
       setMessage('');
       setCompany('');
     } catch {
@@ -105,6 +107,21 @@ function ContactForm() {
           onChange={(e) => setEmail(e.target.value)}
           className="w-full bg-white/[0.04] border border-white/[0.08] rounded-lg px-5 py-3.5 text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-accent/40 focus:bg-white/[0.06] focus:shadow-[0_1px_0_0_hsl(var(--accent)/0.4)] transition-all duration-500"
           placeholder="you@example.com"
+        />
+      </div>
+
+      <div>
+        <label htmlFor="organization" className="block text-[11px] font-bold tracking-[0.3em] uppercase text-muted-foreground mb-2.5">
+          Organization <span className="normal-case tracking-normal font-normal text-muted-foreground/60">(optional)</span>
+        </label>
+        <input
+          id="organization"
+          type="text"
+          autoComplete="organization"
+          value={organization}
+          onChange={(e) => setOrganization(e.target.value)}
+          className="w-full bg-white/[0.04] border border-white/[0.08] rounded-lg px-5 py-3.5 text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-accent/40 focus:bg-white/[0.06] focus:shadow-[0_1px_0_0_hsl(var(--accent)/0.4)] transition-all duration-500"
+          placeholder="Clinic, company, or team"
         />
       </div>
 
@@ -227,9 +244,18 @@ export default function Contact() {
 
             <motion.p
               style={{ opacity: descOpacity, y: descY }}
-              className="text-lg md:text-xl text-muted-foreground font-light leading-relaxed italic max-w-xl mb-8"
+              className="text-lg md:text-xl text-muted-foreground font-light leading-relaxed italic max-w-xl mb-6"
             >
-              Building, launching, or fixing a healthcare tool, service, or operating system? Let&apos;s figure out what it needs to work in practice.
+              For collaborations, advisory work, or selected projects involving clinical implementation, workflow,
+              service design, or digital systems, send me a note.
+            </motion.p>
+
+            <motion.p
+              style={{ opacity: descOpacity, y: descY }}
+              className="flex items-center gap-2.5 text-[11px] font-medium tracking-[0.2em] uppercase text-muted-foreground/70 mb-8"
+            >
+              <span aria-hidden="true" className="w-1.5 h-1.5 rounded-full bg-accent/70" />
+              Currently available for selected projects
             </motion.p>
 
             {/* Illustration - below description, natural flow */}
@@ -267,18 +293,25 @@ export default function Contact() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.8 }}
-              className="mt-4 flex items-center justify-center gap-3"
+              className="mt-4 flex items-center justify-center gap-2"
             >
               <div className="h-[1px] flex-1 bg-white/5" />
               <a
                 href="https://www.linkedin.com/in/kareemhassanein"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex items-center gap-2.5 text-sm text-muted-foreground/60 hover:text-accent transition-colors duration-500 px-4"
+                className="group flex items-center gap-2.5 text-sm text-muted-foreground/60 hover:text-accent transition-colors duration-500 px-3"
               >
                 <Linkedin size={16} className="opacity-60 group-hover:opacity-100 transition-opacity duration-500" />
                 <span>LinkedIn</span>
                 <ArrowUpRight size={12} className="opacity-40 group-hover:opacity-100 transition-opacity duration-500" />
+              </a>
+              <a
+                href="mailto:kareem.hassanein@gmail.com"
+                className="group flex items-center gap-2.5 text-sm text-muted-foreground/60 hover:text-accent transition-colors duration-500 px-3"
+              >
+                <Mail size={16} className="opacity-60 group-hover:opacity-100 transition-opacity duration-500" />
+                <span>Email</span>
               </a>
               <div className="h-[1px] flex-1 bg-white/5" />
             </motion.div>
@@ -294,7 +327,7 @@ export default function Contact() {
             <span className="text-xs font-medium tracking-[0.2em] text-accent/50 uppercase">Kareem Hassanein</span>
           </div>
           <div className="flex items-center gap-4 md:gap-6 text-[10px] uppercase tracking-[0.2em] font-medium text-muted-foreground/50">
-            <span>Burlington, ON</span>
+            <span>Hamilton-Burlington, Ontario</span>
             <span className="w-[3px] h-[3px] rounded-full bg-white/10" />
             <span>Remote</span>
             <span className="w-[3px] h-[3px] rounded-full bg-white/10" />

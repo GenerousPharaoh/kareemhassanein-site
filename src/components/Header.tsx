@@ -6,9 +6,8 @@ import { motion, useScroll, AnimatePresence } from 'framer-motion';
 import { usePathname } from 'next/navigation';
 
 const navItems = [
-  { href: '/', label: 'Home' },
+  { href: '/work', label: 'Work' },
   { href: '/about', label: 'About' },
-  { href: '/services', label: 'Services' },
   { href: '/contact', label: 'Contact' },
 ];
 
@@ -126,7 +125,7 @@ export default function Header() {
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-10">
             {navItems.map((item) => {
-              const isActive = pathname === item.href;
+              const isActive = item.href === '/' ? pathname === '/' : pathname.startsWith(item.href);
               return (
                 <Link
                   key={item.href}
@@ -192,14 +191,14 @@ export default function Header() {
                 >
                   <Link
                     href={item.href}
-                    aria-current={pathname === item.href ? 'page' : undefined}
-                    className={`flex items-baseline gap-4 text-5xl font-light tracking-tight ${pathname === item.href ? 'text-accent' : 'text-foreground/65 hover:text-foreground'
+                    aria-current={pathname.startsWith(item.href) ? 'page' : undefined}
+                    className={`flex items-baseline gap-4 text-5xl font-light tracking-tight ${pathname.startsWith(item.href) ? 'text-accent' : 'text-foreground/65 hover:text-foreground'
                       }`}
                   >
                     <span className="text-sm font-mono text-accent/60">{String(i + 1).padStart(2, '0')}</span>
                     <span>
                       {item.label}
-                      {pathname === item.href && (
+                      {pathname.startsWith(item.href) && (
                         <div className="h-[2px] w-10 bg-accent/50 mt-3 rounded-full" />
                       )}
                     </span>

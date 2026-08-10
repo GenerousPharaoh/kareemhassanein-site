@@ -61,7 +61,7 @@ export default function Footer() {
               <span className="text-xs font-medium tracking-[0.2em] text-[#292d34]/75 uppercase">Kareem Hassanein</span>
             </div>
             <div className="flex items-center gap-4 md:gap-6 text-[10px] uppercase tracking-[0.2em] font-medium text-[#292d34]/55">
-              <span>Burlington, ON</span>
+              <span>Hamilton-Burlington, Ontario</span>
               <span className="w-[3px] h-[3px] rounded-full bg-[#292d34]/25" />
               <span>Remote</span>
               <span className="w-[3px] h-[3px] rounded-full bg-[#292d34]/25" />

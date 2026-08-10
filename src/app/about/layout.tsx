@@ -2,17 +2,20 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "About | Kareem Hassanein",
-  description: "Implementation consultant with a clinical background. I spent years as a physiotherapist and operations lead before moving into workflow automation and technology implementation.",
+  description:
+    "A practicing physiotherapist whose work extends into clinical implementation, workflow automation, patient-facing digital platforms, service design, and product advisory.",
   openGraph: {
     title: "About | Kareem Hassanein",
-    description: "Implementation consultant with a clinical background in physiotherapy and operations leadership.",
+    description:
+      "A practicing physiotherapist whose work extends into clinical implementation, workflow automation, digital platforms, service design, and product advisory.",
     url: "https://khassanein.bio/about",
     type: "website",
   },
   twitter: {
     card: "summary",
     title: "About | Kareem Hassanein",
-    description: "Implementation consultant with a clinical background in physiotherapy and operations leadership.",
+    description:
+      "A practicing physiotherapist whose work extends into clinical implementation, workflow automation, digital platforms, service design, and product advisory.",
   },
   alternates: {
     canonical: "https://khassanein.bio/about",

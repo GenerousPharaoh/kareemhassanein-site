@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 export const dynamic = 'force-dynamic';
 
 // Field length caps. Bound the email payload and reject abusive blobs early.
-const MAX = { name: 100, email: 200, message: 5000 } as const;
+const MAX = { name: 100, email: 200, organization: 200, message: 5000 } as const;
 
 // Best-effort, in-memory per-IP throttle. This resets on cold start and is
 // per-serverless-instance, so it is a speed bump against naive flooding rather
@@ -39,7 +39,7 @@ function getClientIp(request: Request): string {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { name, email, message, company } = body ?? {};
+    const { name, email, organization, message, company } = body ?? {};
 
     // Honeypot: real users never fill this hidden field. Accept and silently
     // drop so bots get a success signal without an email being sent.
@@ -61,6 +61,10 @@ export async function POST(request: Request) {
         { status: 400 }
       );
     }
+
+    // Organization is optional but must be a bounded string when present.
+    const safeOrganization =
+      typeof organization === 'string' ? organization.trim().slice(0, MAX.organization) : '';
 
     // Cap lengths.
     if (
@@ -109,7 +113,7 @@ export async function POST(request: Request) {
       to: 'kareem.hassanein@gmail.com',
       replyTo: email,
       subject: `New message from ${safeName}`,
-      text: `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
+      text: `Name: ${name}\nEmail: ${email}${safeOrganization ? `\nOrganization: ${safeOrganization}` : ''}\n\nMessage:\n${message}`,
     });
 
     return NextResponse.json({ success: true });

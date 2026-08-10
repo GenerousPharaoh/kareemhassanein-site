@@ -23,13 +23,13 @@ const cormorant = Cormorant_Garamond({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://khassanein.bio"),
-  title: "Kareem Hassanein | Clinical Implementation Advisor",
-  description: "Clinical implementation, digital adoption, and operational systems for healthcare practices, health-tech founders, and professional-services firms.",
-  keywords: ["clinical implementation", "digital adoption", "operational systems", "health-tech advisory", "healthcare operations", "AI adoption", "change management", "service innovation"],
+  title: "Kareem Hassanein | Healthcare, Workflow & Digital Systems",
+  description: "Selected work across healthcare platforms, clinic service design, workflow automation, and digital experience, by a practicing physiotherapist working in clinical implementation and AI-enabled delivery.",
+  keywords: ["clinical implementation", "service design", "workflow automation", "information architecture", "healthcare operations", "digital health", "patient experience", "AI-enabled delivery"],
   authors: [{ name: "Kareem Hassanein" }],
   openGraph: {
-    title: "Kareem Hassanein | Clinical Implementation Advisor",
-    description: "Clinical implementation, digital adoption, and operational systems for healthcare practices, health-tech founders, and professional-services firms.",
+    title: "Kareem Hassanein | Healthcare, Workflow & Digital Systems",
+    description: "Selected work across healthcare platforms, clinic service design, workflow automation, and digital experience.",
     type: "website",
     locale: "en_CA",
     url: "https://khassanein.bio",
@@ -39,14 +39,14 @@ export const metadata: Metadata = {
         url: "https://khassanein.bio/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Kareem Hassanein, Clinical Implementation Advisor",
+        alt: "Kareem Hassanein, selected work across healthcare, workflow, and digital systems",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Kareem Hassanein | Clinical Implementation Advisor",
-    description: "Clinical implementation, digital adoption, and operational systems for healthcare, health-tech, and service innovation.",
+    title: "Kareem Hassanein | Healthcare, Workflow & Digital Systems",
+    description: "Selected work across healthcare platforms, clinic service design, workflow automation, and digital experience.",
     images: ["https://khassanein.bio/og-image.png"],
   },
   robots: {
@@ -66,21 +66,21 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Person",
   name: "Kareem Hassanein",
-  jobTitle: "Clinical Implementation Advisor",
-  description: "Kareem Hassanein advises healthcare, health-tech, and service businesses on clinical implementation, digital adoption, operational systems, and practical rollout.",
+  jobTitle: "Registered Physiotherapist",
+  description: "Kareem Hassanein is a practicing physiotherapist whose work extends into clinical implementation, service design, workflow automation, product advisory, and AI-enabled digital delivery.",
   url: "https://khassanein.bio",
   sameAs: [
     "https://www.linkedin.com/in/kareemhassanein",
   ],
   knowsAbout: [
     "Clinical Implementation",
-    "Digital Adoption",
-    "Operational Systems",
+    "Service Design",
+    "Workflow Automation",
+    "Information Architecture",
     "Healthcare Operations",
-    "Health-Tech Advisory",
-    "Change Management",
-    "AI Adoption",
-    "Service Innovation"
+    "Digital Health",
+    "Patient Experience",
+    "AI-Enabled Delivery"
   ],
   alumniOf: [
     {
