@@ -58,7 +58,7 @@ export default function Home() {
         <div className="relative z-10 w-full max-w-[1400px] mx-auto">
           <div className="grid lg:grid-cols-12 gap-y-14 gap-x-10 lg:gap-x-14 items-center">
             {/* Editorial column */}
-            <div className="lg:col-span-6 text-left order-2 lg:order-1 space-y-6 md:space-y-7">
+            <div className="lg:col-span-6 text-left space-y-6 md:space-y-7">
               <motion.div
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -139,29 +139,29 @@ export default function Home() {
               </motion.div>
             </div>
 
-            {/* Project screens collage */}
+            {/* Project screens: single clean frame on mobile, layered collage from tablet up */}
             <motion.div
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1.1, delay: 0.35, ease }}
-              className="lg:col-span-6 order-1 lg:order-2 w-full"
+              className="lg:col-span-6 w-full"
             >
-              <div className="relative max-w-[680px] mx-auto pb-10 md:pb-14 pr-6 sm:pr-10">
+              <div className="relative max-w-[680px] mx-auto sm:pb-14 sm:pr-10">
                 {heroShots.kinetikare && (
-                  <div className="w-[88%]">
+                  <div className="w-full sm:w-[88%]">
                     <ScreenFrame
                       shot={heroShots.kinetikare}
                       priority
-                      sizes="(max-width: 768px) 88vw, 560px"
+                      sizes="(max-width: 768px) 100vw, 560px"
                     />
                   </div>
                 )}
                 {heroShots.endorphins && (
-                  <div className="absolute right-0 -bottom-2 sm:-bottom-4 w-[58%] hidden sm:block">
+                  <div className="absolute right-0 -bottom-4 w-[58%] hidden sm:block">
                     <ScreenFrame shot={heroShots.endorphins} sizes="380px" />
                   </div>
                 )}
-                <div className="absolute -bottom-6 left-[4%] sm:left-auto sm:right-[52%] w-[24%] max-w-[150px] sm:block">
+                <div className="absolute -bottom-6 right-[52%] w-[24%] max-w-[150px] hidden sm:block">
                   <ScreenFrame shot={heroShots.wedding} sizes="150px" />
                 </div>
                 <div aria-hidden="true" className="absolute -inset-8 -z-10 rounded-[48px] bg-accent/[0.05] blur-2xl" />
