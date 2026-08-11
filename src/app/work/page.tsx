@@ -50,7 +50,9 @@ export default function WorkPage() {
         <div className="mx-auto max-w-[1320px]">
           <div className="mb-16 flex items-baseline justify-between border-b border-white/[0.09] pb-5 md:mb-24">
             <h2 className="text-sm font-semibold uppercase tracking-[0.18em] text-foreground/74">Selected projects</h2>
-            <span className="font-mono text-xs text-muted-foreground">01–04</span>
+            <span className="font-mono text-xs text-muted-foreground">
+              01–{String(principalProjects.length).padStart(2, '0')}
+            </span>
           </div>
           <div className="grid gap-24 md:gap-32">
             {principalProjects.map((project, index) => (

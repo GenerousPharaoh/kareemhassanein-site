@@ -13,12 +13,6 @@ const featured = featuredSlugs
   .map((slug) => principalProjects.find((project) => project.slug === slug))
   .filter((project): project is (typeof principalProjects)[number] => Boolean(project));
 
-const proof = [
-  { value: '100%', label: 'team adoption within eight weeks for an AI documentation rollout' },
-  { value: '~30 min', label: 'to draft a legal matter document, down from about three hours' },
-  { value: '6', label: 'clinical services booked through one routed intake instead of six separate paths' },
-];
-
 export default function Home() {
   return (
     <main className="overflow-hidden bg-background text-foreground">
@@ -29,15 +23,15 @@ export default function Home() {
               <p className="hero-fade mb-7 text-xs font-semibold uppercase tracking-[0.2em] text-accent/82">
                 Kareem Hassanein · Implementation &amp; Operations
               </p>
-              <h1 className="max-w-[1040px] text-[clamp(2.6rem,8.5vw,8rem)] font-medium leading-[0.87] tracking-[-0.07em]">
+              <h1 className="max-w-[1100px] text-[clamp(2.5rem,7vw,6.6rem)] font-medium leading-[0.92] tracking-[-0.055em]">
                 <span className="block overflow-hidden pb-[0.08em]">
                   <span className="hero-rise block" style={{ '--hero-delay': '0.08s' } as CSSProperties}>
-                    I fix the part
+                    Selected work in
                   </span>
                 </span>
                 <span className="block overflow-hidden pb-[0.08em]">
                   <span className="hero-rise block" style={{ '--hero-delay': '0.18s' } as CSSProperties}>
-                    of the job that
+                    healthcare, operations,
                   </span>
                 </span>
                 <span className="block overflow-hidden pb-[0.09em]">
@@ -45,7 +39,7 @@ export default function Home() {
                     className="hero-rise block font-serif font-normal italic text-accent"
                     style={{ '--hero-delay': '0.28s' } as CSSProperties}
                   >
-                    nobody owns.
+                    and digital delivery.
                   </span>
                 </span>
               </h1>
@@ -56,9 +50,9 @@ export default function Home() {
               style={{ '--hero-delay': '0.42s' } as CSSProperties}
             >
               <p className="max-w-lg text-lg leading-relaxed text-foreground/76 lg:text-xl">
-                I spent years in clinical practice before moving to the operational side of it. Now I rebuild what
-                sits underneath a service, from booking and documentation to the handoffs between people, and stay
-                with it through rollout until the new way is the normal way.
+                I&rsquo;m a practicing physiotherapist who also builds and runs the systems around care: websites,
+                booking and intake, documentation, and the workflows that connect them. This portfolio shows the
+                finished work and the decisions behind it.
               </p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row lg:flex-col xl:flex-row xl:gap-2">
                 <Link
@@ -87,23 +81,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section aria-label="Selected outcomes" className="border-y border-white/[0.09]">
-        <dl className="mx-auto grid max-w-[1440px] sm:grid-cols-2 lg:grid-cols-3">
-          {proof.map((item, index) => (
-            <div
-              key={item.value}
-              className={`border-white/[0.09] px-6 py-8 sm:px-8 lg:px-10 ${index > 0 ? 'border-t' : ''} ${
-                index === 1 ? 'sm:border-l sm:border-t-0' : ''
-              } ${index > 0 ? 'lg:border-l lg:border-t-0' : ''}`}
-            >
-              <dd className="text-3xl font-semibold tracking-[-0.045em] text-accent md:text-4xl">{item.value}</dd>
-              <dt className="mt-3 max-w-xs text-sm leading-relaxed text-muted-foreground">{item.label}</dt>
-            </div>
-          ))}
-        </dl>
-      </section>
-
-      <section className="px-6 py-24 sm:px-8 md:py-32 lg:px-12 xl:px-20">
+      <section className="border-t border-white/[0.09] px-6 py-24 sm:px-8 md:py-32 lg:px-12 xl:px-20">
         <div className="mx-auto max-w-[1320px]">
           <ScrollReveal direction="up" className="mb-16 md:mb-24">
             <p className="mb-5 text-xs font-semibold uppercase tracking-[0.2em] text-accent/80">Selected work</p>

@@ -116,9 +116,8 @@ export default function About() {
               transition={{ duration: 0.85, delay: 0.28, ease }}
               className="mt-9 max-w-2xl text-lg md:text-[1.35rem] text-foreground/[0.76] font-light leading-relaxed"
             >
-              I still treat patients, and I also run the operational side of a multi-disciplinary clinic. Working both
-              jobs at once is the whole reason this work suits me: I see where a process breaks while I am the one
-              standing inside it, not six weeks later in a report.
+              I still treat patients, and I also run the operational side of a multidisciplinary clinic. Working both
+              jobs at once means I see where a process breaks while I am standing inside it.
             </motion.p>
 
             <motion.div

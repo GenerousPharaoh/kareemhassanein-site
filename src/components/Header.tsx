@@ -171,8 +171,8 @@ export default function Header() {
             className="fixed inset-0 z-[45] flex flex-col justify-center bg-[#111317]/[0.985] px-6 pb-[env(safe-area-inset-bottom)] pt-[env(safe-area-inset-top)] md:hidden"
           >
             <nav className="mx-auto flex w-full max-w-sm flex-col" aria-label="Mobile navigation">
-              {[...navItems, { href: '/contact', label: 'Contact' }].map((item, index) => {
-                const active = pathname.startsWith(item.href);
+              {[{ href: '/', label: 'Home' }, ...navItems, { href: '/contact', label: 'Contact' }].map((item, index) => {
+                const active = item.href === '/' ? pathname === '/' : pathname.startsWith(item.href);
                 return (
                   <motion.div
                     key={item.href}

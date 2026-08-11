@@ -78,7 +78,7 @@ export const projects: Project[] = [
     delivery:
       'Evaluation, configuration, training, SOP development, go-live support, and post-launch refinement were led by me on the clinic side.',
     size: 'large',
-    tier: 'principal',
+    tier: 'additional',
     proof: [
       { value: '100%', label: 'team adoption' },
       { value: '8 weeks', label: 'to full adoption' },
@@ -409,10 +409,10 @@ export const projects: Project[] = [
 ];
 
 const projectOrder = [
-  'clinical-documentation',
-  'tax-relief-counsel',
-  'endorphins',
   'kinetikare',
+  'endorphins',
+  'tax-relief-counsel',
+  'clinical-documentation',
   'wedding-website',
 ];
 
