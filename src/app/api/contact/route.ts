@@ -57,7 +57,7 @@ export async function POST(request: Request) {
       !message.trim()
     ) {
       return NextResponse.json(
-        { error: 'All fields are required.' },
+        { error: 'Name, email, and message are required.' },
         { status: 400 }
       );
     }
@@ -108,13 +108,20 @@ export async function POST(request: Request) {
     const { Resend } = await import('resend');
     const resend = new Resend(process.env.RESEND_API_KEY);
 
-    await resend.emails.send({
+    const { error } = await resend.emails.send({
       from: 'Contact Form <onboarding@resend.dev>',
       to: 'kareem.hassanein@gmail.com',
       replyTo: email,
       subject: `New message from ${safeName}`,
       text: `Name: ${name}\nEmail: ${email}${safeOrganization ? `\nOrganization: ${safeOrganization}` : ''}\n\nMessage:\n${message}`,
     });
+
+    if (error) {
+      return NextResponse.json(
+        { error: 'Something went wrong. Please try again.' },
+        { status: 502 }
+      );
+    }
 
     return NextResponse.json({ success: true });
   } catch {

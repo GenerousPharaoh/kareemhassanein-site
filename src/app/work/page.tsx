@@ -1,91 +1,103 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
+import { ArrowUpRight } from 'lucide-react';
 import ScrollReveal from '@/components/ScrollReveal';
-import AnimatedDivider from '@/components/AnimatedDivider';
 import WorkCard from '@/components/WorkCard';
-import { projects, advisory } from '@/lib/work';
+import { additionalProjects, advisory, principalProjects } from '@/lib/work';
 
 export const metadata: Metadata = {
   title: 'Work | Kareem Hassanein',
-  description:
-    'Selected work across healthcare platforms, clinic service design, workflow automation, and digital experience.',
+  description: 'Case studies in clinical implementation, workflow automation, service design, and digital delivery.',
   openGraph: {
     title: 'Work | Kareem Hassanein',
-    description:
-      'Selected work across healthcare platforms, clinic service design, workflow automation, and digital experience.',
-    url: 'https://khassanein.bio/work',
+    description: 'Case studies in clinical implementation, workflow automation, service design, and digital delivery.',
+    url: 'https://www.khassanein.bio/work',
     type: 'website',
+    locale: 'en_CA',
+    siteName: 'Kareem Hassanein',
+    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'Selected implementation and operations work by Kareem Hassanein' }],
   },
   twitter: {
-    card: 'summary',
+    card: 'summary_large_image',
     title: 'Work | Kareem Hassanein',
-    description:
-      'Selected work across healthcare platforms, clinic service design, workflow automation, and digital experience.',
+    description: 'Case studies in clinical implementation, workflow automation, service design, and digital delivery.',
+    images: ['/og-image.png'],
   },
-  alternates: {
-    canonical: 'https://khassanein.bio/work',
-  },
+  alternates: { canonical: 'https://www.khassanein.bio/work' },
 };
 
 export default function WorkPage() {
-  const large = projects.filter((p) => p.size === 'large');
-  const small = projects.filter((p) => p.size === 'small');
-
   return (
-    <main className="bg-background text-foreground pt-20">
-      {/* Header */}
-      <section className="px-6 md:px-12 xl:px-20 pt-24 md:pt-28 pb-14 md:pb-18">
-        <div className="max-w-[1200px] mx-auto">
+    <main className="bg-background pb-8 pt-32 text-foreground md:pt-40">
+      <section className="px-6 pb-20 sm:px-8 md:pb-28 lg:px-12 xl:px-20">
+        <div className="mx-auto max-w-[1320px]">
           <ScrollReveal direction="up">
-            <span className="block text-xs font-medium tracking-[0.3em] uppercase text-muted-foreground mb-6">
-              Work
-            </span>
-            <h1 className="text-4xl md:text-6xl font-medium tracking-tight mb-7">
-              Selected <span className="text-accent italic font-serif">work.</span>
-            </h1>
-            <p className="text-lg md:text-xl text-muted-foreground font-light leading-relaxed max-w-2xl">
-              Projects across healthcare, operations, and digital experience: what each one was, what I shaped, and the
-              decisions behind the finished work.
-            </p>
-            <AnimatedDivider direction="left" accent maxWidth="200px" className="mt-8" />
+            <p className="mb-6 text-xs font-semibold uppercase tracking-[0.2em] text-accent/80">Work</p>
+            <div className="grid gap-8 lg:grid-cols-12 lg:items-end">
+              <h1 className="max-w-5xl text-[clamp(3rem,8.5vw,8.2rem)] font-medium leading-[0.89] tracking-[-0.065em] lg:col-span-8">
+                Work that holds up in use.
+              </h1>
+              <p className="max-w-lg border-l border-white/[0.12] pl-6 text-lg leading-relaxed text-foreground/72 lg:col-span-4">
+                Implementation, operations, and digital work examined through the problem, the pivotal decision, and
+                the result.
+              </p>
+            </div>
           </ScrollReveal>
         </div>
       </section>
 
-      {/* Principal projects */}
-      <section className="px-6 md:px-12 xl:px-20 pb-8 md:pb-12">
-        <div className="max-w-[1200px] mx-auto">
-          <div className="grid gap-20 md:gap-28">
-            {large.map((project, i) => (
-              <WorkCard key={project.slug} project={project} index={i} variant="row" flip={i % 2 === 1} />
-            ))}
+      <section className="border-t border-white/[0.09] px-6 py-24 sm:px-8 md:py-32 lg:px-12 xl:px-20">
+        <div className="mx-auto max-w-[1320px]">
+          <div className="mb-16 flex items-baseline justify-between border-b border-white/[0.09] pb-5 md:mb-24">
+            <h2 className="text-sm font-semibold uppercase tracking-[0.18em] text-foreground/74">Principal case studies</h2>
+            <span className="font-mono text-xs text-muted-foreground">01–04</span>
           </div>
-          <div className="grid md:grid-cols-2 gap-14 md:gap-12 mt-20 md:mt-28">
-            {small.map((project, i) => (
-              <WorkCard key={project.slug} project={project} index={i} className={i === 1 ? 'md:mt-20' : ''} />
+          <div className="grid gap-24 md:gap-32">
+            {principalProjects.map((project, index) => (
+              <WorkCard key={project.slug} project={project} index={index} variant="row" flip={index % 2 === 1} headingLevel={3} />
             ))}
           </div>
         </div>
       </section>
 
-      {/* Supporting advisory work */}
-      <section className="px-6 md:px-12 xl:px-20 py-20 md:py-28">
-        <div className="max-w-[1200px] mx-auto">
-          <ScrollReveal direction="up">
-            <span className="block text-[10px] md:text-xs font-medium tracking-[0.25em] uppercase text-accent/70 mb-4">
-              Also
-            </span>
-            <h2 className="text-2xl md:text-3xl font-medium tracking-tight mb-10 md:mb-12">
-              Selected implementation &amp; advisory <span className="text-accent/90 italic font-serif">work.</span>
-            </h2>
-          </ScrollReveal>
-          <div className="grid md:grid-cols-3 gap-5 md:gap-6">
-            {advisory.map((item, i) => (
-              <ScrollReveal key={item.title} direction="up" delay={i * 0.06}>
-                <div className="h-full p-7 md:p-8 rounded-lg border border-white/[0.06] bg-[hsl(222,12%,11.5%)] hover:border-accent/20 transition-colors duration-500">
-                  <h3 className="text-lg md:text-xl font-medium tracking-tight mb-3">{item.title}</h3>
-                  <p className="text-sm md:text-[15px] text-muted-foreground/85 leading-relaxed">{item.desc}</p>
-                </div>
-              </ScrollReveal>
+      <section className="border-t border-white/[0.09] px-6 py-24 sm:px-8 md:py-28 lg:px-12 xl:px-20">
+        <div className="mx-auto max-w-[1320px]">
+          <div className="grid gap-12 lg:grid-cols-12 lg:gap-20">
+            <div className="lg:col-span-4">
+              <p className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-accent/80">Additional work</p>
+              <h2 className="text-4xl font-medium tracking-[-0.045em]">Focused digital delivery.</h2>
+            </div>
+            <div className="lg:col-span-8">
+              {additionalProjects.map((project) => (
+                <Link
+                  key={project.slug}
+                  href={`/work/${project.slug}`}
+                  className="group grid min-h-28 items-center gap-5 border-y border-white/[0.1] py-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent sm:grid-cols-[1fr_auto]"
+                >
+                  <div>
+                    <h3 className="text-2xl font-medium tracking-[-0.035em] transition-colors group-hover:text-accent">{project.title}</h3>
+                    <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted-foreground">{project.summary}</p>
+                  </div>
+                  <ArrowUpRight aria-hidden="true" className="text-foreground/55 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-accent" />
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-t border-white/[0.09] px-6 py-24 sm:px-8 md:py-28 lg:px-12 xl:px-20">
+        <div className="mx-auto grid max-w-[1320px] gap-12 lg:grid-cols-12 lg:gap-20">
+          <div className="lg:col-span-4">
+            <p className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-accent/80">Advisory</p>
+            <h2 className="text-4xl font-medium tracking-[-0.045em]">Implementation context beyond the build.</h2>
+          </div>
+          <div className="border-t border-white/[0.1] lg:col-span-8">
+            {advisory.map((item) => (
+              <article key={item.title} className="grid gap-4 border-b border-white/[0.1] py-7 sm:grid-cols-[11rem_1fr] sm:gap-8">
+                <h3 className="text-lg font-medium">{item.title}</h3>
+                <p className="text-sm leading-relaxed text-muted-foreground sm:text-base">{item.desc}</p>
+              </article>
             ))}
           </div>
         </div>

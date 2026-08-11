@@ -1,75 +1,93 @@
 'use client';
 
+import Image from 'next/image';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
-import ParallaxImage from './ParallaxImage';
+import { ArrowUpRight } from 'lucide-react';
+
+const ease = [0.16, 1, 0.3, 1] as const;
 
 export default function Footer() {
+  const pathname = usePathname();
+  const isHome = pathname === '/';
+
+  if (pathname === '/contact') {
+    return (
+      <footer className="relative z-10 border-t border-white/[0.09] bg-background text-foreground">
+        <div className="mx-auto flex max-w-[1440px] flex-col gap-3 px-6 py-6 text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground sm:px-8 md:flex-row md:items-center md:justify-between lg:px-12 xl:px-20">
+          <span>Kareem Hassanein</span>
+          <div className="flex flex-wrap gap-x-5 gap-y-2">
+            <span>Hamilton and Burlington, Ontario</span>
+            <span>Remote across North America</span>
+            <span>© 2026</span>
+          </div>
+        </div>
+      </footer>
+    );
+  }
+
   return (
-    <div
-      className="fixed bottom-0 left-0 w-full h-svh z-0 flex flex-col justify-end pointer-events-none"
-      style={{ clipPath: "polygon(0% 0, 100% 0%, 100% 100%, 0 100%)" }}
-    >
-      <div className="relative h-full w-full bg-[#efe9df] overflow-hidden pointer-events-auto">
-
-        {/* Full-bleed image shown crisp — the warm scene was composed with copy space on the left */}
-        <div className="absolute inset-0 z-0">
-          <ParallaxImage
-            src="/images/footer-image.webp"
+    <footer className="relative z-10 overflow-hidden bg-[#ece7de] text-[#25292f]">
+      <div className="relative border-t border-[#25292f]/10">
+        <div className="relative lg:absolute lg:inset-0">
+          <Image
+            src="/images/system-flow-footer-v2.webp"
             alt=""
-            className="w-full h-full object-cover"
-            imgClassName="object-[28%_center] md:object-center"
-            fadedVertical={false}
+            width={1935}
+            height={812}
+            sizes="100vw"
+            className="h-auto w-full lg:h-full lg:object-cover lg:object-center"
           />
-          {/* Cream wash on the left so the dark headline always rests on clean negative space */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#efe9df] via-[#efe9df]/60 to-transparent md:via-[#efe9df]/25" />
         </div>
 
-        {/* Paper-grain texture */}
         <div
-          className="absolute inset-0 opacity-[0.04] pointer-events-none z-[1] mix-blend-multiply"
-          style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")` }}
-        />
-
-        {/* Content — dark text set into the image's left negative space */}
-        <div className="relative z-10 h-full flex flex-col justify-center items-start text-left max-w-[1600px] mx-auto px-6 md:px-12 xl:px-20 pb-24 md:pb-0 text-[#292d34]">
-          <motion.h2
-            initial={{ opacity: 0, y: 10 }}
+          className={`relative mx-auto flex max-w-[1440px] items-end px-6 pb-16 pt-12 sm:px-8 lg:items-center lg:px-12 xl:px-20 ${
+            isHome ? 'min-h-[520px] lg:min-h-[700px]' : 'min-h-[430px] lg:min-h-[520px]'
+          }`}
+        >
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "0px 0px -20px 0px" }}
-            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="text-6xl sm:text-7xl md:text-[120px] lg:text-[150px] font-medium tracking-tighter mb-8 md:mb-12 lg:mb-14 leading-[0.82]"
+            viewport={{ once: true, margin: '0px 0px -60px 0px' }}
+            transition={{ duration: 0.8, ease }}
+            className="relative max-w-2xl lg:max-w-[46%]"
           >
-            Reach <br />
-            <span className="italic font-light font-serif text-[#292d34]/45">out.</span>
-          </motion.h2>
-
-          <a
-            href="/contact"
-            className="group inline-flex items-center gap-3 md:gap-5 text-base sm:text-lg md:text-xl font-medium px-7 sm:px-9 md:px-11 py-4 md:py-5 rounded-full bg-[#292d34] text-[#f4efe6] transition-all duration-500 hover:bg-[#1d2127] shadow-[0_14px_34px_-14px_rgba(41,45,52,0.55)]"
-          >
-            Get in touch
-            <ArrowRight size={20} className="md:w-6 md:h-6 group-hover:translate-x-0.5 transition-transform duration-500" />
-          </a>
+            <p className="mb-5 text-[11px] font-semibold uppercase tracking-[0.22em] text-[#25292f]/58">
+              Available for implementation, operations, and advisory work
+            </p>
+            <h2 className="max-w-xl font-sans text-[clamp(2.7rem,6vw,5.8rem)] font-medium leading-[0.94] tracking-[-0.055em] text-[#25292f]">
+              Bring me the workflow that should work better.
+            </h2>
+            <p className="mt-6 max-w-lg text-base leading-relaxed text-[#25292f]/68 sm:text-lg">
+              If the process is useful in theory but difficult in practice, I can help make it clearer, more usable,
+              and easier to adopt.
+            </p>
+            <Link
+              href="/contact"
+              className="group mt-8 inline-flex min-h-12 items-center gap-3 rounded-full bg-[#25292f] px-7 text-sm font-semibold text-[#f3eee6] transition-colors duration-500 hover:bg-[#15181c]"
+            >
+              Start a conversation
+              <ArrowUpRight
+                aria-hidden="true"
+                size={17}
+                className="transition-transform duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+              />
+            </Link>
+          </motion.div>
         </div>
+      </div>
 
-        {/* Bottom bar — dark text on a light frosted strip */}
-        <div className="absolute bottom-0 left-0 w-full border-t border-[#292d34]/[0.1] bg-white/30 backdrop-blur-xl z-10">
-          <div className="max-w-[1800px] mx-auto px-6 md:px-12 py-5 md:py-6 flex flex-col md:flex-row justify-between items-center gap-3 md:gap-8">
-            <div className="flex items-center gap-3">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#b08d57]" />
-              <span className="text-xs font-medium tracking-[0.2em] text-[#292d34]/75 uppercase">Kareem Hassanein</span>
-            </div>
-            <div className="flex items-center gap-4 md:gap-6 text-[10px] uppercase tracking-[0.2em] font-medium text-[#292d34]/55">
-              <span>Hamilton-Burlington, Ontario</span>
-              <span className="w-[3px] h-[3px] rounded-full bg-[#292d34]/25" />
-              <span>Remote</span>
-              <span className="w-[3px] h-[3px] rounded-full bg-[#292d34]/25" />
-              <span>© 2026</span>
-            </div>
+      <div className="border-t border-[#25292f]/10">
+        <div className="mx-auto flex max-w-[1440px] flex-col gap-3 px-6 py-5 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#25292f]/55 sm:px-8 md:flex-row md:items-center md:justify-between lg:px-12 xl:px-20">
+          <span>Kareem Hassanein</span>
+          <div className="flex flex-wrap gap-x-5 gap-y-2">
+            <span>Hamilton and Burlington, Ontario</span>
+            <span>Remote across North America</span>
+            <span>© 2026</span>
           </div>
         </div>
       </div>
-    </div>
+    </footer>
   );
 }

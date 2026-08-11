@@ -3,22 +3,26 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Contact | Kareem Hassanein",
   description:
-    "Get in touch about collaborations, advisory work, or projects involving clinical implementation, workflow, service design, or digital systems.",
+    "Start a conversation about implementation, operations, workflow automation, service design, change adoption, or digital delivery.",
   openGraph: {
     title: "Contact | Kareem Hassanein",
     description:
-      "Get in touch about collaborations, advisory work, or projects involving clinical implementation, workflow, service design, or digital systems.",
-    url: "https://khassanein.bio/contact",
+      "Start a conversation about implementation, operations, workflow automation, service design, change adoption, or digital delivery.",
+    url: "https://www.khassanein.bio/contact",
     type: "website",
+    locale: "en_CA",
+    siteName: "Kareem Hassanein",
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Contact Kareem Hassanein" }],
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: "Contact | Kareem Hassanein",
     description:
-      "Get in touch about collaborations, advisory work, or projects involving clinical implementation, workflow, service design, or digital systems.",
+      "Start a conversation about implementation, operations, workflow automation, service design, change adoption, or digital delivery.",
+    images: ["/og-image.png"],
   },
   alternates: {
-    canonical: "https://khassanein.bio/contact",
+    canonical: "https://www.khassanein.bio/contact",
   },
 };
 

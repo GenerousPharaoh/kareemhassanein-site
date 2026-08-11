@@ -1,6 +1,5 @@
 'use client';
 
-import { usePathname } from 'next/navigation';
 import { MotionConfig } from 'framer-motion';
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -12,8 +11,6 @@ export default function LayoutWrapper({
 }: {
     children: React.ReactNode;
 }) {
-    const pathname = usePathname();
-    const isContactPage = pathname === '/contact';
     const isMobile = useIsMobile();
 
     // On mobile, force every framer-motion entrance/whileInView animation
@@ -25,13 +22,13 @@ export default function LayoutWrapper({
             <a href="#main-content" className="skip-link">
                 Skip to main content
             </a>
-            <div className={`relative z-10 bg-background shadow-2xl ${isContactPage ? 'mb-0' : 'mb-[100svh]'}`}>
+            <div className="relative z-10 bg-background">
                 <Header />
-                <div id="main-content" className="min-h-svh">
+                <div id="main-content" tabIndex={-1} className="min-h-svh outline-none">
                     {children}
                 </div>
             </div>
-            {!isContactPage && <Footer />}
+            <Footer />
         </MotionConfig>
     );
 }

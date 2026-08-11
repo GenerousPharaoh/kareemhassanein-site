@@ -32,12 +32,59 @@ export interface Project {
   card?: ShotMeta;
   size: 'large' | 'small';
   confidentialNote?: string;
+  contextLabel?: string;
+  tier?: 'principal' | 'additional';
+  proof?: Array<{
+    value: string;
+    label: string;
+  }>;
 }
 
 const DESKTOP = { width: 1440, height: 900 } as const;
 const PHONE = { width: 390, height: 844 } as const;
 
 export const projects: Project[] = [
+  {
+    slug: 'clinical-documentation',
+    title: 'AI Documentation Rollout',
+    shortTitle: 'AI Documentation Rollout',
+    contextLabel: 'Private Physiotherapy Clinic',
+    category: 'Clinical Implementation · Change Adoption',
+    summary:
+      'Clinic-side evaluation, configuration, training, SOP development, go-live support, and refinement for an AI documentation platform adopted by the full physiotherapy team within eight weeks.',
+    contribution: [
+      'Workflow evaluation',
+      'Configuration',
+      'Team training',
+      'SOP development',
+      'Go-live support',
+      'Adoption',
+      'Post-launch refinement',
+    ],
+    intro: [
+      'A physiotherapy team was introducing an AI documentation platform into a busy clinical environment. The technical setup was only one part of the work. The larger challenge was making the system useful enough, clear enough, and reliable enough to become part of every practitioner’s day.',
+      'I led clinic-side evaluation, configuration, training, SOP development, go-live support, and post-launch refinement. The rollout reached full team adoption within eight weeks and reduced documentation time by approximately three hours per practitioner each week.',
+    ],
+    gallery: [],
+    confidentialNote:
+      'The clinic identity and practitioner information are omitted. The figures below reconstruct the rollout without reproducing private records.',
+    decision:
+      'Adoption was treated as a workflow problem, not a training event. Configuration, expectations, support, and feedback were adjusted around how clinicians actually documented care.',
+    outcomes: [
+      'The full physiotherapy team adopted the platform within eight weeks.',
+      'Documentation time decreased by approximately three hours per practitioner each week.',
+    ],
+    environment: 'Heidi AI · Clinical workflows · Team training · Documented SOPs',
+    delivery:
+      'Evaluation, configuration, training, SOP development, go-live support, and post-launch refinement were led by me on the clinic side.',
+    size: 'large',
+    tier: 'principal',
+    proof: [
+      { value: '100%', label: 'team adoption' },
+      { value: '8 weeks', label: 'to full adoption' },
+      { value: '~3 hrs', label: 'saved weekly per practitioner' },
+    ],
+  },
   {
     slug: 'kinetikare',
     title: 'KinetiKare Physiotherapy',
@@ -118,7 +165,7 @@ export const projects: Project[] = [
     ],
     environment: 'Next.js · GitHub · Vercel · Jane App · Google Search Console',
     delivery:
-      'Clinical requirements, information architecture, content, and testing led by me; the implementation was built, refined, and maintained through Claude Code and Codex.',
+      'Clinical requirements, information architecture, content, and testing led by me; the implementation was built, refined, and maintained through Codex and Cursor.',
     liveUrl: 'https://www.kinetikarephysio.com',
     card: {
       src: '/images/work/kinetikare-home.webp',
@@ -128,6 +175,12 @@ export const projects: Project[] = [
       url: 'kinetikarephysio.com',
     },
     size: 'large',
+    tier: 'principal',
+    proof: [
+      { value: '60+', label: 'pages across the platform' },
+      { value: '55', label: 'condition pages' },
+      { value: '6', label: 'treatment pages' },
+    ],
   },
   {
     slug: 'endorphins',
@@ -218,6 +271,12 @@ export const projects: Project[] = [
       url: 'endorphinshealth.com',
     },
     size: 'large',
+    tier: 'principal',
+    proof: [
+      { value: '6', label: 'clinical specialties' },
+      { value: '8', label: 'municipalities supported' },
+      { value: '1', label: 'coordinated clinic experience' },
+    ],
   },
   {
     slug: 'tax-relief-counsel',
@@ -248,10 +307,16 @@ export const projects: Project[] = [
       'Document-generation time fell from approximately three hours to about 30 minutes per matter.',
       'The workflow runs as a documented, repeatable process the practitioner operates independently, with quality checkpoints built in rather than left to memory.',
     ],
-    environment: 'Claude Code · Structured template library · Documented SOPs',
+    environment: 'Codex · Structured template library · Documented SOPs',
     delivery:
-      'Workflow mapping, template design, prompt design, and quality assurance led by me; the drafting tooling was built with Claude Code around the practice’s existing habits.',
-    size: 'small',
+      'Workflow mapping, template design, prompt design, and quality assurance led by me; the drafting tooling was built with Codex around the practice’s existing habits.',
+    size: 'large',
+    tier: 'principal',
+    proof: [
+      { value: '~3 hrs', label: 'before per matter' },
+      { value: '~30 min', label: 'after per matter' },
+      { value: '85%', label: 'less drafting time' },
+    ],
   },
   {
     slug: 'wedding-website',
@@ -334,18 +399,35 @@ export const projects: Project[] = [
       frame: 'browser',
     },
     size: 'small',
+    tier: 'additional',
+    proof: [
+      { value: '1 link', label: 'for event and travel details' },
+      { value: '7 days', label: 'of optional travel planning' },
+      { value: 'Mobile', label: 'designed for use in transit' },
+    ],
   },
 ];
+
+const projectOrder = [
+  'clinical-documentation',
+  'tax-relief-counsel',
+  'endorphins',
+  'kinetikare',
+  'wedding-website',
+];
+
+export const orderedProjects = projectOrder
+  .map((slug) => projects.find((project) => project.slug === slug))
+  .filter((project): project is Project => Boolean(project));
+
+export const principalProjects = orderedProjects.filter((project) => project.tier === 'principal');
+export const additionalProjects = orderedProjects.filter((project) => project.tier === 'additional');
 
 export function getProject(slug: string): Project | undefined {
   return projects.find((p) => p.slug === slug);
 }
 
 export const advisory = [
-  {
-    title: 'Clinical documentation implementation',
-    desc: 'Led clinic-side evaluation, configuration, training, SOP development, go-live support, and post-launch refinement for an AI documentation platform used across a physiotherapy team.',
-  },
   {
     title: 'Neuro-Mod',
     desc: 'Advising on the clinical deployment of an augmented-reality pain-management device, with a focus on rehabilitation workflows, clinician onboarding, patient education, interface design, and rollout readiness.',
@@ -371,6 +453,6 @@ export const areasOfWork = [
   },
   {
     title: 'AI-enabled delivery',
-    desc: 'Requirements, structured specifications, Claude Code, Codex, iterative testing, troubleshooting, and quality assurance.',
+    desc: 'Requirements, structured specifications, Codex, Cursor, iterative testing, troubleshooting, and quality assurance.',
   },
 ];

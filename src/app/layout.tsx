@@ -2,41 +2,42 @@ import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import LayoutWrapper from "@/components/LayoutWrapper";
-import { Urbanist, Cormorant_Garamond } from 'next/font/google';
+import { Cormorant_Garamond } from 'next/font/google';
+
+const geistSans = localFont({
+  src: "./fonts/GeistVF.woff",
+  variable: "--font-sans",
+  weight: "100 900",
+});
 
 const geistMono = localFont({
   src: "./fonts/GeistMonoVF.woff",
   variable: "--font-geist-mono",
   weight: "100 900",
 });
-const urbanist = Urbanist({
-  subsets: ['latin'],
-  variable: '--font-sans',
-  weight: ['300', '400', '500', '600', '700'],
-});
 const cormorant = Cormorant_Garamond({
   subsets: ['latin'],
   variable: '--font-serif',
-  weight: ['400', '500', '600', '700'],
+  weight: ['400'],
   style: ['normal', 'italic'],
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://khassanein.bio"),
-  title: "Kareem Hassanein | Healthcare, Workflow & Digital Systems",
-  description: "Selected work across healthcare platforms, clinic service design, workflow automation, and digital experience, by a practicing physiotherapist working in clinical implementation and AI-enabled delivery.",
-  keywords: ["clinical implementation", "service design", "workflow automation", "information architecture", "healthcare operations", "digital health", "patient experience", "AI-enabled delivery"],
+  metadataBase: new URL("https://www.khassanein.bio"),
+  title: "Kareem Hassanein | Implementation & Operations",
+  description: "Implementation and operations work across clinical technology, workflow automation, service design, and digital delivery.",
+  keywords: ["implementation consulting", "operations improvement", "clinical implementation", "workflow automation", "change adoption", "service design", "healthcare operations", "digital delivery"],
   authors: [{ name: "Kareem Hassanein" }],
   openGraph: {
-    title: "Kareem Hassanein | Healthcare, Workflow & Digital Systems",
-    description: "Selected work across healthcare platforms, clinic service design, workflow automation, and digital experience.",
+    title: "Kareem Hassanein | Implementation & Operations",
+    description: "Implementation and operations work across clinical technology, workflow automation, service design, and digital delivery.",
     type: "website",
     locale: "en_CA",
-    url: "https://khassanein.bio",
+    url: "https://www.khassanein.bio",
     siteName: "Kareem Hassanein",
     images: [
       {
-        url: "https://khassanein.bio/og-image.png",
+        url: "https://www.khassanein.bio/og-image.png",
         width: 1200,
         height: 630,
         alt: "Kareem Hassanein, selected work across healthcare, workflow, and digital systems",
@@ -45,16 +46,16 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Kareem Hassanein | Healthcare, Workflow & Digital Systems",
-    description: "Selected work across healthcare platforms, clinic service design, workflow automation, and digital experience.",
-    images: ["https://khassanein.bio/og-image.png"],
+    title: "Kareem Hassanein | Implementation & Operations",
+    description: "Implementation and operations work across clinical technology, workflow automation, service design, and digital delivery.",
+    images: ["https://www.khassanein.bio/og-image.png"],
   },
   robots: {
     index: true,
     follow: true,
   },
   alternates: {
-    canonical: "https://khassanein.bio",
+    canonical: "https://www.khassanein.bio",
   },
 };
 
@@ -66,9 +67,9 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Person",
   name: "Kareem Hassanein",
-  jobTitle: "Registered Physiotherapist",
-  description: "Kareem Hassanein is a practicing physiotherapist whose work extends into clinical implementation, service design, workflow automation, product advisory, and AI-enabled digital delivery.",
-  url: "https://khassanein.bio",
+  jobTitle: ["Implementation and Operations Specialist", "Registered Physiotherapist"],
+  description: "Kareem Hassanein is an implementation and operations specialist with a clinical background. His work spans clinical technology, workflow automation, service design, change adoption, and digital delivery.",
+  url: "https://www.khassanein.bio",
   sameAs: [
     "https://www.linkedin.com/in/kareemhassanein",
   ],
@@ -121,7 +122,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${urbanist.variable} ${geistMono.variable} ${cormorant.variable} antialiased font-sans`}
+        className={`${geistSans.variable} ${geistMono.variable} ${cormorant.variable} antialiased font-sans`}
       >
         <div className="noise-overlay" />
         <LayoutWrapper>

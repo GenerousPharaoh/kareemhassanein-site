@@ -1,41 +1,44 @@
 'use client';
 
-import { motion, useScroll, useTransform, useSpring, useReducedMotion } from 'framer-motion';
-import useIsMobile from '@/hooks/useIsMobile';
-import { Linkedin, Mail, ArrowUpRight, Send, Check } from 'lucide-react';
-import MaskedReveal from '@/components/MaskedReveal';
-import Image from 'next/image';
-import { useRef, useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { motion } from 'framer-motion';
+import { ArrowUpRight, Check, Send } from 'lucide-react';
+
+const ease = [0.16, 1, 0.3, 1] as const;
 
 function ContactForm() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [organization, setOrganization] = useState('');
   const [message, setMessage] = useState('');
-  const [company, setCompany] = useState(''); // honeypot: must stay empty for real users
+  const [company, setCompany] = useState('');
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
   const [errorMsg, setErrorMsg] = useState('');
+  const statusRef = useRef<HTMLDivElement>(null);
+  const errorRef = useRef<HTMLParagraphElement>(null);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  useEffect(() => {
+    if (status === 'sent') statusRef.current?.focus();
+    if (status === 'error') errorRef.current?.focus();
+  }, [status]);
+
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
     setStatus('sending');
     setErrorMsg('');
 
     try {
-      const res = await fetch('/api/contact', {
+      const response = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, email, organization, message, company }),
       });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        setErrorMsg(data.error || 'Something went wrong.');
+      const data = await response.json();
+      if (!response.ok) {
+        setErrorMsg(data.error || 'Something went wrong. Please try again.');
         setStatus('error');
         return;
       }
-
       setStatus('sent');
       setName('');
       setEmail('');
@@ -51,290 +54,120 @@ function ContactForm() {
   if (status === 'sent') {
     return (
       <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-        className="rounded-2xl border border-accent/20 bg-accent/[0.03] p-10 text-center"
+        ref={statusRef}
+        tabIndex={-1}
         role="status"
         aria-live="polite"
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease }}
+        className="flex min-h-[460px] flex-col items-start justify-center outline-none"
       >
-        <div className="w-12 h-12 rounded-full bg-accent/10 border border-accent/20 flex items-center justify-center mx-auto mb-6">
-          <Check className="w-5 h-5 text-accent" />
-        </div>
-        <p className="text-xl font-medium tracking-tight mb-2">Message sent.</p>
-        <p className="text-sm text-muted-foreground">I will get back to you shortly.</p>
-        <button
-          onClick={() => setStatus('idle')}
-          className="mt-8 text-sm text-accent/70 hover:text-accent transition-colors duration-300"
-        >
+        <span className="mb-7 flex h-12 w-12 items-center justify-center border border-[#25292f]/20">
+          <Check aria-hidden="true" className="h-5 w-5" />
+        </span>
+        <h2 className="text-4xl font-medium tracking-[-0.045em]">Message sent.</h2>
+        <p className="mt-4 max-w-sm text-base leading-relaxed text-[#25292f]/68">Thank you. I will get back to you shortly.</p>
+        <button onClick={() => setStatus('idle')} className="mt-8 min-h-11 text-sm font-semibold underline underline-offset-4">
           Send another message
         </button>
       </motion.div>
     );
   }
 
+  const inputClass =
+    'w-full border border-[#25292f]/20 bg-transparent px-4 py-3.5 text-[#25292f] placeholder:text-[#25292f]/60 transition-colors duration-300 focus-visible:border-[#25292f]/65 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#25292f]/55 focus-visible:ring-offset-2 focus-visible:ring-offset-[#eee8df]';
+  const labelClass = 'mb-2.5 block text-xs font-semibold uppercase tracking-[0.15em] text-[#25292f]/68';
+
   return (
-    <form onSubmit={handleSubmit} className="space-y-5">
-      <div>
-        <label htmlFor="name" className="block text-[11px] font-bold tracking-[0.3em] uppercase text-muted-foreground mb-2.5">
-          Name<span aria-hidden="true" className="text-accent/70 ml-1">*</span>
-        </label>
-        <input
-          id="name"
-          type="text"
-          required
-          autoComplete="name"
-          aria-describedby={status === 'error' ? 'form-error' : undefined}
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          className="w-full bg-white/[0.04] border border-white/[0.08] rounded-lg px-5 py-3.5 text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-accent/40 focus:bg-white/[0.06] focus:shadow-[0_1px_0_0_hsl(var(--accent)/0.4)] transition-all duration-500"
-          placeholder="Your name"
-        />
+    <form onSubmit={handleSubmit} aria-busy={status === 'sending'}>
+      <div className="grid gap-5 sm:grid-cols-2">
+        <div>
+          <label htmlFor="name" className={labelClass}>Name <span aria-hidden="true">*</span></label>
+          <input id="name" name="name" type="text" required maxLength={120} autoComplete="name" value={name} onChange={(event) => setName(event.target.value)} className={inputClass} placeholder="Your name" />
+        </div>
+        <div>
+          <label htmlFor="email" className={labelClass}>Email <span aria-hidden="true">*</span></label>
+          <input id="email" name="email" type="email" required maxLength={254} autoComplete="email" inputMode="email" value={email} onChange={(event) => setEmail(event.target.value)} className={inputClass} placeholder="you@example.com" />
+        </div>
       </div>
-
-      <div>
-        <label htmlFor="email" className="block text-[11px] font-bold tracking-[0.3em] uppercase text-muted-foreground mb-2.5">
-          Email<span aria-hidden="true" className="text-accent/70 ml-1">*</span>
-        </label>
-        <input
-          id="email"
-          type="email"
-          required
-          autoComplete="email"
-          inputMode="email"
-          aria-describedby={status === 'error' ? 'form-error' : undefined}
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="w-full bg-white/[0.04] border border-white/[0.08] rounded-lg px-5 py-3.5 text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-accent/40 focus:bg-white/[0.06] focus:shadow-[0_1px_0_0_hsl(var(--accent)/0.4)] transition-all duration-500"
-          placeholder="you@example.com"
-        />
+      <div className="mt-5">
+        <label htmlFor="organization" className={labelClass}>Organization <span className="normal-case tracking-normal">(optional)</span></label>
+        <input id="organization" name="organization" type="text" maxLength={160} autoComplete="organization" value={organization} onChange={(event) => setOrganization(event.target.value)} className={inputClass} placeholder="Clinic, company, or team" />
       </div>
-
-      <div>
-        <label htmlFor="organization" className="block text-[11px] font-bold tracking-[0.3em] uppercase text-muted-foreground mb-2.5">
-          Organization <span className="normal-case tracking-normal font-normal text-muted-foreground/60">(optional)</span>
-        </label>
-        <input
-          id="organization"
-          type="text"
-          autoComplete="organization"
-          value={organization}
-          onChange={(e) => setOrganization(e.target.value)}
-          className="w-full bg-white/[0.04] border border-white/[0.08] rounded-lg px-5 py-3.5 text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-accent/40 focus:bg-white/[0.06] focus:shadow-[0_1px_0_0_hsl(var(--accent)/0.4)] transition-all duration-500"
-          placeholder="Clinic, company, or team"
-        />
-      </div>
-
-      <div>
-        <label htmlFor="message" className="block text-[11px] font-bold tracking-[0.3em] uppercase text-muted-foreground mb-2.5">
-          Message<span aria-hidden="true" className="text-accent/70 ml-1">*</span>
-        </label>
-        <textarea
-          id="message"
-          required
-          aria-describedby={status === 'error' ? 'form-error' : undefined}
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          rows={5}
-          className="w-full bg-white/[0.04] border border-white/[0.08] rounded-lg px-5 py-3.5 text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-accent/40 focus:bg-white/[0.06] focus:shadow-[0_1px_0_0_hsl(var(--accent)/0.4)] transition-all duration-500 resize-none"
-          placeholder="What can I help with?"
-        />
+      <div className="mt-5">
+        <label htmlFor="message" className={labelClass}>Message <span aria-hidden="true">*</span></label>
+        <textarea id="message" name="message" required maxLength={5000} value={message} onChange={(event) => setMessage(event.target.value)} rows={7} className={`${inputClass} min-h-40 resize-y`} placeholder="What should work better?" aria-describedby={status === 'error' ? 'form-error' : undefined} />
       </div>
 
       {status === 'error' && (
-        <motion.p
-          id="form-error"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="text-sm text-red-300/80"
-          role="alert"
-        >
+        <motion.p ref={errorRef} tabIndex={-1} id="form-error" role="alert" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-5 text-sm font-medium text-[#8f2525] outline-none">
           {errorMsg}
         </motion.p>
       )}
 
-      <div className="pt-1">
-        <button
-          type="submit"
-          disabled={status === 'sending'}
-          className="group w-full sm:w-auto flex items-center justify-center gap-3 text-sm font-medium tracking-tight bg-accent text-background px-8 py-4 rounded-full hover:bg-accent/90 transition-all duration-500 disabled:opacity-50 disabled:cursor-wait"
-        >
-          {status === 'sending' ? 'Sending...' : 'Send message'}
-          <Send size={16} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-500" />
-        </button>
-      </div>
+      <button type="submit" disabled={status === 'sending'} className="group mt-7 inline-flex min-h-12 w-full items-center justify-center gap-3 bg-[#25292f] px-7 text-sm font-semibold text-[#f3eee6] transition-colors duration-300 hover:bg-[#15181c] disabled:cursor-wait disabled:opacity-55 sm:w-auto">
+        {status === 'sending' ? 'Sending…' : 'Send message'}
+        <Send aria-hidden="true" size={16} className="transition-transform duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+      </button>
 
-      {/* Honeypot: hidden from users and assistive tech. Bots that fill it are dropped server-side. */}
       <div aria-hidden="true" className="absolute left-[-9999px] top-[-9999px] h-0 w-0 overflow-hidden">
         <label htmlFor="company">Company</label>
-        <input
-          id="company"
-          name="company"
-          type="text"
-          tabIndex={-1}
-          autoComplete="off"
-          value={company}
-          onChange={(e) => setCompany(e.target.value)}
-        />
+        <input id="company" name="company" type="text" tabIndex={-1} autoComplete="off" value={company} onChange={(event) => setCompany(event.target.value)} />
       </div>
     </form>
   );
 }
 
-export default function Contact() {
-  const heroRef = useRef(null);
+const fit = [
+  'A clinical or operational workflow creates avoidable friction.',
+  'A technology rollout needs stronger adoption and follow-through.',
+  'A service, process, or digital journey needs clearer structure.',
+  'A useful idea needs disciplined implementation to become dependable.',
+];
 
-  const shouldReduceMotion = useReducedMotion();
-  const isMobile = useIsMobile();
-  const disableScrollMotion = shouldReduceMotion || isMobile;
-
-  const { scrollYProgress } = useScroll({
-    target: heroRef,
-    offset: ["start start", "end start"]
-  });
-  const springConfig = { stiffness: 100, damping: 30 };
-  const textY = useSpring(useTransform(scrollYProgress, [0, 1], [0, disableScrollMotion ? 0 : 30]), springConfig);
-
-  const labelOpacity = useSpring(0, springConfig);
-  const labelY = useSpring(20, springConfig);
-  const headingOpacity = useSpring(0, springConfig);
-  const headingY = useSpring(40, springConfig);
-  const descOpacity = useSpring(0, springConfig);
-  const descY = useSpring(30, springConfig);
-
-  useEffect(() => {
-    setTimeout(() => { labelOpacity.set(0.4); labelY.set(0); }, 100);
-    setTimeout(() => { headingOpacity.set(1); headingY.set(0); }, 300);
-    setTimeout(() => { descOpacity.set(1); descY.set(0); }, 500);
-  }, [labelOpacity, labelY, headingOpacity, headingY, descOpacity, descY]);
-
+export default function ContactPage() {
   return (
-    <main ref={heroRef} className="min-h-svh relative overflow-hidden flex flex-col justify-between bg-background">
+    <main className="bg-background px-6 pb-24 pt-32 text-foreground sm:px-8 md:pb-32 md:pt-40 lg:px-12 xl:px-20">
+      <div className="mx-auto max-w-[1320px]">
+        <div className="grid gap-16 lg:grid-cols-12 lg:gap-20">
+          <motion.section initial={{ opacity: 0, y: 22 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, ease }} className="lg:col-span-6">
+            <p className="mb-6 text-xs font-semibold uppercase tracking-[0.2em] text-accent/80">Contact</p>
+            <h1 className="max-w-3xl text-[clamp(3rem,7.5vw,7.4rem)] font-medium leading-[0.9] tracking-[-0.065em]">
+              Bring me the workflow that should work better.
+            </h1>
+            <p className="mt-8 max-w-xl text-lg leading-relaxed text-foreground/72">
+              Tell me what is getting in the way, who the work affects, and what a better result would look like. I read
+              every message personally.
+            </p>
 
-      <motion.div
-        style={{ y: textY }}
-        className="section-container relative z-10 w-full pt-36 md:pt-40 pb-16 flex-grow flex items-center will-change-transform"
-      >
-        <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-12 lg:gap-20 items-start w-full">
-          {/* Left Column - Heading + Illustration */}
-          <div>
-            <motion.span
-              style={{ opacity: labelOpacity, y: labelY }}
-              className="block text-[10px] font-bold tracking-[0.6em] text-accent/60 uppercase mb-5"
-            >
-              Contact
-            </motion.span>
+            <div className="mt-14 max-w-xl border-t border-white/[0.11]">
+              <h2 className="py-5 text-xs font-semibold uppercase tracking-[0.18em] text-accent/80">A good fit when</h2>
+              <ul>
+                {fit.map((item) => (
+                  <li key={item} className="grid grid-cols-[1.2rem_1fr] gap-3 border-t border-white/[0.11] py-4 text-sm leading-relaxed text-foreground/72 sm:text-base">
+                    <span aria-hidden="true" className="font-mono text-accent">+</span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-            <motion.h1
-              style={{ opacity: headingOpacity, y: headingY, fontSize: 'clamp(3rem, 8vw, 6.5rem)' }}
-              className="font-medium tracking-tighter mb-7 leading-[0.85]"
-            >
-              Get in <br />
-              <span className="opacity-60 italic font-light font-serif">
-                <MaskedReveal delay={0.4} className="py-2">touch.</MaskedReveal>
-              </span>
-            </motion.h1>
+            <a href="https://www.linkedin.com/in/kareemhassanein" className="group mt-9 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-foreground/72 transition-colors hover:text-accent">
+              Connect on LinkedIn
+              <ArrowUpRight aria-hidden="true" size={16} className="transition-transform duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+            </a>
+          </motion.section>
 
-            <motion.div
-              initial={{ opacity: 0, scaleX: 0 }}
-              animate={{ opacity: 1, scaleX: 1 }}
-              transition={{ duration: 1, delay: 0.6 }}
-              className="h-[1px] w-24 bg-accent/30 mb-6 origin-left"
-            />
-
-            <motion.p
-              style={{ opacity: descOpacity, y: descY }}
-              className="text-lg md:text-xl text-muted-foreground font-light leading-relaxed italic max-w-xl mb-6"
-            >
-              For collaborations, advisory work, or selected projects involving clinical implementation, workflow,
-              service design, or digital systems, send me a note.
-            </motion.p>
-
-            <motion.p
-              style={{ opacity: descOpacity, y: descY }}
-              className="flex items-center gap-2.5 text-[11px] font-medium tracking-[0.2em] uppercase text-muted-foreground/70 mb-8"
-            >
-              <span aria-hidden="true" className="w-1.5 h-1.5 rounded-full bg-accent/70" />
-              Currently available for selected projects
-            </motion.p>
-
-            {/* Illustration - below description, natural flow */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
-              className="hidden md:block max-w-xs lg:max-w-sm"
-            >
-              <Image
-                src="/images/contact.webp"
-                alt=""
-                width={500}
-                height={350}
-                className="w-full h-auto rounded-2xl opacity-90"
-              />
-            </motion.div>
-          </div>
-
-          {/* Right Column - Form + LinkedIn */}
-          <div className="lg:pt-16">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-              className="relative rounded-xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm p-6 md:p-8 overflow-hidden"
-            >
-              {/* Accent top edge */}
-              <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-accent/40 via-accent/20 to-transparent" />
-              <ContactForm />
-            </motion.div>
-
-            {/* LinkedIn - subtle below form */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.8 }}
-              className="mt-4 flex items-center justify-center gap-2"
-            >
-              <div className="h-[1px] flex-1 bg-white/5" />
-              <a
-                href="https://www.linkedin.com/in/kareemhassanein"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group flex items-center gap-2.5 text-sm text-muted-foreground/60 hover:text-accent transition-colors duration-500 px-3"
-              >
-                <Linkedin size={16} className="opacity-60 group-hover:opacity-100 transition-opacity duration-500" />
-                <span>LinkedIn</span>
-                <ArrowUpRight size={12} className="opacity-40 group-hover:opacity-100 transition-opacity duration-500" />
-              </a>
-              <a
-                href="mailto:kareem.hassanein@gmail.com"
-                className="group flex items-center gap-2.5 text-sm text-muted-foreground/60 hover:text-accent transition-colors duration-500 px-3"
-              >
-                <Mail size={16} className="opacity-60 group-hover:opacity-100 transition-opacity duration-500" />
-                <span>Email</span>
-              </a>
-              <div className="h-[1px] flex-1 bg-white/5" />
-            </motion.div>
-          </div>
+          <motion.section initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, delay: 0.16, ease }} aria-labelledby="contact-form-heading" className="bg-[#eee8df] p-6 text-[#25292f] sm:p-8 md:p-10 lg:col-span-6 lg:mt-12">
+            <div className="mb-8 border-b border-[#25292f]/15 pb-6">
+              <h2 id="contact-form-heading" className="text-2xl font-medium tracking-[-0.035em]">Start the conversation</h2>
+              <p className="mt-2 text-sm leading-relaxed text-[#25292f]/66">Name, email, and message are required.</p>
+            </div>
+            <ContactForm />
+          </motion.section>
         </div>
-      </motion.div>
-
-      {/* Footer */}
-      <footer className="relative z-10 w-full border-t border-white/[0.06] bg-white/[0.02] backdrop-blur-2xl">
-        <div className="section-container flex flex-col md:flex-row justify-between items-center py-5 gap-4">
-          <div className="flex items-center gap-3">
-            <span className="w-1.5 h-1.5 rounded-full bg-accent/40" />
-            <span className="text-xs font-medium tracking-[0.2em] text-accent/50 uppercase">Kareem Hassanein</span>
-          </div>
-          <div className="flex items-center gap-4 md:gap-6 text-[10px] uppercase tracking-[0.2em] font-medium text-muted-foreground/50">
-            <span>Hamilton-Burlington, Ontario</span>
-            <span className="w-[3px] h-[3px] rounded-full bg-white/10" />
-            <span>Remote</span>
-            <span className="w-[3px] h-[3px] rounded-full bg-white/10" />
-            <span>&copy; 2026</span>
-          </div>
-        </div>
-      </footer>
+      </div>
     </main>
   );
 }

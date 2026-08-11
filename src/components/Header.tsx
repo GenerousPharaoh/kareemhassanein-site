@@ -1,46 +1,30 @@
 'use client';
 
 import Link from 'next/link';
-import { useState, useEffect, useRef } from 'react';
-import { motion, useScroll, AnimatePresence } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
+import { AnimatePresence, motion, useScroll } from 'framer-motion';
 import { usePathname } from 'next/navigation';
 
 const navItems = [
   { href: '/work', label: 'Work' },
   { href: '/about', label: 'About' },
-  { href: '/contact', label: 'Contact' },
 ];
 
+const ease = [0.16, 1, 0.3, 1] as const;
+
 export default function Header() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = usePathname();
+  const { scrollY } = useScroll();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
 
-  // Smart Scroll Logic
-  const { scrollY } = useScroll();
-  const [hidden, setHidden] = useState(false);
-  const lastScrollY = useRef(0);
-
   useEffect(() => {
-    return scrollY.on("change", (latest) => {
-      if (isMenuOpen) {
-        setHidden(false);
-        lastScrollY.current = latest;
-        return;
-      }
-
-      const direction = latest > lastScrollY.current ? "down" : "up";
-      if (direction === "down" && latest > 150) {
-        setHidden(true);
-      } else {
-        setHidden(false);
-      }
-      lastScrollY.current = latest;
+    return scrollY.on('change', (latest) => {
+      setScrolled(latest > 24);
     });
-  }, [scrollY, isMenuOpen]);
-
-  const ease = [0.16, 1, 0.3, 1] as const;
+  }, [scrollY]);
 
   useEffect(() => {
     setIsMenuOpen(false);
@@ -49,13 +33,7 @@ export default function Header() {
   useEffect(() => {
     if (!isMenuOpen) return;
 
-    setHidden(false);
     const focusableSelector = 'a[href], button:not([disabled])';
-    const getFocusable = () => {
-      const menuItems = Array.from(mobileMenuRef.current?.querySelectorAll<HTMLElement>(focusableSelector) ?? []);
-      return [menuButtonRef.current, ...menuItems].filter(Boolean) as HTMLElement[];
-    };
-
     const firstMenuItem = mobileMenuRef.current?.querySelector<HTMLElement>('a[href]');
     firstMenuItem?.focus();
 
@@ -67,13 +45,14 @@ export default function Header() {
       }
 
       if (event.key !== 'Tab') return;
-
-      const focusable = getFocusable();
+      const items = Array.from(
+        mobileMenuRef.current?.querySelectorAll<HTMLElement>(focusableSelector) ?? [],
+      );
+      const focusable = [menuButtonRef.current, ...items].filter(Boolean) as HTMLElement[];
       if (focusable.length === 0) return;
 
       const first = focusable[0];
       const last = focusable[focusable.length - 1];
-
       if (event.shiftKey && document.activeElement === first) {
         event.preventDefault();
         last.focus();
@@ -87,13 +66,8 @@ export default function Header() {
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [isMenuOpen]);
 
-  // Lock body scroll when mobile menu is open
   useEffect(() => {
-    if (isMenuOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
+    document.body.style.overflow = isMenuOpen ? 'hidden' : '';
     return () => {
       document.body.style.overflow = '';
     };
@@ -101,110 +75,124 @@ export default function Header() {
 
   return (
     <>
-      <div className="fixed top-6 left-0 right-0 z-50 flex justify-center px-6 pointer-events-none">
-        <motion.header
-          variants={{
-            visible: { y: 0, opacity: 1, scale: 1 },
-            hidden: { y: -20, opacity: 0, scale: 0.95 },
-          }}
-          animate={hidden ? "hidden" : "visible"}
-          transition={{ duration: 0.4, ease }}
-          className="pointer-events-auto flex items-center gap-12 px-8 py-3 rounded-full bg-[hsl(222,12%,12%)]/90 backdrop-blur-xl border border-white/15 shadow-[0_8px_32px_rgba(0,0,0,0.28)] inner-glow"
+      <motion.div className="fixed inset-x-0 top-0 z-50 px-5 pt-[env(safe-area-inset-top)] sm:px-6 lg:px-10">
+        <header
+          className={`mx-auto flex min-h-20 max-w-[1380px] items-center justify-between border-b px-0 transition-all duration-500 ${
+            scrolled
+              ? 'border-white/[0.08] bg-background/[0.88] px-4 sm:px-6 backdrop-blur-xl'
+              : 'border-white/[0.06] bg-transparent'
+          }`}
         >
-          {/* Logo / Brand */}
           <Link
             href="/"
-            className="group flex items-center gap-3 pr-8 border-r border-white/10 transition-transform active:scale-95"
+            className="group flex min-h-11 items-center gap-3 rounded-md pr-3 text-foreground"
+            aria-label="Kareem Hassanein, home"
           >
-            <div className="w-2 h-2 rounded-full bg-accent opacity-70 group-hover:opacity-100 transition-opacity" />
-            <span className="text-[11px] font-bold tracking-[0.18em] uppercase opacity-70 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-              K. Hassanein
+            <span className="flex h-8 w-8 items-center justify-center rounded-md border border-accent/35 font-serif text-sm font-medium text-accent transition-colors duration-500 group-hover:border-accent/70">
+              KH
+            </span>
+            <span className="hidden text-[12px] font-semibold uppercase tracking-[0.18em] text-foreground/78 transition-colors duration-500 group-hover:text-foreground sm:block">
+              Kareem Hassanein
             </span>
           </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-10">
-            {navItems.map((item) => {
-              const isActive = item.href === '/' ? pathname === '/' : pathname.startsWith(item.href);
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  aria-current={isActive ? 'page' : undefined}
-                  className="relative group py-1"
-                >
-                  <span className={`text-[11px] font-bold tracking-[0.12em] uppercase transition-all duration-500 ${isActive ? 'text-accent' : 'text-white/65 group-hover:text-white/90 group-hover:translate-y-[-1px]'
-                    }`}>
+          <div className="hidden items-center gap-8 md:flex">
+            <nav className="flex items-center gap-8" aria-label="Primary navigation">
+              {navItems.map((item) => {
+                const active = pathname.startsWith(item.href);
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    aria-current={active ? 'page' : undefined}
+                    className={`relative flex min-h-11 items-center text-[12px] font-semibold uppercase tracking-[0.14em] transition-colors duration-300 ${
+                      active ? 'text-accent' : 'text-foreground/62 hover:text-foreground'
+                    }`}
+                  >
                     {item.label}
-                  </span>
-                  {isActive && (
-                    <motion.div
-                      layoutId="header-active-blob"
-                      className="absolute -bottom-1 left-0 right-0 h-[2px] bg-accent/60 rounded-full"
-                      transition={{ duration: 0.6, ease }}
-                    />
-                  )}
-                </Link>
-              );
-            })}
-          </nav>
+                    {active && (
+                      <motion.span
+                        layoutId="nav-active"
+                        className="absolute inset-x-0 bottom-1 h-px bg-accent"
+                        transition={{ duration: 0.55, ease }}
+                      />
+                    )}
+                  </Link>
+                );
+              })}
+            </nav>
+            <Link
+              href="/contact"
+              aria-current={pathname === '/contact' ? 'page' : undefined}
+              className="inline-flex min-h-11 items-center rounded-full bg-accent px-6 text-[12px] font-semibold uppercase tracking-[0.12em] text-background transition-colors duration-300 hover:bg-accent/[0.88]"
+            >
+              Start a conversation
+            </Link>
+          </div>
 
-          {/* Mobile Menu Toggle */}
           <button
             ref={menuButtonRef}
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden relative z-50 p-3 -mr-2 text-white/70 hover:text-white transition-colors"
+            onClick={() => setIsMenuOpen((open) => !open)}
+            className="relative z-50 flex h-11 w-11 items-center justify-center rounded-md text-foreground/75 transition-colors hover:text-foreground md:hidden"
             aria-label={isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
             aria-expanded={isMenuOpen}
             aria-controls="mobile-navigation"
           >
-            <div className="space-y-1.5 w-5">
-              <div className={`h-[1.5px] bg-current transition-all duration-500 origin-center ${isMenuOpen ? 'rotate-45 translate-y-[4.5px]' : ''}`} />
-              <div className={`h-[1.5px] bg-current transition-all duration-500 origin-center ${isMenuOpen ? '-rotate-45 -translate-y-[1.5px]' : ''}`} />
-            </div>
+            <span className="sr-only">Menu</span>
+            <span className="relative block h-4 w-5">
+              <span
+                className={`absolute left-0 top-1 h-px w-5 bg-current transition-transform duration-500 ${
+                  isMenuOpen ? 'translate-y-[3px] rotate-45' : ''
+                }`}
+              />
+              <span
+                className={`absolute bottom-1 left-0 h-px w-5 bg-current transition-transform duration-500 ${
+                  isMenuOpen ? '-translate-y-[3px] -rotate-45' : ''
+                }`}
+              />
+            </span>
           </button>
-        </motion.header>
-      </div>
+        </header>
+      </motion.div>
 
-      {/* Mobile Navigation */}
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
             id="mobile-navigation"
             ref={mobileMenuRef}
-            role="dialog"
-            aria-modal="true"
             aria-label="Site navigation"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.6, ease }}
-            className="fixed inset-0 z-[45] bg-[#0d1014]/[0.985] backdrop-blur-2xl md:hidden flex flex-col justify-center px-12"
+            transition={{ duration: 0.45, ease }}
+            className="fixed inset-0 z-[45] flex flex-col justify-center bg-[#111317]/[0.985] px-6 pb-[env(safe-area-inset-bottom)] pt-[env(safe-area-inset-top)] md:hidden"
           >
-            <nav className="flex flex-col gap-10" aria-label="Mobile navigation">
-              {navItems.map((item, i) => (
-                <motion.div
-                  key={item.href}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.1, duration: 0.8, ease }}
-                >
-                  <Link
-                    href={item.href}
-                    aria-current={pathname.startsWith(item.href) ? 'page' : undefined}
-                    className={`flex items-baseline gap-4 text-5xl font-light tracking-tight ${pathname.startsWith(item.href) ? 'text-accent' : 'text-foreground/65 hover:text-foreground'
-                      }`}
+            <nav className="mx-auto flex w-full max-w-sm flex-col" aria-label="Mobile navigation">
+              {[...navItems, { href: '/contact', label: 'Contact' }].map((item, index) => {
+                const active = pathname.startsWith(item.href);
+                return (
+                  <motion.div
+                    key={item.href}
+                    initial={{ opacity: 0, y: 16 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.08, duration: 0.7, ease }}
+                    className="border-t border-white/[0.08] last:border-b"
                   >
-                    <span className="text-sm font-mono text-accent/60">{String(i + 1).padStart(2, '0')}</span>
-                    <span>
-                      {item.label}
-                      {pathname.startsWith(item.href) && (
-                        <div className="h-[2px] w-10 bg-accent/50 mt-3 rounded-full" />
-                      )}
-                    </span>
-                  </Link>
-                </motion.div>
-              ))}
+                    <Link
+                      href={item.href}
+                      aria-current={active ? 'page' : undefined}
+                      className={`flex min-h-24 items-center justify-between rounded-md px-1 text-5xl font-light tracking-tight ${
+                        active ? 'text-accent' : 'text-foreground/72'
+                      }`}
+                    >
+                      <span>{item.label}</span>
+                      <span className="font-mono text-xs text-foreground/38">
+                        {String(index + 1).padStart(2, '0')}
+                      </span>
+                    </Link>
+                  </motion.div>
+                );
+              })}
             </nav>
           </motion.div>
         )}

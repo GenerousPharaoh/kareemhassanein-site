@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: '*',
       allow: '/',
     },
-    sitemap: 'https://khassanein.bio/sitemap.xml',
+    sitemap: 'https://www.khassanein.bio/sitemap.xml',
   };
 }

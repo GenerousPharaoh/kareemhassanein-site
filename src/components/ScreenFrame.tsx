@@ -13,7 +13,7 @@ export function FrameChrome({ url }: { url?: string }) {
         <span className="w-2 h-2 rounded-full bg-white/[0.12]" />
       </span>
       {url && (
-        <span className="mx-auto pr-8 text-[10px] font-mono tracking-wide text-muted-foreground/60 truncate">
+      <span className="mx-auto pr-8 text-[10px] font-mono tracking-wide text-muted-foreground/80 truncate">
           {url}
         </span>
       )}

@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { frameShell } from '@/components/ScreenFrame';
 import type { GalleryItem, ShotMeta } from '@/lib/work';
@@ -9,7 +9,7 @@ import type { GalleryItem, ShotMeta } from '@/lib/work';
 const ease = [0.16, 1, 0.3, 1] as const;
 
 // Browser chrome whose address bar crossfades as the reel "navigates".
-function ReelChrome({ url }: { url?: string }) {
+function ReelChrome({ url, reduceMotion = false }: { url?: string; reduceMotion?: boolean }) {
   return (
     <div className="relative flex items-center gap-2 px-4 py-2.5 border-b border-white/[0.06] bg-[hsl(222,12%,11%)]">
       <span className="flex gap-1.5" aria-hidden="true">
@@ -21,11 +21,11 @@ function ReelChrome({ url }: { url?: string }) {
         <AnimatePresence mode="wait" initial={false}>
           <motion.span
             key={url ?? 'blank'}
-            initial={{ opacity: 0, y: 8 }}
+            initial={reduceMotion ? false : { opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.45, ease }}
-            className="block text-[10px] font-mono tracking-wide text-muted-foreground/60 truncate"
+            exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -8 }}
+            transition={{ duration: reduceMotion ? 0 : 0.45, ease }}
+            className="block text-[10px] font-mono tracking-wide text-muted-foreground/80 truncate"
           >
             {url ?? ''}
           </motion.span>
@@ -35,148 +35,100 @@ function ReelChrome({ url }: { url?: string }) {
   );
 }
 
-// Stacked full-resolution stills with a slow drift on the active slide and a
-// long crossfade between them. All rendering is native next/image, so the
-// motion costs nothing in sharpness.
-function SlideStack({
-  items,
-  index,
-  drift,
-  driftDuration,
+// Only the selected still is mounted outside the brief exit transition.
+// This keeps the reel sharp without loading every full-resolution screen.
+function SelectedSlide({
+  item,
   sizes,
   priority = false,
+  reduceMotion = false,
 }: {
-  items: ShotMeta[];
-  index: number;
-  drift: boolean;
-  driftDuration: number;
+  item: ShotMeta;
   sizes: string;
   priority?: boolean;
+  reduceMotion?: boolean;
 }) {
   return (
     <div className="relative aspect-[16/10] overflow-hidden">
-      {items.map((item, i) => {
-        const active = i === index;
-        return (
-          <motion.div
-            key={item.src}
-            initial={false}
-            animate={{ opacity: active ? 1 : 0 }}
-            transition={{ duration: 1.0, ease }}
-            className="absolute inset-0"
-            style={{ zIndex: active ? 2 : 1 }}
-            aria-hidden={!active}
-          >
-            <motion.div
-              className="absolute inset-0"
-              initial={false}
-              animate={
-                drift && active
-                  ? { scale: [1, 1.045], y: [0, -8] }
-                  : { scale: 1, y: 0 }
-              }
-              transition={
-                drift && active
-                  ? { duration: driftDuration, ease: 'linear' }
-                  : { duration: 0.8, ease }
-              }
-            >
-              <Image
-                src={item.src}
-                alt={item.alt}
-                fill
-                sizes={sizes}
-                quality={85}
-                priority={priority && i === 0}
-                className="object-cover object-top"
-              />
-            </motion.div>
-          </motion.div>
-        );
-      })}
+      <AnimatePresence initial={false} mode="sync">
+        <motion.div
+          key={item.src}
+          initial={reduceMotion ? false : { opacity: 0, scale: 0.992, y: 8 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={reduceMotion ? { opacity: 0 } : { opacity: 0, scale: 1.006, y: -5 }}
+          transition={{ duration: reduceMotion ? 0 : 0.55, ease }}
+          className="absolute inset-0"
+        >
+          <Image
+            src={item.src}
+            alt={item.alt}
+            fill
+            sizes={sizes}
+            quality={85}
+            priority={priority}
+            className="object-cover object-top"
+          />
+        </motion.div>
+      </AnimatePresence>
     </div>
   );
 }
 
-// Case-study lead: an annotated tour of the desktop screens. Auto-advances
-// while in view, pauses on hover, the caption tracks the active screen, and
-// reduced-motion users get a static, dot-navigable version.
-export function Showreel({ items, interval = 5600 }: { items: GalleryItem[]; interval?: number }) {
+// Case-study lead: a manually controlled, annotated tour of the desktop screens.
+export function Showreel({ items }: { items: GalleryItem[] }) {
   const [index, setIndex] = useState(0);
-  const [paused, setPaused] = useState(false);
-  const [inView, setInView] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
   const shouldReduceMotion = useReducedMotion();
-  const animate = !shouldReduceMotion;
-
-  useEffect(() => {
-    const el = containerRef.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(([entry]) => setInView(entry.isIntersecting), { threshold: 0.25 });
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
-
-  useEffect(() => {
-    if (!animate || paused || !inView) return;
-    const id = setTimeout(() => setIndex((i) => (i + 1) % items.length), interval);
-    return () => clearTimeout(id);
-  }, [index, animate, paused, inView, interval, items.length]);
+  const reduceMotion = Boolean(shouldReduceMotion);
 
   const current = items[index];
+  if (!current) return null;
 
   return (
-    <div
-      ref={containerRef}
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-    >
+    <div role="region" aria-label="Project screen gallery">
       <div className={frameShell}>
-        <ReelChrome url={current.url} />
-        <SlideStack
-          items={items}
-          index={index}
-          drift={animate}
-          driftDuration={(interval + 1200) / 1000}
+        <ReelChrome url={current.url} reduceMotion={reduceMotion} />
+        <SelectedSlide
+          item={current}
           sizes="(max-width: 768px) 100vw, (max-width: 1280px) 80vw, 1000px"
-          priority
+          priority={index === 0}
+          reduceMotion={reduceMotion}
         />
       </div>
 
-      {/* Dots */}
-      <div className="flex justify-center gap-1.5 mt-6" role="tablist" aria-label="Screens in this tour">
+      <div className="mt-5 flex flex-wrap justify-center gap-2" role="group" aria-label="Choose a project screen">
         {items.map((item, i) => {
           const active = i === index;
           return (
             <button
               key={item.src}
               type="button"
-              role="tab"
-              aria-selected={active}
-              aria-label={item.title}
+              aria-pressed={active}
+              aria-label={`${item.title}${active ? ', current screen' : ''}`}
               onClick={() => setIndex(i)}
-              className="group relative flex h-6 items-center justify-center outline-none focus-visible:ring-2 focus-visible:ring-accent/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-              style={{ width: active ? 30 : 18 }}
+              className={`group relative flex h-11 min-w-11 items-center justify-center border px-3 font-mono text-xs outline-none transition-colors duration-500 focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background ${
+                active
+                  ? 'border-accent/60 bg-accent/[0.08] text-accent'
+                  : 'border-white/[0.12] text-foreground/60 hover:border-white/[0.3] hover:text-foreground'
+              }`}
             >
-              <span
-                className={`block h-[3px] rounded-full transition-all duration-500 ${
-                  active ? 'bg-accent w-6' : 'bg-white/20 group-hover:bg-white/40 w-2.5'
-                }`}
-              />
+              <span aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
             </button>
           );
         })}
       </div>
 
-      {/* Synced caption */}
-      <div className="relative mt-4 min-h-[92px] md:min-h-[76px] max-w-2xl mx-auto text-center">
+      <div
+        className="relative mt-2 min-h-[92px] md:min-h-[76px] max-w-2xl mx-auto text-center"
+        aria-live="polite"
+        aria-atomic="true"
+      >
         <AnimatePresence mode="wait" initial={false}>
           <motion.div
             key={index}
-            initial={{ opacity: 0, y: 10 }}
+            initial={reduceMotion ? false : { opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -6 }}
-            transition={{ duration: 0.5, ease }}
+            exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -6 }}
+            transition={{ duration: reduceMotion ? 0 : 0.5, ease }}
           >
             <span className="block text-base md:text-lg font-medium tracking-tight text-foreground/90 mb-1.5">
               {current.title}
@@ -191,36 +143,22 @@ export function Showreel({ items, interval = 5600 }: { items: GalleryItem[]; int
   );
 }
 
-// Card visual: still by default, cycles through the project's screens while
-// the pointer rests on the card.
+// Card visual: a single still keeps browsing calm and avoids background loads.
 export function HoverReel({
   items,
-  active,
   sizes = '(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 640px',
 }: {
   items: ShotMeta[];
   active: boolean;
   sizes?: string;
 }) {
-  const [index, setIndex] = useState(0);
-  const shouldReduceMotion = useReducedMotion();
-  const cycling = active && !shouldReduceMotion && items.length > 1;
-
-  useEffect(() => {
-    if (!cycling) {
-      setIndex(0);
-      return;
-    }
-    const id = setInterval(() => setIndex((i) => (i + 1) % items.length), 1700);
-    return () => clearInterval(id);
-  }, [cycling, items.length]);
-
-  const current = items[index];
+  const current = items[0];
+  if (!current) return null;
 
   return (
     <div className={frameShell}>
       <ReelChrome url={current.url} />
-      <SlideStack items={items} index={index} drift={false} driftDuration={0} sizes={sizes} />
+      <SelectedSlide item={current} sizes={sizes} />
     </div>
   );
 }

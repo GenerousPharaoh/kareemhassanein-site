@@ -4,227 +4,372 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ArrowLeft, ArrowRight, ArrowUpRight } from 'lucide-react';
 import ScreenFrame from '@/components/ScreenFrame';
-import { Showreel } from '@/components/Showreel';
 import ScrollReveal from '@/components/ScrollReveal';
-import AnimatedDivider from '@/components/AnimatedDivider';
 import {
+  ClinicalAdoptionFigure,
+  ClinicalWorkflowFigure,
+  TrcWorkflowHeroFigure,
   TrcTimeFigure,
   TrcPipelineFigure,
   TrcLibraryFigure,
   EndorphinsPathwaysFigure,
 } from '@/components/WorkDiagrams';
-import type { Project } from '@/lib/work';
+import type { GalleryItem, Project } from '@/lib/work';
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
-function SectionLabel({ children }: { children: React.ReactNode }) {
+interface SectionHeadingProps {
+  id: string;
+  number: string;
+  eyebrow: string;
+  children: React.ReactNode;
+  className?: string;
+}
+
+function SectionHeading({ id, number, eyebrow, children, className = '' }: SectionHeadingProps) {
   return (
-    <span className="block text-[10px] md:text-xs font-medium tracking-[0.25em] uppercase text-accent/70 mb-5">
-      {children}
-    </span>
+    <div className={className}>
+      <div className="mb-5 flex items-center gap-3 text-[11px] font-medium tracking-[0.2em] uppercase text-accent/70">
+        <span className="font-mono text-accent/75">{number}</span>
+        <span aria-hidden="true" className="h-px w-8 bg-accent/30" />
+        <span>{eyebrow}</span>
+      </div>
+      <h2 id={id} className="text-3xl md:text-4xl font-medium tracking-[-0.035em] text-foreground text-balance">
+        {children}
+      </h2>
+    </div>
+  );
+}
+
+function ProjectLeadVisual({ project, shot }: { project: Project; shot?: GalleryItem }) {
+  if (project.slug === 'clinical-documentation') {
+    return <ClinicalAdoptionFigure />;
+  }
+
+  if (project.slug === 'tax-relief-counsel') {
+    return <TrcWorkflowHeroFigure />;
+  }
+
+  if (!shot) return null;
+
+  return (
+    <figure>
+      <ScreenFrame
+        shot={shot}
+        priority
+        sizes="(max-width: 1024px) 100vw, 720px"
+      />
+      <figcaption className="mt-5 grid gap-1.5 border-l border-accent/35 pl-4 sm:grid-cols-[0.72fr_1.28fr] sm:gap-6">
+        <span className="text-sm font-medium text-foreground/92">{shot.title}</span>
+        <span className="text-sm leading-relaxed text-muted-foreground/78">{shot.caption}</span>
+      </figcaption>
+    </figure>
+  );
+}
+
+function GalleryFigure({ shot, index }: { shot: GalleryItem; index: number }) {
+  if (shot.frame === 'phone') {
+    return (
+      <figure className="grid items-center gap-8 border-t border-white/[0.07] pt-10 md:grid-cols-[minmax(230px,300px)_minmax(0,1fr)] md:gap-14 md:pt-14">
+        <div className="mx-auto w-full max-w-[280px]">
+          <ScreenFrame shot={shot} sizes="(max-width: 768px) 72vw, 280px" />
+        </div>
+        <figcaption className="max-w-lg">
+          <span className="mb-4 block font-mono text-xs tracking-[0.18em] text-accent/75">
+            {String(index + 1).padStart(2, '0')}
+          </span>
+          <span className="block text-xl md:text-2xl font-medium tracking-tight text-foreground/95 mb-3">
+            {shot.title}
+          </span>
+          <span className="block text-sm md:text-[15px] text-muted-foreground/85 leading-relaxed">
+            {shot.caption}
+          </span>
+        </figcaption>
+      </figure>
+    );
+  }
+
+  return (
+    <figure className="grid items-start gap-7 border-t border-white/[0.07] pt-10 lg:grid-cols-[minmax(0,1fr)_17rem] lg:gap-12 lg:pt-14">
+      <ScreenFrame shot={shot} sizes="(max-width: 1024px) 100vw, 820px" />
+      <figcaption className="lg:pt-8">
+        <span className="mb-4 block font-mono text-xs tracking-[0.18em] text-accent/75">
+          {String(index + 1).padStart(2, '0')}
+        </span>
+        <span className="block text-xl md:text-2xl font-medium tracking-tight text-foreground/95 mb-3">
+          {shot.title}
+        </span>
+        <span className="block text-sm md:text-[15px] text-muted-foreground/85 leading-relaxed">
+          {shot.caption}
+        </span>
+      </figcaption>
+    </figure>
   );
 }
 
 export default function CaseStudy({ project, next }: { project: Project; next: Project }) {
-  const desktopShots = project.gallery.filter((shot) => shot.frame === 'browser');
-  const phoneShots = project.gallery.filter((shot) => shot.frame === 'phone');
+  const leadShot = project.gallery[0];
+  const remainingGallery = leadShot ? project.gallery.slice(1) : project.gallery;
+  const hasSelectedWork =
+    remainingGallery.length > 0 ||
+    project.slug === 'clinical-documentation' ||
+    project.slug === 'tax-relief-counsel' ||
+    project.slug === 'endorphins';
 
   return (
     <main className="bg-background text-foreground pt-20">
-      {/* Header */}
-      <section className="px-6 md:px-12 xl:px-20 pt-20 md:pt-24 pb-12 md:pb-16">
-        <div className="max-w-[1100px] mx-auto">
+      <section className="px-6 md:px-12 xl:px-20 pt-16 md:pt-20 pb-12 md:pb-16">
+        <div className="max-w-[1280px] mx-auto">
           <motion.div
-            initial={{ opacity: 0, y: 14 }}
+            initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease }}
           >
             <Link
               href="/work"
-              className="inline-flex items-center gap-2 text-sm text-muted-foreground/75 hover:text-accent transition-colors duration-300 mb-10"
+              className="inline-flex min-h-11 items-center gap-2 text-sm text-muted-foreground/75 hover:text-accent transition-colors duration-300 mb-10 md:mb-14"
             >
               <ArrowLeft size={15} />
               All work
             </Link>
-            <span className="block text-[10px] md:text-[11px] font-medium tracking-[0.22em] uppercase text-accent/75 mb-4">
-              {project.category}
-            </span>
-            <h1 className="text-4xl md:text-6xl font-medium tracking-tight mb-8" style={{ lineHeight: 1.02 }}>
-              {project.title}
-            </h1>
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.12, ease }}
-            className="space-y-5 max-w-3xl"
-          >
-            {project.intro.map((para) => (
-              <p key={para.slice(0, 32)} className="text-base md:text-lg text-muted-foreground/90 leading-relaxed font-light">
-                {para}
-              </p>
-            ))}
-          </motion.div>
-
-          {/* Contribution row */}
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.22, ease }}
-            className="mt-10"
-          >
-            <span className="block text-[10px] md:text-xs font-medium tracking-[0.25em] uppercase text-muted-foreground/60 mb-4">
-              My contribution
-            </span>
-            <p className="text-sm md:text-[15px] text-foreground/80 leading-loose max-w-3xl">
-              {project.contribution.map((item, i) => (
-                <span key={item}>
-                  {item}
-                  {i < project.contribution.length - 1 && (
-                    <span aria-hidden="true" className="text-accent/50 mx-2.5">
-                      ·
-                    </span>
-                  )}
+          <div className="grid gap-12 lg:grid-cols-12 lg:items-center lg:gap-14 xl:gap-20">
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.08, ease }}
+              className="lg:col-span-5"
+            >
+              {project.contextLabel && (
+                <span className="block text-[11px] font-medium tracking-[0.2em] uppercase text-muted-foreground/80 mb-3">
+                  {project.contextLabel}
                 </span>
-              ))}
-            </p>
-            {project.liveUrl && (
-              <a
-                href={project.liveUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group inline-flex items-center gap-2 mt-7 text-sm font-medium text-foreground/85 px-5 py-2.5 rounded-full border border-white/[0.12] hover:border-accent/35 hover:text-accent hover:bg-white/[0.03] transition-all duration-300"
-              >
-                Visit the live site
-                <ArrowUpRight size={14} className="opacity-60 group-hover:opacity-100 transition-opacity duration-300" />
-                <span className="sr-only"> (opens in new tab)</span>
-              </a>
-            )}
-          </motion.div>
-        </div>
-      </section>
-
-      <div className="px-6 md:px-12 xl:px-20">
-        <div className="max-w-[1100px] mx-auto">
-          <AnimatedDivider direction="left" accent maxWidth="220px" />
-        </div>
-      </div>
-
-      {/* Selected work: gallery or reconstructed figures */}
-      <section className="px-6 md:px-12 xl:px-20 py-14 md:py-20">
-        <div className="max-w-[1100px] mx-auto">
-          <ScrollReveal direction="up">
-            <SectionLabel>Selected work</SectionLabel>
-          </ScrollReveal>
-
-          {project.confidentialNote && (
-            <ScrollReveal direction="up">
-              <p className="text-sm text-muted-foreground/70 leading-relaxed max-w-2xl mb-10 italic font-serif">
-                {project.confidentialNote}
+              )}
+              <span className="block text-[11px] font-medium tracking-[0.19em] uppercase text-accent/80 mb-5 leading-relaxed">
+                {project.category}
+              </span>
+              <h1 className="text-[clamp(2.85rem,6.2vw,5.35rem)] font-medium tracking-[-0.055em] leading-[0.92] text-balance mb-7">
+                {project.title}
+              </h1>
+              <p className="max-w-xl text-lg md:text-xl font-light leading-relaxed text-foreground/78">
+                {project.summary}
               </p>
-            </ScrollReveal>
-          )}
 
-          {desktopShots.length > 0 && (
-            <ScrollReveal direction="up" className="mb-16 md:mb-24">
-              <Showreel items={desktopShots} />
-            </ScrollReveal>
-          )}
+              {project.liveUrl && (
+                <a
+                  href={project.liveUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group mt-8 inline-flex min-h-11 items-center gap-2.5 rounded-[6px] border border-white/[0.13] px-5 text-sm font-medium text-foreground/85 transition-all duration-300 hover:border-accent/40 hover:bg-white/[0.025] hover:text-accent"
+                >
+                  Visit the live site
+                  <ArrowUpRight size={15} className="opacity-65 transition-opacity duration-300 group-hover:opacity-100" />
+                  <span className="sr-only"> (opens in new tab)</span>
+                </a>
+              )}
+            </motion.div>
 
-          {phoneShots.length > 0 && (
-            <div className="space-y-16 md:space-y-24">
-              {phoneShots.map((shot) => (
-                <ScrollReveal key={shot.src} direction="up">
-                  <figure>
-                    <div className="max-w-[300px] md:max-w-[340px] mx-auto">
-                      <ScreenFrame shot={shot} />
-                    </div>
-                    <figcaption className="mt-6 md:mt-7 max-w-2xl mx-auto text-center">
-                      <span className="block text-base md:text-lg font-medium tracking-tight text-foreground/90 mb-2">
-                        {shot.title}
-                      </span>
-                      <span className="block text-sm md:text-[15px] text-muted-foreground/85 leading-relaxed">
-                        {shot.caption}
-                      </span>
-                    </figcaption>
-                  </figure>
-                </ScrollReveal>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.9, delay: 0.18, ease }}
+              className="lg:col-span-7"
+            >
+              <ProjectLeadVisual project={project} shot={leadShot} />
+            </motion.div>
+          </div>
+
+          {project.proof && project.proof.length > 0 && (
+            <motion.dl
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.75, delay: 0.28, ease }}
+              className="mt-12 grid border-y border-white/[0.09] sm:grid-cols-3 md:mt-16"
+              aria-label="Project evidence"
+            >
+              {project.proof.map((item) => (
+                <div
+                  key={`${item.value}-${item.label}`}
+                  className="border-b border-white/[0.08] py-5 last:border-b-0 sm:border-b-0 sm:border-r sm:px-6 sm:last:border-r-0 sm:first:pl-0 sm:last:pr-0 md:py-6"
+                >
+                  <dt className="mb-2 text-[11px] font-medium tracking-[0.16em] uppercase text-muted-foreground/80">
+                    {item.label}
+                  </dt>
+                  <dd className="text-3xl md:text-4xl font-medium tracking-[-0.045em] text-foreground/95">
+                    {item.value}
+                  </dd>
+                </div>
               ))}
-            </div>
-          )}
-
-          {project.slug === 'tax-relief-counsel' && (
-            <div className="space-y-8 md:space-y-10">
-              <ScrollReveal direction="up">
-                <TrcPipelineFigure />
-              </ScrollReveal>
-              <ScrollReveal direction="up">
-                <TrcLibraryFigure />
-              </ScrollReveal>
-              <ScrollReveal direction="up">
-                <TrcTimeFigure />
-              </ScrollReveal>
-            </div>
-          )}
-
-          {project.slug === 'endorphins' && (
-            <ScrollReveal direction="up" className="mt-16 md:mt-24">
-              <EndorphinsPathwaysFigure />
-            </ScrollReveal>
+            </motion.dl>
           )}
         </div>
       </section>
 
-      {/* One key decision */}
-      <section className="px-6 md:px-12 xl:px-20 py-14 md:py-20 relative overflow-hidden">
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 z-0 pointer-events-none bg-gradient-to-b from-transparent via-[hsl(222,15%,7.2%)] to-transparent opacity-80"
-        />
-        <div className="max-w-[1100px] mx-auto relative z-10">
-          <ScrollReveal direction="up">
-            <SectionLabel>One key decision</SectionLabel>
-            <blockquote className="max-w-3xl border-l-2 border-accent/40 pl-6 md:pl-8">
-              <p className="text-xl md:text-2xl text-foreground/85 leading-relaxed font-light tracking-tight">
-                {project.decision}
-              </p>
-            </blockquote>
-          </ScrollReveal>
-        </div>
-      </section>
-
-      {/* What changed */}
-      <section className="px-6 md:px-12 xl:px-20 py-14 md:py-20">
-        <div className="max-w-[1100px] mx-auto">
-          <ScrollReveal direction="up">
-            <SectionLabel>What changed</SectionLabel>
-            <div className="space-y-5 max-w-3xl">
-              {project.outcomes.map((outcome) => (
-                <p key={outcome.slice(0, 32)} className="text-base md:text-lg text-muted-foreground/90 leading-relaxed font-light">
-                  {outcome}
+      <section
+        aria-labelledby="project-brief-heading"
+        className="px-6 md:px-12 xl:px-20 py-20 md:py-28"
+      >
+        <div className="max-w-[1180px] mx-auto grid gap-14 lg:grid-cols-12 lg:gap-20">
+          <ScrollReveal direction="up" className="lg:col-span-7">
+            <SectionHeading id="project-brief-heading" number="01" eyebrow="Context">
+              The work behind the result.
+            </SectionHeading>
+            <div className="mt-8 space-y-5 max-w-3xl">
+              {project.intro.map((paragraph) => (
+                <p
+                  key={paragraph.slice(0, 32)}
+                  className="text-base md:text-lg text-muted-foreground/90 leading-relaxed font-light"
+                >
+                  {paragraph}
                 </p>
               ))}
             </div>
           </ScrollReveal>
 
+          <ScrollReveal direction="up" delay={0.06} className="lg:col-span-5 lg:pt-1">
+            <h2 className="text-xl md:text-2xl font-medium tracking-tight text-foreground/95 mb-6">
+              My contribution
+            </h2>
+            <ul className="border-t border-white/[0.09]">
+              {project.contribution.map((item, index) => (
+                <li key={item} className="flex items-center gap-4 border-b border-white/[0.07] py-3.5">
+                  <span className="font-mono text-xs text-accent/75">
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
+                  <span className="text-sm md:text-[15px] text-foreground/82">{item}</span>
+                </li>
+              ))}
+            </ul>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {hasSelectedWork && (
+        <section
+          aria-labelledby="selected-work-heading"
+          className="border-y border-white/[0.06] bg-white/[0.012] px-6 py-20 md:px-12 md:py-28 xl:px-20"
+        >
+          <div className="max-w-[1180px] mx-auto">
+            <ScrollReveal direction="up">
+              <SectionHeading id="selected-work-heading" number="02" eyebrow="Selected work">
+                The system, made visible.
+              </SectionHeading>
+            </ScrollReveal>
+
+            {project.confidentialNote && (
+              <ScrollReveal direction="up">
+                <p className="mt-7 max-w-2xl border-l border-accent/35 pl-4 text-sm leading-relaxed text-muted-foreground/78">
+                  {project.confidentialNote}
+                </p>
+              </ScrollReveal>
+            )}
+
+            {remainingGallery.length > 0 && (
+              <div className="mt-12 space-y-12 md:mt-16 md:space-y-16">
+                {remainingGallery.map((shot, index) => (
+                  <ScrollReveal key={shot.src} direction="up">
+                    <GalleryFigure shot={shot} index={index + 1} />
+                  </ScrollReveal>
+                ))}
+              </div>
+            )}
+
+            {project.slug === 'clinical-documentation' && (
+              <ScrollReveal direction="up" className="mt-12 md:mt-16">
+                <ClinicalWorkflowFigure />
+              </ScrollReveal>
+            )}
+
+            {project.slug === 'tax-relief-counsel' && (
+              <div className="mt-12 space-y-8 md:mt-16 md:space-y-10">
+                <ScrollReveal direction="up">
+                  <TrcPipelineFigure />
+                </ScrollReveal>
+                <ScrollReveal direction="up">
+                  <TrcLibraryFigure />
+                </ScrollReveal>
+                <ScrollReveal direction="up">
+                  <TrcTimeFigure />
+                </ScrollReveal>
+              </div>
+            )}
+
+            {project.slug === 'endorphins' && (
+              <ScrollReveal direction="up" className="mt-12 md:mt-16">
+                <EndorphinsPathwaysFigure />
+              </ScrollReveal>
+            )}
+          </div>
+        </section>
+      )}
+
+      <section
+        aria-labelledby="key-decision-heading"
+        className="px-6 py-20 md:px-12 md:py-28 xl:px-20"
+      >
+        <div className="max-w-[1180px] mx-auto grid gap-10 lg:grid-cols-12 lg:gap-20">
+          <ScrollReveal direction="up" className="lg:col-span-4">
+            <SectionHeading id="key-decision-heading" number="03" eyebrow="Key decision">
+              What shaped the work.
+            </SectionHeading>
+          </ScrollReveal>
+          <ScrollReveal direction="up" delay={0.05} className="lg:col-span-8 lg:pt-10">
+            <p className="border-l-2 border-accent/45 pl-6 text-xl md:pl-8 md:text-2xl lg:text-[1.75rem] font-light leading-[1.45] tracking-[-0.02em] text-foreground/88">
+              {project.decision}
+            </p>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      <section
+        aria-labelledby="project-outcomes-heading"
+        className="border-t border-white/[0.07] px-6 py-20 md:px-12 md:py-28 xl:px-20"
+      >
+        <div className="max-w-[1180px] mx-auto">
+          <div className="grid gap-10 lg:grid-cols-12 lg:gap-20">
+            <ScrollReveal direction="up" className="lg:col-span-4">
+              <SectionHeading id="project-outcomes-heading" number="04" eyebrow="Outcomes">
+                What changed.
+              </SectionHeading>
+            </ScrollReveal>
+            <ScrollReveal direction="up" delay={0.05} className="lg:col-span-8">
+              <ul className="border-t border-white/[0.09]">
+                {project.outcomes.map((outcome, index) => (
+                  <li key={outcome.slice(0, 32)} className="grid gap-4 border-b border-white/[0.08] py-6 sm:grid-cols-[2.5rem_1fr] md:py-7">
+                    <span className="font-mono text-[11px] text-accent/75 pt-1">
+                      {String(index + 1).padStart(2, '0')}
+                    </span>
+                    <span className="text-base md:text-lg text-foreground/85 leading-relaxed font-light">
+                      {outcome}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </ScrollReveal>
+          </div>
+
           {(project.environment || project.delivery) && (
             <ScrollReveal direction="up">
-              <div className="mt-12 md:mt-14 grid md:grid-cols-2 gap-5 md:gap-6 max-w-3xl">
+              <div className="mt-14 grid border-y border-white/[0.08] md:grid-cols-2 md:divide-x md:divide-white/[0.08]">
                 {project.environment && (
-                  <div className="p-6 md:p-7 rounded-lg border border-white/[0.06] bg-[hsl(222,12%,11.5%)]">
-                    <span className="block text-[10px] font-medium tracking-[0.22em] uppercase text-muted-foreground/60 mb-3">
+                  <div className="border-b border-white/[0.08] py-6 md:border-b-0 md:pr-8">
+                    <h3 className="mb-3 text-[11px] font-medium tracking-[0.18em] uppercase text-muted-foreground/80">
                       Project environment
-                    </span>
-                    <p className="text-sm text-foreground/80 leading-relaxed">{project.environment}</p>
+                    </h3>
+                    <p className="text-sm md:text-[15px] text-foreground/80 leading-relaxed">
+                      {project.environment}
+                    </p>
                   </div>
                 )}
                 {project.delivery && (
-                  <div className="p-6 md:p-7 rounded-lg border border-white/[0.06] bg-[hsl(222,12%,11.5%)]">
-                    <span className="block text-[10px] font-medium tracking-[0.22em] uppercase text-muted-foreground/60 mb-3">
+                  <div className="py-6 md:pl-8">
+                    <h3 className="mb-3 text-[11px] font-medium tracking-[0.18em] uppercase text-muted-foreground/80">
                       Delivery approach
-                    </span>
-                    <p className="text-sm text-foreground/80 leading-relaxed">{project.delivery}</p>
+                    </h3>
+                    <p className="text-sm md:text-[15px] text-foreground/80 leading-relaxed">
+                      {project.delivery}
+                    </p>
                   </div>
                 )}
               </div>
@@ -233,23 +378,22 @@ export default function CaseStudy({ project, next }: { project: Project; next: P
         </div>
       </section>
 
-      {/* Next project */}
-      <section className="px-6 md:px-12 xl:px-20 pt-6 pb-24 md:pb-32">
-        <div className="max-w-[1100px] mx-auto">
+      <section aria-labelledby="next-project-heading" className="px-6 pt-4 pb-24 md:px-12 md:pb-32 xl:px-20">
+        <div className="max-w-[1180px] mx-auto">
           <ScrollReveal direction="up">
-            <Link href={`/work/${next.slug}`} className="group block border-t border-white/[0.07] pt-10">
-              <span className="block text-[10px] md:text-xs font-medium tracking-[0.25em] uppercase text-muted-foreground/60 mb-3">
+            <div className="border-t border-white/[0.09] pt-9">
+              <h2 id="next-project-heading" className="mb-4 text-[11px] font-medium tracking-[0.2em] uppercase text-muted-foreground/80">
                 Next project
-              </span>
-              <span className="flex items-center justify-between gap-6">
-                <span className="text-2xl md:text-4xl font-medium tracking-tight text-foreground/90 group-hover:text-accent transition-colors duration-500">
+              </h2>
+              <Link href={`/work/${next.slug}`} className="group flex items-center justify-between gap-6 py-2">
+                <span className="text-2xl md:text-4xl font-medium tracking-tight text-foreground/92 group-hover:text-accent transition-colors duration-500">
                   {next.title}
                 </span>
-                <span className="flex-shrink-0 w-11 h-11 md:w-12 md:h-12 rounded-full border border-white/10 flex items-center justify-center group-hover:bg-accent group-hover:border-accent transition-all duration-500">
-                  <ArrowRight className="w-4 h-4 md:w-5 md:h-5 text-muted-foreground group-hover:text-background transition-colors duration-500" />
+                <span className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-[6px] border border-white/[0.11] transition-all duration-500 group-hover:border-accent group-hover:bg-accent">
+                  <ArrowRight className="h-4 w-4 text-muted-foreground transition-colors duration-500 group-hover:text-background md:h-5 md:w-5" />
                 </span>
-              </span>
-            </Link>
+              </Link>
+            </div>
           </ScrollReveal>
         </div>
       </section>
