@@ -1,9 +1,11 @@
 'use client';
 
 import Link from 'next/link';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 import ScreenFrame, { FrameChrome } from '@/components/ScreenFrame';
+import { HoverReel } from '@/components/Showreel';
 import type { Project } from '@/lib/work';
 
 function ConfidentialVisual({ project }: { project: Project }) {
@@ -85,11 +87,22 @@ export default function WorkCard({
   headingLevel = 3,
 }: WorkCardProps) {
   const Heading = headingLevel === 2 ? 'h2' : 'h3';
-  const visual = project.card ? (
-    <ScreenFrame
-      shot={project.card}
-      sizes={variant === 'row' ? '(max-width: 1024px) 100vw, 680px' : '(max-width: 768px) 100vw, 640px'}
-    />
+  const [hovered, setHovered] = useState(false);
+
+  // The card still leads; the project's other desktop screens cycle behind
+  // it while the pointer rests on the card.
+  const reelItems = project.card
+    ? [
+        project.card,
+        ...project.gallery.filter((shot) => shot.frame === 'browser' && shot.src !== project.card?.src),
+      ]
+    : [];
+  const cardSizes = variant === 'row' ? '(max-width: 1024px) 100vw, 680px' : '(max-width: 768px) 100vw, 640px';
+
+  const visual = reelItems.length > 1 ? (
+    <HoverReel items={reelItems} active={hovered} sizes={cardSizes} />
+  ) : project.card ? (
+    <ScreenFrame shot={project.card} sizes={cardSizes} />
   ) : (
     <ConfidentialVisual project={project} />
   );
@@ -105,6 +118,8 @@ export default function WorkCard({
       <Link
         href={`/work/${project.slug}`}
         aria-label={`View ${project.title} project`}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
         className="block rounded-2xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-8 focus-visible:outline-accent"
       >
         <div className={variant === 'row' ? 'grid items-center gap-8 lg:grid-cols-12 lg:gap-16' : ''}>
