@@ -174,27 +174,41 @@ export default function About() {
       </section>
 
       <section className="px-6 md:px-12 xl:px-20 py-24 md:py-32">
-        <div className="max-w-[1160px] mx-auto grid lg:grid-cols-12 gap-12 lg:gap-20">
-          <ScrollReveal direction="up" className="lg:col-span-5">
-            <p className="text-xs font-medium tracking-[0.24em] uppercase text-accent/70 mb-5">The perspective</p>
-            <h2 className="text-3xl md:text-5xl font-medium tracking-tight text-balance">
-              Close enough to the work to see what the plan misses.
-            </h2>
-          </ScrollReveal>
+        <div className="max-w-[1160px] mx-auto">
+          <div className="grid lg:grid-cols-12 gap-12 lg:gap-20">
+            <ScrollReveal direction="up" className="lg:col-span-5">
+              <p className="text-xs font-medium tracking-[0.24em] uppercase text-accent/70 mb-5">The perspective</p>
+              <h2 className="text-3xl md:text-5xl font-medium tracking-tight text-balance">
+                Close enough to the work to see what the plan misses.
+              </h2>
+            </ScrollReveal>
 
-          <ScrollReveal direction="up" delay={0.08} className="lg:col-span-7 lg:pt-10">
-            <div className="space-y-6 max-w-2xl">
-              <p className="text-lg md:text-xl text-foreground/[0.82] font-light leading-relaxed">
-                Years in patient care made the surrounding infrastructure impossible to ignore: how people find a
-                service, how information moves, where documentation consumes attention, and why some tools become
-                routine while others create more work.
-              </p>
-              <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
-                That clinical grounding now informs work across implementation, operations, automation, service design,
-                and product advisory. The tools vary. The responsibility does not: understand the real use case,
-                organize it clearly, and deliver something that works beyond the planning stage.
-              </p>
-            </div>
+            <ScrollReveal direction="up" delay={0.08} className="lg:col-span-7 lg:pt-10">
+              <div className="space-y-6 max-w-2xl">
+                <p className="text-lg md:text-xl text-foreground/[0.82] font-light leading-relaxed">
+                  Years in patient care made the surrounding infrastructure impossible to ignore: how people find a
+                  service, how information moves, where documentation consumes attention, and why some tools become
+                  routine while others create more work.
+                </p>
+                <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
+                  That clinical grounding now informs work across implementation, operations, automation, service design,
+                  and product advisory. The tools vary. The responsibility does not: understand the real use case,
+                  organize it clearly, and deliver something that works beyond the planning stage.
+                </p>
+              </div>
+            </ScrollReveal>
+          </div>
+
+          <ScrollReveal direction="up" delay={0.12} className="mt-14 md:mt-20">
+            <figure className="relative aspect-[16/7] min-h-[260px] overflow-hidden rounded-[1.75rem] border border-white/[0.1] bg-white/[0.02]">
+              <Image
+                src="/images/clinical-technology-perspective-v9.webp"
+                alt="Illustrated clinical workspace connecting intake, documentation, and digital delivery"
+                fill
+                sizes="(min-width: 1280px) 1160px, calc(100vw - 3rem)"
+                className="object-cover"
+              />
+            </figure>
           </ScrollReveal>
         </div>
       </section>

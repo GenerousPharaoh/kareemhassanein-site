@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { ArrowDown, ArrowUpRight } from 'lucide-react';
 import ScrollReveal from '@/components/ScrollReveal';
@@ -171,6 +172,15 @@ export default function Home() {
               The tool can change. The discipline stays consistent: understand the workflow, expose the structure,
               support adoption, and refine what happens in use.
             </p>
+            <figure className="relative mt-10 aspect-[4/3] overflow-hidden rounded-[1.5rem] border border-white/[0.1] bg-white/[0.02]">
+              <Image
+                src="/images/solo-workflow-mapping-home-v9.webp"
+                alt="Illustration of Kareem organizing a working process across a table"
+                fill
+                sizes="(min-width: 1024px) 500px, calc(100vw - 3rem)"
+                className="object-cover"
+              />
+            </figure>
           </ScrollReveal>
 
           <ol className="border-t border-white/[0.11] lg:col-span-7">
@@ -193,6 +203,15 @@ export default function Home() {
             <ScrollReveal direction="up" className="lg:col-span-5">
               <p className="mb-5 text-xs font-semibold uppercase tracking-[0.2em] text-accent/80">Current advisory work</p>
               <h2 className="max-w-xl text-4xl font-medium tracking-[-0.045em] sm:text-5xl">Clinical context, applied early.</h2>
+              <figure className="relative mt-10 aspect-[4/3] overflow-hidden rounded-[1.5rem] border border-white/[0.1] bg-white/[0.02]">
+                <Image
+                  src="/images/ai-assisted-work-home-v9.webp"
+                  alt="Illustration of Kareem reviewing an AI-assisted digital workflow"
+                  fill
+                  sizes="(min-width: 1024px) 500px, calc(100vw - 3rem)"
+                  className="object-cover"
+                />
+              </figure>
             </ScrollReveal>
             <div className="border-t border-white/[0.11] lg:col-span-7">
               {advisory.map((item) => (
