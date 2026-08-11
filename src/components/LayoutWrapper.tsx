@@ -4,6 +4,7 @@ import { usePathname } from 'next/navigation';
 import { MotionConfig } from 'framer-motion';
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import SmoothScroll from "@/components/SmoothScroll";
 import useIsMobile from "@/hooks/useIsMobile";
 
 export default function LayoutWrapper({
@@ -20,6 +21,7 @@ export default function LayoutWrapper({
     // small fade/slide reveals run during scroll-driven URL-bar resize.
     return (
         <MotionConfig reducedMotion={isMobile ? 'always' : 'user'}>
+            <SmoothScroll />
             <a href="#main-content" className="skip-link">
                 Skip to main content
             </a>

@@ -54,14 +54,14 @@ export default function WorkPage() {
       {/* Principal projects */}
       <section className="px-6 md:px-12 xl:px-20 pb-8 md:pb-12">
         <div className="max-w-[1200px] mx-auto">
-          <div className="grid gap-14 md:gap-20">
+          <div className="grid gap-20 md:gap-28">
             {large.map((project, i) => (
-              <WorkCard key={project.slug} project={project} index={i} />
+              <WorkCard key={project.slug} project={project} index={i} variant="row" flip={i % 2 === 1} />
             ))}
           </div>
-          <div className="grid md:grid-cols-2 gap-14 md:gap-12 mt-14 md:mt-20">
+          <div className="grid md:grid-cols-2 gap-14 md:gap-12 mt-20 md:mt-28">
             {small.map((project, i) => (
-              <WorkCard key={project.slug} project={project} index={i} />
+              <WorkCard key={project.slug} project={project} index={i} className={i === 1 ? 'md:mt-20' : ''} />
             ))}
           </div>
         </div>

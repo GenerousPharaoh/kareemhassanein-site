@@ -42,7 +42,15 @@ function ProcessVisual() {
   );
 }
 
-export default function WorkCard({ project, index = 0 }: { project: Project; index?: number }) {
+interface WorkCardProps {
+  project: Project;
+  index?: number;
+  variant?: 'stack' | 'row';
+  flip?: boolean;
+  className?: string;
+}
+
+export default function WorkCard({ project, index = 0, variant = 'stack', flip = false, className = '' }: WorkCardProps) {
   const [hovered, setHovered] = useState(false);
 
   // The card's chosen still leads; the project's other desktop screens
@@ -54,13 +62,57 @@ export default function WorkCard({ project, index = 0 }: { project: Project; ind
       ]
     : [];
 
+  const visual = (
+    <div className="transition-transform duration-700 ease-out-expo group-hover:-translate-y-1.5">
+      {reelItems.length > 1 ? (
+        <HoverReel
+          items={reelItems}
+          active={hovered}
+          sizes={variant === 'row' ? '(max-width: 1024px) 100vw, 680px' : '(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 640px'}
+        />
+      ) : project.card ? (
+        <ScreenFrame shot={project.card} sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 640px" />
+      ) : (
+        <ProcessVisual />
+      )}
+    </div>
+  );
+
+  const text = (
+    <div className={variant === 'row' ? 'lg:py-6' : 'mt-6 md:mt-7'}>
+      <span className="flex items-center gap-3 text-[10px] md:text-[11px] font-medium tracking-[0.22em] uppercase text-accent/75 mb-3">
+        <span aria-hidden="true" className="h-px w-8 bg-accent/40 group-hover:w-12 transition-all duration-700" />
+        {project.category}
+      </span>
+      <h3
+        className={`font-medium tracking-tight text-foreground/95 group-hover:text-accent transition-colors duration-500 ${
+          variant === 'row' ? 'text-3xl md:text-4xl lg:text-[2.6rem] leading-[1.08]' : 'text-2xl md:text-3xl'
+        }`}
+      >
+        {project.title}
+      </h3>
+      <p className="mt-4 text-[15px] md:text-base text-muted-foreground/85 leading-relaxed max-w-xl">
+        {project.summary}
+      </p>
+      {variant === 'row' && (
+        <p className="mt-5 text-[12px] tracking-[0.08em] uppercase text-muted-foreground/55 leading-loose max-w-md hidden md:block">
+          {project.contribution.slice(0, 4).join(' · ')}
+        </p>
+      )}
+      <span className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-foreground/75 group-hover:text-accent transition-colors duration-500">
+        View case study
+        <ArrowRight size={15} className="group-hover:translate-x-0.5 transition-transform duration-500" />
+      </span>
+    </div>
+  );
+
   return (
     <motion.article
-      initial={{ opacity: 0, y: 18 }}
+      initial={{ opacity: 0, y: 22 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '0px 0px -8% 0px' }}
-      transition={{ duration: 0.7, delay: (index % 2) * 0.08, ease: [0.16, 1, 0.3, 1] }}
-      className="group"
+      transition={{ duration: 0.8, delay: (index % 2) * 0.08, ease: [0.16, 1, 0.3, 1] }}
+      className={`group ${className}`}
     >
       <Link
         href={`/work/${project.slug}`}
@@ -68,30 +120,17 @@ export default function WorkCard({ project, index = 0 }: { project: Project; ind
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
       >
-        <div className="transition-transform duration-500 ease-out-expo group-hover:-translate-y-1">
-          {reelItems.length > 1 ? (
-            <HoverReel items={reelItems} active={hovered} />
-          ) : project.card ? (
-            <ScreenFrame shot={project.card} sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 640px" />
-          ) : (
-            <ProcessVisual />
-          )}
-        </div>
-        <div className="mt-6 md:mt-7">
-          <span className="block text-[10px] md:text-[11px] font-medium tracking-[0.22em] uppercase text-accent/75 mb-2.5">
-            {project.category}
-          </span>
-          <h3 className="text-2xl md:text-3xl font-medium tracking-tight text-foreground/95 group-hover:text-accent transition-colors duration-500">
-            {project.title}
-          </h3>
-          <p className="mt-3 text-[15px] md:text-base text-muted-foreground/85 leading-relaxed max-w-xl">
-            {project.summary}
-          </p>
-          <span className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-foreground/75 group-hover:text-accent transition-colors duration-500">
-            View case study
-            <ArrowRight size={15} className="group-hover:translate-x-0.5 transition-transform duration-500" />
-          </span>
-        </div>
+        {variant === 'row' ? (
+          <div className="grid lg:grid-cols-12 gap-8 lg:gap-14 items-center">
+            <div className={`lg:col-span-7 ${flip ? 'lg:order-2' : ''}`}>{visual}</div>
+            <div className={`lg:col-span-5 ${flip ? 'lg:order-1' : ''}`}>{text}</div>
+          </div>
+        ) : (
+          <>
+            {visual}
+            {text}
+          </>
+        )}
       </Link>
     </motion.article>
   );
