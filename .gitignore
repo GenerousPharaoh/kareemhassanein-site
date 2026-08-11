@@ -40,3 +40,7 @@ AGENTS.md
 # local artifacts
 /output
 /.playwright-cli
+
+
+# Raw walkthrough recordings (re-generate with scripts/capture-walkthroughs.mjs)
+/scripts/walkthroughs-raw/

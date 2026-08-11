@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ArrowLeft, ArrowRight, ArrowUpRight } from 'lucide-react';
 import ScreenFrame from '@/components/ScreenFrame';
+import WalkthroughFrame from '@/components/WalkthroughFrame';
 import ScrollReveal from '@/components/ScrollReveal';
 import AnimatedDivider from '@/components/AnimatedDivider';
 import {
@@ -119,6 +120,22 @@ export default function CaseStudy({ project, next }: { project: Project; next: P
               <p className="text-sm text-muted-foreground/70 leading-relaxed max-w-2xl mb-10 italic font-serif">
                 {project.confidentialNote}
               </p>
+            </ScrollReveal>
+          )}
+
+          {project.walkthrough && (
+            <ScrollReveal direction="up" className="mb-16 md:mb-24">
+              <figure>
+                <WalkthroughFrame walkthrough={project.walkthrough} />
+                <figcaption className="mt-6 md:mt-7 max-w-2xl mx-auto text-center">
+                  <span className="block text-base md:text-lg font-medium tracking-tight text-foreground/90 mb-2">
+                    {project.walkthrough.title}
+                  </span>
+                  <span className="block text-sm md:text-[15px] text-muted-foreground/85 leading-relaxed">
+                    {project.walkthrough.caption}
+                  </span>
+                </figcaption>
+              </figure>
             </ScrollReveal>
           )}
 

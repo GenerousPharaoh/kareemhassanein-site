@@ -3,6 +3,27 @@
 import Image from 'next/image';
 import type { ShotMeta } from '@/lib/work';
 
+// Minimal browser chrome shared by screenshot and video frames.
+export function FrameChrome({ url }: { url?: string }) {
+  return (
+    <div className="flex items-center gap-2 px-4 py-2.5 border-b border-white/[0.06] bg-[hsl(222,12%,11%)]">
+      <span className="flex gap-1.5" aria-hidden="true">
+        <span className="w-2 h-2 rounded-full bg-white/[0.12]" />
+        <span className="w-2 h-2 rounded-full bg-white/[0.12]" />
+        <span className="w-2 h-2 rounded-full bg-white/[0.12]" />
+      </span>
+      {url && (
+        <span className="mx-auto pr-8 text-[10px] font-mono tracking-wide text-muted-foreground/60 truncate">
+          {url}
+        </span>
+      )}
+    </div>
+  );
+}
+
+export const frameShell =
+  'relative rounded-xl md:rounded-2xl overflow-hidden ring-1 ring-white/[0.09] bg-[hsl(222,12%,12%)] shadow-[0_30px_70px_-25px_rgba(0,0,0,0.7)]';
+
 interface ScreenFrameProps {
   shot: ShotMeta;
   priority?: boolean;
@@ -36,21 +57,8 @@ export default function ScreenFrame({ shot, priority = false, sizes, className =
   }
 
   return (
-    <div
-      className={`relative rounded-xl md:rounded-2xl overflow-hidden ring-1 ring-white/[0.09] bg-[hsl(222,12%,12%)] shadow-[0_30px_70px_-25px_rgba(0,0,0,0.7)] ${className}`}
-    >
-      <div className="flex items-center gap-2 px-4 py-2.5 border-b border-white/[0.06] bg-[hsl(222,12%,11%)]">
-        <span className="flex gap-1.5" aria-hidden="true">
-          <span className="w-2 h-2 rounded-full bg-white/[0.12]" />
-          <span className="w-2 h-2 rounded-full bg-white/[0.12]" />
-          <span className="w-2 h-2 rounded-full bg-white/[0.12]" />
-        </span>
-        {shot.url && (
-          <span className="mx-auto pr-8 text-[10px] font-mono tracking-wide text-muted-foreground/60 truncate">
-            {shot.url}
-          </span>
-        )}
-      </div>
+    <div className={`${frameShell} ${className}`}>
+      <FrameChrome url={shot.url} />
       <Image
         src={shot.src}
         alt={shot.alt}

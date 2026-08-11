@@ -1,10 +1,12 @@
 'use client';
 
 import Link from 'next/link';
-import { motion } from 'framer-motion';
+import Image from 'next/image';
+import { useEffect, useRef, useState } from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
-import ScreenFrame from '@/components/ScreenFrame';
-import type { Project } from '@/lib/work';
+import ScreenFrame, { FrameChrome, frameShell } from '@/components/ScreenFrame';
+import type { Project, ShotMeta, Walkthrough } from '@/lib/work';
 
 // Stand-in visual for projects without public screenshots (client work).
 function ProcessVisual() {
@@ -14,16 +16,7 @@ function ProcessVisual() {
   ];
   return (
     <div className="relative rounded-xl md:rounded-2xl overflow-hidden ring-1 ring-white/[0.09] bg-[hsl(222,12%,11.5%)] shadow-[0_30px_70px_-25px_rgba(0,0,0,0.7)]">
-      <div className="flex items-center gap-2 px-4 py-2.5 border-b border-white/[0.06] bg-[hsl(222,12%,11%)]">
-        <span className="flex gap-1.5" aria-hidden="true">
-          <span className="w-2 h-2 rounded-full bg-white/[0.12]" />
-          <span className="w-2 h-2 rounded-full bg-white/[0.12]" />
-          <span className="w-2 h-2 rounded-full bg-white/[0.12]" />
-        </span>
-        <span className="mx-auto pr-8 text-[10px] font-mono tracking-wide text-muted-foreground/60">
-          drafting workflow · confidential
-        </span>
-      </div>
+      <FrameChrome url="drafting workflow · confidential" />
       <div className="aspect-[16/10] flex flex-col justify-center gap-7 px-8 md:px-12">
         {rows.map((row) => (
           <div key={row.label}>
@@ -49,7 +42,58 @@ function ProcessVisual() {
   );
 }
 
+// Card still that comes alive on hover: the walkthrough clip fades in over
+// the screenshot while the pointer rests on the card.
+function HoverVideoFrame({ shot, walkthrough, active, sizes }: { shot: ShotMeta; walkthrough: Walkthrough; active: boolean; sizes?: string }) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    if (active) {
+      video.play().catch(() => {});
+    } else {
+      video.pause();
+      video.currentTime = 0;
+    }
+  }, [active]);
+
+  return (
+    <div className={frameShell}>
+      <FrameChrome url={shot.url} />
+      <div className="relative">
+        <Image
+          src={shot.src}
+          alt={shot.alt}
+          width={shot.width}
+          height={shot.height}
+          sizes={sizes ?? '(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 640px'}
+          quality={85}
+          className="w-full h-auto"
+        />
+        <video
+          ref={videoRef}
+          muted
+          loop
+          playsInline
+          preload="none"
+          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${active ? 'opacity-100' : 'opacity-0'}`}
+          aria-hidden="true"
+          tabIndex={-1}
+        >
+          <source src={walkthrough.webm} type="video/webm" />
+          <source src={walkthrough.mp4} type="video/mp4" />
+        </video>
+      </div>
+    </div>
+  );
+}
+
 export default function WorkCard({ project, index = 0 }: { project: Project; index?: number }) {
+  const [hovered, setHovered] = useState(false);
+  const shouldReduceMotion = useReducedMotion();
+  const hoverVideo = !shouldReduceMotion && project.card && project.walkthrough;
+
   return (
     <motion.article
       initial={{ opacity: 0, y: 18 }}
@@ -58,9 +102,21 @@ export default function WorkCard({ project, index = 0 }: { project: Project; ind
       transition={{ duration: 0.7, delay: (index % 2) * 0.08, ease: [0.16, 1, 0.3, 1] }}
       className="group"
     >
-      <Link href={`/work/${project.slug}`} className="block focus-visible:outline-none">
+      <Link
+        href={`/work/${project.slug}`}
+        className="block focus-visible:outline-none"
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+      >
         <div className="transition-transform duration-500 ease-out-expo group-hover:-translate-y-1">
-          {project.card ? (
+          {hoverVideo ? (
+            <HoverVideoFrame
+              shot={project.card!}
+              walkthrough={project.walkthrough!}
+              active={hovered}
+              sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 640px"
+            />
+          ) : project.card ? (
             <ScreenFrame shot={project.card} sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 640px" />
           ) : (
             <ProcessVisual />
