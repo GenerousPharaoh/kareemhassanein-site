@@ -320,3 +320,74 @@ img {
 .link-premium:hover::after {
   width: 100%;
 }
+
+/* Hero entrance.
+   Deliberately CSS rather than framer-motion. Motion components write their
+   `initial` styles into the prerendered HTML, which left the entire hero at
+   opacity:0 / translateY(105%) in the served document, so nothing painted
+   until JS hydrated. That was the mobile LCP.
+
+   The MotionConfig reducedMotion guard in LayoutWrapper cannot fix it:
+   useIsMobile is false during SSR and first render, and framer-motion's
+   reduced-motion only suppresses positional keys (transforms, width, height,
+   top/left/right/bottom), never opacity.
+
+   Here the animation only exists inside the media query, so on mobile the
+   hero is simply static markup that paints with the document. */
+.hero-rise,
+.hero-fade {
+  animation-delay: var(--hero-delay, 0s);
+}
+
+@media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+  .hero-rise {
+    animation: hero-rise 1s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .hero-fade {
+    animation: hero-fade 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+}
+
+@keyframes hero-rise {
+  from {
+    transform: translateY(105%);
+  }
+  to {
+    transform: none;
+  }
+}
+
+@keyframes hero-fade {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Case-study title.
+   Sizing this off the viewport cannot work: the column is lg:col-span-5 in a
+   12-column grid whose gap jumps from 56px to 80px at xl, so the column is
+   NARROWER at 1280px (418px) than at 1200px (425px) while a vw-based font is
+   still growing. Any viewport clamp that fits 1280 is undersized elsewhere.
+   Sizing off the container removes the coupling entirely. */
+.case-title {
+  font-size: clamp(2.6rem, 5vw, 4.6rem);
+}
+
+@supports (container-type: inline-size) {
+  .case-title-col {
+    container-type: inline-size;
+  }
+
+  /* The binding constraint is the longest unbreakable word. At this weight and
+     tracking that runs about 6.5em, so the font has to stay under ~15.3% of
+     the column. 14.5cqw leaves a margin. */
+  .case-title {
+    font-size: clamp(2.6rem, 14.5cqw, 4.6rem);
+  }
+}

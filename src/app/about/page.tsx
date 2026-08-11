@@ -52,20 +52,24 @@ const currentRoles = [
 
 const principles = [
   {
-    title: 'Start with the real workflow',
-    description: 'Understand the workarounds, edge cases, and pressures that formal process maps often miss.',
+    title: 'The process on paper is not the process',
+    description:
+      'Every workflow I have mapped has an undocumented layer underneath it: the workaround someone invented, the step only one person knows how to do, the exception that turns up weekly. That layer is usually where the problem is.',
   },
   {
-    title: 'Create structure before tooling',
-    description: 'Clarify inputs, decisions, ownership, and handoffs before deciding what technology should do.',
+    title: 'Software last',
+    description:
+      'Rollouts stall on unclear ownership far more often than on the tool. Who decides, who is accountable, and what happens at each handoff has to be settled before anyone chooses a platform.',
   },
   {
-    title: 'Design for adoption',
-    description: 'Make the new way of working useful, legible, and realistic enough to become routine.',
+    title: 'If it is slower on day one, it fails',
+    description:
+      'When the new way costs more effort than the old way, people quietly go back to the old way. Training does not fix that and neither does a mandate. The work has to be easier at the point of use.',
   },
   {
-    title: 'Stay responsible for the finish',
-    description: 'Test in use, resolve what still creates friction, and remain accountable for the result.',
+    title: 'I stay past go-live',
+    description:
+      'The distance between something that works in testing and something that holds up in a busy week is where most of the real work sits. I would rather be there for it than hand over a document.',
   },
 ];
 
@@ -112,9 +116,9 @@ export default function About() {
               transition={{ duration: 0.85, delay: 0.28, ease }}
               className="mt-9 max-w-2xl text-lg md:text-[1.35rem] text-foreground/[0.76] font-light leading-relaxed"
             >
-              I&rsquo;m an implementation and operations consultant who still practices as a physiotherapist. I
-              translate real workflows into clearer processes and digital tools, guide adoption, and refine the work
-              until it holds up in day-to-day use.
+              I still treat patients, and I also run the operational side of a multi-disciplinary clinic. Working both
+              jobs at once is the whole reason this work suits me: I see where a process breaks while I am the one
+              standing inside it, not six weeks later in a report.
             </motion.p>
 
             <motion.div
@@ -148,9 +152,11 @@ export default function About() {
               <div aria-hidden="true" className="absolute inset-0 bg-background/10" />
               <figcaption className="absolute inset-x-5 bottom-5 rounded-lg border border-white/[0.08] bg-background/[0.85] px-4 py-3 backdrop-blur-md">
                 <span className="block text-[10px] font-medium tracking-[0.2em] uppercase text-accent/70 mb-1.5">
-                  Implementation principle
+                  KinetiKare Physio
                 </span>
-                <span className="text-sm text-foreground/[0.82]">Use technology to make the work clearer, not more complicated.</span>
+                <span className="text-sm text-foreground/[0.82]">
+                  Condition library and booking, built for the phone because that is where almost every patient starts.
+                </span>
               </figcaption>
             </div>
           </motion.figure>
@@ -202,8 +208,8 @@ export default function About() {
           <ScrollReveal direction="up" delay={0.12} className="mt-14 md:mt-20">
             <figure className="relative aspect-[16/7] min-h-[260px] overflow-hidden rounded-[1.75rem] border border-white/[0.1] bg-white/[0.02]">
               <Image
-                src="/images/work/wedding-travel.webp"
-                alt="Travel guidance from the wedding website, one of the delivered projects"
+                src="/images/work/kinetikare-compare.webp"
+                alt="Two commonly confused diagnoses presented side by side, structured around the questions patients actually ask"
                 fill
                 sizes="(min-width: 1280px) 1160px, calc(100vw - 3rem)"
                 className="object-cover object-top"
@@ -221,7 +227,7 @@ export default function About() {
             </div>
             <div className="lg:col-span-8">
               <h2 className="text-3xl md:text-5xl font-medium tracking-tight text-balance">
-                Roles where delivery, operations, and adoption meet.
+                Three organizations, three different problems.
               </h2>
             </div>
           </ScrollReveal>
@@ -253,7 +259,7 @@ export default function About() {
           <ScrollReveal direction="up" className="max-w-2xl mb-14 md:mb-20">
             <p className="text-xs font-medium tracking-[0.24em] uppercase text-accent/70 mb-5">How I work</p>
             <h2 className="text-3xl md:text-5xl font-medium tracking-tight text-balance">
-              Practical judgment, applied through the full implementation.
+              Four things I no longer compromise on.
             </h2>
           </ScrollReveal>
 
@@ -265,9 +271,7 @@ export default function About() {
                     index % 2 === 0 ? 'md:pr-10' : 'md:border-l md:pl-10'
                   }`}
                 >
-                  <p className="text-xs font-medium tracking-[0.18em] uppercase text-accent/75 mb-4">
-                    0{index + 1}
-                  </p>
+                  <span aria-hidden="true" className="mb-4 block h-px w-8 bg-accent/45" />
                   <h3 className="text-xl md:text-2xl font-medium tracking-tight mb-3">{principle.title}</h3>
                   <p className="text-sm md:text-base text-muted-foreground leading-relaxed max-w-md">
                     {principle.description}

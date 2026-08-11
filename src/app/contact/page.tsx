@@ -120,10 +120,10 @@ function ContactForm() {
 }
 
 const fit = [
-  'A clinical or operational workflow creates avoidable friction.',
-  'A technology rollout needs stronger adoption and follow-through.',
-  'A service, process, or digital journey needs clearer structure.',
-  'A useful idea needs disciplined implementation to become dependable.',
+  'A process works on paper and keeps breaking in practice.',
+  'A tool went live and people quietly went back to the old way.',
+  'Something predictable keeps going wrong at a handoff between teams.',
+  'A good idea has been sitting almost finished for months.',
 ];
 
 export default function ContactPage() {

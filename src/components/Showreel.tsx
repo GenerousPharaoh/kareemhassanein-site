@@ -49,8 +49,18 @@ export function HoverReel({
   sizes?: string;
 }) {
   const [index, setIndex] = useState(0);
+  // Only the lead screen mounts until the card is actually interacted with.
+  // next/image lazy loading fires on intersection regardless of opacity, so
+  // mounting every frame up front downloaded the whole reel to display one
+  // still. That was pure waste on touch devices, where `active` never
+  // becomes true and the reel never cycles.
+  const [primed, setPrimed] = useState(false);
   const shouldReduceMotion = useReducedMotion();
   const cycling = active && !shouldReduceMotion && items.length > 1;
+
+  useEffect(() => {
+    if (active) setPrimed(true);
+  }, [active]);
 
   useEffect(() => {
     if (!cycling) {
@@ -61,6 +71,9 @@ export function HoverReel({
     return () => clearInterval(id);
   }, [cycling, items.length]);
 
+  // The first hover mounts the rest, which have the 1.7s until the first
+  // advance to decode.
+  const mounted = primed ? items : items.slice(0, 1);
   const current = items[index] ?? items[0];
   if (!current) return null;
 
@@ -68,7 +81,7 @@ export function HoverReel({
     <div className={frameShell}>
       <ReelChrome url={current.url} reduceMotion={!!shouldReduceMotion} />
       <div className="relative aspect-[16/10] overflow-hidden">
-        {items.map((item, i) => {
+        {mounted.map((item, i) => {
           const isCurrent = i === index;
           return (
             <motion.div

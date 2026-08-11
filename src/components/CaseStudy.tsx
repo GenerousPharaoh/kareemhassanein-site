@@ -139,7 +139,7 @@ export default function ProjectDetail({ project, next }: { project: Project; nex
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.08, ease }}
-              className="lg:col-span-5"
+              className="case-title-col lg:col-span-5"
             >
               {project.contextLabel && (
                 <span className="block text-[11px] font-medium tracking-[0.2em] uppercase text-muted-foreground/80 mb-3">
@@ -149,7 +149,9 @@ export default function ProjectDetail({ project, next }: { project: Project; nex
               <span className="block text-[11px] font-medium tracking-[0.19em] uppercase text-accent/80 mb-5 leading-relaxed">
                 {project.category}
               </span>
-              <h1 className="text-[clamp(2.85rem,6.2vw,5.35rem)] font-medium tracking-[-0.055em] leading-[0.92] text-balance mb-7">
+              {/* Sized from the column, not the viewport. See .case-title in
+                  globals.css for why the viewport cannot work here. */}
+              <h1 className="case-title font-medium tracking-[-0.055em] leading-[0.92] text-balance mb-7">
                 {project.title}
               </h1>
               <p className="max-w-xl text-lg md:text-xl font-light leading-relaxed text-foreground/78">
