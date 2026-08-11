@@ -174,8 +174,8 @@ export default function Home() {
             </p>
             <figure className="relative mt-10 aspect-[4/3] overflow-hidden rounded-[1.5rem] border border-white/[0.1] bg-white/[0.02]">
               <Image
-                src="/images/solo-workflow-mapping-home-v9.webp"
-                alt="Illustration of Kareem organizing a working process across a table"
+                src="/images/systems-conductor-home-v10.webp"
+                alt="Illustration of Kareem orchestrating connected workflows and operating systems"
                 fill
                 sizes="(min-width: 1024px) 500px, calc(100vw - 3rem)"
                 className="object-cover"
@@ -205,8 +205,8 @@ export default function Home() {
               <h2 className="max-w-xl text-4xl font-medium tracking-[-0.045em] sm:text-5xl">Clinical context, applied early.</h2>
               <figure className="relative mt-10 aspect-[4/3] overflow-hidden rounded-[1.5rem] border border-white/[0.1] bg-white/[0.02]">
                 <Image
-                  src="/images/ai-assisted-work-home-v9.webp"
-                  alt="Illustration of Kareem reviewing an AI-assisted digital workflow"
+                  src="/images/ai-systems-score-home-v10.webp"
+                  alt="Illustration of Kareem composing an AI-assisted workflow across layered materials"
                   fill
                   sizes="(min-width: 1024px) 500px, calc(100vw - 3rem)"
                   className="object-cover"
