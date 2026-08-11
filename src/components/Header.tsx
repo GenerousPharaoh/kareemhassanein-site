@@ -86,7 +86,7 @@ export default function Header() {
           <Link
             href="/"
             className="group flex min-h-11 items-center gap-3 rounded-md pr-3 text-foreground"
-            aria-label="Kareem Hassanein, home"
+            aria-label="KH Kareem Hassanein, home"
           >
             <span
               aria-hidden="true"
