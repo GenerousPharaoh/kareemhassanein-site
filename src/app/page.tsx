@@ -174,7 +174,7 @@ export default function Home() {
             </p>
             <figure className="relative mt-10 aspect-[4/3] overflow-hidden rounded-[1.5rem] border border-white/[0.1] bg-white/[0.02]">
               <Image
-                src="/images/illustrated-systems-conductor-home-v12.webp"
+                src="/images/illustrated-systems-conductor-home-v13.webp"
                 alt="Illustration of Kareem orchestrating connected workflows and operating systems"
                 fill
                 sizes="(min-width: 1024px) 500px, calc(100vw - 3rem)"
