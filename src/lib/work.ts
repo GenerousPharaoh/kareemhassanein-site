@@ -15,15 +15,6 @@ export interface GalleryItem extends ShotMeta {
   caption: string;
 }
 
-export interface Walkthrough {
-  mp4: string;
-  webm: string;
-  poster: string;
-  url?: string;
-  title: string;
-  caption: string;
-}
-
 export interface Project {
   slug: string;
   title: string;
@@ -39,7 +30,6 @@ export interface Project {
   delivery?: string;
   liveUrl?: string;
   card?: ShotMeta;
-  walkthrough?: Walkthrough;
   size: 'large' | 'small';
   confidentialNote?: string;
 }
@@ -147,15 +137,6 @@ export const projects: Project[] = [
       frame: 'browser',
       url: 'kinetikarephysio.com',
     },
-    walkthrough: {
-      mp4: '/videos/work/kinetikare.mp4',
-      webm: '/videos/work/kinetikare.webm',
-      poster: '/videos/work/kinetikare-poster.webp',
-      url: 'kinetikarephysio.com',
-      title: 'The live platform, in motion',
-      caption:
-        'From the front door through body-region filtering to a side-by-side comparison: the pathways described below, the way a patient actually moves through them.',
-    },
     size: 'large',
   },
   {
@@ -245,15 +226,6 @@ export const projects: Project[] = [
       ...DESKTOP,
       frame: 'browser',
       url: 'endorphinshealth.com',
-    },
-    walkthrough: {
-      mp4: '/videos/work/endorphins.mp4',
-      webm: '/videos/work/endorphins.webm',
-      poster: '/videos/work/endorphins-poster.webp',
-      url: 'endorphinshealth.com',
-      title: 'One clinic, six services, in motion',
-      caption:
-        'From the clinic front door through the services index and the physiotherapy line to the practitioner-routed booking journey.',
     },
     size: 'large',
   },
@@ -370,14 +342,6 @@ export const projects: Project[] = [
       alt: 'Travel section of the wedding site with an aerial photo of Miraflores, Lima',
       ...DESKTOP,
       frame: 'browser',
-    },
-    walkthrough: {
-      mp4: '/videos/work/wedding.mp4',
-      webm: '/videos/work/wedding.webm',
-      poster: '/videos/work/wedding-poster.webp',
-      title: 'The guest experience, in motion',
-      caption:
-        'The arrival moment, then straight to what guests need: the day, getting to Lima, and the optional adventure, carried by deliberately smooth scrolling.',
     },
     size: 'small',
   },

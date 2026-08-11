@@ -1,12 +1,12 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
-import { useEffect, useRef, useState } from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
+import { useState } from 'react';
+import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
-import ScreenFrame, { FrameChrome, frameShell } from '@/components/ScreenFrame';
-import type { Project, ShotMeta, Walkthrough } from '@/lib/work';
+import ScreenFrame, { FrameChrome } from '@/components/ScreenFrame';
+import { HoverReel } from '@/components/Showreel';
+import type { Project } from '@/lib/work';
 
 // Stand-in visual for projects without public screenshots (client work).
 function ProcessVisual() {
@@ -42,57 +42,17 @@ function ProcessVisual() {
   );
 }
 
-// Card still that comes alive on hover: the walkthrough clip fades in over
-// the screenshot while the pointer rests on the card.
-function HoverVideoFrame({ shot, walkthrough, active, sizes }: { shot: ShotMeta; walkthrough: Walkthrough; active: boolean; sizes?: string }) {
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-    if (active) {
-      video.play().catch(() => {});
-    } else {
-      video.pause();
-      video.currentTime = 0;
-    }
-  }, [active]);
-
-  return (
-    <div className={frameShell}>
-      <FrameChrome url={shot.url} />
-      <div className="relative">
-        <Image
-          src={shot.src}
-          alt={shot.alt}
-          width={shot.width}
-          height={shot.height}
-          sizes={sizes ?? '(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 640px'}
-          quality={85}
-          className="w-full h-auto"
-        />
-        <video
-          ref={videoRef}
-          muted
-          loop
-          playsInline
-          preload="none"
-          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${active ? 'opacity-100' : 'opacity-0'}`}
-          aria-hidden="true"
-          tabIndex={-1}
-        >
-          <source src={walkthrough.webm} type="video/webm" />
-          <source src={walkthrough.mp4} type="video/mp4" />
-        </video>
-      </div>
-    </div>
-  );
-}
-
 export default function WorkCard({ project, index = 0 }: { project: Project; index?: number }) {
   const [hovered, setHovered] = useState(false);
-  const shouldReduceMotion = useReducedMotion();
-  const hoverVideo = !shouldReduceMotion && project.card && project.walkthrough;
+
+  // The card's chosen still leads; the project's other desktop screens
+  // cycle behind it while the pointer rests on the card.
+  const reelItems = project.card
+    ? [
+        project.card,
+        ...project.gallery.filter((shot) => shot.frame === 'browser' && shot.src !== project.card?.src),
+      ]
+    : [];
 
   return (
     <motion.article
@@ -109,13 +69,8 @@ export default function WorkCard({ project, index = 0 }: { project: Project; ind
         onMouseLeave={() => setHovered(false)}
       >
         <div className="transition-transform duration-500 ease-out-expo group-hover:-translate-y-1">
-          {hoverVideo ? (
-            <HoverVideoFrame
-              shot={project.card!}
-              walkthrough={project.walkthrough!}
-              active={hovered}
-              sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 640px"
-            />
+          {reelItems.length > 1 ? (
+            <HoverReel items={reelItems} active={hovered} />
           ) : project.card ? (
             <ScreenFrame shot={project.card} sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 640px" />
           ) : (

@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ArrowLeft, ArrowRight, ArrowUpRight } from 'lucide-react';
 import ScreenFrame from '@/components/ScreenFrame';
-import WalkthroughFrame from '@/components/WalkthroughFrame';
+import { Showreel } from '@/components/Showreel';
 import ScrollReveal from '@/components/ScrollReveal';
 import AnimatedDivider from '@/components/AnimatedDivider';
 import {
@@ -26,6 +26,9 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
 }
 
 export default function CaseStudy({ project, next }: { project: Project; next: Project }) {
+  const desktopShots = project.gallery.filter((shot) => shot.frame === 'browser');
+  const phoneShots = project.gallery.filter((shot) => shot.frame === 'phone');
+
   return (
     <main className="bg-background text-foreground pt-20">
       {/* Header */}
@@ -123,34 +126,20 @@ export default function CaseStudy({ project, next }: { project: Project; next: P
             </ScrollReveal>
           )}
 
-          {project.walkthrough && (
+          {desktopShots.length > 0 && (
             <ScrollReveal direction="up" className="mb-16 md:mb-24">
-              <figure>
-                <WalkthroughFrame walkthrough={project.walkthrough} />
-                <figcaption className="mt-6 md:mt-7 max-w-2xl mx-auto text-center">
-                  <span className="block text-base md:text-lg font-medium tracking-tight text-foreground/90 mb-2">
-                    {project.walkthrough.title}
-                  </span>
-                  <span className="block text-sm md:text-[15px] text-muted-foreground/85 leading-relaxed">
-                    {project.walkthrough.caption}
-                  </span>
-                </figcaption>
-              </figure>
+              <Showreel items={desktopShots} />
             </ScrollReveal>
           )}
 
-          {project.gallery.length > 0 && (
+          {phoneShots.length > 0 && (
             <div className="space-y-16 md:space-y-24">
-              {project.gallery.map((shot, i) => (
+              {phoneShots.map((shot) => (
                 <ScrollReveal key={shot.src} direction="up">
                   <figure>
-                    {shot.frame === 'phone' ? (
-                      <div className="max-w-[300px] md:max-w-[340px] mx-auto">
-                        <ScreenFrame shot={shot} />
-                      </div>
-                    ) : (
-                      <ScreenFrame shot={shot} priority={i === 0} />
-                    )}
+                    <div className="max-w-[300px] md:max-w-[340px] mx-auto">
+                      <ScreenFrame shot={shot} />
+                    </div>
                     <figcaption className="mt-6 md:mt-7 max-w-2xl mx-auto text-center">
                       <span className="block text-base md:text-lg font-medium tracking-tight text-foreground/90 mb-2">
                         {shot.title}
