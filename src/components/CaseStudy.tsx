@@ -107,7 +107,7 @@ function GalleryFigure({ shot, index }: { shot: GalleryItem; index: number }) {
   );
 }
 
-export default function CaseStudy({ project, next }: { project: Project; next: Project }) {
+export default function ProjectDetail({ project, next }: { project: Project; next: Project }) {
   const leadShot = project.gallery[0];
   const remainingGallery = leadShot ? project.gallery.slice(1) : project.gallery;
   const hasSelectedWork =

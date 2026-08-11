@@ -104,7 +104,7 @@ export default function WorkCard({
     >
       <Link
         href={`/work/${project.slug}`}
-        aria-label={`View ${project.title} case study`}
+        aria-label={`View ${project.title} project`}
         className="block rounded-2xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-8 focus-visible:outline-accent"
       >
         <div className={variant === 'row' ? 'grid items-center gap-8 lg:grid-cols-12 lg:gap-16' : ''}>
@@ -135,7 +135,7 @@ export default function WorkCard({
             )}
 
             <span className="mt-6 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-foreground/74 transition-colors duration-500 group-hover:text-accent">
-              Read the case study
+              View project
               <ArrowUpRight aria-hidden="true" size={16} className="transition-transform duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
             </span>
           </div>

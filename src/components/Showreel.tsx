@@ -74,7 +74,7 @@ function SelectedSlide({
   );
 }
 
-// Case-study lead: a manually controlled, annotated tour of the desktop screens.
+// Project lead: a manually controlled, annotated tour of the desktop screens.
 export function Showreel({ items }: { items: GalleryItem[] }) {
   const [index, setIndex] = useState(0);
   const shouldReduceMotion = useReducedMotion();

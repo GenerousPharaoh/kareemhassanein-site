@@ -7,10 +7,10 @@ import { additionalProjects, advisory, principalProjects } from '@/lib/work';
 
 export const metadata: Metadata = {
   title: 'Work | Kareem Hassanein',
-  description: 'Case studies in clinical implementation, workflow automation, service design, and digital delivery.',
+  description: 'Selected projects in clinical implementation, workflow automation, service design, and digital delivery.',
   openGraph: {
     title: 'Work | Kareem Hassanein',
-    description: 'Case studies in clinical implementation, workflow automation, service design, and digital delivery.',
+    description: 'Selected projects in clinical implementation, workflow automation, service design, and digital delivery.',
     url: 'https://www.khassanein.bio/work',
     type: 'website',
     locale: 'en_CA',
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Work | Kareem Hassanein',
-    description: 'Case studies in clinical implementation, workflow automation, service design, and digital delivery.',
+    description: 'Selected projects in clinical implementation, workflow automation, service design, and digital delivery.',
     images: ['/og-image.png'],
   },
   alternates: { canonical: 'https://www.khassanein.bio/work' },
@@ -49,7 +49,7 @@ export default function WorkPage() {
       <section className="border-t border-white/[0.09] px-6 py-24 sm:px-8 md:py-32 lg:px-12 xl:px-20">
         <div className="mx-auto max-w-[1320px]">
           <div className="mb-16 flex items-baseline justify-between border-b border-white/[0.09] pb-5 md:mb-24">
-            <h2 className="text-sm font-semibold uppercase tracking-[0.18em] text-foreground/74">Principal case studies</h2>
+            <h2 className="text-sm font-semibold uppercase tracking-[0.18em] text-foreground/74">Selected projects</h2>
             <span className="font-mono text-xs text-muted-foreground">01–04</span>
           </div>
           <div className="grid gap-24 md:gap-32">

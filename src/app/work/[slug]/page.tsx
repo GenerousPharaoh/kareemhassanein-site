@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import CaseStudy from '@/components/CaseStudy';
+import ProjectDetail from '@/components/CaseStudy';
 import { orderedProjects, getProject } from '@/lib/work';
 
 interface Params {
@@ -26,7 +26,7 @@ export function generateMetadata({ params }: Params): Metadata {
       type: 'website',
       locale: 'en_CA',
       siteName: 'Kareem Hassanein',
-      images: [{ url: image, alt: project.card?.alt ?? `${project.title} case study by Kareem Hassanein` }],
+      images: [{ url: image, alt: project.card?.alt ?? `${project.title} project by Kareem Hassanein` }],
     },
     twitter: {
       card: 'summary_large_image',
@@ -40,7 +40,7 @@ export function generateMetadata({ params }: Params): Metadata {
   };
 }
 
-export default function CaseStudyPage({ params }: Params) {
+export default function ProjectPage({ params }: Params) {
   const project = getProject(params.slug);
   if (!project) notFound();
 
@@ -63,7 +63,7 @@ export default function CaseStudyPage({ params }: Params) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd).replace(/</g, '\\u003c') }}
       />
-      <CaseStudy project={project} next={next} />
+      <ProjectDetail project={project} next={next} />
     </>
   );
 }

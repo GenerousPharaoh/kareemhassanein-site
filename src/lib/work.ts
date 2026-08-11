@@ -1,5 +1,5 @@
 // Single source of truth for the portfolio: the four principal projects,
-// their case-study content, and the supporting advisory work.
+// their project detail content, and the supporting advisory work.
 
 export interface ShotMeta {
   src: string;

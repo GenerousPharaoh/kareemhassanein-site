@@ -30,14 +30,13 @@ export default function Footer() {
   return (
     <footer className="relative z-10 overflow-hidden bg-[#ece7de] text-[#25292f]">
       <div className="relative border-t border-[#25292f]/10">
-        <div className="relative lg:absolute lg:inset-0">
+        <div className="relative h-[300px] sm:h-[380px] lg:absolute lg:inset-0 lg:h-auto">
           <Image
-            src="/images/system-flow-footer-v2.webp"
+            src="/images/workflow-table-footer-v3.webp"
             alt=""
-            width={1935}
-            height={812}
+            fill
             sizes="100vw"
-            className="h-auto w-full lg:h-full lg:object-cover lg:object-center"
+            className="object-cover object-right lg:object-center"
           />
         </div>
 
