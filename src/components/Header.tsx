@@ -3,7 +3,9 @@
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion, useScroll } from 'framer-motion';
+import { ChevronDown } from 'lucide-react';
 import { usePathname } from 'next/navigation';
+import { orderedProjects } from '@/lib/work';
 
 const navItems = [
   { href: '/work', label: 'Work' },
@@ -16,6 +18,7 @@ export default function Header() {
   const pathname = usePathname();
   const { scrollY } = useScroll();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [workOpen, setWorkOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
   const lastScrollY = useRef(0);
@@ -37,6 +40,7 @@ export default function Header() {
 
   useEffect(() => {
     setIsMenuOpen(false);
+    setWorkOpen(false);
   }, [pathname]);
 
   useEffect(() => {
@@ -116,24 +120,83 @@ export default function Header() {
             <nav className="flex items-center gap-8" aria-label="Primary navigation">
               {navItems.map((item) => {
                 const active = pathname.startsWith(item.href);
+                const hasSubmenu = item.href === '/work';
                 return (
-                  <Link
+                  <div
                     key={item.href}
-                    href={item.href}
-                    aria-current={active ? 'page' : undefined}
-                    className={`relative flex min-h-11 items-center text-[12px] font-semibold uppercase tracking-[0.14em] transition-colors duration-300 ${
-                      active ? 'text-accent' : 'text-foreground/62 hover:text-foreground'
-                    }`}
+                    className="relative"
+                    onMouseEnter={hasSubmenu ? () => setWorkOpen(true) : undefined}
+                    onMouseLeave={hasSubmenu ? () => setWorkOpen(false) : undefined}
+                    onFocusCapture={hasSubmenu ? () => setWorkOpen(true) : undefined}
+                    onBlurCapture={
+                      hasSubmenu
+                        ? (event) => {
+                            if (!event.currentTarget.contains(event.relatedTarget as Node)) setWorkOpen(false);
+                          }
+                        : undefined
+                    }
                   >
-                    {item.label}
-                    {active && (
-                      <motion.span
-                        layoutId="nav-active"
-                        className="absolute inset-x-0 bottom-1 h-px bg-accent"
-                        transition={{ duration: 0.55, ease }}
-                      />
+                    <Link
+                      href={item.href}
+                      aria-current={active ? 'page' : undefined}
+                      aria-haspopup={hasSubmenu ? 'menu' : undefined}
+                      aria-expanded={hasSubmenu ? workOpen : undefined}
+                      className={`relative flex min-h-11 items-center gap-1.5 text-[12px] font-semibold uppercase tracking-[0.14em] transition-colors duration-300 ${
+                        active ? 'text-accent' : 'text-foreground/62 hover:text-foreground'
+                      }`}
+                    >
+                      {item.label}
+                      {hasSubmenu && (
+                        <ChevronDown
+                          aria-hidden="true"
+                          size={13}
+                          className={`transition-transform duration-300 ${workOpen ? 'rotate-180' : ''}`}
+                        />
+                      )}
+                      {active && (
+                        <motion.span
+                          layoutId="nav-active"
+                          className="absolute inset-x-0 bottom-1 h-px bg-accent"
+                          transition={{ duration: 0.55, ease }}
+                        />
+                      )}
+                    </Link>
+
+                    {hasSubmenu && (
+                      <AnimatePresence>
+                        {workOpen && (
+                          <motion.div
+                            initial={{ opacity: 0, y: 8 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: 6 }}
+                            transition={{ duration: 0.3, ease }}
+                            className="absolute left-1/2 top-full w-64 -translate-x-1/2 pt-3"
+                          >
+                            <div className="overflow-hidden rounded-xl border border-white/[0.1] bg-[#101114]/[0.97] p-2 shadow-[0_30px_70px_-25px_rgba(0,0,0,0.85)] backdrop-blur-xl">
+                              <Link
+                                href="/work"
+                                className="flex min-h-10 items-center justify-between rounded-lg px-4 text-[12px] font-semibold uppercase tracking-[0.12em] text-foreground/85 transition-colors duration-200 hover:bg-white/[0.05] hover:text-accent"
+                              >
+                                All work
+                              </Link>
+                              <div className="mx-2 my-1.5 h-px bg-white/[0.08]" />
+                              {orderedProjects.map((project) => (
+                                <Link
+                                  key={project.slug}
+                                  href={`/work/${project.slug}`}
+                                  className={`flex min-h-10 items-center rounded-lg px-4 text-sm transition-colors duration-200 hover:bg-white/[0.05] hover:text-accent ${
+                                    pathname === `/work/${project.slug}` ? 'text-accent' : 'text-foreground/72'
+                                  }`}
+                                >
+                                  {project.shortTitle}
+                                </Link>
+                              ))}
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
                     )}
-                  </Link>
+                  </div>
                 );
               })}
             </nav>
@@ -197,7 +260,7 @@ export default function Header() {
                     <Link
                       href={item.href}
                       aria-current={active ? 'page' : undefined}
-                      className={`flex min-h-24 items-center justify-between rounded-md px-1 text-5xl font-light tracking-tight ${
+                      className={`flex min-h-20 items-center justify-between rounded-md px-1 text-4xl font-light tracking-tight ${
                         active ? 'text-accent' : 'text-foreground/72'
                       }`}
                     >
@@ -206,6 +269,21 @@ export default function Header() {
                         {String(index + 1).padStart(2, '0')}
                       </span>
                     </Link>
+                    {item.href === '/work' && (
+                      <div className="mb-4 ml-1 border-l border-white/[0.12] pl-5">
+                        {orderedProjects.map((project) => (
+                          <Link
+                            key={project.slug}
+                            href={`/work/${project.slug}`}
+                            className={`flex min-h-10 items-center text-base ${
+                              pathname === `/work/${project.slug}` ? 'text-accent' : 'text-foreground/58'
+                            }`}
+                          >
+                            {project.shortTitle}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
                   </motion.div>
                 );
               })}

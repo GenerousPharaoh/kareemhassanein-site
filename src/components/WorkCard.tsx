@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight, Check } from 'lucide-react';
 import ScreenFrame, { FrameChrome, type FrameTone } from '@/components/ScreenFrame';
 import { HoverReel } from '@/components/Showreel';
 import type { Project } from '@/lib/work';
@@ -46,15 +46,34 @@ function ConfidentialVisual({ project, tone = 'dark' }: { project: Project; tone
     );
   }
 
-  const stages = [
-    { name: 'Structured intake', note: 'The recurring questions, asked once' },
-    { name: 'Matter facts', note: 'Verified inputs, separated from boilerplate' },
-    { name: 'Template', note: 'The document skeleton for the matter type' },
-    { name: 'Supported draft', note: 'Sections filled against the template' },
-    { name: 'Practitioner review', note: 'Facts, citations, and tone checked' },
-  ];
-
+  // Layered template-and-draft composition: the mechanism made visible
+  // (reusable slots become filled fields) without a word of client content.
   const light = tone === 'light';
+  const desk = light ? 'bg-[#E4DDCB]' : 'bg-[#14171c]';
+  const sheet = light ? 'border-black/[0.09] bg-white' : 'border-white/[0.09] bg-[#1d2127]';
+  const bar = light ? 'bg-[#ddd5c2]' : 'bg-white/[0.1]';
+  const barSoft = light ? 'bg-[#e9e2d1]' : 'bg-white/[0.06]';
+  const tag = light ? 'text-[#8a6d33]' : 'text-accent/80';
+  const slotOpen = light ? 'border-[#8a6d33]/50 text-[#8a6d33]' : 'border-accent/45 text-accent/80';
+  const slotFilled = light
+    ? 'border-[#8a6d33]/40 bg-[#8a6d33]/[0.14] text-[#6d5526]'
+    : 'border-accent/40 bg-accent/[0.14] text-accent';
+  const inkFaint = light ? 'text-[#8b8371]' : 'text-white/45';
+
+  const Slot = ({ label, filled = false, w }: { label: string; filled?: boolean; w: string }) => (
+    <span
+      className={`flex h-4 ${w} shrink-0 items-center justify-center rounded-[4px] border font-mono text-[7px] font-medium uppercase tracking-[0.14em] ${
+        filled ? slotFilled : `border-dashed ${slotOpen}`
+      }`}
+    >
+      {label}
+    </span>
+  );
+
+  const Bar = ({ w, soft = false }: { w: string; soft?: boolean }) => (
+    <span className={`h-1.5 ${w} rounded-full ${soft ? barSoft : bar}`} />
+  );
+
   return (
     <div
       className={`overflow-hidden rounded-xl md:rounded-2xl ${
@@ -64,26 +83,41 @@ function ConfidentialVisual({ project, tone = 'dark' }: { project: Project; tone
       }`}
     >
       <FrameChrome url="drafting workflow · confidential" tone={tone} />
-      <div className="flex aspect-[16/10] flex-col justify-center gap-1 px-6 py-6 sm:px-8 md:px-10">
-        {stages.map((stage, i) => (
-          <div
-            key={stage.name}
-            className={`flex items-baseline gap-4 border-b py-2.5 last:border-b-0 sm:py-3 ${
-              light ? 'border-black/[0.07]' : 'border-white/[0.06]'
-            }`}
-          >
-            <span className={`w-5 font-mono text-[11px] ${light ? 'text-[#8a6d33]' : 'text-accent/70'}`}>{i + 1}</span>
-            <span className={`min-w-0 flex-1 text-sm font-medium sm:text-[15px] ${light ? 'text-[#211c13]' : 'text-foreground/88'}`}>
-              {stage.name}
+      <div className={`relative aspect-[16/10] overflow-hidden ${desk}`}>
+        {/* Template sheet */}
+        <div className={`absolute left-[6%] top-[9%] w-[52%] rounded-lg border p-4 sm:p-5 ${sheet} ${light ? 'shadow-[0_18px_40px_-22px_rgba(35,28,14,0.5)]' : 'shadow-[0_18px_40px_-20px_rgba(0,0,0,0.8)]'}`}>
+          <p className={`mb-3 font-mono text-[8px] font-semibold uppercase tracking-[0.22em] ${tag}`}>Template</p>
+          <div className={`mb-3 h-2 w-2/5 rounded-full ${bar}`} />
+          <div className="space-y-2">
+            <div className="flex items-center gap-2"><Bar w="w-full" soft /></div>
+            <div className="flex items-center gap-2"><Bar w="w-1/4" soft /><Slot label="client" w="w-16" /><Bar w="w-1/3" soft /></div>
+            <div className="flex items-center gap-2"><Bar w="w-full" soft /></div>
+            <div className="flex items-center gap-2"><Slot label="tax years" w="w-20" /><Bar w="w-1/2" soft /></div>
+            <div className="flex items-center gap-2"><Bar w="w-2/3" soft /><Slot label="amount" w="w-16" /></div>
+            <div className="flex items-center gap-2"><Bar w="w-3/4" soft /></div>
+          </div>
+        </div>
+
+        {/* Draft sheet, assembled from the template */}
+        <div className={`absolute bottom-[8%] right-[6%] w-[56%] rounded-lg border p-4 sm:p-5 ${sheet} ${light ? 'shadow-[0_26px_55px_-24px_rgba(35,28,14,0.62)]' : 'shadow-[0_26px_55px_-22px_rgba(0,0,0,0.92)]'}`}>
+          <p className={`mb-3 font-mono text-[8px] font-semibold uppercase tracking-[0.22em] ${tag}`}>Draft</p>
+          <div className={`mb-3 h-2 w-1/2 rounded-full ${bar}`} />
+          <div className="space-y-2">
+            <div className="flex items-center gap-2"><Bar w="w-full" /></div>
+            <div className="flex items-center gap-2"><Bar w="w-1/4" /><Slot label="client" filled w="w-16" /><Bar w="w-1/3" /></div>
+            <div className="flex items-center gap-2"><Slot label="tax years" filled w="w-20" /><Bar w="w-1/2" /></div>
+            <div className="flex items-center gap-2"><Bar w="w-2/3" /><Slot label="amount" filled w="w-16" /></div>
+            <div className="flex items-center gap-2"><Bar w="w-full" /></div>
+          </div>
+          <div className={`mt-4 flex items-center gap-2 border-t pt-3 ${light ? 'border-black/[0.08]' : 'border-white/[0.08]'}`}>
+            <span className={`flex h-4 w-4 items-center justify-center rounded-full border ${light ? 'border-[#8a6d33]/60' : 'border-accent/60'}`}>
+              <Check aria-hidden="true" size={9} className={light ? 'text-[#8a6d33]' : 'text-accent'} />
             </span>
-            <span className={`hidden max-w-[45%] text-right text-xs leading-snug sm:block ${light ? 'text-[#6b6353]' : 'text-muted-foreground'}`}>
-              {stage.note}
+            <span className={`font-mono text-[8px] font-semibold uppercase tracking-[0.22em] ${inkFaint}`}>
+              Practitioner reviewed
             </span>
           </div>
-        ))}
-        <p className={`mt-4 text-xs leading-relaxed ${light ? 'text-[#6b6353]' : 'text-muted-foreground'}`}>
-          Client documents are confidential; the project page shows the reconstructed process.
-        </p>
+        </div>
       </div>
     </div>
   );
