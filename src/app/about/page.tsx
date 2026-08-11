@@ -138,8 +138,8 @@ export default function About() {
           >
             <div className="relative aspect-[2/3] overflow-hidden rounded-[1.25rem] border border-white/[0.08] bg-white/[0.02] shadow-[0_35px_90px_-45px_rgba(0,0,0,0.95)]">
               <Image
-                src="/images/kareem-clinical-systems-about-v7.webp"
-                alt="Kareem holding a tablet between a clinical consultation and a team reviewing a workflow"
+                src="/images/kareem-solo-systems-about-v8.webp"
+                alt="An illustrated portrait of Kareem holding a tablet in a studio with clinical and workflow elements"
                 fill
                 priority
                 sizes="(max-width: 1024px) 90vw, 500px"
