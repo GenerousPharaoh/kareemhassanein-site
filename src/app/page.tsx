@@ -85,17 +85,17 @@ export default function Home() {
                 workflows into practical processes and digital tools, guide adoption, and refine the work until it
                 holds up in day-to-day use.
               </p>
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row lg:flex-col xl:flex-row">
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row lg:flex-col xl:flex-row xl:gap-2">
                 <Link
                   href="/work"
-                  className="group inline-flex min-h-12 items-center justify-center gap-3 rounded-full bg-accent px-7 text-sm font-semibold text-background transition-colors duration-500 hover:bg-accent/90"
+                  className="group inline-flex min-h-12 items-center justify-center gap-3 whitespace-nowrap rounded-full bg-accent px-5 text-sm font-semibold text-background transition-colors duration-500 hover:bg-accent/90"
                 >
                   Explore the work
                   <ArrowDown aria-hidden="true" size={16} className="transition-transform duration-500 group-hover:translate-y-0.5" />
                 </Link>
                 <Link
                   href="/contact"
-                  className="inline-flex min-h-12 items-center justify-center rounded-full border border-white/[0.14] px-7 text-sm font-semibold text-foreground/78 transition-colors duration-500 hover:border-accent/45 hover:text-foreground"
+                  className="inline-flex min-h-12 items-center justify-center whitespace-nowrap rounded-full border border-white/[0.14] px-5 text-sm font-semibold text-foreground/78 transition-colors duration-500 hover:border-accent/45 hover:text-foreground"
                 >
                   Start a conversation
                 </Link>
