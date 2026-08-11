@@ -138,8 +138,8 @@ export default function About() {
           >
             <div className="relative aspect-[2/3] overflow-hidden rounded-[1.25rem] border border-white/[0.08] bg-white/[0.02] shadow-[0_35px_90px_-45px_rgba(0,0,0,0.95)]">
               <Image
-                src="/images/about-workflow-v3.webp"
-                alt="A tangled set of notes being drawn into a clear workflow for a waiting team"
+                src="/images/system-weaver-about-v5.webp"
+                alt="A professional guides many signals through a glass and brass system where they resolve into clear pathways"
                 fill
                 priority
                 sizes="(max-width: 1024px) 90vw, 500px"
@@ -150,7 +150,7 @@ export default function About() {
                 <span className="block text-[10px] font-medium tracking-[0.2em] uppercase text-accent/70 mb-1.5">
                   Working principle
                 </span>
-                <span className="text-sm text-foreground/[0.82]">From friction to a workflow people can use.</span>
+                <span className="text-sm text-foreground/[0.82]">Human judgment turns technology into a system that works.</span>
               </figcaption>
             </div>
           </motion.figure>
