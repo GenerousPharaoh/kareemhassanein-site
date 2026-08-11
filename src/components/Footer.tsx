@@ -32,7 +32,7 @@ export default function Footer() {
       <div className="relative border-t border-white/[0.09]">
         <div className="relative h-[300px] sm:h-[380px] lg:absolute lg:inset-0 lg:h-auto">
           <Image
-            src="/images/signal-instrument-footer-v5.webp"
+            src="/images/navigator-footer-v6.webp"
             alt=""
             fill
             sizes="100vw"
