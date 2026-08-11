@@ -178,7 +178,10 @@ export default function CaseStudy({ project, next }: { project: Project; next: P
 
       {/* One key decision */}
       <section className="px-6 md:px-12 xl:px-20 py-14 md:py-20 relative overflow-hidden">
-        <div className="absolute inset-0 z-0 bg-[hsl(222,14%,10%)]/35" />
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 z-0 pointer-events-none bg-gradient-to-b from-transparent via-[hsl(222,15%,7.2%)] to-transparent opacity-80"
+        />
         <div className="max-w-[1100px] mx-auto relative z-10">
           <ScrollReveal direction="up">
             <SectionLabel>One key decision</SectionLabel>

@@ -45,6 +45,29 @@ const heroShots = {
   },
 };
 
+// Numbered section eyebrow, echoing the guided-chapter rhythm: numeral,
+// hairline, label.
+function Eyebrow({ n, children }: { n: string; children: React.ReactNode }) {
+  return (
+    <p className="flex items-center gap-3.5 text-[10px] md:text-xs font-medium tracking-[0.28em] uppercase text-accent/70 mb-5">
+      <span className="font-serif italic text-base md:text-lg leading-none text-accent/50 tracking-normal normal-case">{n}</span>
+      <span aria-hidden="true" className="h-px w-10 bg-accent/30" />
+      {children}
+    </p>
+  );
+}
+
+// Soft wash that deepens mid-section and dissolves at both edges, so
+// sections blend instead of switching.
+function SectionWash() {
+  return (
+    <div
+      aria-hidden="true"
+      className="absolute inset-0 z-0 pointer-events-none bg-gradient-to-b from-transparent via-[hsl(222,15%,7.2%)] to-transparent opacity-80"
+    />
+  );
+}
+
 // Masked line reveal for the display name.
 function RevealLine({ children, delay, className = '' }: { children: React.ReactNode; delay: number; className?: string }) {
   return (
@@ -226,13 +249,11 @@ export default function Home() {
       </section>
 
       {/* Featured projects */}
-      <section className="py-20 md:py-28 relative z-10 w-full px-6 md:px-12 xl:px-20 overflow-hidden">
-        <div className="absolute inset-0 z-0 bg-[hsl(222,14%,10%)]/35" />
+      <section className="py-24 md:py-32 relative z-10 w-full px-6 md:px-12 xl:px-20 overflow-hidden">
+        <SectionWash />
         <div className="max-w-[1280px] mx-auto relative z-10">
           <ScrollReveal direction="up" className="mb-14 md:mb-20">
-            <p className="text-[10px] md:text-xs font-medium tracking-[0.3em] uppercase text-accent/70 mb-4">
-              Selected Work
-            </p>
+            <Eyebrow n="01">Selected Work</Eyebrow>
             <h2 className="text-3xl md:text-5xl font-medium tracking-tight text-balance leading-[1.05]">
               Four projects, <span className="text-accent/90 italic font-serif">in depth.</span>
             </h2>
@@ -253,12 +274,10 @@ export default function Home() {
       </section>
 
       {/* Supporting advisory work */}
-      <section className="py-20 md:py-24 px-6 md:px-12 xl:px-20">
+      <section className="py-24 md:py-32 px-6 md:px-12 xl:px-20">
         <div className="max-w-[1280px] mx-auto">
           <ScrollReveal direction="up">
-            <p className="text-[10px] md:text-xs font-medium tracking-[0.25em] uppercase text-accent/70 mb-4">
-              Beyond the case studies
-            </p>
+            <Eyebrow n="02">Beyond the case studies</Eyebrow>
             <h2 className="text-2xl md:text-3xl font-medium tracking-tight mb-10 md:mb-12">
               Selected implementation &amp; advisory <span className="text-accent/90 italic font-serif">work.</span>
             </h2>
@@ -278,14 +297,12 @@ export default function Home() {
       </section>
 
       {/* Approach */}
-      <section id="approach" className="py-20 md:py-28 px-6 md:px-12 xl:px-20 relative overflow-hidden scroll-mt-24">
-        <div className="absolute inset-0 z-0 bg-[hsl(222,14%,10%)]/35" />
+      <section id="approach" className="py-24 md:py-32 px-6 md:px-12 xl:px-20 relative overflow-hidden scroll-mt-24">
+        <SectionWash />
         <div className="max-w-[1280px] mx-auto relative z-10">
           <div className="grid lg:grid-cols-[0.9fr_1.4fr] gap-12 lg:gap-20 items-start">
             <ScrollReveal direction="up" className="lg:sticky lg:top-32">
-              <p className="text-[10px] md:text-xs font-medium tracking-[0.25em] uppercase text-accent/70 mb-6">
-                How I approach the work
-              </p>
+              <Eyebrow n="03">How I approach the work</Eyebrow>
               <h2 className="text-3xl md:text-4xl font-medium tracking-tight leading-[1.1] mb-6 text-balance">
                 Fit the system to the workflow, <span className="text-accent/90 italic font-serif">not the other way around.</span>
               </h2>
@@ -313,12 +330,10 @@ export default function Home() {
       </section>
 
       {/* Areas of work */}
-      <section className="py-20 md:py-24 px-6 md:px-12 xl:px-20">
+      <section className="py-24 md:py-32 px-6 md:px-12 xl:px-20">
         <div className="max-w-[1280px] mx-auto">
           <ScrollReveal direction="up">
-            <p className="text-[10px] md:text-xs font-medium tracking-[0.25em] uppercase text-accent/70 mb-4">
-              Areas of work
-            </p>
+            <Eyebrow n="04">Areas of work</Eyebrow>
             <h2 className="text-2xl md:text-3xl font-medium tracking-tight mb-10 md:mb-12">
               Where the projects <span className="text-accent/90 italic font-serif">come from.</span>
             </h2>
@@ -343,7 +358,11 @@ export default function Home() {
         </div>
         <div className="relative z-10 max-w-3xl mx-auto text-center">
           <ScrollReveal direction="up">
-            <p className="text-[10px] md:text-xs font-medium tracking-[0.3em] uppercase text-accent/70 mb-6">About</p>
+            <p className="flex items-center justify-center gap-3.5 text-[10px] md:text-xs font-medium tracking-[0.3em] uppercase text-accent/70 mb-6">
+              <span className="font-serif italic text-base md:text-lg leading-none text-accent/50 tracking-normal normal-case">05</span>
+              <span aria-hidden="true" className="h-px w-10 bg-accent/30" />
+              About
+            </p>
             <h2 className="text-3xl md:text-5xl font-medium tracking-tight leading-[1.08] text-balance mb-6">
               A clinical background applied <span className="text-accent/90 italic font-serif">beyond the treatment room.</span>
             </h2>
