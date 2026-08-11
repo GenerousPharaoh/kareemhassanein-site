@@ -2,7 +2,6 @@
 
 import type { CSSProperties } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { ArrowDown, ArrowUpRight } from 'lucide-react';
 import ScrollReveal from '@/components/ScrollReveal';
 import WorkCard from '@/components/WorkCard';
@@ -115,17 +114,8 @@ export default function Home() {
         <div className="mx-auto max-w-[1320px]">
           <div className="grid gap-12 lg:grid-cols-12 lg:gap-20">
             <ScrollReveal direction="up" className="lg:col-span-5">
-              <p className="mb-5 text-xs font-semibold uppercase tracking-[0.2em] text-accent/80">Current advisory work</p>
-              <h2 className="max-w-xl text-4xl font-medium tracking-[-0.045em] sm:text-5xl">Clinical context, applied early.</h2>
-              <figure className="relative mt-10 aspect-[4/3] overflow-hidden rounded-[1.5rem] border border-white/[0.1] bg-white/[0.02]">
-                <Image
-                  src="/images/work/endorphins-services.webp"
-                  alt="Six clinical services presented as one coordinated clinic at Endorphins"
-                  fill
-                  sizes="(min-width: 1024px) 500px, calc(100vw - 3rem)"
-                  className="object-cover object-top"
-                />
-              </figure>
+              <p className="mb-5 text-xs font-semibold uppercase tracking-[0.2em] text-accent/80">Advisory</p>
+              <h2 className="max-w-xl text-4xl font-medium tracking-[-0.045em] sm:text-5xl">Current advisory work.</h2>
             </ScrollReveal>
             <div className="border-t border-white/[0.11] lg:col-span-7">
               {advisory.map((item) => (

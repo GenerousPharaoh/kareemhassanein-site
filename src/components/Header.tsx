@@ -17,14 +17,23 @@ export default function Header() {
   const { scrollY } = useScroll();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const lastScrollY = useRef(0);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     return scrollY.on('change', (latest) => {
       setScrolled(latest > 24);
+      if (isMenuOpen) {
+        setHidden(false);
+      } else {
+        const goingDown = latest > lastScrollY.current;
+        setHidden(goingDown && latest > 160);
+      }
+      lastScrollY.current = latest;
     });
-  }, [scrollY]);
+  }, [scrollY, isMenuOpen]);
 
   useEffect(() => {
     setIsMenuOpen(false);
@@ -75,7 +84,11 @@ export default function Header() {
 
   return (
     <>
-      <motion.div className="fixed inset-x-0 top-0 z-50 px-5 pt-[env(safe-area-inset-top)] sm:px-6 lg:px-10">
+      <motion.div
+        animate={{ y: hidden ? '-110%' : '0%' }}
+        transition={{ duration: 0.45, ease }}
+        className="fixed inset-x-0 top-0 z-50 px-5 pt-[env(safe-area-inset-top)] sm:px-6 lg:px-10"
+      >
         <header
           className={`mx-auto flex min-h-20 max-w-[1380px] items-center justify-between border-b px-0 transition-all duration-500 ${
             scrolled

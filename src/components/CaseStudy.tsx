@@ -182,29 +182,6 @@ export default function ProjectDetail({ project, next }: { project: Project; nex
             </motion.div>
           </div>
 
-          {project.proof && project.proof.length > 0 && (
-            <motion.dl
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.75, delay: 0.28, ease }}
-              className="mt-12 grid border-y border-white/[0.09] sm:grid-cols-3 md:mt-16"
-              aria-label="Project evidence"
-            >
-              {project.proof.map((item) => (
-                <div
-                  key={`${item.value}-${item.label}`}
-                  className="border-b border-white/[0.08] py-5 last:border-b-0 sm:border-b-0 sm:border-r sm:px-6 sm:last:border-r-0 sm:first:pl-0 sm:last:pr-0 md:py-6"
-                >
-                  <dt className="mb-2 text-[11px] font-medium tracking-[0.16em] uppercase text-muted-foreground/80">
-                    {item.label}
-                  </dt>
-                  <dd className="text-3xl md:text-4xl font-medium tracking-[-0.045em] text-foreground/95">
-                    {item.value}
-                  </dd>
-                </div>
-              ))}
-            </motion.dl>
-          )}
         </div>
       </section>
 

@@ -46,24 +46,28 @@ function ConfidentialVisual({ project }: { project: Project }) {
     );
   }
 
+  const stages = [
+    { name: 'Structured intake', note: 'The recurring questions, asked once' },
+    { name: 'Matter facts', note: 'Verified inputs, separated from boilerplate' },
+    { name: 'Template', note: 'The document skeleton for the matter type' },
+    { name: 'Supported draft', note: 'Sections filled against the template' },
+    { name: 'Practitioner review', note: 'Facts, citations, and tone checked' },
+  ];
+
   return (
     <div className="overflow-hidden rounded-xl border border-white/[0.1] bg-[#171a1f] shadow-[0_28px_70px_-32px_rgba(0,0,0,0.9)] md:rounded-2xl">
       <FrameChrome url="drafting workflow · confidential" />
-      <div className="grid aspect-[16/10] grid-cols-2 divide-x divide-white/[0.09]">
-        <div className="flex flex-col justify-between p-6 sm:p-8 md:p-10">
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">Before</p>
-          <div>
-            <p className="text-4xl font-medium tracking-[-0.05em] text-foreground sm:text-5xl">~3 hrs</p>
-            <p className="mt-3 max-w-44 text-sm leading-relaxed text-muted-foreground">Drafted largely from scratch for each matter.</p>
+      <div className="flex aspect-[16/10] flex-col justify-center gap-1 px-6 py-6 sm:px-8 md:px-10">
+        {stages.map((stage, i) => (
+          <div key={stage.name} className="flex items-baseline gap-4 border-b border-white/[0.06] py-2.5 last:border-b-0 sm:py-3">
+            <span className="w-5 font-mono text-[11px] text-accent/70">{i + 1}</span>
+            <span className="min-w-0 flex-1 text-sm font-medium text-foreground/88 sm:text-[15px]">{stage.name}</span>
+            <span className="hidden max-w-[45%] text-right text-xs leading-snug text-muted-foreground sm:block">{stage.note}</span>
           </div>
-        </div>
-        <div className="flex flex-col justify-between bg-accent/[0.06] p-6 sm:p-8 md:p-10">
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent/80">Structured workflow</p>
-          <div>
-            <p className="text-4xl font-medium tracking-[-0.05em] text-accent sm:text-5xl">~30 min</p>
-            <p className="mt-3 max-w-44 text-sm leading-relaxed text-foreground/66">Reusable templates with quality checkpoints.</p>
-          </div>
-        </div>
+        ))}
+        <p className="mt-4 text-xs leading-relaxed text-muted-foreground">
+          Client documents are confidential; the project page shows the reconstructed process.
+        </p>
       </div>
     </div>
   );
@@ -138,16 +142,6 @@ export default function WorkCard({
             </Heading>
             <p className="mt-5 max-w-xl text-[15px] leading-relaxed text-muted-foreground sm:text-base">{project.summary}</p>
 
-            {project.proof && (
-              <dl className="mt-7 grid grid-cols-3 border-y border-white/[0.09] py-4">
-                {project.proof.map((item) => (
-                  <div key={`${item.value}-${item.label}`} className="border-l border-white/[0.09] px-3 first:border-l-0 first:pl-0">
-                    <dt className="text-[10px] font-medium leading-tight text-muted-foreground sm:text-xs">{item.label}</dt>
-                    <dd className="mb-1 text-base font-semibold tracking-tight text-foreground sm:text-lg">{item.value}</dd>
-                  </div>
-                ))}
-              </dl>
-            )}
 
             <span className="mt-6 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-foreground/74 transition-colors duration-500 group-hover:text-accent">
               View project

@@ -34,10 +34,6 @@ export interface Project {
   confidentialNote?: string;
   contextLabel?: string;
   tier?: 'principal' | 'additional';
-  proof?: Array<{
-    value: string;
-    label: string;
-  }>;
 }
 
 const DESKTOP = { width: 1440, height: 900 } as const;
@@ -79,11 +75,6 @@ export const projects: Project[] = [
       'Evaluation, configuration, training, SOP development, go-live support, and post-launch refinement were led by me on the clinic side.',
     size: 'large',
     tier: 'additional',
-    proof: [
-      { value: '100%', label: 'team adoption' },
-      { value: '8 weeks', label: 'to full adoption' },
-      { value: '~3 hrs', label: 'saved weekly per practitioner' },
-    ],
   },
   {
     slug: 'kinetikare',
@@ -176,11 +167,6 @@ export const projects: Project[] = [
     },
     size: 'large',
     tier: 'principal',
-    proof: [
-      { value: '60+', label: 'pages across the platform' },
-      { value: '55', label: 'condition pages' },
-      { value: '6', label: 'treatment pages' },
-    ],
   },
   {
     slug: 'endorphins',
@@ -272,11 +258,6 @@ export const projects: Project[] = [
     },
     size: 'large',
     tier: 'principal',
-    proof: [
-      { value: '6', label: 'clinical specialties' },
-      { value: '8', label: 'municipalities supported' },
-      { value: '5', label: 'referral pathways into physiotherapy' },
-    ],
   },
   {
     slug: 'tax-relief-counsel',
@@ -312,11 +293,6 @@ export const projects: Project[] = [
       'Workflow mapping, template design, prompt design, and quality assurance led by me; the drafting tooling was built with Claude Code around the practice’s existing habits.',
     size: 'large',
     tier: 'principal',
-    proof: [
-      { value: '~3 hrs', label: 'before per matter' },
-      { value: '~30 min', label: 'after per matter' },
-      { value: '5', label: 'stages from intake to reviewed draft' },
-    ],
   },
   {
     slug: 'wedding-website',
@@ -400,11 +376,6 @@ export const projects: Project[] = [
     },
     size: 'small',
     tier: 'additional',
-    proof: [
-      { value: '10', label: 'sections in one guided scroll' },
-      { value: '7 days', label: 'of optional travel, planned day by day' },
-      { value: '40', label: 'photographs woven through the story' },
-    ],
   },
 ];
 
