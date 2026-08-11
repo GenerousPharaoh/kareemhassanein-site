@@ -88,7 +88,10 @@ export default function Header() {
             className="group flex min-h-11 items-center gap-3 rounded-md pr-3 text-foreground"
             aria-label="Kareem Hassanein, home"
           >
-            <span className="flex h-8 w-8 items-center justify-center rounded-md border border-accent/35 font-serif text-sm font-medium text-accent transition-colors duration-500 group-hover:border-accent/70">
+            <span
+              aria-hidden="true"
+              className="flex h-8 w-8 items-center justify-center rounded-md border border-accent/35 font-serif text-sm font-medium text-accent transition-colors duration-500 group-hover:border-accent/70"
+            >
               KH
             </span>
             <span className="hidden text-[12px] font-semibold uppercase tracking-[0.18em] text-foreground/78 transition-colors duration-500 group-hover:text-foreground sm:block">
