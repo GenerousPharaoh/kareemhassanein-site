@@ -3,19 +3,22 @@
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
-import { frameShell } from '@/components/ScreenFrame';
+import { frameShellFor, type FrameTone } from '@/components/ScreenFrame';
 import type { ShotMeta } from '@/lib/work';
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
 // Browser chrome whose address bar crossfades as the reel "navigates".
-function ReelChrome({ url, reduceMotion = false }: { url?: string; reduceMotion?: boolean }) {
+function ReelChrome({ url, reduceMotion = false, tone = 'dark' }: { url?: string; reduceMotion?: boolean; tone?: FrameTone }) {
+  const bar = tone === 'light' ? 'border-b border-black/[0.07] bg-[#f4f0e7]' : 'border-b border-white/[0.06] bg-[hsl(222,12%,11%)]';
+  const dot = tone === 'light' ? 'bg-black/[0.14]' : 'bg-white/[0.12]';
+  const urlText = tone === 'light' ? 'text-[#6b6353]' : 'text-muted-foreground/80';
   return (
-    <div className="relative flex items-center gap-2 px-4 py-2.5 border-b border-white/[0.06] bg-[hsl(222,12%,11%)]">
+    <div className={`relative flex items-center gap-2 px-4 py-2.5 ${bar}`}>
       <span className="flex gap-1.5" aria-hidden="true">
-        <span className="w-2 h-2 rounded-full bg-white/[0.12]" />
-        <span className="w-2 h-2 rounded-full bg-white/[0.12]" />
-        <span className="w-2 h-2 rounded-full bg-white/[0.12]" />
+        <span className={`w-2 h-2 rounded-full ${dot}`} />
+        <span className={`w-2 h-2 rounded-full ${dot}`} />
+        <span className={`w-2 h-2 rounded-full ${dot}`} />
       </span>
       <span className="mx-auto pr-8 h-[15px] overflow-hidden">
         <AnimatePresence mode="wait" initial={false}>
@@ -25,7 +28,7 @@ function ReelChrome({ url, reduceMotion = false }: { url?: string; reduceMotion?
             animate={{ opacity: 1, y: 0 }}
             exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -8 }}
             transition={{ duration: reduceMotion ? 0 : 0.45, ease }}
-            className="block text-[10px] font-mono tracking-wide text-muted-foreground/80 truncate"
+            className={`block text-[10px] font-mono tracking-wide truncate ${urlText}`}
           >
             {url ?? ''}
           </motion.span>
@@ -43,10 +46,12 @@ export function HoverReel({
   items,
   active,
   sizes = '(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 640px',
+  tone = 'dark',
 }: {
   items: ShotMeta[];
   active: boolean;
   sizes?: string;
+  tone?: FrameTone;
 }) {
   const [index, setIndex] = useState(0);
   // Only the lead screen mounts until the card is actually interacted with.
@@ -78,8 +83,8 @@ export function HoverReel({
   if (!current) return null;
 
   return (
-    <div className={frameShell}>
-      <ReelChrome url={current.url} reduceMotion={!!shouldReduceMotion} />
+    <div className={frameShellFor(tone)}>
+      <ReelChrome url={current.url} reduceMotion={!!shouldReduceMotion} tone={tone} />
       <div className="relative aspect-[16/10] overflow-hidden">
         {mounted.map((item, i) => {
           const isCurrent = i === index;

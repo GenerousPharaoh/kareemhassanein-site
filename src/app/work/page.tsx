@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
 import ScrollReveal from '@/components/ScrollReveal';
+import ScreenFrame from '@/components/ScreenFrame';
 import WorkCard from '@/components/WorkCard';
 import { additionalProjects, advisory, principalProjects } from '@/lib/work';
 
@@ -46,17 +47,17 @@ export default function WorkPage() {
         </div>
       </section>
 
-      <section className="border-t border-white/[0.09] px-6 py-24 sm:px-8 md:py-32 lg:px-12 xl:px-20">
+      <section className="bg-[#ECE6D9] px-6 py-24 text-[#1c1812] sm:px-8 md:py-32 lg:px-12 xl:px-20">
         <div className="mx-auto max-w-[1320px]">
-          <div className="mb-16 flex items-baseline justify-between border-b border-white/[0.09] pb-5 md:mb-24">
-            <h2 className="text-sm font-semibold uppercase tracking-[0.18em] text-foreground/74">Selected projects</h2>
-            <span className="font-mono text-xs text-muted-foreground">
+          <div className="mb-16 flex items-baseline justify-between border-b border-black/[0.14] pb-5 md:mb-24">
+            <h2 className="text-sm font-semibold uppercase tracking-[0.18em] text-[#1c1812]/74">Selected projects</h2>
+            <span className="font-mono text-xs text-[#6b6353]">
               01–{String(principalProjects.length).padStart(2, '0')}
             </span>
           </div>
           <div className="grid gap-24 md:gap-32">
             {principalProjects.map((project, index) => (
-              <WorkCard key={project.slug} project={project} index={index} variant="row" flip={index % 2 === 1} headingLevel={3} />
+              <WorkCard key={project.slug} project={project} index={index} variant="row" flip={index % 2 === 1} headingLevel={3} tone="light" />
             ))}
           </div>
         </div>
@@ -74,8 +75,15 @@ export default function WorkPage() {
                 <Link
                   key={project.slug}
                   href={`/work/${project.slug}`}
-                  className="group grid min-h-28 items-center gap-5 border-y border-white/[0.1] py-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent sm:grid-cols-[1fr_auto]"
+                  className="group grid min-h-28 items-center gap-6 border-y border-white/[0.1] py-7 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent sm:grid-cols-[auto_1fr_auto]"
                 >
+                  {project.card ? (
+                    <div className="hidden w-44 shrink-0 transition-transform duration-500 group-hover:-translate-y-0.5 sm:block">
+                      <ScreenFrame shot={project.card} sizes="176px" />
+                    </div>
+                  ) : (
+                    <span className="hidden sm:block" aria-hidden="true" />
+                  )}
                   <div>
                     <h3 className="text-2xl font-medium tracking-[-0.035em] transition-colors group-hover:text-accent">{project.title}</h3>
                     <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted-foreground">{project.summary}</p>

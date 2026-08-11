@@ -4,11 +4,11 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
-import ScreenFrame, { FrameChrome } from '@/components/ScreenFrame';
+import ScreenFrame, { FrameChrome, type FrameTone } from '@/components/ScreenFrame';
 import { HoverReel } from '@/components/Showreel';
 import type { Project } from '@/lib/work';
 
-function ConfidentialVisual({ project }: { project: Project }) {
+function ConfidentialVisual({ project, tone = 'dark' }: { project: Project; tone?: FrameTone }) {
   if (project.slug === 'clinical-documentation') {
     return (
       <div className="overflow-hidden rounded-xl border border-white/[0.1] bg-[#171a1f] shadow-[0_28px_70px_-32px_rgba(0,0,0,0.9)] md:rounded-2xl">
@@ -54,18 +54,34 @@ function ConfidentialVisual({ project }: { project: Project }) {
     { name: 'Practitioner review', note: 'Facts, citations, and tone checked' },
   ];
 
+  const light = tone === 'light';
   return (
-    <div className="overflow-hidden rounded-xl border border-white/[0.1] bg-[#171a1f] shadow-[0_28px_70px_-32px_rgba(0,0,0,0.9)] md:rounded-2xl">
-      <FrameChrome url="drafting workflow · confidential" />
+    <div
+      className={`overflow-hidden rounded-xl md:rounded-2xl ${
+        light
+          ? 'border border-black/[0.1] bg-white shadow-[0_26px_60px_-30px_rgba(35,28,14,0.45)]'
+          : 'border border-white/[0.1] bg-[#171a1f] shadow-[0_28px_70px_-32px_rgba(0,0,0,0.9)]'
+      }`}
+    >
+      <FrameChrome url="drafting workflow · confidential" tone={tone} />
       <div className="flex aspect-[16/10] flex-col justify-center gap-1 px-6 py-6 sm:px-8 md:px-10">
         {stages.map((stage, i) => (
-          <div key={stage.name} className="flex items-baseline gap-4 border-b border-white/[0.06] py-2.5 last:border-b-0 sm:py-3">
-            <span className="w-5 font-mono text-[11px] text-accent/70">{i + 1}</span>
-            <span className="min-w-0 flex-1 text-sm font-medium text-foreground/88 sm:text-[15px]">{stage.name}</span>
-            <span className="hidden max-w-[45%] text-right text-xs leading-snug text-muted-foreground sm:block">{stage.note}</span>
+          <div
+            key={stage.name}
+            className={`flex items-baseline gap-4 border-b py-2.5 last:border-b-0 sm:py-3 ${
+              light ? 'border-black/[0.07]' : 'border-white/[0.06]'
+            }`}
+          >
+            <span className={`w-5 font-mono text-[11px] ${light ? 'text-[#8a6d33]' : 'text-accent/70'}`}>{i + 1}</span>
+            <span className={`min-w-0 flex-1 text-sm font-medium sm:text-[15px] ${light ? 'text-[#211c13]' : 'text-foreground/88'}`}>
+              {stage.name}
+            </span>
+            <span className={`hidden max-w-[45%] text-right text-xs leading-snug sm:block ${light ? 'text-[#6b6353]' : 'text-muted-foreground'}`}>
+              {stage.note}
+            </span>
           </div>
         ))}
-        <p className="mt-4 text-xs leading-relaxed text-muted-foreground">
+        <p className={`mt-4 text-xs leading-relaxed ${light ? 'text-[#6b6353]' : 'text-muted-foreground'}`}>
           Client documents are confidential; the project page shows the reconstructed process.
         </p>
       </div>
@@ -80,6 +96,7 @@ interface WorkCardProps {
   flip?: boolean;
   className?: string;
   headingLevel?: 2 | 3;
+  tone?: FrameTone;
 }
 
 export default function WorkCard({
@@ -89,6 +106,7 @@ export default function WorkCard({
   flip = false,
   className = '',
   headingLevel = 3,
+  tone = 'dark',
 }: WorkCardProps) {
   const Heading = headingLevel === 2 ? 'h2' : 'h3';
   const [hovered, setHovered] = useState(false);
@@ -104,12 +122,13 @@ export default function WorkCard({
   const cardSizes = variant === 'row' ? '(max-width: 1024px) 100vw, 680px' : '(max-width: 768px) 100vw, 640px';
 
   const visual = reelItems.length > 1 ? (
-    <HoverReel items={reelItems} active={hovered} sizes={cardSizes} />
+    <HoverReel items={reelItems} active={hovered} sizes={cardSizes} tone={tone} />
   ) : project.card ? (
-    <ScreenFrame shot={project.card} sizes={cardSizes} />
+    <ScreenFrame shot={project.card} sizes={cardSizes} tone={tone} />
   ) : (
-    <ConfidentialVisual project={project} />
+    <ConfidentialVisual project={project} tone={tone} />
   );
+  const light = tone === 'light';
 
   return (
     <motion.article
@@ -132,18 +151,18 @@ export default function WorkCard({
           </div>
 
           <div className={`${variant === 'row' ? `lg:col-span-5 lg:py-5 ${flip ? 'lg:order-1' : ''}` : 'mt-7'}`}>
-            <p className="mb-4 text-xs font-semibold uppercase tracking-[0.18em] text-accent/80">
+            <p className={`mb-4 text-xs font-semibold uppercase tracking-[0.18em] ${light ? 'text-[#8a6d33]' : 'text-accent/80'}`}>
               {project.contextLabel ?? project.category}
             </p>
             <Heading
-              className={`${variant === 'row' ? 'text-3xl sm:text-4xl lg:text-[2.8rem]' : 'text-2xl sm:text-3xl'} font-medium leading-[1.02] tracking-[-0.045em] text-foreground transition-colors duration-500 group-hover:text-accent`}
+              className={`${variant === 'row' ? 'text-3xl sm:text-4xl lg:text-[2.8rem]' : 'text-2xl sm:text-3xl'} font-medium leading-[1.02] tracking-[-0.045em] transition-colors duration-500 ${light ? 'text-[#1c1812] group-hover:text-[#8a6d33]' : 'text-foreground group-hover:text-accent'}`}
             >
               {project.title}
             </Heading>
-            <p className="mt-5 max-w-xl text-[15px] leading-relaxed text-muted-foreground sm:text-base">{project.summary}</p>
+            <p className={`mt-5 max-w-xl text-[15px] leading-relaxed sm:text-base ${light ? 'text-[#57503f]' : 'text-muted-foreground'}`}>{project.summary}</p>
 
 
-            <span className="mt-6 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-foreground/74 transition-colors duration-500 group-hover:text-accent">
+            <span className={`mt-6 inline-flex min-h-11 items-center gap-2 text-sm font-semibold transition-colors duration-500 ${light ? 'text-[#1c1812]/74 group-hover:text-[#8a6d33]' : 'text-foreground/74 group-hover:text-accent'}`}>
               View project
               <ArrowUpRight aria-hidden="true" size={16} className="transition-transform duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
             </span>
