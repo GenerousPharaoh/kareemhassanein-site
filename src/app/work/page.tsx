@@ -30,17 +30,21 @@ export const metadata: Metadata = {
 export default function WorkPage() {
   return (
     <main className="bg-background pb-8 pt-32 text-foreground md:pt-40">
-      <section className="px-6 pb-20 sm:px-8 md:pb-28 lg:px-12 xl:px-20">
-        <div className="mx-auto max-w-[1320px]">
+      <section className="relative px-6 pb-20 sm:px-8 md:pb-28 lg:px-12 xl:px-20">
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
+          <div className="absolute -top-36 right-[-12%] h-[34rem] w-[34rem] rounded-full bg-accent/[0.06] blur-3xl" />
+          <div className="absolute bottom-[-40%] left-[-10%] h-[28rem] w-[28rem] rounded-full bg-accent/[0.03] blur-3xl" />
+        </div>
+        <div className="relative mx-auto max-w-[1320px]">
           <ScrollReveal direction="up">
             <p className="mb-6 text-xs font-semibold uppercase tracking-[0.2em] text-accent/80">Work</p>
             <div className="grid gap-8 lg:grid-cols-12 lg:items-end">
               <h1 className="max-w-5xl text-[clamp(3rem,8.5vw,8.2rem)] font-medium leading-[0.89] tracking-[-0.065em] lg:col-span-8">
-                Work that holds up in use.
+                Selected <span className="font-serif font-normal italic text-accent">projects.</span>
               </h1>
               <p className="max-w-lg border-l border-white/[0.12] pl-6 text-lg leading-relaxed text-foreground/72 lg:col-span-4">
-                Implementation, operations, and digital work examined through the problem, the pivotal decision, and
-                the result.
+                Five projects across healthcare platforms, clinic operations, professional services, and digital
+                delivery, each with the decisions behind it.
               </p>
             </div>
           </ScrollReveal>
@@ -68,7 +72,7 @@ export default function WorkPage() {
           <div className="grid gap-12 lg:grid-cols-12 lg:gap-20">
             <div className="lg:col-span-4">
               <p className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-accent/80">Additional work</p>
-              <h2 className="text-4xl font-medium tracking-[-0.045em]">Focused digital delivery.</h2>
+              <h2 className="text-4xl font-medium tracking-[-0.045em]">Additional projects.</h2>
             </div>
             <div className="lg:col-span-8">
               {additionalProjects.map((project) => (
@@ -100,7 +104,7 @@ export default function WorkPage() {
         <div className="mx-auto grid max-w-[1320px] gap-12 lg:grid-cols-12 lg:gap-20">
           <div className="lg:col-span-4">
             <p className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-accent/80">Advisory</p>
-            <h2 className="text-4xl font-medium tracking-[-0.045em]">Implementation context beyond the build.</h2>
+            <h2 className="text-4xl font-medium tracking-[-0.045em]">Current advisory work.</h2>
           </div>
           <div className="border-t border-white/[0.1] lg:col-span-8">
             {advisory.map((item) => (

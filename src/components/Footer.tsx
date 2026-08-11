@@ -15,7 +15,8 @@ const pageLinks = [
   { href: '/contact', label: 'Contact' },
 ];
 
-function FooterNav({ tone = 'dark' }: { tone?: 'dark' | 'page' }) {
+// The three link columns, tone-aware, no outer container.
+function NavColumns({ tone = 'dark' }: { tone?: 'dark' | 'page' }) {
   const muted = tone === 'dark' ? 'text-white/40' : 'text-muted-foreground/70';
   const link =
     tone === 'dark'
@@ -23,10 +24,10 @@ function FooterNav({ tone = 'dark' }: { tone?: 'dark' | 'page' }) {
       : 'text-foreground/72 hover:text-accent';
 
   return (
-    <nav aria-label="Footer" className="mx-auto grid max-w-[1440px] gap-10 px-6 py-12 sm:grid-cols-2 sm:px-8 lg:grid-cols-12 lg:gap-14 lg:px-12 xl:px-20">
-      <div className="lg:col-span-3">
+    <nav aria-label="Footer" className="grid gap-10 sm:grid-cols-3">
+      <div>
         <p className={`mb-4 text-[10px] font-semibold uppercase tracking-[0.2em] ${muted}`}>Pages</p>
-        <ul className="space-y-2.5">
+        <ul className="space-y-2">
           {pageLinks.map((item) => (
             <li key={item.href}>
               <Link href={item.href} className={`inline-flex min-h-8 items-center text-sm transition-colors duration-300 ${link}`}>
@@ -36,24 +37,24 @@ function FooterNav({ tone = 'dark' }: { tone?: 'dark' | 'page' }) {
           ))}
         </ul>
       </div>
-      <div className="lg:col-span-5">
+      <div>
         <p className={`mb-4 text-[10px] font-semibold uppercase tracking-[0.2em] ${muted}`}>Projects</p>
-        <ul className="space-y-2.5">
+        <ul className="space-y-2">
           {orderedProjects.map((project) => (
             <li key={project.slug}>
               <Link
                 href={`/work/${project.slug}`}
-                className={`inline-flex min-h-8 items-center text-sm transition-colors duration-300 ${link}`}
+                className={`inline-flex min-h-8 items-center text-sm leading-snug transition-colors duration-300 ${link}`}
               >
-                {project.title}
+                {project.shortTitle}
               </Link>
             </li>
           ))}
         </ul>
       </div>
-      <div className="lg:col-span-4">
+      <div>
         <p className={`mb-4 text-[10px] font-semibold uppercase tracking-[0.2em] ${muted}`}>Elsewhere</p>
-        <ul className="space-y-2.5">
+        <ul className="space-y-2">
           <li>
             <a
               href="https://www.linkedin.com/in/kareemhassanein"
@@ -71,7 +72,7 @@ function FooterNav({ tone = 'dark' }: { tone?: 'dark' | 'page' }) {
               href="mailto:kareem.hassanein@gmail.com"
               className={`inline-flex min-h-8 items-center text-sm transition-colors duration-300 ${link}`}
             >
-              kareem.hassanein@gmail.com
+              Email
             </a>
           </li>
         </ul>
@@ -101,7 +102,9 @@ export default function Footer() {
     return (
       <footer className="relative z-10 border-t border-white/[0.09] bg-background text-foreground">
         <div className="border-b border-white/[0.07]">
-          <FooterNav tone="page" />
+          <div className="mx-auto max-w-[1440px] px-6 py-12 sm:px-8 lg:px-12 xl:px-20">
+            <NavColumns tone="page" />
+          </div>
         </div>
         <BottomBar tone="page" />
       </footer>
@@ -110,47 +113,49 @@ export default function Footer() {
 
   return (
     <footer className="relative z-10 overflow-hidden bg-[#070807] text-[#f1ede6]">
-      <div className="relative border-t border-white/[0.09]">
-        <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
-          <div className="absolute -top-40 right-[-10%] h-[36rem] w-[36rem] rounded-full bg-accent/[0.07] blur-3xl" />
-          <div className="absolute bottom-[-30%] left-[-8%] h-[30rem] w-[30rem] rounded-full bg-accent/[0.04] blur-3xl" />
-        </div>
-
-        <div className="relative mx-auto flex min-h-[420px] max-w-[1440px] items-end px-6 pb-16 pt-12 sm:px-8 lg:min-h-[480px] lg:items-center lg:px-12 xl:px-20">
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '0px 0px -60px 0px' }}
-            transition={{ duration: 0.8, ease }}
-            className="relative max-w-2xl"
-          >
-            <p className="mb-5 text-[11px] font-semibold uppercase tracking-[0.22em] text-white/48">
-              Available for implementation, operations, and advisory work
-            </p>
-            <h2 className="max-w-xl font-sans text-[clamp(2.7rem,6vw,5.4rem)] font-medium leading-[0.94] tracking-[-0.055em] text-[#f1ede6]">
-              Bring me the workflow that should work better.
-            </h2>
-            <p className="mt-6 max-w-lg text-base leading-relaxed text-[#f1ede6]/62 sm:text-lg">
-              If the process is useful in theory but difficult in practice, I can help shape the workflow, technology,
-              and adoption around how the work actually gets done.
-            </p>
-            <Link
-              href="/contact"
-              className="group mt-8 inline-flex min-h-12 items-center gap-3 rounded-full bg-accent px-7 text-sm font-semibold text-background transition-colors duration-500 hover:bg-accent/90"
-            >
-              Start a conversation
-              <ArrowUpRight
-                aria-hidden="true"
-                size={17}
-                className="transition-transform duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-              />
-            </Link>
-          </motion.div>
-        </div>
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div className="absolute -top-40 right-[-10%] h-[36rem] w-[36rem] rounded-full bg-accent/[0.07] blur-3xl" />
+        <div className="absolute bottom-[-30%] left-[-8%] h-[30rem] w-[30rem] rounded-full bg-accent/[0.04] blur-3xl" />
       </div>
 
       <div className="relative border-t border-white/[0.09]">
-        <FooterNav tone="dark" />
+        <div className="mx-auto max-w-[1440px] px-6 py-16 sm:px-8 md:py-24 lg:px-12 xl:px-20">
+          <div className="grid gap-14 lg:grid-cols-12 lg:gap-20">
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '0px 0px -60px 0px' }}
+              transition={{ duration: 0.8, ease }}
+              className="lg:col-span-6"
+            >
+              <p className="mb-5 text-[11px] font-semibold uppercase tracking-[0.22em] text-white/48">
+                Available for implementation, operations, and advisory work
+              </p>
+              <h2 className="max-w-xl font-sans text-[clamp(2.2rem,4.2vw,3.9rem)] font-medium leading-[0.98] tracking-[-0.045em] text-[#f1ede6]">
+                Have something worth <span className="font-serif font-normal italic text-accent">discussing?</span>
+              </h2>
+              <p className="mt-5 max-w-lg text-base leading-relaxed text-[#f1ede6]/62 sm:text-lg">
+                If the process is useful in theory but difficult in practice, I can help shape the workflow,
+                technology, and adoption around how the work actually gets done.
+              </p>
+              <Link
+                href="/contact"
+                className="group mt-7 inline-flex min-h-12 items-center gap-3 rounded-full bg-accent px-7 text-sm font-semibold text-background transition-colors duration-500 hover:bg-accent/90"
+              >
+                Start a conversation
+                <ArrowUpRight
+                  aria-hidden="true"
+                  size={17}
+                  className="transition-transform duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                />
+              </Link>
+            </motion.div>
+
+            <div className="lg:col-span-6 lg:pt-3">
+              <NavColumns tone="dark" />
+            </div>
+          </div>
+        </div>
       </div>
 
       <div className="relative border-t border-white/[0.09]">

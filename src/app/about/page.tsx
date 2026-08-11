@@ -8,20 +8,6 @@ import ScrollReveal from '@/components/ScrollReveal';
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
-const evidence = [
-  {
-    value: '100%',
-    detail: 'Team adoption within eight weeks for a clinic-wide AI documentation rollout.',
-  },
-  {
-    value: '3 hours to 30 minutes',
-    detail: 'Document-generation time per matter after a recurring drafting workflow was rebuilt.',
-  },
-  {
-    value: '60+ pages',
-    detail: 'Patient education and booking platform structured from clinical requirements.',
-  },
-];
 
 const currentRoles = [
   {
@@ -87,8 +73,12 @@ const education = [
 export default function About() {
   return (
     <main className="overflow-hidden bg-background text-foreground pt-20">
-      <section className="px-6 md:px-12 xl:px-20 pt-16 md:pt-24 pb-20 md:pb-28">
-        <div className="max-w-[1280px] mx-auto grid lg:grid-cols-12 gap-14 lg:gap-16 items-center">
+      <section className="relative px-6 md:px-12 xl:px-20 pt-16 md:pt-24 pb-20 md:pb-28">
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
+          <div className="absolute -top-36 right-[-12%] h-[34rem] w-[34rem] rounded-full bg-accent/[0.06] blur-3xl" />
+          <div className="absolute bottom-[-40%] left-[-10%] h-[28rem] w-[28rem] rounded-full bg-accent/[0.03] blur-3xl" />
+        </div>
+        <div className="relative max-w-[1280px] mx-auto grid lg:grid-cols-12 gap-14 lg:gap-16 items-center">
           <div className="lg:col-span-7">
             <motion.p
               initial={{ opacity: 0, y: 14 }}
@@ -106,8 +96,7 @@ export default function About() {
               transition={{ duration: 0.9, delay: 0.16, ease }}
               className="max-w-4xl text-[clamp(3rem,7.2vw,6.8rem)] font-medium tracking-[-0.055em] leading-[0.91] text-balance"
             >
-              Implementation with a{' '}
-              <span className="font-serif italic font-normal text-accent/90">clinical point of view.</span>
+              About <span className="font-serif italic font-normal text-accent/90">Kareem.</span>
             </motion.h1>
 
             <motion.p
@@ -162,21 +151,6 @@ export default function About() {
         </div>
       </section>
 
-      <section aria-label="Selected evidence" className="border-y border-white/[0.07] px-6 md:px-12 xl:px-20">
-        <div className="max-w-[1280px] mx-auto grid md:grid-cols-3">
-          {evidence.map((item, index) => (
-            <div
-              key={item.value}
-              className={`py-8 md:py-10 ${
-                index > 0 ? 'border-t md:border-t-0 md:border-l border-white/[0.07] md:pl-8 lg:pl-12' : ''
-              } ${index < evidence.length - 1 ? 'md:pr-8 lg:pr-12' : ''}`}
-            >
-              <p className="text-xl md:text-2xl font-medium tracking-tight text-foreground mb-2">{item.value}</p>
-              <p className="text-sm text-muted-foreground leading-relaxed">{item.detail}</p>
-            </div>
-          ))}
-        </div>
-      </section>
 
       <section className="px-6 md:px-12 xl:px-20 py-24 md:py-32">
         <div className="max-w-[1160px] mx-auto">

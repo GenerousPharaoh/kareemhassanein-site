@@ -56,7 +56,11 @@ export default function Home() {
   return (
     <main className="overflow-hidden bg-background text-foreground">
       <section className="relative px-6 pb-20 pt-32 sm:px-8 md:pb-28 md:pt-40 lg:px-12 xl:px-20">
-        <div className="mx-auto max-w-[1440px]">
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
+          <div className="absolute -top-36 right-[-12%] h-[34rem] w-[34rem] rounded-full bg-accent/[0.06] blur-3xl" />
+          <div className="absolute bottom-[-40%] left-[-10%] h-[28rem] w-[28rem] rounded-full bg-accent/[0.03] blur-3xl" />
+        </div>
+        <div className="relative mx-auto max-w-[1440px]">
           <div className="grid gap-14 lg:grid-cols-12 lg:items-end lg:gap-16">
             <div className="lg:col-span-8">
               <p className="hero-fade mb-7 text-xs font-semibold uppercase tracking-[0.2em] text-accent/82">
