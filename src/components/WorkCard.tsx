@@ -35,7 +35,7 @@ function ProcessVisual() {
           </div>
         ))}
         <p className="text-xs text-muted-foreground/65 leading-relaxed max-w-sm">
-          Client documents are confidential; the case study shows the reconstructed process instead.
+          Client documents are confidential; the project page shows the reconstructed process instead.
         </p>
       </div>
     </div>
@@ -100,7 +100,7 @@ export default function WorkCard({ project, index = 0, variant = 'stack', flip =
         </p>
       )}
       <span className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-foreground/75 group-hover:text-accent transition-colors duration-500">
-        View case study
+        View project
         <ArrowRight size={15} className="group-hover:translate-x-0.5 transition-transform duration-500" />
       </span>
     </div>

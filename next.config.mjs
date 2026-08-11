@@ -48,6 +48,11 @@ const nextConfig = {
         destination: '/work',
         permanent: true,
       },
+      {
+        source: '/work/destination-wedding',
+        destination: '/work/wedding-website',
+        permanent: true,
+      },
     ];
   },
 };

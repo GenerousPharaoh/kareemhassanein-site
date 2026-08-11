@@ -264,9 +264,9 @@ export const projects: Project[] = [
     size: 'small',
   },
   {
-    slug: 'destination-wedding',
-    title: 'Destination Wedding Guest Experience',
-    shortTitle: 'Destination Wedding',
+    slug: 'wedding-website',
+    title: 'Wedding Website',
+    shortTitle: 'Wedding Website',
     category: 'Information Architecture · Digital Experience',
     summary:
       'A single digital destination for event schedules, travel, accommodation, maps, calendar links, RSVP intake, and itinerary planning.',
@@ -279,10 +279,19 @@ export const projects: Project[] = [
       'Agentic delivery',
     ],
     intro: [
-      'A destination wedding in Peru asks a lot of its guests: an international flight, an unfamiliar city, a venue outside Lima, and an optional multi-day Machu Picchu trip afterward. This site gives every guest one place that answers the practical questions.',
+      'A wedding in Peru asks a lot of its guests: an international flight, an unfamiliar city, a venue outside Lima, and an optional multi-day Machu Picchu trip afterward. This site gives every guest one place that answers the practical questions.',
       'The site organizes the ceremony and reception schedule, arrival guidance, hotel and neighbourhood information, maps and calendar files, a structured RSVP flow, and a day-by-day itinerary for the optional adventure, all designed to be read on a phone while travelling.',
     ],
     gallery: [
+      {
+        src: '/images/work/wedding-hero.webp',
+        alt: 'Wedding website arrival screen with a framed photo, names, and date',
+        ...DESKTOP,
+        frame: 'browser',
+        title: 'An invitation before a website',
+        caption:
+          'The site opens as a composed arrival: one photograph settling into a fine gold frame with the names and the date. Guests get the feeling first and the logistics a scroll later.',
+      },
       {
         src: '/images/work/wedding-day.webp',
         alt: 'Wedding day schedule with venue details, maps, and calendar actions',
@@ -311,15 +320,6 @@ export const projects: Project[] = [
           'The optional Machu Picchu trip is presented as a horizontal day-by-day itinerary with the cost stated plainly, so guests can decide with real information rather than guesswork.',
       },
       {
-        src: '/images/work/wedding-rsvp.webp',
-        alt: 'RSVP form collecting attendance, meal choice, and plus-one details',
-        ...DESKTOP,
-        frame: 'browser',
-        title: 'RSVP as a guided flow',
-        caption:
-          'The RSVP flow collects attendance, meal choice, dietary needs, and plus-one details in one pass, structured so each guest is captured individually.',
-      },
-      {
         src: '/images/work/wedding-mobile.webp',
         alt: 'Wedding site schedule on a phone',
         ...PHONE,
@@ -338,8 +338,8 @@ export const projects: Project[] = [
     delivery:
       'Information architecture, content structure, and journey design led by me; the site was built, tested, and refined through agentic development tools.',
     card: {
-      src: '/images/work/wedding-travel.webp',
-      alt: 'Travel section of the wedding site with an aerial photo of Miraflores, Lima',
+      src: '/images/work/wedding-hero.webp',
+      alt: 'Wedding website arrival screen with a framed photo, names, and date',
       ...DESKTOP,
       frame: 'browser',
     },

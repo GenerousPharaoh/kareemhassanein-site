@@ -38,7 +38,7 @@ const heroShots = {
   endorphins: projects.find((p) => p.slug === 'endorphins')?.card,
   wedding: {
     src: '/images/work/wedding-travel-mobile.webp',
-    alt: 'Destination wedding site travel guide on a phone',
+    alt: 'Wedding website travel guide on a phone',
     width: 390,
     height: 844,
     frame: 'phone' as const,
@@ -277,7 +277,7 @@ export default function Home() {
       <section className="py-24 md:py-32 px-6 md:px-12 xl:px-20">
         <div className="max-w-[1280px] mx-auto">
           <ScrollReveal direction="up">
-            <Eyebrow n="02">Beyond the case studies</Eyebrow>
+            <Eyebrow n="02">Beyond the featured projects</Eyebrow>
             <h2 className="text-2xl md:text-3xl font-medium tracking-tight mb-10 md:mb-12">
               Selected implementation &amp; advisory <span className="text-accent/90 italic font-serif">work.</span>
             </h2>
