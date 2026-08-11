@@ -82,16 +82,6 @@ export const projects: Project[] = [
           'Patients rarely arrive knowing their diagnosis. The condition library is organized by body region first, with search layered on top, so a person can start from where it hurts.',
       },
       {
-        src: '/images/work/kinetikare-pain-guide.webp',
-        alt: 'Symptom-first pain guide for pain below the kneecap',
-        ...DESKTOP,
-        frame: 'browser',
-        url: 'kinetikarephysio.com/conditions/pain-guides',
-        title: 'Symptom-first entry points',
-        caption:
-          'Many patients begin with a symptom rather than a condition name. Pain guides start from what the person notices, walk through the likely causes, and route them to the right condition page.',
-      },
-      {
         src: '/images/work/kinetikare-compare.webp',
         alt: 'Side-by-side comparison table of tennis elbow and golfers elbow',
         ...DESKTOP,
@@ -102,14 +92,14 @@ export const projects: Project[] = [
           'Some conditions are separated by details patients cannot see from the inside. Comparison pages put the two patterns next to each other and explain what is checked in person to tell them apart.',
       },
       {
-        src: '/images/work/kinetikare-condition.webp',
-        alt: 'Low back pain condition page with safety guidance and booking actions',
+        src: '/images/work/kinetikare-treatment.webp',
+        alt: 'Dry needling treatment page with plain-language benefits and booking',
         ...DESKTOP,
         frame: 'browser',
-        url: 'kinetikarephysio.com/conditions/low-back-pain',
-        title: 'Condition pages built to a clinical standard',
+        url: 'kinetikarephysio.com/treatments/dry-needling',
+        title: 'Treatment education in plain language',
         caption:
-          'Every condition page follows the same structure: what the problem usually is, how it presents, when to seek medical care first, and how assessment typically proceeds.',
+          'Each treatment page opens with what the technique is, what it can help with, and what the evidence supports, before asking anyone to book. The plain language is a deliberate clinical choice.',
       },
       {
         src: '/images/work/kinetikare-mobile.webp',
@@ -269,7 +259,7 @@ export const projects: Project[] = [
     shortTitle: 'Wedding Website',
     category: 'Information Architecture · Digital Experience',
     summary:
-      'A single digital destination for event schedules, travel, accommodation, maps, calendar links, RSVP intake, and itinerary planning.',
+      'A single destination that carries every guest from invitation to itinerary: the day itself, getting there, where to stay, and the optional Machu Picchu adventure.',
     contribution: [
       'Information architecture',
       'Content structure',
