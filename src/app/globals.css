@@ -170,10 +170,8 @@ p {
   background: rgba(255, 255, 255, 0.02);
 }
 
-/* Smooth scroll behavior */
-html {
-  scroll-behavior: smooth;
-}
+/* Native smooth scrolling is intentionally NOT set here: Lenis drives
+   scrolling on desktop and the two fight when both are active. */
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {

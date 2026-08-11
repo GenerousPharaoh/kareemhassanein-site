@@ -12,7 +12,7 @@ export default function SmoothScroll() {
   useEffect(() => {
     if (isMobile || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-    const lenis = new Lenis({ lerp: 0.1, duration: 1.1 });
+    const lenis = new Lenis({ lerp: 0.1, duration: 1.1, anchors: { offset: -90 } });
     let raf = 0;
     const loop = (time: number) => {
       lenis.raf(time);
