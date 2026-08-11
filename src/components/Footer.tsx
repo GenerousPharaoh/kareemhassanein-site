@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion } from 'framer-motion';
@@ -30,14 +29,9 @@ export default function Footer() {
   return (
     <footer className="relative z-10 overflow-hidden bg-[#070807] text-[#f1ede6]">
       <div className="relative border-t border-white/[0.09]">
-        <div className="relative h-[300px] sm:h-[380px] lg:absolute lg:inset-0 lg:h-auto">
-          <Image
-            src="/images/illustrated-systems-footer-v8.webp"
-            alt=""
-            fill
-            sizes="100vw"
-            className="object-cover object-[72%_center] lg:object-center"
-          />
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
+          <div className="absolute -top-40 right-[-10%] h-[36rem] w-[36rem] rounded-full bg-accent/[0.07] blur-3xl" />
+          <div className="absolute bottom-[-30%] left-[-8%] h-[30rem] w-[30rem] rounded-full bg-accent/[0.04] blur-3xl" />
         </div>
 
         <div

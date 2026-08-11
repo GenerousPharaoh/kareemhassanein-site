@@ -10,7 +10,7 @@ import { advisory, principalProjects } from '@/lib/work';
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
-const featuredSlugs = ['clinical-documentation', 'tax-relief-counsel', 'kinetikare'];
+const featuredSlugs = ['kinetikare', 'endorphins', 'tax-relief-counsel'];
 const featured = featuredSlugs
   .map((slug) => principalProjects.find((project) => project.slug === slug))
   .filter((project): project is (typeof principalProjects)[number] => Boolean(project));
@@ -36,7 +36,7 @@ const principles = [
 
 const proof = [
   { value: '100%', label: 'team adoption within eight weeks for an AI documentation rollout' },
-  { value: '85%', label: 'less drafting time through a structured legal workflow' },
+  { value: '~30 min', label: 'to draft a legal matter document, down from about three hours' },
   { value: '60+', label: 'pages in a patient education and booking platform' },
   { value: '6', label: 'clinical specialties coordinated through one digital experience' },
 ];
@@ -82,7 +82,7 @@ export default function Home() {
               className="border-l border-white/[0.12] pl-6 lg:col-span-4 lg:mb-4 lg:pl-8"
             >
               <p className="max-w-lg text-lg leading-relaxed text-foreground/76 lg:text-xl">
-                I&rsquo;m an implementation and operations specialist with a clinical background. I translate real
+                I&rsquo;m an implementation and operations consultant with a clinical background. I translate real
                 workflows into practical processes and digital tools, guide adoption, and refine the work until it
                 holds up in day-to-day use.
               </p>
@@ -140,8 +140,8 @@ export default function Home() {
                 Outcomes, decisions, and the work behind them.
               </h2>
               <p className="max-w-md text-base leading-relaxed text-muted-foreground lg:col-span-4">
-                Three examples of implementation across clinical technology, professional services, and patient-facing
-                digital delivery.
+                Three examples of implementation across healthcare platforms, clinic operations, and professional
+                services.
               </p>
             </div>
           </ScrollReveal>
@@ -174,11 +174,11 @@ export default function Home() {
             </p>
             <figure className="relative mt-10 aspect-[4/3] overflow-hidden rounded-[1.5rem] border border-white/[0.1] bg-white/[0.02]">
               <Image
-                src="/images/illustrated-systems-conductor-home-v13.webp"
-                alt="Illustration of Kareem orchestrating connected workflows and operating systems"
+                src="/images/work/kinetikare-conditions.webp"
+                alt="The KinetiKare condition library, organized by body region"
                 fill
                 sizes="(min-width: 1024px) 500px, calc(100vw - 3rem)"
-                className="object-cover"
+                className="object-cover object-top"
               />
             </figure>
           </ScrollReveal>
@@ -205,11 +205,11 @@ export default function Home() {
               <h2 className="max-w-xl text-4xl font-medium tracking-[-0.045em] sm:text-5xl">Clinical context, applied early.</h2>
               <figure className="relative mt-10 aspect-[4/3] overflow-hidden rounded-[1.5rem] border border-white/[0.1] bg-white/[0.02]">
                 <Image
-                  src="/images/illustrated-ai-workflow-home-v11.webp"
-                  alt="Illustration of Kareem composing an AI-assisted workflow across layered materials"
+                  src="/images/work/endorphins-services.webp"
+                  alt="Six clinical services presented as one coordinated clinic at Endorphins"
                   fill
                   sizes="(min-width: 1024px) 500px, calc(100vw - 3rem)"
-                  className="object-cover"
+                  className="object-cover object-top"
                 />
               </figure>
             </ScrollReveal>

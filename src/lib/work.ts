@@ -74,7 +74,7 @@ export const projects: Project[] = [
       'The full physiotherapy team adopted the platform within eight weeks.',
       'Documentation time decreased by approximately three hours per practitioner each week.',
     ],
-    environment: 'Heidi AI · Clinical workflows · Team training · Documented SOPs',
+    environment: 'AI documentation platform · Clinical workflows · Team training · Documented SOPs',
     delivery:
       'Evaluation, configuration, training, SOP development, go-live support, and post-launch refinement were led by me on the clinic side.',
     size: 'large',
@@ -165,7 +165,7 @@ export const projects: Project[] = [
     ],
     environment: 'Next.js · GitHub · Vercel · Jane App · Google Search Console',
     delivery:
-      'Clinical requirements, information architecture, content, and testing led by me; the implementation was built, refined, and maintained through Codex and Cursor.',
+      'Clinical requirements, information architecture, content, and testing led by me; the implementation was built, refined, and maintained through Claude Code and Codex.',
     liveUrl: 'https://www.kinetikarephysio.com',
     card: {
       src: '/images/work/kinetikare-home.webp',
@@ -275,7 +275,7 @@ export const projects: Project[] = [
     proof: [
       { value: '6', label: 'clinical specialties' },
       { value: '8', label: 'municipalities supported' },
-      { value: '1', label: 'coordinated clinic experience' },
+      { value: '5', label: 'referral pathways into physiotherapy' },
     ],
   },
   {
@@ -307,15 +307,15 @@ export const projects: Project[] = [
       'Document-generation time fell from approximately three hours to about 30 minutes per matter.',
       'The workflow runs as a documented, repeatable process the practitioner operates independently, with quality checkpoints built in rather than left to memory.',
     ],
-    environment: 'Codex · Structured template library · Documented SOPs',
+    environment: 'Claude Code · Structured template library · Documented SOPs',
     delivery:
-      'Workflow mapping, template design, prompt design, and quality assurance led by me; the drafting tooling was built with Codex around the practice’s existing habits.',
+      'Workflow mapping, template design, prompt design, and quality assurance led by me; the drafting tooling was built with Claude Code around the practice’s existing habits.',
     size: 'large',
     tier: 'principal',
     proof: [
       { value: '~3 hrs', label: 'before per matter' },
       { value: '~30 min', label: 'after per matter' },
-      { value: '85%', label: 'less drafting time' },
+      { value: '5', label: 'stages from intake to reviewed draft' },
     ],
   },
   {
@@ -401,9 +401,9 @@ export const projects: Project[] = [
     size: 'small',
     tier: 'additional',
     proof: [
-      { value: '1 link', label: 'for event and travel details' },
-      { value: '7 days', label: 'of optional travel planning' },
-      { value: 'Mobile', label: 'designed for use in transit' },
+      { value: '10', label: 'sections in one guided scroll' },
+      { value: '7 days', label: 'of optional travel, planned day by day' },
+      { value: '40', label: 'photographs woven through the story' },
     ],
   },
 ];
@@ -453,6 +453,6 @@ export const areasOfWork = [
   },
   {
     title: 'AI-enabled delivery',
-    desc: 'Requirements, structured specifications, Codex, Cursor, iterative testing, troubleshooting, and quality assurance.',
+    desc: 'Requirements, structured specifications, Claude Code, Codex, iterative testing, troubleshooting, and quality assurance.',
   },
 ];

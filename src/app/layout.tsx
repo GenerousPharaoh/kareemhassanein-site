@@ -67,8 +67,8 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Person",
   name: "Kareem Hassanein",
-  jobTitle: ["Implementation and Operations Specialist", "Registered Physiotherapist"],
-  description: "Kareem Hassanein is an implementation and operations specialist with a clinical background. His work spans clinical technology, workflow automation, service design, change adoption, and digital delivery.",
+  jobTitle: ["Registered Physiotherapist", "Implementation and Operations Consultant"],
+  description: "Kareem Hassanein is an implementation and operations consultant with a clinical background. His work spans clinical technology, workflow automation, service design, change adoption, and digital delivery.",
   url: "https://www.khassanein.bio",
   sameAs: [
     "https://www.linkedin.com/in/kareemhassanein",

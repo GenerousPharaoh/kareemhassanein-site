@@ -112,7 +112,7 @@ export default function About() {
               transition={{ duration: 0.85, delay: 0.28, ease }}
               className="mt-9 max-w-2xl text-lg md:text-[1.35rem] text-foreground/[0.76] font-light leading-relaxed"
             >
-              I&rsquo;m an implementation and operations specialist who still practices as a physiotherapist. I
+              I&rsquo;m an implementation and operations consultant who still practices as a physiotherapist. I
               translate real workflows into clearer processes and digital tools, guide adoption, and refine the work
               until it holds up in day-to-day use.
             </motion.p>
@@ -138,12 +138,12 @@ export default function About() {
           >
             <div className="relative aspect-[2/3] overflow-hidden rounded-[1.25rem] border border-white/[0.08] bg-white/[0.02] shadow-[0_35px_90px_-45px_rgba(0,0,0,0.95)]">
               <Image
-                src="/images/kareem-solo-systems-about-v8.webp"
-                alt="An illustrated portrait of Kareem holding a tablet in a studio with clinical and workflow elements"
+                src="/images/work/kinetikare-mobile.webp"
+                alt="The KinetiKare mobile experience, one of the delivered platforms"
                 fill
                 priority
                 sizes="(max-width: 1024px) 90vw, 500px"
-                className="object-cover"
+                className="object-cover object-top"
               />
               <div aria-hidden="true" className="absolute inset-0 bg-background/10" />
               <figcaption className="absolute inset-x-5 bottom-5 rounded-lg border border-white/[0.08] bg-background/[0.85] px-4 py-3 backdrop-blur-md">
@@ -202,11 +202,11 @@ export default function About() {
           <ScrollReveal direction="up" delay={0.12} className="mt-14 md:mt-20">
             <figure className="relative aspect-[16/7] min-h-[260px] overflow-hidden rounded-[1.75rem] border border-white/[0.1] bg-white/[0.02]">
               <Image
-                src="/images/clinical-technology-perspective-v9.webp"
-                alt="Illustrated clinical workspace connecting intake, documentation, and digital delivery"
+                src="/images/work/wedding-travel.webp"
+                alt="Travel guidance from the wedding website, one of the delivered projects"
                 fill
                 sizes="(min-width: 1280px) 1160px, calc(100vw - 3rem)"
-                className="object-cover"
+                className="object-cover object-top"
               />
             </figure>
           </ScrollReveal>
@@ -299,7 +299,7 @@ export default function About() {
                 </div>
                 <p className="text-base text-muted-foreground leading-relaxed max-w-2xl">
                   At a private physiotherapy clinic, I led an AI documentation rollout to full team adoption within
-                  eight weeks while maintaining more than $600K in annual clinical revenue for three consecutive years.
+                  eight weeks while carrying a full clinical caseload.
                 </p>
               </article>
             </ScrollReveal>
