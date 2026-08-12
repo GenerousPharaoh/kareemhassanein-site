@@ -24,7 +24,7 @@ function NavColumns({ tone = 'dark' }: { tone?: 'dark' | 'page' }) {
       : 'text-foreground/72 hover:text-accent';
 
   return (
-    <nav aria-label="Footer" className="grid gap-10 sm:grid-cols-3">
+    <nav aria-label="Footer" className="grid grid-cols-2 gap-x-6 gap-y-9 sm:grid-cols-3 sm:gap-10">
       <div>
         <p className={`mb-4 text-[10px] font-semibold uppercase tracking-[0.2em] ${muted}`}>Pages</p>
         <ul className="space-y-2">
