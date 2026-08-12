@@ -36,29 +36,6 @@ const currentRoles = [
   },
 ];
 
-const principles = [
-  {
-    title: 'The process on paper is not the process',
-    description:
-      'Every workflow I have mapped has an undocumented layer underneath it: the workaround someone invented, the step only one person knows how to do, the exception that turns up weekly. That layer is usually where the problem is.',
-  },
-  {
-    title: 'Software last',
-    description:
-      'Rollouts stall on unclear ownership far more often than on the tool. Who decides, who is accountable, and what happens at each handoff has to be settled before anyone chooses a platform.',
-  },
-  {
-    title: 'If it is slower on day one, it fails',
-    description:
-      'When the new way costs more effort than the old way, people quietly go back to the old way. Training does not fix that and neither does a mandate. The work has to be easier at the point of use.',
-  },
-  {
-    title: 'I stay past go-live',
-    description:
-      'The distance between something that works in testing and something that holds up in a busy week is where most of the real work sits. I would rather be there for it than hand over a document.',
-  },
-];
-
 const education = [
   {
     qualification: 'MSc Physiotherapy with Distinction',
@@ -228,32 +205,31 @@ export default function About() {
       </section>
 
       <section className="px-6 md:px-12 xl:px-20 py-24 md:py-32">
-        <div className="max-w-[1160px] mx-auto">
-          <ScrollReveal direction="up" className="max-w-2xl mb-14 md:mb-20">
-            <p className="text-xs font-medium tracking-[0.24em] uppercase text-accent/70 mb-5">How I work</p>
+        <div className="max-w-[1160px] mx-auto grid lg:grid-cols-12 gap-12 lg:gap-20">
+          <ScrollReveal direction="up" className="lg:col-span-5">
+            <p className="text-xs font-medium tracking-[0.24em] uppercase text-accent/70 mb-5">In practice</p>
             <h2 className="text-3xl md:text-5xl font-medium tracking-tight text-balance">
-              Four things I no longer compromise on.
+              I work with the people who will actually use what I make.
             </h2>
           </ScrollReveal>
 
-          <div className="grid md:grid-cols-2 border-t border-white/[0.08]">
-            {principles.map((principle, index) => (
-              <ScrollReveal key={principle.title} direction="up" delay={(index % 2) * 0.05}>
-                <article
-                  className={`min-h-full py-8 md:py-10 border-b border-white/[0.08] ${
-                    index % 2 === 0 ? 'md:pr-10' : 'md:border-l md:pl-10'
-                  }`}
-                >
-                  <span aria-hidden="true" className="mb-4 block h-px w-8 bg-accent/45" />
-                  <h3 className="text-xl md:text-2xl font-medium tracking-tight mb-3">{principle.title}</h3>
-                  <p className="text-sm md:text-base text-muted-foreground leading-relaxed max-w-md">
-                    {principle.description}
-                  </p>
-                </article>
-              </ScrollReveal>
-            ))}
+          <ScrollReveal direction="up" delay={0.08} className="lg:col-span-7 lg:pt-10">
+            <div className="max-w-2xl border-t border-white/[0.09]">
+              <p className="py-6 text-lg md:text-xl font-light leading-relaxed text-foreground/[0.82] border-b border-white/[0.08]">
+                Before I change anything, I watch how the job is being done and ask the people doing it what gets in
+                their way.
+              </p>
+              <p className="py-6 text-base md:text-lg leading-relaxed text-muted-foreground border-b border-white/[0.08]">
+                Sometimes the answer is AI or automation. Sometimes it is a simpler form, clearer information, or one
+                less step. I use the simplest option that makes the work easier.
+              </p>
+              <p className="pt-6 text-base md:text-lg leading-relaxed text-muted-foreground">
+                Then I put it into use, see what breaks, and fix it. Testing never shows you everything that happens on
+                a busy day.
+              </p>
+            </div>
+          </ScrollReveal>
           </div>
-        </div>
       </section>
 
       <section className="px-6 md:px-12 xl:px-20 py-24 md:py-32 border-t border-white/[0.07]">
