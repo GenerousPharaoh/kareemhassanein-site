@@ -207,29 +207,34 @@ export default function About() {
       <section className="px-6 md:px-12 xl:px-20 py-24 md:py-32">
         <div className="max-w-[1160px] mx-auto grid lg:grid-cols-12 gap-12 lg:gap-20">
           <ScrollReveal direction="up" className="lg:col-span-5">
-            <p className="text-xs font-medium tracking-[0.24em] uppercase text-accent/70 mb-5">In practice</p>
+            <p className="text-xs font-medium tracking-[0.24em] uppercase text-accent/70 mb-5">
+              How I think about the work
+            </p>
             <h2 className="text-3xl md:text-5xl font-medium tracking-tight text-balance">
-              I work with the people who will actually use what I make.
+              A process is more than the steps written down.
             </h2>
           </ScrollReveal>
 
           <ScrollReveal direction="up" delay={0.08} className="lg:col-span-7 lg:pt-10">
             <div className="max-w-2xl border-t border-white/[0.09]">
               <p className="py-6 text-lg md:text-xl font-light leading-relaxed text-foreground/[0.82] border-b border-white/[0.08]">
-                Before I change anything, I watch how the job is being done and ask the people doing it what gets in
-                their way.
+                Every process also carries judgment, responsibility, time pressure, incomplete information, and habits
+                people developed to keep the work moving. Some of those habits waste time. Others are compensating for
+                something the formal process never solved.
               </p>
               <p className="py-6 text-base md:text-lg leading-relaxed text-muted-foreground border-b border-white/[0.08]">
-                Sometimes the answer is AI or automation. Sometimes it is a simpler form, clearer information, or one
-                less step. I use the simplest option that makes the work easier.
+                If I change the visible steps without understanding why they exist, I can move the burden to someone
+                else or remove something that mattered. I need to understand what decisions are being made, who depends
+                on them, where information comes from, and what cannot be lost in the name of efficiency.
               </p>
               <p className="pt-6 text-base md:text-lg leading-relaxed text-muted-foreground">
-                Then I put it into use, see what breaks, and fix it. Testing never shows you everything that happens on
-                a busy day.
+                AI and automation can remove work that no longer needs to be done by hand. They can also add more
+                checking, uncertainty, or distance from the work when they are introduced badly. My role is to
+                understand the difference and shape the change so it improves the work as a whole, not just one step.
               </p>
             </div>
           </ScrollReveal>
-          </div>
+        </div>
       </section>
 
       <section className="px-6 md:px-12 xl:px-20 py-24 md:py-32 border-t border-white/[0.07]">
