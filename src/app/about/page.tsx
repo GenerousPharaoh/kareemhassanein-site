@@ -306,14 +306,14 @@ export default function About() {
               href="/work"
               className="group inline-flex items-center justify-center gap-2.5 rounded-full bg-accent px-7 py-3.5 text-sm font-medium text-background transition-colors duration-300 hover:bg-accent/90"
             >
-              Explore the work
+              See the work
               <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-0.5" />
             </Link>
             <Link
               href="/contact"
               className="inline-flex items-center justify-center rounded-full border border-white/[0.13] px-7 py-3.5 text-sm font-medium text-foreground/[0.78] transition-colors duration-300 hover:border-accent/[0.35] hover:text-foreground"
             >
-              Start a conversation
+              Contact
             </Link>
           </div>
         </ScrollReveal>

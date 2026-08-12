@@ -205,7 +205,7 @@ export default function Header() {
               aria-current={pathname === '/contact' ? 'page' : undefined}
               className="inline-flex min-h-11 items-center rounded-full bg-accent px-6 text-[12px] font-semibold uppercase tracking-[0.12em] text-background transition-colors duration-300 hover:bg-accent/[0.88]"
             >
-              Start a conversation
+              Contact
             </Link>
           </div>
 

@@ -132,17 +132,17 @@ export default function Footer() {
                 Available for implementation, operations, and advisory work
               </p>
               <h2 className="max-w-xl font-sans text-[clamp(2.4rem,5.2vw,4.8rem)] font-medium leading-[0.98] tracking-[-0.045em] text-[#f1ede6]">
-                Have something worth <span className="font-serif font-normal italic text-accent">discussing?</span>
+                Get in <span className="font-serif font-normal italic text-accent">touch.</span>
               </h2>
               <p className="mt-5 max-w-lg text-base leading-relaxed text-[#f1ede6]/62 sm:text-lg">
-                If the process is useful in theory but difficult in practice, I can help shape the workflow,
-                technology, and adoption around how the work actually gets done.
+                Tell me what is getting in the way, who it affects, and what a better result would look like. I read
+                every message.
               </p>
               <Link
                 href="/contact"
                 className="group mt-7 inline-flex min-h-12 items-center gap-3 rounded-full bg-accent px-7 text-sm font-semibold text-background transition-colors duration-500 hover:bg-accent/90"
               >
-                Start a conversation
+                Send a message
                 <ArrowUpRight
                   aria-hidden="true"
                   size={17}

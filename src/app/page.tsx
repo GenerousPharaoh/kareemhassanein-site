@@ -2,7 +2,7 @@
 
 import type { CSSProperties } from 'react';
 import Link from 'next/link';
-import { ArrowDown, ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import ScrollReveal from '@/components/ScrollReveal';
 import ScreenFrame from '@/components/ScreenFrame';
 import WorkCard from '@/components/WorkCard';
@@ -102,14 +102,14 @@ export default function Home() {
                   href="/work"
                   className="group inline-flex min-h-12 items-center justify-center gap-3 whitespace-nowrap rounded-full bg-accent px-5 text-sm font-semibold text-background transition-colors duration-500 hover:bg-accent/90"
                 >
-                  Explore the work
-                  <ArrowDown aria-hidden="true" size={16} className="transition-transform duration-500 group-hover:translate-y-0.5" />
+                  See the work
+                  <ArrowUpRight aria-hidden="true" size={16} className="transition-transform duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                 </Link>
                 <Link
                   href="/contact"
                   className="inline-flex min-h-12 items-center justify-center whitespace-nowrap rounded-full border border-white/[0.14] px-5 text-sm font-semibold text-foreground/78 transition-colors duration-500 hover:border-accent/45 hover:text-foreground"
                 >
-                  Start a conversation
+                  Contact
                 </Link>
               </div>
             </div>
