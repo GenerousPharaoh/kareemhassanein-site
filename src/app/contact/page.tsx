@@ -134,7 +134,7 @@ export default function ContactPage() {
           <motion.section initial={{ opacity: 0, y: 22 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, ease }} className="lg:col-span-6">
             <p className="mb-6 text-xs font-semibold uppercase tracking-[0.2em] text-accent/80">Contact</p>
             <h1 className="max-w-3xl text-[clamp(3rem,7.5vw,7.4rem)] font-medium leading-[0.9] tracking-[-0.065em]">
-              Bring me the workflow that should work better.
+              Get in <span className="font-serif font-normal italic text-accent">touch.</span>
             </h1>
             <p className="mt-8 max-w-xl text-lg leading-relaxed text-foreground/72">
               Tell me what is getting in the way, who the work affects, and what a better result would look like. I read
@@ -159,7 +159,7 @@ export default function ContactPage() {
             </a>
           </motion.section>
 
-          <motion.section initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, delay: 0.16, ease }} aria-labelledby="contact-form-heading" className="bg-[#eee8df] p-6 text-[#25292f] sm:p-8 md:p-10 lg:col-span-6 lg:mt-12">
+          <motion.section initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, delay: 0.16, ease }} aria-labelledby="contact-form-heading" className="paper p-6 sm:p-8 md:p-10 lg:col-span-6 lg:mt-12">
             <div className="mb-8 border-b border-[#25292f]/15 pb-6">
               <h2 id="contact-form-heading" className="text-2xl font-medium tracking-[-0.035em]">Start the conversation</h2>
               <p className="mt-2 text-sm leading-relaxed text-[#25292f]/66">Name, email, and message are required.</p>

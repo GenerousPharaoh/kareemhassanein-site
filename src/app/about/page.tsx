@@ -11,7 +11,6 @@ const ease = [0.16, 1, 0.3, 1] as const;
 
 const currentRoles = [
   {
-    number: '01',
     role: 'Digital Strategy & Operations Lead',
     organization: 'Endorphins Health and Wellness Centre',
     period: '2024 to present',
@@ -19,7 +18,6 @@ const currentRoles = [
       'Leading digital operations across six specialties, including booking architecture, patient routing, analytics, and local search.',
   },
   {
-    number: '02',
     role: 'Workflow Automation Consultant',
     organization: 'Tax Relief Counsel',
     period: '2025 to present',
@@ -27,7 +25,6 @@ const currentRoles = [
       'Mapped and rebuilt a recurring document workflow, reducing generation time from about three hours to 30 minutes per matter and documenting the process for independent use.',
   },
   {
-    number: '03',
     role: 'Clinical Advisor',
     organization: 'Neuro-Mod',
     period: '2025 to present',
@@ -186,12 +183,11 @@ export default function About() {
             {currentRoles.map((item, index) => (
               <ScrollReveal key={item.role} direction="up" delay={index * 0.05}>
                 <article className="grid md:grid-cols-12 gap-4 md:gap-8 py-8 md:py-10 border-b border-white/[0.07]">
-                  <p className="md:col-span-1 font-serif italic text-lg text-accent/75">{item.number}</p>
-                  <div className="md:col-span-4">
+                  <div className="md:col-span-5">
                     <h3 className="text-xl md:text-2xl font-medium tracking-tight text-foreground/[0.92]">{item.role}</h3>
                     <p className="mt-2 text-sm text-accent/[0.72]">{item.organization}</p>
                   </div>
-                  <p className="md:col-span-2 text-xs font-medium tracking-[0.12em] uppercase text-muted-foreground/70 md:pt-1">
+                  <p className="md:col-span-2 font-mono text-[11px] tracking-[0.14em] uppercase text-muted-foreground/70 md:pt-1">
                     {item.period}
                   </p>
                   <p className="md:col-span-5 text-sm md:text-base text-muted-foreground leading-relaxed">

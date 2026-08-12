@@ -14,7 +14,7 @@ interface FigureShellProps {
 function FigureShell({ title, caption, children, className = '' }: FigureShellProps) {
   return (
     <figure
-      className={`relative overflow-hidden rounded-[10px] border border-white/[0.09] bg-[hsl(220,14%,10.5%)] shadow-[0_28px_70px_-42px_rgba(0,0,0,0.9)] ${className}`}
+      className={`figure-shadow relative overflow-hidden rounded-[10px] border border-white/[0.09] bg-[hsl(var(--surface))] ${className}`}
     >
       <div aria-hidden="true" className="absolute inset-x-0 top-0 h-px bg-accent/35" />
       <div className="p-6 sm:p-8 md:p-10">{children}</div>

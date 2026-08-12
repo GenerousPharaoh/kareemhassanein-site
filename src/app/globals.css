@@ -122,6 +122,73 @@ html {
   }
 }
 
+
+/* ---------------------------------------------------------------------------
+   Two surfaces.
+
+   The site has one organizing idea: the screens Kareem ships are dark, and the
+   record he keeps (context, contribution, decisions, outcomes) is paper. The
+   `.paper` scope re-points the same design tokens at ink-on-bone, so every
+   component built against --foreground / --accent / --surface flips without a
+   light variant of its own.
+   --------------------------------------------------------------------------- */
+:root {
+  --surface: 222 12% 12%;
+}
+
+.paper {
+  --background: 41 33% 89%;
+  --foreground: 36 22% 9%;
+  --muted-foreground: 42 16% 29%;
+  --accent: 40 46% 37%;
+  --accent-secondary: 40 40% 30%;
+  --accent-foreground: 41 33% 89%;
+  --surface: 0 0% 100%;
+  position: relative;
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+}
+
+/* Paper grain. Subtle enough to read as stock rather than texture. */
+.paper::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E");
+}
+
+.paper > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* White-alpha hairlines and washes are written for the dark surface; retint
+   them to ink so shared components keep their structure on paper. */
+.paper [class*="border-white/"] {
+  border-color: hsl(36 22% 9% / 0.13);
+}
+
+.paper [class*="divide-white/"] > :not([hidden]) ~ :not([hidden]) {
+  border-color: hsl(36 22% 9% / 0.13);
+}
+
+.paper [class*="bg-white/"] {
+  background-color: hsl(36 22% 9% / 0.03);
+}
+
+/* Figure elevation reads as a sheet lifted off the desk, not a hole in it. */
+.figure-shadow {
+  box-shadow: 0 28px 70px -42px rgba(0, 0, 0, 0.9);
+}
+
+.paper .figure-shadow {
+  box-shadow: 0 24px 55px -30px rgba(35, 28, 14, 0.42);
+}
+
 /* Compact display rules, with the serif reserved for intentional accents. */
 h1 {
   letter-spacing: -0.045em;
