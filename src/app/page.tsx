@@ -115,12 +115,6 @@ export default function Home() {
             </div>
           </div>
 
-          <p
-            className="hero-fade mt-12 border-t border-white/[0.1] pt-5 text-xs font-medium uppercase tracking-[0.15em] text-muted-foreground md:mt-16"
-            style={{ '--hero-delay': '0.7s' } as CSSProperties}
-          >
-            Clinical implementation · Workflow automation · Service design · Digital delivery
-          </p>
         </div>
       </section>
 
