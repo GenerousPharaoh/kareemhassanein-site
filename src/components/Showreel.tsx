@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { frameShellFor, type FrameTone } from '@/components/ScreenFrame';
 import type { ShotMeta } from '@/lib/work';
@@ -38,52 +38,57 @@ function ReelChrome({ url, reduceMotion = false, tone = 'dark' }: { url?: string
   );
 }
 
-// Card visual that comes alive under the pointer: the project's screens
-// cycle with a long crossfade while hovered, and settle back to the lead
-// still on leave. Images are lazy next/image renders, so nothing loads
-// until the card itself is near the viewport.
+// The card cycles through the project's screens while it is on screen, so the
+// work is visible without anyone discovering a hover. Hovering pauses it, which
+// is what you want when a particular screen catches your eye.
 export function HoverReel({
   items,
-  active,
+  paused = false,
   sizes = '(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 640px',
   tone = 'dark',
 }: {
   items: ShotMeta[];
-  active: boolean;
+  paused?: boolean;
   sizes?: string;
   tone?: FrameTone;
 }) {
   const [index, setIndex] = useState(0);
-  // Only the lead screen mounts until the card is actually interacted with.
-  // next/image lazy loading fires on intersection regardless of opacity, so
-  // mounting every frame up front downloaded the whole reel to display one
-  // still. That was pure waste on touch devices, where `active` never
-  // becomes true and the reel never cycles.
+  const [inView, setInView] = useState(false);
+  // The remaining frames mount once the card first comes into view, rather than
+  // on page load: next/image lazy loading fires on intersection regardless of
+  // opacity, so mounting the whole reel up front downloads every screen to show
+  // one still.
   const [primed, setPrimed] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
   const shouldReduceMotion = useReducedMotion();
-  const cycling = active && !shouldReduceMotion && items.length > 1;
+  const cycling = inView && !paused && !shouldReduceMotion && items.length > 1;
 
   useEffect(() => {
-    if (active) setPrimed(true);
-  }, [active]);
+    const node = containerRef.current;
+    if (!node) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setInView(entry.isIntersecting);
+        if (entry.isIntersecting) setPrimed(true);
+      },
+      { threshold: 0.45 },
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
-    if (!cycling) {
-      setIndex(0);
-      return;
-    }
-    const id = setInterval(() => setIndex((i) => (i + 1) % items.length), 1700);
+    if (!cycling) return;
+    const id = setInterval(() => setIndex((i) => (i + 1) % items.length), 3000);
     return () => clearInterval(id);
   }, [cycling, items.length]);
 
-  // The first hover mounts the rest, which have the 1.7s until the first
-  // advance to decode.
   const mounted = primed ? items : items.slice(0, 1);
   const current = items[index] ?? items[0];
   if (!current) return null;
 
   return (
-    <div className={frameShellFor(tone)}>
+    <div ref={containerRef} className={frameShellFor(tone)}>
       <ReelChrome url={current.url} reduceMotion={!!shouldReduceMotion} tone={tone} />
       <div className="relative aspect-[16/10] overflow-hidden">
         {mounted.map((item, i) => {

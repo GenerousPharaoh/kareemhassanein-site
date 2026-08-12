@@ -156,7 +156,7 @@ export default function WorkCard({
   const cardSizes = variant === 'row' ? '(max-width: 1024px) 100vw, 680px' : '(max-width: 768px) 100vw, 640px';
 
   const visual = reelItems.length > 1 ? (
-    <HoverReel items={reelItems} active={hovered} sizes={cardSizes} tone={tone} />
+    <HoverReel items={reelItems} paused={hovered} sizes={cardSizes} tone={tone} />
   ) : project.card ? (
     <ScreenFrame shot={project.card} sizes={cardSizes} tone={tone} />
   ) : (
