@@ -17,7 +17,7 @@ const pageLinks = [
 
 // The three link columns, tone-aware, no outer container.
 function NavColumns({ tone = 'dark' }: { tone?: 'dark' | 'page' }) {
-  const muted = tone === 'dark' ? 'text-white/40' : 'text-muted-foreground/70';
+  const muted = tone === 'dark' ? 'text-white/60' : 'text-muted-foreground';
   const link =
     tone === 'dark'
       ? 'text-[#f1ede6]/72 hover:text-accent'
@@ -82,7 +82,7 @@ function NavColumns({ tone = 'dark' }: { tone?: 'dark' | 'page' }) {
 }
 
 function BottomBar({ tone = 'dark' }: { tone?: 'dark' | 'page' }) {
-  const muted = tone === 'dark' ? 'text-white/42' : 'text-muted-foreground';
+  const muted = tone === 'dark' ? 'text-white/58' : 'text-muted-foreground';
   return (
     <div className={`mx-auto flex max-w-[1440px] flex-col gap-3 px-6 py-5 text-[10px] font-semibold uppercase tracking-[0.16em] sm:px-8 md:flex-row md:items-center md:justify-between lg:px-12 xl:px-20 ${muted}`}>
       <span>Kareem Hassanein</span>
@@ -128,7 +128,7 @@ export default function Footer() {
               transition={{ duration: 0.8, ease }}
               className="lg:col-span-6"
             >
-              <p className="mb-5 text-[11px] font-semibold uppercase tracking-[0.22em] text-white/48">
+              <p className="mb-5 text-[11px] font-semibold uppercase tracking-[0.22em] text-white/60">
                 Available for implementation, operations, and advisory work
               </p>
               <h2 className="max-w-xl font-sans text-[clamp(2.2rem,4.2vw,3.9rem)] font-medium leading-[0.98] tracking-[-0.045em] text-[#f1ede6]">

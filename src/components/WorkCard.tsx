@@ -53,10 +53,10 @@ function ConfidentialVisual({ project, tone = 'dark' }: { project: Project; tone
   const sheet = light ? 'border-black/[0.09] bg-white' : 'border-white/[0.09] bg-[#1d2127]';
   const bar = light ? 'bg-[#ddd5c2]' : 'bg-white/[0.1]';
   const barSoft = light ? 'bg-[#e9e2d1]' : 'bg-white/[0.06]';
-  const tag = light ? 'text-[#8a6d33]' : 'text-accent/80';
-  const slotOpen = light ? 'border-[#8a6d33]/50 text-[#8a6d33]' : 'border-accent/45 text-accent/80';
+  const tag = light ? 'text-[#705829]' : 'text-accent/80';
+  const slotOpen = light ? 'border-[#8a6d33]/50 text-[#705829]' : 'border-accent/45 text-accent/80';
   const slotFilled = light
-    ? 'border-[#8a6d33]/40 bg-[#8a6d33]/[0.14] text-[#6d5526]'
+    ? 'border-[#705829]/45 bg-[#705829]/[0.14] text-[#5d481f]'
     : 'border-accent/40 bg-accent/[0.14] text-accent';
   const inkFaint = light ? 'text-[#8b8371]' : 'text-white/45';
 
@@ -110,8 +110,8 @@ function ConfidentialVisual({ project, tone = 'dark' }: { project: Project; tone
             <div className="flex items-center gap-2"><Bar w="w-full" /></div>
           </div>
           <div className={`mt-4 flex items-center gap-2 border-t pt-3 ${light ? 'border-black/[0.08]' : 'border-white/[0.08]'}`}>
-            <span className={`flex h-4 w-4 items-center justify-center rounded-full border ${light ? 'border-[#8a6d33]/60' : 'border-accent/60'}`}>
-              <Check aria-hidden="true" size={9} className={light ? 'text-[#8a6d33]' : 'text-accent'} />
+            <span className={`flex h-4 w-4 items-center justify-center rounded-full border ${light ? 'border-[#705829]/60' : 'border-accent/60'}`}>
+              <Check aria-hidden="true" size={9} className={light ? 'text-[#705829]' : 'text-accent'} />
             </span>
             <span className={`font-mono text-[8px] font-semibold uppercase tracking-[0.22em] ${inkFaint}`}>
               Practitioner reviewed
@@ -185,18 +185,18 @@ export default function WorkCard({
           </div>
 
           <div className={`${variant === 'row' ? `lg:col-span-5 lg:py-5 ${flip ? 'lg:order-1' : ''}` : 'mt-7'}`}>
-            <p className={`mb-4 text-xs font-semibold uppercase tracking-[0.18em] ${light ? 'text-[#8a6d33]' : 'text-accent/80'}`}>
+            <p className={`mb-4 text-xs font-semibold uppercase tracking-[0.18em] ${light ? 'text-[#705829]' : 'text-accent/80'}`}>
               {project.contextLabel ?? project.category}
             </p>
             <Heading
-              className={`${variant === 'row' ? 'text-3xl sm:text-4xl lg:text-[2.8rem]' : 'text-2xl sm:text-3xl'} font-medium leading-[1.02] tracking-[-0.045em] transition-colors duration-500 ${light ? 'text-[#1c1812] group-hover:text-[#8a6d33]' : 'text-foreground group-hover:text-accent'}`}
+              className={`${variant === 'row' ? 'text-3xl sm:text-4xl lg:text-[2.8rem]' : 'text-2xl sm:text-3xl'} font-medium leading-[1.02] tracking-[-0.045em] transition-colors duration-500 ${light ? 'text-[#1c1812] group-hover:text-[#705829]' : 'text-foreground group-hover:text-accent'}`}
             >
               {project.title}
             </Heading>
             <p className={`mt-5 max-w-xl text-[15px] leading-relaxed sm:text-base ${light ? 'text-[#57503f]' : 'text-muted-foreground'}`}>{project.summary}</p>
 
 
-            <span className={`mt-6 inline-flex min-h-11 items-center gap-2 text-sm font-semibold transition-colors duration-500 ${light ? 'text-[#1c1812]/74 group-hover:text-[#8a6d33]' : 'text-foreground/74 group-hover:text-accent'}`}>
+            <span className={`mt-6 inline-flex min-h-11 items-center gap-2 text-sm font-semibold transition-colors duration-500 ${light ? 'text-[#1c1812]/74 group-hover:text-[#705829]' : 'text-foreground/74 group-hover:text-accent'}`}>
               View project
               <ArrowUpRight aria-hidden="true" size={16} className="transition-transform duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
             </span>

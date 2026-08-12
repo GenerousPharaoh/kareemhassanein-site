@@ -133,10 +133,10 @@ export default function Home() {
       <section className="bg-[#ECE6D9] px-6 pb-24 pt-28 text-[#1c1812] sm:px-8 md:pb-32 md:pt-44 lg:px-12 xl:px-20">
         <div className="mx-auto max-w-[1320px]">
           <ScrollReveal direction="up" className="mb-16 md:mb-24">
-            <p className="mb-5 text-xs font-semibold uppercase tracking-[0.2em] text-[#8a6d33]">Selected work</p>
+            <p className="mb-5 text-xs font-semibold uppercase tracking-[0.2em] text-[#705829]">Selected work</p>
             <div className="grid gap-6 lg:grid-cols-12 lg:items-end">
               <h2 className="max-w-4xl text-4xl font-medium tracking-[-0.045em] text-[#1c1812] sm:text-5xl md:text-6xl lg:col-span-8">
-                Outcomes, decisions, and the <span className="font-serif font-normal italic text-[#8a6d33]">work behind them.</span>
+                Outcomes, decisions, and the <span className="font-serif font-normal italic text-[#705829]">work behind them.</span>
               </h2>
               <p className="max-w-md text-base leading-relaxed text-[#57503f] lg:col-span-4">
                 Three examples of implementation across healthcare platforms, clinic operations, and professional
@@ -152,7 +152,7 @@ export default function Home() {
           </div>
 
           <div className="mt-16 border-t border-black/[0.12] pt-8 text-right md:mt-24">
-            <Link href="/work" className="group inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-[#1c1812]/74 hover:text-[#8a6d33]">
+            <Link href="/work" className="group inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-[#1c1812]/74 hover:text-[#705829]">
               See all work
               <ArrowUpRight aria-hidden="true" size={16} className="transition-transform duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
             </Link>
