@@ -12,7 +12,7 @@ export function FrameChrome({ url, tone = 'dark' }: { url?: string; tone?: Frame
       ? 'border-b border-black/[0.07] bg-[#f4f0e7]'
       : 'border-b border-white/[0.06] bg-[hsl(222,12%,11%)]';
   const dot = tone === 'light' ? 'bg-black/[0.14]' : 'bg-white/[0.12]';
-  const urlText = tone === 'light' ? 'text-[#6b6353]' : 'text-muted-foreground/60';
+  const urlText = tone === 'light' ? 'text-[#6b6353]' : 'text-muted-foreground/90';
 
   return (
     <div className={`flex items-center gap-2 px-4 py-2.5 ${bar}`}>
