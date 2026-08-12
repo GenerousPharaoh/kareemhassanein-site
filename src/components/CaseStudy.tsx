@@ -58,7 +58,7 @@ function ProjectLeadVisual({ project, shot }: { project: Project; shot?: Gallery
 function GalleryFigure({ shot }: { shot: GalleryItem }) {
   if (shot.frame === 'phone') {
     return (
-      <figure className="grid items-center gap-8 border-t border-white/[0.07] pt-10 md:grid-cols-[minmax(230px,300px)_minmax(0,1fr)] md:gap-14 md:pt-14">
+      <figure className="grid items-center gap-8 md:grid-cols-[minmax(230px,300px)_minmax(0,1fr)] md:gap-14">
         <div className="mx-auto w-full max-w-[280px]">
           <ScreenFrame shot={shot} tone="light" sizes="(max-width: 768px) 72vw, 280px" />
         </div>
@@ -75,7 +75,7 @@ function GalleryFigure({ shot }: { shot: GalleryItem }) {
   }
 
   return (
-    <figure className="grid items-start gap-7 border-t border-white/[0.07] pt-10 lg:grid-cols-[minmax(0,1fr)_17rem] lg:gap-12 lg:pt-14">
+    <figure className="grid items-start gap-7 lg:grid-cols-[minmax(0,1fr)_17rem] lg:gap-12">
       <ScreenFrame shot={shot} tone="light" sizes="(max-width: 1024px) 100vw, 820px" />
       <figcaption className="lg:pt-8">
         <span className="block text-xl md:text-2xl font-medium tracking-tight text-foreground/95 mb-3">
@@ -184,12 +184,12 @@ export default function ProjectDetail({ project, next }: { project: Project; nex
                     </p>
                   ))}
                 </div>
-                <p className="mt-8 max-w-3xl text-sm leading-loose text-foreground/70">
-                  <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground/80">
-                    My contribution&nbsp;&nbsp;
-                  </span>
-                  {project.contribution.join(' · ')}
-                </p>
+                <div className="mt-10 max-w-3xl">
+                  <p className="mb-2 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground/80">
+                    My contribution
+                  </p>
+                  <p className="text-sm leading-loose text-foreground/72">{project.contribution.join(' · ')}</p>
+                </div>
               </ScrollReveal>
             </section>
 
@@ -267,25 +267,24 @@ export default function ProjectDetail({ project, next }: { project: Project; nex
                 </div>
 
                 {(project.environment || project.delivery) && (
-                  <p className="mt-10 max-w-3xl border-t border-white/[0.14] pt-6 text-sm leading-loose text-foreground/65">
+                  <div className="mt-12 max-w-3xl space-y-5 border-t border-white/[0.14] pt-7">
                     {project.environment && (
-                      <>
-                        <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground/80">
-                          Built with&nbsp;&nbsp;
-                        </span>
-                        {project.environment}
-                      </>
+                      <div>
+                        <p className="mb-2 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground/80">
+                          Built with
+                        </p>
+                        <p className="text-sm leading-loose text-foreground/72">{project.environment}</p>
+                      </div>
                     )}
-                    {project.environment && project.delivery && <br />}
                     {project.delivery && (
-                      <>
-                        <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground/80">
-                          Delivery&nbsp;&nbsp;
-                        </span>
-                        {project.delivery}
-                      </>
+                      <div>
+                        <p className="mb-2 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground/80">
+                          Delivery
+                        </p>
+                        <p className="text-sm leading-loose text-foreground/72">{project.delivery}</p>
+                      </div>
                     )}
-                  </p>
+                  </div>
                 )}
               </ScrollReveal>
             </section>
