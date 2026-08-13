@@ -104,22 +104,13 @@ export default function About() {
           >
             <div className="relative aspect-[2/3] overflow-hidden rounded-[1.25rem] border border-white/[0.08] bg-white/[0.02] shadow-[0_35px_90px_-45px_rgba(0,0,0,0.95)]">
               <Image
-                src="/images/work/kinetikare-mobile.webp"
-                alt="The KinetiKare mobile experience, one of the delivered platforms"
+                src="/images/navigator-about.webp"
+                alt="A figure studying a lit path that winds through a dark landscape of connected rooms"
                 fill
                 priority
                 sizes="(max-width: 1024px) 90vw, 500px"
-                className="object-cover object-top"
+                className="object-cover"
               />
-              <div aria-hidden="true" className="absolute inset-0 bg-background/10" />
-              <figcaption className="absolute inset-x-5 bottom-5 rounded-lg border border-white/[0.08] bg-background/[0.85] px-4 py-3 backdrop-blur-md">
-                <span className="block text-[10px] font-medium tracking-[0.2em] uppercase text-accent/70 mb-1.5">
-                  KinetiKare Physio
-                </span>
-                <span className="text-sm text-foreground/[0.82]">
-                  Condition library and booking, built for the phone because that is where almost every patient starts.
-                </span>
-              </figcaption>
             </div>
           </motion.figure>
         </div>
@@ -153,13 +144,13 @@ export default function About() {
           </div>
 
           <ScrollReveal direction="up" delay={0.12} className="mt-14 md:mt-20">
-            <figure className="relative aspect-[16/7] min-h-[260px] overflow-hidden rounded-[1.75rem] border border-white/[0.1] bg-white/[0.02]">
+            <figure className="relative mx-auto aspect-[4/3] w-full max-w-[860px] overflow-hidden rounded-[1.75rem] border border-white/[0.1] bg-white/[0.02]">
               <Image
-                src="/images/work/kinetikare-compare.webp"
-                alt="Two commonly confused diagnoses presented side by side, structured around the questions patients actually ask"
+                src="/images/systems-conductor.webp"
+                alt="A figure drawing scattered documents into an ordered set of connected records"
                 fill
-                sizes="(min-width: 1280px) 1160px, calc(100vw - 3rem)"
-                className="object-cover object-top"
+                sizes="(min-width: 1024px) 860px, calc(100vw - 3rem)"
+                className="object-cover"
               />
             </figure>
           </ScrollReveal>
