@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
@@ -95,17 +96,34 @@ export default function About() {
             </motion.div>
           </div>
 
+          <motion.figure
+            initial={{ opacity: 0, y: 22 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.34, ease }}
+            className="mt-16 md:mt-20"
+          >
+            <div className="relative aspect-[3/2] overflow-hidden rounded-[1.5rem] border border-white/[0.08]">
+              <Image
+                src="/images/mapping.webp"
+                alt="A figure reading a hand-drawn map of a landscape threaded with routes and waypoints"
+                fill
+                priority
+                sizes="(min-width: 1280px) 1160px, calc(100vw - 3rem)"
+                className="object-cover"
+              />
+            </div>
+          </motion.figure>
         </div>
       </section>
 
 
-      <section className="px-6 md:px-12 xl:px-20 py-24 md:py-32">
+      <section className="paper px-6 md:px-12 xl:px-20 py-24 md:py-32">
         <div className="max-w-[1160px] mx-auto">
           <div className="grid lg:grid-cols-12 gap-12 lg:gap-20">
             <ScrollReveal direction="up" className="lg:col-span-5">
               <p className="text-xs font-medium tracking-[0.24em] uppercase text-accent/70 mb-5">The perspective</p>
               <h2 className="text-3xl md:text-5xl font-medium tracking-tight text-balance">
-                Close enough to the work to see what the plan misses.
+                Background.
               </h2>
             </ScrollReveal>
 
@@ -125,6 +143,16 @@ export default function About() {
             </ScrollReveal>
           </div>
 
+          <ScrollReveal direction="up" delay={0.12} className="mt-14 md:mt-20">
+            <Image
+              src="/images/bridging.webp"
+              alt="An ink drawing of a bridge carrying a route from open ground into a built city"
+              width={1512}
+              height={1008}
+              sizes="(min-width: 1280px) 980px, calc(100vw - 3rem)"
+              className="mx-auto w-full max-w-[980px] mix-blend-multiply"
+            />
+          </ScrollReveal>
         </div>
       </section>
 
@@ -136,7 +164,7 @@ export default function About() {
             </div>
             <div className="lg:col-span-8">
               <h2 className="text-3xl md:text-5xl font-medium tracking-tight text-balance">
-                Three organizations, three different problems.
+                Current roles.
               </h2>
             </div>
           </ScrollReveal>
@@ -169,7 +197,7 @@ export default function About() {
               How I think about the work
             </p>
             <h2 className="text-3xl md:text-5xl font-medium tracking-tight text-balance">
-              A process is more than the steps written down.
+              How I work.
             </h2>
           </ScrollReveal>
 
@@ -256,7 +284,7 @@ export default function About() {
           <div className="max-w-2xl">
             <p className="text-xs font-medium tracking-[0.24em] uppercase text-accent/70 mb-5">Selected work</p>
             <h2 className="text-3xl md:text-5xl font-medium tracking-tight text-balance mb-5">
-              The evidence is in the decisions and what changed after them.
+              Selected work.
             </h2>
             <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
               Explore the implementation, workflow, service, and digital-platform work in more detail.

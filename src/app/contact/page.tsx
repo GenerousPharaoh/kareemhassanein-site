@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { ArrowUpRight, Check, Send } from 'lucide-react';
 
@@ -157,6 +158,16 @@ export default function ContactPage() {
               Connect on LinkedIn
               <ArrowUpRight aria-hidden="true" size={16} className="transition-transform duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
             </a>
+
+            <figure className="relative mt-14 hidden aspect-[3/2] overflow-hidden rounded-[1.5rem] border border-white/[0.08] lg:block">
+              <Image
+                src="/images/contact.webp"
+                alt="A desk with a message being written and replies arriving around it"
+                fill
+                sizes="(min-width: 1024px) 620px, calc(100vw - 3rem)"
+                className="object-cover"
+              />
+            </figure>
           </motion.section>
 
           <motion.section initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, delay: 0.16, ease }} aria-labelledby="contact-form-heading" className="paper p-6 sm:p-8 md:p-10 lg:col-span-6 lg:mt-12">

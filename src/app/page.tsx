@@ -1,6 +1,7 @@
 'use client';
 
 import type { CSSProperties } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
 import ScrollReveal from '@/components/ScrollReveal';
@@ -166,6 +167,15 @@ export default function Home() {
             <ScrollReveal direction="up" className="lg:col-span-5">
               <p className="mb-5 text-xs font-semibold uppercase tracking-[0.2em] text-accent/80">Advisory</p>
               <h2 className="max-w-xl text-4xl font-medium tracking-[-0.045em] sm:text-5xl">Current advisory work.</h2>
+              <figure className="relative mt-10 aspect-square overflow-hidden rounded-[1.5rem] border border-white/[0.08]">
+                <Image
+                  src="/images/orchestrating.webp"
+                  alt="A figure drawing scattered schedules and records into a single flowing line"
+                  fill
+                  sizes="(min-width: 1024px) 500px, calc(100vw - 3rem)"
+                  className="object-cover"
+                />
+              </figure>
             </ScrollReveal>
             <div className="border-t border-white/[0.11] lg:col-span-7">
               {advisory.map((item) => (
