@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
@@ -52,8 +51,8 @@ export default function About() {
           <div className="absolute -top-36 right-[-12%] h-[34rem] w-[34rem] rounded-full bg-accent/[0.06] blur-3xl" />
           <div className="absolute bottom-[-40%] left-[-10%] h-[28rem] w-[28rem] rounded-full bg-accent/[0.03] blur-3xl" />
         </div>
-        <div className="relative max-w-[1280px] mx-auto grid lg:grid-cols-12 gap-14 lg:gap-16 items-center">
-          <div className="lg:col-span-7">
+        <div className="relative max-w-[1280px] mx-auto">
+          <div className="max-w-3xl">
             <motion.p
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
@@ -96,23 +95,6 @@ export default function About() {
             </motion.div>
           </div>
 
-          <motion.figure
-            initial={{ opacity: 0, x: 24 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1, delay: 0.22, ease }}
-            className="lg:col-span-5 lg:justify-self-end w-full max-w-[520px]"
-          >
-            <div className="relative aspect-[2/3] overflow-hidden rounded-[1.25rem] border border-white/[0.08] bg-white/[0.02] shadow-[0_35px_90px_-45px_rgba(0,0,0,0.95)]">
-              <Image
-                src="/images/navigator-about.webp"
-                alt="A figure studying a lit path that winds through a dark landscape of connected rooms"
-                fill
-                priority
-                sizes="(max-width: 1024px) 90vw, 500px"
-                className="object-cover"
-              />
-            </div>
-          </motion.figure>
         </div>
       </section>
 
@@ -143,17 +125,6 @@ export default function About() {
             </ScrollReveal>
           </div>
 
-          <ScrollReveal direction="up" delay={0.12} className="mt-14 md:mt-20">
-            <figure className="relative mx-auto aspect-[4/3] w-full max-w-[860px] overflow-hidden rounded-[1.75rem] border border-white/[0.1] bg-white/[0.02]">
-              <Image
-                src="/images/systems-conductor.webp"
-                alt="A figure drawing scattered documents into an ordered set of connected records"
-                fill
-                sizes="(min-width: 1024px) 860px, calc(100vw - 3rem)"
-                className="object-cover"
-              />
-            </figure>
-          </ScrollReveal>
         </div>
       </section>
 
