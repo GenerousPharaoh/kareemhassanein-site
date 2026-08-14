@@ -6,7 +6,7 @@ import { ArrowUpRight } from 'lucide-react';
 import ScrollReveal from '@/components/ScrollReveal';
 import ScreenFrame from '@/components/ScreenFrame';
 import WorkCard from '@/components/WorkCard';
-import { advisory, areasOfWork, principalProjects } from '@/lib/work';
+import { advisory, principalProjects } from '@/lib/work';
 
 // A bridge of real screens between the hero and the featured work: shots
 // that are not already leading a card below.
@@ -46,9 +46,9 @@ const stripShots = [
 ];
 
 const heroLines = [
-  { text: 'I find friction,', className: '' },
-  { text: 'solve it, and make', className: '' },
-  { text: 'it stick.', className: 'font-serif font-normal italic text-accent' },
+  { text: 'Selected work in', className: '' },
+  { text: 'healthcare, operations,', className: '' },
+  { text: 'and digital delivery.', className: 'font-serif font-normal italic text-accent' },
 ];
 
 const HEADLINE_START = 0.22;
@@ -119,9 +119,9 @@ export default function Home() {
                 className="enter-fade max-w-lg text-lg leading-relaxed text-foreground/76 lg:text-xl"
                 style={{ '--hero-delay': '0.62s', '--enter-dur': '0.95s' } as CSSProperties}
               >
-                I work inside clinical care and operations, where broken handoffs are visible in daily use. I redesign
-                the surrounding workflow, deliver the change, and stay close enough to see whether it is actually
-                adopted.
+                I&rsquo;m a practicing physiotherapist who also builds and runs the systems around care: websites,
+                booking and intake, documentation, and the workflows that connect them. This portfolio shows the
+                finished work and the decisions behind it.
               </p>
               <div
                 className="enter-fade mt-8 flex flex-col gap-3 sm:flex-row lg:flex-col xl:flex-row xl:gap-2"
@@ -191,42 +191,6 @@ export default function Home() {
               See all work
               <ArrowUpRight aria-hidden="true" size={16} className="transition-transform duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
             </Link>
-          </div>
-        </div>
-      </section>
-
-      <section className="border-t border-black/[0.12] bg-[#ECE6D9] px-6 py-24 text-[#1c1812] sm:px-8 md:py-28 lg:px-12 xl:px-20">
-        <div className="mx-auto max-w-[1320px]">
-          <ScrollReveal direction="up" className="grid gap-6 lg:grid-cols-12 lg:items-end">
-            <div className="lg:col-span-7">
-              <p className="mb-5 text-xs font-semibold uppercase tracking-[0.2em] text-[#705829]">Capabilities</p>
-              <h2 className="max-w-3xl text-4xl font-medium tracking-[-0.045em] sm:text-5xl">
-                Where I can help.
-              </h2>
-            </div>
-            <p className="max-w-lg text-base leading-relaxed text-[#57503f] lg:col-span-5">
-              Work can begin with a broken process, a stalled rollout, or a digital service that no longer matches how
-              people use it. These are the areas I can carry from diagnosis through delivery and adoption.
-            </p>
-          </ScrollReveal>
-
-          <div className="mt-14 grid border-y border-black/[0.14] md:grid-cols-2 lg:grid-cols-4">
-            {areasOfWork.map((area, index) => (
-              <ScrollReveal
-                key={area.title}
-                direction="up"
-                delay={index * 0.04}
-                className={`py-7 md:px-6 lg:py-8 ${
-                  index > 0 ? 'border-t border-black/[0.1] md:border-t-0 md:border-l' : ''
-                } ${index === 2 ? 'md:border-l-0 lg:border-l' : ''}`}
-              >
-                <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#705829]/80">
-                  {String(index + 1).padStart(2, '0')}
-                </p>
-                <h3 className="mt-5 text-xl font-medium tracking-[-0.025em]">{area.title}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-[#625a49]">{area.desc}</p>
-              </ScrollReveal>
-            ))}
           </div>
         </div>
       </section>

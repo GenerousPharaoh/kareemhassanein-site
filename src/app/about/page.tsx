@@ -123,12 +123,6 @@ export default function About() {
                     className="object-cover"
                   />
                 </div>
-                <figcaption className="mt-5 grid gap-2 border-l border-accent/35 pl-4 text-sm leading-relaxed sm:grid-cols-[0.72fr_1.28fr] sm:gap-8">
-                  <span className="font-medium text-foreground/88">Working from the clinic floor through to delivery.</span>
-                  <span className="text-muted-foreground">
-                    Care, booking, intake, and documentation are treated as one connected operating environment.
-                  </span>
-                </figcaption>
               </figure>
             </ScrollReveal>
           </div>

@@ -187,8 +187,8 @@ export const projects: Project[] = [
     summary:
       'The operational and digital integration of physiotherapy within an established six-specialty healthcare clinic.',
     proof: [
-      { value: '6 services', label: 'organized as one coordinated clinic' },
-      { value: '1 new service', label: 'physiotherapy launched inside the clinic' },
+      { value: '6 services', label: 'presented on one clinic site' },
+      { value: '1 new service', label: 'physiotherapy launched' },
     ],
     contribution: [
       'Service structure',
@@ -278,8 +278,8 @@ export const projects: Project[] = [
       'A reusable drafting workflow that turned repetitive intake and document-generation work into a structured operating process.',
     proof: [
       { value: '~3h to 30m', label: 'document generation per matter' },
-      { value: '~85%', label: 'less document-generation time' },
-      { value: 'Independent', label: 'practitioner-run workflow' },
+      { value: '~85%', label: 'reduction in document-generation time' },
+      { value: 'Independent', label: 'workflow operated by the practitioner' },
     ],
     contribution: [
       'Workflow mapping',

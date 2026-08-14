@@ -189,9 +189,6 @@ export default function ContactPage() {
                   className="object-cover"
                 />
               </div>
-              <figcaption className="mt-4 border-l border-accent/35 pl-4 text-sm leading-relaxed text-muted-foreground">
-                A useful first conversation starts at the handoff that keeps failing.
-              </figcaption>
             </figure>
           </section>
         </div>
