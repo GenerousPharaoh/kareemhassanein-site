@@ -96,20 +96,6 @@ export default function About() {
             </motion.div>
           </div>
 
-          <motion.figure
-            initial={{ opacity: 0, y: 22 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.34, ease }}
-            className="mt-12 md:mt-16"
-          >
-            <Plate
-              src="/images/mapping.webp"
-              alt="A figure reading a hand-drawn map of a landscape threaded with routes and waypoints"
-              sizes="(min-width: 768px) 620px, 100vw"
-              className="mx-auto w-full max-w-[620px]"
-              priority
-            />
-          </motion.figure>
         </div>
       </section>
 
