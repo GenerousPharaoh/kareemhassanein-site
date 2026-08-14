@@ -1,6 +1,6 @@
 'use client';
 
-import Image from 'next/image';
+import Plate from '@/components/Plate';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
@@ -100,24 +100,21 @@ export default function About() {
             initial={{ opacity: 0, y: 22 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.34, ease }}
-            className="mt-16 md:mt-20"
+            className="mt-12 md:mt-16"
           >
-            <div className="relative aspect-[3/2] overflow-hidden rounded-[1.5rem] border border-white/[0.08]">
-              <Image
-                src="/images/mapping.webp"
-                alt="A figure reading a hand-drawn map of a landscape threaded with routes and waypoints"
-                fill
-                priority
-                sizes="(min-width: 1280px) 1160px, calc(100vw - 3rem)"
-                className="object-cover"
-              />
-            </div>
+            <Plate
+              src="/images/mapping.webp"
+              alt="A figure reading a hand-drawn map of a landscape threaded with routes and waypoints"
+              sizes="(min-width: 768px) 620px, 100vw"
+              className="mx-auto w-full max-w-[620px]"
+              priority
+            />
           </motion.figure>
         </div>
       </section>
 
 
-      <section className="paper px-6 md:px-12 xl:px-20 py-24 md:py-32">
+      <section className="px-6 md:px-12 xl:px-20 py-24 md:py-32">
         <div className="max-w-[1160px] mx-auto">
           <div className="grid lg:grid-cols-12 gap-12 lg:gap-20">
             <ScrollReveal direction="up" className="lg:col-span-5">
@@ -125,6 +122,13 @@ export default function About() {
               <h2 className="text-3xl md:text-5xl font-medium tracking-tight text-balance">
                 Background.
               </h2>
+              <Plate
+                src="/images/orchestrating.webp"
+                alt="A figure drawing scattered schedules and records into a single flowing line"
+                aspect="aspect-square"
+                sizes="(min-width: 1024px) 380px, 60vw"
+                className="mt-10 w-full max-w-[380px]"
+              />
             </ScrollReveal>
 
             <ScrollReveal direction="up" delay={0.08} className="lg:col-span-7 lg:pt-10">
@@ -143,16 +147,6 @@ export default function About() {
             </ScrollReveal>
           </div>
 
-          <ScrollReveal direction="up" delay={0.12} className="mt-14 md:mt-20">
-            <Image
-              src="/images/bridging.webp"
-              alt="An ink drawing of a bridge carrying a route from open ground into a built city"
-              width={1512}
-              height={1008}
-              sizes="(min-width: 1280px) 980px, calc(100vw - 3rem)"
-              className="mx-auto w-full max-w-[980px] mix-blend-multiply"
-            />
-          </ScrollReveal>
         </div>
       </section>
 

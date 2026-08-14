@@ -1,7 +1,6 @@
 'use client';
 
 import type { CSSProperties } from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
 import ScrollReveal from '@/components/ScrollReveal';
@@ -69,12 +68,12 @@ export default function Home() {
               </p>
               <h1 className="max-w-[1100px] text-[clamp(2.5rem,7vw,6.6rem)] font-medium leading-[0.92] tracking-[-0.055em]">
                 <span className="block overflow-hidden pb-[0.08em]">
-                  <span className="hero-rise block" style={{ '--hero-delay': '0.08s' } as CSSProperties}>
+                  <span className="hero-rise block" style={{ '--hero-delay': '0.10s' } as CSSProperties}>
                     Selected work in
                   </span>
                 </span>
                 <span className="block overflow-hidden pb-[0.08em]">
-                  <span className="hero-rise block" style={{ '--hero-delay': '0.18s' } as CSSProperties}>
+                  <span className="hero-rise block" style={{ '--hero-delay': '0.19s' } as CSSProperties}>
                     healthcare, operations,
                   </span>
                 </span>
@@ -90,8 +89,8 @@ export default function Home() {
             </div>
 
             <div
-              className="hero-fade border-l border-white/[0.12] pl-6 lg:col-span-4 lg:mb-4 lg:pl-8"
-              style={{ '--hero-delay': '0.42s' } as CSSProperties}
+              className="hero-fade hero-rule pl-6 lg:col-span-4 lg:mb-4 lg:pl-8"
+              style={{ '--hero-delay': '0.40s' } as CSSProperties}
             >
               <p className="max-w-lg text-lg leading-relaxed text-foreground/76 lg:text-xl">
                 I&rsquo;m a practicing physiotherapist who also builds and runs the systems around care: websites,
@@ -122,10 +121,16 @@ export default function Home() {
       {/* Filmstrip bridge: real screens spanning the dark-to-paper boundary */}
       <section aria-label="Project screens" className="relative z-10 -mb-10 px-6 sm:px-8 md:-mb-20 lg:px-12 xl:px-20">
         <div className="mx-auto grid max-w-[1320px] grid-cols-2 gap-4 md:grid-cols-4 md:gap-6">
+          {/* Part of the load sequence rather than a scroll reveal: these sit in
+              the first screen, so they animate in CSS and paint with the page. */}
           {stripShots.map((shot, index) => (
-            <ScrollReveal key={shot.src} direction="up" delay={index * 0.06} className={stripOffsets[index]}>
+            <div
+              key={shot.src}
+              className={`hero-fade ${stripOffsets[index]}`}
+              style={{ '--hero-delay': `${0.54 + index * 0.07}s` } as CSSProperties}
+            >
               <ScreenFrame shot={shot} sizes="(max-width: 768px) 50vw, 320px" />
-            </ScrollReveal>
+            </div>
           ))}
         </div>
       </section>
@@ -167,15 +172,6 @@ export default function Home() {
             <ScrollReveal direction="up" className="lg:col-span-5">
               <p className="mb-5 text-xs font-semibold uppercase tracking-[0.2em] text-accent/80">Advisory</p>
               <h2 className="max-w-xl text-4xl font-medium tracking-[-0.045em] sm:text-5xl">Current advisory work.</h2>
-              <figure className="relative mt-10 aspect-square overflow-hidden rounded-[1.5rem] border border-white/[0.08]">
-                <Image
-                  src="/images/orchestrating.webp"
-                  alt="A figure drawing scattered schedules and records into a single flowing line"
-                  fill
-                  sizes="(min-width: 1024px) 500px, calc(100vw - 3rem)"
-                  className="object-cover"
-                />
-              </figure>
             </ScrollReveal>
             <div className="border-t border-white/[0.11] lg:col-span-7">
               {advisory.map((item) => (

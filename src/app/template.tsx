@@ -1,15 +1,8 @@
-'use client'
-
-import { motion } from 'framer-motion'
-
+// Page transitions are CSS, not framer-motion. A motion component writes its
+// initial styles into the server HTML, so wrapping every page in one left the
+// whole document invisible until hydration and then slid it upward, fighting
+// the hero's own reveal. This fades opacity only: it paints with the document,
+// moves no layout, and leaves the entrance choreography to the page itself.
 export default function Template({ children }: { children: React.ReactNode }) {
-    return (
-        <motion.div
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
-        >
-            {children}
-        </motion.div>
-    )
+    return <div className="page-enter">{children}</div>;
 }
