@@ -294,31 +294,4 @@ export function TrcLibraryFigure() {
   );
 }
 
-const disciplines = ['Chiropractic', 'Massage Therapy', 'Athletic Therapy', 'Chiropody', 'Acupuncture'];
 
-export function EndorphinsPathwaysFigure() {
-  return (
-    <FigureShell
-      title="One clinic, six disciplines"
-      caption="Physiotherapy was introduced as a peer to five established services, with referral pathways in both directions so a patient can move between disciplines without leaving the clinic."
-    >
-      <div className="grid gap-5 md:grid-cols-[0.72fr_auto_1.28fr] md:items-center">
-        <div className="rounded-[6px] border border-accent/35 bg-accent/[0.06] px-6 py-5">
-          <span className="block text-[10px] font-medium tracking-[0.18em] uppercase text-accent/70 mb-1.5">New service line</span>
-          <span className="block text-lg font-medium text-foreground/95">Physiotherapy</span>
-        </div>
-        <span aria-hidden="true" className="mx-auto h-7 w-px bg-accent/35 md:h-px md:w-10" />
-        <div className="grid gap-px overflow-hidden rounded-[6px] border border-white/[0.08] bg-white/[0.08] sm:grid-cols-2">
-          {disciplines.map((discipline) => (
-            <span key={discipline} className="bg-[hsl(220,14%,10.5%)] px-4 py-3 text-sm text-muted-foreground/90">
-              {discipline}
-            </span>
-          ))}
-          <span className="bg-[hsl(220,14%,10.5%)] px-4 py-3 text-[11px] font-medium tracking-[0.14em] uppercase text-accent/75">
-            Referrals both ways
-          </span>
-        </div>
-      </div>
-    </FigureShell>
-  );
-}

@@ -105,9 +105,8 @@ export const projects: Project[] = [
         ...DESKTOP,
         frame: 'browser',
         url: 'kinetikarephysio.com',
-        title: 'A booking-first front door',
-        caption:
-          'The homepage pairs the clinical introduction with live Google reviews and direct booking, so a first-time visitor can act without hunting for a phone number.',
+        title: 'The homepage',
+        caption: 'Introduction, live Google reviews, and booking in reach without hunting for a phone number.',
       },
       {
         src: '/images/work/kinetikare-conditions.webp',
@@ -115,9 +114,8 @@ export const projects: Project[] = [
         ...DESKTOP,
         frame: 'browser',
         url: 'kinetikarephysio.com/conditions',
-        title: 'Navigation built on body regions',
-        caption:
-          'Patients rarely arrive knowing their diagnosis. The condition library is organized by body region first, with search layered on top, so a person can start from where it hurts.',
+        title: 'The condition library',
+        caption: 'Organised by body region first, with search on top, so someone can start from where it hurts.',
       },
       {
         src: '/images/work/kinetikare-compare.webp',
@@ -125,9 +123,8 @@ export const projects: Project[] = [
         ...DESKTOP,
         frame: 'browser',
         url: 'kinetikarephysio.com/conditions/compare',
-        title: 'Commonly confused diagnoses, side by side',
-        caption:
-          'Some conditions are separated by details patients cannot see from the inside. Comparison pages put the two patterns next to each other and explain what is checked in person to tell them apart.',
+        title: 'Comparison pages',
+        caption: 'Two commonly confused conditions side by side, with what gets checked in person to tell them apart.',
       },
       {
         src: '/images/work/kinetikare-treatment.webp',
@@ -135,18 +132,16 @@ export const projects: Project[] = [
         ...DESKTOP,
         frame: 'browser',
         url: 'kinetikarephysio.com/treatments/dry-needling',
-        title: 'Treatment education in plain language',
-        caption:
-          'Each treatment page opens with what the technique is, what it can help with, and what the evidence supports, before asking anyone to book. The plain language is a deliberate clinical choice.',
+        title: 'A treatment page',
+        caption: 'What the technique is, what it helps with, and what the evidence supports, before any booking ask.',
       },
       {
         src: '/images/work/kinetikare-mobile.webp',
         alt: 'KinetiKare mobile homepage with booking and call actions',
         ...PHONE,
         frame: 'phone',
-        title: 'Designed for the phone in hand',
-        caption:
-          'Most visits happen on a phone. The mobile experience keeps booking and calling one tap away without burying the educational content.',
+        title: 'On a phone',
+        caption: 'Where most visits happen, with booking and calling a tap away.',
       },
     ],
     decision:
@@ -195,9 +190,8 @@ export const projects: Project[] = [
         ...DESKTOP,
         frame: 'browser',
         url: 'endorphinshealth.com',
-        title: 'One clinic, not six brands',
-        caption:
-          'The site leads with the clinic as a whole rather than a list of departments. Each discipline keeps its identity one level deeper, where the visitor is already oriented.',
+        title: 'The clinic homepage',
+        caption: 'Rebuilt around the clinic as a whole, with each discipline one level deeper.',
       },
       {
         src: '/images/work/endorphins-services.webp',
@@ -205,9 +199,8 @@ export const projects: Project[] = [
         ...DESKTOP,
         frame: 'browser',
         url: 'endorphinshealth.com/services',
-        title: 'Six services, one structure',
-        caption:
-          'Every service card answers the same three questions: what it is, who provides it, and whether online booking is available. The symmetry keeps six disciplines comparable at a glance.',
+        title: 'The services index',
+        caption: 'Each service card carries what it is, who provides it, and whether it can be booked online.',
       },
       {
         src: '/images/work/endorphins-physio.webp',
@@ -215,9 +208,8 @@ export const projects: Project[] = [
         ...DESKTOP,
         frame: 'browser',
         url: 'endorphinshealth.com/services/physiotherapy',
-        title: 'The physiotherapy service line',
-        caption:
-          'The service I launched clinically also had to be legible digitally: what physiotherapy at this clinic involves, who provides it, and how to start.',
+        title: 'The physiotherapy page',
+        caption: 'The service line I launched, written up for patients deciding whether to book.',
       },
       {
         src: '/images/work/endorphins-booking.webp',
@@ -225,18 +217,16 @@ export const projects: Project[] = [
         ...DESKTOP,
         frame: 'browser',
         url: 'endorphinshealth.com/book-appointment',
-        title: 'Booking routed by practitioner',
-        caption:
-          'Patients book a person, not a department. The booking journey routes by practitioner with call and online options, matching how the front desk actually schedules.',
+        title: 'Booking',
+        caption: 'Routed by practitioner rather than by department, matching how the front desk schedules.',
       },
       {
         src: '/images/work/endorphins-mobile.webp',
         alt: 'Endorphins mobile homepage',
         ...PHONE,
         frame: 'phone',
-        title: 'Mobile-first for local search',
-        caption:
-          'Most local-search visits land on a phone. The mobile presentation keeps calling and booking immediate for someone looking for care nearby.',
+        title: 'On a phone',
+        caption: 'Most local-search visits arrive on mobile, so calling and booking stay in reach.',
       },
     ],
     decision:
@@ -319,45 +309,40 @@ export const projects: Project[] = [
         alt: 'Wedding website arrival screen with a framed photo, names, and date',
         ...DESKTOP,
         frame: 'browser',
-        title: 'An invitation before a website',
-        caption:
-          'The site opens as a composed arrival: one photograph settling into a fine gold frame with the names and the date. Guests get the feeling first and the logistics a scroll later.',
+        title: 'The arrival',
+        caption: 'One photograph settling into a gold frame with the names and the date. Logistics come a scroll later.',
       },
       {
         src: '/images/work/wedding-day.webp',
         alt: 'Wedding day schedule with venue details, maps, and calendar actions',
         ...DESKTOP,
         frame: 'browser',
-        title: 'The day, structured for action',
-        caption:
-          'The venue section pairs the schedule with the three actions a guest actually needs: open the location in Maps, add it to a calendar, or download the invite file.',
+        title: 'The day',
+        caption: 'Schedule alongside the three things a guest needs: maps, calendar, and the invite file.',
       },
       {
         src: '/images/work/wedding-travel.webp',
         alt: 'Travel section explaining how to get to Lima',
         ...DESKTOP,
         frame: 'browser',
-        title: 'Travel guidance before logistics',
-        caption:
-          'Travel content is written as reassurance first and logistics second: fly into Lima, stay in Miraflores, use Uber. The details follow once the shape of the trip is clear.',
+        title: 'Getting there',
+        caption: 'Fly into Lima, stay in Miraflores, use Uber. The details follow once the shape of the trip is clear.',
       },
       {
         src: '/images/work/wedding-machu.webp',
         alt: 'Machu Picchu day-by-day itinerary with costs stated plainly',
         ...DESKTOP,
         frame: 'browser',
-        title: 'A seven-day itinerary made scannable',
-        caption:
-          'The optional Machu Picchu trip is presented as a horizontal day-by-day itinerary with the cost stated plainly, so guests can decide with real information rather than guesswork.',
+        title: 'The Machu Picchu trip',
+        caption: 'Seven days laid out one at a time, with the cost stated plainly so guests can decide.',
       },
       {
         src: '/images/work/wedding-mobile.webp',
         alt: 'Wedding site schedule on a phone',
         ...PHONE,
         frame: 'phone',
-        title: 'Built for a phone in an airport',
-        caption:
-          'Guests will use this site in transit. The mobile layout keeps the schedule, addresses, and actions readable at a glance.',
+        title: 'In transit',
+        caption: 'Schedule, addresses, and actions readable at a glance on a phone.',
       },
     ],
     decision:

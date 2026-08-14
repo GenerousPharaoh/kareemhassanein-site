@@ -11,7 +11,6 @@ import {
   TrcWorkflowHeroFigure,
   TrcPipelineFigure,
   TrcLibraryFigure,
-  EndorphinsPathwaysFigure,
 } from '@/components/WorkDiagrams';
 import type { GalleryItem, Project } from '@/lib/work';
 
@@ -234,11 +233,6 @@ export default function ProjectDetail({ project, next }: { project: Project; nex
                   </div>
                 )}
 
-                {project.slug === 'endorphins' && (
-                  <ScrollReveal direction="up" className="mt-14 md:mt-20">
-                    <EndorphinsPathwaysFigure />
-                  </ScrollReveal>
-                )}
               </section>
             )}
 
