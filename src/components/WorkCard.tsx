@@ -195,6 +195,25 @@ export default function WorkCard({
             </Heading>
             <p className={`mt-5 max-w-xl text-[15px] leading-relaxed sm:text-base ${light ? 'text-[#57503f]' : 'text-muted-foreground'}`}>{project.summary}</p>
 
+            {project.proof && project.proof.length > 0 && (
+              <dl className={`mt-6 border-y ${light ? 'border-black/[0.12]' : 'border-white/[0.11]'}`}>
+                {project.proof.slice(0, 3).map((item, proofIndex) => (
+                  <div
+                    key={`${item.value}-${item.label}`}
+                    className={`grid grid-cols-[minmax(7rem,0.8fr)_1.4fr] items-baseline gap-4 py-2.5 ${
+                      proofIndex > 0 ? light ? 'border-t border-black/[0.09]' : 'border-t border-white/[0.08]' : ''
+                    }`}
+                  >
+                    <dt className={`col-start-2 text-xs leading-snug ${light ? 'text-[#6b6353]' : 'text-muted-foreground/82'}`}>
+                      {item.label}
+                    </dt>
+                    <dd className={`col-start-1 row-start-1 text-sm font-semibold tracking-[-0.015em] ${light ? 'text-[#1c1812]' : 'text-foreground/92'}`}>
+                      {item.value}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            )}
 
             <span className={`mt-6 inline-flex min-h-11 items-center gap-2 text-sm font-semibold transition-colors duration-500 ${light ? 'text-[#1c1812]/74 group-hover:text-[#705829]' : 'text-foreground/74 group-hover:text-accent'}`}>
               View project

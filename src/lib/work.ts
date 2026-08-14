@@ -15,12 +15,18 @@ export interface GalleryItem extends ShotMeta {
   caption: string;
 }
 
+export interface ProjectProof {
+  value: string;
+  label: string;
+}
+
 export interface Project {
   slug: string;
   title: string;
   shortTitle: string;
   category: string;
   summary: string;
+  proof?: ProjectProof[];
   contribution: string[];
   intro: string[];
   gallery: GalleryItem[];
@@ -48,6 +54,11 @@ export const projects: Project[] = [
     category: 'Clinical Implementation · Change Adoption',
     summary:
       'Clinic-side evaluation, configuration, training, SOP development, go-live support, and refinement for an AI documentation platform adopted by the full physiotherapy team within eight weeks.',
+    proof: [
+      { value: '100%', label: 'full team adoption' },
+      { value: '8 weeks', label: 'to full adoption' },
+      { value: '~3 hours', label: 'saved per practitioner each week' },
+    ],
     contribution: [
       'Workflow evaluation',
       'Configuration',
@@ -74,7 +85,7 @@ export const projects: Project[] = [
     delivery:
       'Evaluation, configuration, training, SOP development, go-live support, and post-launch refinement were led by me on the clinic side.',
     size: 'large',
-    tier: 'additional',
+    tier: 'principal',
   },
   {
     slug: 'kinetikare',
@@ -83,6 +94,11 @@ export const projects: Project[] = [
     category: 'Healthcare Platform · Patient Experience',
     summary:
       'A patient education, acquisition, and booking platform organized around body regions, symptoms, conditions, and commonly confused diagnoses.',
+    proof: [
+      { value: '60+ pages', label: 'patient education and booking platform' },
+      { value: '55', label: 'condition pages' },
+      { value: '6', label: 'treatment pages' },
+    ],
     contribution: [
       'Clinical requirements',
       'Information architecture',
@@ -170,6 +186,10 @@ export const projects: Project[] = [
     category: 'Service Design · Clinic Digital Operations',
     summary:
       'The operational and digital integration of physiotherapy within an established six-specialty healthcare clinic.',
+    proof: [
+      { value: '6 services', label: 'organized as one coordinated clinic' },
+      { value: '1 new service', label: 'physiotherapy launched inside the clinic' },
+    ],
     contribution: [
       'Service structure',
       'Intake and booking journey',
@@ -256,6 +276,11 @@ export const projects: Project[] = [
     category: 'Workflow Automation · Professional Services',
     summary:
       'A reusable drafting workflow that turned repetitive intake and document-generation work into a structured operating process.',
+    proof: [
+      { value: '~3h to 30m', label: 'document generation per matter' },
+      { value: '~85%', label: 'less document-generation time' },
+      { value: 'Independent', label: 'practitioner-run workflow' },
+    ],
     contribution: [
       'Workflow mapping',
       'Bottleneck identification',
@@ -365,10 +390,10 @@ export const projects: Project[] = [
 ];
 
 const projectOrder = [
-  'kinetikare',
-  'endorphins',
-  'tax-relief-counsel',
   'clinical-documentation',
+  'tax-relief-counsel',
+  'endorphins',
+  'kinetikare',
   'wedding-website',
 ];
 

@@ -6,7 +6,7 @@ import { ArrowUpRight } from 'lucide-react';
 import ScrollReveal from '@/components/ScrollReveal';
 import ScreenFrame from '@/components/ScreenFrame';
 import WorkCard from '@/components/WorkCard';
-import { advisory, principalProjects } from '@/lib/work';
+import { advisory, areasOfWork, principalProjects } from '@/lib/work';
 
 // A bridge of real screens between the hero and the featured work: shots
 // that are not already leading a card below.
@@ -28,31 +28,31 @@ const stripShots = [
     url: 'endorphinshealth.com/book-appointment',
   },
   {
-    src: '/images/work/wedding-travel.webp',
-    alt: 'Travel section of the wedding website with an aerial photo of Lima',
+    src: '/images/work/kinetikare-compare.webp',
+    alt: 'KinetiKare comparison page showing two commonly confused conditions side by side',
     width: 1440,
     height: 900,
     frame: 'browser' as const,
-    url: 'wedding · travel',
+    url: 'kinetikarephysio.com/conditions/compare',
   },
   {
-    src: '/images/work/kinetikare-treatment.webp',
-    alt: 'Dry needling treatment page with plain-language benefits',
+    src: '/images/work/endorphins-services.webp',
+    alt: 'Endorphins services index showing six clinical services',
     width: 1440,
     height: 900,
     frame: 'browser' as const,
-    url: 'kinetikarephysio.com/treatments',
+    url: 'endorphinshealth.com/services',
   },
 ];
 
 const heroLines = [
-  { text: 'Selected work in', className: '' },
-  { text: 'healthcare, operations,', className: '' },
-  { text: 'and digital delivery.', className: 'font-serif font-normal italic text-accent' },
+  { text: 'I find friction,', className: '' },
+  { text: 'solve it, and make', className: '' },
+  { text: 'it stick.', className: 'font-serif font-normal italic text-accent' },
 ];
 
-const HEADLINE_START = 1;
-const WORD_STEP = 0.085;
+const HEADLINE_START = 0.22;
+const WORD_STEP = 0.055;
 
 // One span per word, each resolving on its own beat.
 function HeadlineLine({ text, offset, className = '', duration }: { text: string; offset: number; className?: string; duration: string }) {
@@ -79,7 +79,7 @@ function HeadlineLine({ text, offset, className = '', duration }: { text: string
 
 const stripOffsets = ['md:translate-y-8', 'md:-translate-y-2', 'md:translate-y-12', 'md:translate-y-3'];
 
-const featuredSlugs = ['kinetikare', 'endorphins', 'tax-relief-counsel'];
+const featuredSlugs = ['clinical-documentation', 'tax-relief-counsel', 'endorphins'];
 const featured = featuredSlugs
   .map((slug) => principalProjects.find((project) => project.slug === slug))
   .filter((project): project is (typeof principalProjects)[number] => Boolean(project));
@@ -88,10 +88,6 @@ export default function Home() {
   return (
     <main className="overflow-hidden bg-background text-foreground">
       <section className="relative px-6 pb-20 pt-32 sm:px-8 md:pb-28 md:pt-40 lg:px-12 xl:px-20">
-        <div aria-hidden="true" className="enter-glow pointer-events-none absolute inset-0 overflow-hidden">
-          <div className="absolute -top-36 right-[-12%] h-[34rem] w-[34rem] rounded-full bg-accent/[0.06] blur-3xl" />
-          <div className="absolute bottom-[-40%] left-[-10%] h-[28rem] w-[28rem] rounded-full bg-accent/[0.03] blur-3xl" />
-        </div>
         <div className="relative mx-auto max-w-[1440px]">
           <div className="grid gap-14 lg:grid-cols-12 lg:items-end lg:gap-16">
             <div className="lg:col-span-8">
@@ -99,9 +95,9 @@ export default function Home() {
                 <span
                   aria-hidden="true"
                   className="enter-rule-x h-px w-10 bg-accent/50"
-                  style={{ '--hero-delay': '0.30s' } as CSSProperties}
+                  style={{ '--hero-delay': '0.06s' } as CSSProperties}
                 />
-                <span className="enter-fade" style={{ '--hero-delay': '0.62s', '--enter-dur': '1.1s' } as CSSProperties}>
+                <span className="enter-fade" style={{ '--hero-delay': '0.16s', '--enter-dur': '0.85s' } as CSSProperties}>
                   Kareem Hassanein · Implementation &amp; Operations
                 </span>
               </p>
@@ -112,24 +108,24 @@ export default function Home() {
                     text={line.text}
                     offset={heroLines.slice(0, index).reduce((total, prev) => total + prev.text.split(' ').length, 0)}
                     className={line.className}
-                    duration={index === heroLines.length - 1 ? '1.25s' : '1.05s'}
+                    duration={index === heroLines.length - 1 ? '1s' : '0.85s'}
                   />
                 ))}
               </h1>
             </div>
 
-            <div className="hero-rule pl-6 lg:col-span-4 lg:mb-4 lg:pl-8" style={{ '--hero-delay': '2.20s' } as CSSProperties}>
+            <div className="hero-rule pl-6 lg:col-span-4 lg:mb-4 lg:pl-8" style={{ '--hero-delay': '0.52s' } as CSSProperties}>
               <p
                 className="enter-fade max-w-lg text-lg leading-relaxed text-foreground/76 lg:text-xl"
-                style={{ '--hero-delay': '2.42s', '--enter-dur': '1.35s' } as CSSProperties}
+                style={{ '--hero-delay': '0.62s', '--enter-dur': '0.95s' } as CSSProperties}
               >
-                I&rsquo;m a practicing physiotherapist who also builds and runs the systems around care: websites,
-                booking and intake, documentation, and the workflows that connect them. This portfolio shows the
-                finished work and the decisions behind it.
+                I work inside clinical care and operations, where broken handoffs are visible in daily use. I redesign
+                the surrounding workflow, deliver the change, and stay close enough to see whether it is actually
+                adopted.
               </p>
               <div
                 className="enter-fade mt-8 flex flex-col gap-3 sm:flex-row lg:flex-col xl:flex-row xl:gap-2"
-                style={{ '--hero-delay': '2.86s', '--enter-dur': '1.2s' } as CSSProperties}
+                style={{ '--hero-delay': '0.82s', '--enter-dur': '0.9s' } as CSSProperties}
               >
                 <Link
                   href="/work"
@@ -160,7 +156,7 @@ export default function Home() {
             <div
               key={shot.src}
               className={`enter-settle ${stripOffsets[index]}`}
-              style={{ '--hero-delay': `${3.20 + index * 0.26}s`, '--enter-dur': '1.5s' } as CSSProperties}
+              style={{ '--hero-delay': `${1.02 + index * 0.08}s`, '--enter-dur': '0.9s' } as CSSProperties}
             >
               <ScreenFrame shot={shot} sizes="(max-width: 768px) 50vw, 320px" />
             </div>
@@ -195,6 +191,42 @@ export default function Home() {
               See all work
               <ArrowUpRight aria-hidden="true" size={16} className="transition-transform duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
             </Link>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-t border-black/[0.12] bg-[#ECE6D9] px-6 py-24 text-[#1c1812] sm:px-8 md:py-28 lg:px-12 xl:px-20">
+        <div className="mx-auto max-w-[1320px]">
+          <ScrollReveal direction="up" className="grid gap-6 lg:grid-cols-12 lg:items-end">
+            <div className="lg:col-span-7">
+              <p className="mb-5 text-xs font-semibold uppercase tracking-[0.2em] text-[#705829]">Capabilities</p>
+              <h2 className="max-w-3xl text-4xl font-medium tracking-[-0.045em] sm:text-5xl">
+                Where I can help.
+              </h2>
+            </div>
+            <p className="max-w-lg text-base leading-relaxed text-[#57503f] lg:col-span-5">
+              Work can begin with a broken process, a stalled rollout, or a digital service that no longer matches how
+              people use it. These are the areas I can carry from diagnosis through delivery and adoption.
+            </p>
+          </ScrollReveal>
+
+          <div className="mt-14 grid border-y border-black/[0.14] md:grid-cols-2 lg:grid-cols-4">
+            {areasOfWork.map((area, index) => (
+              <ScrollReveal
+                key={area.title}
+                direction="up"
+                delay={index * 0.04}
+                className={`py-7 md:px-6 lg:py-8 ${
+                  index > 0 ? 'border-t border-black/[0.1] md:border-t-0 md:border-l' : ''
+                } ${index === 2 ? 'md:border-l-0 lg:border-l' : ''}`}
+              >
+                <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#705829]/80">
+                  {String(index + 1).padStart(2, '0')}
+                </p>
+                <h3 className="mt-5 text-xl font-medium tracking-[-0.025em]">{area.title}</h3>
+                <p className="mt-3 text-sm leading-relaxed text-[#625a49]">{area.desc}</p>
+              </ScrollReveal>
+            ))}
           </div>
         </div>
       </section>

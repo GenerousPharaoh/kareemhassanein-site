@@ -405,7 +405,6 @@ img {
 .enter-fade,
 .enter-settle,
 .enter-rule-x,
-.enter-glow,
 .hero-rule::before {
   animation-delay: var(--hero-delay, 0s);
 }
@@ -435,42 +434,35 @@ img {
      is drawn, still arrives as a block of words; only per-word timing reads as
      a sentence assembling itself. */
   .enter-word {
-    animation: enter-word var(--enter-dur, 1s) cubic-bezier(0.22, 0.61, 0.36, 1) both;
+    animation: enter-word var(--enter-dur, 1s) cubic-bezier(0.16, 1, 0.3, 1) both;
   }
 
-  /* Everything else holds still and simply arrives. */
-  /* Everything else pulls into focus instead of popping on. A gentle cubic
-     curve rather than expo, which front-loads its motion and reads as a flash. */
+  /* Supporting content arrives quickly enough to remain usable. */
   .enter-fade {
-    animation: enter-fade var(--enter-dur, 1.2s) cubic-bezier(0.22, 0.61, 0.36, 1) both;
-  }
-
-  /* Ambient light comes up before anything is legible. */
-  .enter-glow {
-    animation: enter-glow 2.4s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+    animation: enter-fade var(--enter-dur, 0.9s) cubic-bezier(0.16, 1, 0.3, 1) both;
   }
 
   /* The small gold mark that opens the page. */
   .enter-rule-x {
-    animation: enter-rule-x 0.9s cubic-bezier(0.65, 0, 0.35, 1) both;
+    animation: enter-rule-x 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
   }
 
   /* Plates settle rather than slide. `scale` is its own property here so it
      composes with the Tailwind translate offsets instead of overwriting them. */
   .enter-settle {
-    animation: enter-settle var(--enter-dur, 1.4s) cubic-bezier(0.22, 0.61, 0.36, 1) both;
+    animation: enter-settle var(--enter-dur, 0.9s) cubic-bezier(0.16, 1, 0.3, 1) both;
   }
 
   .hero-rule::before {
-    animation: rule-draw 1.2s cubic-bezier(0.65, 0, 0.35, 1) both;
+    animation: rule-draw 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
   }
 }
 
 @keyframes enter-word {
   from {
     opacity: 0;
-    filter: blur(10px);
-    scale: 1.03;
+    filter: blur(4px);
+    scale: 1.015;
   }
   to {
     opacity: 1;
@@ -482,20 +474,11 @@ img {
 @keyframes enter-fade {
   from {
     opacity: 0;
-    filter: blur(7px);
+    filter: blur(3px);
   }
   to {
     opacity: 1;
     filter: blur(0);
-  }
-}
-
-@keyframes enter-glow {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
   }
 }
 
@@ -513,8 +496,8 @@ img {
 @keyframes enter-settle {
   from {
     opacity: 0;
-    scale: 1.045;
-    filter: blur(12px);
+    scale: 1.02;
+    filter: blur(5px);
   }
   to {
     opacity: 1;

@@ -80,9 +80,38 @@ export default function Header() {
   }, [isMenuOpen]);
 
   useEffect(() => {
-    document.body.style.overflow = isMenuOpen ? 'hidden' : '';
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = isMenuOpen ? 'hidden' : previousOverflow;
     return () => {
-      document.body.style.overflow = '';
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [isMenuOpen]);
+
+  useEffect(() => {
+    const backgroundRegions = [
+      document.getElementById('main-content'),
+      document.querySelector<HTMLElement>('footer'),
+    ].filter(Boolean) as HTMLElement[];
+
+    if (!isMenuOpen) return;
+
+    const previousState = backgroundRegions.map((region) => ({
+      region,
+      inert: region.hasAttribute('inert'),
+      ariaHidden: region.getAttribute('aria-hidden'),
+    }));
+
+    backgroundRegions.forEach((region) => {
+      region.setAttribute('inert', '');
+      region.setAttribute('aria-hidden', 'true');
+    });
+
+    return () => {
+      previousState.forEach(({ region, inert, ariaHidden }) => {
+        if (!inert) region.removeAttribute('inert');
+        if (ariaHidden === null) region.removeAttribute('aria-hidden');
+        else region.setAttribute('aria-hidden', ariaHidden);
+      });
     };
   }, [isMenuOpen]);
 
@@ -91,6 +120,7 @@ export default function Header() {
       <motion.div
         animate={{ y: hidden ? '-110%' : '0%' }}
         transition={{ duration: 0.45, ease }}
+        onFocusCapture={() => setHidden(false)}
         className="fixed inset-x-0 top-0 z-50 px-5 pt-[env(safe-area-inset-top)] sm:px-6 lg:px-10"
       >
         <header
@@ -139,7 +169,7 @@ export default function Header() {
                     <Link
                       href={item.href}
                       aria-current={active ? 'page' : undefined}
-                      aria-haspopup={hasSubmenu ? 'menu' : undefined}
+                      aria-haspopup={hasSubmenu ? true : undefined}
                       aria-expanded={hasSubmenu ? workOpen : undefined}
                       className={`relative flex min-h-11 items-center gap-1.5 text-[12px] font-semibold uppercase tracking-[0.14em] transition-colors duration-300 ${
                         active ? 'text-accent' : 'text-foreground/62 hover:text-foreground'
@@ -172,7 +202,7 @@ export default function Header() {
                             transition={{ duration: 0.3, ease }}
                             className="absolute left-1/2 top-full w-64 -translate-x-1/2 pt-3"
                           >
-                            <div className="overflow-hidden rounded-xl border border-white/[0.1] bg-[#101114]/[0.97] p-2 shadow-[0_30px_70px_-25px_rgba(0,0,0,0.85)] backdrop-blur-xl">
+                            <div role="group" aria-label="Work projects" className="overflow-hidden rounded-xl border border-white/[0.1] bg-[#101114]/[0.97] p-2 shadow-[0_30px_70px_-25px_rgba(0,0,0,0.85)] backdrop-blur-xl">
                               <Link
                                 href="/work"
                                 className="flex min-h-10 items-center justify-between rounded-lg px-4 text-[12px] font-semibold uppercase tracking-[0.12em] text-foreground/85 transition-colors duration-200 hover:bg-white/[0.05] hover:text-accent"
@@ -239,12 +269,14 @@ export default function Header() {
           <motion.div
             id="mobile-navigation"
             ref={mobileMenuRef}
+            role="dialog"
+            aria-modal="true"
             aria-label="Site navigation"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.45, ease }}
-            className="fixed inset-0 z-[45] flex flex-col justify-center bg-[#111317]/[0.985] px-6 pb-[env(safe-area-inset-bottom)] pt-[env(safe-area-inset-top)] md:hidden"
+            className="fixed inset-0 z-[45] flex flex-col justify-start overflow-y-auto overscroll-contain bg-[#111317]/[0.985] px-6 pb-[calc(env(safe-area-inset-bottom)+2rem)] pt-[calc(env(safe-area-inset-top)+6rem)] md:hidden"
           >
             <nav className="mx-auto flex w-full max-w-sm flex-col" aria-label="Mobile navigation">
               {[{ href: '/', label: 'Home' }, ...navItems, { href: '/contact', label: 'Contact' }].map((item, index) => {
@@ -260,7 +292,7 @@ export default function Header() {
                     <Link
                       href={item.href}
                       aria-current={active ? 'page' : undefined}
-                      className={`flex min-h-20 items-center justify-between rounded-md px-1 text-4xl font-light tracking-tight ${
+                      className={`flex min-h-16 items-center justify-between rounded-md px-1 text-3xl font-light tracking-tight sm:min-h-20 sm:text-4xl ${
                         active ? 'text-accent' : 'text-foreground/72'
                       }`}
                     >
@@ -275,7 +307,7 @@ export default function Header() {
                           <Link
                             key={project.slug}
                             href={`/work/${project.slug}`}
-                            className={`flex min-h-10 items-center text-base ${
+                            className={`flex min-h-9 items-center text-sm sm:min-h-10 sm:text-base ${
                               pathname === `/work/${project.slug}` ? 'text-accent' : 'text-foreground/58'
                             }`}
                           >

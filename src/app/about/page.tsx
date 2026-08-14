@@ -2,7 +2,7 @@
 
 import type { CSSProperties } from 'react';
 
-import Plate from '@/components/Plate';
+import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import ScrollReveal from '@/components/ScrollReveal';
@@ -47,10 +47,6 @@ export default function About() {
   return (
     <main className="overflow-hidden bg-background text-foreground pt-20">
       <section className="relative px-6 md:px-12 xl:px-20 pt-16 md:pt-24 pb-20 md:pb-28">
-        <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
-          <div className="absolute -top-36 right-[-12%] h-[34rem] w-[34rem] rounded-full bg-accent/[0.06] blur-3xl" />
-          <div className="absolute bottom-[-40%] left-[-10%] h-[28rem] w-[28rem] rounded-full bg-accent/[0.03] blur-3xl" />
-        </div>
         <div className="relative max-w-[1280px] mx-auto">
           <div className="max-w-3xl">
             <p
@@ -99,13 +95,6 @@ export default function About() {
               <h2 className="text-3xl md:text-5xl font-medium tracking-tight text-balance">
                 Background.
               </h2>
-              <Plate
-                src="/images/orchestrating.webp"
-                alt="A figure drawing scattered schedules and records into a single flowing line"
-                aspect="aspect-square"
-                sizes="(min-width: 1024px) 380px, 60vw"
-                className="mt-10 w-full max-w-[380px]"
-              />
             </ScrollReveal>
 
             <ScrollReveal direction="up" delay={0.08} className="lg:col-span-7 lg:pt-10">
@@ -121,6 +110,26 @@ export default function About() {
                   organize it clearly, and deliver something that works beyond the planning stage.
                 </p>
               </div>
+            </ScrollReveal>
+
+            <ScrollReveal direction="up" delay={0.1} className="lg:col-span-12">
+              <figure className="mt-2">
+                <div className="relative aspect-[3/2] overflow-hidden rounded-[1.5rem] border border-white/[0.09] bg-[#090a09]">
+                  <Image
+                    src="/images/about-clinical-workflow-final.webp"
+                    alt="Illustration of Kareem mapping a route from a physiotherapy treatment room through booking and documentation interfaces"
+                    fill
+                    sizes="(min-width: 1280px) 1160px, calc(100vw - 3rem)"
+                    className="object-cover"
+                  />
+                </div>
+                <figcaption className="mt-5 grid gap-2 border-l border-accent/35 pl-4 text-sm leading-relaxed sm:grid-cols-[0.72fr_1.28fr] sm:gap-8">
+                  <span className="font-medium text-foreground/88">Working from the clinic floor through to delivery.</span>
+                  <span className="text-muted-foreground">
+                    Care, booking, intake, and documentation are treated as one connected operating environment.
+                  </span>
+                </figcaption>
+              </figure>
             </ScrollReveal>
           </div>
 

@@ -113,11 +113,6 @@ export default function Footer() {
 
   return (
     <footer className="relative z-10 overflow-hidden bg-[#070807] text-[#f1ede6] md:fixed md:inset-x-0 md:bottom-0 md:z-0 md:flex md:min-h-svh md:flex-col">
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 right-[-10%] h-[36rem] w-[36rem] rounded-full bg-accent/[0.07] blur-3xl" />
-        <div className="absolute bottom-[-30%] left-[-8%] h-[30rem] w-[30rem] rounded-full bg-accent/[0.04] blur-3xl" />
-      </div>
-
       <div className="relative flex flex-1 items-center border-t border-white/[0.09] md:border-t-0">
         <div className="mx-auto w-full max-w-[1440px] px-6 py-16 sm:px-8 md:py-12 lg:px-12 xl:px-20">
           <div className="grid gap-14 lg:grid-cols-12 lg:gap-20">

@@ -1,7 +1,7 @@
 'use client';
 
+import type { CSSProperties } from 'react';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
 import { ArrowLeft, ArrowRight, ArrowUpRight } from 'lucide-react';
 import ScreenFrame from '@/components/ScreenFrame';
 import ScrollReveal from '@/components/ScrollReveal';
@@ -13,8 +13,6 @@ import {
   TrcLibraryFigure,
 } from '@/components/WorkDiagrams';
 import type { GalleryItem, Project } from '@/lib/work';
-
-const ease = [0.16, 1, 0.3, 1] as const;
 
 // Section signposts, not statements. Small, quiet, one hairline.
 function SectionHeading({ id, children }: { id: string; children: React.ReactNode }) {
@@ -101,15 +99,8 @@ export default function ProjectDetail({ project, next }: { project: Project; nex
     <main className="bg-background text-foreground pt-20">
       {/* The screen. */}
       <section className="relative px-6 md:px-12 xl:px-20 pt-16 md:pt-20 pb-20 md:pb-28">
-        <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
-          <div className="absolute -top-40 right-[-14%] h-[34rem] w-[34rem] rounded-full bg-accent/[0.055] blur-3xl" />
-        </div>
         <div className="relative max-w-[1280px] mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease }}
-          >
+          <div className="enter-fade" style={{ '--hero-delay': '0.04s' } as CSSProperties}>
             <Link
               href="/work"
               className="inline-flex min-h-11 items-center gap-2 text-sm text-muted-foreground/75 hover:text-accent transition-colors duration-300 mb-10 md:mb-14"
@@ -117,14 +108,12 @@ export default function ProjectDetail({ project, next }: { project: Project; nex
               <ArrowLeft size={15} />
               All work
             </Link>
-          </motion.div>
+          </div>
 
           <div className="grid gap-12 lg:grid-cols-12 lg:items-center lg:gap-14 xl:gap-20">
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.08, ease }}
-              className="case-title-col lg:col-span-5"
+            <div
+              className="case-title-col enter-fade lg:col-span-5"
+              style={{ '--hero-delay': '0.12s' } as CSSProperties}
             >
               {project.contextLabel && (
                 <span className="block font-mono text-[11px] tracking-[0.16em] uppercase text-muted-foreground/80 mb-3">
@@ -141,6 +130,24 @@ export default function ProjectDetail({ project, next }: { project: Project; nex
                 {project.summary}
               </p>
 
+              {project.proof && project.proof.length > 0 && (
+                <dl className="mt-8 border-y border-white/[0.12]">
+                  {project.proof.map((item, index) => (
+                    <div
+                      key={`${item.value}-${item.label}`}
+                      className={`grid grid-cols-[minmax(7.5rem,0.8fr)_1.4fr] items-baseline gap-4 py-3 ${
+                        index > 0 ? 'border-t border-white/[0.09]' : ''
+                      }`}
+                    >
+                      <dt className="col-start-2 text-xs leading-snug text-muted-foreground/82">{item.label}</dt>
+                      <dd className="col-start-1 row-start-1 text-sm font-semibold tracking-[-0.015em] text-foreground/92">
+                        {item.value}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+              )}
+
               {project.liveUrl && (
                 <a
                   href={project.liveUrl}
@@ -153,16 +160,14 @@ export default function ProjectDetail({ project, next }: { project: Project; nex
                   <span className="sr-only"> (opens in new tab)</span>
                 </a>
               )}
-            </motion.div>
+            </div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, delay: 0.18, ease }}
-              className="lg:col-span-7"
+            <div
+              className="enter-fade lg:col-span-7"
+              style={{ '--hero-delay': '0.2s' } as CSSProperties}
             >
               <ProjectLeadVisual project={project} shot={leadShot} />
-            </motion.div>
+            </div>
           </div>
         </div>
       </section>

@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
-import ScrollReveal from '@/components/ScrollReveal';
 import ScreenFrame from '@/components/ScreenFrame';
 import WorkCard from '@/components/WorkCard';
 import { additionalProjects, advisory, principalProjects } from '@/lib/work';
@@ -31,30 +30,26 @@ export default function WorkPage() {
   return (
     <main className="bg-background pb-8 pt-32 text-foreground md:pt-40">
       <section className="relative px-6 pb-20 sm:px-8 md:pb-28 lg:px-12 xl:px-20">
-        <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
-          <div className="absolute -top-36 right-[-12%] h-[34rem] w-[34rem] rounded-full bg-accent/[0.06] blur-3xl" />
-          <div className="absolute bottom-[-40%] left-[-10%] h-[28rem] w-[28rem] rounded-full bg-accent/[0.03] blur-3xl" />
-        </div>
         <div className="relative mx-auto max-w-[1320px]">
-          <ScrollReveal direction="up">
+          <div className="enter-fade">
             <p className="mb-6 text-xs font-semibold uppercase tracking-[0.2em] text-accent/80">Work</p>
             <div className="grid gap-8 lg:grid-cols-12 lg:items-end">
               <h1 className="max-w-5xl text-[clamp(3rem,8.5vw,8.2rem)] font-medium leading-[0.89] tracking-[-0.065em] lg:col-span-8">
                 Selected <span className="font-serif font-normal italic text-accent">projects.</span>
               </h1>
               <p className="max-w-lg border-l border-white/[0.12] pl-6 text-lg leading-relaxed text-foreground/72 lg:col-span-4">
-                Five projects across healthcare platforms, clinic operations, professional services, and digital
-                delivery, each with the decisions behind it.
+                Four principal projects across clinical implementation, workflow automation, clinic operations, and
+                digital delivery, each with the decisions and evidence behind it.
               </p>
             </div>
-          </ScrollReveal>
+          </div>
         </div>
       </section>
 
       <section className="bg-[#ECE6D9] px-6 py-24 text-[#1c1812] sm:px-8 md:py-32 lg:px-12 xl:px-20">
         <div className="mx-auto max-w-[1320px]">
           <div className="mb-16 flex items-baseline justify-between border-b border-black/[0.14] pb-5 md:mb-24">
-            <h2 className="text-sm font-semibold uppercase tracking-[0.18em] text-[#1c1812]/74">Selected projects</h2>
+            <h2 className="text-sm font-semibold uppercase tracking-[0.18em] text-[#1c1812]/74">Principal projects</h2>
             <span className="font-mono text-xs text-[#6b6353]">
               01–{String(principalProjects.length).padStart(2, '0')}
             </span>

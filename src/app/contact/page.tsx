@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { type CSSProperties, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { ArrowUpRight, Check, Send } from 'lucide-react';
@@ -85,16 +85,16 @@ function ContactForm() {
       <div className="grid gap-5 sm:grid-cols-2">
         <div>
           <label htmlFor="name" className={labelClass}>Name <span aria-hidden="true">*</span></label>
-          <input id="name" name="name" type="text" required maxLength={120} autoComplete="name" value={name} onChange={(event) => setName(event.target.value)} className={inputClass} placeholder="Your name" />
+          <input id="name" name="name" type="text" required maxLength={100} autoComplete="name" value={name} onChange={(event) => setName(event.target.value)} className={inputClass} placeholder="Your name" />
         </div>
         <div>
           <label htmlFor="email" className={labelClass}>Email <span aria-hidden="true">*</span></label>
-          <input id="email" name="email" type="email" required maxLength={254} autoComplete="email" inputMode="email" value={email} onChange={(event) => setEmail(event.target.value)} className={inputClass} placeholder="you@example.com" />
+          <input id="email" name="email" type="email" required maxLength={200} autoComplete="email" inputMode="email" value={email} onChange={(event) => setEmail(event.target.value)} className={inputClass} placeholder="you@example.com" />
         </div>
       </div>
       <div className="mt-5">
         <label htmlFor="organization" className={labelClass}>Organization <span className="normal-case tracking-normal">(optional)</span></label>
-        <input id="organization" name="organization" type="text" maxLength={160} autoComplete="organization" value={organization} onChange={(event) => setOrganization(event.target.value)} className={inputClass} placeholder="Clinic, company, or team" />
+        <input id="organization" name="organization" type="text" maxLength={200} autoComplete="organization" value={organization} onChange={(event) => setOrganization(event.target.value)} className={inputClass} placeholder="Clinic, company, or team" />
       </div>
       <div className="mt-5">
         <label htmlFor="message" className={labelClass}>Message <span aria-hidden="true">*</span></label>
@@ -131,8 +131,8 @@ export default function ContactPage() {
   return (
     <main className="bg-background px-6 pb-24 pt-32 text-foreground sm:px-8 md:pb-32 md:pt-40 lg:px-12 xl:px-20">
       <div className="mx-auto max-w-[1320px]">
-        <div className="grid gap-16 lg:grid-cols-12 lg:gap-20">
-          <motion.section initial={{ opacity: 0, y: 22 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, ease }} className="lg:col-span-6">
+        <div className="grid gap-10 lg:grid-cols-12 lg:gap-x-20 lg:gap-y-14">
+          <section className="enter-fade lg:col-span-6" style={{ '--hero-delay': '0.06s' } as CSSProperties}>
             <p className="mb-6 text-xs font-semibold uppercase tracking-[0.2em] text-accent/80">Contact</p>
             <h1 className="max-w-3xl text-[clamp(3rem,7.5vw,7.4rem)] font-medium leading-[0.9] tracking-[-0.065em]">
               Get in <span className="font-serif font-normal italic text-accent">touch.</span>
@@ -141,7 +141,21 @@ export default function ContactPage() {
               Tell me what is getting in the way, who the work affects, and what a better result would look like. I read
               every message personally.
             </p>
+          </section>
 
+          <section
+            aria-labelledby="contact-form-heading"
+            className="enter-fade paper order-2 p-6 sm:p-8 md:p-10 lg:order-none lg:col-span-6 lg:col-start-7 lg:row-span-2 lg:row-start-1 lg:mt-12"
+            style={{ '--hero-delay': '0.14s' } as CSSProperties}
+          >
+            <div className="mb-8 border-b border-[#25292f]/15 pb-6">
+              <h2 id="contact-form-heading" className="text-2xl font-medium tracking-[-0.035em]">Start the conversation</h2>
+              <p className="mt-2 text-sm leading-relaxed text-[#25292f]/66">Name, email, and message are required.</p>
+            </div>
+            <ContactForm />
+          </section>
+
+          <section className="order-3 lg:order-none lg:col-span-6 lg:row-start-2">
             <div className="mt-14 max-w-xl border-t border-white/[0.11]">
               <h2 className="py-5 text-xs font-semibold uppercase tracking-[0.18em] text-accent/80">A good fit when</h2>
               <ul>
@@ -154,29 +168,32 @@ export default function ContactPage() {
               </ul>
             </div>
 
-            <a href="https://www.linkedin.com/in/kareemhassanein" className="group mt-9 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-foreground/72 transition-colors hover:text-accent">
+            <a
+              href="https://www.linkedin.com/in/kareemhassanein"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group mt-9 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-foreground/72 transition-colors hover:text-accent"
+            >
               Connect on LinkedIn
               <ArrowUpRight aria-hidden="true" size={16} className="transition-transform duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+              <span className="sr-only"> (opens in new tab)</span>
             </a>
 
-            <figure className="relative mt-14 hidden aspect-[3/2] overflow-hidden rounded-[1.5rem] border border-white/[0.08] lg:block">
-              <Image
-                src="/images/contact.webp"
-                alt="A desk with a message being written and replies arriving around it"
-                fill
-                sizes="(min-width: 1024px) 620px, calc(100vw - 3rem)"
-                className="object-cover"
-              />
+            <figure className="mt-12 max-w-xl">
+              <div className="relative aspect-[3/2] overflow-hidden rounded-[1.5rem] border border-white/[0.09] bg-[#090a09]">
+                <Image
+                  src="/images/contact-handoff-repair-final.webp"
+                  alt="Illustration of Kareem fitting a connector between booking and intake stages in a clinic workflow"
+                  fill
+                  sizes="(min-width: 1024px) 560px, calc(100vw - 3rem)"
+                  className="object-cover"
+                />
+              </div>
+              <figcaption className="mt-4 border-l border-accent/35 pl-4 text-sm leading-relaxed text-muted-foreground">
+                A useful first conversation starts at the handoff that keeps failing.
+              </figcaption>
             </figure>
-          </motion.section>
-
-          <motion.section initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, delay: 0.16, ease }} aria-labelledby="contact-form-heading" className="paper p-6 sm:p-8 md:p-10 lg:col-span-6 lg:mt-12">
-            <div className="mb-8 border-b border-[#25292f]/15 pb-6">
-              <h2 id="contact-form-heading" className="text-2xl font-medium tracking-[-0.035em]">Start the conversation</h2>
-              <p className="mt-2 text-sm leading-relaxed text-[#25292f]/66">Name, email, and message are required.</p>
-            </div>
-            <ContactForm />
-          </motion.section>
+          </section>
         </div>
       </div>
     </main>

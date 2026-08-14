@@ -1,16 +1,17 @@
-'use client';
-
+import type { Metadata } from 'next';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
 import { ArrowLeft, ArrowUpRight } from 'lucide-react';
 
-const ease = [0.16, 1, 0.3, 1] as const;
+export const metadata: Metadata = {
+  title: 'Page not found | Kareem Hassanein',
+  robots: { index: false, follow: false },
+};
 
 export default function NotFound() {
   return (
     <main className="flex min-h-[82svh] items-center bg-background px-6 pb-24 pt-32 text-foreground sm:px-8 md:pt-40 lg:px-12 xl:px-20">
       <div className="mx-auto grid w-full max-w-[1320px] gap-14 lg:grid-cols-12 lg:items-end lg:gap-20">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease }} className="lg:col-span-8">
+        <div className="enter-fade lg:col-span-8">
           <p className="mb-6 font-mono text-xs uppercase tracking-[0.2em] text-accent/80">Error 404</p>
           <h1 className="max-w-4xl text-[clamp(3.2rem,8vw,7.8rem)] font-medium leading-[0.9] tracking-[-0.065em]">
             This path doesn&rsquo;t lead anywhere.
@@ -29,9 +30,9 @@ export default function NotFound() {
               <ArrowUpRight aria-hidden="true" size={16} className="transition-transform duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
             </Link>
           </div>
-        </motion.div>
+        </div>
 
-        <motion.aside initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8, delay: 0.18 }} aria-label="Route status" className="border-y border-white/[0.1] py-6 font-mono text-xs text-muted-foreground lg:col-span-4">
+        <aside aria-label="Route status" className="enter-fade border-y border-white/[0.1] py-6 font-mono text-xs text-muted-foreground lg:col-span-4">
           <div className="flex justify-between border-b border-white/[0.08] pb-4">
             <span>Request</span>
             <span className="text-foreground/80">Unknown route</span>
@@ -40,7 +41,7 @@ export default function NotFound() {
             <span>Next step</span>
             <span className="text-accent">Choose a valid path</span>
           </div>
-        </motion.aside>
+        </aside>
       </div>
     </main>
   );
