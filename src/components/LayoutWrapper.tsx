@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { MotionConfig } from 'framer-motion';
 import Header from "@/components/Header";
@@ -23,8 +23,13 @@ export default function LayoutWrapper({
     // The page reserves exactly the footer's own height, so the reveal ends
     // flush with no empty panel. The md:mb-[100svh] class below is the
     // pre-measurement fallback and is overridden as soon as the height is known.
+    // useLayoutEffect, not useEffect: the reserved space starts at a 100svh
+    // fallback and is corrected to the footer's real height. Doing that after
+    // paint changes the document height on every load, which shifts the
+    // scrollbar and reads as a flicker. This measures before the browser paints.
     const [footerHeight, setFooterHeight] = useState(0);
-    useEffect(() => {
+    const useIsomorphicLayoutEffect = typeof window === 'undefined' ? useEffect : useLayoutEffect;
+    useIsomorphicLayoutEffect(() => {
         if (!revealFooter) {
             setFooterHeight(0);
             return;

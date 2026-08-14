@@ -63,34 +63,28 @@ export default function Home() {
         <div className="relative mx-auto max-w-[1440px]">
           <div className="grid gap-14 lg:grid-cols-12 lg:items-end lg:gap-16">
             <div className="lg:col-span-8">
-              <p className="hero-fade mb-7 text-xs font-semibold uppercase tracking-[0.2em] text-accent/82">
+              <p className="enter-fade mb-7 text-xs font-semibold uppercase tracking-[0.2em] text-accent/82" style={{ '--hero-delay': '0.06s' } as CSSProperties}>
                 Kareem Hassanein · Implementation &amp; Operations
               </p>
               <h1 className="max-w-[1100px] text-[clamp(2.5rem,7vw,6.6rem)] font-medium leading-[0.92] tracking-[-0.055em]">
-                <span className="block overflow-hidden pb-[0.08em]">
-                  <span className="hero-rise block" style={{ '--hero-delay': '0.10s' } as CSSProperties}>
-                    Selected work in
-                  </span>
+                <span className="enter-wipe block" style={{ '--hero-delay': '0.14s' } as CSSProperties}>
+                  Selected work in
                 </span>
-                <span className="block overflow-hidden pb-[0.08em]">
-                  <span className="hero-rise block" style={{ '--hero-delay': '0.19s' } as CSSProperties}>
-                    healthcare, operations,
-                  </span>
+                <span className="enter-wipe block" style={{ '--hero-delay': '0.26s' } as CSSProperties}>
+                  healthcare, operations,
                 </span>
-                <span className="block overflow-hidden pb-[0.24em] -mb-[0.12em]">
-                  <span
-                    className="hero-rise block font-serif font-normal italic text-accent"
-                    style={{ '--hero-delay': '0.28s' } as CSSProperties}
-                  >
-                    and digital delivery.
-                  </span>
+                <span
+                  className="enter-wipe block pb-[0.12em] -mb-[0.12em] font-serif font-normal italic text-accent"
+                  style={{ '--hero-delay': '0.38s' } as CSSProperties}
+                >
+                  and digital delivery.
                 </span>
               </h1>
             </div>
 
             <div
-              className="hero-fade hero-rule pl-6 lg:col-span-4 lg:mb-4 lg:pl-8"
-              style={{ '--hero-delay': '0.40s' } as CSSProperties}
+              className="enter-fade hero-rule pl-6 lg:col-span-4 lg:mb-4 lg:pl-8"
+              style={{ '--hero-delay': '0.52s' } as CSSProperties}
             >
               <p className="max-w-lg text-lg leading-relaxed text-foreground/76 lg:text-xl">
                 I&rsquo;m a practicing physiotherapist who also builds and runs the systems around care: websites,
@@ -126,8 +120,8 @@ export default function Home() {
           {stripShots.map((shot, index) => (
             <div
               key={shot.src}
-              className={`hero-fade ${stripOffsets[index]}`}
-              style={{ '--hero-delay': `${0.54 + index * 0.07}s` } as CSSProperties}
+              className={`enter-settle ${stripOffsets[index]}`}
+              style={{ '--hero-delay': `${0.74 + index * 0.08}s` } as CSSProperties}
             >
               <ScreenFrame shot={shot} sizes="(max-width: 768px) 50vw, 320px" />
             </div>

@@ -1,12 +1,11 @@
 'use client';
 
+import type { CSSProperties } from 'react';
+
 import Plate from '@/components/Plate';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import ScrollReveal from '@/components/ScrollReveal';
-
-const ease = [0.16, 1, 0.3, 1] as const;
 
 
 const currentRoles = [
@@ -54,46 +53,38 @@ export default function About() {
         </div>
         <div className="relative max-w-[1280px] mx-auto">
           <div className="max-w-3xl">
-            <motion.p
-              initial={{ opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.08, ease }}
-              className="flex items-center gap-3 text-xs font-medium tracking-[0.24em] uppercase text-accent/75 mb-8"
+            <p
+              className="enter-fade flex items-center gap-3 text-xs font-medium tracking-[0.24em] uppercase text-accent/75 mb-8"
+              style={{ '--hero-delay': '0.06s' } as CSSProperties}
             >
               <span aria-hidden="true" className="h-px w-10 bg-accent/[0.45]" />
               Kareem Hassanein · About
-            </motion.p>
+            </p>
 
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, delay: 0.16, ease }}
-              className="max-w-4xl text-[clamp(3rem,7.2vw,6.8rem)] font-medium tracking-[-0.055em] leading-[0.91] text-balance"
+            <h1
+              className="enter-wipe max-w-4xl text-[clamp(3rem,7.2vw,6.8rem)] font-medium tracking-[-0.055em] leading-[0.91] text-balance"
+              style={{ '--hero-delay': '0.16s' } as CSSProperties}
             >
               About <span className="font-serif italic font-normal text-accent/90">Kareem.</span>
-            </motion.h1>
+            </h1>
 
-            <motion.p
-              initial={{ opacity: 0, y: 18 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.85, delay: 0.28, ease }}
-              className="mt-9 max-w-2xl text-lg md:text-[1.35rem] text-foreground/[0.76] font-light leading-relaxed"
+            <p
+              className="enter-fade mt-9 max-w-2xl text-lg md:text-[1.35rem] text-foreground/[0.76] font-light leading-relaxed"
+              style={{ '--hero-delay': '0.34s' } as CSSProperties}
             >
               I still treat patients, and I also run the operational side of a multidisciplinary clinic. Working both
               jobs at once means I see where a process breaks while I am standing inside it.
-            </motion.p>
+            </p>
 
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.38, ease }}
-              className="mt-10 flex flex-wrap gap-x-6 gap-y-3 text-sm text-muted-foreground"
+            <div
+              className="enter-fade mt-10 flex flex-wrap gap-x-6 gap-y-3 text-sm text-muted-foreground"
+              style={{ '--hero-delay': '0.46s' } as CSSProperties}
             >
               <span>Clinical implementation</span>
               <span>Workflow automation</span>
               <span>Service design</span>
               <span>Digital delivery</span>
-            </motion.div>
+            </div>
           </div>
 
         </div>
