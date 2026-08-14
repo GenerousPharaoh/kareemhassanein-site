@@ -405,6 +405,7 @@ img {
 .enter-fade,
 .enter-settle,
 .enter-rule-x,
+.enter-glow,
 .hero-rule::before {
   animation-delay: var(--hero-delay, 0s);
 }
@@ -430,29 +431,38 @@ img {
 }
 
 @media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
-  /* Display lines are drawn on, left to right, rather than slid upward. */
+  /* Display lines are drawn on, left to right, like a stroke being laid down:
+     eased in and out so the leading edge accelerates and settles rather than
+     snapping open. */
   .enter-wipe {
-    animation: enter-wipe var(--enter-dur, 0.85s) cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation: enter-wipe var(--enter-dur, 1.3s) cubic-bezier(0.65, 0, 0.35, 1) both;
   }
 
   /* Everything else holds still and simply arrives. */
+  /* Everything else pulls into focus instead of popping on. A gentle cubic
+     curve rather than expo, which front-loads its motion and reads as a flash. */
   .enter-fade {
-    animation: enter-fade var(--enter-dur, 0.8s) cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation: enter-fade var(--enter-dur, 1.2s) cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  }
+
+  /* Ambient light comes up before anything is legible. */
+  .enter-glow {
+    animation: enter-glow 2.4s cubic-bezier(0.22, 0.61, 0.36, 1) both;
   }
 
   /* The small gold mark that opens the page. */
   .enter-rule-x {
-    animation: enter-rule-x 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation: enter-rule-x 0.9s cubic-bezier(0.65, 0, 0.35, 1) both;
   }
 
   /* Plates settle rather than slide. `scale` is its own property here so it
      composes with the Tailwind translate offsets instead of overwriting them. */
   .enter-settle {
-    animation: enter-settle var(--enter-dur, 0.85s) cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation: enter-settle var(--enter-dur, 1.4s) cubic-bezier(0.22, 0.61, 0.36, 1) both;
   }
 
   .hero-rule::before {
-    animation: rule-draw 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation: rule-draw 1.2s cubic-bezier(0.65, 0, 0.35, 1) both;
   }
 }
 
@@ -466,6 +476,17 @@ img {
 }
 
 @keyframes enter-fade {
+  from {
+    opacity: 0;
+    filter: blur(7px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+@keyframes enter-glow {
   from {
     opacity: 0;
   }
@@ -488,11 +509,13 @@ img {
 @keyframes enter-settle {
   from {
     opacity: 0;
-    scale: 1.035;
+    scale: 1.045;
+    filter: blur(12px);
   }
   to {
     opacity: 1;
     scale: 1;
+    filter: blur(0);
   }
 }
 

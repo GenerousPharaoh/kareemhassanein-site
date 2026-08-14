@@ -56,7 +56,7 @@ export default function Home() {
   return (
     <main className="overflow-hidden bg-background text-foreground">
       <section className="relative px-6 pb-20 pt-32 sm:px-8 md:pb-28 md:pt-40 lg:px-12 xl:px-20">
-        <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div aria-hidden="true" className="enter-glow pointer-events-none absolute inset-0 overflow-hidden">
           <div className="absolute -top-36 right-[-12%] h-[34rem] w-[34rem] rounded-full bg-accent/[0.06] blur-3xl" />
           <div className="absolute bottom-[-40%] left-[-10%] h-[28rem] w-[28rem] rounded-full bg-accent/[0.03] blur-3xl" />
         </div>
@@ -67,32 +67,32 @@ export default function Home() {
                 <span
                   aria-hidden="true"
                   className="enter-rule-x h-px w-10 bg-accent/50"
-                  style={{ '--hero-delay': '0.05s' } as CSSProperties}
+                  style={{ '--hero-delay': '0.30s' } as CSSProperties}
                 />
-                <span className="enter-fade" style={{ '--hero-delay': '0.22s', '--enter-dur': '0.7s' } as CSSProperties}>
+                <span className="enter-fade" style={{ '--hero-delay': '0.62s', '--enter-dur': '1.1s' } as CSSProperties}>
                   Kareem Hassanein · Implementation &amp; Operations
                 </span>
               </p>
               <h1 className="max-w-[1100px] text-[clamp(2.5rem,7vw,6.6rem)] font-medium leading-[0.92] tracking-[-0.055em]">
-                <span className="enter-wipe block" style={{ '--hero-delay': '0.46s', '--enter-dur': '0.8s' } as CSSProperties}>
+                <span className="enter-wipe block" style={{ '--hero-delay': '0.96s', '--enter-dur': '1.35s' } as CSSProperties}>
                   Selected work in
                 </span>
-                <span className="enter-wipe block" style={{ '--hero-delay': '0.68s', '--enter-dur': '0.85s' } as CSSProperties}>
+                <span className="enter-wipe block" style={{ '--hero-delay': '1.30s', '--enter-dur': '1.35s' } as CSSProperties}>
                   healthcare, operations,
                 </span>
                 <span
                   className="enter-wipe block pb-[0.12em] -mb-[0.12em] font-serif font-normal italic text-accent"
-                  style={{ '--hero-delay': '0.92s', '--enter-dur': '1s' } as CSSProperties}
+                  style={{ '--hero-delay': '1.64s', '--enter-dur': '1.55s' } as CSSProperties}
                 >
                   and digital delivery.
                 </span>
               </h1>
             </div>
 
-            <div className="hero-rule pl-6 lg:col-span-4 lg:mb-4 lg:pl-8" style={{ '--hero-delay': '1.24s' } as CSSProperties}>
+            <div className="hero-rule pl-6 lg:col-span-4 lg:mb-4 lg:pl-8" style={{ '--hero-delay': '2.20s' } as CSSProperties}>
               <p
                 className="enter-fade max-w-lg text-lg leading-relaxed text-foreground/76 lg:text-xl"
-                style={{ '--hero-delay': '1.36s', '--enter-dur': '0.85s' } as CSSProperties}
+                style={{ '--hero-delay': '2.38s', '--enter-dur': '1.35s' } as CSSProperties}
               >
                 I&rsquo;m a practicing physiotherapist who also builds and runs the systems around care: websites,
                 booking and intake, documentation, and the workflows that connect them. This portfolio shows the
@@ -100,7 +100,7 @@ export default function Home() {
               </p>
               <div
                 className="enter-fade mt-8 flex flex-col gap-3 sm:flex-row lg:flex-col xl:flex-row xl:gap-2"
-                style={{ '--hero-delay': '1.62s', '--enter-dur': '0.8s' } as CSSProperties}
+                style={{ '--hero-delay': '2.82s', '--enter-dur': '1.2s' } as CSSProperties}
               >
                 <Link
                   href="/work"
@@ -131,7 +131,7 @@ export default function Home() {
             <div
               key={shot.src}
               className={`enter-settle ${stripOffsets[index]}`}
-              style={{ '--hero-delay': `${1.86 + index * 0.14}s`, '--enter-dur': '0.9s' } as CSSProperties}
+              style={{ '--hero-delay': `${3.15 + index * 0.24}s`, '--enter-dur': '1.5s' } as CSSProperties}
             >
               <ScreenFrame shot={shot} sizes="(max-width: 768px) 50vw, 320px" />
             </div>
