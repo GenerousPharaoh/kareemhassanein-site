@@ -1,6 +1,6 @@
 'use client';
 
-import type { CSSProperties } from 'react';
+import { Fragment, type CSSProperties } from 'react';
 import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
 import ScrollReveal from '@/components/ScrollReveal';
@@ -45,6 +45,38 @@ const stripShots = [
   },
 ];
 
+const heroLines = [
+  { text: 'Selected work in', className: '' },
+  { text: 'healthcare, operations,', className: '' },
+  { text: 'and digital delivery.', className: 'font-serif font-normal italic text-accent' },
+];
+
+const HEADLINE_START = 1;
+const WORD_STEP = 0.085;
+
+// One span per word, each resolving on its own beat.
+function HeadlineLine({ text, offset, className = '', duration }: { text: string; offset: number; className?: string; duration: string }) {
+  const words = text.split(' ');
+  return (
+    <span className={`block ${className}`}>
+      {words.map((word, index) => (
+        <Fragment key={`${word}-${index}`}>
+          <span
+            className="enter-word inline-block"
+            style={{
+              '--hero-delay': `${(HEADLINE_START + (offset + index) * WORD_STEP).toFixed(3)}s`,
+              '--enter-dur': duration,
+            } as CSSProperties}
+          >
+            {word}
+          </span>
+          {index < words.length - 1 && ' '}
+        </Fragment>
+      ))}
+    </span>
+  );
+}
+
 const stripOffsets = ['md:translate-y-8', 'md:-translate-y-2', 'md:translate-y-12', 'md:translate-y-3'];
 
 const featuredSlugs = ['kinetikare', 'endorphins', 'tax-relief-counsel'];
@@ -74,25 +106,22 @@ export default function Home() {
                 </span>
               </p>
               <h1 className="max-w-[1100px] text-[clamp(2.5rem,7vw,6.6rem)] font-medium leading-[0.92] tracking-[-0.055em]">
-                <span className="enter-wipe block" style={{ '--hero-delay': '0.96s', '--enter-dur': '1.35s' } as CSSProperties}>
-                  Selected work in
-                </span>
-                <span className="enter-wipe block" style={{ '--hero-delay': '1.30s', '--enter-dur': '1.35s' } as CSSProperties}>
-                  healthcare, operations,
-                </span>
-                <span
-                  className="enter-wipe block pb-[0.12em] -mb-[0.12em] font-serif font-normal italic text-accent"
-                  style={{ '--hero-delay': '1.64s', '--enter-dur': '1.55s' } as CSSProperties}
-                >
-                  and digital delivery.
-                </span>
+                {heroLines.map((line, index) => (
+                  <HeadlineLine
+                    key={line.text}
+                    text={line.text}
+                    offset={heroLines.slice(0, index).reduce((total, prev) => total + prev.text.split(' ').length, 0)}
+                    className={line.className}
+                    duration={index === heroLines.length - 1 ? '1.25s' : '1.05s'}
+                  />
+                ))}
               </h1>
             </div>
 
             <div className="hero-rule pl-6 lg:col-span-4 lg:mb-4 lg:pl-8" style={{ '--hero-delay': '2.20s' } as CSSProperties}>
               <p
                 className="enter-fade max-w-lg text-lg leading-relaxed text-foreground/76 lg:text-xl"
-                style={{ '--hero-delay': '2.38s', '--enter-dur': '1.35s' } as CSSProperties}
+                style={{ '--hero-delay': '2.42s', '--enter-dur': '1.35s' } as CSSProperties}
               >
                 I&rsquo;m a practicing physiotherapist who also builds and runs the systems around care: websites,
                 booking and intake, documentation, and the workflows that connect them. This portfolio shows the
@@ -100,7 +129,7 @@ export default function Home() {
               </p>
               <div
                 className="enter-fade mt-8 flex flex-col gap-3 sm:flex-row lg:flex-col xl:flex-row xl:gap-2"
-                style={{ '--hero-delay': '2.82s', '--enter-dur': '1.2s' } as CSSProperties}
+                style={{ '--hero-delay': '2.86s', '--enter-dur': '1.2s' } as CSSProperties}
               >
                 <Link
                   href="/work"
@@ -131,7 +160,7 @@ export default function Home() {
             <div
               key={shot.src}
               className={`enter-settle ${stripOffsets[index]}`}
-              style={{ '--hero-delay': `${3.15 + index * 0.24}s`, '--enter-dur': '1.5s' } as CSSProperties}
+              style={{ '--hero-delay': `${3.20 + index * 0.26}s`, '--enter-dur': '1.5s' } as CSSProperties}
             >
               <ScreenFrame shot={shot} sizes="(max-width: 768px) 50vw, 320px" />
             </div>

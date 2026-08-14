@@ -62,8 +62,8 @@ export default function About() {
             </p>
 
             <h1
-              className="enter-wipe max-w-4xl text-[clamp(3rem,7.2vw,6.8rem)] font-medium tracking-[-0.055em] leading-[0.91] text-balance"
-              style={{ '--hero-delay': '0.16s' } as CSSProperties}
+              className="enter-fade max-w-4xl text-[clamp(3rem,7.2vw,6.8rem)] font-medium tracking-[-0.055em] leading-[0.91] text-balance"
+              style={{ '--hero-delay': '0.20s', '--enter-dur': '1.2s' } as CSSProperties}
             >
               About <span className="font-serif italic font-normal text-accent/90">Kareem.</span>
             </h1>
