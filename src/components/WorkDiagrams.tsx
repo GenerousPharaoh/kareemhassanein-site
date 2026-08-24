@@ -41,25 +41,25 @@ const clinicalPhases = [
 export function ClinicalAdoptionFigure() {
   return (
     <FigureShell
-      title="Adoption was the implementation target"
-      caption="The reconstructed view shows the rollout logic without identifying the clinic or any practitioner. Full team adoption was reached within eight weeks."
+      title="Full-team use within eight weeks"
+      caption="The reconstructed view shows the rollout logic without identifying the clinic or any practitioner."
       className="h-full"
     >
       <div className="flex flex-col gap-9 md:gap-11">
         <div className="grid grid-cols-[1fr_auto] items-end gap-6 border-b border-white/[0.08] pb-7">
           <div>
             <span className="block text-[11px] font-medium tracking-[0.2em] uppercase text-muted-foreground/70 mb-3">
-              Team adoption
+              Time to full-team use
             </span>
             <span className="block text-5xl sm:text-6xl font-medium tracking-[-0.055em] text-foreground">
-              100%
+              8 weeks
             </span>
           </div>
           <div className="text-right pb-1">
             <span className="block text-[11px] font-medium tracking-[0.18em] uppercase text-muted-foreground/80 mb-1">
-              Reached by
+              Weekly time saved
             </span>
-            <span className="block text-xl sm:text-2xl font-medium tracking-tight text-accent">Week 8</span>
+            <span className="block text-xl sm:text-2xl font-medium tracking-tight text-accent">~3 hours</span>
           </div>
         </div>
 
@@ -293,5 +293,4 @@ export function TrcLibraryFigure() {
     </FigureShell>
   );
 }
-
 

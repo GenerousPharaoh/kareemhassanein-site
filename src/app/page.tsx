@@ -47,7 +47,7 @@ const stripShots = [
 
 const heroLines = [
   { text: 'Selected work in', className: '' },
-  { text: 'healthcare, operations,', className: '' },
+  { text: 'implementation, service operations,', className: '' },
   { text: 'and digital delivery.', className: 'font-serif font-normal italic text-accent' },
 ];
 
@@ -79,10 +79,7 @@ function HeadlineLine({ text, offset, className = '', duration }: { text: string
 
 const stripOffsets = ['md:translate-y-8', 'md:-translate-y-2', 'md:translate-y-12', 'md:translate-y-3'];
 
-const featuredSlugs = ['clinical-documentation', 'tax-relief-counsel', 'endorphins'];
-const featured = featuredSlugs
-  .map((slug) => principalProjects.find((project) => project.slug === slug))
-  .filter((project): project is (typeof principalProjects)[number] => Boolean(project));
+const featured = principalProjects;
 
 export default function Home() {
   return (
@@ -98,7 +95,7 @@ export default function Home() {
                   style={{ '--hero-delay': '0.06s' } as CSSProperties}
                 />
                 <span className="enter-fade" style={{ '--hero-delay': '0.16s', '--enter-dur': '0.85s' } as CSSProperties}>
-                  Kareem Hassanein · Implementation &amp; Operations
+                  Kareem Hassanein · Implementation, Service Operations &amp; Digital Delivery
                 </span>
               </p>
               <h1 className="max-w-[1100px] text-[clamp(2.5rem,7vw,6.6rem)] font-medium leading-[0.92] tracking-[-0.055em]">
@@ -119,9 +116,10 @@ export default function Home() {
                 className="enter-fade max-w-lg text-lg leading-relaxed text-foreground/76 lg:text-xl"
                 style={{ '--hero-delay': '0.62s', '--enter-dur': '0.95s' } as CSSProperties}
               >
-                I&rsquo;m a practicing physiotherapist who also builds and runs the systems around care: websites,
-                booking and intake, documentation, and the workflows that connect them. This portfolio shows the
-                finished work and the decisions behind it.
+                I work across healthcare and professional services, drawing on a background in frontline care, team
+                leadership, and more than 10,000 hours of direct client work. The case studies below show how I assess
+                needs, work within real constraints, carry an idea through delivery, and refine it against what
+                happens in practice.
               </p>
               <div
                 className="enter-fade mt-8 flex flex-col gap-3 sm:flex-row lg:flex-col xl:flex-row xl:gap-2"
@@ -131,16 +129,22 @@ export default function Home() {
                   href="/work"
                   className="group inline-flex min-h-12 items-center justify-center gap-3 whitespace-nowrap rounded-full bg-accent px-5 text-sm font-semibold text-background transition-colors duration-500 hover:bg-accent/90"
                 >
-                  See the work
+                  View selected work
                   <ArrowUpRight aria-hidden="true" size={16} className="transition-transform duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                 </Link>
                 <Link
-                  href="/contact"
+                  href="/about"
                   className="inline-flex min-h-12 items-center justify-center whitespace-nowrap rounded-full border border-white/[0.14] px-5 text-sm font-semibold text-foreground/78 transition-colors duration-500 hover:border-accent/45 hover:text-foreground"
                 >
-                  Contact
+                  About Kareem
                 </Link>
               </div>
+              <p
+                className="enter-fade mt-6 max-w-lg text-xs leading-relaxed text-muted-foreground"
+                style={{ '--hero-delay': '0.94s', '--enter-dur': '0.9s' } as CSSProperties}
+              >
+                Open to full-time opportunities and selected advisory work · Hamilton, Ontario · Remote
+              </p>
             </div>
           </div>
 
@@ -174,15 +178,22 @@ export default function Home() {
                 Outcomes, decisions, and the <span className="font-serif font-normal italic text-[#705829]">work behind them.</span>
               </h2>
               <p className="max-w-md text-base leading-relaxed text-[#57503f] lg:col-span-4">
-                Three examples of implementation across healthcare platforms, clinic operations, and professional
-                services.
+                Case studies across service launches, workflow improvement, technology adoption, and digital products.
               </p>
             </div>
           </ScrollReveal>
 
           <div className="grid gap-24 md:gap-32">
             {featured.map((project, index) => (
-              <WorkCard key={project.slug} project={project} index={index} variant="row" flip={index % 2 === 1} tone="light" />
+              <WorkCard
+                key={project.slug}
+                project={project}
+                summary={project.cardSummary}
+                index={index}
+                variant="row"
+                flip={index % 2 === 1}
+                tone="light"
+              />
             ))}
           </div>
 
@@ -199,8 +210,8 @@ export default function Home() {
         <div className="mx-auto max-w-[1320px]">
           <div className="grid gap-12 lg:grid-cols-12 lg:gap-20">
             <ScrollReveal direction="up" className="lg:col-span-5">
-              <p className="mb-5 text-xs font-semibold uppercase tracking-[0.2em] text-accent/80">Advisory</p>
-              <h2 className="max-w-xl text-4xl font-medium tracking-[-0.045em] sm:text-5xl">Current advisory work.</h2>
+              <p className="mb-5 text-xs font-semibold uppercase tracking-[0.2em] text-accent/80">Current work</p>
+              <h2 className="max-w-xl text-4xl font-medium tracking-[-0.045em] sm:text-5xl">Advisory &amp; Mentorship.</h2>
             </ScrollReveal>
             <div className="border-t border-white/[0.11] lg:col-span-7">
               {advisory.map((item) => (

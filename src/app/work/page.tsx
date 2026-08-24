@@ -7,10 +7,10 @@ import { additionalProjects, advisory, principalProjects } from '@/lib/work';
 
 export const metadata: Metadata = {
   title: 'Work | Kareem Hassanein',
-  description: 'Selected projects in clinical implementation, workflow automation, service design, and digital delivery.',
+  description: 'Selected projects in service launches, workflow improvement, technology adoption, and digital products.',
   openGraph: {
     title: 'Work | Kareem Hassanein',
-    description: 'Selected projects in clinical implementation, workflow automation, service design, and digital delivery.',
+    description: 'Selected projects in service launches, workflow improvement, technology adoption, and digital products.',
     url: 'https://www.khassanein.bio/work',
     type: 'website',
     locale: 'en_CA',
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Work | Kareem Hassanein',
-    description: 'Selected projects in clinical implementation, workflow automation, service design, and digital delivery.',
+    description: 'Selected projects in service launches, workflow improvement, technology adoption, and digital products.',
     images: ['/og-image.png'],
   },
   alternates: { canonical: 'https://www.khassanein.bio/work' },
@@ -98,8 +98,8 @@ export default function WorkPage() {
       <section className="border-t border-white/[0.09] px-6 py-24 sm:px-8 md:py-28 lg:px-12 xl:px-20">
         <div className="mx-auto grid max-w-[1320px] gap-12 lg:grid-cols-12 lg:gap-20">
           <div className="lg:col-span-4">
-            <p className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-accent/80">Advisory</p>
-            <h2 className="text-4xl font-medium tracking-[-0.045em]">Current advisory work.</h2>
+            <p className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-accent/80">Current work</p>
+            <h2 className="text-4xl font-medium tracking-[-0.045em]">Advisory &amp; Mentorship.</h2>
           </div>
           <div className="border-t border-white/[0.1] lg:col-span-8">
             {advisory.map((item) => (

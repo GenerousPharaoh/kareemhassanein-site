@@ -26,10 +26,12 @@ export interface Project {
   shortTitle: string;
   category: string;
   summary: string;
+  cardSummary?: string;
   proof?: ProjectProof[];
   contribution: string[];
   intro: string[];
   gallery: GalleryItem[];
+  decisionHeading?: string;
   decision: string;
   outcomes: string[];
   environment?: string;
@@ -48,15 +50,16 @@ const PHONE = { width: 390, height: 844 } as const;
 export const projects: Project[] = [
   {
     slug: 'clinical-documentation',
-    title: 'AI Documentation Rollout',
-    shortTitle: 'AI Documentation Rollout',
+    title: 'Clinical Documentation Rollout',
+    shortTitle: 'Clinical Documentation Rollout',
     contextLabel: 'Private Physiotherapy Clinic',
-    category: 'Clinical Implementation · Change Adoption',
+    category: 'Technology Adoption · Clinical Operations',
     summary:
-      'Clinic-side evaluation, configuration, training, SOP development, go-live support, and refinement for an AI documentation platform adopted by the full physiotherapy team within eight weeks.',
+      'Introduced a clinical documentation platform across a physiotherapy team, from evaluation and configuration through training, rollout, and refinement.',
+    cardSummary:
+      'Led a clinical documentation platform from evaluation and configuration through training, rollout, and refinement, reaching full-team use within eight weeks.',
     proof: [
-      { value: '100%', label: 'full team adoption' },
-      { value: '8 weeks', label: 'to full adoption' },
+      { value: '8 weeks', label: 'to full-team use' },
       { value: '~3 hours', label: 'saved per practitioner each week' },
     ],
     contribution: [
@@ -65,20 +68,21 @@ export const projects: Project[] = [
       'Team training',
       'SOP development',
       'Go-live support',
-      'Adoption',
+      'Team rollout',
       'Post-launch refinement',
     ],
     intro: [
-      'A physiotherapy team was introducing an AI documentation platform into a busy clinical environment. The technical setup was only one part of the work. The larger challenge was making the system useful enough, clear enough, and reliable enough to become part of every practitioner’s day.',
-      'I led clinic-side evaluation, configuration, training, SOP development, go-live support, and post-launch refinement. The rollout reached full team adoption within eight weeks and reduced documentation time by approximately three hours per practitioner each week.',
+      'A physiotherapy team was introducing a new documentation platform into an established clinical routine. The central question was not simply whether the tool worked, but whether it could reduce documentation time without creating new uncertainty, inconsistency, or administrative burden.',
+      'I led the clinic-side evaluation, configuration, training, rollout support, and refinement. Full-team use was reached within eight weeks, with approximately three hours saved per practitioner each week.',
     ],
     gallery: [],
     confidentialNote:
       'The clinic identity and practitioner information are omitted. The figures below reconstruct the rollout without reproducing private records.',
+    decisionHeading: 'Treat the rollout as an operating change, not a one-time training event.',
     decision:
-      'Adoption was treated as a workflow problem, not a training event. Configuration, expectations, support, and feedback were adjusted around how clinicians actually documented care.',
+      'Configuration, shared expectations, support, and refinement remained connected to how practitioners actually documented care.',
     outcomes: [
-      'The full physiotherapy team adopted the platform within eight weeks.',
+      'Full-team use was reached within eight weeks.',
       'Documentation time decreased by approximately three hours per practitioner each week.',
     ],
     environment: 'AI documentation platform · Clinical workflows · Team training · Documented SOPs',
@@ -91,28 +95,30 @@ export const projects: Project[] = [
     slug: 'kinetikare',
     title: 'KinetiKare Physiotherapy',
     shortTitle: 'KinetiKare',
-    category: 'Healthcare Platform · Patient Experience',
+    category: 'Digital Product · Patient Experience',
     summary:
-      'A patient education, acquisition, and booking platform organized around body regions, symptoms, conditions, and commonly confused diagnoses.',
+      'A 60+ page patient education and booking platform organized around the different ways people look for help: by body region, symptom, condition, or treatment.',
+    cardSummary:
+      'Designed and launched a 60+ page patient education and booking platform, then used performance data to improve how people find and navigate its content.',
     proof: [
       { value: '60+ pages', label: 'patient education and booking platform' },
-      { value: '55', label: 'condition pages' },
-      { value: '6', label: 'treatment pages' },
+      { value: '775 to 33,000+', label: 'monthly search impressions' },
+      { value: '42 to 10', label: 'average search position in 13 months' },
     ],
     contribution: [
       'Clinical requirements',
       'Information architecture',
-      'User journeys',
-      'Condition taxonomy',
       'Content structure',
+      'Navigation',
       'Booking pathways',
-      'Agentic development',
+      'Analytics',
       'Testing',
       'Iteration',
+      'AI-assisted development',
     ],
     intro: [
-      'KinetiKare is the public platform for my own physiotherapy practice in Burlington. It is built for the moment someone starts looking for help: it meets them at whatever they already know about their problem, teaches them what matters, and carries them through to booking an assessment.',
-      'The platform spans condition education, symptom-led guides, side-by-side comparisons of commonly confused diagnoses, treatment information, patient reviews, and direct booking through the clinic scheduling system.',
+      'KinetiKare is the public platform for my physiotherapy practice in Burlington. It is designed for people who may know where they hurt or what they are experiencing without knowing the name of the condition.',
+      'The platform combines body-region navigation, symptom-based guidance, condition information, treatment pages, comparisons, patient reviews, and direct online booking.',
     ],
     gallery: [
       {
@@ -131,7 +137,7 @@ export const projects: Project[] = [
         frame: 'browser',
         url: 'kinetikarephysio.com/conditions',
         title: 'The condition library',
-        caption: 'Organised by body region first, with search on top, so someone can start from where it hurts.',
+        caption: 'Organized by body region first, with search on top, so someone can start from where it hurts.',
       },
       {
         src: '/images/work/kinetikare-compare.webp',
@@ -163,7 +169,7 @@ export const projects: Project[] = [
     decision:
       'Patients do not always know the name of their condition. The platform therefore combines body-region navigation, symptom-led guides, and side-by-side comparisons instead of relying exclusively on diagnostic categories. The same clinical content is reachable from three directions because people arrive with three different kinds of questions.',
     outcomes: [
-      'The platform is the primary front door for the practice. Condition, guide, and comparison pages earn steady search visibility across Burlington and the surrounding communities, and new patients regularly arrive already oriented to their likely problem.',
+      'Search visibility increased substantially across the platform’s condition, guide, and comparison content.',
     ],
     environment: 'Next.js · GitHub · Vercel · Jane App · Google Search Console',
     delivery:
@@ -181,27 +187,29 @@ export const projects: Project[] = [
   },
   {
     slug: 'endorphins',
-    title: 'Endorphins Health & Wellness Centre',
+    title: 'Endorphins Health and Wellness Centre',
     shortTitle: 'Endorphins',
-    category: 'Service Design · Clinic Digital Operations',
+    category: 'Service Launch · Digital Operations',
     summary:
-      'The operational and digital integration of physiotherapy within an established six-specialty healthcare clinic.',
+      'Launching physiotherapy within an established multidisciplinary clinic while redesigning the clinic’s website and digital operations around its services as a whole.',
+    cardSummary:
+      'Launched physiotherapy within an established multidisciplinary clinic and led a broader redesign of the clinic’s website and digital operations.',
     proof: [
-      { value: '6 services', label: 'presented on one clinic site' },
-      { value: '1 new service', label: 'physiotherapy launched' },
+      { value: '25 to 137', label: 'monthly organic clicks in 10 months' },
+      { value: '30 to 13', label: 'average search position' },
     ],
     contribution: [
-      'Service structure',
-      'Intake and booking journey',
-      'Referral pathways',
+      'Service launch',
+      'Website strategy',
       'Information architecture',
-      'Service content',
+      'Online booking',
+      'Content',
       'Analytics',
-      'Local search',
+      'Search performance',
     ],
     intro: [
-      'Endorphins Health and Wellness Centre is an established multidisciplinary clinic in Burlington with six services: chiropractic, physiotherapy, massage therapy, athletic therapy, chiropody, and acupuncture. I joined to launch the physiotherapy service line and took on the clinic’s digital presence and patient routing along the way.',
-      'The work ran on two levels at once: introducing a new discipline into an existing clinical environment, and redesigning how the clinic presents six distinct services as one coordinated place to get care.',
+      'Endorphins is an established multidisciplinary clinic in Burlington. I joined to launch physiotherapy as a new service and subsequently took responsibility for the clinic’s website and broader digital operations.',
+      'The work involved both establishing the new service and improving how the clinic presents its different services, practitioners, and booking options to the public.',
     ],
     gallery: [
       {
@@ -250,14 +258,14 @@ export const projects: Project[] = [
       },
     ],
     decision:
-      'Six clinical disciplines needed to remain distinct while still feeling like one coordinated clinic. The information architecture, service content, and booking pathways had to make each service understandable on its own terms without fragmenting the clinic into six mini-websites.',
+      'The clinic’s services needed to remain clear on their own terms while still feeling like part of one multidisciplinary practice. The website structure, content, and online booking options were designed around that balance.',
     outcomes: [
-      'Physiotherapy launched as a functioning service line inside an established clinic, with referral pathways connecting it to the other five disciplines.',
-      'The redesigned site and local-search work give each service a findable, bookable presence across the surrounding municipalities.',
+      'Physiotherapy launched as a functioning service within the clinic.',
+      'Within 10 months of the website relaunch, monthly organic clicks increased from 25 to 137 and average search position improved from 30 to 13.',
     ],
     environment: 'Custom site · GitHub Actions · Jane App · Google Analytics · Google Business Profile',
     delivery:
-      'Service structure, patient journeys, content, and analytics led by me; the site implementation was built and maintained through agentic development tools.',
+      'Service launch, website strategy, information architecture, content, and analytics led by me; the site implementation was built and maintained through AI-assisted development tools.',
     liveUrl: 'https://endorphinshealth.com',
     card: {
       src: '/images/work/endorphins-home.webp',
@@ -273,13 +281,15 @@ export const projects: Project[] = [
     slug: 'tax-relief-counsel',
     title: 'Tax Relief Counsel',
     shortTitle: 'Tax Relief Counsel',
-    category: 'Workflow Automation · Professional Services',
+    category: 'Workflow Improvement · Professional Services',
     summary:
       'A reusable drafting workflow that turned repetitive intake and document-generation work into a structured operating process.',
+    cardSummary:
+      'Worked with a solo law practice to restructure a recurring drafting workflow, reducing document-generation time from about three hours to 30 minutes per matter.',
     proof: [
       { value: '~3h to 30m', label: 'document generation per matter' },
       { value: '~85%', label: 'reduction in document-generation time' },
-      { value: 'Independent', label: 'workflow operated by the practitioner' },
+      { value: 'Practitioner-led', label: 'ongoing operation' },
     ],
     contribution: [
       'Workflow mapping',
@@ -292,7 +302,7 @@ export const projects: Project[] = [
     ],
     intro: [
       'Tax Relief Counsel is a solo tax-law practice whose matters generate long, structured documents from broadly similar inputs. Before this project, each document was drafted largely from scratch: the same sections rebuilt every time, with consistency depending on attention and available hours on a given day.',
-      'I learned the practice’s workflow from the inside, mapped where the time actually went, and rebuilt the drafting process around a reusable template library with LLM-supported drafting. The interesting part was not the automation itself. It was finding the repeatable structure inside work that looked bespoke, and shaping it into a process a non-technical practitioner runs independently.',
+      'I learned the practice’s workflow from the inside, mapped where the time actually went, and rebuilt the drafting process around a reusable template library with LLM-supported drafting. The interesting part was not the automation itself. It was finding the repeatable structure inside work that looked bespoke, and shaping it into a process the practitioner can operate independently.',
     ],
     gallery: [],
     confidentialNote:
@@ -322,7 +332,7 @@ export const projects: Project[] = [
       'Travel and event journeys',
       'Forms',
       'Responsive experience',
-      'Agentic delivery',
+      'AI-assisted development',
     ],
     intro: [
       'A wedding in Peru asks a lot of its guests: an international flight, an unfamiliar city, a venue outside Lima, and an optional multi-day Machu Picchu trip afterward. This site gives every guest one place that answers the practical questions.',
@@ -377,7 +387,7 @@ export const projects: Project[] = [
     ],
     environment: 'Next.js · Vercel · Framer Motion',
     delivery:
-      'Information architecture, content structure, and journey design led by me; the site was built, tested, and refined through agentic development tools.',
+      'Information architecture, content structure, and journey design led by me; the site was built, tested, and refined through AI-assisted development tools.',
     card: {
       src: '/images/work/wedding-hero.webp',
       alt: 'Wedding website arrival screen with a framed photo, names, and date',
@@ -390,10 +400,10 @@ export const projects: Project[] = [
 ];
 
 const projectOrder = [
-  'clinical-documentation',
-  'tax-relief-counsel',
   'endorphins',
+  'tax-relief-counsel',
   'kinetikare',
+  'clinical-documentation',
   'wedding-website',
 ];
 

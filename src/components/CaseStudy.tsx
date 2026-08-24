@@ -246,9 +246,14 @@ export default function ProjectDetail({ project, next }: { project: Project; nex
                 <SectionHeading id="decision">The decision that shaped it</SectionHeading>
               </ScrollReveal>
               <ScrollReveal direction="up">
-                <p className="max-w-3xl text-lg leading-relaxed text-muted-foreground md:text-xl">
-                  {project.decision}
-                </p>
+                <div className="max-w-3xl">
+                  {project.decisionHeading && (
+                    <h3 className="mb-4 text-xl font-medium leading-snug tracking-[-0.025em] text-foreground md:text-2xl">
+                      {project.decisionHeading}
+                    </h3>
+                  )}
+                  <p className="text-lg leading-relaxed text-muted-foreground md:text-xl">{project.decision}</p>
+                </div>
               </ScrollReveal>
             </section>
 

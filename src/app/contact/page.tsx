@@ -121,10 +121,10 @@ function ContactForm() {
 }
 
 const fit = [
-  'A process works on paper and keeps breaking in practice.',
-  'A tool went live and people quietly went back to the old way.',
-  'Something predictable keeps going wrong at a handoff between teams.',
-  'A good idea has been sitting almost finished for months.',
+  'A service or workflow is creating avoidable friction.',
+  'A new tool needs to be introduced without disrupting the work around it.',
+  'A process needs clearer ownership, information, or handoffs.',
+  'A digital or operational project needs someone to carry it from definition through launch and refinement.',
 ];
 
 export default function ContactPage() {
@@ -138,8 +138,8 @@ export default function ContactPage() {
               Get in <span className="font-serif font-normal italic text-accent">touch.</span>
             </h1>
             <p className="mt-8 max-w-xl text-lg leading-relaxed text-foreground/72">
-              Tell me what is getting in the way, who the work affects, and what a better result would look like. I read
-              every message personally.
+              For full-time roles, selected advisory work, or project inquiries, tell me what you are working on, who
+              it affects, and what a useful result would look like.
             </p>
           </section>
 

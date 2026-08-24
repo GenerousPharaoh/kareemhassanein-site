@@ -87,8 +87,7 @@ function BottomBar({ tone = 'dark' }: { tone?: 'dark' | 'page' }) {
     <div className={`mx-auto flex max-w-[1440px] flex-col gap-3 px-6 py-5 text-[10px] font-semibold uppercase tracking-[0.16em] sm:px-8 md:flex-row md:items-center md:justify-between lg:px-12 xl:px-20 ${muted}`}>
       <span>Kareem Hassanein</span>
       <div className="flex flex-wrap gap-x-5 gap-y-2">
-        <span>Hamilton and Burlington, Ontario</span>
-        <span>Remote across North America</span>
+        <span>Hamilton and Burlington, Ontario · Remote across Canada</span>
         <span>© 2026</span>
       </div>
     </div>
@@ -124,14 +123,14 @@ export default function Footer() {
               className="lg:col-span-6"
             >
               <p className="mb-5 text-[11px] font-semibold uppercase tracking-[0.22em] text-white/60">
-                Available for implementation, operations, and advisory work
+                Open to full-time opportunities and selected advisory work
               </p>
               <h2 className="max-w-xl font-sans text-[clamp(2.4rem,5.2vw,4.8rem)] font-medium leading-[0.98] tracking-[-0.045em] text-[#f1ede6]">
                 Get in <span className="font-serif font-normal italic text-accent">touch.</span>
               </h2>
               <p className="mt-5 max-w-lg text-base leading-relaxed text-[#f1ede6]/62 sm:text-lg">
-                Tell me what is getting in the way, who it affects, and what a better result would look like. I read
-                every message.
+                For full-time roles, selected advisory work, or project inquiries, tell me what you are working on and
+                what a useful result would look like.
               </p>
               <Link
                 href="/contact"

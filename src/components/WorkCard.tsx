@@ -16,9 +16,9 @@ function ConfidentialVisual({ project, tone = 'dark' }: { project: Project; tone
         <div className="flex aspect-[16/10] flex-col justify-between p-6 sm:p-8 md:p-10">
           <div className="flex items-start justify-between gap-8 border-b border-white/[0.09] pb-6">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent/80">Adoption outcome</p>
-              <p className="mt-3 text-5xl font-medium tracking-[-0.06em] text-foreground sm:text-6xl">100%</p>
-              <p className="mt-2 text-sm text-muted-foreground">of the physiotherapy team</p>
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent/80">Rollout outcome</p>
+              <p className="mt-3 text-5xl font-medium tracking-[-0.06em] text-foreground sm:text-6xl">8 weeks</p>
+              <p className="mt-2 text-sm text-muted-foreground">to full-team use</p>
             </div>
             <p className="max-w-36 text-right font-mono text-xs leading-relaxed text-foreground/58">
               Evaluation<br />Configuration<br />Support<br />Refinement
@@ -37,8 +37,7 @@ function ConfidentialVisual({ project, tone = 'dark' }: { project: Project; tone
               <div className="absolute right-0 top-[-5px] h-3 w-3 border border-accent bg-[#171a1f]" />
             </div>
             <p className="mt-5 max-w-md text-sm leading-relaxed text-muted-foreground">
-              Adoption was handled as a workflow problem, with training, configuration, and support adjusted around
-              clinical use.
+              Configuration, training, support, and refinement stayed connected to how practitioners documented care.
             </p>
           </div>
         </div>
@@ -125,6 +124,7 @@ function ConfidentialVisual({ project, tone = 'dark' }: { project: Project; tone
 
 interface WorkCardProps {
   project: Project;
+  summary?: string;
   index?: number;
   variant?: 'stack' | 'row';
   flip?: boolean;
@@ -135,6 +135,7 @@ interface WorkCardProps {
 
 export default function WorkCard({
   project,
+  summary,
   index = 0,
   variant = 'stack',
   flip = false,
@@ -186,14 +187,16 @@ export default function WorkCard({
 
           <div className={`${variant === 'row' ? `lg:col-span-5 lg:py-5 ${flip ? 'lg:order-1' : ''}` : 'mt-7'}`}>
             <p className={`mb-4 text-xs font-semibold uppercase tracking-[0.18em] ${light ? 'text-[#705829]' : 'text-accent/80'}`}>
-              {project.contextLabel ?? project.category}
+              {project.category}
             </p>
             <Heading
               className={`${variant === 'row' ? 'text-3xl sm:text-4xl lg:text-[2.8rem]' : 'text-2xl sm:text-3xl'} font-medium leading-[1.02] tracking-[-0.045em] transition-colors duration-500 ${light ? 'text-[#1c1812] group-hover:text-[#705829]' : 'text-foreground group-hover:text-accent'}`}
             >
               {project.title}
             </Heading>
-            <p className={`mt-5 max-w-xl text-[15px] leading-relaxed sm:text-base ${light ? 'text-[#57503f]' : 'text-muted-foreground'}`}>{project.summary}</p>
+            <p className={`mt-5 max-w-xl text-[15px] leading-relaxed sm:text-base ${light ? 'text-[#57503f]' : 'text-muted-foreground'}`}>
+              {summary ?? project.summary}
+            </p>
 
             {project.proof && project.proof.length > 0 && (
               <dl className={`mt-6 border-y ${light ? 'border-black/[0.12]' : 'border-white/[0.11]'}`}>

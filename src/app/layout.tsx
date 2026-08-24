@@ -24,13 +24,13 @@ const cormorant = Cormorant_Garamond({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.khassanein.bio"),
-  title: "Kareem Hassanein | Implementation & Operations",
-  description: "Implementation and operations work across clinical technology, workflow automation, service design, and digital delivery.",
-  keywords: ["implementation consulting", "operations improvement", "clinical implementation", "workflow automation", "change adoption", "service design", "healthcare operations", "digital delivery"],
+  title: "Kareem Hassanein | Implementation & Service Operations",
+  description: "Portfolio of Kareem Hassanein: selected work in implementation, service operations, workflow improvement, and digital delivery across healthcare and professional services.",
+  keywords: ["implementation consulting", "service operations", "operations improvement", "workflow improvement", "technology adoption", "service design", "healthcare operations", "digital delivery"],
   authors: [{ name: "Kareem Hassanein" }],
   openGraph: {
-    title: "Kareem Hassanein | Implementation & Operations",
-    description: "Implementation and operations work across clinical technology, workflow automation, service design, and digital delivery.",
+    title: "Kareem Hassanein | Implementation & Service Operations",
+    description: "Portfolio of Kareem Hassanein: selected work in implementation, service operations, workflow improvement, and digital delivery across healthcare and professional services.",
     type: "website",
     locale: "en_CA",
     url: "https://www.khassanein.bio",
@@ -46,8 +46,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Kareem Hassanein | Implementation & Operations",
-    description: "Implementation and operations work across clinical technology, workflow automation, service design, and digital delivery.",
+    title: "Kareem Hassanein | Implementation & Service Operations",
+    description: "Portfolio of Kareem Hassanein: selected work in implementation, service operations, workflow improvement, and digital delivery across healthcare and professional services.",
     images: ["https://www.khassanein.bio/og-image.png"],
   },
   robots: {
@@ -67,16 +67,17 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Person",
   name: "Kareem Hassanein",
-  jobTitle: ["Registered Physiotherapist", "Implementation and Operations Consultant"],
-  description: "Kareem Hassanein is an implementation and operations consultant with a clinical background. His work spans clinical technology, workflow automation, service design, change adoption, and digital delivery.",
+  jobTitle: ["Registered Physiotherapist", "Implementation and Service Operations Consultant"],
+  description: "Kareem Hassanein works across implementation, service operations, workflow improvement, technology adoption, and digital delivery in healthcare and professional services.",
   url: "https://www.khassanein.bio",
   sameAs: [
     "https://www.linkedin.com/in/kareemhassanein",
   ],
   knowsAbout: [
-    "Clinical Implementation",
+    "Technology Adoption",
+    "Service Operations",
     "Service Design",
-    "Workflow Automation",
+    "Workflow Improvement",
     "Information Architecture",
     "Healthcare Operations",
     "Digital Health",

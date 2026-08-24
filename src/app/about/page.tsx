@@ -14,21 +14,21 @@ const currentRoles = [
     organization: 'Endorphins Health and Wellness Centre',
     period: '2024 to present',
     description:
-      'Leading digital operations across six specialties, including booking architecture, patient routing, analytics, and local search.',
+      'Launched physiotherapy as a new service and now lead the clinic’s website, online booking, analytics, and broader digital operations.',
   },
   {
-    role: 'Workflow Automation Consultant',
+    role: 'Workflow Improvement Consultant',
     organization: 'Tax Relief Counsel',
     period: '2025 to present',
     description:
-      'Mapped and rebuilt a recurring document workflow, reducing generation time from about three hours to 30 minutes per matter and documenting the process for independent use.',
+      'Worked with the practitioner to restructure a recurring drafting workflow, reducing document-generation time from about three hours to 30 minutes per matter and documenting the process for independent use.',
   },
   {
     role: 'Clinical Advisor',
     organization: 'Neuro-Mod',
     period: '2025 to present',
     description:
-      'Reviewing clinical deployment, interface design, clinician onboarding, patient education, and rollout readiness for an augmented-reality pain-management device.',
+      'Advise on clinical deployment for an augmented-reality pain-management device, including clinician workflow, onboarding, patient education, interface considerations, and rollout readiness.',
   },
 ];
 
@@ -68,17 +68,17 @@ export default function About() {
               className="enter-fade mt-9 max-w-2xl text-lg md:text-[1.35rem] text-foreground/[0.76] font-light leading-relaxed"
               style={{ '--hero-delay': '0.34s' } as CSSProperties}
             >
-              I still treat patients, and I also run the operational side of a multidisciplinary clinic. Working both
-              jobs at once means I see where a process breaks while I am standing inside it.
+              My background spans frontline healthcare, client development, team leadership, service operations, and
+              digital delivery.
             </p>
 
             <div
               className="enter-fade mt-10 flex flex-wrap gap-x-6 gap-y-3 text-sm text-muted-foreground"
               style={{ '--hero-delay': '0.46s' } as CSSProperties}
             >
-              <span>Clinical implementation</span>
-              <span>Workflow automation</span>
-              <span>Service design</span>
+              <span>Implementation</span>
+              <span>Service operations</span>
+              <span>Workflow improvement</span>
               <span>Digital delivery</span>
             </div>
           </div>
@@ -100,15 +100,25 @@ export default function About() {
             <ScrollReveal direction="up" delay={0.08} className="lg:col-span-7 lg:pt-10">
               <div className="space-y-6 max-w-2xl">
                 <p className="text-lg md:text-xl text-foreground/[0.82] font-light leading-relaxed">
-                  Years in patient care made the surrounding infrastructure impossible to ignore: how people find a
-                  service, how information moves, where documentation consumes attention, and why some tools become
-                  routine while others create more work.
+                  More than 10,000 hours of patient care and one-to-one coaching taught me to begin with the actual
+                  need: what the person or team is trying to achieve, what constraints are real, what information is
+                  missing, and how progress will be measured. From there, I work toward a practical approach, support
+                  execution, and adjust when the work reveals something the original plan did not.
                 </p>
                 <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
-                  That clinical grounding now informs work across implementation, operations, automation, service design,
-                  and product advisory. The tools vary. The responsibility does not: understand the real use case,
-                  organize it clearly, and deliver something that works beyond the planning stage.
+                  I now bring that perspective to implementation, workflow improvement, technology adoption, digital
+                  products, and advisory work. I am most useful where success depends not only on the quality of the
+                  solution, but on whether people can understand, use, and sustain it.
                 </p>
+                <article className="mt-10 border-t border-white/[0.09] pt-7">
+                  <h3 className="text-xl font-medium tracking-tight text-foreground/[0.92]">Client and team leadership</h3>
+                  <p className="mt-4 text-base leading-relaxed text-muted-foreground md:text-lg">
+                    Before physiotherapy, I delivered more than 3,000 hours of one-to-one personal training and later
+                    managed a 25-person fitness team. That experience developed the commercial and relationship side of
+                    my work: consultative assessment, ongoing coaching, performance management, client retention, and
+                    accountability for results.
+                  </p>
+                </article>
               </div>
             </ScrollReveal>
 
@@ -178,19 +188,18 @@ export default function About() {
           <ScrollReveal direction="up" delay={0.08} className="lg:col-span-7 lg:pt-10">
             <div className="max-w-2xl border-t border-white/[0.09]">
               <p className="py-6 text-lg md:text-xl font-light leading-relaxed text-foreground/[0.82] border-b border-white/[0.08]">
-                Every process also carries judgment, responsibility, time pressure, incomplete information, and habits
-                people developed to keep the work moving. Some of those habits waste time. Others are compensating for
-                something the formal process never solved.
+                Every workflow carries more than its visible steps. It also carries judgment, responsibility, time
+                pressure, incomplete information, and workarounds people developed to keep things moving. Some create
+                waste. Others compensate for something the formal process never solved.
               </p>
               <p className="py-6 text-base md:text-lg leading-relaxed text-muted-foreground border-b border-white/[0.08]">
-                If I change the visible steps without understanding why they exist, I can move the burden to someone
-                else or remove something that mattered. I need to understand what decisions are being made, who depends
-                on them, where information comes from, and what cannot be lost in the name of efficiency.
+                Before changing anything, I try to understand what decisions are being made, who relies on them, where
+                the information comes from, and what cannot be lost. That reduces the risk of solving one problem by
+                moving the burden somewhere else.
               </p>
               <p className="pt-6 text-base md:text-lg leading-relaxed text-muted-foreground">
-                AI and automation can remove work that no longer needs to be done by hand. They can also add more
-                checking, uncertainty, or distance from the work when they are introduced badly. My role is to
-                understand the difference and shape the change so it improves the work as a whole, not just one step.
+                Technology and automation are useful when they reduce effort without weakening judgment, quality, or
+                accountability. I focus on the operating result as a whole, not simply whether one step became faster.
               </p>
             </div>
           </ScrollReveal>
@@ -216,7 +225,7 @@ export default function About() {
                   </p>
                 </div>
                 <p className="text-base text-muted-foreground leading-relaxed max-w-2xl">
-                  At a private physiotherapy clinic, I led an AI documentation rollout to full team adoption within
+                  At a private physiotherapy clinic, I led a clinical documentation rollout to full-team use within
                   eight weeks while carrying a full clinical caseload.
                 </p>
               </article>
