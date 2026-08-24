@@ -57,7 +57,7 @@ export function ClinicalAdoptionFigure() {
           </div>
           <div className="text-right pb-1">
             <span className="block text-[11px] font-medium tracking-[0.18em] uppercase text-muted-foreground/80 mb-1">
-              Weekly time saved
+              Estimated weekly time saved
             </span>
             <span className="block text-xl sm:text-2xl font-medium tracking-tight text-accent">~3 hours</span>
           </div>
@@ -85,7 +85,7 @@ export function ClinicalAdoptionFigure() {
             Sustained result
           </span>
           <span className="block text-base text-foreground/90">
-            Approximately three hours saved each week per practitioner
+            An estimated three hours saved each week per practitioner
           </span>
         </div>
       </div>
@@ -293,4 +293,3 @@ export function TrcLibraryFigure() {
     </FigureShell>
   );
 }
-

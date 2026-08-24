@@ -57,10 +57,10 @@ export const projects: Project[] = [
     summary:
       'Introduced a clinical documentation platform across a physiotherapy team, from evaluation and configuration through training, rollout, and refinement.',
     cardSummary:
-      'Led a clinical documentation platform from evaluation and configuration through training, rollout, and refinement, reaching full-team use within eight weeks.',
+      'Led evaluation, configuration, training and rollout to full-team use within eight weeks, with an estimated three hours saved per practitioner each week.',
     proof: [
       { value: '8 weeks', label: 'to full-team use' },
-      { value: '~3 hours', label: 'saved per practitioner each week' },
+      { value: '~3 hours per week', label: 'estimated time saved per practitioner' },
     ],
     contribution: [
       'Workflow evaluation',
@@ -73,7 +73,7 @@ export const projects: Project[] = [
     ],
     intro: [
       'A physiotherapy team was introducing a new documentation platform into an established clinical routine. The central question was not simply whether the tool worked, but whether it could reduce documentation time without creating new uncertainty, inconsistency, or administrative burden.',
-      'I led the clinic-side evaluation, configuration, training, rollout support, and refinement. Full-team use was reached within eight weeks, with approximately three hours saved per practitioner each week.',
+      'I led the clinic-side evaluation, configuration, training, rollout support, and refinement. Full-team use was reached within eight weeks, with an estimated three hours saved per practitioner each week.',
     ],
     gallery: [],
     confidentialNote:
@@ -83,7 +83,7 @@ export const projects: Project[] = [
       'Configuration, shared expectations, support, and refinement remained connected to how practitioners actually documented care.',
     outcomes: [
       'Full-team use was reached within eight weeks.',
-      'Documentation time decreased by approximately three hours per practitioner each week.',
+      'The rollout was estimated to save each practitioner approximately three hours per week.',
     ],
     environment: 'AI documentation platform · Clinical workflows · Team training · Documented SOPs',
     delivery:
@@ -99,11 +99,10 @@ export const projects: Project[] = [
     summary:
       'A 60+ page patient education and booking platform organized around the different ways people look for help: by body region, symptom, condition, or treatment.',
     cardSummary:
-      'Designed and launched a 60+ page patient education and booking platform, then used performance data to improve how people find and navigate its content.',
+      'Built and iterated a 60+ page patient education and booking platform; monthly Google Search impressions increased from 775 in June 2025 to 33,325 in July 2026.',
     proof: [
-      { value: '60+ pages', label: 'patient education and booking platform' },
-      { value: '775 to 33,000+', label: 'monthly search impressions' },
-      { value: '42 to 10', label: 'average search position in 13 months' },
+      { value: '60+ pages', label: 'patient education and booking platform launched' },
+      { value: '775 to 33,325', label: 'monthly Google Search impressions, June 2025 to July 2026' },
     ],
     contribution: [
       'Clinical requirements',
@@ -169,7 +168,7 @@ export const projects: Project[] = [
     decision:
       'Patients do not always know the name of their condition. The platform therefore combines body-region navigation, symptom-led guides, and side-by-side comparisons instead of relying exclusively on diagnostic categories. The same clinical content is reachable from three directions because people arrive with three different kinds of questions.',
     outcomes: [
-      'Search visibility increased substantially across the platform’s condition, guide, and comparison content.',
+      'Search visibility increased from 775 monthly Google Search impressions in June 2025 to 33,325 in July 2026 across the platform’s condition and guide content.',
     ],
     environment: 'Next.js · GitHub · Vercel · Jane App · Google Search Console',
     delivery:
@@ -193,10 +192,10 @@ export const projects: Project[] = [
     summary:
       'Launching physiotherapy within an established multidisciplinary clinic while redesigning the clinic’s website and digital operations around its services as a whole.',
     cardSummary:
-      'Launched physiotherapy within an established multidisciplinary clinic and led a broader redesign of the clinic’s website and digital operations.',
+      'Launched physiotherapy as a new clinic service and led the clinic-wide website relaunch. Monthly Google Search clicks increased from 25 in July 2025 to 112 in July 2026.',
     proof: [
-      { value: '25 to 137', label: 'monthly organic clicks in 10 months' },
-      { value: '30 to 13', label: 'average search position' },
+      { value: '1 new service', label: 'physiotherapy launched' },
+      { value: '25 to 112', label: 'monthly Google Search clicks, July 2025 to July 2026' },
     ],
     contribution: [
       'Service launch',
@@ -261,7 +260,7 @@ export const projects: Project[] = [
       'The clinic’s services needed to remain clear on their own terms while still feeling like part of one multidisciplinary practice. The website structure, content, and online booking options were designed around that balance.',
     outcomes: [
       'Physiotherapy launched as a functioning service within the clinic.',
-      'Within 10 months of the website relaunch, monthly organic clicks increased from 25 to 137 and average search position improved from 30 to 13.',
+      'The redesigned site gives each service a clear public page and a direct route to online booking. Monthly Google Search clicks increased from 25 in July 2025 to 112 in July 2026 following the relaunch.',
     ],
     environment: 'Custom site · GitHub Actions · Jane App · Google Analytics · Google Business Profile',
     delivery:
@@ -285,11 +284,9 @@ export const projects: Project[] = [
     summary:
       'A reusable drafting workflow that turned repetitive intake and document-generation work into a structured operating process.',
     cardSummary:
-      'Worked with a solo law practice to restructure a recurring drafting workflow, reducing document-generation time from about three hours to 30 minutes per matter.',
+      'Reduced document-generation time from approximately three hours to 30 minutes per matter and documented the workflow for independent use by the practitioner.',
     proof: [
-      { value: '~3h to 30m', label: 'document generation per matter' },
-      { value: '~85%', label: 'reduction in document-generation time' },
-      { value: 'Practitioner-led', label: 'ongoing operation' },
+      { value: '~3 hours → 30 minutes', label: 'document-generation time per matter' },
     ],
     contribution: [
       'Workflow mapping',
@@ -311,7 +308,7 @@ export const projects: Project[] = [
       'The drafting process could not be meaningfully improved until the recurring inputs, decisions, and document structures were standardized. The template library came first; the automation only became reliable once the structure existed for it to fill.',
     outcomes: [
       'Document-generation time fell from approximately three hours to about 30 minutes per matter.',
-      'The workflow runs as a documented, repeatable process the practitioner operates independently, with quality checkpoints built in rather than left to memory.',
+      'Documented for ongoing practitioner operation, with quality checkpoints built into the process rather than left to memory.',
     ],
     environment: 'Claude Code · Structured template library · Documented SOPs',
     delivery:
@@ -400,10 +397,10 @@ export const projects: Project[] = [
 ];
 
 const projectOrder = [
-  'endorphins',
   'tax-relief-counsel',
-  'kinetikare',
   'clinical-documentation',
+  'endorphins',
+  'kinetikare',
   'wedding-website',
 ];
 
