@@ -100,13 +100,15 @@ export default function Home() {
               </p>
               <h1 className="max-w-[1100px] text-[clamp(2.5rem,7vw,6.6rem)] font-medium leading-[0.92] tracking-[-0.055em]">
                 {heroLines.map((line, index) => (
-                  <HeadlineLine
-                    key={line.text}
-                    text={line.text}
-                    offset={heroLines.slice(0, index).reduce((total, prev) => total + prev.text.split(' ').length, 0)}
-                    className={line.className}
-                    duration={index === heroLines.length - 1 ? '1s' : '0.85s'}
-                  />
+                  <Fragment key={line.text}>
+                    <HeadlineLine
+                      text={line.text}
+                      offset={heroLines.slice(0, index).reduce((total, prev) => total + prev.text.split(' ').length, 0)}
+                      className={line.className}
+                      duration={index === heroLines.length - 1 ? '1s' : '0.85s'}
+                    />
+                    {index < heroLines.length - 1 && ' '}
+                  </Fragment>
                 ))}
               </h1>
             </div>
