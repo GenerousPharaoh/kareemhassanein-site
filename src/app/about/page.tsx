@@ -10,11 +10,11 @@ import ScrollReveal from '@/components/ScrollReveal';
 
 const currentRoles = [
   {
-    role: 'Digital Strategy & Operations Lead',
+    role: 'Physiotherapist & Digital Strategy and Operations Lead',
     organization: 'Endorphins Health and Wellness Centre',
     period: '2024 to present',
     description:
-      'Launched physiotherapy as a new service and now lead the clinic’s website, online booking, analytics, and broader digital operations.',
+      'Provide physiotherapy care while leading the clinic’s day-to-day digital operations, including its website, online booking, analytics, and service information. Launched physiotherapy as a new service within the established multidisciplinary clinic.',
   },
   {
     role: 'Workflow Improvement Consultant',
@@ -113,9 +113,10 @@ export default function About() {
                 <article className="mt-10 border-t border-white/[0.09] pt-7">
                   <h3 className="text-xl font-medium tracking-tight text-foreground/[0.92]">Client and team leadership</h3>
                   <p className="mt-4 text-base leading-relaxed text-muted-foreground md:text-lg">
-                    Before physiotherapy, I delivered more than 3,000 hours of one-to-one personal training and later
-                    managed a 25-person fitness team. That experience developed the commercial and relationship side of
-                    my work: consultative assessment, ongoing coaching, performance management, client retention, and
+                    Before physiotherapy, I delivered more than 3,000 hours of one-to-one personal training, generated
+                    more than $375K in fitness-service sales across training and management roles, and managed a
+                    25-person team. That experience developed the commercial and relationship side of my work:
+                    consultative assessment, ongoing coaching, performance management, client retention, and
                     accountability for results.
                   </p>
                 </article>

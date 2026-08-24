@@ -103,7 +103,7 @@ const jsonLd = {
   },
   address: {
     "@type": "PostalAddress",
-    addressLocality: "Burlington",
+    addressLocality: "Hamilton",
     addressRegion: "Ontario",
     addressCountry: "Canada"
   }

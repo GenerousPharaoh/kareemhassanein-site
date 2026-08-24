@@ -99,10 +99,11 @@ export const projects: Project[] = [
     summary:
       'A 60+ page patient education and booking platform organized around the different ways people look for help: by body region, symptom, condition, or treatment.',
     cardSummary:
-      'Built and iterated a 60+ page patient education and booking platform; monthly Google Search impressions increased from 775 in June 2025 to 33,325 in July 2026.',
+      'Built and iterated a 60+ page patient education and booking platform; monthly Google Search clicks increased from 27 in July 2025 to 93 in July 2026.',
     proof: [
       { value: '60+ pages', label: 'patient education and booking platform launched' },
-      { value: '775 to 33,325', label: 'monthly Google Search impressions, June 2025 to July 2026' },
+      { value: '27 to 93', label: 'monthly Google Search clicks, July 2025 to July 2026' },
+      { value: '54.2 to 9.8', label: 'average Google Search position, July 2025 to July 2026' },
     ],
     contribution: [
       'Clinical requirements',
@@ -116,7 +117,7 @@ export const projects: Project[] = [
       'AI-assisted development',
     ],
     intro: [
-      'KinetiKare is the public platform for my physiotherapy practice in Burlington. It is designed for people who may know where they hurt or what they are experiencing without knowing the name of the condition.',
+      'KinetiKare is the patient education and booking platform I founded and operate for my physiotherapy practice in Burlington. It is designed for people who may know where they hurt or what they are experiencing without knowing the name of the condition.',
       'The platform combines body-region navigation, symptom-based guidance, condition information, treatment pages, comparisons, patient reviews, and direct online booking.',
     ],
     gallery: [
@@ -168,7 +169,7 @@ export const projects: Project[] = [
     decision:
       'Patients do not always know the name of their condition. The platform therefore combines body-region navigation, symptom-led guides, and side-by-side comparisons instead of relying exclusively on diagnostic categories. The same clinical content is reachable from three directions because people arrive with three different kinds of questions.',
     outcomes: [
-      'Search visibility increased from 775 monthly Google Search impressions in June 2025 to 33,325 in July 2026 across the platform’s condition and guide content.',
+      'Monthly Google Search clicks increased from 27 in July 2025 to 93 in July 2026, while average result position improved from 54.2 to 9.8.',
     ],
     environment: 'Next.js · GitHub · Vercel · Jane App · Google Search Console',
     delivery:

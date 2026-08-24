@@ -145,7 +145,7 @@ export default function Home() {
                 className="enter-fade mt-6 max-w-lg text-xs leading-relaxed text-muted-foreground"
                 style={{ '--hero-delay': '0.94s', '--enter-dur': '0.9s' } as CSSProperties}
               >
-                Open to full-time opportunities and selected advisory work · Hamilton, Ontario · Remote
+                Open to full-time opportunities and selected advisory work · Hamilton, Ontario · On-site, hybrid, or remote
               </p>
             </div>
           </div>
