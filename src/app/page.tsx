@@ -20,8 +20,8 @@ const stripShots = [
     url: 'kinetikarephysio.com/conditions',
   },
   {
-    src: '/images/work/endorphins-booking.webp',
-    alt: 'Endorphins booking page routed by practitioner',
+    src: '/images/work/endorphins-booking-2026-08.webp',
+    alt: 'Endorphins booking page with reception and practitioner scheduling options',
     width: 1440,
     height: 900,
     frame: 'browser' as const,
@@ -36,8 +36,8 @@ const stripShots = [
     url: 'kinetikarephysio.com/conditions/compare',
   },
   {
-    src: '/images/work/endorphins-services.webp',
-    alt: 'Endorphins services index showing six clinical services',
+    src: '/images/work/endorphins-services-2026-08.webp',
+    alt: 'Endorphins services page introducing six clinical disciplines and booking information',
     width: 1440,
     height: 900,
     frame: 'browser' as const,
