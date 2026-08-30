@@ -339,37 +339,113 @@ export const orderedProjects = projectOrder
 export const principalProjects = orderedProjects.filter((project) => project.tier === 'principal');
 export const additionalProjects = orderedProjects.filter((project) => project.tier === 'additional');
 
-// The homepage screen tour.
+// The homepage screen ribbons.
 //
-// Sourced from the project galleries rather than restated here, so the screen
-// names stay in one place and cannot drift from the project pages. Order is
-// deliberate: it alternates between projects rather than grouping them, so the
-// tour reads as a range of work instead of a slideshow of one site.
-const tourOrder: ReadonlyArray<readonly [string, string]> = [
-  ['kinetikare', '/images/work/kinetikare-conditions.webp'],
-  ['endorphins', '/images/work/endorphins-booking-2026-08.webp'],
-  ['kinetikare', '/images/work/kinetikare-compare.webp'],
-  ['endorphins', '/images/work/endorphins-services-2026-08.webp'],
-  ['kinetikare', '/images/work/kinetikare-treatment.webp'],
-  ['endorphins', '/images/work/endorphins-home-2026-08.webp'],
-  ['wedding-website', '/images/work/wedding-hero.webp'],
-  ['wedding-website', '/images/work/wedding-travel.webp'],
-];
-
-export interface TourShot {
+// Captured for this section specifically rather than reused from the project
+// galleries: the gallery shots are page tops, which at ribbon size are mostly
+// navigation and headline. These are the sections that actually carry the
+// design, so they still read at a few hundred pixels wide. Sequenced so dark,
+// light and photographic frames alternate rather than clumping.
+export interface RibbonShot {
   src: string;
   alt: string;
-  url?: string;
+  /** Which project the screen belongs to, shown on hover. */
   project: string;
+  /** What the screen is. */
   label: string;
+  /** Project page the frame links to. */
+  slug: string;
 }
 
-export const tourShots: TourShot[] = tourOrder.flatMap(([slug, src]) => {
-  const project = projects.find((p) => p.slug === slug);
-  const shot = project?.gallery.find((g) => g.src === src);
-  if (!project || !shot) return [];
-  return [{ src: shot.src, alt: shot.alt, url: shot.url, project: project.title, label: shot.title }];
-});
+export const ribbonRowA: RibbonShot[] = [
+  {
+    src: '/images/work/reel-kk-hero.webp',
+    alt: 'KinetiKare homepage with a diagonal split between the introduction and the treatment room',
+    project: 'KinetiKare Physiotherapy',
+    label: 'The homepage',
+    slug: 'kinetikare',
+  },
+  {
+    src: '/images/work/reel-endo-disciplines.webp',
+    alt: 'Endorphins healthcare disciplines laid out as six cards',
+    project: 'Endorphins Health and Wellness Centre',
+    label: 'Six disciplines',
+    slug: 'endorphins',
+  },
+  {
+    src: '/images/work/reel-wed-machu.webp',
+    alt: 'Wedding website section showing Machu Picchu under cloud',
+    project: 'Wedding Website',
+    label: 'Where it all began',
+    slug: 'wedding-website',
+  },
+  {
+    src: '/images/work/kinetikare-compare.webp',
+    alt: 'KinetiKare comparison table setting tennis elbow against golfer’s elbow',
+    project: 'KinetiKare Physiotherapy',
+    label: 'Two conditions, compared',
+    slug: 'kinetikare',
+  },
+  {
+    src: '/images/work/reel-endo-reviews.webp',
+    alt: 'Endorphins patient reviews with a verified Google rating',
+    project: 'Endorphins Health and Wellness Centre',
+    label: 'Patient reviews',
+    slug: 'endorphins',
+  },
+  {
+    src: '/images/work/reel-wed-lima.webp',
+    alt: 'Wedding website travel section with an aerial photograph of Lima',
+    project: 'Wedding Website',
+    label: 'Getting to Lima',
+    slug: 'wedding-website',
+  },
+];
+
+export const ribbonRowB: RibbonShot[] = [
+  {
+    src: '/images/work/reel-kk-anatomy.webp',
+    alt: 'KinetiKare condition page opening with an anatomical shoulder illustration',
+    project: 'KinetiKare Physiotherapy',
+    label: 'A condition, explained',
+    slug: 'kinetikare',
+  },
+  {
+    src: '/images/work/reel-wed-day.webp',
+    alt: 'Wedding website schedule for the day, set on deep blue',
+    project: 'Wedding Website',
+    label: 'The day',
+    slug: 'wedding-website',
+  },
+  {
+    src: '/images/work/endorphins-booking-2026-08.webp',
+    alt: 'Endorphins booking page with reception and practitioner scheduling side by side',
+    project: 'Endorphins Health and Wellness Centre',
+    label: 'Booking',
+    slug: 'endorphins',
+  },
+  {
+    src: '/images/work/reel-kk-manual.webp',
+    alt: 'KinetiKare manual therapy section with a treatment photograph',
+    project: 'KinetiKare Physiotherapy',
+    label: 'Hands-on therapy',
+    slug: 'kinetikare',
+  },
+  {
+    src: '/images/work/wedding-hero.webp',
+    alt: 'Wedding website arrival screen with a framed photograph, the names, and the date',
+    project: 'Wedding Website',
+    label: 'The arrival',
+    slug: 'wedding-website',
+  },
+  {
+    src: '/images/work/endorphins-home-2026-08.webp',
+    alt: 'Endorphins clinic homepage led by a photograph of the building',
+    project: 'Endorphins Health and Wellness Centre',
+    label: 'The clinic homepage',
+    slug: 'endorphins',
+  },
+];
 
 export function getProject(slug: string): Project | undefined {
   return projects.find((p) => p.slug === slug);

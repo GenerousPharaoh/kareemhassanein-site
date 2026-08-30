@@ -5,9 +5,9 @@ import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
 import HeadlineReveal from '@/components/HeadlineReveal';
 import ScrollReveal from '@/components/ScrollReveal';
-import ScreenCarousel from '@/components/ScreenCarousel';
+import ScreenRibbons from '@/components/ScreenRibbons';
 import WorkCard from '@/components/WorkCard';
-import { advisory, principalProjects, tourShots } from '@/lib/work';
+import { advisory, principalProjects, ribbonRowA, ribbonRowB } from '@/lib/work';
 
 const heroLines = [
   { text: 'Selected work in' },
@@ -78,13 +78,12 @@ export default function Home() {
         </div>
       </section>
 
-      {/* The screen tour. It sits wholly in the dark rather than straddling the
-          seam: at this size a frame is tall enough that a boundary cutting
-          through it read as a rendering fault rather than a bridge. */}
-      <section aria-label="Project screens" className="relative z-10 px-6 pb-4 sm:px-8 md:pb-10 lg:px-12 xl:px-20">
-        <div className="mx-auto max-w-[1320px]">
-          <ScreenCarousel shots={tourShots} />
-        </div>
+      {/* Two ribbons of live screens, drifting in opposite directions. Runs
+          edge to edge rather than inside the page gutter: the rows are meant to
+          continue past the viewport, and a masked edge says that better than a
+          margin does. */}
+      <section aria-label="Screens from live projects" className="relative z-10 pb-6 md:pb-12">
+        <ScreenRibbons rowA={ribbonRowA} rowB={ribbonRowB} />
       </section>
 
       {/* Featured work on warm paper */}

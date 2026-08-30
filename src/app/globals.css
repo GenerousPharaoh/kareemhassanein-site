@@ -447,51 +447,75 @@ img {
   }
 }
 
-/* Screen carousel.
-   The scrollbar is hidden because the tick rail and the arrows already say
-   where you are; the track stays a real scroll container so touch swipe and
-   keyboard scrolling keep working. */
-.carousel-track {
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-  scroll-padding-left: 0;
-  overscroll-behavior-x: contain;
+/* Screen ribbons.
+
+   Two rows drifting in opposite directions. Each row holds its content twice
+   and translates by exactly -50%, which lands on the start of the duplicate,
+   so the loop has no seam. The edges are masked rather than cut, so screens
+   arrive and leave instead of appearing at a hard boundary.
+
+   Motion lives on the row, and the row is the only thing that moves: the
+   frames themselves are static, so hovering one can lift it without fighting
+   the drift. */
+.ribbon-band {
+  overflow: hidden;
+  padding: 18px 0 30px;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
 }
 
-.carousel-track::-webkit-scrollbar {
-  display: none;
+.ribbon-row {
+  display: flex;
+  gap: 22px;
+  width: max-content;
+  will-change: transform;
 }
 
-/* Only the screen in focus reads at full strength. Applied from lg up, where
-   a slice of the next frame is visible alongside it; below that one slide
-   fills the track and dimming would only flicker mid-swipe. */
-@media (min-width: 1024px) {
-  .carousel-slide {
-    opacity: 0.32;
-    transition: opacity 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
+.ribbon-item {
+  flex: 0 0 clamp(230px, 27vw, 400px);
+  display: block;
+  border-radius: 14px;
+}
+
+.ribbon-frame {
+  transition:
+    transform 0.55s cubic-bezier(0.22, 0.61, 0.36, 1),
+    box-shadow 0.55s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.ribbon-item:hover .ribbon-frame,
+.ribbon-item:focus-visible .ribbon-frame {
+  transform: translateY(-10px) scale(1.035);
+  box-shadow: 0 40px 80px -28px rgba(0, 0, 0, 0.85);
+}
+
+.ribbon-item:focus-visible {
+  outline: 2px solid hsl(var(--accent));
+  outline-offset: 8px;
+}
+
+@media (min-width: 768px) {
+  .ribbon-row {
+    gap: 30px;
   }
-
-  .carousel-slide[data-active] {
-    opacity: 1;
-  }
 }
 
-/* The caption is re-keyed on change, so it mounts fresh and this replays.
-   A cut, not a slide: the screen behind it is already moving. */
 @media (prefers-reduced-motion: no-preference) {
-  .carousel-label {
-    animation: carousel-label 0.5s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  .ribbon-row {
+    animation: ribbon-drift var(--ribbon-dur, 72s) linear infinite;
+  }
+
+  /* Held while the pointer or focus is inside the row, and by the control. */
+  .ribbon-band:hover .ribbon-row,
+  .ribbon-band:focus-within .ribbon-row,
+  .ribbon-row[data-paused] {
+    animation-play-state: paused;
   }
 }
 
-@keyframes carousel-label {
-  from {
-    opacity: 0;
-    filter: blur(4px);
-  }
+@keyframes ribbon-drift {
   to {
-    opacity: 1;
-    filter: blur(0);
+    transform: translate3d(-50%, 0, 0);
   }
 }
 
