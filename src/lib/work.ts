@@ -339,6 +339,38 @@ export const orderedProjects = projectOrder
 export const principalProjects = orderedProjects.filter((project) => project.tier === 'principal');
 export const additionalProjects = orderedProjects.filter((project) => project.tier === 'additional');
 
+// The homepage screen tour.
+//
+// Sourced from the project galleries rather than restated here, so the screen
+// names stay in one place and cannot drift from the project pages. Order is
+// deliberate: it alternates between projects rather than grouping them, so the
+// tour reads as a range of work instead of a slideshow of one site.
+const tourOrder: ReadonlyArray<readonly [string, string]> = [
+  ['kinetikare', '/images/work/kinetikare-conditions.webp'],
+  ['endorphins', '/images/work/endorphins-booking-2026-08.webp'],
+  ['kinetikare', '/images/work/kinetikare-compare.webp'],
+  ['endorphins', '/images/work/endorphins-services-2026-08.webp'],
+  ['kinetikare', '/images/work/kinetikare-treatment.webp'],
+  ['endorphins', '/images/work/endorphins-home-2026-08.webp'],
+  ['wedding-website', '/images/work/wedding-hero.webp'],
+  ['wedding-website', '/images/work/wedding-travel.webp'],
+];
+
+export interface TourShot {
+  src: string;
+  alt: string;
+  url?: string;
+  project: string;
+  label: string;
+}
+
+export const tourShots: TourShot[] = tourOrder.flatMap(([slug, src]) => {
+  const project = projects.find((p) => p.slug === slug);
+  const shot = project?.gallery.find((g) => g.src === src);
+  if (!project || !shot) return [];
+  return [{ src: shot.src, alt: shot.alt, url: shot.url, project: project.title, label: shot.title }];
+});
+
 export function getProject(slug: string): Project | undefined {
   return projects.find((p) => p.slug === slug);
 }

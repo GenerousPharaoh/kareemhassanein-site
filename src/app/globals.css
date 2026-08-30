@@ -447,6 +447,54 @@ img {
   }
 }
 
+/* Screen carousel.
+   The scrollbar is hidden because the tick rail and the arrows already say
+   where you are; the track stays a real scroll container so touch swipe and
+   keyboard scrolling keep working. */
+.carousel-track {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  scroll-padding-left: 0;
+  overscroll-behavior-x: contain;
+}
+
+.carousel-track::-webkit-scrollbar {
+  display: none;
+}
+
+/* Only the screen in focus reads at full strength. Applied from lg up, where
+   a slice of the next frame is visible alongside it; below that one slide
+   fills the track and dimming would only flicker mid-swipe. */
+@media (min-width: 1024px) {
+  .carousel-slide {
+    opacity: 0.32;
+    transition: opacity 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+
+  .carousel-slide[data-active] {
+    opacity: 1;
+  }
+}
+
+/* The caption is re-keyed on change, so it mounts fresh and this replays.
+   A cut, not a slide: the screen behind it is already moving. */
+@media (prefers-reduced-motion: no-preference) {
+  .carousel-label {
+    animation: carousel-label 0.5s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  }
+}
+
+@keyframes carousel-label {
+  from {
+    opacity: 0;
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
 /* Case-study title.
    Sizing this off the viewport cannot work: the column is lg:col-span-5 in a
    12-column grid whose gap jumps from 56px to 80px at xl, so the column is

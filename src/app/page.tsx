@@ -5,35 +5,9 @@ import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
 import HeadlineReveal from '@/components/HeadlineReveal';
 import ScrollReveal from '@/components/ScrollReveal';
-import ScreenFrame from '@/components/ScreenFrame';
+import ScreenCarousel from '@/components/ScreenCarousel';
 import WorkCard from '@/components/WorkCard';
-import { advisory, principalProjects } from '@/lib/work';
-
-// A bridge of real screens between the hero and the featured work.
-//
-// Two, not four. At four across, each screen rendered about 410px wide, which
-// is a 0.28 scale on a 1440px capture: the content inside was illegible and
-// they read as generic website thumbnails. Two at roughly 640px carry enough
-// detail to be evidence. Both show a decision rather than a homepage, and
-// neither leads a card below.
-const stripShots = [
-  {
-    src: '/images/work/kinetikare-conditions.webp',
-    alt: 'KinetiKare condition library filtered by body region',
-    width: 1440,
-    height: 900,
-    frame: 'browser' as const,
-    url: 'kinetikarephysio.com/conditions',
-  },
-  {
-    src: '/images/work/endorphins-booking-2026-08.webp',
-    alt: 'Endorphins booking page with reception and practitioner scheduling options',
-    width: 1440,
-    height: 900,
-    frame: 'browser' as const,
-    url: 'endorphinshealth.com/book-appointment',
-  },
-];
+import { advisory, principalProjects, tourShots } from '@/lib/work';
 
 const heroLines = [
   { text: 'Selected work in' },
@@ -46,7 +20,7 @@ const featured = principalProjects;
 export default function Home() {
   return (
     <main className="overflow-hidden bg-background text-foreground">
-      <section className="relative px-6 pb-24 pt-28 sm:px-8 sm:pt-32 md:pb-36 md:pt-40 lg:px-12 xl:px-20">
+      <section className="relative px-6 pb-20 pt-28 sm:px-8 sm:pt-32 md:pb-24 md:pt-40 lg:px-12 xl:px-20">
         <div className="relative mx-auto max-w-[1440px]">
           <div className="grid gap-14 lg:grid-cols-12 lg:items-end lg:gap-16">
             <div className="lg:col-span-8">
@@ -104,25 +78,17 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Filmstrip bridge: real screens spanning the dark-to-paper boundary.
-          One shared baseline, so the surface change cuts both at the same
-          height and reads as deliberate. The previous staggered translates cut
-          each screen at a different point and read as misalignment. */}
-      <section aria-label="Project screens" className="relative z-10 -mb-12 px-6 sm:px-8 md:-mb-24 lg:px-12 xl:px-20">
-        <div className="mx-auto grid max-w-[1320px] grid-cols-1 gap-8 sm:grid-cols-2 sm:gap-6 md:gap-8">
-          {/* A scroll beat, not part of the load sequence. Only the top edge of
-              these sits in the first screen, so animating them on load spent the
-              motion where nobody could see it and left them static on arrival. */}
-          {stripShots.map((shot, index) => (
-            <ScrollReveal key={shot.src} variant="figure" delay={index * 0.1}>
-              <ScreenFrame shot={shot} sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 640px" />
-            </ScrollReveal>
-          ))}
+      {/* The screen tour. It sits wholly in the dark rather than straddling the
+          seam: at this size a frame is tall enough that a boundary cutting
+          through it read as a rendering fault rather than a bridge. */}
+      <section aria-label="Project screens" className="relative z-10 px-6 pb-4 sm:px-8 md:pb-10 lg:px-12 xl:px-20">
+        <div className="mx-auto max-w-[1320px]">
+          <ScreenCarousel shots={tourShots} />
         </div>
       </section>
 
       {/* Featured work on warm paper */}
-      <section id="selected-work" className="scroll-mt-20 bg-[#ECE6D9] px-6 pb-24 pt-28 text-[#1c1812] sm:px-8 md:pb-32 md:pt-44 lg:px-12 xl:px-20">
+      <section id="selected-work" className="scroll-mt-20 bg-[#ECE6D9] px-6 pb-24 pt-20 text-[#1c1812] sm:px-8 md:pb-32 md:pt-28 lg:px-12 xl:px-20">
         <div className="mx-auto max-w-[1320px]">
           {/* Two beats, not one slab: the signpost and title land, then the
               framing sentence follows them in. */}
