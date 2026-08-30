@@ -83,7 +83,7 @@ const featured = principalProjects;
 
 export default function Home() {
   return (
-    <main className="overflow-hidden bg-background text-foreground">
+    <main className="overflow-x-clip bg-background text-foreground">
       <section className="relative px-6 pb-24 pt-28 sm:px-8 sm:pt-32 md:pb-36 md:pt-40 lg:px-12 xl:px-20">
         <div className="relative mx-auto max-w-[1440px]">
           <div className="grid gap-14 lg:grid-cols-12 lg:items-end lg:gap-16">
@@ -159,12 +159,14 @@ export default function Home() {
               these sits in the first screen, so animating them on load spent the
               motion where nobody could see it and left them static on arrival. */}
           {stripShots.map((shot, index) => (
-            <ScrollReveal key={shot.src} direction="up" delay={index * 0.07} onMobile>
-              {/* The offset lives on an inner element: framer-motion writes an
-                  inline transform for the reveal, which would otherwise
-                  overwrite the Tailwind translate that staggers the strip. */}
+            <ScrollReveal key={shot.src} direction="up" delay={index * 0.05}>
+              {/* Two nested elements because both animate: the outer holds the
+                  Tailwind offset that staggers the strip, the inner drifts
+                  against the scroll. One transform each, no overwriting. */}
               <div className={stripOffsets[index]}>
-                <ScreenFrame shot={shot} sizes="(max-width: 768px) 50vw, 320px" />
+                <div className="drift" style={{ '--drift': `${6 + index * 3}px` } as CSSProperties}>
+                  <ScreenFrame shot={shot} sizes="(max-width: 768px) 50vw, 320px" />
+                </div>
               </div>
             </ScrollReveal>
           ))}

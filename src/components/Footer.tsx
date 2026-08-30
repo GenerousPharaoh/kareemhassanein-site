@@ -1,12 +1,10 @@
 'use client';
 
+import type { CSSProperties } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { motion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 import { orderedProjects } from '@/lib/work';
-
-const ease = [0.16, 1, 0.3, 1] as const;
 
 const pageLinks = [
   { href: '/', label: 'Home' },
@@ -115,13 +113,7 @@ export default function Footer() {
       <div className="relative flex flex-1 items-center border-t border-white/[0.09] md:border-t-0">
         <div className="mx-auto w-full max-w-[1440px] px-6 py-16 sm:px-8 md:py-12 lg:px-12 xl:px-20">
           <div className="grid gap-14 lg:grid-cols-12 lg:gap-20">
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '0px 0px -60px 0px' }}
-              transition={{ duration: 0.8, ease }}
-              className="lg:col-span-6"
-            >
+            <div className="reveal lg:col-span-6" style={{ '--reveal-y': '16px' } as CSSProperties}>
               <p className="mb-5 text-[11px] font-semibold uppercase tracking-[0.22em] text-white/60">
                 Open to full-time opportunities and selected advisory work
               </p>
@@ -142,7 +134,7 @@ export default function Footer() {
                   className="transition-transform duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
                 />
               </Link>
-            </motion.div>
+            </div>
 
             <div className="lg:col-span-6 lg:pt-3">
               <NavColumns tone="dark" />

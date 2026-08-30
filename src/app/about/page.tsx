@@ -45,7 +45,7 @@ const education = [
 
 export default function About() {
   return (
-    <main className="overflow-hidden bg-background text-foreground pt-20">
+    <main className="overflow-x-clip bg-background text-foreground pt-20">
       <section className="relative px-6 md:px-12 xl:px-20 pt-16 md:pt-24 pb-20 md:pb-28">
         <div className="relative max-w-[1280px] mx-auto">
           <div className="max-w-3xl">

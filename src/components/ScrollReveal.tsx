@@ -1,54 +1,53 @@
-'use client';
-
-import { motion, useReducedMotion } from 'framer-motion';
-import { ReactNode } from 'react';
-import useIsMobile from '@/hooks/useIsMobile';
+import type { CSSProperties, ReactNode } from 'react';
 
 interface ScrollRevealProps {
     children: ReactNode;
     direction?: 'up' | 'down' | 'left' | 'right' | 'none';
     distance?: number;
+    /** Fraction of the entry range to offset this element by, so items sharing
+     *  a row resolve in order instead of together. Roughly 0-0.4. */
     delay?: number;
     className?: string;
-    style?: React.CSSProperties;
-    /** Reveal on mobile too. Safe for whileInView (IntersectionObserver +
-     *  fixed tween); never enable for scroll-driven motion. */
-    onMobile?: boolean;
+    style?: CSSProperties;
 }
 
+/**
+ * A scroll-linked reveal driven entirely by CSS `animation-timeline: view()`.
+ *
+ * This used to be a framer-motion `whileInView` tween, which meant an
+ * IntersectionObserver plus a main-thread animation per element, disabled
+ * wholesale on mobile because those jolt during iOS Safari's URL-bar resize.
+ * The scroll-driven version runs on the compositor and is threaded in Safari
+ * 26.4, so it works on every breakpoint and costs no JavaScript.
+ *
+ * Progressive enhancement: the element is fully visible by default. The
+ * animation attaches only inside `@supports (animation-timeline: view())`, so
+ * an older browser renders a finished page instead of an invisible one.
+ */
 export default function ScrollReveal({
     children,
     direction = 'up',
-    distance = 12,
+    distance = 14,
     delay = 0,
     className = '',
     style = {},
-    onMobile = false,
 }: ScrollRevealProps) {
-    const shouldReduceMotion = useReducedMotion();
-    const isMobile = useIsMobile();
-    const disableReveal = shouldReduceMotion || (isMobile && !onMobile);
-    const initialX = direction === 'left' ? -distance : direction === 'right' ? distance : 0;
-    const initialY = direction === 'up' ? distance : direction === 'down' ? -distance : 0;
-
-    if (disableReveal) {
-        return (
-            <div style={style} className={className}>
-                {children}
-            </div>
-        );
-    }
+    const axis = direction === 'left' || direction === 'right' ? 'x' : 'y';
+    const sign = direction === 'down' || direction === 'right' ? -1 : 1;
+    const offset = direction === 'none' ? 0 : distance * sign;
 
     return (
-        <motion.div
-            initial={{ opacity: 0, x: initialX, y: initialY }}
-            whileInView={{ opacity: 1, x: 0, y: 0 }}
-            viewport={{ once: true, margin: "0px 0px -40px 0px" }}
-            transition={{ duration: 0.4, delay, ease: [0.16, 1, 0.3, 1] }}
-            style={style}
-            className={className}
+        <div
+            className={`reveal ${className}`}
+            style={{
+                [`--reveal-${axis}`]: `${offset}px`,
+                // `delay` is spatial here, not temporal: it pushes this
+                // element's entry range further down the viewport.
+                ...(delay ? { '--reveal-stagger': `${Math.round(delay * 100)}%` } : {}),
+                ...style,
+            } as CSSProperties}
         >
             {children}
-        </motion.div>
+        </div>
     );
 }

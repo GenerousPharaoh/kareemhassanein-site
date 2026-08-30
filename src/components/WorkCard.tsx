@@ -1,8 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { useState, type CSSProperties } from 'react';
 import { ArrowUpRight, Check } from 'lucide-react';
 import ScreenFrame, { FrameChrome, type FrameTone } from '@/components/ScreenFrame';
 import { HoverReel } from '@/components/Showreel';
@@ -166,12 +165,9 @@ export default function WorkCard({
   const light = tone === 'light';
 
   return (
-    <motion.article
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '0px 0px -8% 0px' }}
-      transition={{ duration: 0.8, delay: (index % 2) * 0.06, ease: [0.16, 1, 0.3, 1] }}
-      className={`group ${className}`}
+    <article
+      className={`reveal group ${className}`}
+      style={{ '--reveal-y': '24px', '--reveal-stagger': `${(index % 2) * 5}%` } as CSSProperties}
     >
       <Link
         href={`/work/${project.slug}`}
@@ -225,6 +221,6 @@ export default function WorkCard({
           </div>
         </div>
       </Link>
-    </motion.article>
+    </article>
   );
 }

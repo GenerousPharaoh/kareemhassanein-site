@@ -380,6 +380,59 @@ img {
   }
 }
 
+/* Scroll-driven reveals.
+   Content is visible by default and the animation is attached only where view()
+   timelines exist, so a browser without support shows a finished page rather
+   than a blank one. These run on the compositor -- Safari 26.4 threads
+   scroll-driven animations -- which is why they are safe on mobile, where the
+   previous IntersectionObserver + main-thread tween was disabled outright. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      animation-name: reveal;
+      animation-duration: auto;
+      animation-fill-mode: both;
+      animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+      animation-timeline: view();
+      /* Resolved well before the element reaches the middle of the screen, so
+         scrolling back up only unwinds it at the very edge. */
+      animation-range: entry calc(4% + var(--reveal-stagger, 0%))
+                       entry calc(46% + var(--reveal-stagger, 0%));
+    }
+
+    /* Screens drift a few pixels against the scroll. Scroll-linked rather than
+       time-based, so it tracks the finger instead of running past it. */
+    .drift {
+      animation-name: drift;
+      animation-duration: auto;
+      animation-fill-mode: both;
+      animation-timing-function: linear;
+      animation-timeline: view();
+      animation-range: cover;
+    }
+  }
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translate3d(var(--reveal-x, 0px), var(--reveal-y, 14px), 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes drift {
+  from {
+    transform: translate3d(0, var(--drift, 14px), 0);
+  }
+  to {
+    transform: translate3d(0, calc(var(--drift, 14px) * -1), 0);
+  }
+}
+
 /* Accessibility: respect reduced motion preference */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -389,6 +442,15 @@ img {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+
+  /* A cross-fade is the recommended stand-in for movement under `reduce`, so
+     the hero still arrives in reading order. Nothing here translates, scales,
+     blurs, or couples to scroll. */
+  .enter-word,
+  .enter-fade,
+  .enter-rule-x {
+    animation: enter-fade-lite 0.3s ease var(--hero-delay, 0s) both !important;
   }
 }
 
