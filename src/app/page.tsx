@@ -78,9 +78,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* The live screens, standing on a slowly turning wall. Full bleed: the
-          cylinder is meant to run past the edges of the viewport rather than
-          sit inside the page gutter. */}
+      {/* The live screens on a slowly turning wall, with a second ring of the
+          same work turning against it behind. Full bleed: the cylinders are
+          meant to run past the edges rather than sit in the page gutter. */}
       <section aria-label="Screens from live projects" className="relative z-10 pb-10 md:pb-16">
         <ScreenWall shots={wallShots} />
       </section>

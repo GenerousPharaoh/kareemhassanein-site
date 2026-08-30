@@ -354,7 +354,9 @@ export interface WallShot {
   project: string;
   /** What the screen is. */
   label: string;
-  /** Project page the frame links to. */
+  /** The real address, shown in the frame's own chrome. */
+  url: string;
+  /** Which project it belongs to. */
   slug: string;
 }
 
@@ -362,47 +364,47 @@ const KK = 'KinetiKare Physiotherapy';
 const EN = 'Endorphins Health and Wellness Centre';
 
 export const wallShots: WallShot[] = [
-  { src: '/images/work/reel-kk-hero.webp', project: KK, slug: 'kinetikare', label: 'The homepage',
+  { src: '/images/work/reel-kk-hero.webp', project: KK, url: 'kinetikarephysio.com', slug: 'kinetikare', label: 'The homepage',
     alt: 'KinetiKare homepage split diagonally between the introduction and the treatment room' },
-  { src: '/images/work/reel-endo-disciplines.webp', project: EN, slug: 'endorphins', label: 'Six disciplines',
+  { src: '/images/work/reel-endo-disciplines.webp', project: EN, url: 'endorphinshealth.com', slug: 'endorphins', label: 'Six disciplines',
     alt: 'Endorphins healthcare disciplines laid out as six cards' },
-  { src: '/images/work/reel-kk-spine.webp', project: KK, slug: 'kinetikare', label: 'Low back pain',
+  { src: '/images/work/reel-kk-spine.webp', project: KK, url: 'kinetikarephysio.com/conditions/low-back-pain', slug: 'kinetikare', label: 'Low back pain',
     alt: 'KinetiKare low back pain page with an anatomical plate of the lumbar spine' },
-  { src: '/images/work/reel-endo-physio.webp', project: EN, slug: 'endorphins', label: 'Physiotherapy',
+  { src: '/images/work/reel-endo-physio.webp', project: EN, url: 'endorphinshealth.com/services/physiotherapy', slug: 'endorphins', label: 'Physiotherapy',
     alt: 'Endorphins physiotherapy service page with booking and referral details' },
-  { src: '/images/work/reel-kk-regions.webp', project: KK, slug: 'kinetikare', label: 'Start where it hurts',
+  { src: '/images/work/reel-kk-regions.webp', project: KK, url: 'kinetikarephysio.com/conditions', slug: 'kinetikare', label: 'Start where it hurts',
     alt: 'KinetiKare condition index filtered by body region' },
-  { src: '/images/work/reel-endo-reviews.webp', project: EN, slug: 'endorphins', label: 'Patient reviews',
+  { src: '/images/work/reel-endo-reviews.webp', project: EN, url: 'endorphinshealth.com', slug: 'endorphins', label: 'Patient reviews',
     alt: 'Endorphins patient reviews with a verified Google rating' },
-  { src: '/images/work/reel-kk-shoulder.webp', project: KK, slug: 'kinetikare', label: 'Frozen shoulder',
+  { src: '/images/work/reel-kk-shoulder.webp', project: KK, url: 'kinetikarephysio.com/conditions/frozen-shoulder', slug: 'kinetikare', label: 'Frozen shoulder',
     alt: 'KinetiKare frozen shoulder page with an anatomical plate of the glenohumeral capsule' },
-  { src: '/images/work/reel-endo-booking.webp', project: EN, slug: 'endorphins', label: 'Booking',
+  { src: '/images/work/reel-endo-booking.webp', project: EN, url: 'endorphinshealth.com/book-appointment', slug: 'endorphins', label: 'Booking',
     alt: 'Endorphins booking page with reception and practitioner scheduling side by side' },
-  { src: '/images/work/reel-kk-compare.webp', project: KK, slug: 'kinetikare', label: 'Two conditions, compared',
+  { src: '/images/work/reel-kk-compare.webp', project: KK, url: 'kinetikarephysio.com/conditions/compare', slug: 'kinetikare', label: 'Two conditions, compared',
     alt: 'KinetiKare comparison table setting tennis elbow against golfer’s elbow' },
-  { src: '/images/work/reel-endo-massage.webp', project: EN, slug: 'endorphins', label: 'Massage techniques',
+  { src: '/images/work/reel-endo-massage.webp', project: EN, url: 'endorphinshealth.com/services/massage-therapy', slug: 'endorphins', label: 'Massage techniques',
     alt: 'Endorphins massage therapy page listing four techniques' },
-  { src: '/images/work/reel-kk-knee.webp', project: KK, slug: 'kinetikare', label: 'Patellofemoral knee pain',
+  { src: '/images/work/reel-kk-knee.webp', project: KK, url: 'kinetikarephysio.com/conditions/knee-pain-patellofemoral', slug: 'kinetikare', label: 'Patellofemoral knee pain',
     alt: 'KinetiKare knee pain page with an anatomical plate of the patellofemoral joint' },
-  { src: '/images/work/reel-endo-home.webp', project: EN, slug: 'endorphins', label: 'The clinic homepage',
+  { src: '/images/work/reel-endo-home.webp', project: EN, url: 'endorphinshealth.com', slug: 'endorphins', label: 'The clinic homepage',
     alt: 'Endorphins clinic homepage led by a photograph of the building' },
-  { src: '/images/work/reel-kk-needling.webp', project: KK, slug: 'kinetikare', label: 'Dry needling',
+  { src: '/images/work/reel-kk-needling.webp', project: KK, url: 'kinetikarephysio.com/treatments/dry-needling', slug: 'kinetikare', label: 'Dry needling',
     alt: 'KinetiKare dry needling treatment page' },
-  { src: '/images/work/reel-kk-sciatica.webp', project: KK, slug: 'kinetikare', label: 'Sciatica',
+  { src: '/images/work/reel-kk-sciatica.webp', project: KK, url: 'kinetikarephysio.com/conditions/sciatica', slug: 'kinetikare', label: 'Sciatica',
     alt: 'KinetiKare sciatica page with an anatomical plate of the sciatic nerve' },
-  { src: '/images/work/reel-kk-process.webp', project: KK, slug: 'kinetikare', label: 'What to expect',
+  { src: '/images/work/reel-kk-process.webp', project: KK, url: 'kinetikarephysio.com/services', slug: 'kinetikare', label: 'What to expect',
     alt: 'KinetiKare treatment process laid out in four stages' },
-  { src: '/images/work/reel-kk-elbow.webp', project: KK, slug: 'kinetikare', label: 'Tennis elbow',
+  { src: '/images/work/reel-kk-elbow.webp', project: KK, url: 'kinetikarephysio.com/conditions/tennis-elbow', slug: 'kinetikare', label: 'Tennis elbow',
     alt: 'KinetiKare tennis elbow page with an anatomical plate of the common extensor origin' },
-  { src: '/images/work/reel-kk-manual.webp', project: KK, slug: 'kinetikare', label: 'Hands-on therapy',
+  { src: '/images/work/reel-kk-manual.webp', project: KK, url: 'kinetikarephysio.com', slug: 'kinetikare', label: 'Hands-on therapy',
     alt: 'KinetiKare manual therapy section with a treatment photograph' },
-  { src: '/images/work/reel-kk-achilles.webp', project: KK, slug: 'kinetikare', label: 'Achilles tendinopathy',
+  { src: '/images/work/reel-kk-achilles.webp', project: KK, url: 'kinetikarephysio.com/conditions/achilles-tendinopathy', slug: 'kinetikare', label: 'Achilles tendinopathy',
     alt: 'KinetiKare Achilles tendinopathy page with an anatomical plate of the tendon' },
-  { src: '/images/work/reel-kk-anatomy.webp', project: KK, slug: 'kinetikare', label: 'Rotator cuff injuries',
+  { src: '/images/work/reel-kk-anatomy.webp', project: KK, url: 'kinetikarephysio.com/conditions/rotator-cuff-injuries', slug: 'kinetikare', label: 'Rotator cuff injuries',
     alt: 'KinetiKare rotator cuff page with an anatomical plate of the shoulder' },
-  { src: '/images/work/reel-kk-foot.webp', project: KK, slug: 'kinetikare', label: 'Plantar fasciitis',
+  { src: '/images/work/reel-kk-foot.webp', project: KK, url: 'kinetikarephysio.com/conditions/plantar-fasciitis', slug: 'kinetikare', label: 'Plantar fasciitis',
     alt: 'KinetiKare plantar fasciitis page with an anatomical plate of the plantar fascia' },
-  { src: '/images/work/reel-kk-disc.webp', project: KK, slug: 'kinetikare', label: 'Disc herniation',
+  { src: '/images/work/reel-kk-disc.webp', project: KK, url: 'kinetikarephysio.com/conditions/disc-herniation', slug: 'kinetikare', label: 'Disc herniation',
     alt: 'KinetiKare disc herniation page with an anatomical plate of an intervertebral disc' },
 ];
 
