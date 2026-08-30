@@ -72,17 +72,17 @@ export const projects: Project[] = [
     slug: 'kinetikare',
     title: 'KinetiKare Physiotherapy',
     shortTitle: 'KinetiKare',
-    category: 'Digital Product · Patient Experience',
+    category: 'Patient Education · Online Booking',
     summary:
-      'A 60+ page patient education and booking platform organized around the different ways people look for help: by body region, symptom, condition, or treatment.',
+      'A 60+ page physiotherapy website where patients can explore by body region, symptom, condition, or treatment before booking online.',
     cardSummary:
-      'Built a 60+ page patient education and booking platform organized around how people actually look for help.',
+      'Built a 60+ page physiotherapy website where patients can explore by body region, symptom, condition, or treatment before booking.',
     cardOutcome: 'Google Search clicks more than tripled year over year.',
     role:
       'I led the clinical requirements, information architecture, content structure, navigation, booking pathways, testing, and ongoing iteration.',
     intro: [
-      'KinetiKare is the patient education and booking platform I founded and operate for my physiotherapy practice serving Burlington, Waterdown, and Oakville. It is designed for people who may know where they hurt or what they are experiencing without knowing the name of the condition.',
-      'The platform combines body-region navigation, symptom-based guidance, condition information, treatment pages, comparisons, patient reviews, and direct online booking.',
+      'KinetiKare is the physiotherapy practice I founded and operate, serving Burlington, Waterdown, and Oakville. Its website is designed for people who may know where they hurt or what they are experiencing without knowing the name of the condition.',
+      'The site combines body-region navigation, symptom-based guidance, condition information, treatment pages, comparisons, patient reviews, and direct online booking.',
     ],
     gallery: [
       {
@@ -131,7 +131,7 @@ export const projects: Project[] = [
       },
     ],
     approach:
-      'Patients do not always know the name of their condition. The platform therefore combines body-region navigation, symptom-led guides, and side-by-side comparisons instead of relying exclusively on diagnostic categories. The same clinical content is reachable from three directions because people arrive with three different kinds of questions.',
+      'Patients do not always know the name of their condition. The site therefore combines body-region navigation, symptom-led guides, and side-by-side comparisons instead of relying exclusively on diagnostic categories. The same clinical content is reachable from three directions because people arrive with three different kinds of questions.',
     outcomes: [
       'Monthly Google Search clicks increased from 27 in July 2025 to 93 in July 2026.',
     ],
