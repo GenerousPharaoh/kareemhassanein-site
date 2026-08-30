@@ -46,7 +46,7 @@ const education = [
 export default function About() {
   return (
     <main className="overflow-hidden bg-background text-foreground pt-20">
-      <section className="relative px-6 md:px-12 xl:px-20 pt-16 md:pt-24 pb-20 md:pb-28">
+      <section className="relative px-6 pb-10 pt-14 md:px-12 md:pb-28 md:pt-24 xl:px-20">
         <div className="relative max-w-[1280px] mx-auto">
           <div className="max-w-3xl">
             <p
@@ -77,7 +77,7 @@ export default function About() {
       </section>
 
 
-      <section className="px-6 md:px-12 xl:px-20 py-24 md:py-32">
+      <section className="px-6 pb-20 pt-12 md:px-12 md:py-32 xl:px-20">
         <div className="max-w-[1160px] mx-auto">
           <div className="grid lg:grid-cols-12 gap-12 lg:gap-20">
             <ScrollReveal direction="up" className="lg:col-span-5">
