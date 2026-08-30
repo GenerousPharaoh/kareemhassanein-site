@@ -355,6 +355,31 @@ img {
   transition: opacity 0.5s ease;
 }
 
+/* Mobile entrance sequence.
+   The desktop choreography below is gated at >=768px because blur() and
+   scale() during iOS Safari's URL-bar resize flicker. Opacity alone is
+   compositor-safe, so mobile gets the same reading order -- eyebrow,
+   headline, supporting copy, actions -- without the expensive properties. */
+@media (max-width: 767px) and (prefers-reduced-motion: no-preference) {
+  .enter-word,
+  .enter-fade {
+    animation: enter-fade-lite var(--enter-dur, 0.7s) cubic-bezier(0.16, 1, 0.3, 1) var(--hero-delay, 0s) both;
+  }
+
+  .enter-rule-x {
+    animation: enter-rule-x 0.7s cubic-bezier(0.16, 1, 0.3, 1) var(--hero-delay, 0s) both;
+  }
+}
+
+@keyframes enter-fade-lite {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 /* Accessibility: respect reduced motion preference */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -401,13 +426,6 @@ img {
 
    Here the animation only exists inside the media query, so on mobile the
    hero is simply static markup that paints with the document. */
-.enter-word,
-.enter-fade,
-.enter-settle,
-.enter-rule-x,
-.hero-rule::before {
-  animation-delay: var(--hero-delay, 0s);
-}
 
 .enter-rule-x {
   transform-origin: left;
@@ -434,27 +452,22 @@ img {
      is drawn, still arrives as a block of words; only per-word timing reads as
      a sentence assembling itself. */
   .enter-word {
-    animation: enter-word var(--enter-dur, 1s) cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation: enter-word var(--enter-dur, 1s) cubic-bezier(0.16, 1, 0.3, 1) var(--hero-delay, 0s) both;
   }
 
   /* Supporting content arrives quickly enough to remain usable. */
   .enter-fade {
-    animation: enter-fade var(--enter-dur, 0.9s) cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation: enter-fade var(--enter-dur, 0.9s) cubic-bezier(0.16, 1, 0.3, 1) var(--hero-delay, 0s) both;
   }
 
   /* The small gold mark that opens the page. */
   .enter-rule-x {
-    animation: enter-rule-x 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation: enter-rule-x 0.7s cubic-bezier(0.16, 1, 0.3, 1) var(--hero-delay, 0s) both;
   }
 
-  /* Plates settle rather than slide. `scale` is its own property here so it
-     composes with the Tailwind translate offsets instead of overwriting them. */
-  .enter-settle {
-    animation: enter-settle var(--enter-dur, 0.9s) cubic-bezier(0.16, 1, 0.3, 1) both;
-  }
 
   .hero-rule::before {
-    animation: rule-draw 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation: rule-draw 0.8s cubic-bezier(0.16, 1, 0.3, 1) var(--hero-delay, 0s) both;
   }
 }
 
@@ -493,18 +506,6 @@ img {
   }
 }
 
-@keyframes enter-settle {
-  from {
-    opacity: 0;
-    scale: 1.02;
-    filter: blur(5px);
-  }
-  to {
-    opacity: 1;
-    scale: 1;
-    filter: blur(0);
-  }
-}
 
 @keyframes rule-draw {
   from {

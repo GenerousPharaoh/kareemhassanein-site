@@ -11,6 +11,9 @@ interface ScrollRevealProps {
     delay?: number;
     className?: string;
     style?: React.CSSProperties;
+    /** Reveal on mobile too. Safe for whileInView (IntersectionObserver +
+     *  fixed tween); never enable for scroll-driven motion. */
+    onMobile?: boolean;
 }
 
 export default function ScrollReveal({
@@ -20,10 +23,11 @@ export default function ScrollReveal({
     delay = 0,
     className = '',
     style = {},
+    onMobile = false,
 }: ScrollRevealProps) {
     const shouldReduceMotion = useReducedMotion();
     const isMobile = useIsMobile();
-    const disableReveal = shouldReduceMotion || isMobile;
+    const disableReveal = shouldReduceMotion || (isMobile && !onMobile);
     const initialX = direction === 'left' ? -distance : direction === 'right' ? distance : 0;
     const initialY = direction === 'up' ? distance : direction === 'down' ? -distance : 0;
 

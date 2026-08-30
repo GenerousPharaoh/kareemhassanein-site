@@ -84,7 +84,7 @@ const featured = principalProjects;
 export default function Home() {
   return (
     <main className="overflow-hidden bg-background text-foreground">
-      <section className="relative px-6 pb-20 pt-32 sm:px-8 md:pb-28 md:pt-40 lg:px-12 xl:px-20">
+      <section className="relative px-6 pb-24 pt-28 sm:px-8 sm:pt-32 md:pb-36 md:pt-40 lg:px-12 xl:px-20">
         <div className="relative mx-auto max-w-[1440px]">
           <div className="grid gap-14 lg:grid-cols-12 lg:items-end lg:gap-16">
             <div className="lg:col-span-8">
@@ -113,10 +113,10 @@ export default function Home() {
               </h1>
             </div>
 
-            <div className="hero-rule pl-6 lg:col-span-4 lg:mb-4 lg:pl-8" style={{ '--hero-delay': '0.52s' } as CSSProperties}>
+            <div className="hero-rule pl-6 lg:col-span-4 lg:mb-4 lg:pl-8" style={{ '--hero-delay': '0.80s' } as CSSProperties}>
               <p
-                className="enter-fade max-w-lg text-lg leading-relaxed text-foreground/76 lg:text-xl"
-                style={{ '--hero-delay': '0.62s', '--enter-dur': '0.95s' } as CSSProperties}
+                className="enter-fade max-w-lg text-base leading-relaxed text-foreground/76 sm:text-lg lg:text-xl"
+                style={{ '--hero-delay': '0.88s', '--enter-dur': '0.95s' } as CSSProperties}
               >
                 I work across healthcare and professional services, drawing on a background in frontline care, team
                 leadership, and more than 10,000 hours of direct client work. The case studies below cover a clinical
@@ -124,7 +124,7 @@ export default function Home() {
               </p>
               <div
                 className="enter-fade mt-8 flex flex-col gap-3 sm:flex-row lg:flex-col xl:flex-row xl:gap-2"
-                style={{ '--hero-delay': '0.82s', '--enter-dur': '0.9s' } as CSSProperties}
+                style={{ '--hero-delay': '1.08s', '--enter-dur': '0.9s' } as CSSProperties}
               >
                 <Link
                   href="/work"
@@ -142,7 +142,7 @@ export default function Home() {
               </div>
               <p
                 className="enter-fade mt-6 max-w-lg text-xs leading-relaxed text-muted-foreground"
-                style={{ '--hero-delay': '0.94s', '--enter-dur': '0.9s' } as CSSProperties}
+                style={{ '--hero-delay': '1.22s', '--enter-dur': '0.9s' } as CSSProperties}
               >
                 Open to full-time opportunities and selected advisory work · Hamilton and Burlington, Ontario · On-site, hybrid, or remote
               </p>
@@ -155,16 +155,18 @@ export default function Home() {
       {/* Filmstrip bridge: real screens spanning the dark-to-paper boundary */}
       <section aria-label="Project screens" className="relative z-10 -mb-10 px-6 sm:px-8 md:-mb-20 lg:px-12 xl:px-20">
         <div className="mx-auto grid max-w-[1320px] grid-cols-2 gap-4 md:grid-cols-4 md:gap-6">
-          {/* Part of the load sequence rather than a scroll reveal: these sit in
-              the first screen, so they animate in CSS and paint with the page. */}
+          {/* A scroll beat, not part of the load sequence. Only the top edge of
+              these sits in the first screen, so animating them on load spent the
+              motion where nobody could see it and left them static on arrival. */}
           {stripShots.map((shot, index) => (
-            <div
-              key={shot.src}
-              className={`enter-settle ${stripOffsets[index]}`}
-              style={{ '--hero-delay': `${1.02 + index * 0.08}s`, '--enter-dur': '0.9s' } as CSSProperties}
-            >
-              <ScreenFrame shot={shot} sizes="(max-width: 768px) 50vw, 320px" />
-            </div>
+            <ScrollReveal key={shot.src} direction="up" delay={index * 0.07} onMobile>
+              {/* The offset lives on an inner element: framer-motion writes an
+                  inline transform for the reveal, which would otherwise
+                  overwrite the Tailwind translate that staggers the strip. */}
+              <div className={stripOffsets[index]}>
+                <ScreenFrame shot={shot} sizes="(max-width: 768px) 50vw, 320px" />
+              </div>
+            </ScrollReveal>
           ))}
         </div>
       </section>
