@@ -5,9 +5,9 @@ import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
 import HeadlineReveal from '@/components/HeadlineReveal';
 import ScrollReveal from '@/components/ScrollReveal';
-import ScreenRibbons from '@/components/ScreenRibbons';
+import ScreenWall from '@/components/ScreenWall';
 import WorkCard from '@/components/WorkCard';
-import { advisory, principalProjects, ribbonRowA, ribbonRowB } from '@/lib/work';
+import { advisory, principalProjects, wallShots } from '@/lib/work';
 
 const heroLines = [
   { text: 'Selected work in' },
@@ -78,12 +78,11 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Two ribbons of live screens, drifting in opposite directions. Runs
-          edge to edge rather than inside the page gutter: the rows are meant to
-          continue past the viewport, and a masked edge says that better than a
-          margin does. */}
-      <section aria-label="Screens from live projects" className="relative z-10 pb-6 md:pb-12">
-        <ScreenRibbons rowA={ribbonRowA} rowB={ribbonRowB} />
+      {/* The live screens, standing on a slowly turning wall. Full bleed: the
+          cylinder is meant to run past the edges of the viewport rather than
+          sit inside the page gutter. */}
+      <section aria-label="Screens from live projects" className="relative z-10 pb-10 md:pb-16">
+        <ScreenWall shots={wallShots} />
       </section>
 
       {/* Featured work on warm paper */}

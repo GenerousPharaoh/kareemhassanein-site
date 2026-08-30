@@ -447,76 +447,70 @@ img {
   }
 }
 
-/* Screen ribbons.
+/* Screen wall.
 
-   Two rows drifting in opposite directions. Each row holds its content twice
-   and translates by exactly -50%, which lands on the start of the duplicate,
-   so the loop has no seam. The edges are masked rather than cut, so screens
-   arrive and leave instead of appearing at a hard boundary.
+   The cards stand on a cylinder. Each is rotated to its own angle and pushed
+   out by the radius; the ring itself is pulled back by the same radius so the
+   front card lands on the z=0 plane at full size. Everything else follows from
+   the perspective value, which is why nothing here scales cards by hand.
 
-   Motion lives on the row, and the row is the only thing that moves: the
-   frames themselves are static, so hovering one can lift it without fighting
-   the drift. */
-.ribbon-band {
+   Sizes are set in CSS and the radius is derived from the measured card width
+   in ScreenWall.tsx, so the geometry stays correct across breakpoints. */
+.wall-stage {
+  height: 380px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   overflow: hidden;
-  padding: 18px 0 30px;
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
-  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  perspective: 1500px;
+  perspective-origin: 50% 50%;
 }
 
-.ribbon-row {
-  display: flex;
-  gap: 22px;
-  width: max-content;
+.wall-ring {
+  position: relative;
+  width: 300px;
+  height: 178px;
+  transform-style: preserve-3d;
   will-change: transform;
 }
 
-.ribbon-item {
-  flex: 0 0 clamp(230px, 27vw, 400px);
-  display: block;
-  border-radius: 14px;
+.wall-cell {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
 }
 
-.ribbon-frame {
-  transition:
-    transform 0.55s cubic-bezier(0.22, 0.61, 0.36, 1),
-    box-shadow 0.55s cubic-bezier(0.22, 0.61, 0.36, 1);
+.wall-cell a {
+  border-radius: 12px;
 }
 
-.ribbon-item:hover .ribbon-frame,
-.ribbon-item:focus-visible .ribbon-frame {
-  transform: translateY(-10px) scale(1.035);
-  box-shadow: 0 40px 80px -28px rgba(0, 0, 0, 0.85);
-}
-
-.ribbon-item:focus-visible {
+.wall-cell a:focus-visible {
   outline: 2px solid hsl(var(--accent));
-  outline-offset: 8px;
+  outline-offset: 6px;
 }
 
-@media (min-width: 768px) {
-  .ribbon-row {
-    gap: 30px;
-  }
+@media (min-width: 640px) {
+  .wall-stage { height: 440px; }
+  .wall-ring { width: 400px; height: 230px; }
 }
 
+@media (min-width: 1024px) {
+  .wall-stage { height: 490px; }
+  .wall-ring { width: 460px; height: 262px; }
+}
+
+/* The caption is re-keyed when the front card changes, so it mounts fresh and
+   this replays as a cut rather than a crossfade over moving pixels. */
 @media (prefers-reduced-motion: no-preference) {
-  .ribbon-row {
-    animation: ribbon-drift var(--ribbon-dur, 72s) linear infinite;
-  }
-
-  /* Held while the pointer or focus is inside the row, and by the control. */
-  .ribbon-band:hover .ribbon-row,
-  .ribbon-band:focus-within .ribbon-row,
-  .ribbon-row[data-paused] {
-    animation-play-state: paused;
+  .wall-label {
+    animation: wall-label 0.5s cubic-bezier(0.22, 0.61, 0.36, 1) both;
   }
 }
 
-@keyframes ribbon-drift {
-  to {
-    transform: translate3d(-50%, 0, 0);
-  }
+@keyframes wall-label {
+  from { opacity: 0; filter: blur(4px); }
+  to { opacity: 1; filter: blur(0); }
 }
 
 /* Case-study title.

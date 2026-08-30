@@ -339,17 +339,18 @@ export const orderedProjects = projectOrder
 export const principalProjects = orderedProjects.filter((project) => project.tier === 'principal');
 export const additionalProjects = orderedProjects.filter((project) => project.tier === 'additional');
 
-// The homepage screen ribbons.
+// The homepage screen wall.
 //
-// Captured for this section specifically rather than reused from the project
-// galleries: the gallery shots are page tops, which at ribbon size are mostly
-// navigation and headline. These are the sections that actually carry the
-// design, so they still read at a few hundred pixels wide. Sequenced so dark,
-// light and photographic frames alternate rather than clumping.
-export interface RibbonShot {
+// Captured for this section rather than reused from the project galleries: the
+// gallery shots are page tops, which at this size are mostly navigation and
+// headline. These are the sections that carry the design, and they lean on the
+// condition pages because the anatomical plates are the best-looking thing
+// either site has. Order alternates KinetiKare and Endorphins, and keeps the
+// plates apart so the wall does not read as a row of cream circles.
+export interface WallShot {
   src: string;
   alt: string;
-  /** Which project the screen belongs to, shown on hover. */
+  /** Which project the screen belongs to. */
   project: string;
   /** What the screen is. */
   label: string;
@@ -357,94 +358,52 @@ export interface RibbonShot {
   slug: string;
 }
 
-export const ribbonRowA: RibbonShot[] = [
-  {
-    src: '/images/work/reel-kk-hero.webp',
-    alt: 'KinetiKare homepage with a diagonal split between the introduction and the treatment room',
-    project: 'KinetiKare Physiotherapy',
-    label: 'The homepage',
-    slug: 'kinetikare',
-  },
-  {
-    src: '/images/work/reel-endo-disciplines.webp',
-    alt: 'Endorphins healthcare disciplines laid out as six cards',
-    project: 'Endorphins Health and Wellness Centre',
-    label: 'Six disciplines',
-    slug: 'endorphins',
-  },
-  {
-    src: '/images/work/reel-wed-machu.webp',
-    alt: 'Wedding website section showing Machu Picchu under cloud',
-    project: 'Wedding Website',
-    label: 'Where it all began',
-    slug: 'wedding-website',
-  },
-  {
-    src: '/images/work/reel-kk-compare.webp',
-    alt: 'KinetiKare comparison table setting tennis elbow against golfer’s elbow',
-    project: 'KinetiKare Physiotherapy',
-    label: 'Two conditions, compared',
-    slug: 'kinetikare',
-  },
-  {
-    src: '/images/work/reel-endo-reviews.webp',
-    alt: 'Endorphins patient reviews with a verified Google rating',
-    project: 'Endorphins Health and Wellness Centre',
-    label: 'Patient reviews',
-    slug: 'endorphins',
-  },
-  {
-    src: '/images/work/reel-wed-lima.webp',
-    alt: 'Wedding website travel section with an aerial photograph of Lima',
-    project: 'Wedding Website',
-    label: 'Getting to Lima',
-    slug: 'wedding-website',
-  },
-];
+const KK = 'KinetiKare Physiotherapy';
+const EN = 'Endorphins Health and Wellness Centre';
 
-export const ribbonRowB: RibbonShot[] = [
-  {
-    src: '/images/work/reel-kk-anatomy.webp',
-    alt: 'KinetiKare condition page opening with an anatomical shoulder illustration',
-    project: 'KinetiKare Physiotherapy',
-    label: 'A condition, explained',
-    slug: 'kinetikare',
-  },
-  {
-    src: '/images/work/reel-wed-day.webp',
-    alt: 'Wedding website schedule for the day, set on deep blue',
-    project: 'Wedding Website',
-    label: 'The day',
-    slug: 'wedding-website',
-  },
-  {
-    src: '/images/work/reel-endo-booking.webp',
-    alt: 'Endorphins booking page with reception and practitioner scheduling side by side',
-    project: 'Endorphins Health and Wellness Centre',
-    label: 'Booking',
-    slug: 'endorphins',
-  },
-  {
-    src: '/images/work/reel-kk-manual.webp',
-    alt: 'KinetiKare manual therapy section with a treatment photograph',
-    project: 'KinetiKare Physiotherapy',
-    label: 'Hands-on therapy',
-    slug: 'kinetikare',
-  },
-  {
-    src: '/images/work/reel-wed-arrival.webp',
-    alt: 'Wedding website arrival screen with a framed photograph, the names, and the date',
-    project: 'Wedding Website',
-    label: 'The arrival',
-    slug: 'wedding-website',
-  },
-  {
-    src: '/images/work/reel-endo-home.webp',
-    alt: 'Endorphins clinic homepage led by a photograph of the building',
-    project: 'Endorphins Health and Wellness Centre',
-    label: 'The clinic homepage',
-    slug: 'endorphins',
-  },
+export const wallShots: WallShot[] = [
+  { src: '/images/work/reel-kk-hero.webp', project: KK, slug: 'kinetikare', label: 'The homepage',
+    alt: 'KinetiKare homepage split diagonally between the introduction and the treatment room' },
+  { src: '/images/work/reel-endo-disciplines.webp', project: EN, slug: 'endorphins', label: 'Six disciplines',
+    alt: 'Endorphins healthcare disciplines laid out as six cards' },
+  { src: '/images/work/reel-kk-spine.webp', project: KK, slug: 'kinetikare', label: 'Low back pain',
+    alt: 'KinetiKare low back pain page with an anatomical plate of the lumbar spine' },
+  { src: '/images/work/reel-endo-physio.webp', project: EN, slug: 'endorphins', label: 'Physiotherapy',
+    alt: 'Endorphins physiotherapy service page with booking and referral details' },
+  { src: '/images/work/reel-kk-regions.webp', project: KK, slug: 'kinetikare', label: 'Start where it hurts',
+    alt: 'KinetiKare condition index filtered by body region' },
+  { src: '/images/work/reel-endo-reviews.webp', project: EN, slug: 'endorphins', label: 'Patient reviews',
+    alt: 'Endorphins patient reviews with a verified Google rating' },
+  { src: '/images/work/reel-kk-shoulder.webp', project: KK, slug: 'kinetikare', label: 'Frozen shoulder',
+    alt: 'KinetiKare frozen shoulder page with an anatomical plate of the glenohumeral capsule' },
+  { src: '/images/work/reel-endo-booking.webp', project: EN, slug: 'endorphins', label: 'Booking',
+    alt: 'Endorphins booking page with reception and practitioner scheduling side by side' },
+  { src: '/images/work/reel-kk-compare.webp', project: KK, slug: 'kinetikare', label: 'Two conditions, compared',
+    alt: 'KinetiKare comparison table setting tennis elbow against golfer’s elbow' },
+  { src: '/images/work/reel-endo-massage.webp', project: EN, slug: 'endorphins', label: 'Massage techniques',
+    alt: 'Endorphins massage therapy page listing four techniques' },
+  { src: '/images/work/reel-kk-knee.webp', project: KK, slug: 'kinetikare', label: 'Patellofemoral knee pain',
+    alt: 'KinetiKare knee pain page with an anatomical plate of the patellofemoral joint' },
+  { src: '/images/work/reel-endo-home.webp', project: EN, slug: 'endorphins', label: 'The clinic homepage',
+    alt: 'Endorphins clinic homepage led by a photograph of the building' },
+  { src: '/images/work/reel-kk-needling.webp', project: KK, slug: 'kinetikare', label: 'Dry needling',
+    alt: 'KinetiKare dry needling treatment page' },
+  { src: '/images/work/reel-kk-sciatica.webp', project: KK, slug: 'kinetikare', label: 'Sciatica',
+    alt: 'KinetiKare sciatica page with an anatomical plate of the sciatic nerve' },
+  { src: '/images/work/reel-kk-process.webp', project: KK, slug: 'kinetikare', label: 'What to expect',
+    alt: 'KinetiKare treatment process laid out in four stages' },
+  { src: '/images/work/reel-kk-elbow.webp', project: KK, slug: 'kinetikare', label: 'Tennis elbow',
+    alt: 'KinetiKare tennis elbow page with an anatomical plate of the common extensor origin' },
+  { src: '/images/work/reel-kk-manual.webp', project: KK, slug: 'kinetikare', label: 'Hands-on therapy',
+    alt: 'KinetiKare manual therapy section with a treatment photograph' },
+  { src: '/images/work/reel-kk-achilles.webp', project: KK, slug: 'kinetikare', label: 'Achilles tendinopathy',
+    alt: 'KinetiKare Achilles tendinopathy page with an anatomical plate of the tendon' },
+  { src: '/images/work/reel-kk-anatomy.webp', project: KK, slug: 'kinetikare', label: 'Rotator cuff injuries',
+    alt: 'KinetiKare rotator cuff page with an anatomical plate of the shoulder' },
+  { src: '/images/work/reel-kk-foot.webp', project: KK, slug: 'kinetikare', label: 'Plantar fasciitis',
+    alt: 'KinetiKare plantar fasciitis page with an anatomical plate of the plantar fascia' },
+  { src: '/images/work/reel-kk-disc.webp', project: KK, slug: 'kinetikare', label: 'Disc herniation',
+    alt: 'KinetiKare disc herniation page with an anatomical plate of an intervertebral disc' },
 ];
 
 export function getProject(slug: string): Project | undefined {
