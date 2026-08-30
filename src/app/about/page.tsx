@@ -91,7 +91,7 @@ export default function About() {
         <div className="max-w-[1160px] mx-auto">
           <div className="grid lg:grid-cols-12 gap-12 lg:gap-20">
             <ScrollReveal direction="up" className="lg:col-span-5">
-              <p className="text-xs font-medium tracking-[0.24em] uppercase text-accent/70 mb-5">The perspective</p>
+              <p className="text-xs font-medium tracking-[0.24em] uppercase text-accent/70 mb-5">Where this comes from</p>
               <h2 className="text-3xl md:text-5xl font-medium tracking-tight text-balance">
                 Background.
               </h2>
@@ -113,7 +113,7 @@ export default function About() {
                 <article className="mt-10 border-t border-white/[0.09] pt-7">
                   <h3 className="text-xl font-medium tracking-tight text-foreground/[0.92]">Client and team leadership</h3>
                   <p className="mt-4 text-base leading-relaxed text-muted-foreground md:text-lg">
-                    Before physiotherapy, I delivered more than 3,000 hours of one-to-one personal training, generated
+                    Before physiotherapy, I delivered more than 3,000 hours of that total as one-to-one personal training, generated
                     more than $375K in fitness-service sales across training and management roles, and managed a
                     25-person team. That experience developed the commercial and relationship side of my work:
                     consultative assessment, ongoing coaching, performance management, client retention, and
@@ -179,7 +179,7 @@ export default function About() {
         <div className="max-w-[1160px] mx-auto grid lg:grid-cols-12 gap-12 lg:gap-20">
           <ScrollReveal direction="up" className="lg:col-span-5">
             <p className="text-xs font-medium tracking-[0.24em] uppercase text-accent/70 mb-5">
-              How I think about the work
+              Method
             </p>
             <h2 className="text-3xl md:text-5xl font-medium tracking-tight text-balance">
               How I work.
@@ -266,7 +266,7 @@ export default function About() {
       <section className="px-6 md:px-12 xl:px-20 py-24 md:py-32 border-t border-white/[0.07]">
         <ScrollReveal direction="up" className="max-w-[1160px] mx-auto flex flex-col lg:flex-row lg:items-end lg:justify-between gap-10">
           <div className="max-w-2xl">
-            <p className="text-xs font-medium tracking-[0.24em] uppercase text-accent/70 mb-5">Selected work</p>
+            <p className="text-xs font-medium tracking-[0.24em] uppercase text-accent/70 mb-5">Next</p>
             <h2 className="text-3xl md:text-5xl font-medium tracking-tight text-balance mb-5">
               Selected work.
             </h2>

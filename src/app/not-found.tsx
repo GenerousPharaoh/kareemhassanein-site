@@ -17,8 +17,7 @@ export default function NotFound() {
             This path doesn&rsquo;t lead anywhere.
           </h1>
           <p className="mt-8 max-w-xl text-lg leading-relaxed text-muted-foreground">
-            The page may have moved, or the address may be incomplete. The main portfolio and project index are still
-            available below.
+            The page may have moved, or the address may be incomplete. Home and the project list are linked below.
           </p>
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">
             <Link href="/" className="group inline-flex min-h-12 items-center justify-center gap-3 rounded-full bg-accent px-7 text-sm font-semibold text-background">
@@ -31,17 +30,6 @@ export default function NotFound() {
             </Link>
           </div>
         </div>
-
-        <aside aria-label="Route status" className="enter-fade border-y border-white/[0.1] py-6 font-mono text-xs text-muted-foreground lg:col-span-4">
-          <div className="flex justify-between border-b border-white/[0.08] pb-4">
-            <span>Request</span>
-            <span className="text-foreground/80">Unknown route</span>
-          </div>
-          <div className="flex justify-between pt-4">
-            <span>Next step</span>
-            <span className="text-accent">Choose a valid path</span>
-          </div>
-        </aside>
       </div>
     </main>
   );
