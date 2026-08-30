@@ -56,7 +56,7 @@ export const projects: Project[] = [
     summary:
       'Introduced a clinical documentation platform across a physiotherapy team, from evaluation and configuration through training, rollout, and refinement.',
     cardSummary:
-      'Led evaluation, configuration, training and rollout to full-team use within eight weeks, with an estimated three hours saved per practitioner each week.',
+      'Led evaluation, configuration, training, and rollout to full-team use within eight weeks.',
     proof: [
       { value: '8 weeks', label: 'from evaluation to full-team use' },
       { value: '~3 hours per week', label: 'estimated time saved per practitioner' },
@@ -72,7 +72,7 @@ export const projects: Project[] = [
     ],
     intro: [
       'A physiotherapy team was introducing a new documentation platform into an established clinical routine. The central question was not simply whether the tool worked, but whether it could reduce documentation time without creating new uncertainty, inconsistency, or administrative burden.',
-      'I led the clinic-side evaluation, configuration, training, rollout support, and refinement. Full-team use was reached within eight weeks, with an estimated three hours saved per practitioner each week.',
+      'I led the clinic-side evaluation, configuration, training, rollout support, and refinement. Full-team use was reached within eight weeks.',
     ],
     gallery: [],
     confidentialNote:
@@ -86,7 +86,7 @@ export const projects: Project[] = [
     ],
     environment: 'AI documentation platform · Clinical workflows · Team training · Documented SOPs',
     delivery:
-      'Evaluation, configuration, training, SOP development, go-live support, and post-launch refinement were led by me on the clinic side.',
+      'I led evaluation, configuration, training, SOP development, go-live support, and post-launch refinement on the clinic side.',
     tier: 'principal',
   },
   {
@@ -115,7 +115,7 @@ export const projects: Project[] = [
       'AI-assisted development',
     ],
     intro: [
-      'KinetiKare is the patient education and booking platform I founded and operate for my physiotherapy practice in Burlington. It is designed for people who may know where they hurt or what they are experiencing without knowing the name of the condition.',
+      'KinetiKare is the patient education and booking platform I founded and operate for my physiotherapy practice serving Burlington, Waterdown, and Oakville. It is designed for people who may know where they hurt or what they are experiencing without knowing the name of the condition.',
       'The platform combines body-region navigation, symptom-based guidance, condition information, treatment pages, comparisons, patient reviews, and direct online booking.',
     ],
     gallery: [
@@ -171,7 +171,7 @@ export const projects: Project[] = [
     ],
     environment: 'Next.js · GitHub · Vercel · Jane App · Google Search Console',
     delivery:
-      'Clinical requirements, information architecture, content, and testing led by me; the implementation was built, refined, and maintained through Claude Code and Codex.',
+      'I led clinical requirements, information architecture, content, and testing; the implementation was built, refined, and maintained with Claude Code and Codex.',
     liveUrl: 'https://www.kinetikarephysio.com',
     card: {
       src: '/images/work/kinetikare-home.webp',
@@ -261,7 +261,7 @@ export const projects: Project[] = [
     ],
     environment: 'Custom site · GitHub Actions · Jane App · Google Analytics · Google Business Profile',
     delivery:
-      'Service launch, website strategy, information architecture, content, and analytics led by me; the site implementation was built and maintained through AI-assisted development tools.',
+      'I led the service launch, website strategy, information architecture, content, and analytics; the site implementation was built and maintained with Claude Code and Codex.',
     liveUrl: 'https://endorphinshealth.com',
     card: {
       src: '/images/work/endorphins-home-2026-08.webp',
@@ -282,7 +282,7 @@ export const projects: Project[] = [
     cardSummary:
       'Reduced document-generation time from approximately three hours to 30 minutes per matter and documented the workflow for independent use by the practitioner.',
     proof: [
-      { value: '~3 hours → 30 minutes', label: 'document-generation time per matter' },
+      { value: '~3 hours to 30 minutes', label: 'document-generation time per matter' },
     ],
     contribution: [
       'Workflow mapping',
@@ -295,7 +295,7 @@ export const projects: Project[] = [
     ],
     intro: [
       'Tax Relief Counsel is a solo tax-law practice whose matters generate long, structured documents from broadly similar inputs. Before this project, each document was drafted largely from scratch: the same sections rebuilt every time, with consistency depending on attention and available hours on a given day.',
-      'I learned the practice’s workflow from the inside, mapped where the time actually went, and rebuilt the drafting process around a reusable template library with LLM-supported drafting. The interesting part was not the automation itself. It was finding the repeatable structure inside work that looked bespoke, and shaping it into a process the practitioner can operate independently.',
+      'I learned the practice’s workflow from the inside, mapped where the time actually went, and rebuilt the drafting process around a reusable template library with LLM-supported drafting. The substance of the work was finding the repeatable structure inside matters that looked bespoke, then shaping it into a process the practitioner can operate independently.',
     ],
     gallery: [],
     confidentialNote:
@@ -308,7 +308,7 @@ export const projects: Project[] = [
     ],
     environment: 'Claude Code · Structured template library · Documented SOPs',
     delivery:
-      'Workflow mapping, template design, prompt design, and quality assurance led by me; the drafting tooling was built with Claude Code around the practice’s existing habits.',
+      'I led workflow mapping, template design, prompt design, and quality assurance; the drafting tooling was built with Claude Code around the practice’s existing habits.',
     tier: 'principal',
   },
   {
@@ -379,7 +379,7 @@ export const projects: Project[] = [
     ],
     environment: 'Next.js · Vercel · Framer Motion',
     delivery:
-      'Information architecture, content structure, and journey design led by me; the site was built, tested, and refined through AI-assisted development tools.',
+      'I led information architecture, content structure, and journey design; the site was built, tested, and refined with Claude Code.',
     card: {
       src: '/images/work/wedding-hero.webp',
       alt: 'Wedding website arrival screen with a framed photo, names, and date',

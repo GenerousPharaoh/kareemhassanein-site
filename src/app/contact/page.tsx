@@ -98,7 +98,7 @@ function ContactForm() {
       </div>
       <div className="mt-5">
         <label htmlFor="message" className={labelClass}>Message <span aria-hidden="true">*</span></label>
-        <textarea id="message" name="message" required maxLength={5000} value={message} onChange={(event) => setMessage(event.target.value)} rows={7} className={`${inputClass} min-h-40 resize-y`} placeholder="What should work better?" aria-describedby={status === 'error' ? 'form-error' : undefined} />
+        <textarea id="message" name="message" required maxLength={5000} value={message} onChange={(event) => setMessage(event.target.value)} rows={7} className={`${inputClass} min-h-40 resize-y`} placeholder="What you are working on, and what a useful result would look like." aria-describedby={status === 'error' ? 'form-error' : undefined} />
       </div>
 
       {status === 'error' && (

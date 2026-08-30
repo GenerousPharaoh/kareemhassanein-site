@@ -49,7 +49,7 @@ export default function WorkPage() {
       <section className="bg-[#ECE6D9] px-6 py-24 text-[#1c1812] sm:px-8 md:py-32 lg:px-12 xl:px-20">
         <div className="mx-auto max-w-[1320px]">
           <div className="mb-16 flex items-baseline justify-between border-b border-black/[0.14] pb-5 md:mb-24">
-            <h2 className="text-sm font-semibold uppercase tracking-[0.18em] text-[#1c1812]/74">Selected projects</h2>
+            <h2 className="text-sm font-semibold uppercase tracking-[0.18em] text-[#1c1812]/74">Principal projects</h2>
             <span className="font-mono text-xs text-[#6b6353]">
               01–{String(principalProjects.length).padStart(2, '0')}
             </span>

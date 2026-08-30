@@ -95,7 +95,7 @@ export default function Home() {
                   style={{ '--hero-delay': '0.06s' } as CSSProperties}
                 />
                 <span className="enter-fade" style={{ '--hero-delay': '0.16s', '--enter-dur': '0.85s' } as CSSProperties}>
-                  Kareem Hassanein · Implementation, Service Operations &amp; Digital Delivery
+                  Kareem Hassanein
                 </span>
               </p>
               <h1 className="max-w-[1100px] text-[clamp(2.5rem,7vw,6.6rem)] font-medium leading-[0.92] tracking-[-0.055em]">
@@ -119,9 +119,8 @@ export default function Home() {
                 style={{ '--hero-delay': '0.62s', '--enter-dur': '0.95s' } as CSSProperties}
               >
                 I work across healthcare and professional services, drawing on a background in frontline care, team
-                leadership, and more than 10,000 hours of direct client work. The case studies below show how I assess
-                needs, work within real constraints, carry an idea through delivery, and refine it against what
-                happens in practice.
+                leadership, and more than 10,000 hours of direct client work. The case studies below cover a clinical
+                software rollout, two clinic websites, and a drafting workflow rebuilt for a solo law practice.
               </p>
               <div
                 className="enter-fade mt-8 flex flex-col gap-3 sm:flex-row lg:flex-col xl:flex-row xl:gap-2"
@@ -177,7 +176,7 @@ export default function Home() {
             <p className="mb-5 text-xs font-semibold uppercase tracking-[0.2em] text-[#705829]">Selected work</p>
             <div className="grid gap-6 lg:grid-cols-12 lg:items-end">
               <h2 className="max-w-4xl text-4xl font-medium tracking-[-0.045em] text-[#1c1812] sm:text-5xl md:text-6xl lg:col-span-8">
-                Outcomes, decisions, and the <span className="font-serif font-normal italic text-[#705829]">work behind them.</span>
+                Outcomes, and the <span className="font-serif font-normal italic text-[#705829]">decisions behind them.</span>
               </h2>
               <p className="max-w-md text-base leading-relaxed text-[#57503f] lg:col-span-4">
                 Case studies across service launches, workflow improvement, technology adoption, and digital products.
