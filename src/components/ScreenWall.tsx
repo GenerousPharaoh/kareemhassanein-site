@@ -26,6 +26,12 @@ import type { WallShot } from '@/lib/work';
  * Nothing responds to the pointer. A cursor-driven camera and a hover hold
  * both made the wall lurch as the mouse crossed the section.
  *
+ * Neither ring is tilted. A rotateX on a cylinder displaces each card
+ * vertically by sin(tilt) times its own z, so a card's height depends on where
+ * it has got to around the ring: cards climbed as they came round and clipped
+ * against the top of the stage. Flat, every card sits on the same line and the
+ * only motion is the turn itself.
+ *
  * Radius is derived, not guessed. Neighbouring cards are 2R.sin(pi/N) apart,
  * so for them not to overlap the radius has to grow with the card width and
  * with the number of cards. It is recomputed on resize.
@@ -43,6 +49,12 @@ const FAR_SPEED_RATIO = -0.55;
 // that one sits dead centre and the rest are off screen.
 const FAR_RADIUS_RATIO = 1.15;
 const FAR_PUSH = 900;
+// The far tier is offset uniformly so it reads above the near one, and fills
+// what would otherwise be dead space under the section label. Uniform is the
+// point: it is the one vertical move in here that does not depend on where a
+// card sits around the ring. The value is pre-perspective, so the on-screen
+// lift is this times the far tier's scale, which is why it looks large.
+const FAR_LIFT = -140;
 
 export default function ScreenWall({ shots }: { shots: WallShot[] }) {
   const nearRing = useRef<HTMLDivElement>(null);
@@ -113,12 +125,12 @@ export default function ScreenWall({ shots }: { shots: WallShot[] }) {
       const near = nearRing.current;
       if (near) {
         near.style.transform =
-          `translateY(-30px) translateZ(${-nearRadius.current}px) rotateY(${rot.current}deg) rotateX(-5deg)`;
+          `translateZ(${-nearRadius.current}px) rotateY(${rot.current}deg)`;
       }
       const far = farRing.current;
       if (far) {
         far.style.transform =
-          `translateY(-124px) translateZ(${-farRadius.current - FAR_PUSH}px) rotateY(${rot.current * FAR_SPEED_RATIO}deg) rotateX(-5deg)`;
+          `translateY(${FAR_LIFT}px) translateZ(${-farRadius.current - FAR_PUSH}px) rotateY(${rot.current * FAR_SPEED_RATIO}deg)`;
       }
 
       let best = 0;

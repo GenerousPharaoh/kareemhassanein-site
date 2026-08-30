@@ -462,7 +462,7 @@ img {
    ScreenWall.tsx, so the geometry stays correct across breakpoints. */
 .wall-stage {
   position: relative;
-  height: 380px;
+  height: 330px;
   overflow: hidden;
   perspective: 1500px;
   perspective-origin: 50% 50%;
@@ -493,12 +493,12 @@ img {
 }
 
 @media (min-width: 640px) {
-  .wall-stage { height: 440px; }
+  .wall-stage { height: 375px; }
   .wall-ring { width: 400px; height: 230px; }
 }
 
 @media (min-width: 1024px) {
-  .wall-stage { height: 490px; }
+  .wall-stage { height: 420px; }
   .wall-ring { width: 460px; height: 262px; }
 }
 
