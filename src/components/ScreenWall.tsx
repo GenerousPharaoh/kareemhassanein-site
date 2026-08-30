@@ -29,8 +29,10 @@ import type { WallShot } from '@/lib/work';
  * arrows give a keyboard route to every card.
  */
 
-// Degrees per frame. Slow: a full turn takes about two and a half minutes.
-const SPEED = 0.04;
+// Degrees per SECOND, not per frame. Per-frame drift runs at double speed on a
+// 120Hz display and half on a 60Hz one; this way the wall turns at the same
+// rate everywhere. A full turn takes two minutes.
+const DEG_PER_SEC = 3;
 const GAP = 46;
 
 export default function ScreenWall({ shots }: { shots: WallShot[] }) {
@@ -87,9 +89,14 @@ export default function ScreenWall({ shots }: { shots: WallShot[] }) {
   useEffect(() => {
     let raf = 0;
     let lastFront = -1;
-    const loop = () => {
-      if (!reduceMotion && !paused && !hovering.current) rot.current -= SPEED;
-      nudge.current += (targetNudge.current - nudge.current) * 0.06;
+    let prev = performance.now();
+    const loop = (now: number) => {
+      // Clamp the step so a backgrounded tab does not resume with a huge jump.
+      const dt = Math.min((now - prev) / 1000, 0.1);
+      prev = now;
+      if (!reduceMotion && !paused && !hovering.current) rot.current -= DEG_PER_SEC * dt;
+      // Frame-rate independent easing toward the pointer nudge.
+      nudge.current += (targetNudge.current - nudge.current) * Math.min(1, dt * 4);
 
       const ring = ringRef.current;
       if (ring) {
