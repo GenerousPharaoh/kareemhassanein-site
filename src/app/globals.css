@@ -371,6 +371,82 @@ img {
   }
 }
 
+/* ---------------------------------------------------------------------------
+   Scroll choreography.
+
+   The same vocabulary as the hero entrance, carried down the page: content
+   resolves out of blur on a gentle cubic rather than sliding in. Each role
+   carries its own weight, so a section heading, a screenshot and a list row
+   do not all arrive on the same gesture.
+
+   The hidden state is gated on `html[data-reveal-js]`, which an inline script
+   in the document head sets before first paint. Without JavaScript the
+   attribute never appears, so nothing is ever hidden and the page reads as
+   plain static markup. IntersectionObserver then adds [data-revealed].
+   --------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: no-preference) {
+  html[data-reveal-js] [data-reveal] {
+    opacity: 0;
+    transition: opacity var(--reveal-dur, 0.66s) cubic-bezier(0.22, 0.61, 0.36, 1)
+      var(--reveal-delay, 0s);
+    will-change: opacity;
+  }
+
+  html[data-reveal-js] [data-reveal][data-revealed] {
+    opacity: 1;
+    will-change: auto;
+  }
+
+  /* Mobile stops at opacity. Desktop adds the rise, the blur resolve and the
+     settle, which are the expensive properties. */
+  @media (min-width: 768px) {
+    html[data-reveal-js] [data-reveal] {
+      transform: translateY(var(--reveal-y, 16px)) scale(var(--reveal-scale, 1));
+      filter: blur(var(--reveal-blur, 3px));
+      transition:
+        opacity var(--reveal-dur, 0.66s) cubic-bezier(0.22, 0.61, 0.36, 1) var(--reveal-delay, 0s),
+        transform var(--reveal-dur, 0.66s) cubic-bezier(0.22, 0.61, 0.36, 1) var(--reveal-delay, 0s),
+        filter var(--reveal-dur, 0.66s) cubic-bezier(0.22, 0.61, 0.36, 1) var(--reveal-delay, 0s);
+      will-change: opacity, transform, filter;
+    }
+
+    html[data-reveal-js] [data-reveal][data-revealed] {
+      transform: none;
+      filter: blur(0);
+    }
+
+    /* Signposts. They lead their section, so they move first and least. */
+    html[data-reveal-js] [data-reveal='heading'] {
+      --reveal-y: 20px;
+      --reveal-blur: 5px;
+      --reveal-dur: 0.72s;
+    }
+
+    /* Prose. Enough movement to feel authored, not enough to read as a slide. */
+    html[data-reveal-js] [data-reveal='text'] {
+      --reveal-y: 16px;
+      --reveal-blur: 3px;
+      --reveal-dur: 0.66s;
+    }
+
+    /* Screens and diagrams. The evidence, so it pulls into focus the way the
+       hero does instead of sliding into place. */
+    html[data-reveal-js] [data-reveal='figure'] {
+      --reveal-y: 26px;
+      --reveal-blur: 9px;
+      --reveal-scale: 1.018;
+      --reveal-dur: 0.95s;
+    }
+
+    /* Rows in a list. Quick, so a stagger of them stays crisp. */
+    html[data-reveal-js] [data-reveal='item'] {
+      --reveal-y: 12px;
+      --reveal-blur: 0px;
+      --reveal-dur: 0.5s;
+    }
+  }
+}
+
 /* Case-study title.
    Sizing this off the viewport cannot work: the column is lg:col-span-5 in a
    12-column grid whose gap jumps from 56px to 80px at xl, so the column is

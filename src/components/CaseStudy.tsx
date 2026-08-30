@@ -101,7 +101,7 @@ export default function ProjectDetail({ project, next }: { project: Project; nex
       {/* The screen. */}
       <section className="relative px-6 pb-16 pt-12 md:px-12 md:pb-28 md:pt-20 xl:px-20">
         <div className="relative max-w-[1280px] mx-auto">
-          <div className="enter-fade" style={{ '--hero-delay': '0.04s' } as CSSProperties}>
+          <div className="enter-fade" style={{ '--hero-delay': '0.06s' } as CSSProperties}>
             <Link
               href="/work"
               className="mb-8 inline-flex min-h-11 items-center gap-2 text-sm text-muted-foreground/75 transition-colors duration-300 hover:text-accent md:mb-14"
@@ -114,7 +114,7 @@ export default function ProjectDetail({ project, next }: { project: Project; nex
           <div className="grid gap-12 lg:grid-cols-12 lg:items-center lg:gap-14 xl:gap-20">
             <div
               className="case-title-col enter-fade lg:col-span-5"
-              style={{ '--hero-delay': '0.12s' } as CSSProperties}
+              style={{ '--hero-delay': '0.28s', '--enter-dur': '1.05s' } as CSSProperties}
             >
               {project.contextLabel && (
                 <span className="block font-mono text-[11px] tracking-[0.16em] uppercase text-muted-foreground/80 mb-3">
@@ -147,7 +147,7 @@ export default function ProjectDetail({ project, next }: { project: Project; nex
 
             <div
               className="enter-fade lg:col-span-7"
-              style={{ '--hero-delay': '0.2s' } as CSSProperties}
+              style={{ '--hero-delay': '0.54s', '--enter-dur': '1.15s' } as CSSProperties}
             >
               <ProjectLeadVisual project={project} shot={leadShot} />
             </div>
@@ -160,10 +160,10 @@ export default function ProjectDetail({ project, next }: { project: Project; nex
         <div className="px-6 py-20 md:px-12 md:py-28 xl:px-20">
           <div className="mx-auto max-w-[1080px] space-y-16 md:space-y-24">
             <section aria-labelledby="project-context">
-              <ScrollReveal direction="up">
+              <ScrollReveal variant="heading">
                 <SectionHeading id="project-context">Context</SectionHeading>
               </ScrollReveal>
-              <ScrollReveal direction="up">
+              <ScrollReveal variant="text" delay={0.1}>
                 <div className="max-w-3xl space-y-5">
                   {project.intro.map((paragraph) => (
                     <p key={paragraph.slice(0, 32)} className="text-base md:text-lg text-muted-foreground leading-relaxed">
@@ -182,12 +182,12 @@ export default function ProjectDetail({ project, next }: { project: Project; nex
 
             {hasWorkExamples && (
               <section aria-labelledby="work-examples">
-                <ScrollReveal direction="up">
+                <ScrollReveal variant="heading">
                   <SectionHeading id="work-examples">The work</SectionHeading>
                 </ScrollReveal>
 
                 {project.confidentialNote && (
-                  <ScrollReveal direction="up">
+                  <ScrollReveal variant="text" delay={0.1}>
                     <p className="mb-10 max-w-2xl border-l-2 border-accent/45 pl-4 text-sm leading-relaxed text-muted-foreground">
                       {project.confidentialNote}
                     </p>
@@ -197,7 +197,7 @@ export default function ProjectDetail({ project, next }: { project: Project; nex
                 {remainingGallery.length > 0 && (
                   <div className="space-y-14 md:space-y-20">
                     {remainingGallery.map((shot) => (
-                      <ScrollReveal key={shot.src} direction="up">
+                      <ScrollReveal key={shot.src} variant="figure">
                         <GalleryFigure shot={shot} />
                       </ScrollReveal>
                     ))}
@@ -205,20 +205,20 @@ export default function ProjectDetail({ project, next }: { project: Project; nex
                 )}
 
                 {project.slug === 'clinical-documentation' && (
-                  <ScrollReveal direction="up">
+                  <ScrollReveal variant="figure">
                     <ClinicalWorkflowFigure />
                   </ScrollReveal>
                 )}
 
                 {project.slug === 'tax-relief-counsel' && (
                   <div className="space-y-8 md:space-y-10">
-                    <ScrollReveal direction="up">
+                    <ScrollReveal variant="figure">
                       <TrcTimeFigure />
                     </ScrollReveal>
-                    <ScrollReveal direction="up">
+                    <ScrollReveal variant="figure">
                       <TrcPipelineFigure />
                     </ScrollReveal>
-                    <ScrollReveal direction="up">
+                    <ScrollReveal variant="figure">
                       <TrcLibraryFigure />
                     </ScrollReveal>
                   </div>
@@ -228,10 +228,10 @@ export default function ProjectDetail({ project, next }: { project: Project; nex
             )}
 
             <section aria-labelledby="approach">
-              <ScrollReveal direction="up">
+              <ScrollReveal variant="heading">
                 <SectionHeading id="approach">Approach</SectionHeading>
               </ScrollReveal>
-              <ScrollReveal direction="up">
+              <ScrollReveal variant="text" delay={0.1}>
                 <div className="max-w-3xl">
                   <p className="text-lg leading-relaxed text-muted-foreground md:text-xl">{project.approach}</p>
                 </div>
@@ -239,10 +239,10 @@ export default function ProjectDetail({ project, next }: { project: Project; nex
             </section>
 
             <section aria-labelledby="outcomes">
-              <ScrollReveal direction="up">
+              <ScrollReveal variant="heading">
                 <SectionHeading id="outcomes">What changed</SectionHeading>
               </ScrollReveal>
-              <ScrollReveal direction="up">
+              <ScrollReveal variant="text" delay={0.1}>
                 <div className="max-w-3xl space-y-5">
                   {project.outcomes.map((outcome) => (
                     <p key={outcome.slice(0, 32)} className="text-base md:text-lg text-muted-foreground leading-relaxed">
@@ -267,7 +267,7 @@ export default function ProjectDetail({ project, next }: { project: Project; nex
 
       <section aria-labelledby="next-project-heading" className="px-6 pb-20 pt-16 md:px-12 md:pb-32 md:pt-24 xl:px-20">
         <div className="max-w-[1280px] mx-auto">
-          <ScrollReveal direction="up">
+          <ScrollReveal variant="item">
             <div className="border-t border-white/[0.09] pt-9">
               <h2 id="next-project-heading" className="mb-4 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground/80">
                 Next project

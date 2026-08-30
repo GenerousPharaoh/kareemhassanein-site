@@ -4,6 +4,13 @@ import { type CSSProperties, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { ArrowUpRight, Check, Send } from 'lucide-react';
+import HeadlineReveal from '@/components/HeadlineReveal';
+import ScrollReveal from '@/components/ScrollReveal';
+
+const contactHeadline = [
+  { text: 'Get in' },
+  { text: 'touch.', className: 'font-serif font-normal italic text-accent', duration: '1s' },
+];
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -132,12 +139,21 @@ export default function ContactPage() {
     <main className="bg-background px-6 pb-24 pt-32 text-foreground sm:px-8 md:pb-32 md:pt-40 lg:px-12 xl:px-20">
       <div className="mx-auto max-w-[1320px]">
         <div className="grid gap-10 lg:grid-cols-12 lg:gap-x-20 lg:gap-y-14">
-          <section className="enter-fade lg:col-span-6" style={{ '--hero-delay': '0.06s' } as CSSProperties}>
-            <p className="mb-6 text-xs font-semibold uppercase tracking-[0.2em] text-accent/80">Contact</p>
+          <section className="lg:col-span-6">
+            <p
+              className="enter-fade mb-6 flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-accent/80"
+              style={{ '--hero-delay': '0.16s', '--enter-dur': '0.85s' } as CSSProperties}
+            >
+              <span aria-hidden="true" className="enter-rule-x h-px w-10 bg-accent/50" style={{ '--hero-delay': '0.06s' } as CSSProperties} />
+              Contact
+            </p>
             <h1 className="max-w-3xl text-[clamp(3rem,7.5vw,7.4rem)] font-medium leading-[0.9] tracking-[-0.065em]">
-              Get in <span className="font-serif font-normal italic text-accent">touch.</span>
+              <HeadlineReveal lines={contactHeadline} layout="inline" start={0.3} step={0.1} />
             </h1>
-            <p className="mt-8 max-w-xl text-lg leading-relaxed text-foreground/72">
+            <p
+              className="enter-fade mt-8 max-w-xl text-lg leading-relaxed text-foreground/72"
+              style={{ '--hero-delay': '0.78s', '--enter-dur': '0.95s' } as CSSProperties}
+            >
               For full-time roles, selected advisory work, or project inquiries, tell me what you are working on, who
               it affects, and what a useful result would look like.
             </p>
@@ -146,7 +162,7 @@ export default function ContactPage() {
           <section
             aria-labelledby="contact-form-heading"
             className="enter-fade paper order-2 p-6 sm:p-8 md:p-10 lg:order-none lg:col-span-6 lg:col-start-7 lg:row-span-2 lg:row-start-1 lg:mt-12"
-            style={{ '--hero-delay': '0.14s' } as CSSProperties}
+            style={{ '--hero-delay': '0.98s', '--enter-dur': '1.1s' } as CSSProperties}
           >
             <div className="mb-8 border-b border-[#25292f]/15 pb-6">
               <h2 id="contact-form-heading" className="text-2xl font-medium tracking-[-0.035em]">Start the conversation</h2>
@@ -157,13 +173,17 @@ export default function ContactPage() {
 
           <section className="order-3 lg:order-none lg:col-span-6 lg:row-start-2">
             <div className="mt-14 max-w-xl border-t border-white/[0.11]">
-              <h2 className="py-5 text-xs font-semibold uppercase tracking-[0.18em] text-accent/80">A good fit when</h2>
+              <ScrollReveal variant="heading">
+                <h2 className="py-5 text-xs font-semibold uppercase tracking-[0.18em] text-accent/80">A good fit when</h2>
+              </ScrollReveal>
               <ul>
-                {fit.map((item) => (
-                  <li key={item} className="grid grid-cols-[1.2rem_1fr] gap-3 border-t border-white/[0.11] py-4 text-sm leading-relaxed text-foreground/72 sm:text-base">
-                    <span aria-hidden="true" className="font-mono text-accent">+</span>
-                    {item}
-                  </li>
+                {fit.map((item, index) => (
+                  <ScrollReveal key={item} variant="item" delay={0.06 + index * 0.08}>
+                    <li className="grid grid-cols-[1.2rem_1fr] gap-3 border-t border-white/[0.11] py-4 text-sm leading-relaxed text-foreground/72 sm:text-base">
+                      <span aria-hidden="true" className="font-mono text-accent">+</span>
+                      {item}
+                    </li>
+                  </ScrollReveal>
                 ))}
               </ul>
             </div>
@@ -179,7 +199,8 @@ export default function ContactPage() {
               <span className="sr-only"> (opens in new tab)</span>
             </a>
 
-            <figure className="mt-12 max-w-xl">
+            <ScrollReveal variant="figure" className="mt-12 max-w-xl">
+            <figure>
               <div className="relative aspect-[3/2] overflow-hidden rounded-[1.5rem] border border-white/[0.09] bg-[#090a09]">
                 <Image
                   src="/images/contact-handoff-repair-final.webp"
@@ -190,6 +211,7 @@ export default function ContactPage() {
                 />
               </div>
             </figure>
+            </ScrollReveal>
           </section>
         </div>
       </div>

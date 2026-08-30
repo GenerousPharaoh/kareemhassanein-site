@@ -117,6 +117,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        {/* Marks JS as available before first paint, which is what unlocks the
+            hidden state for [data-reveal] in globals.css. Without this the
+            reveal CSS never applies, so a visitor with JS disabled gets the
+            page fully readable rather than a screen of invisible sections. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: "document.documentElement.setAttribute('data-reveal-js','')",
+          }}
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }}

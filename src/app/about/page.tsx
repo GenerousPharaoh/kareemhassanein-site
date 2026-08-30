@@ -5,7 +5,13 @@ import type { CSSProperties } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
+import HeadlineReveal from '@/components/HeadlineReveal';
 import ScrollReveal from '@/components/ScrollReveal';
+
+const aboutHeadline = [
+  { text: 'About' },
+  { text: 'Kareem.', className: 'font-serif italic font-normal text-accent/90', duration: '1.05s' },
+];
 
 
 const currentRoles = [
@@ -57,16 +63,13 @@ export default function About() {
               Kareem Hassanein · About
             </p>
 
-            <h1
-              className="enter-fade max-w-4xl text-[clamp(3rem,7.2vw,6.8rem)] font-medium tracking-[-0.055em] leading-[0.91] text-balance"
-              style={{ '--hero-delay': '0.20s', '--enter-dur': '1.2s' } as CSSProperties}
-            >
-              About <span className="font-serif italic font-normal text-accent/90">Kareem.</span>
+            <h1 className="max-w-4xl text-[clamp(3rem,7.2vw,6.8rem)] font-medium tracking-[-0.055em] leading-[0.91] text-balance">
+              <HeadlineReveal lines={aboutHeadline} layout="inline" start={0.28} step={0.11} />
             </h1>
 
             <p
               className="enter-fade mt-9 max-w-2xl text-lg md:text-[1.35rem] text-foreground/[0.76] font-light leading-relaxed"
-              style={{ '--hero-delay': '0.34s' } as CSSProperties}
+              style={{ '--hero-delay': '0.74s', '--enter-dur': '0.95s' } as CSSProperties}
             >
               My approach to implementation comes from years of direct patient care, one-to-one coaching, team
               leadership, and responsibility for day-to-day services.
@@ -80,14 +83,14 @@ export default function About() {
       <section className="px-6 pb-20 pt-12 md:px-12 md:pb-28 md:pt-20 xl:px-20">
         <div className="max-w-[1160px] mx-auto">
           <div className="grid lg:grid-cols-12 gap-12 lg:gap-20">
-            <ScrollReveal direction="up" className="lg:col-span-5">
+            <ScrollReveal variant="heading" className="lg:col-span-5">
               <p className="text-xs font-medium tracking-[0.24em] uppercase text-accent/70 mb-5">Where this comes from</p>
               <h2 className="text-3xl md:text-5xl font-medium tracking-tight text-balance">
                 Background.
               </h2>
             </ScrollReveal>
 
-            <ScrollReveal direction="up" delay={0.08} className="lg:col-span-7 lg:pt-10">
+            <ScrollReveal variant="text" delay={0.12} className="lg:col-span-7 lg:pt-10">
               <div className="space-y-6 max-w-2xl">
                 <p className="text-lg md:text-xl text-foreground/[0.82] font-light leading-relaxed">
                   More than 10,000 hours of patient care and one-to-one coaching taught me to begin with the actual
@@ -111,7 +114,7 @@ export default function About() {
               </div>
             </ScrollReveal>
 
-            <ScrollReveal direction="up" delay={0.1} className="lg:col-span-12">
+            <ScrollReveal variant="figure" delay={0.16} className="lg:col-span-12">
               <figure className="mt-2">
                 <div className="relative aspect-[3/2] overflow-hidden rounded-[1.5rem] border border-white/[0.09] bg-[#090a09]">
                   <Image
@@ -131,7 +134,7 @@ export default function About() {
 
       <section className="px-6 py-20 md:px-12 md:py-28 xl:px-20">
         <div className="max-w-[1160px] mx-auto grid lg:grid-cols-12 gap-12 lg:gap-20">
-          <ScrollReveal direction="up" className="lg:col-span-5">
+          <ScrollReveal variant="heading" className="lg:col-span-5">
             <p className="text-xs font-medium tracking-[0.24em] uppercase text-accent/70 mb-5">
               Method
             </p>
@@ -140,7 +143,7 @@ export default function About() {
             </h2>
           </ScrollReveal>
 
-          <ScrollReveal direction="up" delay={0.08} className="lg:col-span-7 lg:pt-10">
+          <ScrollReveal variant="text" delay={0.12} className="lg:col-span-7 lg:pt-10">
             <div className="max-w-2xl border-t border-white/[0.09]">
               <p className="py-6 text-lg md:text-xl font-light leading-relaxed text-foreground/[0.82] border-b border-white/[0.08]">
                 Every workflow carries more than its visible steps. It also carries judgment, responsibility, time
@@ -163,7 +166,7 @@ export default function About() {
 
       <section className="border-y border-white/[0.07] bg-white/[0.012] px-6 py-20 md:px-12 md:py-28 xl:px-20">
         <div className="max-w-[1160px] mx-auto">
-          <ScrollReveal direction="up" className="grid lg:grid-cols-12 gap-8 lg:gap-16 mb-14 md:mb-20">
+          <ScrollReveal variant="heading" className="grid lg:grid-cols-12 gap-8 lg:gap-16 mb-14 md:mb-20">
             <div className="lg:col-span-4">
               <p className="text-xs font-medium tracking-[0.24em] uppercase text-accent/70">Current work</p>
             </div>
@@ -176,7 +179,7 @@ export default function About() {
 
           <div className="border-t border-white/[0.09]">
             {currentRoles.map((item, index) => (
-              <ScrollReveal key={item.role} direction="up" delay={index * 0.05}>
+              <ScrollReveal key={item.role} variant="item" delay={0.06 + index * 0.09}>
                 <article className="grid md:grid-cols-12 gap-4 md:gap-8 py-8 md:py-10 border-b border-white/[0.07]">
                   <div className="md:col-span-5">
                     <h3 className="text-xl md:text-2xl font-medium tracking-tight text-foreground/[0.92]">{item.role}</h3>
@@ -197,7 +200,7 @@ export default function About() {
 
       <section className="border-t border-white/[0.07] px-6 py-20 md:px-12 md:py-28 xl:px-20">
         <div className="max-w-[1160px] mx-auto grid lg:grid-cols-12 gap-14 lg:gap-20">
-          <ScrollReveal direction="up" className="lg:col-span-4">
+          <ScrollReveal variant="heading" className="lg:col-span-4">
             <p className="text-xs font-medium tracking-[0.24em] uppercase text-accent/70 mb-5">Foundation</p>
             <h2 className="text-3xl md:text-4xl font-medium tracking-tight text-balance">
               Clinical practice and formal training.
@@ -205,7 +208,7 @@ export default function About() {
           </ScrollReveal>
 
           <div className="lg:col-span-8 space-y-12">
-            <ScrollReveal direction="up">
+            <ScrollReveal variant="text">
               <article className="border-t border-white/[0.09] pt-7">
                 <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-2 mb-4">
                   <h3 className="text-xl md:text-2xl font-medium tracking-tight">Registered Physiotherapist</h3>
@@ -220,7 +223,7 @@ export default function About() {
               </article>
             </ScrollReveal>
 
-            <ScrollReveal direction="up">
+            <ScrollReveal variant="text">
               <div>
                 <p className="text-xs font-medium tracking-[0.2em] uppercase text-accent/75 mb-5">Education</p>
                 <div className="border-t border-white/[0.09]">
@@ -237,7 +240,7 @@ export default function About() {
               </div>
             </ScrollReveal>
 
-            <ScrollReveal direction="up">
+            <ScrollReveal variant="text">
               <article className="border-t border-white/[0.09] pt-7">
                 <p className="text-xs font-medium tracking-[0.2em] uppercase text-accent/75 mb-3">Mentorship</p>
                 <h3 className="text-lg font-medium tracking-tight mb-2">Lab2Market Validate · McMaster University</h3>
@@ -252,7 +255,7 @@ export default function About() {
       </section>
 
       <section className="border-t border-white/[0.07] px-6 py-20 md:px-12 md:py-28 xl:px-20">
-        <ScrollReveal direction="up" className="max-w-[1160px] mx-auto flex flex-col lg:flex-row lg:items-end lg:justify-between gap-10">
+        <ScrollReveal variant="heading" className="max-w-[1160px] mx-auto flex flex-col lg:flex-row lg:items-end lg:justify-between gap-10">
           <div className="max-w-2xl">
             <p className="text-xs font-medium tracking-[0.24em] uppercase text-accent/70 mb-5">Next</p>
             <h2 className="text-3xl md:text-5xl font-medium tracking-tight text-balance mb-5">

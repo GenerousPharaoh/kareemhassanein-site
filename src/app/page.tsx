@@ -1,15 +1,21 @@
 'use client';
 
-import { Fragment, type CSSProperties } from 'react';
+import type { CSSProperties } from 'react';
 import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
+import HeadlineReveal from '@/components/HeadlineReveal';
 import ScrollReveal from '@/components/ScrollReveal';
 import ScreenFrame from '@/components/ScreenFrame';
 import WorkCard from '@/components/WorkCard';
 import { advisory, principalProjects } from '@/lib/work';
 
-// A bridge of real screens between the hero and the featured work: shots
-// that are not already leading a card below.
+// A bridge of real screens between the hero and the featured work.
+//
+// Two, not four. At four across, each screen rendered about 410px wide, which
+// is a 0.28 scale on a 1440px capture: the content inside was illegible and
+// they read as generic website thumbnails. Two at roughly 640px carry enough
+// detail to be evidence. Both show a decision rather than a homepage, and
+// neither leads a card below.
 const stripShots = [
   {
     src: '/images/work/kinetikare-conditions.webp',
@@ -27,57 +33,13 @@ const stripShots = [
     frame: 'browser' as const,
     url: 'endorphinshealth.com/book-appointment',
   },
-  {
-    src: '/images/work/kinetikare-compare.webp',
-    alt: 'KinetiKare comparison page showing two commonly confused conditions side by side',
-    width: 1440,
-    height: 900,
-    frame: 'browser' as const,
-    url: 'kinetikarephysio.com/conditions/compare',
-  },
-  {
-    src: '/images/work/endorphins-services-2026-08.webp',
-    alt: 'Endorphins services page introducing six clinical disciplines and booking information',
-    width: 1440,
-    height: 900,
-    frame: 'browser' as const,
-    url: 'endorphinshealth.com/services',
-  },
 ];
 
 const heroLines = [
-  { text: 'Selected work in', className: '' },
-  { text: 'implementation, service operations,', className: '' },
-  { text: 'and digital delivery.', className: 'font-serif font-normal italic text-accent' },
+  { text: 'Selected work in' },
+  { text: 'implementation, service operations,' },
+  { text: 'and digital delivery.', className: 'font-serif font-normal italic text-accent', duration: '1s' },
 ];
-
-const HEADLINE_START = 0.22;
-const WORD_STEP = 0.055;
-
-// One span per word, each resolving on its own beat.
-function HeadlineLine({ text, offset, className = '', duration }: { text: string; offset: number; className?: string; duration: string }) {
-  const words = text.split(' ');
-  return (
-    <span className={`block ${className}`}>
-      {words.map((word, index) => (
-        <Fragment key={`${word}-${index}`}>
-          <span
-            className="enter-word inline-block"
-            style={{
-              '--hero-delay': `${(HEADLINE_START + (offset + index) * WORD_STEP).toFixed(3)}s`,
-              '--enter-dur': duration,
-            } as CSSProperties}
-          >
-            {word}
-          </span>
-          {index < words.length - 1 && ' '}
-        </Fragment>
-      ))}
-    </span>
-  );
-}
-
-const stripOffsets = ['md:translate-y-8', 'md:-translate-y-2', 'md:translate-y-12', 'md:translate-y-3'];
 
 const featured = principalProjects;
 
@@ -99,17 +61,7 @@ export default function Home() {
                 </span>
               </p>
               <h1 className="max-w-[1100px] text-[clamp(2.5rem,7vw,6.6rem)] font-medium leading-[0.92] tracking-[-0.055em]">
-                {heroLines.map((line, index) => (
-                  <Fragment key={line.text}>
-                    <HeadlineLine
-                      text={line.text}
-                      offset={heroLines.slice(0, index).reduce((total, prev) => total + prev.text.split(' ').length, 0)}
-                      className={line.className}
-                      duration={index === heroLines.length - 1 ? '1s' : '0.85s'}
-                    />
-                    {index < heroLines.length - 1 && ' '}
-                  </Fragment>
-                ))}
+                <HeadlineReveal lines={heroLines} />
               </h1>
             </div>
 
@@ -152,20 +104,18 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Filmstrip bridge: real screens spanning the dark-to-paper boundary */}
-      <section aria-label="Project screens" className="relative z-10 -mb-10 px-6 sm:px-8 md:-mb-20 lg:px-12 xl:px-20">
-        <div className="mx-auto grid max-w-[1320px] grid-cols-2 gap-4 md:grid-cols-4 md:gap-6">
+      {/* Filmstrip bridge: real screens spanning the dark-to-paper boundary.
+          One shared baseline, so the surface change cuts both at the same
+          height and reads as deliberate. The previous staggered translates cut
+          each screen at a different point and read as misalignment. */}
+      <section aria-label="Project screens" className="relative z-10 -mb-12 px-6 sm:px-8 md:-mb-24 lg:px-12 xl:px-20">
+        <div className="mx-auto grid max-w-[1320px] grid-cols-1 gap-8 sm:grid-cols-2 sm:gap-6 md:gap-8">
           {/* A scroll beat, not part of the load sequence. Only the top edge of
               these sits in the first screen, so animating them on load spent the
               motion where nobody could see it and left them static on arrival. */}
           {stripShots.map((shot, index) => (
-            <ScrollReveal key={shot.src} direction="up" delay={index * 0.07} onMobile>
-              {/* The offset lives on an inner element: framer-motion writes an
-                  inline transform for the reveal, which would otherwise
-                  overwrite the Tailwind translate that staggers the strip. */}
-              <div className={stripOffsets[index]}>
-                <ScreenFrame shot={shot} sizes="(max-width: 768px) 50vw, 320px" />
-              </div>
+            <ScrollReveal key={shot.src} variant="figure" delay={index * 0.1}>
+              <ScreenFrame shot={shot} sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 640px" />
             </ScrollReveal>
           ))}
         </div>
@@ -174,17 +124,21 @@ export default function Home() {
       {/* Featured work on warm paper */}
       <section id="selected-work" className="scroll-mt-20 bg-[#ECE6D9] px-6 pb-24 pt-28 text-[#1c1812] sm:px-8 md:pb-32 md:pt-44 lg:px-12 xl:px-20">
         <div className="mx-auto max-w-[1320px]">
-          <ScrollReveal direction="up" className="mb-16 md:mb-24">
-            <p className="mb-5 text-xs font-semibold uppercase tracking-[0.2em] text-[#705829]">Selected work</p>
-            <div className="grid gap-6 lg:grid-cols-12 lg:items-end">
-              <h2 className="max-w-4xl text-4xl font-medium tracking-[-0.045em] text-[#1c1812] sm:text-5xl md:text-6xl lg:col-span-8">
+          {/* Two beats, not one slab: the signpost and title land, then the
+              framing sentence follows them in. */}
+          <div className="mb-16 grid gap-6 lg:grid-cols-12 lg:items-end md:mb-24">
+            <ScrollReveal variant="heading" className="lg:col-span-7">
+              <p className="mb-5 text-xs font-semibold uppercase tracking-[0.2em] text-[#705829]">Selected work</p>
+              <h2 className="text-4xl font-medium tracking-[-0.045em] text-[#1c1812] sm:text-5xl md:text-6xl">
                 Projects and <span className="font-serif font-normal italic text-[#705829]">results.</span>
               </h2>
-              <p className="max-w-md text-base leading-relaxed text-[#57503f] lg:col-span-4">
+            </ScrollReveal>
+            <ScrollReveal variant="text" delay={0.12} className="lg:col-span-5 lg:pb-2">
+              <p className="max-w-md text-base leading-relaxed text-[#57503f] lg:ml-auto">
                 Four projects across clinical software, clinic operations, professional services, and patient-facing digital products.
               </p>
-            </div>
-          </ScrollReveal>
+            </ScrollReveal>
+          </div>
 
           <div className="grid gap-16 md:grid-cols-2 md:gap-x-10 md:gap-y-20">
             {featured.map((project, index) => (
@@ -199,28 +153,30 @@ export default function Home() {
             ))}
           </div>
 
-          <div className="mt-16 border-t border-black/[0.12] pt-8 text-right md:mt-24">
+          <ScrollReveal variant="item" className="mt-16 border-t border-black/[0.12] pt-8 text-right md:mt-24">
             <Link href="/work" className="group inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-[#1c1812]/74 hover:text-[#705829]">
               See all work
               <ArrowUpRight aria-hidden="true" size={16} className="transition-transform duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
             </Link>
-          </div>
+          </ScrollReveal>
         </div>
       </section>
 
       <section className="border-t border-white/[0.09] px-6 py-24 sm:px-8 md:py-32 lg:px-12 xl:px-20">
         <div className="mx-auto max-w-[1320px]">
           <div className="grid gap-12 lg:grid-cols-12 lg:gap-20">
-            <ScrollReveal direction="up" className="lg:col-span-5">
+            <ScrollReveal variant="heading" className="lg:col-span-5">
               <p className="mb-5 text-xs font-semibold uppercase tracking-[0.2em] text-accent/80">Current work</p>
               <h2 className="max-w-xl text-4xl font-medium tracking-[-0.045em] sm:text-5xl">Advisory &amp; Mentorship.</h2>
             </ScrollReveal>
             <div className="border-t border-white/[0.11] lg:col-span-7">
-              {advisory.map((item) => (
-                <article key={item.title} className="grid gap-4 border-b border-white/[0.11] py-7 sm:grid-cols-[11rem_1fr] sm:gap-8">
-                  <h3 className="text-lg font-medium tracking-tight text-foreground">{item.title}</h3>
-                  <p className="text-sm leading-relaxed text-muted-foreground sm:text-base">{item.desc}</p>
-                </article>
+              {advisory.map((item, index) => (
+                <ScrollReveal key={item.title} variant="item" delay={0.08 + index * 0.09}>
+                  <article className="grid gap-4 border-b border-white/[0.11] py-7 sm:grid-cols-[11rem_1fr] sm:gap-8">
+                    <h3 className="text-lg font-medium tracking-tight text-foreground">{item.title}</h3>
+                    <p className="text-sm leading-relaxed text-muted-foreground sm:text-base">{item.desc}</p>
+                  </article>
+                </ScrollReveal>
               ))}
             </div>
           </div>

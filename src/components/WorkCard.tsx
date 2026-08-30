@@ -2,41 +2,59 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
-import { motion } from 'framer-motion';
 import { ArrowUpRight, Check } from 'lucide-react';
 import ScreenFrame, { FrameChrome, type FrameTone } from '@/components/ScreenFrame';
+import ScrollReveal from '@/components/ScrollReveal';
 import { HoverReel } from '@/components/Showreel';
 import type { Project } from '@/lib/work';
 
 function ConfidentialVisual({ project, tone = 'dark' }: { project: Project; tone?: FrameTone }) {
   if (project.slug === 'clinical-documentation') {
+    // This branch used to hardcode a dark panel and ignore the tone prop it
+    // was handed, so on the cream work band it rendered as a black slab beside
+    // the light Tax Relief Counsel visual. Same failure mode that retired
+    // EndorphinsPathwaysFigure: anything that can land inside .paper has to
+    // take a tone rather than assume the dark surface.
+    const isLight = tone === 'light';
+    const shell = isLight
+      ? 'border-black/[0.1] bg-white shadow-[0_26px_60px_-30px_rgba(35,28,14,0.45)]'
+      : 'border-white/[0.1] bg-[#171a1f] shadow-[0_28px_70px_-32px_rgba(0,0,0,0.9)]';
+    const rule = isLight ? 'border-black/[0.1]' : 'border-white/[0.09]';
+    const label = isLight ? 'text-[#705829]' : 'text-accent/80';
+    const value = isLight ? 'text-[#1c1812]' : 'text-foreground';
+    const body = isLight ? 'text-[#57503f]' : 'text-muted-foreground';
+    const faint = isLight ? 'text-[#6b6353]' : 'text-foreground/58';
+    const track = isLight ? 'bg-black/[0.12]' : 'bg-white/[0.16]';
+    const fill = isLight ? 'bg-[#705829]/80' : 'bg-accent/75';
+    const cap = isLight ? 'border-[#705829] bg-white' : 'border-accent bg-[#171a1f]';
+
     return (
-      <div className="overflow-hidden rounded-xl border border-white/[0.1] bg-[#171a1f] shadow-[0_28px_70px_-32px_rgba(0,0,0,0.9)] md:rounded-2xl">
-        <FrameChrome url="implementation record · private clinic" />
+      <div className={`overflow-hidden rounded-xl border md:rounded-2xl ${shell}`}>
+        <FrameChrome url="implementation record · private clinic" tone={tone} />
         <div className="flex aspect-[16/10] flex-col justify-between p-6 sm:p-8 md:p-10">
-          <div className="flex items-start justify-between gap-8 border-b border-white/[0.09] pb-6">
+          <div className={`flex items-start justify-between gap-8 border-b pb-6 ${rule}`}>
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent/80">Rollout outcome</p>
-              <p className="mt-3 text-5xl font-medium tracking-[-0.06em] text-foreground sm:text-6xl">8 weeks</p>
-              <p className="mt-2 text-sm text-muted-foreground">to full-team use</p>
+              <p className={`text-xs font-semibold uppercase tracking-[0.18em] ${label}`}>Rollout outcome</p>
+              <p className={`mt-3 text-5xl font-medium tracking-[-0.06em] sm:text-6xl ${value}`}>8 weeks</p>
+              <p className={`mt-2 text-sm ${body}`}>to full-team use</p>
             </div>
-            <p className="max-w-36 text-right font-mono text-xs leading-relaxed text-foreground/58">
+            <p className={`max-w-36 text-right font-mono text-xs leading-relaxed ${faint}`}>
               Evaluation<br />Configuration<br />Support<br />Refinement
             </p>
           </div>
           <div>
-            <div className="mb-3 flex justify-between font-mono text-[11px] text-foreground/52">
+            <div className={`mb-3 flex justify-between font-mono text-[11px] ${faint}`}>
               <span>Start</span>
               <span>Week 2</span>
               <span>Week 4</span>
               <span>Week 6</span>
               <span>Week 8</span>
             </div>
-            <div className="relative h-px bg-white/[0.16]">
-              <div className="absolute inset-y-[-2px] left-0 w-full bg-accent/75" />
-              <div className="absolute right-0 top-[-5px] h-3 w-3 border border-accent bg-[#171a1f]" />
+            <div className={`relative h-px ${track}`}>
+              <div className={`absolute inset-y-[-2px] left-0 w-full ${fill}`} />
+              <div className={`absolute right-0 top-[-5px] h-3 w-3 border ${cap}`} />
             </div>
-            <p className="mt-5 max-w-md text-sm leading-relaxed text-muted-foreground">
+            <p className={`mt-5 max-w-md text-sm leading-relaxed ${body}`}>
               Configuration, training, support, and refinement stayed connected to how practitioners documented care.
             </p>
           </div>
@@ -57,7 +75,7 @@ function ConfidentialVisual({ project, tone = 'dark' }: { project: Project; tone
   const slotFilled = light
     ? 'border-[#705829]/45 bg-[#705829]/[0.14] text-[#5d481f]'
     : 'border-accent/40 bg-accent/[0.14] text-accent';
-  const inkFaint = light ? 'text-[#8b8371]' : 'text-white/45';
+  const inkFaint = light ? 'text-[#6b6353]' : 'text-white/45';
 
   const Slot = ({ label, filled = false, w }: { label: string; filled?: boolean; w: string }) => (
     <span
@@ -166,13 +184,12 @@ export default function WorkCard({
   const light = tone === 'light';
 
   return (
-    <motion.article
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '0px 0px -8% 0px' }}
-      transition={{ duration: 0.8, delay: (index % 2) * 0.06, ease: [0.16, 1, 0.3, 1] }}
-      className={`group ${className}`}
-    >
+    // The card is the evidence, so it resolves on the shared `figure` beat
+    // rather than carrying its own timing. ScrollReveal also owns the mobile
+    // branch: blur and scale are too expensive during iOS URL-bar resize, and
+    // MotionConfig's reduced-motion strips transforms but not filters.
+    <ScrollReveal variant="figure" delay={(index % 2) * 0.08} className={className}>
+      <article className="group">
       <Link
         href={`/work/${project.slug}`}
         aria-label={`View ${project.title} project`}
@@ -211,6 +228,7 @@ export default function WorkCard({
           </div>
         </div>
       </Link>
-    </motion.article>
+      </article>
+    </ScrollReveal>
   );
 }
