@@ -15,11 +15,6 @@ export interface GalleryItem extends ShotMeta {
   caption: string;
 }
 
-export interface ProjectProof {
-  value: string;
-  label: string;
-}
-
 export interface Project {
   slug: string;
   title: string;
@@ -27,15 +22,13 @@ export interface Project {
   category: string;
   summary: string;
   cardSummary?: string;
-  proof?: ProjectProof[];
-  contribution: string[];
+  cardOutcome?: string;
+  role: string;
   intro: string[];
   gallery: GalleryItem[];
-  decisionHeading?: string;
-  decision: string;
+  approach: string;
   outcomes: string[];
   environment?: string;
-  delivery?: string;
   liveUrl?: string;
   card?: ShotMeta;
   confidentialNote?: string;
@@ -56,37 +49,23 @@ export const projects: Project[] = [
     summary:
       'Introduced a clinical documentation platform across a physiotherapy team, from evaluation and configuration through training, rollout, and refinement.',
     cardSummary:
-      'Led evaluation, configuration, training, and rollout to full-team use within eight weeks.',
-    proof: [
-      { value: '8 weeks', label: 'from evaluation to full-team use' },
-      { value: '~3 hours per week', label: 'estimated time saved per practitioner' },
-    ],
-    contribution: [
-      'Workflow evaluation',
-      'Configuration',
-      'Team training',
-      'SOP development',
-      'Go-live support',
-      'Team rollout',
-      'Post-launch refinement',
-    ],
+      'Led clinic-side evaluation, configuration, training, go-live support, and refinement for a new clinical documentation platform.',
+    role:
+      'I led clinic-side evaluation, configuration, team training, go-live support, and post-launch refinement.',
     intro: [
       'A physiotherapy team was introducing a new documentation platform into an established clinical routine. The central question was not simply whether the tool worked, but whether it could reduce documentation time without creating new uncertainty, inconsistency, or administrative burden.',
-      'I led the clinic-side evaluation, configuration, training, rollout support, and refinement. Full-team use was reached within eight weeks.',
+      'I led the clinic-side evaluation, configuration, training, rollout support, and refinement, keeping the implementation connected to how practitioners actually documented care.',
     ],
     gallery: [],
     confidentialNote:
       'The clinic identity and practitioner information are omitted. The figures below reconstruct the rollout without reproducing private records.',
-    decisionHeading: 'Treat the rollout as an operating change, not a one-time training event.',
-    decision:
+    approach:
       'Configuration, shared expectations, support, and refinement remained connected to how practitioners actually documented care.',
     outcomes: [
       'Full-team use was reached within eight weeks.',
       'The rollout was estimated to save each practitioner approximately three hours per week.',
     ],
     environment: 'AI documentation platform · Clinical workflows · Team training · Documented SOPs',
-    delivery:
-      'I led evaluation, configuration, training, SOP development, go-live support, and post-launch refinement on the clinic side.',
     tier: 'principal',
   },
   {
@@ -97,23 +76,10 @@ export const projects: Project[] = [
     summary:
       'A 60+ page patient education and booking platform organized around the different ways people look for help: by body region, symptom, condition, or treatment.',
     cardSummary:
-      'Built and iterated a 60+ page patient education and booking platform; monthly Google Search clicks increased from 27 in July 2025 to 93 in July 2026.',
-    proof: [
-      { value: '27 to 93', label: 'monthly Google Search clicks, July 2025 to July 2026' },
-      { value: '60+ pages', label: 'patient education and booking platform launched' },
-      { value: '54.2 to 9.8', label: 'average Google Search position, July 2025 to July 2026 (lower is better)' },
-    ],
-    contribution: [
-      'Clinical requirements',
-      'Information architecture',
-      'Content structure',
-      'Navigation',
-      'Booking pathways',
-      'Analytics',
-      'Testing',
-      'Iteration',
-      'AI-assisted development',
-    ],
+      'Built a 60+ page patient education and booking platform organized around how people actually look for help.',
+    cardOutcome: 'Google Search clicks more than tripled year over year.',
+    role:
+      'I led the clinical requirements, information architecture, content structure, navigation, booking pathways, testing, and ongoing iteration.',
     intro: [
       'KinetiKare is the patient education and booking platform I founded and operate for my physiotherapy practice serving Burlington, Waterdown, and Oakville. It is designed for people who may know where they hurt or what they are experiencing without knowing the name of the condition.',
       'The platform combines body-region navigation, symptom-based guidance, condition information, treatment pages, comparisons, patient reviews, and direct online booking.',
@@ -164,14 +130,12 @@ export const projects: Project[] = [
         caption: 'Where most visits happen, with booking and calling a tap away.',
       },
     ],
-    decision:
+    approach:
       'Patients do not always know the name of their condition. The platform therefore combines body-region navigation, symptom-led guides, and side-by-side comparisons instead of relying exclusively on diagnostic categories. The same clinical content is reachable from three directions because people arrive with three different kinds of questions.',
     outcomes: [
-      'Monthly Google Search clicks increased from 27 in July 2025 to 93 in July 2026, while average result position improved from 54.2 to 9.8.',
+      'Monthly Google Search clicks increased from 27 in July 2025 to 93 in July 2026.',
     ],
     environment: 'Next.js · GitHub · Vercel · Jane App · Google Search Console',
-    delivery:
-      'I led clinical requirements, information architecture, content, and testing; the implementation was built, refined, and maintained with Claude Code and Codex.',
     liveUrl: 'https://www.kinetikarephysio.com',
     card: {
       src: '/images/work/kinetikare-home.webp',
@@ -190,19 +154,10 @@ export const projects: Project[] = [
     summary:
       'Launching physiotherapy within an established multidisciplinary clinic while redesigning the clinic’s website and digital operations around its services as a whole.',
     cardSummary:
-      'Launched physiotherapy as a new clinic service and led the clinic-wide website relaunch. Monthly Google Search clicks increased from 25 in July 2025 to 112 in July 2026.',
-    proof: [
-      { value: '25 to 112', label: 'monthly Google Search clicks, July 2025 to July 2026' },
-    ],
-    contribution: [
-      'Service launch',
-      'Website strategy',
-      'Information architecture',
-      'Online booking',
-      'Content',
-      'Analytics',
-      'Search performance',
-    ],
+      'Launched physiotherapy and rebuilt the clinic website around its six services and their booking paths.',
+    cardOutcome: 'Google Search clicks increased 4.5 times year over year.',
+    role:
+      'I led the physiotherapy service launch, website strategy, information architecture, content, online-booking pathways, and analytics.',
     intro: [
       'Endorphins is an established multidisciplinary clinic in Burlington. I joined to launch physiotherapy as a new service and subsequently took responsibility for the clinic’s website and broader digital operations.',
       'The work involved both establishing the new service and improving how the clinic presents its different services, practitioners, and booking options to the public.',
@@ -253,15 +208,13 @@ export const projects: Project[] = [
         caption: 'Most local-search visits arrive on mobile, so calling and booking stay in reach.',
       },
     ],
-    decision:
+    approach:
       'The clinic’s services needed to remain clear on their own terms while still feeling like part of one multidisciplinary practice. The website structure, content, and online booking options were designed around that balance.',
     outcomes: [
       'Physiotherapy launched as a functioning service within the clinic.',
       'The redesigned site gives each service a clear public page, with online booking where the discipline supports it and reception contact everywhere else. Monthly Google Search clicks increased from 25 in July 2025 to 112 in July 2026 following the relaunch.',
     ],
     environment: 'Custom site · GitHub Actions · Jane App · Google Analytics · Google Business Profile',
-    delivery:
-      'I led the service launch, website strategy, information architecture, content, and analytics; the site implementation was built and maintained with Claude Code and Codex.',
     liveUrl: 'https://endorphinshealth.com',
     card: {
       src: '/images/work/endorphins-home-2026-08.webp',
@@ -280,19 +233,10 @@ export const projects: Project[] = [
     summary:
       'A reusable drafting workflow that turned repetitive intake and document-generation work into a structured operating process.',
     cardSummary:
-      'Reduced document-generation time from approximately three hours to 30 minutes per matter and documented the workflow for independent use by the practitioner.',
-    proof: [
-      { value: '~3 hours to 30 minutes', label: 'document-generation time per matter' },
-    ],
-    contribution: [
-      'Workflow mapping',
-      'Bottleneck identification',
-      'Template library',
-      'LLM-supported drafting',
-      'Prompt design',
-      'Quality assurance',
-      'Adoption',
-    ],
+      'Mapped a recurring drafting process and rebuilt it around reusable templates, structured inputs, and practitioner review.',
+    cardOutcome: 'Drafting time fell from about three hours to 30 minutes per matter.',
+    role:
+      'I led workflow mapping, template design, prompt design, quality assurance, and implementation with the practitioner.',
     intro: [
       'Tax Relief Counsel is a solo tax-law practice whose matters generate long, structured documents from broadly similar inputs. Before this project, each document was drafted largely from scratch: the same sections rebuilt every time, with consistency depending on attention and available hours on a given day.',
       'I learned the practice’s workflow from the inside, mapped where the time actually went, and rebuilt the drafting process around a reusable template library with LLM-supported drafting. The substance of the work was finding the repeatable structure inside matters that looked bespoke, then shaping it into a process the practitioner can operate independently.',
@@ -300,15 +244,13 @@ export const projects: Project[] = [
     gallery: [],
     confidentialNote:
       'Client materials are confidential. The figures below are reconstructed views of the process rather than screenshots of matter documents.',
-    decision:
+    approach:
       'The drafting process could not be meaningfully improved until the recurring inputs, decisions, and document structures were standardized. The template library came first; the automation only became reliable once the structure existed for it to fill.',
     outcomes: [
       'Document-generation time fell from approximately three hours to about 30 minutes per matter.',
       'Documented for ongoing practitioner operation, with quality checkpoints built into the process rather than left to memory.',
     ],
     environment: 'Claude Code · Structured template library · Documented SOPs',
-    delivery:
-      'I led workflow mapping, template design, prompt design, and quality assurance; the drafting tooling was built with Claude Code around the practice’s existing habits.',
     tier: 'principal',
   },
   {
@@ -318,14 +260,8 @@ export const projects: Project[] = [
     category: 'Information Architecture · Digital Experience',
     summary:
       'A single destination that carries every guest from invitation to itinerary: the day itself, getting there, where to stay, and the optional Machu Picchu adventure.',
-    contribution: [
-      'Information architecture',
-      'Content structure',
-      'Travel and event journeys',
-      'Forms',
-      'Responsive experience',
-      'AI-assisted development',
-    ],
+    role:
+      'I led the information architecture, content structure, guest journeys, forms, responsive design, and testing.',
     intro: [
       'A wedding in Peru asks a lot of its guests: an international flight, an unfamiliar city, a venue outside Lima, and an optional multi-day Machu Picchu trip afterward. This site gives every guest one place that answers the practical questions.',
       'The site organizes the ceremony and reception schedule, arrival guidance, hotel and neighbourhood information, maps and calendar files, a structured RSVP flow, and a day-by-day itinerary for the optional adventure, all designed to be read on a phone while travelling.',
@@ -372,14 +308,12 @@ export const projects: Project[] = [
         caption: 'Schedule, addresses, and actions readable at a glance on a phone.',
       },
     ],
-    decision:
+    approach:
       'The site needed to become the single source of truth for both event and travel logistics, particularly for guests using it from their phones while travelling. Every section is structured around a question a guest would actually ask, in the order they would ask it.',
     outcomes: [
       'Guests get one authoritative link covering the ceremony, travel, lodging, RSVP, and the optional adventure, replacing scattered group messages and documents.',
     ],
     environment: 'Next.js · Vercel · Framer Motion',
-    delivery:
-      'I led information architecture, content structure, and journey design; the site was built, tested, and refined with Claude Code.',
     card: {
       src: '/images/work/wedding-hero.webp',
       alt: 'Wedding website arrival screen with a framed photo, names, and date',

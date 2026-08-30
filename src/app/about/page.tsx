@@ -68,19 +68,9 @@ export default function About() {
               className="enter-fade mt-9 max-w-2xl text-lg md:text-[1.35rem] text-foreground/[0.76] font-light leading-relaxed"
               style={{ '--hero-delay': '0.34s' } as CSSProperties}
             >
-              My background spans frontline healthcare, client development, team leadership, service operations, and
-              digital delivery.
+              My approach to implementation comes from years of direct patient care, one-to-one coaching, team
+              leadership, and responsibility for day-to-day services.
             </p>
-
-            <div
-              className="enter-fade mt-10 flex flex-wrap gap-x-6 gap-y-3 text-sm text-muted-foreground"
-              style={{ '--hero-delay': '0.46s' } as CSSProperties}
-            >
-              <span>Implementation</span>
-              <span>Service operations</span>
-              <span>Workflow improvement</span>
-              <span>Digital delivery</span>
-            </div>
           </div>
 
         </div>
@@ -113,11 +103,9 @@ export default function About() {
                 <article className="mt-10 border-t border-white/[0.09] pt-7">
                   <h3 className="text-xl font-medium tracking-tight text-foreground/[0.92]">Client and team leadership</h3>
                   <p className="mt-4 text-base leading-relaxed text-muted-foreground md:text-lg">
-                    Before physiotherapy, I delivered more than 3,000 hours of that total as one-to-one personal training, generated
-                    more than $375K in fitness-service sales across training and management roles, and managed a
-                    25-person team. That experience developed the commercial and relationship side of my work:
-                    consultative assessment, ongoing coaching, performance management, client retention, and
-                    accountability for results.
+                    Managing a 25-person fitness team added responsibility for coaching others, performance, and
+                    commercial results. That experience still shapes how I communicate expectations, support adoption,
+                    and stay accountable for outcomes.
                   </p>
                 </article>
               </div>
@@ -138,6 +126,38 @@ export default function About() {
             </ScrollReveal>
           </div>
 
+        </div>
+      </section>
+
+      <section className="px-6 md:px-12 xl:px-20 py-24 md:py-32">
+        <div className="max-w-[1160px] mx-auto grid lg:grid-cols-12 gap-12 lg:gap-20">
+          <ScrollReveal direction="up" className="lg:col-span-5">
+            <p className="text-xs font-medium tracking-[0.24em] uppercase text-accent/70 mb-5">
+              Method
+            </p>
+            <h2 className="text-3xl md:text-5xl font-medium tracking-tight text-balance">
+              How I work.
+            </h2>
+          </ScrollReveal>
+
+          <ScrollReveal direction="up" delay={0.08} className="lg:col-span-7 lg:pt-10">
+            <div className="max-w-2xl border-t border-white/[0.09]">
+              <p className="py-6 text-lg md:text-xl font-light leading-relaxed text-foreground/[0.82] border-b border-white/[0.08]">
+                Every workflow carries more than its visible steps. It also carries judgment, responsibility, time
+                pressure, incomplete information, and workarounds people developed to keep things moving. Some create
+                waste. Others compensate for something the formal process never solved.
+              </p>
+              <p className="py-6 text-base md:text-lg leading-relaxed text-muted-foreground border-b border-white/[0.08]">
+                Before changing anything, I try to understand what decisions are being made, who relies on them, where
+                the information comes from, and what cannot be lost. That reduces the risk of solving one problem by
+                moving the burden somewhere else.
+              </p>
+              <p className="pt-6 text-base md:text-lg leading-relaxed text-muted-foreground">
+                Technology and automation are useful when they reduce effort without weakening judgment, quality, or
+                accountability. I focus on the operating result as a whole, not simply whether one step became faster.
+              </p>
+            </div>
+          </ScrollReveal>
         </div>
       </section>
 
@@ -175,38 +195,6 @@ export default function About() {
         </div>
       </section>
 
-      <section className="px-6 md:px-12 xl:px-20 py-24 md:py-32">
-        <div className="max-w-[1160px] mx-auto grid lg:grid-cols-12 gap-12 lg:gap-20">
-          <ScrollReveal direction="up" className="lg:col-span-5">
-            <p className="text-xs font-medium tracking-[0.24em] uppercase text-accent/70 mb-5">
-              Method
-            </p>
-            <h2 className="text-3xl md:text-5xl font-medium tracking-tight text-balance">
-              How I work.
-            </h2>
-          </ScrollReveal>
-
-          <ScrollReveal direction="up" delay={0.08} className="lg:col-span-7 lg:pt-10">
-            <div className="max-w-2xl border-t border-white/[0.09]">
-              <p className="py-6 text-lg md:text-xl font-light leading-relaxed text-foreground/[0.82] border-b border-white/[0.08]">
-                Every workflow carries more than its visible steps. It also carries judgment, responsibility, time
-                pressure, incomplete information, and workarounds people developed to keep things moving. Some create
-                waste. Others compensate for something the formal process never solved.
-              </p>
-              <p className="py-6 text-base md:text-lg leading-relaxed text-muted-foreground border-b border-white/[0.08]">
-                Before changing anything, I try to understand what decisions are being made, who relies on them, where
-                the information comes from, and what cannot be lost. That reduces the risk of solving one problem by
-                moving the burden somewhere else.
-              </p>
-              <p className="pt-6 text-base md:text-lg leading-relaxed text-muted-foreground">
-                Technology and automation are useful when they reduce effort without weakening judgment, quality, or
-                accountability. I focus on the operating result as a whole, not simply whether one step became faster.
-              </p>
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
-
       <section className="px-6 md:px-12 xl:px-20 py-24 md:py-32 border-t border-white/[0.07]">
         <div className="max-w-[1160px] mx-auto grid lg:grid-cols-12 gap-14 lg:gap-20">
           <ScrollReveal direction="up" className="lg:col-span-4">
@@ -226,8 +214,8 @@ export default function About() {
                   </p>
                 </div>
                 <p className="text-base text-muted-foreground leading-relaxed max-w-2xl">
-                  At a private physiotherapy clinic, I led a clinical documentation rollout to full-team use within
-                  eight weeks while carrying a full clinical caseload.
+                  At a private physiotherapy clinic, I led a documentation-platform rollout while carrying a full
+                  clinical caseload, keeping the implementation connected to how the team actually worked.
                 </p>
               </article>
             </ScrollReveal>

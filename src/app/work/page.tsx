@@ -39,7 +39,7 @@ export default function WorkPage() {
               </h1>
               <p className="max-w-lg border-l border-white/[0.12] pl-6 text-lg leading-relaxed text-foreground/72 lg:col-span-4">
                 Projects across healthcare platforms, clinic operations, professional services, and digital
-                delivery, each with the decisions behind it.
+                delivery. Each shows the problem, the work, and what changed.
               </p>
             </div>
           </div>

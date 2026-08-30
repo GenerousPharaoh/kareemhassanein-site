@@ -118,16 +118,16 @@ export default function Home() {
                 className="enter-fade max-w-lg text-base leading-relaxed text-foreground/76 sm:text-lg lg:text-xl"
                 style={{ '--hero-delay': '0.88s', '--enter-dur': '0.95s' } as CSSProperties}
               >
-                I work across healthcare and professional services, drawing on a background in frontline care, team
-                leadership, and more than 10,000 hours of direct client work. The case studies below cover a clinical
-                software rollout, two clinic websites, and a drafting workflow rebuilt for a solo law practice.
+                I work across healthcare and professional services, drawing on more than 10,000 hours of direct client
+                work. The projects below cover a clinical software rollout, two clinic websites, and a legal drafting
+                workflow.
               </p>
               <div
                 className="enter-fade mt-8 flex flex-col gap-3 sm:flex-row lg:flex-col xl:flex-row xl:gap-2"
                 style={{ '--hero-delay': '1.08s', '--enter-dur': '0.9s' } as CSSProperties}
               >
                 <Link
-                  href="/work"
+                  href="#selected-work"
                   className="group inline-flex min-h-12 items-center justify-center gap-3 whitespace-nowrap rounded-full bg-accent px-5 text-sm font-semibold text-background transition-colors duration-500 hover:bg-accent/90"
                 >
                   View selected work
@@ -135,7 +135,7 @@ export default function Home() {
                 </Link>
                 <Link
                   href="/about"
-                  className="inline-flex min-h-12 items-center justify-center whitespace-nowrap rounded-full border border-white/[0.14] px-5 text-sm font-semibold text-foreground/78 transition-colors duration-500 hover:border-accent/45 hover:text-foreground"
+                  className="hidden min-h-12 items-center justify-center whitespace-nowrap rounded-full border border-white/[0.14] px-5 text-sm font-semibold text-foreground/78 transition-colors duration-500 hover:border-accent/45 hover:text-foreground sm:inline-flex"
                 >
                   About Kareem
                 </Link>
@@ -144,7 +144,7 @@ export default function Home() {
                 className="enter-fade mt-6 max-w-lg text-xs leading-relaxed text-muted-foreground"
                 style={{ '--hero-delay': '1.22s', '--enter-dur': '0.9s' } as CSSProperties}
               >
-                Open to full-time opportunities and selected advisory work · Hamilton and Burlington, Ontario · On-site, hybrid, or remote
+                Hamilton and Burlington, Ontario · Open to on-site, hybrid, or remote opportunities
               </p>
             </div>
           </div>
@@ -172,29 +172,28 @@ export default function Home() {
       </section>
 
       {/* Featured work on warm paper */}
-      <section className="bg-[#ECE6D9] px-6 pb-24 pt-28 text-[#1c1812] sm:px-8 md:pb-32 md:pt-44 lg:px-12 xl:px-20">
+      <section id="selected-work" className="scroll-mt-20 bg-[#ECE6D9] px-6 pb-24 pt-28 text-[#1c1812] sm:px-8 md:pb-32 md:pt-44 lg:px-12 xl:px-20">
         <div className="mx-auto max-w-[1320px]">
           <ScrollReveal direction="up" className="mb-16 md:mb-24">
             <p className="mb-5 text-xs font-semibold uppercase tracking-[0.2em] text-[#705829]">Selected work</p>
             <div className="grid gap-6 lg:grid-cols-12 lg:items-end">
               <h2 className="max-w-4xl text-4xl font-medium tracking-[-0.045em] text-[#1c1812] sm:text-5xl md:text-6xl lg:col-span-8">
-                Outcomes, and the <span className="font-serif font-normal italic text-[#705829]">decisions behind them.</span>
+                Projects and <span className="font-serif font-normal italic text-[#705829]">results.</span>
               </h2>
               <p className="max-w-md text-base leading-relaxed text-[#57503f] lg:col-span-4">
-                Case studies across service launches, workflow improvement, technology adoption, and digital products.
+                Four projects across clinical software, clinic operations, professional services, and patient-facing digital products.
               </p>
             </div>
           </ScrollReveal>
 
-          <div className="grid gap-24 md:gap-32">
+          <div className="grid gap-16 md:grid-cols-2 md:gap-x-10 md:gap-y-20">
             {featured.map((project, index) => (
               <WorkCard
                 key={project.slug}
                 project={project}
                 summary={project.cardSummary}
                 index={index}
-                variant="row"
-                flip={index % 2 === 1}
+                variant="stack"
                 tone="light"
               />
             ))}

@@ -99,12 +99,12 @@ export default function ProjectDetail({ project, next }: { project: Project; nex
   return (
     <main className="bg-background text-foreground pt-20">
       {/* The screen. */}
-      <section className="relative px-6 md:px-12 xl:px-20 pt-16 md:pt-20 pb-20 md:pb-28">
+      <section className="relative px-6 pb-16 pt-12 md:px-12 md:pb-28 md:pt-20 xl:px-20">
         <div className="relative max-w-[1280px] mx-auto">
           <div className="enter-fade" style={{ '--hero-delay': '0.04s' } as CSSProperties}>
             <Link
               href="/work"
-              className="inline-flex min-h-11 items-center gap-2 text-sm text-muted-foreground/75 hover:text-accent transition-colors duration-300 mb-10 md:mb-14"
+              className="mb-8 inline-flex min-h-11 items-center gap-2 text-sm text-muted-foreground/75 transition-colors duration-300 hover:text-accent md:mb-14"
             >
               <ArrowLeft size={15} />
               All work
@@ -130,24 +130,6 @@ export default function ProjectDetail({ project, next }: { project: Project; nex
               <p className="max-w-xl text-lg md:text-xl font-light leading-relaxed text-foreground/78">
                 {project.summary}
               </p>
-
-              {project.proof && project.proof.length > 0 && (
-                <dl className="mt-8 border-y border-white/[0.12]">
-                  {project.proof.map((item, index) => (
-                    <div
-                      key={`${item.value}-${item.label}`}
-                      className={`grid grid-cols-[minmax(7.5rem,0.8fr)_1.4fr] items-baseline gap-4 py-3 ${
-                        index > 0 ? 'border-t border-white/[0.09]' : ''
-                      }`}
-                    >
-                      <dt className="col-start-2 text-xs leading-snug text-muted-foreground/82">{item.label}</dt>
-                      <dd className="col-start-1 row-start-1 text-sm font-semibold tracking-[-0.015em] text-foreground/92">
-                        {item.value}
-                      </dd>
-                    </div>
-                  ))}
-                </dl>
-              )}
 
               {project.liveUrl && (
                 <a
@@ -191,9 +173,9 @@ export default function ProjectDetail({ project, next }: { project: Project; nex
                 </div>
                 <div className="mt-10 max-w-3xl">
                   <p className="mb-2 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground/80">
-                    My contribution
+                    My role
                   </p>
-                  <p className="text-sm leading-loose text-foreground/72">{project.contribution.join(' · ')}</p>
+                  <p className="text-sm leading-relaxed text-foreground/72">{project.role}</p>
                 </div>
               </ScrollReveal>
             </section>
@@ -245,18 +227,13 @@ export default function ProjectDetail({ project, next }: { project: Project; nex
               </section>
             )}
 
-            <section aria-labelledby="decision">
+            <section aria-labelledby="approach">
               <ScrollReveal direction="up">
-                <SectionHeading id="decision">The decision that shaped it</SectionHeading>
+                <SectionHeading id="approach">Approach</SectionHeading>
               </ScrollReveal>
               <ScrollReveal direction="up">
                 <div className="max-w-3xl">
-                  {project.decisionHeading && (
-                    <h3 className="mb-4 text-xl font-medium leading-snug tracking-[-0.025em] text-foreground md:text-2xl">
-                      {project.decisionHeading}
-                    </h3>
-                  )}
-                  <p className="text-lg leading-relaxed text-muted-foreground md:text-xl">{project.decision}</p>
+                  <p className="text-lg leading-relaxed text-muted-foreground md:text-xl">{project.approach}</p>
                 </div>
               </ScrollReveal>
             </section>
@@ -274,24 +251,12 @@ export default function ProjectDetail({ project, next }: { project: Project; nex
                   ))}
                 </div>
 
-                {(project.environment || project.delivery) && (
-                  <div className="mt-12 max-w-3xl space-y-5 border-t border-white/[0.14] pt-7">
-                    {project.environment && (
-                      <div>
-                        <p className="mb-2 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground/80">
-                          Built with
-                        </p>
-                        <p className="text-sm leading-loose text-foreground/72">{project.environment}</p>
-                      </div>
-                    )}
-                    {project.delivery && (
-                      <div>
-                        <p className="mb-2 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground/80">
-                          Delivery
-                        </p>
-                        <p className="text-sm leading-loose text-foreground/72">{project.delivery}</p>
-                      </div>
-                    )}
+                {project.environment && (
+                  <div className="mt-12 max-w-3xl border-t border-white/[0.14] pt-7">
+                    <p className="mb-2 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground/80">
+                      Tools and environment
+                    </p>
+                    <p className="text-sm leading-loose text-foreground/72">{project.environment}</p>
                   </div>
                 )}
               </ScrollReveal>

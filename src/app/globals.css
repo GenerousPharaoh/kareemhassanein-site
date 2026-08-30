@@ -127,7 +127,7 @@ html {
    Two surfaces.
 
    The site has one organizing idea: the screens Kareem ships are dark, and the
-   record he keeps (context, contribution, decisions, outcomes) is paper. The
+   record he keeps (context, role, approach, outcomes) is paper. The
    `.paper` scope re-points the same design tokens at ink-on-bone, so every
    component built against --foreground / --accent / --surface flips without a
    light variant of its own.
