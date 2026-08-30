@@ -87,7 +87,7 @@ function BottomBar({ tone = 'dark' }: { tone?: 'dark' | 'page' }) {
     <div className={`mx-auto flex max-w-[1440px] flex-col gap-3 px-6 py-5 text-[10px] font-semibold uppercase tracking-[0.16em] sm:px-8 md:flex-row md:items-center md:justify-between lg:px-12 xl:px-20 ${muted}`}>
       <span>Kareem Hassanein</span>
       <div className="flex flex-wrap gap-x-5 gap-y-2">
-        <span>Hamilton and Burlington, Ontario · Remote across Canada</span>
+        <span>Hamilton and Burlington, Ontario · On-site, hybrid, or remote</span>
         <span>© 2026</span>
       </div>
     </div>

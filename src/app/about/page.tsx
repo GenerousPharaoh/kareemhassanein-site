@@ -113,7 +113,7 @@ export default function About() {
                 <article className="mt-10 border-t border-white/[0.09] pt-7">
                   <h3 className="text-xl font-medium tracking-tight text-foreground/[0.92]">Client and team leadership</h3>
                   <p className="mt-4 text-base leading-relaxed text-muted-foreground md:text-lg">
-                    Before physiotherapy, I delivered more than 3,000 hours of one-to-one personal training, generated
+                    Before physiotherapy, I delivered more than 3,000 hours of that total as one-to-one personal training, generated
                     more than $375K in fitness-service sales across training and management roles, and managed a
                     25-person team. That experience developed the commercial and relationship side of my work:
                     consultative assessment, ongoing coaching, performance management, client retention, and

@@ -9,6 +9,7 @@ import {
   ClinicalAdoptionFigure,
   ClinicalWorkflowFigure,
   TrcWorkflowHeroFigure,
+  TrcTimeFigure,
   TrcPipelineFigure,
   TrcLibraryFigure,
 } from '@/components/WorkDiagrams';
@@ -229,6 +230,9 @@ export default function ProjectDetail({ project, next }: { project: Project; nex
 
                 {project.slug === 'tax-relief-counsel' && (
                   <div className="space-y-8 md:space-y-10">
+                    <ScrollReveal direction="up">
+                      <TrcTimeFigure />
+                    </ScrollReveal>
                     <ScrollReveal direction="up">
                       <TrcPipelineFigure />
                     </ScrollReveal>

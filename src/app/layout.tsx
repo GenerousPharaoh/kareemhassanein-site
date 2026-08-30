@@ -25,12 +25,12 @@ const cormorant = Cormorant_Garamond({
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.khassanein.bio"),
   title: "Kareem Hassanein | Implementation & Service Operations",
-  description: "Portfolio of Kareem Hassanein: selected work in implementation, service operations, workflow improvement, and digital delivery across healthcare and professional services.",
+  description: "Selected work by Kareem Hassanein in implementation, service operations, workflow improvement, and digital delivery across healthcare and professional services.",
   keywords: ["implementation consulting", "service operations", "operations improvement", "workflow improvement", "technology adoption", "service design", "healthcare operations", "digital delivery"],
   authors: [{ name: "Kareem Hassanein" }],
   openGraph: {
     title: "Kareem Hassanein | Implementation & Service Operations",
-    description: "Portfolio of Kareem Hassanein: selected work in implementation, service operations, workflow improvement, and digital delivery across healthcare and professional services.",
+    description: "Selected work by Kareem Hassanein in implementation, service operations, workflow improvement, and digital delivery across healthcare and professional services.",
     type: "website",
     locale: "en_CA",
     url: "https://www.khassanein.bio",
@@ -40,14 +40,14 @@ export const metadata: Metadata = {
         url: "https://www.khassanein.bio/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Kareem Hassanein, selected work across healthcare, workflow, and digital systems",
+        alt: "Kareem Hassanein, selected work across healthcare, workflow, and digital delivery",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Kareem Hassanein | Implementation & Service Operations",
-    description: "Portfolio of Kareem Hassanein: selected work in implementation, service operations, workflow improvement, and digital delivery across healthcare and professional services.",
+    description: "Selected work by Kareem Hassanein in implementation, service operations, workflow improvement, and digital delivery across healthcare and professional services.",
     images: ["https://www.khassanein.bio/og-image.png"],
   },
   robots: {
@@ -93,13 +93,13 @@ const jsonLd = {
     {
       "@type": "CollegeOrUniversity",
       name: "McMaster University",
-      description: "BSc Kinesiology"
+      description: "BSc Kinesiology (Honours)"
     }
   ],
   affiliation: {
     "@type": "Organization",
-    name: "Lab2Market Validate, McMaster University Industry Liaison Office",
-    description: "Volunteer mentor, June 2026 cohort"
+    name: "Lab2Market Validate, McMaster University",
+    description: "Volunteer mentor"
   },
   address: {
     "@type": "PostalAddress",

@@ -82,7 +82,7 @@ export function ClinicalAdoptionFigure() {
 
         <div className="border-l-2 border-accent/45 pl-4">
           <span className="block text-[11px] font-medium tracking-[0.18em] uppercase text-muted-foreground/80 mb-1.5">
-            Sustained result
+            Estimated ongoing effect
           </span>
           <span className="block text-base text-foreground/90">
             An estimated three hours saved each week per practitioner

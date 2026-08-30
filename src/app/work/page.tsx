@@ -7,10 +7,10 @@ import { additionalProjects, advisory, principalProjects } from '@/lib/work';
 
 export const metadata: Metadata = {
   title: 'Work | Kareem Hassanein',
-  description: 'Selected projects in service launches, workflow improvement, technology adoption, and digital products.',
+  description: 'Selected projects across healthcare platforms, clinic operations, professional services, and digital delivery.',
   openGraph: {
     title: 'Work | Kareem Hassanein',
-    description: 'Selected projects in service launches, workflow improvement, technology adoption, and digital products.',
+    description: 'Selected projects across healthcare platforms, clinic operations, professional services, and digital delivery.',
     url: 'https://www.khassanein.bio/work',
     type: 'website',
     locale: 'en_CA',
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Work | Kareem Hassanein',
-    description: 'Selected projects in service launches, workflow improvement, technology adoption, and digital products.',
+    description: 'Selected projects across healthcare platforms, clinic operations, professional services, and digital delivery.',
     images: ['/og-image.png'],
   },
   alternates: { canonical: 'https://www.khassanein.bio/work' },
@@ -38,7 +38,7 @@ export default function WorkPage() {
                 Selected <span className="font-serif font-normal italic text-accent">projects.</span>
               </h1>
               <p className="max-w-lg border-l border-white/[0.12] pl-6 text-lg leading-relaxed text-foreground/72 lg:col-span-4">
-                Five projects across healthcare platforms, clinic operations, professional services, and digital
+                Projects across healthcare platforms, clinic operations, professional services, and digital
                 delivery, each with the decisions behind it.
               </p>
             </div>

@@ -38,7 +38,6 @@ export interface Project {
   delivery?: string;
   liveUrl?: string;
   card?: ShotMeta;
-  size: 'large' | 'small';
   confidentialNote?: string;
   contextLabel?: string;
   tier?: 'principal' | 'additional';
@@ -59,7 +58,7 @@ export const projects: Project[] = [
     cardSummary:
       'Led evaluation, configuration, training and rollout to full-team use within eight weeks, with an estimated three hours saved per practitioner each week.',
     proof: [
-      { value: '8 weeks', label: 'to full-team use' },
+      { value: '8 weeks', label: 'from evaluation to full-team use' },
       { value: '~3 hours per week', label: 'estimated time saved per practitioner' },
     ],
     contribution: [
@@ -88,7 +87,6 @@ export const projects: Project[] = [
     environment: 'AI documentation platform · Clinical workflows · Team training · Documented SOPs',
     delivery:
       'Evaluation, configuration, training, SOP development, go-live support, and post-launch refinement were led by me on the clinic side.',
-    size: 'large',
     tier: 'principal',
   },
   {
@@ -101,9 +99,9 @@ export const projects: Project[] = [
     cardSummary:
       'Built and iterated a 60+ page patient education and booking platform; monthly Google Search clicks increased from 27 in July 2025 to 93 in July 2026.',
     proof: [
-      { value: '60+ pages', label: 'patient education and booking platform launched' },
       { value: '27 to 93', label: 'monthly Google Search clicks, July 2025 to July 2026' },
-      { value: '54.2 to 9.8', label: 'average Google Search position, July 2025 to July 2026' },
+      { value: '60+ pages', label: 'patient education and booking platform launched' },
+      { value: '54.2 to 9.8', label: 'average Google Search position, July 2025 to July 2026 (lower is better)' },
     ],
     contribution: [
       'Clinical requirements',
@@ -141,7 +139,7 @@ export const projects: Project[] = [
       },
       {
         src: '/images/work/kinetikare-compare.webp',
-        alt: 'Side-by-side comparison table of tennis elbow and golfers elbow',
+        alt: 'Side-by-side comparison table of tennis elbow and golfer’s elbow',
         ...DESKTOP,
         frame: 'browser',
         url: 'kinetikarephysio.com/conditions/compare',
@@ -182,7 +180,6 @@ export const projects: Project[] = [
       frame: 'browser',
       url: 'kinetikarephysio.com',
     },
-    size: 'large',
     tier: 'principal',
   },
   {
@@ -195,7 +192,6 @@ export const projects: Project[] = [
     cardSummary:
       'Launched physiotherapy as a new clinic service and led the clinic-wide website relaunch. Monthly Google Search clicks increased from 25 in July 2025 to 112 in July 2026.',
     proof: [
-      { value: '1 new service', label: 'physiotherapy launched' },
       { value: '25 to 112', label: 'monthly Google Search clicks, July 2025 to July 2026' },
     ],
     contribution: [
@@ -261,7 +257,7 @@ export const projects: Project[] = [
       'The clinic’s services needed to remain clear on their own terms while still feeling like part of one multidisciplinary practice. The website structure, content, and online booking options were designed around that balance.',
     outcomes: [
       'Physiotherapy launched as a functioning service within the clinic.',
-      'The redesigned site gives each service a clear public page and a direct route to online booking. Monthly Google Search clicks increased from 25 in July 2025 to 112 in July 2026 following the relaunch.',
+      'The redesigned site gives each service a clear public page, with online booking where the discipline supports it and reception contact everywhere else. Monthly Google Search clicks increased from 25 in July 2025 to 112 in July 2026 following the relaunch.',
     ],
     environment: 'Custom site · GitHub Actions · Jane App · Google Analytics · Google Business Profile',
     delivery:
@@ -274,7 +270,6 @@ export const projects: Project[] = [
       frame: 'browser',
       url: 'endorphinshealth.com',
     },
-    size: 'large',
     tier: 'principal',
   },
   {
@@ -314,7 +309,6 @@ export const projects: Project[] = [
     environment: 'Claude Code · Structured template library · Documented SOPs',
     delivery:
       'Workflow mapping, template design, prompt design, and quality assurance led by me; the drafting tooling was built with Claude Code around the practice’s existing habits.',
-    size: 'large',
     tier: 'principal',
   },
   {
@@ -392,7 +386,6 @@ export const projects: Project[] = [
       ...DESKTOP,
       frame: 'browser',
     },
-    size: 'small',
     tier: 'additional',
   },
 ];
@@ -419,29 +412,10 @@ export function getProject(slug: string): Project | undefined {
 export const advisory = [
   {
     title: 'Neuro-Mod',
-    desc: 'Advising on the clinical deployment of an augmented-reality pain-management device, with a focus on rehabilitation workflows, clinician onboarding, patient education, interface design, and rollout readiness.',
+    desc: 'Advising on the clinical deployment of ARISE, an augmented-reality therapy for chronic neck pain, with a focus on rehabilitation workflows, clinician onboarding, remote monitoring, patient education, interface design, and rollout readiness.',
   },
   {
-    title: 'Lab2Market · McMaster University',
+    title: 'Lab2Market Validate · McMaster University',
     desc: 'Mentoring health-tech and health-innovation teams on clinical fit, workflow burden, onboarding, adoption, and the practical realities of introducing new products into care environments.',
-  },
-];
-
-export const areasOfWork = [
-  {
-    title: 'Clinical implementation',
-    desc: 'Workflow discovery, configuration, onboarding, training, go-live support, and early adoption.',
-  },
-  {
-    title: 'Workflow and operations',
-    desc: 'Intake, booking, referral, documentation, and professional-service processes.',
-  },
-  {
-    title: 'Digital experience',
-    desc: 'Information architecture, patient and client journeys, content systems, forms, analytics, and search visibility.',
-  },
-  {
-    title: 'AI-enabled delivery',
-    desc: 'Requirements, structured specifications, Claude Code, Codex, iterative testing, troubleshooting, and quality assurance.',
   },
 ];
