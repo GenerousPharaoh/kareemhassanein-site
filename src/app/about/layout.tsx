@@ -3,11 +3,11 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "About | Kareem Hassanein",
   description:
-    "Kareem Hassanein works across implementation, service operations, workflow improvement, technology adoption, and digital delivery.",
+    "Kareem Hassanein brings a background in physiotherapy, one-to-one coaching, team leadership, and clinic operations to implementation work.",
   openGraph: {
     title: "About | Kareem Hassanein",
     description:
-      "Kareem Hassanein works across implementation, service operations, workflow improvement, technology adoption, and digital delivery.",
+      "Kareem Hassanein brings a background in physiotherapy, one-to-one coaching, team leadership, and clinic operations to implementation work.",
     url: "https://www.khassanein.bio/about",
     type: "website",
     locale: "en_CA",
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "About | Kareem Hassanein",
     description:
-      "Kareem Hassanein works across implementation, service operations, workflow improvement, technology adoption, and digital delivery.",
+      "Kareem Hassanein brings a background in physiotherapy, one-to-one coaching, team leadership, and clinic operations to implementation work.",
     images: ["/og-image.png"],
   },
   alternates: {

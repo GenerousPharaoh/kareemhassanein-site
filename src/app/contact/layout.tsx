@@ -3,11 +3,11 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Contact | Kareem Hassanein",
   description:
-    "Get in touch about full-time roles, selected advisory work, or projects in implementation, service operations, and digital delivery.",
+    "Contact Kareem Hassanein about full-time roles, selected advisory work, or project inquiries.",
   openGraph: {
     title: "Contact | Kareem Hassanein",
     description:
-      "Get in touch about full-time roles, selected advisory work, or projects in implementation, service operations, and digital delivery.",
+      "Contact Kareem Hassanein about full-time roles, selected advisory work, or project inquiries.",
     url: "https://www.khassanein.bio/contact",
     type: "website",
     locale: "en_CA",
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Contact | Kareem Hassanein",
     description:
-      "Get in touch about full-time roles, selected advisory work, or projects in implementation, service operations, and digital delivery.",
+      "Contact Kareem Hassanein about full-time roles, selected advisory work, or project inquiries.",
     images: ["/og-image.png"],
   },
   alternates: {

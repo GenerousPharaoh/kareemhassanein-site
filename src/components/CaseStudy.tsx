@@ -90,7 +90,7 @@ function GalleryFigure({ shot }: { shot: GalleryItem }) {
 export default function ProjectDetail({ project, next }: { project: Project; next: Project }) {
   const leadShot = project.gallery[0];
   const remainingGallery = leadShot ? project.gallery.slice(1) : project.gallery;
-  const hasSelectedWork =
+  const hasWorkExamples =
     remainingGallery.length > 0 ||
     project.slug === 'clinical-documentation' ||
     project.slug === 'tax-relief-counsel' ||
@@ -158,10 +158,10 @@ export default function ProjectDetail({ project, next }: { project: Project; nex
       {/* What was written down. */}
       <div className="paper">
         <div className="px-6 py-20 md:px-12 md:py-28 xl:px-20">
-          <div className="mx-auto max-w-[1080px] space-y-20 md:space-y-28">
-            <section aria-labelledby="about-project">
+          <div className="mx-auto max-w-[1080px] space-y-16 md:space-y-24">
+            <section aria-labelledby="project-context">
               <ScrollReveal direction="up">
-                <SectionHeading id="about-project">About the project</SectionHeading>
+                <SectionHeading id="project-context">Context</SectionHeading>
               </ScrollReveal>
               <ScrollReveal direction="up">
                 <div className="max-w-3xl space-y-5">
@@ -180,10 +180,10 @@ export default function ProjectDetail({ project, next }: { project: Project; nex
               </ScrollReveal>
             </section>
 
-            {hasSelectedWork && (
-              <section aria-labelledby="selected-work">
+            {hasWorkExamples && (
+              <section aria-labelledby="work-examples">
                 <ScrollReveal direction="up">
-                  <SectionHeading id="selected-work">Selected work</SectionHeading>
+                  <SectionHeading id="work-examples">The work</SectionHeading>
                 </ScrollReveal>
 
                 {project.confidentialNote && (
@@ -265,7 +265,7 @@ export default function ProjectDetail({ project, next }: { project: Project; nex
         </div>
       </div>
 
-      <section aria-labelledby="next-project-heading" className="px-6 pt-20 pb-24 md:px-12 md:pt-24 md:pb-32 xl:px-20">
+      <section aria-labelledby="next-project-heading" className="px-6 pb-20 pt-16 md:px-12 md:pb-32 md:pt-24 xl:px-20">
         <div className="max-w-[1280px] mx-auto">
           <ScrollReveal direction="up">
             <div className="border-t border-white/[0.09] pt-9">

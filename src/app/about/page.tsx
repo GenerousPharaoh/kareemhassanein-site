@@ -46,7 +46,7 @@ const education = [
 export default function About() {
   return (
     <main className="overflow-hidden bg-background text-foreground pt-20">
-      <section className="relative px-6 pb-10 pt-14 md:px-12 md:pb-28 md:pt-24 xl:px-20">
+      <section className="relative px-6 pb-10 pt-14 md:px-12 md:pb-16 md:pt-24 xl:px-20">
         <div className="relative max-w-[1280px] mx-auto">
           <div className="max-w-3xl">
             <p
@@ -77,7 +77,7 @@ export default function About() {
       </section>
 
 
-      <section className="px-6 pb-20 pt-12 md:px-12 md:py-32 xl:px-20">
+      <section className="px-6 pb-20 pt-12 md:px-12 md:pb-28 md:pt-20 xl:px-20">
         <div className="max-w-[1160px] mx-auto">
           <div className="grid lg:grid-cols-12 gap-12 lg:gap-20">
             <ScrollReveal direction="up" className="lg:col-span-5">
@@ -129,7 +129,7 @@ export default function About() {
         </div>
       </section>
 
-      <section className="px-6 md:px-12 xl:px-20 py-24 md:py-32">
+      <section className="px-6 py-20 md:px-12 md:py-28 xl:px-20">
         <div className="max-w-[1160px] mx-auto grid lg:grid-cols-12 gap-12 lg:gap-20">
           <ScrollReveal direction="up" className="lg:col-span-5">
             <p className="text-xs font-medium tracking-[0.24em] uppercase text-accent/70 mb-5">
@@ -161,7 +161,7 @@ export default function About() {
         </div>
       </section>
 
-      <section className="px-6 md:px-12 xl:px-20 py-24 md:py-32 border-y border-white/[0.07] bg-white/[0.012]">
+      <section className="border-y border-white/[0.07] bg-white/[0.012] px-6 py-20 md:px-12 md:py-28 xl:px-20">
         <div className="max-w-[1160px] mx-auto">
           <ScrollReveal direction="up" className="grid lg:grid-cols-12 gap-8 lg:gap-16 mb-14 md:mb-20">
             <div className="lg:col-span-4">
@@ -195,7 +195,7 @@ export default function About() {
         </div>
       </section>
 
-      <section className="px-6 md:px-12 xl:px-20 py-24 md:py-32 border-t border-white/[0.07]">
+      <section className="border-t border-white/[0.07] px-6 py-20 md:px-12 md:py-28 xl:px-20">
         <div className="max-w-[1160px] mx-auto grid lg:grid-cols-12 gap-14 lg:gap-20">
           <ScrollReveal direction="up" className="lg:col-span-4">
             <p className="text-xs font-medium tracking-[0.24em] uppercase text-accent/70 mb-5">Foundation</p>
@@ -251,7 +251,7 @@ export default function About() {
         </div>
       </section>
 
-      <section className="px-6 md:px-12 xl:px-20 py-24 md:py-32 border-t border-white/[0.07]">
+      <section className="border-t border-white/[0.07] px-6 py-20 md:px-12 md:py-28 xl:px-20">
         <ScrollReveal direction="up" className="max-w-[1160px] mx-auto flex flex-col lg:flex-row lg:items-end lg:justify-between gap-10">
           <div className="max-w-2xl">
             <p className="text-xs font-medium tracking-[0.24em] uppercase text-accent/70 mb-5">Next</p>

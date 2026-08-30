@@ -7,10 +7,10 @@ import { additionalProjects, advisory, principalProjects } from '@/lib/work';
 
 export const metadata: Metadata = {
   title: 'Work | Kareem Hassanein',
-  description: 'Selected projects across healthcare platforms, clinic operations, professional services, and digital delivery.',
+  description: 'Case studies covering a clinical documentation rollout, two clinic websites, and a legal drafting workflow.',
   openGraph: {
     title: 'Work | Kareem Hassanein',
-    description: 'Selected projects across healthcare platforms, clinic operations, professional services, and digital delivery.',
+    description: 'Case studies covering a clinical documentation rollout, two clinic websites, and a legal drafting workflow.',
     url: 'https://www.khassanein.bio/work',
     type: 'website',
     locale: 'en_CA',
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Work | Kareem Hassanein',
-    description: 'Selected projects across healthcare platforms, clinic operations, professional services, and digital delivery.',
+    description: 'Case studies covering a clinical documentation rollout, two clinic websites, and a legal drafting workflow.',
     images: ['/og-image.png'],
   },
   alternates: { canonical: 'https://www.khassanein.bio/work' },
@@ -46,15 +46,15 @@ export default function WorkPage() {
         </div>
       </section>
 
-      <section className="bg-[#ECE6D9] px-6 py-24 text-[#1c1812] sm:px-8 md:py-32 lg:px-12 xl:px-20">
+      <section className="bg-[#ECE6D9] px-6 py-20 text-[#1c1812] sm:px-8 md:py-28 lg:px-12 xl:px-20">
         <div className="mx-auto max-w-[1320px]">
-          <div className="mb-16 flex items-baseline justify-between border-b border-black/[0.14] pb-5 md:mb-24">
+          <div className="mb-14 flex items-baseline justify-between border-b border-black/[0.14] pb-5 md:mb-20">
             <h2 className="text-sm font-semibold uppercase tracking-[0.18em] text-[#1c1812]/74">Principal projects</h2>
             <span className="font-mono text-xs text-[#6b6353]">
               01–{String(principalProjects.length).padStart(2, '0')}
             </span>
           </div>
-          <div className="grid gap-24 md:gap-32">
+          <div className="grid gap-16 md:gap-32">
             {principalProjects.map((project, index) => (
               <WorkCard key={project.slug} project={project} index={index} variant="row" flip={index % 2 === 1} headingLevel={3} tone="light" />
             ))}
@@ -62,7 +62,7 @@ export default function WorkPage() {
         </div>
       </section>
 
-      <section className="border-t border-white/[0.09] px-6 py-24 sm:px-8 md:py-28 lg:px-12 xl:px-20">
+      <section className="border-t border-white/[0.09] px-6 py-20 sm:px-8 md:py-24 lg:px-12 xl:px-20">
         <div className="mx-auto max-w-[1320px]">
           <div className="grid gap-12 lg:grid-cols-12 lg:gap-20">
             <div className="lg:col-span-4">
@@ -95,7 +95,7 @@ export default function WorkPage() {
         </div>
       </section>
 
-      <section className="border-t border-white/[0.09] px-6 py-24 sm:px-8 md:py-28 lg:px-12 xl:px-20">
+      <section className="border-t border-white/[0.09] px-6 py-20 sm:px-8 md:py-24 lg:px-12 xl:px-20">
         <div className="mx-auto grid max-w-[1320px] gap-12 lg:grid-cols-12 lg:gap-20">
           <div className="lg:col-span-4">
             <p className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-accent/80">Current work</p>

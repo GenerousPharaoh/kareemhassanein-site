@@ -25,12 +25,12 @@ const cormorant = Cormorant_Garamond({
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.khassanein.bio"),
   title: "Kareem Hassanein | Implementation & Service Operations",
-  description: "Selected work by Kareem Hassanein in implementation, service operations, workflow improvement, and digital delivery across healthcare and professional services.",
+  description: "Case studies by Kareem Hassanein covering a clinical documentation rollout, two clinic websites, and a legal drafting workflow.",
   keywords: ["implementation consulting", "service operations", "operations improvement", "workflow improvement", "technology adoption", "service design", "healthcare operations", "digital delivery"],
   authors: [{ name: "Kareem Hassanein" }],
   openGraph: {
     title: "Kareem Hassanein | Implementation & Service Operations",
-    description: "Selected work by Kareem Hassanein in implementation, service operations, workflow improvement, and digital delivery across healthcare and professional services.",
+    description: "Case studies by Kareem Hassanein covering a clinical documentation rollout, two clinic websites, and a legal drafting workflow.",
     type: "website",
     locale: "en_CA",
     url: "https://www.khassanein.bio",
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Kareem Hassanein | Implementation & Service Operations",
-    description: "Selected work by Kareem Hassanein in implementation, service operations, workflow improvement, and digital delivery across healthcare and professional services.",
+    description: "Case studies by Kareem Hassanein covering a clinical documentation rollout, two clinic websites, and a legal drafting workflow.",
     images: ["https://www.khassanein.bio/og-image.png"],
   },
   robots: {
@@ -68,7 +68,7 @@ const jsonLd = {
   "@type": "Person",
   name: "Kareem Hassanein",
   jobTitle: ["Registered Physiotherapist", "Implementation and Service Operations Consultant"],
-  description: "Kareem Hassanein works across implementation, service operations, workflow improvement, technology adoption, and digital delivery in healthcare and professional services.",
+  description: "Kareem Hassanein works on clinical software adoption, clinic operations, patient-facing websites, and professional-service workflows.",
   url: "https://www.khassanein.bio",
   sameAs: [
     "https://www.linkedin.com/in/kareemhassanein",

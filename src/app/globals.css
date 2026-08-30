@@ -54,71 +54,9 @@ html {
   }
 }
 
-.glass-card {
-  background: rgba(255, 255, 255, 0.01);
-  backdrop-filter: blur(80px);
-  border: 0.5px solid rgba(255, 255, 255, 0.06);
-  box-shadow:
-    0 50px 100px -30px rgba(0, 0, 0, 0.9),
-    inset 0 1px 1px rgba(255, 255, 255, 0.02);
-  transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-/* Glass card with narrative background texture */
-.glass-narrative {
-  position: relative;
-  overflow: hidden;
-}
-
-.glass-narrative::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-size: cover;
-  background-position: center;
-  opacity: 0.03;
-  pointer-events: none;
-  transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.glass-narrative:hover::before {
-  opacity: 0.06;
-}
-
-.link-underline {
-  position: relative;
-}
-
-.link-underline::after {
-  content: '';
-  position: absolute;
-  width: 0;
-  height: 0.5px;
-  bottom: -6px;
-  left: 0;
-  background-color: hsl(var(--accent));
-  transition: width 1s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.link-underline:hover::after {
-  width: 100%;
-}
-
 @layer utilities {
   .text-balance {
     text-wrap: balance;
-  }
-
-  .perspective-3000 {
-    perspective: 3000px;
-  }
-
-  .section-container {
-    @apply max-w-[1200px] mx-auto px-6 md:px-12 xl:px-8;
-  }
-
-  .mask-image-fade {
-    mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
   }
 }
 
@@ -209,12 +147,6 @@ p {
   line-height: 1.68;
 }
 
-/* Refined Interaction States */
-.group:hover .glass-card {
-  border-color: rgba(255, 255, 255, 0.12);
-  background: rgba(255, 255, 255, 0.02);
-}
-
 /* Native smooth scrolling is intentionally NOT set here: Lenis drives
    scrolling on desktop and the two fight when both are active. */
 
@@ -271,15 +203,6 @@ select:focus-visible {
   outline-offset: 4px;
 }
 
-/* Subtle divider line */
-.divider-subtle {
-  height: 1px;
-  background: linear-gradient(90deg,
-      transparent 0%,
-      rgba(255, 255, 255, 0.1) 50%,
-      transparent 100%);
-}
-
 /* Noise overlay for texture */
 .noise-overlay {
   position: fixed;
@@ -291,63 +214,16 @@ select:focus-visible {
   mix-blend-mode: overlay;
 }
 
-/* Page transitions handled by template.tsx with no filter blur */
-
-/* Premium gradient border effect */
-.gradient-border {
-  position: relative;
-  background: transparent;
-}
-
-.gradient-border::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  padding: 1px;
-  border-radius: inherit;
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.1) 0%,
-    rgba(255, 255, 255, 0.05) 50%,
-    rgba(255, 255, 255, 0.1) 100%
-  );
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
-}
-
-.gradient-border:hover::before {
-  background: linear-gradient(
-    135deg,
-    hsl(var(--accent) / 0.3) 0%,
-    rgba(255, 255, 255, 0.1) 50%,
-    hsl(var(--accent) / 0.3) 100%
-  );
-}
-
-/* Subtle lift on hover */
-.hover-lift {
-  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.hover-lift:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.3);
+@media (max-width: 767px) {
+  .noise-overlay {
+    display: none;
+  }
 }
 
 /* Premium text selection */
 ::selection {
   background-color: hsl(var(--accent) / 0.3);
   color: hsl(var(--foreground));
-}
-
-/* Header inner glow */
-.inner-glow {
-  box-shadow:
-    0 8px 32px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.04);
 }
 
 /* Smooth image loading */
@@ -390,27 +266,6 @@ img {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-}
-
-/* Premium link hover */
-.link-premium {
-  position: relative;
-  display: inline-block;
-}
-
-.link-premium::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 0;
-  height: 1px;
-  background: linear-gradient(90deg, hsl(var(--accent)), transparent);
-  transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.link-premium:hover::after {
-  width: 100%;
 }
 
 /* Hero entrance.
