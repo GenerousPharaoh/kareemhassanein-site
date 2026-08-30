@@ -60,7 +60,7 @@ function Row({
             >
               <div className={`${frameShellFor('dark')} ribbon-frame`}>
                 <FrameChrome />
-                <div className="relative aspect-[16/10] overflow-hidden bg-[hsl(222,12%,14%)]">
+                <div className="relative aspect-[2/1] overflow-hidden bg-[hsl(222,12%,14%)]">
                   <Image
                     src={shot.src}
                     alt={shot.alt}

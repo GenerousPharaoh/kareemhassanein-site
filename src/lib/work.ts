@@ -380,7 +380,7 @@ export const ribbonRowA: RibbonShot[] = [
     slug: 'wedding-website',
   },
   {
-    src: '/images/work/kinetikare-compare.webp',
+    src: '/images/work/reel-kk-compare.webp',
     alt: 'KinetiKare comparison table setting tennis elbow against golfer’s elbow',
     project: 'KinetiKare Physiotherapy',
     label: 'Two conditions, compared',
@@ -418,7 +418,7 @@ export const ribbonRowB: RibbonShot[] = [
     slug: 'wedding-website',
   },
   {
-    src: '/images/work/endorphins-booking-2026-08.webp',
+    src: '/images/work/reel-endo-booking.webp',
     alt: 'Endorphins booking page with reception and practitioner scheduling side by side',
     project: 'Endorphins Health and Wellness Centre',
     label: 'Booking',
@@ -432,14 +432,14 @@ export const ribbonRowB: RibbonShot[] = [
     slug: 'kinetikare',
   },
   {
-    src: '/images/work/wedding-hero.webp',
+    src: '/images/work/reel-wed-arrival.webp',
     alt: 'Wedding website arrival screen with a framed photograph, the names, and the date',
     project: 'Wedding Website',
     label: 'The arrival',
     slug: 'wedding-website',
   },
   {
-    src: '/images/work/endorphins-home-2026-08.webp',
+    src: '/images/work/reel-endo-home.webp',
     alt: 'Endorphins clinic homepage led by a photograph of the building',
     project: 'Endorphins Health and Wellness Centre',
     label: 'The clinic homepage',
