@@ -53,14 +53,14 @@ export const projects: Project[] = [
     role:
       'I led clinic-side evaluation, configuration, team training, go-live support, and post-launch refinement.',
     intro: [
-      'A physiotherapy team was introducing a new documentation platform into an established clinical routine. The central question was not simply whether the tool worked, but whether it could reduce documentation time without creating new uncertainty, inconsistency, or administrative burden.',
-      'I led the clinic-side evaluation, configuration, training, rollout support, and refinement, keeping the implementation connected to how practitioners actually documented care.',
+      'A physiotherapy clinic was moving its clinical notes onto an AI documentation platform. The aim was to cut the time practitioners spent on notes without the notes becoming less consistent.',
+      'I evaluated the platform for the clinic, configured it, trained the team, supported the first weeks of use, and adjusted the setup as problems came up.',
     ],
     gallery: [],
     confidentialNote:
-      'The clinic identity and practitioner information are omitted. The figures below reconstruct the rollout without reproducing private records.',
+      'The clinic and its practitioners are not named. The figures below are illustrations of the rollout, not clinic records.',
     approach:
-      'Configuration, shared expectations, support, and refinement remained connected to how practitioners actually documented care.',
+      'The platform was configured around the way the team already wrote notes, rather than asking practitioners to change how they documented to suit the tool. The setup was revised as problems came up in the first weeks of use.',
     outcomes: [
       'Full-team use was reached within eight weeks.',
       'The rollout was estimated to save each practitioner approximately three hours per week.',
@@ -92,7 +92,7 @@ export const projects: Project[] = [
         frame: 'browser',
         url: 'kinetikarephysio.com',
         title: 'The homepage',
-        caption: 'Introduction, live Google reviews, and booking in reach without hunting for a phone number.',
+        caption: 'The introduction, Google reviews, and the booking button.',
       },
       {
         src: '/images/work/kinetikare-conditions.webp',
@@ -101,7 +101,7 @@ export const projects: Project[] = [
         frame: 'browser',
         url: 'kinetikarephysio.com/conditions',
         title: 'The condition library',
-        caption: 'Organized by body region first, with search on top, so someone can start from where it hurts.',
+        caption: 'Conditions grouped by body region, with a search box above.',
       },
       {
         src: '/images/work/kinetikare-compare.webp',
@@ -110,7 +110,7 @@ export const projects: Project[] = [
         frame: 'browser',
         url: 'kinetikarephysio.com/conditions/compare',
         title: 'Comparison pages',
-        caption: 'Two commonly confused conditions side by side, with what gets checked in person to tell them apart.',
+        caption: 'Two similar conditions side by side, with how they are told apart in an assessment.',
       },
       {
         src: '/images/work/kinetikare-treatment.webp',
@@ -119,7 +119,7 @@ export const projects: Project[] = [
         frame: 'browser',
         url: 'kinetikarephysio.com/treatments/dry-needling',
         title: 'A treatment page',
-        caption: 'What the technique is, what it helps with, and what the evidence supports, before any booking ask.',
+        caption: 'What the technique is, what it is used for, and what the evidence says.',
       },
       {
         src: '/images/work/kinetikare-mobile.webp',
@@ -127,11 +127,11 @@ export const projects: Project[] = [
         ...PHONE,
         frame: 'phone',
         title: 'On a phone',
-        caption: 'Where most visits happen, with booking and calling a tap away.',
+        caption: 'The same pages on a phone, with the call and booking buttons.',
       },
     ],
     approach:
-      'Patients do not always know the name of their condition. The site therefore combines body-region navigation, symptom-led guides, and side-by-side comparisons instead of relying exclusively on diagnostic categories. The same clinical content is reachable from three directions because people arrive with three different kinds of questions.',
+      'Most people arrive knowing where it hurts rather than the name of the condition, so the site can be browsed by body region and by symptom as well as by condition. Comparison pages cover the conditions most often mistaken for each other.',
     outcomes: [
       'Monthly Google Search clicks increased from 27 in July 2025 to 93 in July 2026.',
     ],
@@ -152,7 +152,7 @@ export const projects: Project[] = [
     shortTitle: 'Endorphins',
     category: 'Service Launch · Digital Operations',
     summary:
-      'Launching physiotherapy within an established multidisciplinary clinic while redesigning the clinic’s website and digital operations around its services as a whole.',
+      'Launching physiotherapy at an established multidisciplinary clinic, then rebuilding the clinic’s website and online booking around all six of its services.',
     cardSummary:
       'Launched physiotherapy and rebuilt the clinic website around its six services and their booking paths.',
     cardOutcome: 'Google Search clicks increased 4.5 times year over year.',
@@ -170,7 +170,7 @@ export const projects: Project[] = [
         frame: 'browser',
         url: 'endorphinshealth.com',
         title: 'The clinic homepage',
-        caption: 'Rebuilt around the clinic as a whole, with each discipline one level deeper.',
+        caption: 'The homepage: the clinic, its six services, and how to book.',
       },
       {
         src: '/images/work/endorphins-services-2026-08.webp',
@@ -179,7 +179,7 @@ export const projects: Project[] = [
         frame: 'browser',
         url: 'endorphinshealth.com/services',
         title: 'The services index',
-        caption: 'The six disciplines, booking options, referral requirements, and practical clinic details in one place.',
+        caption: 'The six services, with booking options, referral requirements, and clinic details.',
       },
       {
         src: '/images/work/endorphins-physio-2026-08.webp',
@@ -188,7 +188,7 @@ export const projects: Project[] = [
         frame: 'browser',
         url: 'endorphinshealth.com/services/physiotherapy',
         title: 'The physiotherapy page',
-        caption: 'The service line I launched, written up for patients deciding whether to book.',
+        caption: 'The page for the physiotherapy service, which I launched at the clinic.',
       },
       {
         src: '/images/work/endorphins-booking-2026-08.webp',
@@ -197,7 +197,7 @@ export const projects: Project[] = [
         frame: 'browser',
         url: 'endorphinshealth.com/book-appointment',
         title: 'Booking',
-        caption: 'Reception contact and practitioner-specific scheduling options presented together.',
+        caption: 'Reception contact details and online booking for the practitioners who offer it.',
       },
       {
         src: '/images/work/endorphins-mobile-2026-08.webp',
@@ -205,11 +205,11 @@ export const projects: Project[] = [
         ...PHONE,
         frame: 'phone',
         title: 'On a phone',
-        caption: 'Most local-search visits arrive on mobile, so calling and booking stay in reach.',
+        caption: 'The services and booking pages on a phone.',
       },
     ],
     approach:
-      'The clinic’s services needed to remain clear on their own terms while still feeling like part of one multidisciplinary practice. The website structure, content, and online booking options were designed around that balance.',
+      'Each service got its own page and its own way to book, all under one clinic site rather than six separate identities.',
     outcomes: [
       'Physiotherapy launched as a functioning service within the clinic.',
       'The redesigned site gives each service a clear public page, with online booking where the discipline supports it and reception contact everywhere else. Monthly Google Search clicks increased from 25 in July 2025 to 112 in July 2026 following the relaunch.',
@@ -231,24 +231,24 @@ export const projects: Project[] = [
     shortTitle: 'Tax Relief Counsel',
     category: 'Workflow Improvement · Professional Services',
     summary:
-      'A reusable drafting workflow that turned repetitive intake and document-generation work into a structured operating process.',
+      'A template library and drafting workflow for a solo tax-law practice, replacing documents that had been written from scratch for every matter.',
     cardSummary:
       'Mapped a recurring drafting process and rebuilt it around reusable templates, structured inputs, and practitioner review.',
     cardOutcome: 'Drafting time fell from about three hours to 30 minutes per matter.',
     role:
       'I led workflow mapping, template design, prompt design, quality assurance, and implementation with the practitioner.',
     intro: [
-      'Tax Relief Counsel is a solo tax-law practice whose matters generate long, structured documents from broadly similar inputs. Before this project, each document was drafted largely from scratch: the same sections rebuilt every time, with consistency depending on attention and available hours on a given day.',
-      'I learned the practice’s workflow from the inside, mapped where the time actually went, and rebuilt the drafting process around a reusable template library with LLM-supported drafting. The substance of the work was finding the repeatable structure inside matters that looked bespoke, then shaping it into a process the practitioner can operate independently.',
+      'Tax Relief Counsel is a solo tax-law practice. Its matters produce long documents built from similar inputs, and before this project each one was drafted from scratch, with the same sections rebuilt every time.',
+      'I went through the drafting process with the practitioner, mapped where the time went, and built a template library that a language model drafts from using structured inputs.',
     ],
     gallery: [],
     confidentialNote:
-      'Client materials are confidential. The figures below are reconstructed views of the process rather than screenshots of matter documents.',
+      'Client materials are confidential. The figures below show the process, not any matter documents.',
     approach:
-      'The drafting process could not be meaningfully improved until the recurring inputs, decisions, and document structures were standardized. The template library came first; the automation only became reliable once the structure existed for it to fill.',
+      'The templates came before any automation. The recurring sections, inputs, and decisions had to be written down in a standard form first; the drafting model only produced consistent output once it had that structure to fill in.',
     outcomes: [
       'Document-generation time fell from approximately three hours to about 30 minutes per matter.',
-      'Documented for ongoing practitioner operation, with quality checkpoints built into the process rather than left to memory.',
+      'The process is documented so the practitioner runs it without me, with the review steps written into it.',
     ],
     environment: 'Claude Code · Structured template library · Documented SOPs',
     tier: 'principal',
@@ -257,14 +257,14 @@ export const projects: Project[] = [
     slug: 'wedding-website',
     title: 'Wedding Website',
     shortTitle: 'Wedding Website',
-    category: 'Information Architecture · Digital Experience',
+    category: 'Event Website · Guest Logistics',
     summary:
-      'A single destination that carries every guest from invitation to itinerary: the day itself, getting there, where to stay, and the optional Machu Picchu adventure.',
+      'A guest website for a wedding in Peru: the schedule, how to get there, where to stay, the RSVP, and an optional Machu Picchu trip afterward.',
     role:
-      'I led the information architecture, content structure, guest journeys, forms, responsive design, and testing.',
+      'I led the structure, content, RSVP form, mobile layout, and testing.',
     intro: [
-      'A wedding in Peru asks a lot of its guests: an international flight, an unfamiliar city, a venue outside Lima, and an optional multi-day Machu Picchu trip afterward. This site gives every guest one place that answers the practical questions.',
-      'The site organizes the ceremony and reception schedule, arrival guidance, hotel and neighbourhood information, maps and calendar files, a structured RSVP flow, and a day-by-day itinerary for the optional adventure, all designed to be read on a phone while travelling.',
+      'The wedding is at a hacienda south of Lima, most guests are flying in from abroad, and there is an optional seven-day Machu Picchu trip afterward. The site puts the practical information in one place.',
+      'It covers the schedule for the day, the venue with a map and a calendar file, flights and the hotel, getting around Lima, the trip itinerary and its cost, common questions, and the RSVP form.',
     ],
     gallery: [
       {
@@ -273,7 +273,7 @@ export const projects: Project[] = [
         ...DESKTOP,
         frame: 'browser',
         title: 'The arrival',
-        caption: 'One photograph settling into a gold frame with the names and the date. Logistics come a scroll later.',
+        caption: 'A photograph of the couple in a gold frame, with their names and the date.',
       },
       {
         src: '/images/work/wedding-day.webp',
@@ -281,7 +281,7 @@ export const projects: Project[] = [
         ...DESKTOP,
         frame: 'browser',
         title: 'The day',
-        caption: 'Schedule alongside the three things a guest needs: maps, calendar, and the invite file.',
+        caption: 'The schedule for the day, with the venue address, a map link, and a calendar file.',
       },
       {
         src: '/images/work/wedding-travel.webp',
@@ -289,29 +289,29 @@ export const projects: Project[] = [
         ...DESKTOP,
         frame: 'browser',
         title: 'Getting there',
-        caption: 'Fly into Lima, stay in Miraflores, use Uber. The details follow once the shape of the trip is clear.',
+        caption: 'Flights into Lima, the hotel in Miraflores, and getting around by Uber.',
       },
       {
         src: '/images/work/wedding-machu.webp',
-        alt: 'Machu Picchu day-by-day itinerary with costs stated plainly',
+        alt: 'Machu Picchu day-by-day itinerary with the cost per person',
         ...DESKTOP,
         frame: 'browser',
         title: 'The Machu Picchu trip',
-        caption: 'Seven days laid out one at a time, with the cost stated plainly so guests can decide.',
+        caption: 'The optional seven-day trip after the wedding, one day at a time, with the cost per person.',
       },
       {
         src: '/images/work/wedding-mobile.webp',
         alt: 'Wedding site schedule on a phone',
         ...PHONE,
         frame: 'phone',
-        title: 'In transit',
-        caption: 'Schedule, addresses, and actions readable at a glance on a phone.',
+        title: 'On a phone',
+        caption: 'The schedule and venue details on a phone.',
       },
     ],
     approach:
-      'The site needed to become the single source of truth for both event and travel logistics, particularly for guests using it from their phones while travelling. Every section is structured around a question a guest would actually ask, in the order they would ask it.',
+      'The sections run in the order a guest needs them, from the day itself through flights and the hotel to the optional trip and the RSVP, and every section was checked on a phone as well as a desktop.',
     outcomes: [
-      'Guests get one authoritative link covering the ceremony, travel, lodging, RSVP, and the optional adventure, replacing scattered group messages and documents.',
+      'Guests get one link that covers the ceremony, travel, the hotel, the RSVP, and the optional trip.',
     ],
     environment: 'Next.js · Vercel · Framer Motion',
     card: {

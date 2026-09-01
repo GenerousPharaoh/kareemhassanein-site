@@ -42,7 +42,7 @@ export function ClinicalAdoptionFigure() {
   return (
     <FigureShell
       title="Full-team use within eight weeks"
-      caption="The reconstructed view shows the rollout logic without identifying the clinic or any practitioner."
+      caption="Time to full-team use, and the estimated weekly time saved per practitioner."
       className="h-full"
     >
       <div className="flex flex-col gap-9 md:gap-11">
@@ -95,28 +95,28 @@ export function ClinicalAdoptionFigure() {
 
 const clinicalWorkflow = [
   {
-    title: 'Observe the existing routine',
-    note: 'Evaluate how documentation fits into the clinical day before changing the workflow.',
+    title: 'Look at the existing routine',
+    note: 'How the team wrote notes and where documentation time went in a clinic day.',
   },
   {
-    title: 'Configure around real use',
-    note: 'Set the platform up around the team, its documentation needs, and shared expectations.',
+    title: 'Configure the platform',
+    note: 'Set the platform up around the way the team already documented care.',
   },
   {
     title: 'Train and support go-live',
-    note: 'Give practitioners a clear operating method and direct support while it becomes familiar.',
+    note: 'Train each practitioner, then be available during the first weeks of use.',
   },
   {
-    title: 'Refine from practice',
-    note: 'Use live feedback to remove remaining friction and strengthen the documented process.',
+    title: 'Adjust after go-live',
+    note: 'Change the setup where it was getting in the way, and write the final process down.',
   },
 ];
 
 export function ClinicalWorkflowFigure() {
   return (
     <FigureShell
-      title="Implementation continued after training"
-      caption="The rollout was managed as an operating change. Configuration, support, and refinement stayed connected to the way practitioners actually documented care."
+      title="The four stages of the rollout"
+      caption="Evaluation, configuration, training and go-live, and the adjustments made in the weeks after."
     >
       <ol className="grid gap-0 md:grid-cols-4">
         {clinicalWorkflow.map((item, index) => (
@@ -142,8 +142,8 @@ export function TrcWorkflowHeroFigure() {
 
   return (
     <FigureShell
-      title="Structure carries the repetition"
-      caption="This reconstructed system view contains no matter documents. Verified inputs enter a reusable drafting structure, and practitioner review remains the final control."
+      title="How a document is drafted"
+      caption="Matter facts and a template go in, a draft comes out, and the practitioner checks facts, citations, tone, and scope before it is used."
       className="h-full"
     >
       <div className="grid gap-6 md:grid-cols-[0.9fr_auto_1.1fr] md:items-stretch">
@@ -197,8 +197,8 @@ export function TrcWorkflowHeroFigure() {
 export function TrcTimeFigure() {
   return (
     <FigureShell
-      title="What changed, in time"
-      caption="The before and after is easier to understand than a percentage: drafting a matter document went from approximately three hours to about 30 minutes."
+      title="Drafting time per matter"
+      caption="From approximately three hours to about 30 minutes."
     >
       <div className="space-y-7">
         <div>
@@ -236,7 +236,7 @@ export function TrcPipelineFigure() {
   return (
     <FigureShell
       title="Intake to draft"
-      caption="Each stage hands a structured artifact to the next. The practitioner stays in control of judgment calls while the system carries the repetition."
+      caption="The five stages, from the intake questions to the practitioner’s review of the draft."
     >
       <ol className="grid gap-0 md:grid-cols-5">
         {pipeline.map((item, index) => (
@@ -269,7 +269,7 @@ export function TrcLibraryFigure() {
   return (
     <FigureShell
       title="The template library"
-      caption="What looked bespoke had a stable skeleton. Standardizing that structure is what made the drafting support repeatable and reviewable."
+      caption="One structure per matter type: the sections in order, standard language with slots for the facts, and the checks run before a document goes out."
     >
       <div className="grid gap-4 md:grid-cols-3">
         {library.map((group, index) => (
