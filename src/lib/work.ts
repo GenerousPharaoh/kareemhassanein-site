@@ -77,9 +77,9 @@ export const projects: Project[] = [
       'A 60+ page physiotherapy website where patients can explore by body region, symptom, condition, or treatment before booking online.',
     cardSummary:
       'Built a 60+ page physiotherapy website where patients can explore by body region, symptom, condition, or treatment before booking.',
-    cardOutcome: 'Google Search clicks more than tripled year over year.',
+    cardOutcome: 'Monthly Google Search clicks rose from 27 to 93 year over year.',
     role:
-      'I led the clinical requirements, information architecture, content structure, navigation, booking pathways, testing, and ongoing iteration.',
+      'I defined the site structure, wrote and organized the clinical content, built the navigation and booking links, tested the site, and continue to update it.',
     intro: [
       'KinetiKare is my personal physiotherapy brand, with the website serving as its main public presence. It is designed for people who may know where they hurt or what they are experiencing without knowing the name of the condition.',
       'The site combines body-region navigation, symptom-based guidance, condition information, treatment pages, comparisons, patient reviews, and direct online booking.',
@@ -131,7 +131,7 @@ export const projects: Project[] = [
       },
     ],
     approach:
-      'Most people arrive knowing where it hurts rather than the name of the condition, so the site can be browsed by body region and by symptom as well as by condition. Comparison pages cover the conditions most often mistaken for each other.',
+      'The site can be browsed by body region, symptom, condition, or treatment. It also includes comparison pages for conditions with similar symptoms.',
     outcomes: [
       'Monthly Google Search clicks increased from 27 in July 2025 to 93 in July 2026.',
     ],
@@ -152,15 +152,15 @@ export const projects: Project[] = [
     shortTitle: 'Endorphins',
     category: 'Service Launch · Digital Operations',
     summary:
-      'Launching physiotherapy at an established multidisciplinary clinic, then rebuilding the clinic’s website and online booking around all six of its services.',
+      'I launched physiotherapy at an established multidisciplinary clinic, then rebuilt its website with pages and booking links for all six services.',
     cardSummary:
-      'Launched physiotherapy and rebuilt the clinic website around its six services and their booking paths.',
-    cardOutcome: 'Google Search clicks increased 4.5 times year over year.',
+      'Launched physiotherapy and rebuilt the clinic website with pages and booking links for all six services.',
+    cardOutcome: 'Monthly Google Search clicks rose from 25 to 112 year over year.',
     role:
-      'I led the physiotherapy service launch, website strategy, information architecture, content, online-booking pathways, and analytics.',
+      'I launched the physiotherapy service, rebuilt the website, wrote and organized its content, connected the booking links, and set up analytics.',
     intro: [
       'Endorphins is an established multidisciplinary clinic in Burlington. I joined to launch physiotherapy as a new service and subsequently took responsibility for the clinic’s website and broader digital operations.',
-      'The work involved both establishing the new service and improving how the clinic presents its different services, practitioners, and booking options to the public.',
+      'The website rebuild covered the clinic’s service pages, practitioner information, booking links, and contact information.',
     ],
     gallery: [
       {
@@ -209,10 +209,10 @@ export const projects: Project[] = [
       },
     ],
     approach:
-      'Each service got its own page and its own way to book, all under one clinic site rather than six separate identities.',
+      'I created pages for all six services, added condition filters and practitioner profiles, and linked each service to online booking or reception.',
     outcomes: [
       'Physiotherapy launched as a functioning service within the clinic.',
-      'The redesigned site gives each service a clear public page, with online booking where the discipline supports it and reception contact everywhere else. Monthly Google Search clicks increased from 25 in July 2025 to 112 in July 2026 following the relaunch.',
+      'Monthly Google Search clicks increased from 25 in July 2025 to 112 in July 2026 following the website relaunch.',
     ],
     environment: 'Custom site · GitHub Actions · Jane App · Google Analytics · Google Business Profile',
     liveUrl: 'https://endorphinshealth.com',
