@@ -17,12 +17,10 @@ export const metadata: Metadata = {
   },
   description:
     'I build and run the online side of law firms and of dental and medical practices: the website, the Google profile, booking or intake, ads, and the tracking that ties them together.',
-  alternates: { canonical: '/' },
   openGraph: {
     type: 'website',
     siteName: SITE.name,
     locale: 'en_CA',
-    url: '/',
     images: [{ url: '/og.png', width: 1200, height: 630, alt: 'Kareem Hassanein: from a Google search to a booked appointment, every step working and counted.' }],
   },
   twitter: { card: 'summary_large_image', images: ['/og.png'] },

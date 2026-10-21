@@ -1,0 +1,71 @@
+.bar {
+  padding-bottom: clamp(36px, 4.6vw, 64px);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  min-height: 44px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  box-shadow: inset 0 0 0 1px var(--rule);
+  color: var(--ink);
+  font: 500 0.9375rem / 1 var(--font-body);
+  letter-spacing: -0.005em;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.chip[aria-pressed='true'] {
+  background: var(--ink);
+  color: var(--paper);
+  box-shadow: inset 0 0 0 1px var(--ink);
+}
+
+@media (hover: hover) {
+  .chip[aria-pressed='false']:hover {
+    box-shadow: inset 0 0 0 1px var(--ink);
+  }
+}
+
+/* On narrow screens the chips stay on one line and the row scrolls, running to the screen edges */
+@media (max-width: 520px) {
+  .chips {
+    flex-wrap: nowrap;
+    gap: 6px;
+    overflow-x: auto;
+    margin: -4px calc(-1 * var(--gutter-r)) -4px calc(-1 * var(--gutter-l));
+    padding: 4px var(--gutter-r) 4px var(--gutter-l);
+    scroll-padding-inline: var(--gutter-l) var(--gutter-r);
+    scrollbar-width: none;
+  }
+
+  .chips::-webkit-scrollbar {
+    display: none;
+  }
+
+  .chip {
+    flex: none;
+    padding: 0 13px;
+    font-size: 0.875rem;
+  }
+}
+
+/* Filtering: cards carry data-sectors, sections carry data-group */
+.results[data-filter='firms'] [data-sectors]:not([data-sectors~='firms']),
+.results[data-filter='clinics'] [data-sectors]:not([data-sectors~='clinics']),
+.results[data-filter='firms'] [data-group='beyond'],
+.results[data-filter='clinics'] [data-group='beyond'],
+.results[data-filter='beyond'] [data-group='practices'] {
+  display: none;
+}

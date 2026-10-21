@@ -1,19 +1,10 @@
 import Link from 'next/link';
-import type { CSSProperties } from 'react';
 import type { CaseStudy } from '@/content/cases';
 import { BrowserFrame } from '@/components/media/Frames';
 import { LoopVideo } from '@/components/media/LoopVideo';
 import { Picture } from '@/components/media/Picture';
+import { paletteVars } from '@/lib/palette';
 import styles from './SelectedWork.module.css';
-
-const paletteVars = (c: CaseStudy) =>
-  ({
-    '--ground': c.palette.ground,
-    '--gink': c.palette.ink,
-    '--gmuted': c.palette.muted,
-    '--grule': c.palette.rule,
-    '--gaccent': c.palette.accent,
-  }) as CSSProperties;
 
 function Arrow() {
   return (
@@ -27,7 +18,7 @@ function Arrow() {
 export function SelectedWork({ lead, practices, beyond }: { lead: CaseStudy; practices: CaseStudy[]; beyond: CaseStudy[] }) {
   return (
     <div className={styles.wrap}>
-      <article className={styles.feature} style={paletteVars(lead)} data-reveal>
+      <article className={styles.feature} style={paletteVars(lead.palette)} data-reveal>
         <div className={styles.featureText}>
           <p className={styles.kind}>{lead.kindLabel}</p>
           <h3 className={styles.featureName}>
@@ -54,7 +45,7 @@ export function SelectedWork({ lead, practices, beyond }: { lead: CaseStudy; pra
 
       <div className={styles.grid}>
         {practices.map((c) => (
-          <article key={c.slug} className={styles.card} style={paletteVars(c)} data-reveal>
+          <article key={c.slug} className={styles.card} style={paletteVars(c.palette)} data-reveal>
             <div className={styles.cardMedia}>
               <BrowserFrame domain={c.domain}>
                 <Picture media={c.plate.desktop} sizes="(min-width: 1240px) 380px, (min-width: 760px) 30vw, 88vw" />
@@ -82,7 +73,7 @@ export function SelectedWork({ lead, practices, beyond }: { lead: CaseStudy; pra
       </div>
       <div className={styles.beyond}>
         {beyond.map((c) => (
-          <article key={c.slug} className={styles.mini} style={paletteVars(c)} data-reveal>
+          <article key={c.slug} className={styles.mini} style={paletteVars(c.palette)} data-reveal>
             <div className={styles.miniMedia}>
               <Picture media={c.plate.desktop} sizes="(min-width: 1240px) 380px, (min-width: 760px) 30vw, 88vw" />
             </div>

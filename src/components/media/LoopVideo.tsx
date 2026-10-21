@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import type { Loop } from '@/lib/media';
+import { prefersReducedMotion, useReducedMotion } from '@/lib/useReducedMotion';
 import styles from './LoopVideo.module.css';
 
 type Props = { loop: Loop; className?: string };
@@ -13,18 +14,20 @@ type Props = { loop: Loop; className?: string };
  */
 export function LoopVideo({ loop, className }: Props) {
   const ref = useRef<HTMLVideoElement>(null);
+  const reduce = useReducedMotion();
   const [playing, setPlaying] = useState(false);
-  const [userPaused, setUserPaused] = useState(false);
-  const pausedByUser = useRef(false);
+  // The viewer's own choice wins; until they make one, reduced motion means wait for a tap.
+  const [choice, setChoice] = useState<'play' | 'pause' | null>(null);
+  const choiceRef = useRef(choice);
+  const held = choice === 'pause' || (choice === null && reduce);
+
+  useEffect(() => {
+    choiceRef.current = choice;
+  }, [choice]);
 
   useEffect(() => {
     const v = ref.current;
     if (!v) return;
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduce) {
-      pausedByUser.current = true;
-      setUserPaused(true);
-    }
     const onPlay = () => setPlaying(true);
     const onPause = () => setPlaying(false);
     v.addEventListener('play', onPlay);
@@ -33,7 +36,8 @@ export function LoopVideo({ loop, className }: Props) {
       ([entry]) => {
         if (entry.isIntersecting) {
           if (v.preload !== 'auto') v.preload = 'auto';
-          if (!pausedByUser.current) v.play().catch(() => {});
+          const wait = choiceRef.current === 'pause' || (choiceRef.current === null && prefersReducedMotion());
+          if (!wait) v.play().catch(() => {});
         } else if (!v.paused) v.pause();
       },
       { threshold: 0.25 }
@@ -50,12 +54,12 @@ export function LoopVideo({ loop, className }: Props) {
     const v = ref.current;
     if (!v) return;
     if (v.paused) {
-      pausedByUser.current = false;
-      setUserPaused(false);
+      setChoice('play');
+      choiceRef.current = 'play';
       v.play().catch(() => {});
     } else {
-      pausedByUser.current = true;
-      setUserPaused(true);
+      setChoice('pause');
+      choiceRef.current = 'pause';
       v.pause();
     }
   };
@@ -80,7 +84,7 @@ export function LoopVideo({ loop, className }: Props) {
         className={styles.toggle}
         onClick={toggle}
         aria-label={playing ? `Pause: ${loop.label}` : `Play: ${loop.label}`}
-        data-state={playing ? 'playing' : userPaused ? 'paused' : 'idle'}
+        data-state={playing ? 'playing' : held ? 'paused' : 'idle'}
       >
         {playing ? (
           <svg viewBox="0 0 16 16" aria-hidden="true">

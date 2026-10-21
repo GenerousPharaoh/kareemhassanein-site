@@ -1,0 +1,58 @@
+.pairs {
+  padding-block: clamp(48px, 6vw, 96px) var(--section);
+}
+
+.head {
+  display: grid;
+  gap: 12px;
+  margin-bottom: clamp(24px, 3vw, 40px);
+}
+
+.title {
+  font: 700 var(--t-h3) / 1.15 var(--font-display);
+  letter-spacing: -0.018em;
+}
+
+.note {
+  max-width: 60ch;
+  color: var(--muted);
+}
+
+.rows {
+  display: grid;
+  gap: clamp(36px, 4.4vw, 64px);
+}
+
+.row {
+  display: grid;
+  gap: clamp(36px, 4.4vw, 64px);
+}
+
+.cell {
+  min-width: 0;
+}
+
+@media (min-width: 700px) {
+  .row {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--gap);
+  }
+
+  /* Widths follow each page's shape, so both comparisons in a row share a height */
+  .row > .cell {
+    flex: var(--r) 1 0%;
+  }
+
+  .row[data-solo] > .cell[data-device='phone'] {
+    flex: 0 1 340px;
+  }
+}
+
+@media (min-width: 960px) {
+  .head {
+    grid-template-columns: minmax(0, 3fr) minmax(0, 9fr);
+    column-gap: var(--gap);
+    align-items: baseline;
+  }
+}

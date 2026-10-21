@@ -9,14 +9,15 @@ import styles from './Header.module.css';
 export function Header() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  // Close the menu when the route changes (adjusting state during render, not in an effect).
+  const [routeSeen, setRouteSeen] = useState(pathname);
+  if (routeSeen !== pathname) {
+    setRouteSeen(pathname);
+    setOpen(false);
+  }
   const [scrolled, setScrolled] = useState(false);
   const menuButton = useRef<HTMLButtonElement>(null);
   const sheet = useRef<HTMLDivElement>(null);
-
-  // Close the menu on navigation.
-  useEffect(() => {
-    setOpen(false);
-  }, [pathname]);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);

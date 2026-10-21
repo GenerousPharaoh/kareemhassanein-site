@@ -1,5 +1,15 @@
+import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import { CaseHeader, heroInHeader } from '@/components/work/CaseHeader';
+import { Gallery, HeroLoop } from '@/components/work/CaseMedia';
+import { CloseCall } from '@/components/work/CloseCall';
+import { NextCase } from '@/components/work/NextCase';
+import { Pairs } from '@/components/work/Pairs';
+import { Credit, MeasuredList, NumberedList, ShippedList, StoryBlock } from '@/components/work/Story';
+import { paletteVars } from '@/components/work/palette';
 import { CASES, caseBySlug } from '@/content/cases';
+import { SITE } from '@/content/site';
+import styles from './page.module.css';
 
 export function generateStaticParams() {
   return CASES.map((c) => ({ slug: c.slug }));
@@ -7,22 +17,96 @@ export function generateStaticParams() {
 
 export const dynamicParams = false;
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const c = caseBySlug(slug);
-  return c ? { title: c.name, description: c.summary } : {};
+  if (!c) return {};
+  const img = c.plate.desktop;
+  const width = img.widths.includes(1600) ? 1600 : Math.max(...img.widths.filter((w) => w <= 1600));
+  const image = { url: `${img.src}-${width}.webp`, width, height: Math.round((width * img.h) / img.w), alt: img.alt };
+  const description = `${c.kindLabel}${c.kindLabel.endsWith('.') ? '' : '.'} ${c.summary}`;
+  return {
+    title: c.name,
+    description,
+    alternates: { canonical: `/work/${c.slug}` },
+    openGraph: {
+      type: 'article',
+      siteName: SITE.name,
+      locale: 'en_CA',
+      url: `/work/${c.slug}`,
+      title: `${c.name} · ${SITE.name}`,
+      description,
+      images: [image],
+    },
+    twitter: { card: 'summary_large_image', title: `${c.name} · ${SITE.name}`, description, images: [image.url] },
+  };
 }
 
 export default async function CasePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const c = caseBySlug(slug);
   if (!c) notFound();
+  const next = CASES[(CASES.indexOf(c) + 1) % CASES.length];
+  // The note explains the before shots when there are any; otherwise it belongs with the summary.
+  const noteWithSummary = c.note && !c.pairs.length ? c.note : undefined;
+
   return (
-    <div className="container section">
-      <h1 className="t-h1">{c.name}</h1>
-      <p className="t-lede" style={{ marginTop: 16 }}>
-        {c.summary}
-      </p>
-    </div>
+    <article className={styles.page} style={paletteVars(c.palette)}>
+      <CaseHeader c={c} />
+
+      <div className={`container ${styles.story} ${styles.first}`}>
+        <StoryBlock id="case-short" label="In short">
+          <p className={styles.summary}>{c.summary}</p>
+          {c.context ? <p className={styles.aside}>{c.context}</p> : null}
+          {noteWithSummary ? <p className={styles.aside}>{noteWithSummary}</p> : null}
+        </StoryBlock>
+      </div>
+
+      {heroInHeader(c) ? null : <HeroLoop c={c} />}
+
+      <div className={`container ${styles.story}`}>
+        {c.found?.length ? (
+          <StoryBlock id="case-found" label="What I found">
+            <NumberedList items={c.found} />
+          </StoryBlock>
+        ) : null}
+        <StoryBlock id="case-decided" label="What I decided">
+          <NumberedList items={c.decided} />
+        </StoryBlock>
+      </div>
+
+      <Gallery c={c} />
+
+      <div className={`container ${styles.story} ${styles.after}`}>
+        <StoryBlock id="case-shipped" label="What shipped">
+          <ShippedList items={c.shipped} />
+        </StoryBlock>
+        {c.measured?.length ? (
+          <StoryBlock id="case-measured" label="What was measured">
+            <MeasuredList items={c.measured} />
+            {c.credit ? <Credit>{c.credit}</Credit> : null}
+          </StoryBlock>
+        ) : c.credit ? (
+          <StoryBlock id="case-credit" label="Credit">
+            <p className={styles.summary}>{c.credit}</p>
+          </StoryBlock>
+        ) : null}
+      </div>
+
+      <Pairs pairs={c.pairs} note={c.note} />
+
+      <NextCase c={next} />
+
+      <CloseCall
+        track="case"
+        title="Does your practice have a question like this one?"
+        body={
+          <>
+            Tell me what is not working on a <span style={{ whiteSpace: 'nowrap' }}>20-minute</span> call. Or start with a website check: I walk your whole path from
+            search to booked, then send a ranked list with a fixed price beside each fix.
+          </>
+        }
+      />
+    </article>
   );
 }

@@ -1,0 +1,142 @@
+/* Hero loop: full width for window-shaped loops; a taller crop is held to a sensible height */
+.heroWrap {
+  padding-block: clamp(4px, 1.5vw, 20px) clamp(36px, 4.6vw, 64px);
+}
+
+.hero {
+  margin: 0 auto;
+  max-width: min(100%, calc(820px * var(--r)));
+}
+
+.caption {
+  margin-top: 12px;
+  max-width: 62ch;
+  font-size: var(--t-small);
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+/* The band of screens, in the case palette */
+.band {
+  padding-block: var(--section);
+  background: var(--case-ground);
+  color: var(--case-ink);
+}
+
+.band .caption {
+  color: var(--case-muted);
+}
+
+.title {
+  margin-bottom: clamp(24px, 3vw, 40px);
+  font: 700 var(--t-h3) / 1.15 var(--font-display);
+  letter-spacing: -0.018em;
+}
+
+.rows {
+  display: grid;
+  gap: clamp(32px, 4vw, 56px);
+}
+
+.row {
+  display: grid;
+  gap: clamp(32px, 4vw, 56px);
+}
+
+.shot {
+  margin: 0;
+  min-width: 0;
+}
+
+@media (min-width: 700px) {
+  .row {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--gap);
+  }
+
+  /* Widths follow each capture's shape, so every item in a row has the same height */
+  .row > .shot {
+    flex: var(--r) 1 0%;
+  }
+
+  .row[data-solo] > .shot {
+    max-width: calc(820px * var(--r));
+    margin-inline: auto;
+  }
+}
+
+/* Phones */
+.phones {
+  margin-top: clamp(56px, 7vw, 104px);
+}
+
+.subtitle {
+  margin-bottom: 22px;
+  font: 500 var(--t-label) / 1.4 var(--font-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--case-muted);
+}
+
+.phoneRow {
+  list-style: none;
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain;
+  margin: -4px calc(-1 * var(--gutter-r)) -52px calc(-1 * var(--gutter-l));
+  padding: 4px var(--gutter-r) 52px var(--gutter-l);
+  scroll-padding-inline: var(--gutter-l) var(--gutter-r);
+  scrollbar-width: none;
+}
+
+.phoneRow::-webkit-scrollbar {
+  display: none;
+}
+
+.phoneItem {
+  flex: 0 0 min(64vw, 260px);
+  scroll-snap-align: start;
+}
+
+.phoneFigure {
+  margin: 0;
+}
+
+/* Every phone the same shape, so the row lines up; a shorter capture loses a sliver of side margin */
+.phoneFrame img,
+.phoneFrame video {
+  aspect-ratio: 1170 / 2532;
+  object-fit: cover;
+  object-position: 50% 0;
+}
+
+@media (min-width: 760px) {
+  .phoneRow {
+    justify-content: center;
+    gap: clamp(20px, 3vw, 40px);
+    overflow: visible;
+    margin: 0;
+    padding: 0;
+  }
+
+  .phoneItem {
+    flex: 0 1 260px;
+    min-width: 0;
+  }
+}
+
+/* On dark grounds a shadow disappears, so frames get a fine light edge instead */
+.band[data-tone='dark'] .frame {
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.1),
+    0 30px 60px -30px rgba(0, 0, 0, 0.75);
+}
+
+.band[data-tone='dark'] .phoneFrame > * {
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.16),
+    0 28px 52px -24px rgba(0, 0, 0, 0.75);
+}

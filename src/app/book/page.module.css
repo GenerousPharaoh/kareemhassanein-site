@@ -1,0 +1,112 @@
+/* Phones: heading, form, then what happens next. Wide screens: heading and notes on the left, the form on the right. */
+.layout {
+  display: grid;
+  grid-template-areas:
+    'head'
+    'form'
+    'aside';
+  gap: clamp(32px, 5vw, 48px);
+  padding-top: clamp(32px, 5vw, 80px);
+  padding-bottom: var(--section);
+}
+
+.head {
+  grid-area: head;
+}
+
+.head h1 {
+  font-size: clamp(2.3rem, 1.25rem + 3.2vw, 4.1rem);
+  max-width: 11ch;
+}
+
+.formCol {
+  grid-area: form;
+  min-width: 0;
+}
+
+.card {
+  padding: clamp(20px, 3.4vw, 44px);
+  border-radius: 24px;
+  background: var(--card);
+  box-shadow:
+    0 0 0 1px var(--rule-soft),
+    0 1px 2px rgba(18, 20, 23, 0.04),
+    0 40px 80px -48px rgba(18, 20, 23, 0.32);
+}
+
+.aside {
+  grid-area: aside;
+  display: grid;
+  align-content: start;
+  gap: 28px;
+}
+
+.asideTitle {
+  font: 700 var(--t-h3) / 1.15 var(--font-display);
+  letter-spacing: -0.015em;
+}
+
+.next {
+  list-style: none;
+  display: grid;
+  border-top: 1px solid var(--rule);
+}
+
+.nextItem {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
+  gap: 12px;
+  align-items: baseline;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--rule);
+  color: var(--ink-2);
+}
+
+.nextNum {
+  font: 500 0.8125rem/1 var(--font-mono);
+  color: var(--muted);
+}
+
+.mail {
+  display: grid;
+  gap: 10px;
+}
+
+.mailAddress {
+  font-size: 1.0625rem;
+}
+
+.safe {
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr);
+  gap: 12px;
+  padding: 16px 18px;
+  border-radius: 14px;
+  background: var(--paper-2);
+  font-size: var(--t-small);
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+
+.safe svg {
+  width: 20px;
+  height: 20px;
+  color: var(--signal);
+}
+
+@media (min-width: 1000px) {
+  .layout {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+      'head form'
+      'aside form';
+    column-gap: clamp(56px, 7vw, 112px);
+    row-gap: clamp(40px, 4vw, 56px);
+    align-items: start;
+  }
+
+  .aside {
+    max-width: 440px;
+  }
+}

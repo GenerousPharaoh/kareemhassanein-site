@@ -20,6 +20,7 @@
 }
 
 .storyTab {
+  position: relative;
   min-height: 34px;
   padding: 0 14px;
   border: 0;
@@ -40,6 +41,7 @@
 }
 
 .pause {
+  position: relative;
   width: 34px;
   height: 34px;
   display: grid;
@@ -49,6 +51,24 @@
   background: var(--paper-2);
   color: var(--ink);
   cursor: pointer;
+}
+
+/* Touch areas of at least 44px around the compact controls */
+.storyTab::after,
+.pause::after,
+.stepButton::after {
+  content: '';
+  position: absolute;
+  inset: -5px 0;
+}
+
+.pause::after {
+  inset: -5px;
+  border-radius: 50%;
+}
+
+.stepButton::after {
+  inset: -8px 0;
 }
 
 .pause svg {
@@ -598,6 +618,7 @@
 }
 
 .stepButton {
+  position: relative;
   display: grid;
   gap: 6px;
   width: 100%;

@@ -1,0 +1,28 @@
+/* overflow-x: clip keeps any bleed from widening the page without breaking the sticky labels */
+.page {
+  overflow-x: clip;
+}
+
+.story {
+  display: grid;
+}
+
+.first {
+  padding-top: clamp(44px, 5.4vw, 88px);
+}
+
+.after {
+  padding-top: clamp(20px, 2.6vw, 40px);
+}
+
+.summary {
+  max-width: 40ch;
+  font-size: clamp(1.2rem, 1.02rem + 0.62vw, 1.5rem);
+  line-height: 1.45;
+  letter-spacing: -0.008em;
+}
+
+.aside {
+  max-width: 60ch;
+  color: var(--muted);
+}

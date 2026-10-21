@@ -13,11 +13,16 @@ export function BrowserFrame({ domain, children, className }: { domain?: string;
   );
 }
 
-/** A phone outline whose corners scale with its width. */
+/**
+ * A phone outline whose bezel and corners scale with its width. The outer box is the size
+ * container (an element cannot query itself), so size and place the phone with className.
+ */
 export function PhoneFrame({ children, className }: { children: ReactNode; className?: string }) {
   return (
-    <div className={`${styles.phone} ${className ?? ''}`}>
-      <div className={styles.screen}>{children}</div>
+    <div className={`${styles.phoneBox} ${className ?? ''}`}>
+      <div className={styles.phone}>
+        <div className={styles.screen}>{children}</div>
+      </div>
     </div>
   );
 }

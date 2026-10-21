@@ -21,7 +21,10 @@
   outline: none;
 }
 
-.cover:focus-visible::after {
+/* The cards clip their content, so the focus ring goes on the card itself */
+.feature:has(.cover:focus-visible),
+.card:has(.cover:focus-visible),
+.mini:has(.cover:focus-visible) {
   outline: 2px solid var(--focus);
   outline-offset: 4px;
 }
@@ -30,7 +33,7 @@
   font: 500 0.75rem/1.4 var(--font-mono);
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--gmuted);
+  color: var(--case-muted);
 }
 
 .read {
@@ -56,8 +59,8 @@
   gap: 28px;
   padding: clamp(24px, 4vw, 56px);
   border-radius: 24px;
-  background: var(--ground);
-  color: var(--gink);
+  background: var(--case-ground);
+  color: var(--case-ink);
   overflow: hidden;
 }
 
@@ -76,7 +79,7 @@
   font-size: var(--t-lede);
   line-height: 1.45;
   max-width: 40ch;
-  color: var(--gink);
+  color: var(--case-ink);
   opacity: 0.88;
 }
 
@@ -91,9 +94,9 @@
 .tags li {
   padding: 6px 10px;
   border-radius: 999px;
-  box-shadow: inset 0 0 0 1px var(--grule);
+  box-shadow: inset 0 0 0 1px var(--case-rule);
   font: 500 0.75rem/1 var(--font-body);
-  color: var(--gmuted);
+  color: var(--case-muted);
 }
 
 .featureMedia {
@@ -113,8 +116,8 @@
   display: flex;
   flex-direction: column;
   border-radius: 20px;
-  background: var(--ground);
-  color: var(--gink);
+  background: var(--case-ground);
+  color: var(--case-ink);
   overflow: hidden;
 }
 
@@ -139,7 +142,7 @@
 .cardSummary {
   font-size: var(--t-small);
   line-height: 1.55;
-  color: var(--gink);
+  color: var(--case-ink);
   opacity: 0.84;
 }
 
@@ -169,8 +172,8 @@
   position: relative;
   display: grid;
   border-radius: 18px;
-  background: var(--ground);
-  color: var(--gink);
+  background: var(--case-ground);
+  color: var(--case-ink);
   overflow: hidden;
 }
 
@@ -200,7 +203,7 @@
 
 .miniKind {
   font-size: 0.8125rem;
-  color: var(--gmuted);
+  color: var(--case-muted);
 }
 
 @media (min-width: 760px) {

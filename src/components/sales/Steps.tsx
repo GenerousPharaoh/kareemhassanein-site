@@ -1,0 +1,35 @@
+import { SectionHead } from './SectionHead';
+import styles from './Steps.module.css';
+
+export type Step = { title: string; text: string };
+
+type Props = {
+  id: string;
+  title: string;
+  intro?: string;
+  steps: Step[];
+  note?: string;
+};
+
+/** What happens, in order, from the first call to the handover. */
+export function Steps({ id, title, intro, steps, note }: Props) {
+  return (
+    <section className={`night section ${styles.section}`} aria-labelledby={id}>
+      <div className={`container ${styles.inner}`}>
+        <SectionHead id={id} label="Working together" title={title} intro={intro} split />
+        <ol className={styles.steps}>
+          {steps.map((s, n) => (
+            <li key={s.title} className={styles.step} data-last={n === steps.length - 1 || undefined} data-reveal>
+              <span className={styles.node} aria-hidden="true">
+                {n + 1}
+              </span>
+              <h3 className={styles.title}>{s.title}</h3>
+              <p className={styles.text}>{s.text}</p>
+            </li>
+          ))}
+        </ol>
+        {note ? <p className={styles.note}>{note}</p> : null}
+      </div>
+    </section>
+  );
+}

@@ -1,0 +1,284 @@
+/*
+  A case on its own palette ground. The colours come from the case data as --case-* properties.
+  The link in the heading stretches over the card; the media sits above it and lets taps through.
+*/
+.card {
+  --r: clamp(20px, 2.2vw, 30px);
+  --pad: clamp(22px, 3.6vw, 52px);
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-areas: 'text' 'media' 'more';
+  gap: clamp(26px, 3.2vw, 40px);
+  height: 100%;
+  padding: var(--pad);
+  border-radius: var(--r);
+  background: var(--case-ground);
+  color: var(--case-ink);
+  box-shadow:
+    inset 0 0 0 1px var(--case-rule),
+    0 1px 2px rgba(18, 20, 23, 0.04);
+  transition:
+    transform 0.6s var(--ease-out),
+    box-shadow 0.6s var(--ease-out);
+}
+
+.card[data-variant='compact'] {
+  --pad: clamp(22px, 2.3vw, 28px);
+}
+
+/* Text */
+.text {
+  grid-area: text;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+}
+
+.kind {
+  font: 500 var(--t-label) / 1.4 var(--font-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--case-muted);
+}
+
+.name {
+  margin-top: 14px;
+  font: 800 clamp(2rem, 1.2rem + 2.3vw, 3.1rem) / 0.98 var(--font-display);
+  letter-spacing: -0.032em;
+}
+
+.card[data-variant='compact'] .name {
+  margin-top: 12px;
+  font-size: clamp(1.75rem, 1.35rem + 1.3vw, 2.25rem);
+  line-height: 1;
+  letter-spacing: -0.028em;
+}
+
+.link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.link:focus-visible {
+  outline: none;
+}
+
+/* The link covers the card, so the whole card is one target */
+.link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: var(--r);
+}
+
+.link:focus-visible::after {
+  outline: 2px solid var(--focus);
+  outline-offset: 4px;
+}
+
+.summary {
+  margin-top: 18px;
+  max-width: 42ch;
+  font-size: clamp(1.0625rem, 1rem + 0.22vw, 1.1875rem);
+  line-height: 1.5;
+}
+
+.card[data-variant='compact'] .summary {
+  margin-top: 14px;
+  font-size: 1rem;
+}
+
+.services {
+  margin-top: 18px;
+  max-width: 48ch;
+  font: 500 0.8125rem / 1.6 var(--font-mono);
+  color: var(--case-muted);
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+  padding: 6px 12px 6px 10px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--case-accent) 16%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--case-accent) 34%, transparent);
+  font: 500 0.8125rem / 1.25 var(--font-body);
+}
+
+.status::before {
+  content: '';
+  flex: none;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--case-accent);
+}
+
+.more {
+  grid-area: more;
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font: 600 0.9375rem / 1 var(--font-body);
+}
+
+.arrow {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.35s var(--ease-out);
+}
+
+/* Media: the desktop page in a browser frame with the phone overlapping its lower corner */
+.media {
+  grid-area: media;
+  position: relative;
+  z-index: 2;
+  align-self: end;
+  min-width: 0;
+  padding-right: 14%;
+  padding-bottom: 9%;
+  pointer-events: none;
+}
+
+/* The loop's pause button still takes taps */
+.media button {
+  pointer-events: auto;
+}
+
+/* The phone overlaps the loop's lower right corner, so its pause button moves to the left */
+.deskLoop button {
+  right: auto;
+  left: 12px;
+}
+
+.desk {
+  position: relative;
+}
+
+.phone {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 25%;
+}
+
+.clip {
+  overflow: hidden;
+}
+
+.clip img,
+.clip video {
+  transition: transform 0.9s var(--ease-out);
+}
+
+/* Loops are cut to the window's shape so every card's frame matches */
+.deskLoop {
+  aspect-ratio: 16 / 10;
+}
+
+.deskLoop video {
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 20%;
+}
+
+/* Below 600px the overlapping phone would be too small to read; the page takes the full width */
+@media (max-width: 599px) {
+  .media {
+    padding: 0;
+  }
+
+  .phone {
+    display: none;
+  }
+}
+
+/* On dark grounds a shadow disappears, so the frames get a fine light edge instead */
+.card[data-tone='dark'] .desk {
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.1),
+    0 30px 60px -30px rgba(0, 0, 0, 0.75);
+}
+
+.card[data-tone='dark'] .phone > * {
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.16),
+    0 28px 52px -24px rgba(0, 0, 0, 0.75);
+}
+
+@media (min-width: 960px) {
+  .card[data-variant='feature'] {
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.25fr);
+    grid-template-rows: 1fr auto;
+    grid-template-areas: 'text media' 'more media';
+    column-gap: clamp(32px, 4vw, 64px);
+    row-gap: 28px;
+  }
+
+  .card[data-variant='feature'] .text {
+    padding-top: 4px;
+  }
+
+  .card[data-variant='feature'] .more {
+    align-self: end;
+    padding-bottom: 2px;
+  }
+
+  .card[data-variant='compact'] {
+    grid-template-rows: auto 1fr auto;
+    grid-template-areas: 'media' 'text' 'more';
+    row-gap: 26px;
+  }
+
+  .card[data-variant='compact'] .media {
+    align-self: start;
+  }
+}
+
+@media (hover: none) and (prefers-reduced-motion: no-preference) {
+  .card:active {
+    transform: scale(0.992);
+    transition-duration: 0.2s;
+  }
+}
+
+/* Hovering the card shows the pause button; the media itself lets the pointer through */
+@media (hover: hover) {
+  .card:hover .media button {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow:
+      inset 0 0 0 1px var(--case-rule),
+      0 34px 64px -40px rgba(18, 20, 23, 0.5);
+  }
+
+  .card:hover .clip img,
+  .card:hover .clip video {
+    transform: scale(1.02);
+  }
+
+  .card:hover .arrow {
+    transform: translateX(4px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .clip img,
+  .clip video,
+  .arrow {
+    transition: none;
+  }
+}

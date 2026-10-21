@@ -1,0 +1,191 @@
+.section {
+  background: var(--paper-2);
+}
+
+.inner {
+  display: grid;
+  gap: clamp(40px, 5vw, 64px);
+}
+
+.copy {
+  display: grid;
+  gap: 18px;
+  align-content: start;
+  min-width: 0;
+}
+
+.title {
+  max-width: 16ch;
+}
+
+.title span {
+  display: block;
+  color: var(--muted);
+}
+
+.text {
+  max-width: 52ch;
+}
+
+.examples {
+  list-style: none;
+  margin-top: 10px;
+  border-top: 1px solid var(--rule);
+}
+
+/* Each example is one link to its case; the whole row is the target */
+.example {
+  position: relative;
+  display: grid;
+  gap: 4px;
+  padding: 14px 28px 16px 0;
+  border-bottom: 1px solid var(--rule);
+  font-size: var(--t-small);
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+
+.example::after {
+  content: '';
+  position: absolute;
+  right: 2px;
+  top: 50%;
+  width: 7px;
+  height: 7px;
+  margin-top: -4px;
+  border-top: 1.5px solid var(--muted);
+  border-right: 1.5px solid var(--muted);
+  transform: rotate(45deg);
+  transition: transform 0.25s var(--ease-out);
+}
+
+.case {
+  justify-self: start;
+  font: 500 var(--t-label) / 1.4 var(--font-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--signal);
+  text-decoration: none;
+}
+
+.case::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+
+.case:focus-visible {
+  outline: none;
+}
+
+.example:has(.case:focus-visible) {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* The marked-up sheet */
+.sheet {
+  margin: 0;
+  align-self: start;
+  display: grid;
+  gap: 0;
+  border-radius: 18px;
+  background: var(--card);
+  box-shadow:
+    0 0 0 1px var(--rule),
+    0 30px 60px -36px rgba(18, 20, 23, 0.32);
+  overflow: hidden;
+}
+
+.sheetHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 16px;
+  padding: 16px clamp(20px, 3vw, 32px);
+  border-bottom: 1px solid var(--rule-soft);
+  font: 500 var(--t-label) / 1.4 var(--font-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.legend {
+  display: inline-flex;
+  gap: 14px;
+  text-transform: none;
+  letter-spacing: 0.02em;
+}
+
+.legendDel {
+  text-decoration: line-through;
+  text-decoration-thickness: 1.5px;
+}
+
+.legendIns {
+  color: var(--signal);
+}
+
+.lines {
+  list-style: none;
+  padding: clamp(8px, 1.5vw, 12px) clamp(20px, 3vw, 32px);
+}
+
+.line {
+  padding: clamp(16px, 2vw, 22px) 0;
+  font: 600 clamp(1.15rem, 1rem + 0.6vw, 1.5rem) / 1.5 var(--font-display);
+  letter-spacing: -0.012em;
+}
+
+.line + .line {
+  border-top: 1px solid var(--rule-soft);
+}
+
+.del {
+  color: var(--muted);
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+  text-decoration-color: color-mix(in srgb, var(--ink) 55%, transparent);
+}
+
+.ins {
+  padding: 0.02em 0.32em;
+  border-radius: 6px;
+  background: var(--signal-soft);
+  color: var(--signal);
+  text-decoration: none;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+.sheetNote {
+  padding: 16px clamp(20px, 3vw, 32px) 20px;
+  border-top: 1px solid var(--rule-soft);
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+
+@media (hover: hover) {
+  .example:hover .case {
+    text-decoration: underline;
+    text-underline-offset: 0.3em;
+  }
+
+  .example:hover::after {
+    transform: translateX(3px) rotate(45deg);
+  }
+}
+
+@media (min-width: 1000px) {
+  .inner {
+    grid-template-columns: minmax(0, 6fr) minmax(0, 6fr);
+    column-gap: clamp(48px, 6vw, 96px);
+    align-items: start;
+  }
+
+  .sheet {
+    margin-top: 34px;
+  }
+}

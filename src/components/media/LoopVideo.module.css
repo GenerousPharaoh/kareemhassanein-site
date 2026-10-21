@@ -30,6 +30,14 @@
   backdrop-filter: blur(6px);
 }
 
+/* A 48px touch area around the 36px button */
+.toggle::after {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+}
+
 .toggle svg {
   width: 14px;
   height: 14px;

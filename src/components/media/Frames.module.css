@@ -35,8 +35,11 @@
   height: auto;
 }
 
-.phone {
+.phoneBox {
   container-type: inline-size;
+}
+
+.phone {
   background: #0d0e10;
   padding: 2.4cqw;
   border-radius: 14cqw;

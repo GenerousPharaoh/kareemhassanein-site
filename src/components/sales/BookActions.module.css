@@ -1,0 +1,48 @@
+.actions {
+  display: grid;
+  gap: 16px;
+  justify-items: start;
+}
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 12px;
+}
+
+.reply {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: var(--t-small);
+  color: var(--muted);
+}
+
+.dot {
+  flex: none;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--signal);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--signal) 18%, transparent);
+}
+
+/* On a phone the two buttons share the width, one above the other, as big targets for a thumb */
+@media (max-width: 559px) {
+  .actions {
+    justify-items: stretch;
+  }
+
+  .buttons {
+    flex-direction: column;
+  }
+
+  .buttons .button {
+    width: 100%;
+    min-height: 52px;
+  }
+
+  .reply {
+    justify-self: center;
+  }
+}

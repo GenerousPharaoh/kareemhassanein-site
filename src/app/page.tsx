@@ -11,6 +11,15 @@ import { PRICE_LINE, PRICE_NOTE } from '@/content/offers';
 import { PATH } from '@/content/path';
 import { SITE } from '@/content/site';
 import { still } from '@/lib/media';
+import { pageMeta } from '@/lib/meta';
+
+export const metadata = pageMeta({
+  title: `${SITE.name} · ${SITE.descriptor}`,
+  absoluteTitle: true,
+  description:
+    'I build and run the online side of law firms and of dental and medical practices: the website, the Google profile, booking or intake, ads, and the tracking that ties them together.',
+  path: '/',
+});
 
 const STEPS = [
   { name: 'Assess', text: 'I walk the whole path, from the search result to the booked appointment, and tell you what is actually happening.' },

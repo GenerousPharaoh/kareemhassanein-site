@@ -1,0 +1,168 @@
+[
+  {
+    "route": "/about",
+    "device": "phone",
+    "controls": 27,
+    "found": []
+  },
+  {
+    "route": "/about",
+    "device": "desktop",
+    "controls": 32,
+    "found": [
+      {
+        "kind": "info",
+        "detail": "32 Tab stops"
+      }
+    ]
+  },
+  {
+    "route": "/book",
+    "device": "phone",
+    "controls": 23,
+    "found": [
+      {
+        "kind": "size",
+        "detail": "input.RequestForm-module \"\" is 20×20 (minimum 44×44)"
+      },
+      {
+        "kind": "size",
+        "detail": "input.RequestForm-module \"\" is 20×20 (minimum 44×44)"
+      }
+    ]
+  },
+  {
+    "route": "/book",
+    "device": "desktop",
+    "controls": 28,
+    "found": [
+      {
+        "kind": "size",
+        "detail": "input.RequestForm-module \"\" is 20×20 (minimum 24×24)"
+      },
+      {
+        "kind": "size",
+        "detail": "input.RequestForm-module \"\" is 20×20 (minimum 24×24)"
+      },
+      {
+        "kind": "focus",
+        "detail": "input \"\" shows no visible focus indicator"
+      },
+      {
+        "kind": "info",
+        "detail": "27 Tab stops"
+      }
+    ]
+  },
+  {
+    "route": "/ai",
+    "device": "phone",
+    "controls": 16,
+    "found": []
+  },
+  {
+    "route": "/ai",
+    "device": "desktop",
+    "controls": 21,
+    "found": [
+      {
+        "kind": "info",
+        "detail": "21 Tab stops"
+      }
+    ]
+  },
+  {
+    "route": "/privacy",
+    "device": "phone",
+    "controls": 17,
+    "found": []
+  },
+  {
+    "route": "/privacy",
+    "device": "desktop",
+    "controls": 22,
+    "found": [
+      {
+        "kind": "info",
+        "detail": "22 Tab stops"
+      }
+    ]
+  },
+  {
+    "route": "/notes",
+    "device": "phone",
+    "controls": 18,
+    "found": []
+  },
+  {
+    "route": "/notes",
+    "device": "desktop",
+    "controls": 23,
+    "found": [
+      {
+        "kind": "info",
+        "detail": "23 Tab stops"
+      }
+    ]
+  },
+  {
+    "route": "/notes/google-ads-leads-button-clicks",
+    "device": "phone",
+    "controls": 19,
+    "found": []
+  },
+  {
+    "route": "/notes/google-ads-leads-button-clicks",
+    "device": "desktop",
+    "controls": 31,
+    "found": [
+      {
+        "kind": "info",
+        "detail": "31 Tab stops"
+      }
+    ]
+  },
+  {
+    "route": "/notes/new-patients-from-website-and-ads",
+    "device": "phone",
+    "controls": 19,
+    "found": []
+  },
+  {
+    "route": "/notes/new-patients-from-website-and-ads",
+    "device": "desktop",
+    "controls": 27,
+    "found": [
+      {
+        "kind": "info",
+        "detail": "27 Tab stops"
+      }
+    ]
+  },
+  {
+    "route": "/missing-page",
+    "device": "phone",
+    "controls": 16,
+    "found": [
+      {
+        "kind": "console",
+        "detail": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+      }
+    ]
+  },
+  {
+    "route": "/missing-page",
+    "device": "desktop",
+    "controls": 21,
+    "found": [
+      {
+        "kind": "info",
+        "detail": "21 Tab stops"
+      },
+      {
+        "kind": "console",
+        "detail": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+      }
+    ]
+  }
+]

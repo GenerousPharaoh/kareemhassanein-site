@@ -1,10 +1,193 @@
-export const metadata = { title: 'About' };
+import Link from 'next/link';
+import { Picture } from '@/components/media/Picture';
+import { CaseChips } from '@/components/pages/CaseChips';
+import { CloseBand } from '@/components/pages/CloseBand';
+import { enter } from '@/components/pages/enter';
+import { pageMeta } from '@/lib/meta';
+import { still } from '@/lib/media';
+import styles from './page.module.css';
 
-export default function Page() {
+export const metadata = pageMeta({
+  title: 'About',
+  description:
+    'I am a Registered Physiotherapist in Ontario who still treats patients every week, and I build and run the online side of law firms and of dental and medical practices.',
+  path: '/about',
+});
+
+const portrait = still('site/portrait', 'Kareem Hassanein');
+
+const FACTS = [
+  { term: 'Practice', lines: ['Registered Physiotherapist', 'Ontario'] },
+  { term: 'Education', lines: ['MSc Physiotherapy, Robert Gordon University', 'BSc Kinesiology, McMaster University'] },
+  { term: 'Mentoring', lines: ['Lab2Market Validate', 'McMaster University'] },
+  { term: 'Based in', lines: ['Burlington, Ontario', 'Working across Canada and the US'] },
+];
+
+const STEPS = [
+  {
+    name: 'Assess',
+    text: 'I walk the whole path, from the search result to the booked appointment or signed client, and tell you what is actually happening.',
+  },
+  {
+    name: 'Plan',
+    text: 'You get a short, ranked list with a fixed price beside each item. You choose what gets done.',
+  },
+  {
+    name: 'Build',
+    text: 'I design and build it, with real options to choose from. I direct AI build tools the way a lead directs a studio; every decision, review and test is mine.',
+    link: { href: '/ai', label: 'How I use AI' },
+  },
+  {
+    name: 'Run',
+    text: 'I keep it working, report bookings or signed clients by source, and answer for it. Every change is logged and can be undone.',
+  },
+];
+
+const QUESTIONS = [
+  {
+    q: 'Will you find what is actually wrong?',
+    a: 'Tax Relief Counsel asked about its website. The larger problem was in the ad account, where most of the reported conversions were clicks on the consultation button. At PhysioMax, bookings had never reached Analytics, and the gap was inside the booking system, not the website.',
+    cases: ['tax-relief-counsel', 'physiomax'],
+  },
+  {
+    q: 'Will you understand my field?',
+    a: 'Booking systems, college rules and how patients choose are part of my working week. At Endorphins, I named the colleges in text instead of showing their logos, which the colleges restrict. For a tax law firm, I built tools around IRS procedures, with the IRS source beside every figure.',
+    cases: ['endorphins', 'tax-relief-counsel'],
+  },
+  {
+    q: 'How fast, and what if something breaks?',
+    a: 'A gear store’s redesign went live the same evening, built on a copy of its theme with a one-step rollback. A law firm’s new site launches with one DNS change, reversible the same way.',
+    cases: ['techniques-combat', 'tax-relief-counsel'],
+  },
+  {
+    q: 'Will I have to manage you?',
+    a: 'There is one person to deal with: strategy, design, build, tracking and ads all stay with me. You choose between rendered designs instead of imagining them, approve a one-page list with a fixed price beside each item, and get a short update every week until handover.',
+    cases: ['endorphins', 'tax-relief-counsel'],
+  },
+  {
+    q: 'Whose side are you on?',
+    a: 'Yours. Your domain, hosting, Google accounts and booking system stay in your name, and you pay those bills directly. At Endorphins, every account is in the clinic’s name and the agency has limited access. On my own practice’s ads, I keep a running log of every change, corrections included.',
+    cases: ['endorphins', 'kinetikare'],
+  },
+];
+
+export default function AboutPage() {
   return (
-    <div className="container section">
-      <h1 className="t-h1">About</h1>
-      <p className="t-lede" style={{ marginTop: 16 }}>This page is being built.</p>
-    </div>
+    <>
+      <section className={`container ${styles.hero}`} aria-labelledby="about-title">
+        <div className={styles.heroCopy}>
+          <p className="t-label" data-enter style={enter(0)}>
+            About
+          </p>
+          <h1 id="about-title" className={`t-h1 ${styles.title}`} data-enter style={enter(1)}>
+            The physiotherapist who builds.
+          </h1>
+          <p className={`t-lede ${styles.lede}`} data-enter style={enter(2)}>
+            I am Kareem Hassanein, a Registered Physiotherapist in Ontario. I still treat patients every week at clinics in
+            Burlington, and I build and run the online side of independent practices: the website, the Google profile,
+            booking or intake, ads, and the tracking that ties them together.
+          </p>
+        </div>
+        <figure className={styles.portrait} data-enter style={enter(2)}>
+          <Picture
+            media={portrait}
+            sizes="(min-width: 1240px) 400px, (min-width: 960px) 32vw, 76vw"
+            priority
+            className={styles.portraitPic}
+          />
+        </figure>
+        <dl className={styles.facts} data-enter style={enter(3)}>
+          {FACTS.map((f) => (
+            <div key={f.term} className={styles.fact}>
+              <dt className="t-label">{f.term}</dt>
+              {f.lines.map((line, i) => (
+                <dd key={line} className={i === 0 ? styles.factMain : styles.factSub}>
+                  {line}
+                </dd>
+              ))}
+            </div>
+          ))}
+        </dl>
+      </section>
+
+      <section className={`container ${styles.whySection}`} aria-labelledby="why-title">
+        <div className={styles.why}>
+          <div className={styles.whyHead} data-reveal>
+            <p className="t-label">Why a physiotherapist</p>
+            <h2 id="why-title" className={`t-h2 ${styles.whyTitle}`}>
+              I know regulated practice from the inside.
+            </h2>
+          </div>
+          <div className={styles.whyBody} data-reveal>
+            <p>
+              Treating patients every week means I know how people choose a professional, how booking works at the front desk,
+              and what a regulator will and will not let you say. Law firms have their own version of each, and I learn yours
+              before changing anything.
+            </p>
+            <p>
+              I work on a practice the way I work with a patient. I assess before I treat, look for the cause rather than the
+              symptom, and check the result afterwards. A patient can come in about a sore knee when the cause is the hip.
+            </p>
+            <p className={styles.whyAside}>
+              Outside the practice and the build work, I volunteer as a mentor for Lab2Market Validate at McMaster University,
+              supporting Canadian researchers who are taking health innovations to market.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className={`night ${styles.how}`} aria-labelledby="how-title">
+        <div className="container">
+          <div className={styles.howHead} data-reveal>
+            <p className="t-label">How I work</p>
+            <h2 id="how-title" className="t-h2">
+              I work in four steps.
+            </h2>
+          </div>
+          <ol className={styles.steps}>
+            {STEPS.map((s, i) => (
+              <li key={s.name} className={styles.step} data-reveal>
+                <span className={styles.node} aria-hidden="true" />
+                <p className={`t-label ${styles.stepNum}`} aria-hidden="true">
+                  {String(i + 1).padStart(2, '0')}
+                </p>
+                <h3 className={styles.stepName}>{s.name}</h3>
+                <p className={styles.stepText}>{s.text}</p>
+                {s.link ? (
+                  <Link href={s.link.href} className={styles.stepLink}>
+                    {s.link.label}
+                    <svg viewBox="0 0 16 16" aria-hidden="true">
+                      <path d="M3 8h9.5M8.5 4l4 4-4 4" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </Link>
+                ) : null}
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      <section className={`container section ${styles.hire}`} aria-labelledby="hire-title">
+        <div className={styles.hireHead} data-reveal>
+          <p className="t-label">Questions owners ask</p>
+          <h2 id="hire-title" className="t-h2">
+            Why owners hire me
+          </h2>
+        </div>
+        <div className={styles.rows}>
+          {QUESTIONS.map((item) => (
+            <article key={item.q} className={styles.row} data-reveal>
+              <h3 className={styles.question}>{item.q}</h3>
+              <div className={styles.answer}>
+                <p>{item.a}</p>
+                <CaseChips slugs={item.cases} label={`Cases for: ${item.q}`} />
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <CloseBand track="about-close" />
+    </>
   );
 }
