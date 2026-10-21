@@ -1,143 +1,73 @@
-import type { Metadata, Viewport } from "next";
-import localFont from "next/font/local";
-import "./globals.css";
-import LayoutWrapper from "@/components/LayoutWrapper";
-import { Cormorant_Garamond } from 'next/font/google';
+import type { Metadata, Viewport } from 'next';
+import { Geist, Geist_Mono, Schibsted_Grotesk } from 'next/font/google';
+import { Footer } from '@/components/site/Footer';
+import { Header } from '@/components/site/Header';
+import { SITE } from '@/content/site';
+import './globals.css';
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-sans",
-  weight: "100 900",
-});
-
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
-const cormorant = Cormorant_Garamond({
-  subsets: ['latin'],
-  variable: '--font-serif',
-  weight: ['400'],
-  style: ['normal', 'italic'],
-});
+const display = Schibsted_Grotesk({ subsets: ['latin'], variable: '--font-schibsted', display: 'swap' });
+const body = Geist({ subsets: ['latin'], variable: '--font-geist', display: 'swap' });
+const mono = Geist_Mono({ subsets: ['latin'], variable: '--font-geist-mono', display: 'swap', preload: false });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.khassanein.bio"),
-  title: "Kareem Hassanein | Implementation & Service Operations",
-  description: "Case studies by Kareem Hassanein covering a clinical documentation rollout, two clinic websites, and a legal drafting workflow.",
-  keywords: ["implementation consulting", "service operations", "operations improvement", "workflow improvement", "technology adoption", "service design", "healthcare operations", "digital delivery"],
-  authors: [{ name: "Kareem Hassanein" }],
+  metadataBase: new URL(SITE.url),
+  title: {
+    default: `${SITE.name} · ${SITE.descriptor}`,
+    template: `%s · ${SITE.name}`,
+  },
+  description:
+    'I build and run the online side of law firms and of dental and medical practices: the website, the Google profile, booking or intake, ads, and the tracking that ties them together.',
+  alternates: { canonical: '/' },
   openGraph: {
-    title: "Kareem Hassanein | Implementation & Service Operations",
-    description: "Case studies by Kareem Hassanein covering a clinical documentation rollout, two clinic websites, and a legal drafting workflow.",
-    type: "website",
-    locale: "en_CA",
-    url: "https://www.khassanein.bio",
-    siteName: "Kareem Hassanein",
-    images: [
-      {
-        url: "https://www.khassanein.bio/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "Kareem Hassanein, selected work across healthcare, workflow, and digital delivery",
-      },
-    ],
+    type: 'website',
+    siteName: SITE.name,
+    locale: 'en_CA',
+    url: '/',
   },
-  twitter: {
-    card: "summary_large_image",
-    title: "Kareem Hassanein | Implementation & Service Operations",
-    description: "Case studies by Kareem Hassanein covering a clinical documentation rollout, two clinic websites, and a legal drafting workflow.",
-    images: ["https://www.khassanein.bio/og-image.png"],
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
-  alternates: {
-    canonical: "https://www.khassanein.bio",
-  },
+  twitter: { card: 'summary_large_image' },
+  robots: { index: true, follow: true },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#14161a",
+  themeColor: '#f2f4f0',
+  viewportFit: 'cover',
 };
 
 const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "Person",
-  name: "Kareem Hassanein",
-  jobTitle: ["Registered Physiotherapist", "Implementation and Service Operations Consultant"],
-  description: "Kareem Hassanein works on clinical software adoption, clinic operations, patient-facing websites, and professional-service workflows.",
-  url: "https://www.khassanein.bio",
-  sameAs: [
-    "https://www.linkedin.com/in/kareemhassanein",
-  ],
-  knowsAbout: [
-    "Technology Adoption",
-    "Service Operations",
-    "Service Design",
-    "Workflow Improvement",
-    "Information Architecture",
-    "Healthcare Operations",
-    "Digital Health",
-    "Patient Experience",
-    "AI-Enabled Delivery"
-  ],
-  alumniOf: [
+  '@context': 'https://schema.org',
+  '@graph': [
     {
-      "@type": "CollegeOrUniversity",
-      name: "Robert Gordon University",
-      description: "MSc Physiotherapy with Distinction"
+      '@type': 'Person',
+      '@id': SITE.personId,
+      name: SITE.name,
+      url: SITE.url,
+      sameAs: [SITE.linkedin, 'https://www.kinetikarephysio.com'],
     },
     {
-      "@type": "CollegeOrUniversity",
-      name: "McMaster University",
-      description: "BSc Kinesiology (Honours)"
-    }
+      '@type': 'ProfessionalService',
+      '@id': SITE.orgId,
+      name: SITE.name,
+      url: SITE.url,
+      email: SITE.email,
+      description: SITE.descriptor,
+      founder: { '@id': SITE.personId },
+      areaServed: [
+        { '@type': 'Country', name: 'Canada' },
+        { '@type': 'Country', name: 'United States' },
+      ],
+      address: { '@type': 'PostalAddress', addressLocality: 'Burlington', addressRegion: 'ON', addressCountry: 'CA' },
+    },
   ],
-  affiliation: {
-    "@type": "Organization",
-    name: "Lab2Market Validate, McMaster University",
-    description: "Volunteer mentor"
-  },
-  address: {
-    "@type": "PostalAddress",
-    addressLocality: "Hamilton",
-    addressRegion: "Ontario",
-    addressCountry: "Canada"
-  }
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <head>
-        {/* Marks JS as available before first paint, which is what unlocks the
-            hidden state for [data-reveal] in globals.css. Without this the
-            reveal CSS never applies, so a visitor with JS disabled gets the
-            page fully readable rather than a screen of invisible sections. */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: "document.documentElement.setAttribute('data-reveal-js','')",
-          }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }}
-        />
-      </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} ${cormorant.variable} antialiased font-sans`}
-      >
-        <div className="noise-overlay" />
-        <LayoutWrapper>
-          {children}
-        </LayoutWrapper>
+    <html lang="en-CA" className={`${display.variable} ${body.variable} ${mono.variable}`}>
+      <body>
+        <Header />
+        <main id="main">{children}</main>
+        <Footer />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       </body>
     </html>
   );

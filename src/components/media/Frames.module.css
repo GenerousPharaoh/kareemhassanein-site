@@ -1,0 +1,74 @@
+.browser {
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow:
+    0 0 0 1px rgba(18, 20, 23, 0.08),
+    0 1px 2px rgba(18, 20, 23, 0.06),
+    0 24px 48px -24px rgba(18, 20, 23, 0.32);
+}
+
+.bar {
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #eef0ec;
+  border-bottom: 1px solid rgba(18, 20, 23, 0.07);
+}
+
+.url {
+  font: 500 11px/1 var(--font-mono);
+  color: #5d636a;
+  background: #fff;
+  padding: 5px 12px;
+  border-radius: 999px;
+  max-width: 72%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.viewport :where(img, video) {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.phone {
+  container-type: inline-size;
+  background: #0d0e10;
+  padding: 2.4cqw;
+  border-radius: 14cqw;
+  box-shadow:
+    0 0 0 1px rgba(128, 128, 128, 0.28),
+    0 1px 2px rgba(18, 20, 23, 0.1),
+    0 28px 52px -24px rgba(18, 20, 23, 0.42);
+}
+
+.screen {
+  border-radius: 11.8cqw;
+  overflow: hidden;
+  background: #fff;
+}
+
+.screen :where(img, video) {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.screenFrame {
+  border-radius: 10px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow:
+    0 0 0 1px rgba(18, 20, 23, 0.08),
+    0 22px 44px -26px rgba(18, 20, 23, 0.34);
+}
+
+.screenFrame :where(img, video) {
+  display: block;
+  width: 100%;
+  height: auto;
+}

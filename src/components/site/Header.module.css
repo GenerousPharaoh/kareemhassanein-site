@@ -1,0 +1,236 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  padding-top: env(safe-area-inset-top, 0px);
+  background: color-mix(in srgb, var(--paper) 86%, transparent);
+  -webkit-backdrop-filter: saturate(1.4) blur(14px);
+  backdrop-filter: saturate(1.4) blur(14px);
+  transition: box-shadow 0.3s ease;
+}
+
+.header[data-scrolled] {
+  box-shadow: 0 1px 0 var(--rule);
+}
+
+.skip {
+  position: absolute;
+  left: 12px;
+  top: -60px;
+  z-index: 60;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: var(--ink);
+  color: var(--paper);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.skip:focus {
+  top: calc(8px + env(safe-area-inset-top, 0px));
+}
+
+.inner {
+  height: var(--header-h);
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.mark {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font: 700 1.0625rem/1 var(--font-display);
+  letter-spacing: -0.02em;
+  text-decoration: none;
+  white-space: nowrap;
+  margin-right: auto;
+}
+
+.dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--signal);
+  box-shadow: 0 0 0 3px var(--signal-soft);
+}
+
+.nav {
+  display: none;
+  align-items: center;
+  gap: 4px;
+}
+
+.link {
+  position: relative;
+  padding: 10px 12px;
+  border-radius: 999px;
+  font: 500 0.9375rem/1 var(--font-body);
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.link[aria-current='page'] {
+  color: var(--ink);
+  background: var(--paper-2);
+}
+
+.cta {
+  display: none;
+  min-height: 40px;
+  align-items: center;
+  padding: 0 18px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--paper);
+  font: 600 0.875rem/1 var(--font-body);
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+.menuButton {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  margin-right: -10px;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.menuIcon,
+.menuIcon::before,
+.menuIcon::after {
+  display: block;
+  width: 20px;
+  height: 1.6px;
+  border-radius: 2px;
+  background: var(--ink);
+  transition: transform 0.3s var(--ease-out), background-color 0.2s ease;
+}
+
+.menuIcon {
+  position: relative;
+}
+
+.menuIcon::before,
+.menuIcon::after {
+  content: '';
+  position: absolute;
+  left: 0;
+}
+
+.menuIcon::before {
+  transform: translateY(-6px);
+}
+
+.menuIcon::after {
+  transform: translateY(6px);
+}
+
+.header[data-open] .menuIcon {
+  background: transparent;
+}
+
+.header[data-open] .menuIcon::before {
+  transform: rotate(45deg);
+}
+
+.header[data-open] .menuIcon::after {
+  transform: rotate(-45deg);
+}
+
+.sheet {
+  position: fixed;
+  inset: calc(var(--header-h) + env(safe-area-inset-top, 0px)) 0 0;
+  background: var(--paper);
+  overflow-y: auto;
+  padding-bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .sheet:not([hidden]) {
+    animation: sheet-in 0.35s var(--ease-out) both;
+  }
+}
+
+@keyframes sheet-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.sheetNav {
+  display: flex;
+  flex-direction: column;
+  padding-top: 20px;
+}
+
+.sheetLink {
+  padding: 14px 0;
+  border-bottom: 1px solid var(--rule-soft);
+  font: 800 clamp(1.9rem, 8vw, 2.5rem)/1.05 var(--font-display);
+  letter-spacing: -0.03em;
+  text-decoration: none;
+}
+
+.sheetLink[aria-current='page'] {
+  color: var(--signal);
+}
+
+.sheetFoot {
+  display: grid;
+  gap: 12px;
+  padding-top: 28px;
+}
+
+.sheetCta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--paper);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.sheetNote {
+  text-align: center;
+  font-size: var(--t-small);
+  color: var(--muted);
+}
+
+@media (min-width: 960px) {
+  .nav {
+    display: flex;
+  }
+
+  .cta {
+    display: inline-flex;
+  }
+
+  .menuButton,
+  .sheet {
+    display: none;
+  }
+}
+
+@media (hover: hover) {
+  .link:hover {
+    color: var(--ink);
+  }
+
+  .cta:hover {
+    background: var(--ink-2);
+  }
+}

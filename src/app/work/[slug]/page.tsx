@@ -1,69 +1,28 @@
-import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import ProjectDetail from '@/components/CaseStudy';
-import { orderedProjects, getProject } from '@/lib/work';
-
-interface Params {
-  params: { slug: string };
-}
+import { CASES, caseBySlug } from '@/content/cases';
 
 export function generateStaticParams() {
-  return orderedProjects.map((project) => ({ slug: project.slug }));
+  return CASES.map((c) => ({ slug: c.slug }));
 }
 
-export function generateMetadata({ params }: Params): Metadata {
-  const project = getProject(params.slug);
-  if (!project) return {};
-  const url = `https://www.khassanein.bio/work/${project.slug}`;
-  const image = project.card?.src ?? '/og-image.png';
-  return {
-    title: `${project.title} | Kareem Hassanein`,
-    description: project.summary,
-    openGraph: {
-      title: `${project.title} | Kareem Hassanein`,
-      description: project.summary,
-      url,
-      type: 'website',
-      locale: 'en_CA',
-      siteName: 'Kareem Hassanein',
-      images: [{ url: image, alt: project.card?.alt ?? `${project.title} project by Kareem Hassanein` }],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: `${project.title} | Kareem Hassanein`,
-      description: project.summary,
-      images: [image],
-    },
-    alternates: {
-      canonical: url,
-    },
-  };
+export const dynamicParams = false;
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const c = caseBySlug(slug);
+  return c ? { title: c.name, description: c.summary } : {};
 }
 
-export default function ProjectPage({ params }: Params) {
-  const project = getProject(params.slug);
-  if (!project) notFound();
-
-  const index = orderedProjects.findIndex((p) => p.slug === project.slug);
-  const next = orderedProjects[(index + 1) % orderedProjects.length];
-
-  const breadcrumbJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.khassanein.bio' },
-      { '@type': 'ListItem', position: 2, name: 'Work', item: 'https://www.khassanein.bio/work' },
-      { '@type': 'ListItem', position: 3, name: project.title, item: `https://www.khassanein.bio/work/${project.slug}` },
-    ],
-  };
-
+export default async function CasePage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const c = caseBySlug(slug);
+  if (!c) notFound();
   return (
-    <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd).replace(/</g, '\\u003c') }}
-      />
-      <ProjectDetail project={project} next={next} />
-    </>
+    <div className="container section">
+      <h1 className="t-h1">{c.name}</h1>
+      <p className="t-lede" style={{ marginTop: 16 }}>
+        {c.summary}
+      </p>
+    </div>
   );
 }

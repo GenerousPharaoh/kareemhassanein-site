@@ -1,0 +1,57 @@
+.wrap {
+  position: relative;
+  background: #0b0c0d;
+}
+
+.video {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.toggle {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(14, 15, 17, 0.62);
+  color: #fff;
+  cursor: pointer;
+  opacity: 0;
+  transform: scale(0.92);
+  transition: opacity 0.25s ease, transform 0.25s var(--ease-out);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+
+.toggle svg {
+  width: 14px;
+  height: 14px;
+  fill: currentColor;
+}
+
+/* Visible when it matters: paused by the viewer, on touch screens, on hover and on keyboard focus */
+.toggle[data-state='paused'],
+.toggle:focus-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (hover: none) {
+  .toggle {
+    opacity: 0.85;
+    transform: none;
+  }
+}
+
+@media (hover: hover) {
+  .wrap:hover .toggle {
+    opacity: 1;
+    transform: none;
+  }
+}

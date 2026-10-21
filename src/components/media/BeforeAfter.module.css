@@ -1,0 +1,114 @@
+.figure {
+  margin: 0;
+  min-width: 0;
+}
+
+.figure[data-device='phone'] {
+  max-width: 340px;
+}
+
+.stage {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #fff;
+  touch-action: pan-y;
+  cursor: ew-resize;
+  user-select: none;
+  box-shadow:
+    0 0 0 1px rgba(18, 20, 23, 0.08),
+    0 22px 44px -26px rgba(18, 20, 23, 0.34);
+}
+
+.figure[data-device='phone'] .stage {
+  border-radius: 28px;
+  border: 7px solid #0d0e10;
+}
+
+.stage img {
+  display: block;
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+}
+
+.after {
+  position: absolute;
+  inset: 0;
+  clip-path: inset(0 0 0 var(--pos));
+}
+
+.line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--pos);
+  width: 2px;
+  margin-left: -1px;
+  background: #fff;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.18);
+  pointer-events: none;
+}
+
+.handle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 40px;
+  height: 40px;
+  margin: -20px 0 0 -20px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #fff;
+  color: #121417;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+}
+
+.handle svg {
+  width: 18px;
+  height: 18px;
+}
+
+.tag {
+  position: absolute;
+  top: 12px;
+  font: 500 11px/1 var(--font-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 6px 8px;
+  border-radius: 6px;
+  background: rgba(14, 15, 17, 0.72);
+  color: #fff;
+  pointer-events: none;
+}
+
+.tagBefore {
+  left: 12px;
+}
+
+.tagAfter {
+  right: 12px;
+}
+
+.range {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: ew-resize;
+}
+
+.stage:has(.range:focus-visible) {
+  outline: 2px solid var(--focus);
+  outline-offset: 4px;
+}
+
+.caption {
+  margin-top: 12px;
+  font-size: var(--t-small);
+  color: var(--muted);
+}
