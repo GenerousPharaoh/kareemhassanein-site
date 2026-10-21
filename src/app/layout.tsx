@@ -23,8 +23,9 @@ export const metadata: Metadata = {
     siteName: SITE.name,
     locale: 'en_CA',
     url: '/',
+    images: [{ url: '/og.png', width: 1200, height: 630, alt: 'Kareem Hassanein: from a Google search to a booked appointment, every step working and counted.' }],
   },
-  twitter: { card: 'summary_large_image' },
+  twitter: { card: 'summary_large_image', images: ['/og.png'] },
   robots: { index: true, follow: true },
 };
 
