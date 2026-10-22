@@ -1,12 +1,11 @@
 import Link from 'next/link';
-import { RollText } from '@/components/motion/RollText';
 import { CopyEmail } from '@/components/ui/CopyEmail';
 import { FOOTER_NAV, SITE } from '@/content/site';
 import styles from './Footer.module.css';
 
 export function Footer() {
   return (
-    <footer className={`night ${styles.footer}`}>
+    <footer className={styles.footer}>
       <div className={`container ${styles.top}`}>
         <div className={styles.contact}>
           <p className={styles.label}>Write to me</p>
@@ -16,11 +15,11 @@ export function Footer() {
         <nav className={styles.nav} aria-label="Footer">
           {FOOTER_NAV.map((item) => (
             <Link key={item.href} href={item.href} className={styles.link}>
-              <RollText text={item.label} />
+              {item.label}
             </Link>
           ))}
           <a href={SITE.linkedin} className={styles.link} rel="noopener">
-            <RollText text="LinkedIn" />
+            LinkedIn
           </a>
         </nav>
       </div>

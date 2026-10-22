@@ -1,188 +1,303 @@
-/* ---------- Offer ---------- */
+/* ---------- Offer: the bottom half of the light sheet ---------- */
 
 .offer {
-  padding-block: var(--section);
+  position: relative;
+  z-index: 3;
+}
+
+.offerInner {
+  position: relative;
+  padding-top: clamp(40px, 5vw, 72px);
+  padding-bottom: calc(clamp(64px, 8vw, 120px) + var(--sheet-r));
+}
+
+.offerRule {
+  position: absolute;
+  left: var(--gutter-l);
+  right: var(--gutter-r);
+  top: 0;
+  height: 1px;
+  background: var(--rule);
+  transform-origin: 0 50%;
 }
 
 .offerGrid {
   display: grid;
-  gap: clamp(36px, 6vw, 72px);
-}
-
-.offerMain {
-  display: grid;
-  align-content: start;
-  gap: 24px;
+  gap: 28px;
 }
 
 .offerTitle {
-  font: 400 var(--t-h1) / 0.94 var(--font-display);
-  letter-spacing: -0.025em;
-  max-width: 11ch;
+  font: 500 var(--t-h2) / 1.04 var(--font-display);
+  letter-spacing: -0.035em;
+  max-width: 12ch;
 }
 
-.offerTitle em {
-  color: var(--brass-ink);
+.offerBody {
+  display: grid;
+  gap: 20px;
+  align-content: start;
 }
 
 .offerSummary {
-  max-width: 32rem;
+  max-width: 40ch;
   font-size: var(--t-lede);
   line-height: 1.5;
-  color: var(--ink-2);
-}
-
-.offerSide {
-  display: grid;
-  align-content: start;
-  gap: 22px;
-}
-
-.price {
-  font: 400 clamp(4.5rem, 2.5rem + 8vw, 10rem) / 0.85 var(--font-display);
-  letter-spacing: -0.04em;
-  font-variation-settings: 'opsz' 96;
 }
 
 .includes {
   list-style: none;
-  border-top: 1px solid var(--rule);
+  display: grid;
+  gap: 8px;
+  max-width: 44ch;
+  color: var(--muted);
+  font-size: 0.9375rem;
+  line-height: 1.5;
 }
 
 .includes li {
-  padding: 13px 0;
-  border-bottom: 1px solid var(--rule);
+  position: relative;
+  padding-left: 18px;
+}
+
+.includes li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.72em;
+  width: 8px;
+  height: 1px;
+  background: currentColor;
+}
+
+.offerSide {
+  display: grid;
+  gap: 14px;
+  align-content: start;
+}
+
+.price {
+  font: 500 clamp(2.6rem, 1.6rem + 3vw, 4.5rem) / 1 var(--font-display);
+  letter-spacing: -0.045em;
 }
 
 .terms {
-  font: italic 400 1.15rem/1.4 var(--font-display);
-  color: var(--signal);
+  max-width: 34ch;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--muted);
 }
 
 .offerLinks {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 12px 28px;
+  gap: 8px 22px;
+  margin-top: 8px;
 }
 
+/* A solid button whose dark fill lifts away from below on hover, leaving the outline */
 .primary {
+  position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 12px;
-  min-height: 54px;
-  padding: 0 26px;
+  gap: 10px;
+  min-height: 50px;
+  padding: 0 22px 0 24px;
   border-radius: 999px;
-  background: var(--stage);
-  color: var(--ivory);
+  background: var(--ink);
+  color: var(--paper);
   font-weight: 500;
   text-decoration: none;
-  transition:
-    background-color var(--dur-hover) var(--ease-colour),
-    transform var(--dur-press) var(--ease-out);
+  overflow: hidden;
+  isolation: isolate;
+  transition: color 0.4s var(--ease-colour);
+}
+
+.primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: #f6f5f1;
+  transform: translateY(101%);
+  transition: transform 0.55s var(--ease-out);
+}
+
+.primary::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 1px var(--ink);
+  pointer-events: none;
 }
 
 .primary svg {
-  width: 20px;
-  height: 20px;
-  color: var(--brass-hi);
-  transition: transform var(--dur-ui) var(--ease-out);
+  width: 18px;
+  height: 18px;
+  transition: transform 0.5s var(--ease-out);
+}
+
+@media (hover: hover) {
+  .primary:hover {
+    color: var(--ink);
+  }
+
+  .primary:hover::before {
+    transform: none;
+  }
+
+  .primary:hover svg {
+    transform: translateX(4px);
+  }
 }
 
 .primary:active {
-  transform: scale(0.97);
+  transform: scale(0.98);
 }
 
 .secondary {
   display: inline-flex;
   align-items: center;
-  min-height: 48px;
+  min-height: 44px;
   font-weight: 500;
-  text-decoration: underline;
-  text-decoration-color: var(--brass-ink);
-  text-underline-offset: 0.35em;
+  text-decoration: none;
+  background: linear-gradient(currentColor, currentColor) 0 calc(100% - 10px) / 100% 1px no-repeat;
+  transition: background-size 0.6s var(--ease-out);
 }
 
 @media (hover: hover) {
-  .primary:hover {
-    background: #1d3a2e;
-  }
-
-  .primary:hover svg {
-    transform: translateX(5px);
+  .secondary:hover {
+    background-size: 0% 1px;
+    background-position: 100% calc(100% - 10px);
   }
 }
 
 @media (min-width: 900px) {
   .offerGrid {
-    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr) minmax(0, 0.85fr);
+    gap: clamp(28px, 4vw, 64px);
   }
 }
 
-/* ---------- Close ---------- */
+/* ---------- Close: a dark sheet over the light one, with the booking band ---------- */
 
 .close {
-  padding-block: var(--section);
+  position: relative;
+  z-index: 4;
+  margin-top: calc(-1 * var(--sheet-r));
+  border-radius: var(--sheet-r) var(--sheet-r) 0 0;
+  padding: clamp(64px, 8vw, 128px) 0 clamp(40px, 5vw, 72px);
   background: var(--stage);
+  color: var(--ink);
 }
 
 .kicker {
-  font: italic 400 1.15rem/1.3 var(--font-display);
-  color: var(--brass);
+  margin-bottom: clamp(16px, 2vw, 28px);
+  color: var(--muted);
+  font-size: 0.9375rem;
 }
 
 .closeTitle {
-  margin-top: 18px;
+  font: inherit;
 }
 
-.big {
-  display: inline-flex;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  gap: 0.2em 0.35em;
-  font: 400 clamp(3.2rem, 1.4rem + 7.8vw, 11rem) / 0.95 var(--font-display);
-  letter-spacing: -0.035em;
-  font-variation-settings: 'opsz' 96;
-  color: var(--ivory);
+.band {
+  --band-x: clamp(12px, 1.6vw, 24px);
+  position: relative;
+  display: block;
+  margin-inline: calc(-1 * var(--band-x));
+  color: var(--ink);
   text-decoration: none;
+  isolation: isolate;
+  border-radius: 4px;
+  overflow: hidden;
 }
 
-.bigArrow {
-  display: inline-grid;
+.rule {
+  position: absolute;
+  left: var(--band-x);
+  right: var(--band-x);
+  top: 0;
+  height: 1px;
+  background: var(--rule);
+  transform-origin: 0 50%;
+  z-index: 2;
+}
+
+.ruleEnd {
+  top: auto;
+  bottom: 0;
+}
+
+.bandMask {
+  display: block;
+  overflow: hidden;
+}
+
+.bandRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: clamp(22px, 3vw, 44px) var(--band-x);
+}
+
+.bandText {
+  font: 500 var(--t-mega) / 1 var(--font-display);
+  letter-spacing: -0.045em;
+}
+
+.bandArrow {
+  flex: none;
+  display: grid;
   place-items: center;
-  width: 0.7em;
-  height: 0.7em;
-  margin-bottom: 0.08em;
+  width: clamp(48px, 5vw, 84px);
+  height: clamp(48px, 5vw, 84px);
   border-radius: 50%;
-  background: var(--brass);
-  color: var(--stage-deep);
-  transition: transform var(--dur-move) var(--ease-out), background-color var(--dur-hover) var(--ease-colour);
+  box-shadow: inset 0 0 0 1px currentColor;
 }
 
-.bigArrow svg {
-  width: 46%;
-  height: 46%;
+.bandArrow svg {
+  width: 42%;
+  height: 42%;
+  transition: transform 0.6s var(--ease-out);
 }
 
-.big:active .bigArrow {
-  transform: scale(0.92);
+/* The fill sits exactly over the row and is clipped away until hover */
+.fill {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  background: var(--ivory);
+  color: var(--stage);
+  clip-path: inset(100% 0 0 0);
+  transition: clip-path 0.7s var(--ease-out);
+}
+
+.fill .bandRow {
+  width: 100%;
 }
 
 @media (hover: hover) {
-  .big:hover .bigArrow {
-    transform: rotate(-45deg);
-    background: var(--brass-hi);
+  .band:hover .fill {
+    clip-path: inset(0 0 0 0);
+  }
+
+  .band:hover .bandArrow svg {
+    transform: translateX(10%);
   }
 }
 
-.big:focus-visible .bigArrow {
-  transform: rotate(-45deg);
+.band:focus-visible {
+  outline-offset: 4px;
 }
 
 .alt {
-  max-width: 34rem;
-  margin-top: clamp(28px, 4vw, 48px);
-  font-size: var(--t-lede);
-  line-height: 1.5;
+  margin-top: clamp(16px, 2vw, 28px);
+  max-width: 48ch;
   color: var(--muted);
 }

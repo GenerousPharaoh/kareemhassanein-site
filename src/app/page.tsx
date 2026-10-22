@@ -1,16 +1,12 @@
-import { Beyond } from '@/components/home/Beyond';
 import { Close, Offer } from '@/components/home/HomeEnd';
-import { Intro } from '@/components/home/Intro';
-import { PathFilm } from '@/components/home/PathFilm';
-import { PathTrack } from '@/components/home/PathTrack';
-import { STORIES } from '@/components/home/stories';
-import { WorkScenes } from '@/components/home/WorkScenes';
-import { BEYOND_CASES, PRACTICE_CASES } from '@/content/cases';
-import { PATH } from '@/content/path';
+import s from '@/components/home/Home.module.css';
+import { Showreel, type ReelItem, type ReelMedia } from '@/components/home/Showreel';
+import { Statement } from '@/components/home/Statement';
+import { WorkIndex, type IndexItem } from '@/components/home/WorkIndex';
+import { CASES, caseBySlug } from '@/content/cases';
 import { SITE } from '@/content/site';
-import { still, type Still } from '@/lib/media';
+import { loop, still, type Still } from '@/lib/media';
 import { pageMeta } from '@/lib/meta';
-import { accentText, toneOf } from '@/lib/palette';
 
 export const metadata = pageMeta({
   title: `${SITE.name} · ${SITE.descriptor}`,
@@ -30,40 +26,165 @@ const PORTRAIT: Still = {
   device: 'desktop',
 };
 
+/** A loop for the reel: its first frame as the still, the video on top. */
+const reelLoop = (key: string): ReelMedia => {
+  const l = loop(key, '');
+  return { image: { src: l.poster, srcSet: `${l.poster} ${l.w}w`, w: l.w, h: l.h }, video: l.src };
+};
+
+/** A still for the reel, at the two large widths. */
+const reelStill = (key: string): ReelMedia => {
+  const st = still(key, '');
+  const widths = st.widths.filter((w) => w >= 1600);
+  return { image: { src: `${st.src}-${widths[0]}.webp`, srcSet: widths.map((w) => `${st.src}-${w}.webp ${w}w`).join(', '), w: st.w, h: st.h } };
+};
+
+// The reel: what each project looks like on a desktop and on a phone, the stage it sits on (its
+// own colours, dark or light), and its time on screen. deep is the dark version the work list uses.
+const REEL: Array<Omit<ReelItem, 'kind' | 'href'> & { deep: string }> = [
+  {
+    slug: 'tax-relief-counsel',
+    name: 'Tax Relief Counsel',
+    label: 'Tax Relief Counsel',
+    tone: '#1b2740',
+    ink: '#efeae1',
+    dark: true,
+    deep: '#1b2740',
+    focus: { desktop: 0.35, phone: 0.2 },
+    desktop: reelLoop('tax-relief-counsel/hero-arrive--desktop'),
+    phone: reelLoop('tax-relief-counsel/hero-arrive--phone'),
+    seconds: 7.6,
+  },
+  {
+    slug: 'endorphins',
+    name: 'Endorphins',
+    label: 'Endorphins',
+    tone: '#dfe7d5',
+    ink: '#17230f',
+    dark: false,
+    deep: '#17231a',
+    focus: { desktop: 0.62, phone: 0.1 },
+    desktop: reelStill('endorphins/home-hero--desktop'),
+    phone: reelLoop('endorphins/home-scroll--phone'),
+    seconds: 6.6,
+  },
+  {
+    slug: 'physiomax',
+    name: 'PhysioMax',
+    label: 'PhysioMax',
+    tone: '#132b40',
+    ink: '#eef1f4',
+    dark: true,
+    deep: '#11273a',
+    focus: { desktop: 0.3, phone: 0.1 },
+    desktop: reelLoop('physiomax/treat-chart--desktop'),
+    phone: reelLoop('physiomax/home-scroll--phone'),
+    seconds: 7.8,
+  },
+  {
+    slug: 'kinetikare',
+    name: 'KinetiKare',
+    label: 'KinetiKare',
+    tone: '#efe9dd',
+    ink: '#1a2233',
+    dark: false,
+    deep: '#141b2b',
+    focus: { desktop: 0.35, phone: 0.1 },
+    desktop: reelStill('kinetikare/home-hero--desktop'),
+    phone: reelLoop('kinetikare/home-scroll--phone'),
+    seconds: 6.6,
+  },
+  {
+    slug: 'techniques-combat',
+    name: 'Techniques Combat',
+    label: 'Techniques',
+    tone: '#e7e6e1',
+    ink: '#0c0c0c',
+    dark: false,
+    deep: '#151515',
+    focus: { desktop: 0.5, phone: 0.3 },
+    desktop: reelLoop('techniques-combat/hero-film--desktop'),
+    phone: reelLoop('techniques-combat/hero-film--phone'),
+    seconds: 8.6,
+  },
+  {
+    slug: 'travel-journal',
+    name: 'A travel journal',
+    label: 'Travel journal',
+    tone: '#182d3d',
+    ink: '#f6f1e7',
+    dark: true,
+    deep: '#172b3a',
+    focus: { desktop: 0.3, phone: 0.1 },
+    desktop: reelLoop('travel-journal/opening--desktop'),
+    phone: reelLoop('travel-journal/travels-scroll--phone'),
+    seconds: 6.6,
+  },
+  {
+    slug: 'wedding',
+    name: 'A destination wedding',
+    label: 'Wedding',
+    tone: '#efede6',
+    ink: '#1e2630',
+    dark: false,
+    deep: '#1c2430',
+    focus: { desktop: 0.45, phone: 0.3 },
+    desktop: reelLoop('wedding/opening--desktop'),
+    phone: reelLoop('wedding/opening--phone'),
+    seconds: 6.2,
+  },
+];
+
+// The list below the reel shows a second screen from each project
+const PREVIEW: Record<string, string> = {
+  'tax-relief-counsel': 'tax-relief-counsel/decoder--desktop',
+  endorphins: 'endorphins/lp-physio--desktop',
+  physiomax: 'physiomax/home-hero--desktop',
+  kinetikare: 'kinetikare/knee-hub--desktop',
+  'techniques-combat': 'techniques-combat/home-hero--desktop',
+  'travel-journal': 'travel-journal/travels-top--desktop',
+  wedding: 'wedding/day--desktop',
+};
+
+const KEEP_CASE = ['Business Profile', 'Shopify'];
+/** "Diagnosis, Website, Tools" reads as "Diagnosis, website, tools". */
+const servicesLine = (list: string[]) =>
+  list.map((x, i) => (i === 0 || KEEP_CASE.includes(x) || /^[A-Z]{2,}$/.test(x) ? x : x.charAt(0).toLowerCase() + x.slice(1))).join(', ');
+
 export default function Home() {
-  const firm = STORIES[0];
+  const reel: ReelItem[] = REEL.map(({ deep: _deep, ...r }) => {
+    const c = caseBySlug(r.slug)!;
+    return { ...r, kind: c.kindLabel, href: `/work/${c.slug}` };
+  });
+
+  const index: IndexItem[] = CASES.map((c) => ({
+    slug: c.slug,
+    name: REEL.find((r) => r.slug === c.slug)?.name ?? c.short,
+    kind: c.kindLabel,
+    services: servicesLine(c.services),
+    href: `/work/${c.slug}`,
+    tone: REEL.find((r) => r.slug === c.slug)?.deep ?? '#0c0c0b',
+    still: still(PREVIEW[c.slug], c.plate.desktop.alt),
+  }));
 
   return (
     <>
-      <PathFilm
-        bookingHref={SITE.bookingHref}
-        story={{
-          query: firm.query,
-          result: firm.result,
-          booked: firm.booked,
-          counted: firm.counted,
-          desktop: still('tax-relief-counsel/home-hero--desktop', 'Tax Relief Counsel home page'),
-          phone: still('tax-relief-counsel/home-hero--phone', 'Tax Relief Counsel home page on a phone'),
-        }}
+      <div className={s.opening}>
+        <Showreel items={reel} title={`${SITE.name} · ${SITE.descriptor}`} />
+        <WorkIndex items={index} />
+      </div>
+      <Statement
+        pieces={[
+          'I build and run the online side of law firms and independent practices: the website ',
+          { still: still('tax-relief-counsel/home-hero--desktop', ''), label: 'Tax Relief Counsel' },
+          ', the Google profile, booking or intake ',
+          { still: still('endorphins/lp-physio--desktop', ''), label: 'Endorphins' },
+          ', ads, and the tracking that ties them together.',
+        ]}
+        body="I’m Kareem Hassanein, a Registered Physiotherapist in Ontario. I still treat patients every week at clinics in Burlington."
+        link={{ href: '/about', label: 'Why a physiotherapist' }}
+        portrait={PORTRAIT}
       />
-      <Intro portrait={PORTRAIT} />
-      <PathTrack stops={PATH} />
-      <WorkScenes
-        cases={PRACTICE_CASES.map((c) => ({
-          slug: c.slug,
-          name: c.name,
-          kindLabel: c.kindLabel,
-          summary: c.summary,
-          domain: c.domain,
-          ground: c.palette.ground,
-          ink: c.palette.ink,
-          accent: accentText(c.palette),
-          tone: toneOf(c.palette),
-          desktop: c.plate.desktop,
-          phone: c.plate.phone,
-        }))}
-      />
-      <Beyond cases={BEYOND_CASES.map((c) => ({ slug: c.slug, name: c.name, kindLabel: c.kindLabel, desktop: c.plate.desktop }))} />
       <Offer />
       <Close />
     </>

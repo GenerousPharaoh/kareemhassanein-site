@@ -1,19 +1,20 @@
 /*
-  A dark racing-green stage, ivory type, one brass light. Display type is a high-contrast
-  editorial serif (Bodoni Moda); working text is Geist. Client work keeps its own colours and
-  takes over the screen in scenes. Motion is choreographed per scene (GSAP on native scroll),
-  never one fade applied to everything.
+  A quiet studio frame around loud work: near-black, warm white type, one sharp grotesk (Mona Sans).
+  The colour comes from the client work itself: full-screen loops, and a stage that takes on the
+  colour of whichever project is in view. Light sheets give the page its rhythm.
+  Sizes are set for a 1280 by 680 laptop window first, then phones, then large screens.
 */
 :root {
   /* Stage */
-  --stage: #13271f;
-  --stage-raised: #1a3129;
-  --stage-deep: #0c1813;
-  --ivory: #efe9dd;
-  --ivory-2: #d6cfbf;
-  --brass: #c9a35f;
-  --brass-hi: #e0bf7e;
-  --brass-ink: #7f5f24; /* brass for small text on ivory paper */
+  --stage: #0c0c0b;
+  --stage-raised: #161615;
+  --stage-deep: #070707;
+  --ivory: #eeede8;
+  --ivory-2: #cbcac4;
+  /* Older components read these names; the system no longer has a brass accent */
+  --brass: var(--ivory);
+  --brass-hi: #ffffff;
+  --brass-ink: #0c0c0b;
 
   /* Roles (the components read these) */
   --paper: var(--stage);
@@ -21,65 +22,79 @@
   --card: var(--stage-raised);
   --ink: var(--ivory);
   --ink-2: var(--ivory-2);
-  --muted: #a7b0a5;
-  --faint: #8a958b;
-  --rule: rgba(239, 233, 221, 0.14);
-  --rule-soft: rgba(239, 233, 221, 0.08);
+  --muted: #8f8e88;
+  --faint: #6d6c67;
+  --rule: rgba(238, 237, 232, 0.13);
+  --rule-soft: rgba(238, 237, 232, 0.07);
 
-  /* Deeper sections */
   --night: var(--stage-deep);
-  --night-2: #12201a;
+  --night-2: #101010;
   --on-night: var(--ivory);
-  --on-night-muted: #a7b0a5;
-  --on-night-rule: rgba(239, 233, 221, 0.12);
+  --on-night-muted: #8f8e88;
+  --on-night-rule: rgba(238, 237, 232, 0.12);
 
-  /* Signal: booked, counted, working */
-  --signal: var(--brass);
-  --signal-soft: rgba(201, 163, 95, 0.16);
-  --signal-on-night: var(--brass-hi);
+  --signal: var(--ivory);
+  --signal-soft: rgba(238, 237, 232, 0.1);
+  --signal-on-night: var(--ivory);
 
   /* Focus rings: at least 3:1 against what they sit on */
-  --focus-on-light: #2d5bd8;
-  --focus-on-dark: #f3d79c;
+  --focus-on-light: #1f4fd6;
+  --focus-on-dark: #ffffff;
   --focus: var(--focus-on-dark);
 
-  --font-display: var(--font-bodoni), 'Didot', 'Bodoni 72', Georgia, serif;
-  --font-body: var(--font-geist), 'Segoe UI', system-ui, -apple-system, sans-serif;
-  /* --font-mono-face is set on <html> by the layout: Geist Mono without next/font's resized Arial fallback */
-  --font-mono: var(--font-mono-face), ui-monospace, 'Cascadia Mono', Consolas, monospace;
+  --font-sans: var(--font-mona), 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-display: var(--font-sans);
+  --font-body: var(--font-sans);
+  /* Older components ask for a mono face; the system has one family, with tabular figures there */
+  --font-mono: var(--font-sans);
 
-  /* Type scale: display sizes are large, because the serif carries the identity */
-  --t-mega: clamp(3.4rem, 1.2rem + 11vw, 13.5rem);
-  --t-hero: clamp(3rem, 1.2rem + 7.6vw, 9.25rem);
-  --t-h1: clamp(2.6rem, 1.2rem + 5.4vw, 6.6rem);
-  --t-h2: clamp(2.05rem, 1.1rem + 3.4vw, 4.4rem);
-  --t-h3: clamp(1.4rem, 1.1rem + 1.1vw, 2.05rem);
-  --t-lede: clamp(1.12rem, 1rem + 0.42vw, 1.4rem);
-  --t-body: 1.0625rem;
-  --t-small: 0.9375rem;
-  --t-label: 1rem;
+  /* Type scale: the largest type stays smaller than the work it introduces */
+  --t-mega: clamp(2.75rem, 1.4rem + 4.2vw, 6rem);
+  --t-hero: clamp(2.4rem, 1.3rem + 3.2vw, 4.75rem);
+  --t-h1: clamp(2.2rem, 1.25rem + 2.8vw, 4.25rem);
+  --t-h2: clamp(1.75rem, 1.1rem + 1.9vw, 3rem);
+  --t-h3: clamp(1.2rem, 1.05rem + 0.55vw, 1.6rem);
+  --t-lede: clamp(1.0625rem, 0.98rem + 0.3vw, 1.25rem);
+  --t-body: 1rem;
+  --t-small: 0.875rem;
+  --t-label: 0.875rem;
 
   /* Space */
   --gutter-l: max(20px, env(safe-area-inset-left, 0px));
   --gutter-r: max(20px, env(safe-area-inset-right, 0px));
-  --maxw: 1320px;
-  --section: clamp(88px, 11vw, 176px);
-  --gap: clamp(20px, 2.4vw, 32px);
-  --radius: 6px;
-  --radius-s: 4px;
+  --maxw: 1600px;
+  --section: clamp(64px, 7.5vw, 120px);
+  --gap: clamp(16px, 2vw, 28px);
+  --radius: 10px;
+  --radius-s: 6px;
+  --sheet-r: clamp(20px, 2.4vw, 32px);
 
   /* Motion: one set of durations and curves for the whole site */
   --dur-press: 120ms;
-  --dur-hover: 220ms;
-  --dur-ui: 360ms;
-  --dur-move: 720ms;
+  --dur-hover: 260ms;
+  --dur-ui: 420ms;
+  --dur-move: 900ms;
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-in-out: cubic-bezier(0.76, 0, 0.24, 1);
   --ease-in: cubic-bezier(0.55, 0, 1, 0.45);
   --ease-colour: cubic-bezier(0.25, 0.1, 0.25, 1);
-  --header-h: 72px;
+  --header-h: 64px;
 
   color-scheme: dark;
+}
+
+@media (min-width: 900px) {
+  :root {
+    --gutter-l: max(32px, env(safe-area-inset-left, 0px));
+    --gutter-r: max(32px, env(safe-area-inset-right, 0px));
+  }
+}
+
+@media (min-width: 1600px) {
+  :root {
+    --gutter-l: 48px;
+    --gutter-r: 48px;
+  }
 }
 
 *,
@@ -96,6 +111,24 @@ html {
   background: var(--stage);
 }
 
+/* Lenis (weighted scrolling on desktop pointers) */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
 body {
   margin: 0;
   background: var(--paper);
@@ -103,17 +136,17 @@ body {
   font-family: var(--font-body);
   font-size: var(--t-body);
   line-height: 1.6;
+  font-kerning: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
-  /* The page background follows the scene on screen (set by the scene controller) */
-  transition: background-color 0.7s var(--ease-colour);
 }
 
 img,
 video,
 svg,
-picture {
+picture,
+canvas {
   display: block;
   max-width: 100%;
 }
@@ -143,7 +176,7 @@ h3,
 h4 {
   margin: 0;
   font-family: var(--font-display);
-  font-weight: 400;
+  font-weight: 500;
   text-wrap: balance;
 }
 
@@ -158,8 +191,10 @@ ol {
   padding: 0;
 }
 
-em {
-  font-style: italic;
+/* Emphasis inside headings is a second tone, not a second typeface */
+:is(h1, h2, h3, .t-mega, .t-hero, .t-h1, .t-h2) em {
+  font-style: normal;
+  color: var(--muted);
 }
 
 :focus-visible {
@@ -169,8 +204,8 @@ em {
 }
 
 ::selection {
-  background: var(--brass);
-  color: var(--stage-deep);
+  background: var(--ink);
+  color: var(--paper);
 }
 
 .sr-only {
@@ -208,27 +243,29 @@ em {
   --focus: var(--focus-on-dark);
 }
 
-/* Light ivory scenes: the same system, inverted */
+/* Light sheets: the same system, inverted, on a warm light grey */
 .paper {
-  background: var(--ivory);
-  color: var(--stage);
-  --paper: var(--ivory);
-  --paper-2: #e6dfd0;
-  --card: #f6f2ea;
-  --ink: var(--stage);
-  --ink-2: #24392f;
-  --muted: #4c5b52;
-  --faint: #66746b;
-  --rule: rgba(19, 39, 31, 0.16);
-  --rule-soft: rgba(19, 39, 31, 0.08);
-  --signal: var(--brass-ink);
-  --signal-soft: rgba(127, 95, 36, 0.12);
+  background: #e9e8e3;
+  color: #0c0c0b;
+  --paper: #e9e8e3;
+  --paper-2: #deddd7;
+  --card: #f3f2ee;
+  --ink: #0c0c0b;
+  --ink-2: #2b2b29;
+  --muted: #5d5c57;
+  --faint: #76756f;
+  --rule: rgba(12, 12, 11, 0.14);
+  --rule-soft: rgba(12, 12, 11, 0.07);
+  --signal: #0c0c0b;
+  --signal-soft: rgba(12, 12, 11, 0.08);
+  --brass: #0c0c0b;
   --focus: var(--focus-on-light);
+  color-scheme: light;
 }
 
 /*
   A section that rises over the one before it like a sheet: rounded top corners, overlapping the
-  previous section's last few pixels. Used where the page turns from the dark stage to ivory and back.
+  previous section's last few pixels.
 */
 .sheet-up {
   position: relative;
@@ -237,41 +274,38 @@ em {
   border-radius: var(--sheet-r) var(--sheet-r) 0 0;
 }
 
-:root {
-  --sheet-r: clamp(22px, 3vw, 44px);
-}
-
 /* Type */
 .t-mega {
-  font: 400 var(--t-mega) / 0.86 var(--font-display);
-  letter-spacing: -0.035em;
+  font: 500 var(--t-mega) / 0.96 var(--font-display);
+  letter-spacing: -0.045em;
 }
 
 .t-hero {
-  font: 400 var(--t-hero) / 0.9 var(--font-display);
-  letter-spacing: -0.03em;
+  font: 500 var(--t-hero) / 0.98 var(--font-display);
+  letter-spacing: -0.04em;
 }
 
 .t-h1 {
-  font: 400 var(--t-h1) / 0.94 var(--font-display);
-  letter-spacing: -0.025em;
+  font: 500 var(--t-h1) / 1 var(--font-display);
+  letter-spacing: -0.035em;
 }
 
 .t-h2 {
-  font: 400 var(--t-h2) / 1 var(--font-display);
-  letter-spacing: -0.02em;
+  font: 500 var(--t-h2) / 1.05 var(--font-display);
+  letter-spacing: -0.03em;
 }
 
 .t-h3 {
-  font: 500 var(--t-h3) / 1.12 var(--font-display);
-  letter-spacing: -0.01em;
+  font: 500 var(--t-h3) / 1.2 var(--font-display);
+  letter-spacing: -0.015em;
 }
 
 .t-lede {
   font-size: var(--t-lede);
   line-height: 1.5;
   color: var(--muted);
-  max-width: 60ch;
+  max-width: 58ch;
+  letter-spacing: -0.005em;
 }
 
 .t-small {
@@ -279,11 +313,11 @@ em {
   line-height: 1.55;
 }
 
-/* A small italic caption in the display serif, in brass: editorial, never an uppercase eyebrow */
+/* A small caption in the body face, in the muted tone: never an uppercase eyebrow */
 .t-label {
-  font: italic 400 var(--t-label) / 1.35 var(--font-display);
+  font: 400 var(--t-label) / 1.4 var(--font-body);
   letter-spacing: 0;
-  color: var(--signal);
+  color: var(--muted);
 }
 
 .prose {
@@ -295,13 +329,14 @@ em {
 }
 
 .prose h2 {
-  font: 400 clamp(1.7rem, 1.2rem + 1.7vw, 2.6rem) / 1.05 var(--font-display);
-  letter-spacing: -0.015em;
+  font: 500 clamp(1.4rem, 1.15rem + 1vw, 2rem) / 1.15 var(--font-display);
+  letter-spacing: -0.025em;
   margin-top: 2em;
 }
 
 .prose h3 {
-  font: 500 1.35rem / 1.2 var(--font-display);
+  font: 500 1.2rem / 1.25 var(--font-display);
+  letter-spacing: -0.01em;
   margin-top: 1.6em;
 }
 
@@ -324,23 +359,18 @@ em {
   }
 }
 
-/*
-  data-reveal is now inert: one fade applied to everything reads as a template. Scenes and
-  headings that deserve motion get their own choreography from the motion components.
-*/
-
 /* First-screen entrance for blocks that are not split into lines */
 @media (prefers-reduced-motion: no-preference) {
   [data-enter] {
-    animation: enter 1s var(--ease-out) both;
-    animation-delay: calc(120ms + var(--i, 0) * 90ms);
+    animation: enter 1.1s var(--ease-out) both;
+    animation-delay: calc(140ms + var(--i, 0) * 90ms);
   }
 }
 
 @keyframes enter {
   from {
     opacity: 0.01;
-    transform: translateY(18px);
+    transform: translateY(16px);
   }
   to {
     opacity: 1;
@@ -349,35 +379,38 @@ em {
 }
 
 /*
-  Page transitions (React ViewTransition around the page in the layout): the old page sinks and
-  dims quickly, the new one rises into place. The header stays put.
+  Page transitions (React ViewTransition around the page in the layout): the old page sinks back
+  and dims, and the new one rises over it as a sheet with rounded top corners. The header stays.
 */
 ::view-transition-old(.page-swap) {
-  animation: 260ms var(--ease-in) both page-out;
+  animation: 760ms var(--ease-in-out) both page-out;
 }
 
 ::view-transition-new(.page-swap) {
-  animation: 620ms var(--ease-out) 140ms both page-in;
+  animation: 860ms var(--ease-in-out) 60ms both page-in;
 }
 
 @keyframes page-out {
   to {
-    opacity: 0;
-    transform: translateY(-2.5vh) scale(0.985);
-    filter: brightness(0.7);
+    opacity: 0.2;
+    transform: translateY(-6vh) scale(0.94);
   }
 }
 
 @keyframes page-in {
   from {
-    opacity: 0;
-    transform: translateY(5vh);
+    clip-path: inset(100% 0 0 0 round 32px 32px 0 0);
+    transform: translateY(12vh);
+  }
+  to {
+    clip-path: inset(0 0 0 0 round 0);
+    transform: none;
   }
 }
 
 /* Shared images between a work preview and its case page */
 ::view-transition-group(.case-morph) {
-  animation-duration: 640ms;
+  animation-duration: 820ms;
   animation-timing-function: var(--ease-in-out);
 }
 
@@ -389,8 +422,8 @@ em {
   }
 }
 
-/* SplitText line masks (SplitReveal): room below the baseline so descenders and italics are never clipped */
+/* SplitText line masks (SplitReveal): room below the baseline so descenders are never clipped */
 .sl-mask {
-  padding-bottom: 0.1em;
-  margin-bottom: -0.1em;
+  padding-bottom: 0.12em;
+  margin-bottom: -0.12em;
 }

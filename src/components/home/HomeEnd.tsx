@@ -1,8 +1,10 @@
+'use client';
+
 import Link from 'next/link';
-import { RollText } from '@/components/motion/RollText';
-import { SplitReveal } from '@/components/motion/SplitReveal';
+import { useRef } from 'react';
 import { OFFERS } from '@/content/offers';
 import { SITE } from '@/content/site';
+import { getGsap, useGsap } from '@/lib/gsap';
 import s from './HomeEnd.module.css';
 
 const Arrow = () => (
@@ -11,34 +13,52 @@ const Arrow = () => (
   </svg>
 );
 
-/** The way in: the website check, at its fixed price. */
+/** The way in: the website check, at its fixed price, on the same light sheet as the introduction. */
 export function Offer() {
   const check = OFFERS.find((o) => o.id === 'check')!;
+  const root = useRef<HTMLElement>(null);
+
+  useGsap(root, ({ reduce }) => {
+    if (reduce) return;
+    const { gsap } = getGsap();
+    const el = root.current!;
+    const tl = gsap.timeline({ scrollTrigger: { trigger: el, start: 'top 80%', once: true } });
+    tl.fromTo(el.querySelector('[data-rule]'), { scaleX: 0 }, { scaleX: 1, duration: 1.4, ease: 'expo.out' }, 0).fromTo(
+      el.querySelectorAll('[data-up]'),
+      { y: 24, opacity: 0 },
+      { y: 0, opacity: 1, duration: 1.1, ease: 'expo.out', stagger: 0.08 },
+      0.15,
+    );
+  });
+
   return (
-    <section className={`paper sheet-up ${s.offer}`} aria-labelledby="offer-h">
-      <div className={`container ${s.offerGrid}`}>
-        <div className={s.offerMain}>
-          <SplitReveal id="offer-h" className={s.offerTitle}>
-            Start with the <em>website check</em>
-          </SplitReveal>
-          <p className={s.offerSummary}>{check.summary}</p>
-        </div>
-        <div className={s.offerSide}>
-          <p className={s.price}>{check.price}</p>
-          <ul className={s.includes}>
-            {check.includes.map((line) => (
-              <li key={line}>{line}</li>
-            ))}
-          </ul>
-          <p className={s.terms}>{check.terms}</p>
-          <div className={s.offerLinks}>
-            <Link href={SITE.checkHref} className={s.primary} data-track="home-check">
-              Start with the check
-              <Arrow />
-            </Link>
-            <Link href="/pricing" className={s.secondary}>
-              All prices
-            </Link>
+    <section ref={root} className={`paper ${s.offer}`} aria-labelledby="offer-h" data-theme="light">
+      <div className={`container ${s.offerInner}`}>
+        <span className={s.offerRule} data-rule aria-hidden="true" />
+        <div className={s.offerGrid}>
+          <h2 id="offer-h" className={s.offerTitle} data-up>
+            Start with the website check
+          </h2>
+          <div className={s.offerBody} data-up>
+            <p className={s.offerSummary}>{check.summary}</p>
+            <ul className={s.includes}>
+              {check.includes.map((line) => (
+                <li key={line}>{line}</li>
+              ))}
+            </ul>
+          </div>
+          <div className={s.offerSide} data-up>
+            <p className={s.price}>{check.price}</p>
+            <p className={s.terms}>{check.terms}</p>
+            <div className={s.offerLinks}>
+              <Link href={SITE.checkHref} className={s.primary} data-track="home-check">
+                <span>Start with the check</span>
+                <Arrow />
+              </Link>
+              <Link href="/pricing" className={s.secondary}>
+                All prices
+              </Link>
+            </div>
           </div>
         </div>
       </div>
@@ -46,21 +66,52 @@ export function Offer() {
   );
 }
 
-/** The end of the page: one large way to book. */
+/** The end of the page: one large way to book, a full-width band that fills on hover. */
 export function Close() {
+  const root = useRef<HTMLElement>(null);
+
+  useGsap(root, ({ reduce }) => {
+    if (reduce) return;
+    const { gsap } = getGsap();
+    const el = root.current!;
+    const tl = gsap.timeline({ scrollTrigger: { trigger: el, start: 'top 75%', once: true } });
+    tl.fromTo(el.querySelectorAll('[data-rule]'), { scaleX: 0 }, { scaleX: 1, duration: 1.4, ease: 'expo.out', stagger: 0.1 }, 0)
+      .fromTo(el.querySelector('[data-big]'), { yPercent: 105 }, { yPercent: 0, duration: 1.2, ease: 'expo.out' }, 0.1)
+      .fromTo(el.querySelectorAll('[data-up]'), { y: 18, opacity: 0 }, { y: 0, opacity: 1, duration: 1, ease: 'expo.out', stagger: 0.08 }, 0.3);
+  });
+
   return (
-    <section className={`sheet-up ${s.close}`} aria-labelledby="close-h">
+    <section ref={root} className={s.close} aria-labelledby="close-h">
       <div className="container">
-        <p className={s.kicker}>{SITE.reply}</p>
+        <p className={s.kicker} data-up>
+          {SITE.reply}
+        </p>
         <h2 id="close-h" className={s.closeTitle}>
-          <Link href={SITE.bookingHref} className={s.big} data-track="home-close-book">
-            <RollText text="Book a 20-minute call" />
-            <span className={s.bigArrow} aria-hidden="true">
-              <Arrow />
+          <Link href={SITE.bookingHref} className={s.band} data-track="home-close-book">
+            <span className={s.rule} data-rule aria-hidden="true" />
+            <span className={s.bandMask}>
+              <span className={s.bandRow} data-big>
+                <span className={s.bandText}>Book a 20-minute call</span>
+                <span className={s.bandArrow} aria-hidden="true">
+                  <Arrow />
+                </span>
+              </span>
             </span>
+            {/* The fill: the same row in dark type on ivory, revealed from below on hover */}
+            <span className={s.fill} aria-hidden="true">
+              <span className={s.bandRow}>
+                <span className={s.bandText}>Book a 20-minute call</span>
+                <span className={s.bandArrow}>
+                  <Arrow />
+                </span>
+              </span>
+            </span>
+            <span className={`${s.rule} ${s.ruleEnd}`} data-rule aria-hidden="true" />
           </Link>
         </h2>
-        <p className={s.alt}>Tell me what is not working. There is nothing to prepare except your site address.</p>
+        <p className={s.alt} data-up>
+          Tell me what is not working. There is nothing to prepare except your site address.
+        </p>
       </div>
     </section>
   );

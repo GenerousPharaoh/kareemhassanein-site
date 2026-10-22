@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { MouseEvent } from 'react';
-import { RollText } from '@/components/motion/RollText';
 import { NAV, SITE } from '@/content/site';
 import { prefersReducedMotion } from '@/lib/useReducedMotion';
 import styles from './Header.module.css';
@@ -26,6 +25,7 @@ export function Header() {
     if (phase === 'open') setPhase('closing');
   }
   const [scrolled, setScrolled] = useState(false);
+  const [tucked, setTucked] = useState(false);
   const menuButton = useRef<HTMLButtonElement>(null);
   const sheet = useRef<HTMLDivElement>(null);
 
@@ -42,14 +42,28 @@ export function Header() {
     return () => document.removeEventListener('touchstart', noop);
   }, []);
 
-  // The hairline under the header, with a little hysteresis so it cannot flicker at the threshold.
+  // The background and hairline once the page has moved under the header (with a little hysteresis
+  // so they cannot flicker at the threshold), and the header tucked away while reading down the page,
+  // back as soon as the page moves up.
   useEffect(() => {
     let on = false;
+    let tuck = false;
+    let last = window.scrollY;
     const onScroll = () => {
-      const next = on ? window.scrollY > 4 : window.scrollY > 12;
+      const y = window.scrollY;
+      const next = on ? y > 4 : y > 12;
       if (next !== on) {
         on = next;
         setScrolled(next);
+      }
+      const dy = y - last;
+      if (Math.abs(dy) > 8 || y < 80) {
+        const t = dy > 0 && y > window.innerHeight * 0.7;
+        if (t !== tuck) {
+          tuck = t;
+          setTucked(t);
+        }
+        last = y;
       }
     };
     onScroll();
@@ -61,6 +75,21 @@ export function Header() {
   // client grounds, dark type over ivory paper. Sections say which they are with .paper, .night or
   // data-theme; the default is the dark stage.
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
+  // When the reel's stage changes colour, the header's colours change as slowly as the stage does
+  const [slow, setSlow] = useState(false);
+  useEffect(() => {
+    let t = 0;
+    const onStage = () => {
+      setSlow(true);
+      window.clearTimeout(t);
+      t = window.setTimeout(() => setSlow(false), 1600);
+    };
+    window.addEventListener('stagechange', onStage);
+    return () => {
+      window.clearTimeout(t);
+      window.removeEventListener('stagechange', onStage);
+    };
+  }, []);
   useEffect(() => {
     let frame = 0;
     const read = () => {
@@ -78,10 +107,12 @@ export function Header() {
     read();
     window.addEventListener('scroll', queue, { passive: true });
     window.addEventListener('resize', queue);
+    window.addEventListener('stagechange', queue);
     return () => {
       cancelAnimationFrame(frame);
       window.removeEventListener('scroll', queue);
       window.removeEventListener('resize', queue);
+      window.removeEventListener('stagechange', queue);
     };
   }, [pathname]);
 
@@ -148,24 +179,34 @@ export function Header() {
   const isActive = (href: string) => (href === '/' ? pathname === '/' : pathname === href || pathname.startsWith(href + '/'));
 
   return (
-    <header className={styles.header} data-scrolled={scrolled || undefined} data-open={open || undefined} data-theme={theme}>
+    <header
+      className={styles.header}
+      data-scrolled={scrolled || undefined}
+      data-tucked={(tucked && phase === 'closed') || undefined}
+      data-open={open || undefined}
+      data-theme={theme}
+      data-slow={slow || undefined}
+      onFocusCapture={() => setTucked(false)}
+    >
       <a href="#main" className={styles.skip}>
         Skip to content
       </a>
       <div className={`container ${styles.inner}`}>
         <Link href="/" className={styles.mark} aria-label={`${SITE.name}, home`}>
-          <span className={styles.dot} aria-hidden="true" />
-          <span>{SITE.name}</span>
+          <span className={styles.markName}>{SITE.name}</span>
+          <span className={styles.markLine} aria-hidden="true">
+            {SITE.descriptor}
+          </span>
         </Link>
         <nav className={styles.nav} aria-label="Main">
           {NAV.map((item) => (
             <Link key={item.href} href={item.href} className={styles.link} aria-current={isActive(item.href) ? 'page' : undefined}>
-              <RollText text={item.label} />
+              {item.label}
             </Link>
           ))}
         </nav>
         <Link href={SITE.bookingHref} className={styles.cta} data-track="header-book">
-          <RollText text="Book a call" />
+          <span className={styles.ctaText}>Book a call</span>
         </Link>
         <button
           ref={menuButton}

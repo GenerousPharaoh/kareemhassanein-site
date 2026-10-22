@@ -1,0 +1,86 @@
+'use client';
+
+import Link from 'next/link';
+import { useRef } from 'react';
+import { Picture } from '@/components/media/Picture';
+import { getGsap, useGsap } from '@/lib/gsap';
+import type { Still } from '@/lib/media';
+import s from './Statement.module.css';
+
+/** A run of text, or a small picture set into the line beside the words it shows. */
+export type Piece = string | { still: Still; label: string };
+
+type Props = {
+  pieces: Piece[];
+  body: string;
+  link: { href: string; label: string };
+  portrait: Still;
+};
+
+/**
+ * Who builds it: one long sentence on a light sheet, lit word by word as it scrolls into place,
+ * with small pictures of the work set into the line, and the portrait standing at the edge.
+ */
+export function Statement({ pieces, body, link, portrait }: Props) {
+  const root = useRef<HTMLElement>(null);
+
+  useGsap(root, ({ reduce }) => {
+    if (reduce) return;
+    const { gsap, SplitText } = getGsap();
+    const el = root.current!;
+    const text = el.querySelector<HTMLElement>('[data-lit]')!;
+    const split = SplitText.create(text.querySelectorAll('[data-words]'), { type: 'words', wordsClass: s.word });
+    const words = [...split.words, ...el.querySelectorAll<HTMLElement>('[data-chip]')];
+    // In reading order, so the chips light with the words around them
+    words.sort((a, b) => (a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1));
+    const tl = gsap.timeline({ scrollTrigger: { trigger: text, start: 'top 78%', end: 'bottom 52%', scrub: 0.6 } });
+    words.forEach((w, i) => {
+      if (w.hasAttribute('data-chip')) {
+        tl.fromTo(w.querySelector('[data-chip-img]'), { clipPath: 'inset(50% 50% 50% 50% round 999px)', scale: 1.4 }, { clipPath: 'inset(0% 0% 0% 0% round 999px)', scale: 1, ease: 'power2.out', duration: 1.6 }, i * 0.35);
+      } else {
+        tl.fromTo(w, { opacity: 0.16 }, { opacity: 1, ease: 'none', duration: 1 }, i * 0.35);
+      }
+    });
+
+    gsap.fromTo(el.querySelector('[data-portrait]'), { yPercent: 10 }, { yPercent: 0, ease: 'none', scrollTrigger: { trigger: el, start: 'top bottom', end: 'top 20%', scrub: true } });
+    gsap.fromTo(el.querySelectorAll('[data-after]'), { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 1.1, ease: 'expo.out', stagger: 0.08, scrollTrigger: { trigger: el.querySelector('[data-after]'), start: 'top 90%', once: true } });
+
+    return () => split.revert();
+  });
+
+  return (
+    <section ref={root} className={`paper ${s.statement}`} aria-labelledby="who-h" data-theme="light">
+      <div className={`container ${s.grid}`}>
+        <div className={s.copy}>
+          <h2 id="who-h" className={s.text} data-lit>
+            {pieces.map((p, i) =>
+              typeof p === 'string' ? (
+                <span key={i} data-words>
+                  {p}
+                </span>
+              ) : (
+                <span key={i} className={s.chip} data-chip aria-hidden="true" title={p.label}>
+                  <span className={s.chipImg} data-chip-img>
+                    <Picture media={p.still} sizes="120px" />
+                  </span>
+                </span>
+              ),
+            )}
+          </h2>
+          <p className={s.body} data-after>
+            {body}
+          </p>
+          <Link href={link.href} className={s.more} data-after>
+            {link.label}
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M5 12h13m-5-6 6 6-6 6" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </Link>
+        </div>
+        <div className={s.portrait} data-portrait>
+          <Picture media={portrait} sizes="(min-width: 900px) min(520px, 38vw), 80vw" />
+        </div>
+      </div>
+    </section>
+  );
+}

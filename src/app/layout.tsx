@@ -1,20 +1,15 @@
 import type { Metadata, Viewport } from 'next';
-import { Bodoni_Moda, Geist, Geist_Mono } from 'next/font/google';
+import { Mona_Sans } from 'next/font/google';
 import { ViewTransition } from 'react';
 import { Footer } from '@/components/site/Footer';
 import { Header } from '@/components/site/Header';
+import { SmoothScroll } from '@/components/site/SmoothScroll';
 import { SITE } from '@/content/site';
 import './globals.css';
 
-// Display: a high-contrast didone with an optical-size axis, so very large headings stay crisp
-const display = Bodoni_Moda({ subsets: ['latin'], style: ['normal', 'italic'], axes: ['opsz'], variable: '--font-bodoni', display: 'swap' });
-const body = Geist({ subsets: ['latin'], variable: '--font-geist', display: 'swap' });
-const mono = Geist_Mono({ subsets: ['latin'], variable: '--font-geist-mono', display: 'swap', preload: false });
-// The mono stack skips next/font's fallback: that face is a resized Arial, which runs wide on the
-// uppercase labels and wraps them until Geist Mono arrives (Turbopack ignores adjustFontFallback).
-// Only the real face goes into --font-mono; the system monospace fonts after it in globals.css
-// share Geist Mono's 0.6em advance, so nothing moves when it swaps in.
-const monoFace = mono.style.fontFamily.split(',')[0].trim();
+// One family for everything: Mona Sans, a grotesk with weight and width axes (the width axis sets
+// the large project names a touch narrower than the text).
+const sans = Mona_Sans({ subsets: ['latin'], axes: ['wdth'], variable: '--font-mona', display: 'swap' });
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
@@ -35,7 +30,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: '#13271f',
+  themeColor: '#0c0c0b',
   viewportFit: 'cover',
 };
 
@@ -68,7 +63,7 @@ const jsonLd = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en-CA" className={`${display.variable} ${body.variable} ${mono.variable}`} style={{ ['--font-mono-face' as string]: monoFace }}>
+    <html lang="en-CA" className={sans.variable}>
       <body>
         <Header />
         {/* Each route change swaps the page inside this boundary with the page-swap animation; the header stays */}
@@ -76,6 +71,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <main id="main">{children}</main>
         </ViewTransition>
         <Footer />
+        <SmoothScroll />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       </body>
     </html>
