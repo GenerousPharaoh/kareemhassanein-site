@@ -53,11 +53,24 @@
   color: var(--muted);
 }
 
+/* A text link: the underline strengthens on hover, and at once when pressed */
 .mail {
   color: var(--ink);
   font-weight: 500;
   overflow-wrap: anywhere;
   text-decoration-color: color-mix(in srgb, currentColor 35%, transparent);
+  transition: text-decoration-color var(--dur-hover) var(--ease-colour);
+}
+
+.mail:active {
+  text-decoration-color: currentColor;
+  transition-duration: 0s;
+}
+
+@media (hover: hover) {
+  .mail:hover {
+    text-decoration-color: currentColor;
+  }
 }
 
 .prose {

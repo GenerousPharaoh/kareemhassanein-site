@@ -20,8 +20,10 @@ export function Plate({
   phone,
   domain,
   priority = false,
-  desktopSizes = '(min-width: 1280px) 1130px, 90vw',
-  phoneSizes = '(min-width: 1240px) 268px, 24vw',
+  // From the plate's padding (clamp(36px, 9%, 120px) on the right), the phone's width
+  // (clamp(104px, 23%, 268px)) and its bezel, for a plate as wide as the container.
+  desktopSizes = '(min-width: 1280px) 1128px, (min-width: 440px) calc(91vw - 36px), calc(100vw - 76px)',
+  phoneSizes = '(min-width: 1205px) 255px, (min-width: 492px) calc(21.9vw - 9px), 99px',
   className,
 }: Props) {
   return (

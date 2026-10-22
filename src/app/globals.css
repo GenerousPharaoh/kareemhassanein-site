@@ -25,11 +25,15 @@
   --signal: #13704a;
   --signal-soft: #d9ede2;
   --signal-on-night: #5bd59c;
-  --focus: #2d68d8;
+  /* Focus rings: at least 3:1 against what they sit on. Dark sections and dark client grounds use the light blue. */
+  --focus-on-light: #2d68d8;
+  --focus-on-dark: #8ab4ff;
+  --focus: var(--focus-on-light);
 
   --font-display: var(--font-schibsted), 'Helvetica Neue', Arial, sans-serif;
   --font-body: var(--font-geist), 'Segoe UI', system-ui, -apple-system, sans-serif;
-  --font-mono: var(--font-geist-mono), ui-monospace, 'Cascadia Mono', Consolas, monospace;
+  /* --font-mono-face is set on <html> by the layout: Geist Mono without next/font's resized Arial fallback */
+  --font-mono: var(--font-mono-face), ui-monospace, 'Cascadia Mono', Consolas, monospace;
 
   /* Type scale */
   --t-hero: clamp(2.7rem, 1.15rem + 5.7vw, 6.5rem);
@@ -187,6 +191,7 @@ ol {
   --rule: var(--on-night-rule);
   --rule-soft: var(--on-night-rule);
   --signal: var(--signal-on-night);
+  --focus: var(--focus-on-dark);
 }
 
 /* Type */
@@ -267,13 +272,17 @@ ol {
   }
 }
 
-/* Scroll-linked entrance, CSS only. Content is fully visible where unsupported. */
+/*
+  Scroll-linked entrance, CSS only. Content is fully visible where unsupported. The entrance ends
+  within the first 30vh of a block's arrival, so a tall block that starts mid-screen is never left
+  half drawn at rest.
+*/
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
     [data-reveal] {
       animation: reveal linear both;
       animation-timeline: view();
-      animation-range: entry 0% entry 55%;
+      animation-range: entry 0% entry min(55%, 30vh);
     }
   }
 }

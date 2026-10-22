@@ -1,11 +1,9 @@
+/* Everything in the band sits on the client's ground, so its focus rings use the ring made for that ground */
 .band {
+  --focus: var(--case-focus);
   padding-block: var(--section);
   background: var(--case-ground);
   color: var(--case-ink);
-}
-
-.band :focus-visible {
-  outline-color: var(--case-ink);
 }
 
 .band ::selection {
@@ -25,20 +23,39 @@
   min-width: 0;
 }
 
+/*
+  Parts separated by a small dot. Each dot belongs to the part after it, and the row is shifted left
+  by one separator's width inside a clipped box, so a part that wraps onto a new line leaves its dot
+  out of sight instead of one dangling at the end of the line above.
+*/
 .kicker {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px 12px;
+  overflow: hidden;
   font: 500 var(--t-label) / 1.4 var(--font-mono);
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--case-muted);
 }
 
-.sep {
+.kickerLine {
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: 8px;
+  margin-left: -28px;
+}
+
+.kickerLine > span {
+  position: relative;
+  padding-left: 28px;
+}
+
+.kickerLine > span::before {
+  content: '';
+  position: absolute;
+  left: 12px;
+  top: 50%;
   width: 4px;
   height: 4px;
+  margin-top: -2px;
   border-radius: 50%;
   background: currentColor;
   opacity: 0.7;
@@ -188,26 +205,43 @@
   font: 600 0.9375rem / 1 var(--font-body);
   text-decoration: none;
   white-space: nowrap;
-  transition:
-    background-color 0.2s ease,
-    transform 0.2s var(--ease-out);
+  transition: background-color var(--dur-hover) var(--ease-colour);
 }
 
 .cta svg {
   width: 16px;
   height: 16px;
-  transition: transform 0.25s var(--ease-out);
+}
+
+/* The house button: the fill changes on hover, the arrow leans on, and a press gives at once */
+@media (prefers-reduced-motion: no-preference) {
+  .cta {
+    transition:
+      background-color var(--dur-hover) var(--ease-colour),
+      transform var(--dur-press) var(--ease-out);
+  }
+
+  .cta:active {
+    transform: scale(0.97);
+  }
+
+  .cta svg {
+    transition: transform var(--dur-ui) var(--ease-out);
+  }
 }
 
 .cta:active {
-  transform: translateY(1px);
+  background: color-mix(in srgb, var(--case-ink) 86%, var(--case-ground));
+  transition-duration: var(--dur-press);
 }
 
 @media (hover: hover) {
   .cta:hover {
     background: color-mix(in srgb, var(--case-ink) 86%, var(--case-ground));
   }
+}
 
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
   .cta:hover svg {
     transform: translateX(3px);
   }

@@ -6,6 +6,16 @@ import { Picture } from '@/components/media/Picture';
 import { paletteVars } from '@/lib/palette';
 import styles from './SelectedWork.module.css';
 
+/*
+  Honest widths for the card images, from the layout: 20px page gutters, three columns from 760px
+  (gaps of about 2.4vw), and the practice cards' media inset by 18 to 28px on each side.
+*/
+const CARD_SIZES = '(min-width: 1280px) 336px, (min-width: 760px) calc(27vw - 13px), calc(100vw - 76px)';
+const MINI_SIZES = '(min-width: 1280px) 392px, (min-width: 760px) calc(32vw - 13px), calc(100vw - 40px)';
+
+/** A kind label that never starts a line with its separator: the dot stays with the word before it. */
+const kind = (label: string) => label.replace(/ · /g, ' · ');
+
 function Arrow() {
   return (
     <svg viewBox="0 0 16 16" aria-hidden="true" className={styles.arrow}>
@@ -20,7 +30,7 @@ export function SelectedWork({ lead, practices, beyond }: { lead: CaseStudy; pra
     <div className={styles.wrap}>
       <article className={styles.feature} style={paletteVars(lead.palette)} data-reveal>
         <div className={styles.featureText}>
-          <p className={styles.kind}>{lead.kindLabel}</p>
+          <p className={styles.kind}>{kind(lead.kindLabel)}</p>
           <h3 className={styles.featureName}>
             <Link href={`/work/${lead.slug}`} className={styles.cover}>
               {lead.name}
@@ -48,11 +58,11 @@ export function SelectedWork({ lead, practices, beyond }: { lead: CaseStudy; pra
           <article key={c.slug} className={styles.card} style={paletteVars(c.palette)} data-reveal>
             <div className={styles.cardMedia}>
               <BrowserFrame domain={c.domain}>
-                <Picture media={c.plate.desktop} sizes="(min-width: 1240px) 380px, (min-width: 760px) 30vw, 88vw" />
+                <Picture media={c.plate.desktop} sizes={CARD_SIZES} />
               </BrowserFrame>
             </div>
             <div className={styles.cardText}>
-              <p className={styles.kind}>{c.kindLabel}</p>
+              <p className={styles.kind}>{kind(c.kindLabel)}</p>
               <h3 className={styles.cardName}>
                 <Link href={`/work/${c.slug}`} className={styles.cover}>
                   {c.name}
@@ -75,7 +85,7 @@ export function SelectedWork({ lead, practices, beyond }: { lead: CaseStudy; pra
         {beyond.map((c) => (
           <article key={c.slug} className={styles.mini} style={paletteVars(c.palette)} data-reveal>
             <div className={styles.miniMedia}>
-              <Picture media={c.plate.desktop} sizes="(min-width: 1240px) 380px, (min-width: 760px) 30vw, 88vw" />
+              <Picture media={c.plate.desktop} sizes={MINI_SIZES} />
             </div>
             <div className={styles.miniText}>
               <h3 className={styles.miniName}>
@@ -83,7 +93,7 @@ export function SelectedWork({ lead, practices, beyond }: { lead: CaseStudy; pra
                   {c.name}
                 </Link>
               </h3>
-              <p className={styles.miniKind}>{c.kindLabel}</p>
+              <p className={styles.miniKind}>{kind(c.kindLabel)}</p>
             </div>
           </article>
         ))}

@@ -18,9 +18,26 @@
   box-shadow:
     inset 0 0 0 1px var(--case-rule),
     0 1px 2px rgba(18, 20, 23, 0.04);
-  transition:
-    transform 0.6s var(--ease-out),
-    box-shadow 0.6s var(--ease-out);
+  transition: transform var(--dur-ui) var(--ease-out);
+}
+
+/* A lifted card's deeper shadow fades in on a layer of its own, so a hover repaints nothing */
+.card::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: 0 34px 64px -40px rgba(18, 20, 23, 0.5);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur-ui) var(--ease-out);
+}
+
+/* The focus ring goes round the whole card, which the link covers */
+.card:has(.link:focus-visible) {
+  outline: 2px solid var(--focus);
+  outline-offset: 4px;
 }
 
 .card[data-variant='compact'] {
@@ -72,11 +89,6 @@
   inset: 0;
   z-index: 1;
   border-radius: var(--r);
-}
-
-.link:focus-visible::after {
-  outline: 2px solid var(--focus);
-  outline-offset: 4px;
 }
 
 .summary {
@@ -131,7 +143,7 @@
 .arrow {
   width: 16px;
   height: 16px;
-  transition: transform 0.35s var(--ease-out);
+  transition: transform var(--dur-ui) var(--ease-out);
 }
 
 /* Media: the desktop page in a browser frame with the phone overlapping its lower corner */
@@ -151,10 +163,12 @@
   pointer-events: auto;
 }
 
-/* The phone overlaps the loop's lower right corner, so its pause button moves to the left */
-.deskLoop button {
-  right: auto;
-  left: 12px;
+/* Where the phone overlaps the loop's lower right corner, its pause button moves to the left */
+@media (min-width: 600px) {
+  .deskLoop button {
+    right: auto;
+    left: 12px;
+  }
 }
 
 .desk {
@@ -174,7 +188,7 @@
 
 .clip img,
 .clip video {
-  transition: transform 0.9s var(--ease-out);
+  transition: transform var(--dur-move) var(--ease-out);
 }
 
 /* Loops are cut to the window's shape so every card's frame matches */
@@ -241,27 +255,41 @@
   }
 }
 
-@media (hover: none) and (prefers-reduced-motion: no-preference) {
-  .card:active {
-    transform: scale(0.992);
-    transition-duration: 0.2s;
+/* Pressed: the card gives a little, at once. Only a press on the link counts, so pressing the
+   loop's pause button does not look like opening the case. */
+@media (prefers-reduced-motion: no-preference) {
+  .card:has(.link:active) {
+    transform: scale(0.99);
+    transition-duration: var(--dur-press);
   }
 }
 
-/* Hovering the card shows the pause button; the media itself lets the pointer through */
+/* On touch a scroll can start on a card; the short wait keeps the list from pulsing under the finger */
+@media (hover: none) and (prefers-reduced-motion: no-preference) {
+  .card:has(.link:active) {
+    transition-delay: 50ms;
+  }
+}
+
+/* Hovering the card shows the pause button and its deeper shadow; the media lets the pointer through */
 @media (hover: hover) {
   .card:hover .media button {
     opacity: 1;
     transform: none;
   }
+
+  .card:hover::before {
+    opacity: 1;
+  }
 }
 
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
   .card:hover {
-    transform: translateY(-4px);
-    box-shadow:
-      inset 0 0 0 1px var(--case-rule),
-      0 34px 64px -40px rgba(18, 20, 23, 0.5);
+    transform: translateY(-3px);
+  }
+
+  .card:hover:has(.link:active) {
+    transform: translateY(-3px) scale(0.99);
   }
 
   .card:hover .clip img,
@@ -270,7 +298,7 @@
   }
 
   .card:hover .arrow {
-    transform: translateX(4px);
+    transform: translateX(3px);
   }
 }
 

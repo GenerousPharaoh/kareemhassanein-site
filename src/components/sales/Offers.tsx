@@ -1,7 +1,7 @@
 import { ButtonLink } from '@/components/ui/ButtonLink';
 import type { Offer } from '@/content/offers';
 import { SITE } from '@/content/site';
-import { splitPrice } from './style';
+import { enterAt, splitPrice } from './style';
 import styles from './Offers.module.css';
 
 function Price({ price, large = false }: { price: string; large?: boolean }) {
@@ -37,11 +37,14 @@ function Includes({ items }: { items: string[] }) {
   );
 }
 
-/** The website check, set apart as the way in. */
+/**
+ * The website check, set apart as the way in. On wide screens its top shows in the first screen, so
+ * it enters after the hero above it (the hero's label, title, lede, actions and facts are 0 to 4).
+ */
 export function CheckOffer({ offer }: { offer: Offer }) {
   const id = `offer-${offer.id}`;
   return (
-    <article className={`night ${styles.feature}`} id={offer.id} aria-labelledby={id} data-enter>
+    <article className={`night ${styles.feature}`} id={offer.id} aria-labelledby={id} data-enter style={enterAt(5)}>
       <div className={styles.featureMain}>
         <p className={styles.wayIn}>{offer.label}</p>
         <h2 id={id} className={styles.featureName}>

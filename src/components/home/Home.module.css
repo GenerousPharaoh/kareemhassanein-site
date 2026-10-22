@@ -217,7 +217,10 @@
   min-width: 0;
 }
 
+/* Each price is a card link: the house card's lift, shadow layer and press */
 .priceLink {
+  position: relative;
+  isolation: isolate;
   display: flex;
   align-items: baseline;
   justify-content: space-between;
@@ -228,7 +231,22 @@
   background: var(--card);
   box-shadow: inset 0 0 0 1px var(--rule-soft);
   text-decoration: none;
-  transition: box-shadow 0.25s ease, transform 0.25s var(--ease-out);
+  transition:
+    box-shadow var(--dur-hover) var(--ease-colour),
+    translate var(--dur-ui) var(--ease-out),
+    scale var(--dur-ui) var(--ease-out);
+}
+
+.priceLink::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: 0 18px 30px -22px rgba(18, 20, 23, 0.4);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur-ui) var(--ease-out);
 }
 
 .priceLabel {
@@ -286,12 +304,33 @@
   }
 }
 
+@media (prefers-reduced-motion: no-preference) {
+  .priceLink:active {
+    scale: 0.99;
+    transition-duration: var(--dur-press);
+  }
+}
+
+/* On touch a scroll can start on a card; the short wait keeps it from pulsing under the finger */
+@media (hover: none) and (prefers-reduced-motion: no-preference) {
+  .priceLink:active {
+    transition-delay: 50ms;
+  }
+}
+
 @media (hover: hover) {
   .priceLink:hover {
-    transform: translateY(-2px);
-    box-shadow:
-      inset 0 0 0 1px var(--rule),
-      0 18px 30px -24px rgba(18, 20, 23, 0.4);
+    box-shadow: inset 0 0 0 1px var(--rule);
+  }
+
+  .priceLink:hover::before {
+    opacity: 1;
+  }
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .priceLink:hover {
+    translate: 0 -3px;
   }
 }
 

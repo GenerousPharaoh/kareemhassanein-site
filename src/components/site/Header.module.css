@@ -3,7 +3,6 @@
   top: 0;
   z-index: 50;
   padding-top: env(safe-area-inset-top, 0px);
-  transition: box-shadow 0.3s ease;
 }
 
 /*
@@ -18,16 +17,59 @@
   background: color-mix(in srgb, var(--paper) 86%, transparent);
   -webkit-backdrop-filter: saturate(1.4) blur(14px);
   backdrop-filter: saturate(1.4) blur(14px);
+  transition: background-color var(--dur-press) var(--ease-colour);
 }
 
-.header[data-scrolled] {
-  box-shadow: 0 1px 0 var(--rule);
+/* While the menu is open, the header and the sheet are one solid sheet of paper */
+.header[data-open]::before {
+  background: var(--paper);
+}
+
+/* The hairline under the header once the page has moved beneath it */
+.header::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 1px;
+  background: var(--rule);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur-ui) var(--ease-colour);
+}
+
+.header[data-scrolled]::after {
+  opacity: 1;
+}
+
+/* Where the browser can tie it to the scroll itself, it fades in over the first few pixels instead */
+@supports (animation-timeline: scroll()) {
+  .header::after {
+    animation: hairline linear both;
+    animation-timeline: scroll(root block);
+    animation-range: 0px 24px;
+  }
+}
+
+@keyframes hairline {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Hidden while the menu is open (visibility, so the scroll-linked opacity stays free to run on the compositor) */
+.header[data-open]::after {
+  visibility: hidden;
 }
 
 .skip {
   position: absolute;
   left: 12px;
-  top: -60px;
+  top: calc(8px + env(safe-area-inset-top, 0px));
   z-index: 60;
   padding: 10px 14px;
   border-radius: 8px;
@@ -35,10 +77,11 @@
   color: var(--paper);
   font-weight: 600;
   text-decoration: none;
+  transform: translateY(calc(-100% - 24px - env(safe-area-inset-top, 0px)));
 }
 
-.skip:focus {
-  top: calc(8px + env(safe-area-inset-top, 0px));
+.skip:focus-visible {
+  transform: none;
 }
 
 .inner {
@@ -58,6 +101,11 @@
   white-space: nowrap;
   min-height: 44px;
   margin-right: auto;
+  transition: opacity var(--dur-press) var(--ease-colour);
+}
+
+.mark:active {
+  opacity: 0.7;
 }
 
 .dot {
@@ -81,15 +129,35 @@
   font: 500 0.9375rem/1 var(--font-body);
   color: var(--muted);
   text-decoration: none;
-  transition: color 0.2s ease, background-color 0.2s ease;
+  transition:
+    color var(--dur-hover) var(--ease-colour),
+    background-color var(--dur-hover) var(--ease-colour);
 }
 
-.link[aria-current='page'] {
+/* 44px tall targets for touch screens wide enough for this layout (a tablet held sideways) */
+.link::after,
+.cta::after {
+  content: '';
+  position: absolute;
+  inset: -5px 0;
+}
+
+.cta::after {
+  inset: -2px 0;
+}
+
+.link[aria-current='page'],
+.link:active {
   color: var(--ink);
   background: var(--paper-2);
 }
 
+.link:active {
+  transition-duration: var(--dur-press);
+}
+
 .cta {
+  position: relative;
   display: none;
   min-height: 40px;
   align-items: center;
@@ -99,85 +167,81 @@
   color: var(--paper);
   font: 600 0.875rem/1 var(--font-body);
   text-decoration: none;
-  transition: background-color 0.2s ease;
+  transition:
+    background-color var(--dur-hover) var(--ease-colour),
+    transform var(--dur-press) var(--ease-out);
+}
+
+.cta:active {
+  transform: scale(0.97);
 }
 
 .menuButton {
+  position: relative;
   width: 44px;
   height: 44px;
   display: grid;
   place-items: center;
   margin-right: -10px;
   border: 0;
+  border-radius: 50%;
   background: transparent;
   cursor: pointer;
+  transition: background-color var(--dur-press) var(--ease-colour);
 }
 
-.menuIcon,
-.menuIcon::before,
-.menuIcon::after {
-  display: block;
-  width: 20px;
-  height: 1.6px;
-  border-radius: 2px;
-  background: var(--ink);
-  transition: transform 0.3s var(--ease-out), background-color 0.2s ease;
+.menuButton:active {
+  background: color-mix(in srgb, var(--ink) 7%, transparent);
 }
 
+/* Three bars that become a cross */
 .menuIcon {
   position: relative;
+  width: 20px;
+  height: 14px;
 }
 
-.menuIcon::before,
-.menuIcon::after {
-  content: '';
+.menuIcon span {
   position: absolute;
   left: 0;
+  top: 50%;
+  width: 20px;
+  height: 1.6px;
+  margin-top: -0.8px;
+  border-radius: 2px;
+  background: var(--ink);
 }
 
-.menuIcon::before {
-  transform: translateY(-6px);
+.menuIcon span:nth-child(1) {
+  translate: 0 -6px;
 }
 
-.menuIcon::after {
-  transform: translateY(6px);
+.menuIcon span:nth-child(3) {
+  translate: 0 6px;
 }
 
-.header[data-open] .menuIcon {
-  background: transparent;
+.header[data-open] .menuIcon span:nth-child(1) {
+  translate: 0 0;
+  rotate: 45deg;
 }
 
-.header[data-open] .menuIcon::before {
-  transform: rotate(45deg);
+.header[data-open] .menuIcon span:nth-child(2) {
+  scale: 0 1;
 }
 
-.header[data-open] .menuIcon::after {
-  transform: rotate(-45deg);
+.header[data-open] .menuIcon span:nth-child(3) {
+  translate: 0 0;
+  rotate: -45deg;
 }
 
+/* The sheet covers the page below the header */
 .sheet {
   position: fixed;
   inset: calc(var(--header-h) + env(safe-area-inset-top, 0px)) 0 0;
   background: var(--paper);
   overflow-y: auto;
+  overscroll-behavior: contain;
   padding-bottom: calc(24px + env(safe-area-inset-bottom, 0px));
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .sheet:not([hidden]) {
-    animation: sheet-in 0.35s var(--ease-out) both;
-  }
-}
-
-@keyframes sheet-in {
-  from {
-    opacity: 0;
-    transform: translateY(-8px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
 }
 
 .sheetNav {
@@ -192,10 +256,15 @@
   font: 800 clamp(1.9rem, 8vw, 2.5rem)/1.05 var(--font-display);
   letter-spacing: -0.03em;
   text-decoration: none;
+  transition: color var(--dur-press) var(--ease-colour);
 }
 
 .sheetLink[aria-current='page'] {
   color: var(--signal);
+}
+
+.sheetLink:active {
+  color: var(--muted);
 }
 
 .sheetFoot {
@@ -214,12 +283,107 @@
   color: var(--paper);
   font-weight: 600;
   text-decoration: none;
+  transition:
+    background-color var(--dur-hover) var(--ease-colour),
+    transform var(--dur-press) var(--ease-out);
+}
+
+.sheetCta:active {
+  transform: scale(0.97);
 }
 
 .sheetNote {
   text-align: center;
   font-size: var(--t-small);
   color: var(--muted);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .skip {
+    transition: transform var(--dur-hover) var(--ease-in);
+  }
+
+  .skip:focus-visible {
+    transition: transform var(--dur-ui) var(--ease-out);
+  }
+
+  /* Closing: the cross turns back, then the bars part */
+  .menuIcon span:nth-child(1),
+  .menuIcon span:nth-child(3) {
+    transition:
+      rotate var(--dur-press) var(--ease-in-out),
+      translate var(--dur-press) var(--ease-out) var(--dur-press);
+  }
+
+  /* Opening: the bars meet, then turn into a cross. The middle bar goes while they cover it. */
+  .header[data-open] .menuIcon span:nth-child(1),
+  .header[data-open] .menuIcon span:nth-child(3) {
+    transition:
+      translate var(--dur-press) var(--ease-in-out),
+      rotate var(--dur-hover) var(--ease-out) calc(var(--dur-press) - 20ms);
+  }
+
+  /* The middle bar narrows away while the other two lie over it (a real, if short, transition, so it runs on the compositor) */
+  .menuIcon span:nth-child(2) {
+    transition: scale 30ms var(--ease-out) calc(var(--dur-press) - 20ms);
+  }
+
+  .header[data-open] .menuIcon span:nth-child(2) {
+    transition: scale 30ms var(--ease-in) calc(var(--dur-press) - 40ms);
+  }
+
+  /*
+    Opening: an opaque sheet arrives quickly over the page, then the links settle in one after
+    another, so the menu's type never shows through the page's (or the page's through it).
+  */
+  .sheet[data-phase='open'] {
+    animation: sheet-in var(--dur-press) var(--ease-out) both;
+  }
+
+  .sheet[data-phase='open'] :is(.sheetLink, .sheetFoot) {
+    animation: item-in var(--dur-ui) var(--ease-out) both;
+    animation-delay: calc(90ms + var(--i) * 30ms);
+  }
+
+  /* Closing, faster: the links go first, then the blank sheet, never both at once */
+  .sheet[data-phase='closing'] {
+    animation: sheet-out 130ms var(--ease-in) 90ms both;
+  }
+
+  .sheet[data-phase='closing'] :is(.sheetLink, .sheetFoot) {
+    animation: item-out 90ms var(--ease-in) both;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sheet[data-phase='closing'] {
+    visibility: hidden;
+  }
+}
+
+@keyframes sheet-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes sheet-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes item-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes item-out {
+  to {
+    opacity: 0;
+  }
 }
 
 @media (min-width: 960px) {
@@ -242,7 +406,16 @@
     color: var(--ink);
   }
 
-  .cta:hover {
+  .cta:hover,
+  .sheetCta:hover {
     background: var(--ink-2);
+  }
+
+  .sheetLink:hover {
+    color: var(--muted);
+  }
+
+  .sheetLink[aria-current='page']:hover {
+    color: var(--signal);
   }
 }

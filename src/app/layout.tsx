@@ -8,6 +8,11 @@ import './globals.css';
 const display = Schibsted_Grotesk({ subsets: ['latin'], variable: '--font-schibsted', display: 'swap' });
 const body = Geist({ subsets: ['latin'], variable: '--font-geist', display: 'swap' });
 const mono = Geist_Mono({ subsets: ['latin'], variable: '--font-geist-mono', display: 'swap', preload: false });
+// The mono stack skips next/font's fallback: that face is a resized Arial, which runs wide on the
+// uppercase labels and wraps them until Geist Mono arrives (Turbopack ignores adjustFontFallback).
+// Only the real face goes into --font-mono; the system monospace fonts after it in globals.css
+// share Geist Mono's 0.6em advance, so nothing moves when it swaps in.
+const monoFace = mono.style.fontFamily.split(',')[0].trim();
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
@@ -61,7 +66,14 @@ const jsonLd = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en-CA" className={`${display.variable} ${body.variable} ${mono.variable}`}>
+    // data-scroll-behavior: in-page links scroll smoothly, but a new page starts at its top at once
+    // (Next 16 otherwise animates the route change's scroll through the new page).
+    <html
+      lang="en-CA"
+      className={`${display.variable} ${body.variable} ${mono.variable}`}
+      style={{ ['--font-mono-face' as string]: monoFace }}
+      data-scroll-behavior="smooth"
+    >
       <body>
         <Header />
         <main id="main">{children}</main>

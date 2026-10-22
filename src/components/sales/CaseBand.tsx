@@ -5,7 +5,7 @@ import { Picture } from '@/components/media/Picture';
 import type { CaseStudy } from '@/content/cases';
 import type { Loop, Still } from '@/lib/media';
 import { CasePlate } from './CasePlate';
-import { paletteVars } from './style';
+import { keepDots, paletteVars } from './style';
 import styles from './CaseBand.module.css';
 
 type Props = {
@@ -26,9 +26,10 @@ export function CaseBand({ c, findings, wide, phone }: Props) {
         <div className={styles.aside}>
           <header className={styles.head}>
             <p className={styles.kicker}>
-              <span>The work</span>
-              <span className={styles.sep} aria-hidden="true" />
-              <span>{c.kindLabel}</span>
+              <span className={styles.kickerLine}>
+                <span>The work</span>
+                <span>{keepDots(c.kindLabel)}</span>
+              </span>
             </p>
             <h2 id={id} className={styles.name}>
               {c.name}
@@ -43,13 +44,14 @@ export function CaseBand({ c, findings, wide, phone }: Props) {
           </header>
         </div>
 
+        {/* Sizes follow the layout: full width less the 9% inset on phones, the 8fr column from 1000px */}
         <div className={styles.plate} data-reveal>
           <CasePlate
             desktop={c.plate.desktop}
             phone={c.plate.phone}
             domain={c.domain}
-            desktopSizes="(min-width: 1240px) 700px, (min-width: 1000px) 58vw, 88vw"
-            phoneSizes="(min-width: 1240px) 180px, (min-width: 1000px) 15vw, 22vw"
+            desktopSizes="(min-width: 1280px) 710px, (min-width: 1000px) calc(57.6vw - 24px), calc(91vw - 36px)"
+            phoneSizes="(min-width: 1280px) 171px, (min-width: 1000px) calc(13.9vw - 6px), max(88px, calc(21.9vw - 9px))"
           />
         </div>
 
@@ -76,7 +78,7 @@ export function CaseBand({ c, findings, wide, phone }: Props) {
           </figure>
           <figure className={styles.phoneFig} data-reveal>
             <PhoneFrame className={styles.phoneFrame}>
-              <Picture media={phone.still} sizes="(min-width: 1000px) 220px, 56vw" />
+              <Picture media={phone.still} sizes="(min-width: 1000px) 210px, (min-width: 760px) 24vw, min(210px, calc(59vw - 24px))" />
             </PhoneFrame>
             <figcaption className={styles.caption}>{phone.caption}</figcaption>
           </figure>

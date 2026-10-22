@@ -24,7 +24,7 @@ export function NextCase({ c }: { c: CaseStudy }) {
           </div>
           <div className={styles.peek} aria-hidden="true">
             <BrowserFrame domain={c.domain} className={styles.frame}>
-              <Picture media={c.plate.desktop} sizes="(min-width: 1280px) 640px, (min-width: 960px) 52vw, calc(100vw - 40px)" />
+              <Picture media={c.plate.desktop} sizes="(min-width: 1280px) 705px, (min-width: 960px) calc(57vw - 23px), calc(100vw - 40px)" />
             </BrowserFrame>
           </div>
         </div>

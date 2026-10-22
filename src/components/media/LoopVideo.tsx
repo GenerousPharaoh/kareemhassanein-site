@@ -86,16 +86,18 @@ export function LoopVideo({ loop, className }: Props) {
         aria-label={playing ? `Pause: ${loop.label}` : `Play: ${loop.label}`}
         data-state={playing ? 'playing' : held ? 'paused' : 'idle'}
       >
-        {playing ? (
-          <svg viewBox="0 0 16 16" aria-hidden="true">
+        {/* Both icons stay in place and cross-fade (on spans, which the compositor can move), so the button never changes shape */}
+        <span className={styles.iconPause} aria-hidden="true">
+          <svg viewBox="0 0 16 16">
             <rect x="4" y="3" width="2.6" height="10" rx="0.6" />
             <rect x="9.4" y="3" width="2.6" height="10" rx="0.6" />
           </svg>
-        ) : (
-          <svg viewBox="0 0 16 16" aria-hidden="true">
+        </span>
+        <span className={styles.iconPlay} aria-hidden="true">
+          <svg viewBox="0 0 16 16">
             <path d="M5 3.2v9.6c0 .5.5.8.9.5l7.2-4.8a.6.6 0 0 0 0-1L5.9 2.7c-.4-.3-.9 0-.9.5Z" />
           </svg>
-        )}
+        </span>
       </button>
     </div>
   );

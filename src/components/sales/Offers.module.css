@@ -171,8 +171,8 @@
   max-width: 50ch;
 }
 
+/* Fills its row, so beside a longer note the rule above stays level with its neighbour's */
 .terms {
-  align-self: end;
   padding-top: 16px;
   border-top: 1px solid var(--rule);
   font-size: var(--t-small);

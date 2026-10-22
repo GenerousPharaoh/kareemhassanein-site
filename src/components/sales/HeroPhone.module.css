@@ -5,7 +5,9 @@
   gap: 14px;
 }
 
+/* The panel is the client's ground, so the pause button's ring uses the ring made for that ground */
 .panel {
+  --focus: var(--case-focus);
   position: relative;
   display: grid;
   place-items: center;
@@ -36,9 +38,4 @@
   line-height: 1.5;
   color: var(--muted);
   max-width: 46ch;
-}
-
-/* Keep the focus ring visible on dark grounds */
-.panel :focus-visible {
-  outline-color: var(--case-ink);
 }

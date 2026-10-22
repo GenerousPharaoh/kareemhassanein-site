@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { Stop } from '@/content/path';
 import styles from './PathBand.module.css';
 
@@ -100,6 +100,20 @@ function Glyph({ id }: { id: Stop['id'] }) {
 export function PathBand({ stops }: { stops: Stop[] }) {
   const [active, setActive] = useState(0);
   const stop = stops[active];
+  // Hovering a stop opens it after a short pause, so a pointer crossing the track on its way to
+  // the panel's link does not change the panel under it. Click, tap and keyboard act at once.
+  const intent = useRef<number | undefined>(undefined);
+  const hoverOpen = (i: number) => {
+    window.clearTimeout(intent.current);
+    intent.current = window.setTimeout(() => setActive(i), 90);
+  };
+  const hoverCancel = () => window.clearTimeout(intent.current);
+  useEffect(() => () => window.clearTimeout(intent.current), []);
+
+  const focusTab = (i: number) => {
+    setActive(i);
+    document.getElementById(`stop-tab-${stops[i].id}`)?.focus();
+  };
 
   return (
     <div className={styles.band}>
@@ -117,15 +131,16 @@ export function PathBand({ stops }: { stops: Stop[] }) {
             className={styles.tab}
             data-state={i < active ? 'past' : i === active ? 'now' : 'next'}
             onClick={() => setActive(i)}
-            onMouseEnter={() => setActive(i)}
+            onMouseEnter={() => hoverOpen(i)}
+            onMouseLeave={hoverCancel}
             onFocus={() => setActive(i)}
             onKeyDown={(e) => {
-              if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
-                e.preventDefault();
-                const next = (active + (e.key === 'ArrowRight' ? 1 : stops.length - 1)) % stops.length;
-                setActive(next);
-                document.getElementById(`stop-tab-${stops[next].id}`)?.focus();
-              }
+              const last = stops.length - 1;
+              const next =
+                e.key === 'ArrowRight' ? (active + 1) % stops.length : e.key === 'ArrowLeft' ? (active + last) % stops.length : e.key === 'Home' ? 0 : e.key === 'End' ? last : -1;
+              if (next < 0) return;
+              e.preventDefault();
+              focusTab(next);
             }}
           >
             <span className={styles.node} aria-hidden="true" />
@@ -137,21 +152,29 @@ export function PathBand({ stops }: { stops: Stop[] }) {
           </button>
         ))}
       </div>
+      {/*
+        Every stop's panel sits in the same grid cell, so the band keeps the height of the tallest
+        and the page below never moves; the open one fades in once the last has gone.
+      */}
       <div id="stop-panel" role="tabpanel" aria-labelledby={`stop-tab-${stop.id}`} className={styles.panel}>
-        <div key={stop.id} className={styles.panelIn}>
-          <div className={styles.panelText}>
-            <p className="t-label">From the work</p>
-            <p className={styles.example}>{stop.example}</p>
-            <Link href={`/work/${stop.caseSlug}`} className={styles.caseLink}>
-              See the {stop.caseName} case
-              <svg viewBox="0 0 16 16" aria-hidden="true">
-                <path d="M3 8h9.5M8.5 4l4 4-4 4" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </Link>
-          </div>
-          <div className={styles.panelGlyph} aria-hidden="true">
-            <Glyph id={stop.id} />
-          </div>
+        <div className={styles.panelStack}>
+          {stops.map((s, i) => (
+            <div key={s.id} className={styles.panelIn} data-on={i === active || undefined} aria-hidden={i !== active || undefined} inert={i !== active}>
+              <div className={styles.panelText}>
+                <p className="t-label">From the work</p>
+                <p className={styles.example}>{s.example}</p>
+                <Link href={`/work/${s.caseSlug}`} className={styles.caseLink}>
+                  See the {s.caseName} case
+                  <svg viewBox="0 0 16 16" aria-hidden="true">
+                    <path d="M3 8h9.5M8.5 4l4 4-4 4" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </Link>
+              </div>
+              <div className={styles.panelGlyph} aria-hidden="true">
+                <Glyph id={s.id} />
+              </div>
+            </div>
+          ))}
         </div>
       </div>
 

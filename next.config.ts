@@ -38,6 +38,8 @@ const nextConfig: NextConfig = {
     return [
       { source: '/services', destination: '/work', permanent: true },
       { source: '/contact', destination: '/book', permanent: true },
+      // Older check links used a query; the check now has its own static page.
+      { source: '/book', has: [{ type: 'query', key: 'topic', value: 'check' }], destination: '/book/check', permanent: true },
       { source: '/work/destination-wedding', destination: '/work/wedding', permanent: true },
       { source: '/work/wedding-website', destination: '/work/wedding', permanent: true },
     ];

@@ -34,10 +34,17 @@
   text-decoration: none;
 }
 
+/* The ring stands clear of the words and the rules (the first price starts flush with the column) */
+.link:focus-visible {
+  outline-offset: 6px;
+  border-radius: 10px;
+}
+
 .label {
   grid-area: label;
   font: 500 1rem / 1.35 var(--font-body);
   color: var(--ink-2);
+  transition: color var(--dur-hover) var(--ease-colour);
 }
 
 .price {
@@ -56,7 +63,7 @@
 .figure {
   font: 800 clamp(1.5rem, 1.15rem + 1.2vw, 2.4rem) / 1 var(--font-display);
   letter-spacing: -0.03em;
-  transition: color 0.2s ease;
+  transition: color var(--dur-hover) var(--ease-colour);
 }
 
 .tag {
@@ -102,6 +109,17 @@
   }
 }
 
+/* Pressed, on touch as well: the same change as hover, at once */
+.link:active .figure {
+  color: var(--signal);
+  transition-duration: 0s;
+}
+
+.link:active .label {
+  color: var(--ink);
+  transition-duration: 0s;
+}
+
 /* Wide screens: five columns, each price set large under its name */
 @media (min-width: 900px) {
   .line {
@@ -109,13 +127,20 @@
     border-bottom: 1px solid var(--rule);
   }
 
+  /* Each column measures itself, so a price can never run into the next one */
   .cell {
+    container-type: inline-size;
     border-bottom: 0;
     border-left: 1px solid var(--rule);
   }
 
   .cell:first-child {
     border-left: 0;
+  }
+
+  /* As designed from about 1100px; narrower, the figure shrinks just enough for "from $10,000" to fit */
+  .figure {
+    font-size: min(clamp(1.5rem, 1.15rem + 1.2vw, 2.4rem), 14.5cqi);
   }
 
   .link {

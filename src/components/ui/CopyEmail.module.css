@@ -12,10 +12,18 @@
   text-decoration-color: color-mix(in srgb, currentColor 35%, transparent);
   text-underline-offset: 0.25em;
   overflow-wrap: anywhere;
+  transition: text-decoration-color var(--dur-hover) var(--ease-colour);
+}
+
+.address:active {
+  text-decoration-color: currentColor;
 }
 
 .copy {
   position: relative;
+  display: inline-grid;
+  justify-items: center;
+  align-items: center;
   min-height: 32px;
   padding: 0 12px;
   border: 0;
@@ -23,7 +31,36 @@
   background: color-mix(in srgb, currentColor 9%, transparent);
   font: 500 0.8125rem/1 var(--font-body);
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition:
+    background-color var(--dur-hover) var(--ease-colour),
+    scale var(--dur-press) var(--ease-out);
+}
+
+/* Copy and Copied in the same cell: the leaving word goes first, then the new one fades in */
+.label {
+  grid-area: 1 / 1;
+  transition: opacity var(--dur-press) var(--ease-in);
+}
+
+.copy:not([data-copied]) .label:last-child,
+.copy[data-copied] .label:first-child {
+  opacity: 0;
+}
+
+.copy:not([data-copied]) .label:first-child,
+.copy[data-copied] .label:last-child {
+  transition: opacity var(--dur-hover) var(--ease-out) var(--dur-press);
+}
+
+.copy:active {
+  background: color-mix(in srgb, currentColor 16%, transparent);
+  transition-duration: var(--dur-press);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .copy:active {
+    scale: 0.96;
+  }
 }
 
 /* Larger touch areas without changing the layout */

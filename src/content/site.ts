@@ -10,7 +10,7 @@ export const SITE = {
   reply: 'Replies within one business day',
   // Swap for the Cal.com link once it exists; every booking button reads this.
   bookingHref: '/book',
-  checkHref: '/book?topic=check',
+  checkHref: '/book/check',
   // Shared with kinetikarephysio.com so search engines connect the physiotherapist and the digital work.
   personId: 'https://www.kinetikarephysio.com/#person',
   orgId: 'https://www.khassanein.bio/#practice',

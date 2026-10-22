@@ -42,12 +42,42 @@ every control answers a touch or a click at once.
 - Every control has an accessible name; toggles expose state (`aria-pressed`, `aria-expanded`,
   `aria-selected`); live regions announce async results.
 
+### House interaction patterns (use these everywhere so the site feels like one hand made it)
+- Solid and ghost buttons: hover changes the fill or ring (`--dur-hover`, `--ease-colour`) and nudges
+  the arrow 3px right (`--dur-ui`, `--ease-out`); pressed scales to 0.97 (`--dur-press`).
+  `src/components/ui/ButtonLink` is the reference; match it in any other button.
+- Text links: the underline colour strengthens on hover; no movement.
+- Whole-card links (stretched link): hover lifts the card 3px and deepens its shadow (`--dur-ui`,
+  `--ease-out`), media inside may scale to 1.02 over `--dur-move`; pressed scales the card to 0.99;
+  the focus ring sits on the card via `:has(:focus-visible)`.
+- Chips, tabs and toggles: colour and fill change only (`--dur-hover`); the selected one is solid ink
+  or carries `aria-pressed` / `aria-selected` styling; no layout jump between states.
+- Disclosures (FAQ `details`): the panel opens with a short height and opacity transition where the
+  browser supports it (`::details-content` with `interpolate-size: allow-keywords`), instantly elsewhere;
+  the plus icon rotates to a cross over `--dur-ui`.
+- Copy and form feedback: a state change (Copied, Sent) cross-fades in place without moving
+  neighbours, and is announced through a live region.
+
 ### Layout and finish
 - Alignment to the container edges and to each other; consistent spacing rhythm; headings balance
   (no one-word last lines); images crop on purpose; radii and shadows come from a small set.
 - No horizontal scroll at 360, 390, 768, 1024 or 1440 wide. No layout shift during load or
   interaction.
 - The phone is the main device: judge everything at 390 wide first.
+
+## Who owns what (edit only your own files)
+
+- System and home: `src/app/globals.css`, `src/app/layout.tsx`, `src/app/page.tsx`,
+  `src/app/not-found.tsx`, `src/components/{site,ui,media,home}/**`, `src/lib/**`.
+- Work: `src/app/work/**`, `src/components/work/**`.
+- Sales and pages: `src/app/{firms,clinics,pricing,about,book,ai,privacy,notes}/**`,
+  `src/components/{sales,pages}/**`, `src/content/faq.ts`, `src/content/notes/**`.
+- The lead owns `src/content/{site,cases,offers,path}.ts`, `next.config.ts` and the scripts.
+  If you need a change in a file you do not own, send the lead a message (SendMessage to `main`)
+  with the exact change; do not edit it yourself.
+- Performance work beyond your own pages (fonts, CSS chunking, the cost of the first layout,
+  video loading strategy) is a separate pass after this one; do fix image `sizes` and anything
+  in your own files that makes a page slower.
 
 ## Tools (all headless, all in `scripts/`; the dev server is http://localhost:4321)
 
@@ -70,10 +100,23 @@ every control answers a touch or a click at once.
   hover, unhover, click, tap, focus, key, scroll, scrollby, wait, drag). Use it on every transition
   you judge, before and after fixing it, and look at the sheet. CSS module class names are hashed,
   so select with `[class*="Component-module"][class*="__name"]` or by role and aria attributes.
-- `node scripts/shot.mjs /route [--phone|--desktop] [--full]`: still screenshots.
+- `node scripts/audit/images.mjs [/route ...]`: every responsive image at phone 3x, laptop 1x and
+  large 2x; lists files far larger than they are shown (a `sizes` that claims too much width) and
+  ones too soft. Fix every "too big" in your area.
+- `node scripts/shot.mjs /route [--phone|--desktop] [--full]`: still screenshots. Full-page phone
+  captures taller than 16,384 device pixels repeat at the bottom (a Chrome limit), so check long
+  phone pages screen by screen with `--y=`.
 - Real numbers need the production build, which only the lead runs. Do not run `next build`.
 
 Run one tool at a time; the machine is short of memory. Do not start another dev server.
+
+## Layout notes from the build
+
+- In Chrome a sticky grid item is bounded by the whole grid, not its own rows; wrap it if it must
+  stop earlier.
+- Client accent colours are too faint for small text on light grounds; use `--case-accent-text`
+  (set by `paletteVars` in `src/lib/palette.ts`) for any small accent text, `--case-accent` for
+  dots, rules and large type.
 
 ## Things already found (verify, then fix or confirm)
 

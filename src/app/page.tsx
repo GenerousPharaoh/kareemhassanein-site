@@ -105,7 +105,7 @@ export default function Home() {
       <section className={`section ${styles.who}`} aria-labelledby="who-h">
         <div className={`container ${styles.whoGrid}`}>
           <div className={styles.portrait} data-reveal>
-            <Picture media={portrait} sizes="(min-width: 960px) 420px, 80vw" />
+            <Picture media={portrait} sizes="(min-width: 1150px) 420px, (min-width: 860px) calc(38vw - 16px), (min-width: 460px) 420px, calc(100vw - 40px)" />
           </div>
           <div className={styles.whoText}>
             <p className="t-label">Who you work with</p>

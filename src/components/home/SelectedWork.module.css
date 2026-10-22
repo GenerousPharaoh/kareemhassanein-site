@@ -21,12 +21,42 @@
   outline: none;
 }
 
-/* The cards clip their content, so the focus ring goes on the card itself */
+/* The focus ring goes round the whole card, which the link covers */
 .feature:has(.cover:focus-visible),
 .card:has(.cover:focus-visible),
 .mini:has(.cover:focus-visible) {
   outline: 2px solid var(--focus);
   outline-offset: 4px;
+}
+
+/*
+  The house card: on hover it lifts 3px over a deeper shadow and its picture leans in; pressed, it
+  gives a little at once. The lift and press use the translate and scale properties, which add to
+  the scroll reveal's transform instead of fighting it.
+*/
+.feature,
+.card,
+.mini {
+  position: relative;
+  isolation: isolate;
+  transition:
+    translate var(--dur-ui) var(--ease-out),
+    scale var(--dur-ui) var(--ease-out);
+}
+
+/* The deeper shadow, on its own layer, so hovering fades a layer instead of repainting the card */
+.feature::before,
+.card::before,
+.mini::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: 0 34px 64px -40px rgba(18, 20, 23, 0.5);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur-ui) var(--ease-out);
 }
 
 .kind {
@@ -49,19 +79,17 @@
 .arrow {
   width: 16px;
   height: 16px;
-  transition: transform 0.3s var(--ease-out);
+  transition: transform var(--dur-ui) var(--ease-out);
 }
 
 /* Feature */
 .feature {
-  position: relative;
   display: grid;
   gap: 28px;
   padding: clamp(24px, 4vw, 56px);
   border-radius: 24px;
   background: var(--case-ground);
   color: var(--case-ink);
-  overflow: hidden;
 }
 
 .featureText {
@@ -99,10 +127,19 @@
   color: var(--case-muted);
 }
 
+/*
+  The loop sits above the card's link so its pause button can be pressed, and lets every other
+  touch or click through to the link.
+*/
 .featureMedia {
   position: relative;
+  z-index: 2;
   min-width: 0;
-  transition: transform 0.6s var(--ease-out);
+  pointer-events: none;
+}
+
+.featureMedia button {
+  pointer-events: auto;
 }
 
 /* Practice cards */
@@ -112,18 +149,15 @@
 }
 
 .card {
-  position: relative;
   display: flex;
   flex-direction: column;
   border-radius: 20px;
   background: var(--case-ground);
   color: var(--case-ink);
-  overflow: hidden;
 }
 
 .cardMedia {
   padding: clamp(18px, 2.4vw, 28px) clamp(18px, 2.4vw, 28px) 0;
-  transition: transform 0.6s var(--ease-out);
 }
 
 .cardText {
@@ -144,6 +178,14 @@
   line-height: 1.55;
   color: var(--case-ink);
   opacity: 0.84;
+}
+
+/* Pictures lean in from the top, inside their frames */
+.featureMedia video,
+.cardMedia img,
+.miniMedia img {
+  transform-origin: 50% 0;
+  transition: transform var(--dur-move) var(--ease-out);
 }
 
 /* Beyond practices */
@@ -169,17 +211,16 @@
 }
 
 .mini {
-  position: relative;
   display: grid;
   border-radius: 18px;
   background: var(--case-ground);
   color: var(--case-ink);
-  overflow: hidden;
 }
 
 .miniMedia {
   overflow: hidden;
   aspect-ratio: 16 / 10;
+  border-radius: 18px 18px 0 0;
 }
 
 .miniMedia img {
@@ -187,7 +228,6 @@
   height: 100%;
   object-fit: cover;
   object-position: top;
-  transition: transform 0.8s var(--ease-out);
 }
 
 .miniText {
@@ -221,18 +261,54 @@
   }
 }
 
+/* Pressed: only a press on the card's link counts, so pressing the loop's pause button does not look like opening the case */
+@media (prefers-reduced-motion: no-preference) {
+  .feature:has(.cover:active),
+  .card:has(.cover:active),
+  .mini:has(.cover:active) {
+    scale: 0.99;
+    transition-duration: var(--dur-press);
+  }
+}
+
+/* On touch a scroll can start on a card; the short wait keeps the list from pulsing under the finger */
+@media (hover: none) and (prefers-reduced-motion: no-preference) {
+  .feature:has(.cover:active),
+  .card:has(.cover:active),
+  .mini:has(.cover:active) {
+    transition-delay: 50ms;
+  }
+}
+
 @media (hover: hover) {
-  .feature:hover .featureMedia,
-  .card:hover .cardMedia {
-    transform: translateY(-4px);
+  .feature:hover::before,
+  .card:hover::before,
+  .mini:hover::before {
+    opacity: 1;
   }
 
+  /* Hovering the lead case shows the loop's pause button */
+  .feature:hover .featureMedia button {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .feature:hover,
+  .card:hover,
+  .mini:hover {
+    translate: 0 -3px;
+  }
+
+  .feature:hover .featureMedia video,
+  .card:hover .cardMedia img,
   .mini:hover .miniMedia img {
-    transform: scale(1.03);
+    transform: scale(1.02);
   }
 
   .feature:hover .arrow,
   .card:hover .arrow {
-    transform: translateX(4px);
+    transform: translateX(3px);
   }
 }

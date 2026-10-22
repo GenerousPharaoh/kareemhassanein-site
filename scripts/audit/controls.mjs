@@ -142,6 +142,9 @@ for (const route of list) {
         return `${tag}${cls ? '.' + cls : ''} "${text}"`;
       };
       const hidden = (el) => {
+        // Content of a closed disclosure is not rendered, whatever its computed display says.
+        const closed = el.closest('details:not([open])');
+        if (closed && !el.closest('summary')) return true;
         for (let p = el; p; p = p.parentElement) {
           if (p.hasAttribute('inert') || p.getAttribute('aria-hidden') === 'true') return true;
           const cs = getComputedStyle(p);
@@ -235,12 +238,13 @@ for (const route of list) {
     // Images: alt text present, nothing broken.
     const imgs = await page.evaluate(async () => {
       for (const i of document.images) {
-        if (i.complete) continue;
+        if (i.complete || !i.getClientRects().length) continue;
         i.scrollIntoView({ block: 'center', behavior: 'instant' });
         await Promise.race([new Promise((r) => i.addEventListener('load', r, { once: true }) || i.addEventListener('error', r, { once: true })), new Promise((r) => setTimeout(r, 6000))]);
       }
       scrollTo({ top: 0, behavior: 'instant' });
-      return [...document.images].map((i) => ({ src: i.currentSrc || i.src, ok: i.complete && i.naturalWidth > 0, alt: i.getAttribute('alt') }));
+      // Images that are not rendered (inside display: none) never load, by design; judge only their alt text.
+      return [...document.images].map((i) => ({ src: i.currentSrc || i.src, ok: !i.getClientRects().length || (i.complete && i.naturalWidth > 0), alt: i.getAttribute('alt') }));
     });
     for (const i of imgs) {
       if (i.alt === null) push('alt', `image without alt: ${i.src.slice(-60)}`);
@@ -283,10 +287,6 @@ for (const route of list) {
         if (f.dev) continue;
         if (seen.has(f.key)) break;
         seen.add(f.key);
-        if (!f.visible) {
-          push('focus', `${f.desc} takes focus while invisible`);
-          continue;
-        }
         if (!f.onScreen) {
           push('focus', `${f.desc} takes focus off screen`);
           continue;
@@ -301,7 +301,7 @@ for (const route of list) {
         await kpage.evaluate(() => window.__fe?.focus());
         await kpage.waitForTimeout(40);
         const changed = await diffBox(focused, plain);
-        if (!changed) push('focus', `${f.desc} shows no visible focus indicator`);
+        if (!changed) push('focus', f.visible ? `${f.desc} shows no visible focus indicator` : `${f.desc} takes focus while invisible and nothing on screen changes`);
         else {
           const m = 48;
           const near = changed.right >= f.box.left - m && changed.left <= f.box.right + m && changed.bottom >= f.box.top - m && changed.top <= f.box.bottom + m;

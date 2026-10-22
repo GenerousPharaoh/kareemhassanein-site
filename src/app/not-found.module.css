@@ -1,0 +1,10 @@
+/* A short page still fills the first screen, so the footer never shows half-way up under it */
+.page {
+  min-height: calc(100svh - var(--header-h) - env(safe-area-inset-top, 0px));
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}

@@ -47,14 +47,15 @@ export default function WorkPage() {
         </p>
       </header>
 
+      {/* data-work-item marks what takes part when the filter changes (see WorkFilter) */}
       <WorkFilter>
         <section className={`container ${styles.group}`} data-group="practices" aria-labelledby="work-practices">
-          <h2 id="work-practices" className={styles.groupTitle}>
+          <h2 id="work-practices" className={styles.groupTitle} data-work-item>
             Law firms and clinics
           </h2>
           <ul className={styles.features}>
             {PRACTICE_CASES.map((c) => (
-              <li key={c.slug} className={styles.item} data-sectors={c.sectors.join(' ')} style={{ viewTransitionName: `case-${c.slug}` }}>
+              <li key={c.slug} className={styles.item} data-sectors={c.sectors.join(' ')} data-work-item>
                 <div className={styles.reveal} data-reveal>
                   <CaseCard c={c} variant="feature" />
                 </div>
@@ -64,7 +65,7 @@ export default function WorkPage() {
         </section>
 
         <section className={`container ${styles.group} ${styles.beyond}`} data-group="beyond" aria-labelledby="work-beyond">
-          <div className={styles.groupHead}>
+          <div className={styles.groupHead} data-work-item>
             <h2 id="work-beyond" className={styles.groupTitle}>
               Beyond practices
             </h2>
@@ -72,7 +73,7 @@ export default function WorkPage() {
           </div>
           <ul className={styles.compacts}>
             {BEYOND_CASES.map((c) => (
-              <li key={c.slug} className={styles.item} data-sectors={c.sectors.join(' ')} style={{ viewTransitionName: `case-${c.slug}` }}>
+              <li key={c.slug} className={styles.item} data-sectors={c.sectors.join(' ')} data-work-item>
                 <div className={styles.reveal} data-reveal>
                   <CaseCard c={c} variant="compact" />
                 </div>
@@ -82,11 +83,13 @@ export default function WorkPage() {
         </section>
       </WorkFilter>
 
-      <CloseCall
-        track="work"
-        title="Not sure where to start?"
-        body="Book a short call and tell me what is not working, or begin with the website check. Its price is credited in full toward any work within 60 days."
-      />
+      <div data-work-item>
+        <CloseCall
+          track="work"
+          title="Not sure where to start?"
+          body="Book a short call and tell me what is not working, or begin with the website check. Its price is credited in full toward any work within 60 days."
+        />
+      </div>
     </>
   );
 }

@@ -8,6 +8,11 @@
     inset 0 -1px 0 var(--case-rule);
 }
 
+/* Focus rings here sit on the next case's ground, so they take the ring colour made for it */
+.next {
+  --focus: var(--case-focus);
+}
+
 .link {
   display: block;
   color: inherit;
@@ -64,7 +69,7 @@
 .go svg {
   width: 16px;
   height: 16px;
-  transition: transform 0.35s var(--ease-out);
+  transition: transform var(--dur-ui) var(--ease-out);
 }
 
 /* Only the top of the page shows; the band crops the rest */
@@ -73,7 +78,7 @@
 }
 
 .frame {
-  transition: transform 0.8s var(--ease-out);
+  transition: transform var(--dur-move) var(--ease-out);
 }
 
 .next[data-tone='dark'] .frame {
@@ -104,12 +109,38 @@
   }
 }
 
+/* Pressed: the page rises a little and the arrow nudges, at once; under a pointer the risen page
+   gives back a few pixels */
+@media (prefers-reduced-motion: no-preference) {
+  .link:active .frame {
+    transform: translateY(-8px);
+    transition-duration: var(--dur-press);
+  }
+
+  .link:active .go svg {
+    transform: translateX(3px);
+    transition-duration: var(--dur-press);
+  }
+}
+
+/* On touch a scroll can start on the band; the short wait keeps it from twitching under the finger */
+@media (hover: none) and (prefers-reduced-motion: no-preference) {
+  .link:active .frame,
+  .link:active .go svg {
+    transition-delay: 50ms;
+  }
+}
+
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
   .link:hover .frame {
     transform: translateY(-14px);
   }
 
+  .link:hover:active .frame {
+    transform: translateY(-10px);
+  }
+
   .link:hover .go svg {
-    transform: translateX(4px);
+    transform: translateX(3px);
   }
 }

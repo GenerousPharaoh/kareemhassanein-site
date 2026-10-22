@@ -23,6 +23,11 @@
   color: var(--case-ink);
 }
 
+/* Focus rings here sit on the case's ground, so they take the ring colour made for it */
+.band {
+  --focus: var(--case-focus);
+}
+
 .band .caption {
   color: var(--case-muted);
 }

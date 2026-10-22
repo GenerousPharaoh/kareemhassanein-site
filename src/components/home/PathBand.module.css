@@ -39,7 +39,10 @@
   background: var(--night);
   box-shadow: inset 0 0 0 1.5px rgba(236, 238, 234, 0.4);
   margin-bottom: 18px;
-  transition: box-shadow 0.3s ease, background-color 0.3s ease, transform 0.3s var(--ease-out);
+  transition:
+    box-shadow var(--dur-ui) var(--ease-colour),
+    background-color var(--dur-ui) var(--ease-colour),
+    transform var(--dur-ui) var(--ease-out);
 }
 
 .tab[data-state='past'] .node {
@@ -65,11 +68,12 @@
   font: 800 clamp(1.4rem, 0.9rem + 1.1vw, 2rem)/1 var(--font-display);
   letter-spacing: -0.03em;
   color: rgba(236, 238, 234, 0.5);
-  transition: color 0.3s ease;
+  transition: color var(--dur-hover) var(--ease-colour);
 }
 
 .tab[data-state='now'] .tabName,
-.tab[data-state='past'] .tabName {
+.tab[data-state='past'] .tabName,
+.tab:active .tabName {
   color: var(--on-night);
 }
 
@@ -87,27 +91,37 @@
   padding-top: 32px;
 }
 
+/* All six panels share one cell; only the open one shows */
+.panelStack {
+  display: grid;
+}
+
 .panelIn {
+  grid-area: 1 / 1;
+  align-self: start;
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 360px);
   gap: clamp(32px, 5vw, 80px);
   align-items: center;
+  visibility: hidden;
+  opacity: 0;
 }
 
+.panelIn[data-on] {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* The panel being left fades quickly; the next one arrives once it has gone */
 @media (prefers-reduced-motion: no-preference) {
   .panelIn {
-    animation: panel-in 0.5s var(--ease-out) both;
+    transition:
+      opacity var(--dur-press) var(--ease-in),
+      visibility 0s linear var(--dur-press);
   }
-}
 
-@keyframes panel-in {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
+  .panelIn[data-on] {
+    transition: opacity var(--dur-ui) var(--ease-out) var(--dur-press);
   }
 }
 
@@ -133,12 +147,17 @@
   font-weight: 600;
   color: var(--signal-on-night);
   text-decoration: none;
+  transition: opacity var(--dur-press) var(--ease-colour);
+}
+
+.caseLink:active {
+  opacity: 0.7;
 }
 
 .caseLink svg {
   width: 16px;
   height: 16px;
-  transition: transform 0.25s var(--ease-out);
+  transition: transform var(--dur-ui) var(--ease-out);
 }
 
 /* Phone list */
@@ -202,9 +221,19 @@
   .tab:hover .tabName {
     color: var(--on-night);
   }
+}
 
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
   .caseLink:hover svg {
     transform: translateX(3px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .node,
+  .tabName,
+  .caseLink svg {
+    transition: none;
   }
 }
 

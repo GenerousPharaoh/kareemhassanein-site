@@ -7,6 +7,11 @@
   padding-top: clamp(12px, 2vw, 28px);
 }
 
+/* Focus rings here sit on the case's ground, so they take the ring colour made for it */
+.header {
+  --focus: var(--case-focus);
+}
+
 .header::before {
   content: '';
   position: absolute;
@@ -33,13 +38,19 @@
   color: var(--case-muted);
   font: 500 0.9375rem / 1 var(--font-body);
   text-decoration: none;
-  transition: color 0.2s ease;
+  transition: color var(--dur-hover) var(--ease-colour);
 }
 
 .back svg {
   width: 16px;
   height: 16px;
-  transition: transform 0.3s var(--ease-out);
+  transition: transform var(--dur-ui) var(--ease-out);
+}
+
+/* Pressed: full ink at once */
+.back:active {
+  color: var(--case-ink);
+  transition-duration: var(--dur-press);
 }
 
 .kind {
@@ -172,7 +183,9 @@
   .back:hover {
     color: var(--case-ink);
   }
+}
 
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
   .back:hover svg {
     transform: translateX(-3px);
   }

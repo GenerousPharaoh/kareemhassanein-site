@@ -88,7 +88,8 @@ export default async function NotePage({ params }: Props) {
       </header>
 
       <div className="container">
-        <div className={styles.layout}>
+        {/* On wide screens the note starts in the first screen, so it enters after the heading and byline */}
+        <div className={styles.layout} data-enter style={enter(4)}>
           <nav className={styles.contents} aria-label="In this note">
             <p className="t-label">In this note</p>
             <ol className={styles.contentsList}>

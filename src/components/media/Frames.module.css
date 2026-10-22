@@ -23,7 +23,8 @@
   background: #fff;
   padding: 5px 12px;
   border-radius: 999px;
-  max-width: 72%;
+  /* Room for the longest address in a narrow card; it shortens only when there is truly no space */
+  max-width: calc(100% - 20px);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

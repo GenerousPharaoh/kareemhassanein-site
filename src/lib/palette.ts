@@ -44,7 +44,12 @@ export function accentText(p: Palette): string {
   return p.ink;
 }
 
-/** A client's palette as custom properties (--case-ground, --case-ink, ...), set on the element that owns the band. */
+/**
+ * A client's palette as custom properties (--case-ground, --case-ink, ...), set on the element that owns the band.
+ * --case-focus is a focus ring colour that reads on the ground. It is not applied by itself, because these
+ * properties also sit on wrappers whose rings are drawn on the page's paper: a band drawn entirely on the
+ * ground opts in with `--focus: var(--case-focus)`.
+ */
 export function paletteVars(p: Palette): CSSProperties {
   return {
     '--case-ground': p.ground,
@@ -53,5 +58,6 @@ export function paletteVars(p: Palette): CSSProperties {
     '--case-rule': p.rule,
     '--case-accent': p.accent,
     '--case-accent-text': accentText(p),
+    '--case-focus': toneOf(p) === 'dark' ? 'var(--focus-on-dark)' : 'var(--focus-on-light)',
   } as CSSProperties;
 }

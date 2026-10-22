@@ -1,0 +1,7 @@
+# Local working files that a deploy never needs
+output
+legacy
+docs
+scripts
+.playwright-cli
+*.md

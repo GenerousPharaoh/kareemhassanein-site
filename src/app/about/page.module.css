@@ -239,19 +239,38 @@
   text-decoration: underline;
   text-decoration-color: rgba(236, 238, 234, 0.35);
   text-underline-offset: 0.3em;
+  transition: text-decoration-color var(--dur-hover) var(--ease-colour);
+}
+
+/* Room for the ring on the dark band */
+.stepLink:focus-visible {
+  outline-offset: 5px;
+  border-radius: 8px;
+}
+
+.stepLink:active {
+  text-decoration-color: currentColor;
+  transition-duration: 0s;
 }
 
 .stepLink svg {
   width: 14px;
   height: 14px;
-  transition: transform 0.25s var(--ease-out);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .stepLink svg {
+    transition: transform var(--dur-ui) var(--ease-out);
+  }
 }
 
 @media (hover: hover) {
   .stepLink:hover {
     text-decoration-color: currentColor;
   }
+}
 
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
   .stepLink:hover svg {
     transform: translateX(3px);
   }

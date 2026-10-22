@@ -1,7 +1,7 @@
 import type { CSSProperties } from 'react';
 import type { Pair } from '@/content/cases';
 import { BeforeAfter } from '@/components/media/BeforeAfter';
-import { pairRows, ratio, rowSizes } from './layout';
+import { pairRows, pairSizes, ratio } from './layout';
 import styles from './Pairs.module.css';
 
 /** The old pages beside the new ones, as sliders, in rows that share a height. */
@@ -23,7 +23,7 @@ export function Pairs({ pairs, note }: { pairs: Pair[]; note?: string }) {
             <div key={row.map((p) => p.after.src).join()} className={styles.row} data-solo={row.length === 1 || undefined} data-reveal>
               {row.map((p) => (
                 <div key={p.after.src} className={styles.cell} data-device={p.after.device} style={{ ['--r' as string]: ratio(p.after) } as CSSProperties}>
-                  <BeforeAfter before={p.before} after={p.after} label={p.label} sizes={rowSizes(ratio(p.after) / total)} />
+                  <BeforeAfter before={p.before} after={p.after} label={p.label} sizes={pairSizes(p.after.device, ratio(p.after) / total, row.length === 1)} />
                 </div>
               ))}
             </div>

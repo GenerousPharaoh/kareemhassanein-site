@@ -37,7 +37,8 @@ export default function PrivacyPage() {
           ))}
         </dl>
 
-        <div className={styles.body}>
+        {/* On wide screens the body shows in the first screen, so it enters after the heading and summary */}
+        <div className={styles.body} data-enter style={enter(4)}>
           <aside className={styles.side} aria-label="Contact for privacy questions">
             <p className="t-label">Questions</p>
             <p>

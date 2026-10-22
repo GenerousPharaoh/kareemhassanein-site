@@ -4,7 +4,7 @@ import { BrowserFrame, PhoneFrame, ScreenFrame } from '@/components/media/Frames
 import { LoopVideo } from '@/components/media/LoopVideo';
 import { Picture } from '@/components/media/Picture';
 import type { Loop, Still } from '@/lib/media';
-import { isStrip, isWindow, ratio, rowSizes, shotRows, type Shot } from './layout';
+import { isStrip, isWindow, phoneRowSizes, ratio, rowSizes, shotRows, type Shot } from './layout';
 import { toneOf } from './palette';
 import styles from './CaseMedia.module.css';
 
@@ -35,12 +35,14 @@ export function HeroLoop({ c }: { c: CaseStudy }) {
   );
 }
 
-function ShotFigure({ shot, share }: { shot: Shot; share: number }) {
+function ShotFigure({ shot, share, solo }: { shot: Shot; share: number; solo: boolean }) {
   const caption = shot.kind === 'loop' ? shot.media.label : shot.media.alt;
+  // A capture alone in its row is held to 820px tall, so a narrow one never fills the row
+  const cap = solo ? Math.round(820 * ratio(shot.media)) : undefined;
   return (
     <figure className={styles.shot} style={shape(ratio(shot.media))}>
       <ScreenFrame className={styles.frame}>
-        {shot.kind === 'loop' ? <LoopVideo loop={shot.media} /> : <Picture media={shot.media} sizes={rowSizes(share)} />}
+        {shot.kind === 'loop' ? <LoopVideo loop={shot.media} /> : <Picture media={shot.media} sizes={rowSizes(share, cap)} />}
       </ScreenFrame>
       <figcaption className={styles.caption} aria-hidden="true">
         {caption}
@@ -49,13 +51,13 @@ function ShotFigure({ shot, share }: { shot: Shot; share: number }) {
   );
 }
 
-function PhoneFigure({ media }: { media: Loop | Still }) {
+function PhoneFigure({ media, sizes }: { media: Loop | Still; sizes: string }) {
   const isLoop = 'poster' in media;
   return (
     <li className={styles.phoneItem}>
       <figure className={styles.phoneFigure}>
         <PhoneFrame className={styles.phoneFrame}>
-          {isLoop ? <LoopVideo loop={media} /> : <Picture media={media} sizes="(min-width: 760px) 260px, 64vw" />}
+          {isLoop ? <LoopVideo loop={media} /> : <Picture media={media} sizes={sizes} />}
         </PhoneFrame>
         <figcaption className={styles.caption} aria-hidden="true">
           {isLoop ? media.label : media.alt}
@@ -93,7 +95,7 @@ export function Gallery({ c }: { c: CaseStudy }) {
               return (
                 <div key={row.map((s) => s.media.src).join()} className={styles.row} data-solo={row.length === 1 || undefined} data-reveal>
                   {row.map((s) => (
-                    <ShotFigure key={s.media.src} shot={s} share={ratio(s.media) / total} />
+                    <ShotFigure key={s.media.src} shot={s} share={ratio(s.media) / total} solo={row.length === 1} />
                   ))}
                 </div>
               );
@@ -105,7 +107,7 @@ export function Gallery({ c }: { c: CaseStudy }) {
             <h3 className={styles.subtitle}>On a phone</h3>
             <ul className={styles.phoneRow} aria-label="Phone screens">
               {phones.map((m) => (
-                <PhoneFigure key={m.src} media={m} />
+                <PhoneFigure key={m.src} media={m} sizes={phoneRowSizes(phones.length)} />
               ))}
             </ul>
           </div>

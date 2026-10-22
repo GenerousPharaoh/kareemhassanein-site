@@ -58,7 +58,12 @@
   min-height: 44px;
   color: var(--on-night-muted);
   text-decoration: none;
-  transition: color 0.2s ease;
+  transition: color var(--dur-hover) var(--ease-colour);
+}
+
+.link:active {
+  color: var(--on-night);
+  transition-duration: var(--dur-press);
 }
 
 .base {

@@ -2,7 +2,6 @@
   --error: #b42318;
   --field-line: color-mix(in srgb, var(--ink) 15%, transparent);
   display: grid;
-  gap: 14px;
 }
 
 .form {
@@ -17,7 +16,6 @@
   padding: 0;
   border: 0;
   display: grid;
-  gap: 12px;
 }
 
 .legend {
@@ -42,8 +40,17 @@
   box-shadow: inset 0 0 0 1px var(--rule);
   cursor: pointer;
   transition:
-    box-shadow 0.2s ease,
-    background-color 0.2s ease;
+    box-shadow var(--dur-hover) var(--ease-colour),
+    background-color var(--dur-hover) var(--ease-colour);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .topic {
+    transition:
+      box-shadow var(--dur-hover) var(--ease-colour),
+      background-color var(--dur-hover) var(--ease-colour),
+      transform var(--dur-press) var(--ease-out);
+  }
 }
 
 .topic:has(.radio:checked) {
@@ -51,6 +58,11 @@
   box-shadow:
     inset 0 0 0 1.5px var(--ink),
     0 10px 24px -18px rgba(18, 20, 23, 0.45);
+}
+
+/* Pressed: the card gives a little under the finger, at once */
+.topic:active {
+  transform: scale(0.98);
 }
 
 .topic:has(.radio:focus-visible) {
@@ -71,9 +83,10 @@
   border: 1.5px solid var(--faint);
   background: #fff;
   cursor: pointer;
-  transition: border-color 0.2s ease;
+  transition: border-color var(--dur-hover) var(--ease-colour);
 }
 
+/* The dot: grows in when chosen; the old one lets go at once, so the eye moves to the new choice */
 .radio::after {
   content: '';
   width: 10px;
@@ -81,7 +94,7 @@
   border-radius: 50%;
   background: var(--ink);
   transform: scale(0);
-  transition: transform 0.25s var(--ease-out);
+  transition: transform var(--dur-press) var(--ease-out);
 }
 
 .radio:checked {
@@ -90,6 +103,7 @@
 
 .radio:checked::after {
   transform: scale(1);
+  transition: transform var(--dur-ui) var(--ease-out);
 }
 
 .radio:focus-visible {
@@ -122,7 +136,9 @@
   color: var(--muted);
 }
 
+/* Its space is inside the opening note, so nothing is left behind when the call is chosen */
 .checkNote {
+  margin-top: 12px;
   padding: 14px 16px;
   border-radius: 12px;
   background: var(--signal-soft);
@@ -131,26 +147,49 @@
   line-height: 1.5;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .checkNote {
-    animation: note-in 0.35s var(--ease-out) both;
-  }
-}
-
-@keyframes note-in {
-  from {
-    opacity: 0;
-    transform: translateY(-4px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
 @media (min-width: 560px) {
   .topicGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/*
+  A note that comes and goes under a control (the check's details, a field's error, a problem with
+  sending). The space opens and the words arrive once there is room for them; closing is quicker
+  and the words leave first, so a line is never sliced in half. Instant with reduced motion.
+*/
+.reveal {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.reveal[data-show] {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  visibility: visible;
+}
+
+.revealClip {
+  min-height: 0;
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Closing: the words fade at once, then the space closes behind them */
+  .reveal {
+    transition:
+      grid-template-rows var(--dur-hover) var(--ease-in-out) 60ms,
+      opacity var(--dur-press) var(--ease-out),
+      visibility 0s linear calc(var(--dur-hover) + 60ms);
+  }
+
+  .reveal[data-show] {
+    transition:
+      grid-template-rows var(--dur-ui) var(--ease-out),
+      opacity var(--dur-hover) var(--ease-out) 100ms,
+      visibility 0s;
   }
 }
 
@@ -171,6 +210,12 @@
   display: grid;
   align-content: start;
   gap: 8px;
+  min-width: 0;
+}
+
+/* The input and its error, with no gap of their own: the error brings its space with it */
+.control {
+  display: grid;
   min-width: 0;
 }
 
@@ -195,6 +240,7 @@
   color: var(--muted);
 }
 
+/* Text fields show focus on a click too, so they use :focus, with a soft halo instead of the ring */
 .input {
   display: block;
   width: 100%;
@@ -210,8 +256,8 @@
   -webkit-appearance: none;
   appearance: none;
   transition:
-    border-color 0.2s ease,
-    box-shadow 0.2s ease;
+    border-color var(--dur-hover) var(--ease-colour),
+    box-shadow var(--dur-hover) var(--ease-colour);
 }
 
 .input:focus {
@@ -228,15 +274,24 @@
   box-shadow: 0 0 0 4px color-mix(in srgb, var(--error) 18%, transparent);
 }
 
+/* The resize grip only where a pointer can use it; on a touch screen it is too small to drag
+   (iOS ignores it), and drawing it stalls the first scroll past the field */
 .textarea {
   min-height: 168px;
-  resize: vertical;
+  resize: none;
+}
+
+@media (pointer: fine) {
+  .textarea {
+    resize: vertical;
+  }
 }
 
 .error {
   display: flex;
   align-items: flex-start;
   gap: 7px;
+  margin-top: 8px;
   font-size: 0.875rem;
   line-height: 1.4;
   color: var(--error);
@@ -247,12 +302,6 @@
   width: 16px;
   height: 16px;
   margin-top: 1px;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .error {
-    animation: note-in 0.25s var(--ease-out) both;
-  }
 }
 
 /* Off screen, out of the tab order and the accessibility tree */
@@ -275,10 +324,8 @@
 }
 
 .submit {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
+  display: inline-grid;
+  place-items: center;
   min-height: 52px;
   padding: 0 26px;
   border: 0;
@@ -287,25 +334,90 @@
   color: var(--paper);
   font: 600 1rem/1 var(--font-body);
   cursor: pointer;
-  transition:
-    background-color 0.2s ease,
-    transform 0.2s var(--ease-out),
-    opacity 0.2s ease;
+  transition: background-color var(--dur-hover) var(--ease-colour);
 }
 
+/* Pressed, like the site's solid buttons: the fill lightens at once and, with motion, it gives a little */
 .submit:active:not([aria-disabled='true']) {
-  transform: translateY(1px);
+  background: var(--ink-2);
+  transition-duration: var(--dur-press);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .submit {
+    transition:
+      background-color var(--dur-hover) var(--ease-colour),
+      transform var(--dur-press) var(--ease-out);
+  }
+
+  .submit:active:not([aria-disabled='true']) {
+    transform: scale(0.97);
+  }
 }
 
 .submit[aria-disabled='true'] {
   cursor: progress;
-  opacity: 0.78;
+  background: var(--ink-2);
+}
+
+/* The two labels share one cell, so the button keeps its size while it sends */
+.submitLabel,
+.submitBusy {
+  grid-area: 1 / 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.submitBusy {
+  opacity: 0;
+}
+
+.submit[data-sending] .submitLabel {
+  opacity: 0;
+}
+
+.submit[data-sending] .submitBusy {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /*
+    The label rolls up and out, then "Sending" rolls in from below, never both at once:
+    whichever is leaving goes quickly, and whichever is arriving waits for it.
+  */
+  .submitBusy,
+  .submit[data-sending] .submitLabel {
+    transition:
+      opacity var(--dur-press) var(--ease-out),
+      transform var(--dur-hover) var(--ease-in);
+  }
+
+  .submitLabel,
+  .submit[data-sending] .submitBusy {
+    transition:
+      opacity var(--dur-hover) var(--ease-out) 70ms,
+      transform var(--dur-ui) var(--ease-out) 40ms;
+  }
+
+  .submitBusy {
+    transform: translateY(8px);
+  }
+
+  .submit[data-sending] .submitLabel {
+    transform: translateY(-8px);
+  }
+
+  .submit[data-sending] .submitBusy {
+    transform: none;
+  }
 }
 
 .arrow {
   width: 16px;
   height: 16px;
-  transition: transform 0.25s var(--ease-out);
+  transition: transform var(--dur-ui) var(--ease-out);
 }
 
 .spinner {
@@ -314,12 +426,12 @@
   border-radius: 50%;
   border: 2px solid currentColor;
   border-right-color: transparent;
-  animation: spin 0.75s linear infinite;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .spinner {
-    animation-duration: 2.4s;
+/* It turns only while a request is on its way, and not at all with reduced motion */
+@media (prefers-reduced-motion: no-preference) {
+  .submit[data-sending] .spinner {
+    animation: spin 0.75s linear infinite;
   }
 }
 
@@ -357,6 +469,10 @@
     box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ink) 40%, transparent);
   }
 
+  .topic:hover .radio:not(:checked) {
+    border-color: var(--muted);
+  }
+
   .input:hover:not(:focus) {
     border-color: color-mix(in srgb, var(--ink) 32%, transparent);
   }
@@ -374,18 +490,15 @@
   }
 }
 
-/* Status line under the form: visible for problems, read aloud for everything */
+/* What went wrong, under the form; its space is inside the note so it leaves nothing behind */
 .status {
+  margin-top: 14px;
   padding: 12px 14px;
   border-radius: 12px;
   background: color-mix(in srgb, var(--error) 7%, transparent);
   font-size: var(--t-small);
   line-height: 1.5;
   color: var(--error);
-}
-
-.status:empty {
-  padding: 0;
 }
 
 /* Sent */
@@ -417,6 +530,7 @@
   letter-spacing: -0.03em;
 }
 
+/* Focus is moved here for screen readers; a heading is not a control, so it shows no ring */
 .doneTitle:focus {
   outline: none;
 }
@@ -434,12 +548,17 @@
   text-decoration: underline;
   text-decoration-color: color-mix(in srgb, currentColor 35%, transparent);
   text-underline-offset: 0.3em;
+  transition: text-decoration-color var(--dur-hover) var(--ease-colour);
+}
+
+.doneLink:active {
+  text-decoration-color: currentColor;
 }
 
 .doneLink svg {
   width: 15px;
   height: 15px;
-  transition: transform 0.25s var(--ease-out);
+  transition: transform var(--dur-ui) var(--ease-out);
 }
 
 @media (hover: hover) {
@@ -458,15 +577,27 @@
   overflow-wrap: anywhere;
 }
 
+/* The thanks rises into place, then the tick draws itself */
 @media (prefers-reduced-motion: no-preference) {
   .done {
-    animation: note-in 0.5s var(--ease-out) both;
+    animation: done-in var(--dur-move) var(--ease-out) both;
   }
 
   .doneIcon path {
     stroke-dasharray: 24;
     stroke-dashoffset: 24;
-    animation: draw 0.6s 0.15s var(--ease-out) forwards;
+    animation: draw var(--dur-move) var(--ease-out) 180ms forwards;
+  }
+}
+
+@keyframes done-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
   }
 }
 

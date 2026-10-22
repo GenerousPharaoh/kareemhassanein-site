@@ -5,7 +5,7 @@ import { BrowserFrame, PhoneFrame } from '@/components/media/Frames';
 import { LoopVideo } from '@/components/media/LoopVideo';
 import { Picture } from '@/components/media/Picture';
 import { Plate } from '@/components/media/Plate';
-import { isWindow } from './layout';
+import { isWindow, LIVE_PHONE_SIZES } from './layout';
 import { toneOf } from './palette';
 import styles from './CaseHeader.module.css';
 
@@ -64,7 +64,7 @@ export function CaseHeader({ c }: { c: CaseStudy }) {
               <LoopVideo loop={c.hero} className={styles.liveLoop} />
             </BrowserFrame>
             <PhoneFrame className={styles.livePhone}>
-              <Picture media={c.plate.phone} sizes="(min-width: 1280px) 268px, 23vw" priority />
+              <Picture media={c.plate.phone} sizes={LIVE_PHONE_SIZES} priority />
             </PhoneFrame>
           </div>
         ) : (

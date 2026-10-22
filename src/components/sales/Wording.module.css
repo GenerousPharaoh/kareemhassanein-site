@@ -56,16 +56,19 @@
   border-top: 1.5px solid var(--muted);
   border-right: 1.5px solid var(--muted);
   transform: rotate(45deg);
-  transition: transform 0.25s var(--ease-out);
 }
 
+/* The underline is always there, in a clear colour, so hover can fade it in rather than switch it on */
 .case {
   justify-self: start;
   font: 500 var(--t-label) / 1.4 var(--font-mono);
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--signal);
-  text-decoration: none;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 0.3em;
+  transition: text-decoration-color var(--dur-hover) var(--ease-colour);
 }
 
 .case::before {
@@ -78,10 +81,29 @@
   outline: none;
 }
 
+/* The ring stands clear of the words, which start flush with the column */
 .example:has(.case:focus-visible) {
   outline: 2px solid var(--focus);
-  outline-offset: 2px;
-  border-radius: 4px;
+  outline-offset: 5px;
+  border-radius: 8px;
+}
+
+/* Pressed, on touch as well: the case name underlines at once */
+.example:active .case {
+  text-decoration-color: currentColor;
+  transition-duration: 0s;
+}
+
+.example::after {
+  transition: border-color var(--dur-hover) var(--ease-colour);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .example::after {
+    transition:
+      border-color var(--dur-hover) var(--ease-colour),
+      transform var(--dur-ui) var(--ease-out);
+  }
 }
 
 /* The marked-up sheet */
@@ -169,10 +191,15 @@
 
 @media (hover: hover) {
   .example:hover .case {
-    text-decoration: underline;
-    text-underline-offset: 0.3em;
+    text-decoration-color: currentColor;
   }
 
+  .example:hover::after {
+    border-color: var(--ink);
+  }
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
   .example:hover::after {
     transform: translateX(3px) rotate(45deg);
   }
