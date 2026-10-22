@@ -1,11 +1,13 @@
 import type { Metadata, Viewport } from 'next';
-import { Geist, Geist_Mono, Schibsted_Grotesk } from 'next/font/google';
+import { Bodoni_Moda, Geist, Geist_Mono } from 'next/font/google';
+import { ViewTransition } from 'react';
 import { Footer } from '@/components/site/Footer';
 import { Header } from '@/components/site/Header';
 import { SITE } from '@/content/site';
 import './globals.css';
 
-const display = Schibsted_Grotesk({ subsets: ['latin'], variable: '--font-schibsted', display: 'swap' });
+// Display: a high-contrast didone with an optical-size axis, so very large headings stay crisp
+const display = Bodoni_Moda({ subsets: ['latin'], style: ['normal', 'italic'], axes: ['opsz'], variable: '--font-bodoni', display: 'swap' });
 const body = Geist({ subsets: ['latin'], variable: '--font-geist', display: 'swap' });
 const mono = Geist_Mono({ subsets: ['latin'], variable: '--font-geist-mono', display: 'swap', preload: false });
 // The mono stack skips next/font's fallback: that face is a resized Arial, which runs wide on the
@@ -33,7 +35,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: '#f2f4f0',
+  themeColor: '#13271f',
   viewportFit: 'cover',
 };
 
@@ -66,17 +68,13 @@ const jsonLd = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    // data-scroll-behavior: in-page links scroll smoothly, but a new page starts at its top at once
-    // (Next 16 otherwise animates the route change's scroll through the new page).
-    <html
-      lang="en-CA"
-      className={`${display.variable} ${body.variable} ${mono.variable}`}
-      style={{ ['--font-mono-face' as string]: monoFace }}
-      data-scroll-behavior="smooth"
-    >
+    <html lang="en-CA" className={`${display.variable} ${body.variable} ${mono.variable}`} style={{ ['--font-mono-face' as string]: monoFace }}>
       <body>
         <Header />
-        <main id="main">{children}</main>
+        {/* Each route change swaps the page inside this boundary with the page-swap animation; the header stays */}
+        <ViewTransition update="page-swap" default="none">
+          <main id="main">{children}</main>
+        </ViewTransition>
         <Footer />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       </body>

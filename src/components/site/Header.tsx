@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { MouseEvent } from 'react';
+import { RollText } from '@/components/motion/RollText';
 import { NAV, SITE } from '@/content/site';
 import { prefersReducedMotion } from '@/lib/useReducedMotion';
 import styles from './Header.module.css';
@@ -55,6 +56,34 @@ export function Header() {
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
+
+  // The header takes the colours of whatever passes under it: ivory type over the dark stage and
+  // client grounds, dark type over ivory paper. Sections say which they are with .paper, .night or
+  // data-theme; the default is the dark stage.
+  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
+  useEffect(() => {
+    let frame = 0;
+    const read = () => {
+      frame = 0;
+      const header = document.querySelector('body > header');
+      const y = (header?.getBoundingClientRect().height ?? 72) / 2;
+      const under = document.elementsFromPoint(window.innerWidth / 2, y).find((el) => !el.closest('body > header'));
+      const host = under?.closest('[data-theme], .paper, .night');
+      const t = host?.getAttribute('data-theme') ?? (host?.classList.contains('paper') ? 'light' : 'dark');
+      setTheme(t === 'light' ? 'light' : 'dark');
+    };
+    const queue = () => {
+      if (!frame) frame = requestAnimationFrame(read);
+    };
+    read();
+    window.addEventListener('scroll', queue, { passive: true });
+    window.addEventListener('resize', queue);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener('scroll', queue);
+      window.removeEventListener('resize', queue);
+    };
+  }, [pathname]);
 
   // While open: the page behind cannot scroll or take focus, focus stays in the menu, Escape closes it,
   // and widening the window past the phone layout closes it at once.
@@ -119,7 +148,7 @@ export function Header() {
   const isActive = (href: string) => (href === '/' ? pathname === '/' : pathname === href || pathname.startsWith(href + '/'));
 
   return (
-    <header className={styles.header} data-scrolled={scrolled || undefined} data-open={open || undefined}>
+    <header className={styles.header} data-scrolled={scrolled || undefined} data-open={open || undefined} data-theme={theme}>
       <a href="#main" className={styles.skip}>
         Skip to content
       </a>
@@ -131,12 +160,12 @@ export function Header() {
         <nav className={styles.nav} aria-label="Main">
           {NAV.map((item) => (
             <Link key={item.href} href={item.href} className={styles.link} aria-current={isActive(item.href) ? 'page' : undefined}>
-              {item.label}
+              <RollText text={item.label} />
             </Link>
           ))}
         </nav>
         <Link href={SITE.bookingHref} className={styles.cta} data-track="header-book">
-          Book a call
+          <RollText text="Book a call" />
         </Link>
         <button
           ref={menuButton}

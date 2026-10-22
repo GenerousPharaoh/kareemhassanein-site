@@ -1,33 +1,13 @@
 .footer {
-  padding-top: clamp(56px, 7vw, 96px);
-  padding-bottom: calc(28px + env(safe-area-inset-bottom, 0px));
+  overflow: hidden;
+  padding-top: clamp(64px, 8vw, 112px);
+  padding-bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+  border-top: 1px solid var(--on-night-rule);
 }
 
-.inner {
+.top {
   display: grid;
-  gap: 40px;
-}
-
-.mark {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  font: 800 clamp(1.6rem, 1.1rem + 1.6vw, 2.4rem)/1 var(--font-display);
-  letter-spacing: -0.03em;
-}
-
-.dot {
-  width: 11px;
-  height: 11px;
-  border-radius: 50%;
-  background: var(--signal-on-night);
-  box-shadow: 0 0 0 4px rgba(91, 213, 156, 0.16);
-}
-
-.descriptor {
-  margin-top: 14px;
-  max-width: 44ch;
-  color: var(--on-night-muted);
+  gap: 44px;
 }
 
 .contact {
@@ -36,8 +16,13 @@
   align-content: start;
 }
 
+.label {
+  font: italic 400 1.15rem/1.3 var(--font-display);
+  color: var(--brass);
+}
+
 .email {
-  font-size: 1.0625rem;
+  font-size: clamp(1.1rem, 1rem + 0.5vw, 1.4rem);
 }
 
 .reply {
@@ -48,7 +33,7 @@
 .nav {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 2px 20px;
+  gap: 0 24px;
   align-content: start;
 }
 
@@ -56,14 +41,27 @@
   display: flex;
   align-items: center;
   min-height: 44px;
-  color: var(--on-night-muted);
+  color: var(--ivory-2);
   text-decoration: none;
   transition: color var(--dur-hover) var(--ease-colour);
 }
 
-.link:active {
-  color: var(--on-night);
-  transition-duration: var(--dur-press);
+@media (hover: hover) {
+  .link:hover {
+    color: var(--brass-hi);
+  }
+}
+
+.wordmark {
+  margin: clamp(56px, 8vw, 112px) 0 0;
+  padding: 0 1.2vw;
+  font: 400 12.1vw / 0.82 var(--font-display);
+  letter-spacing: -0.045em;
+  font-variation-settings: 'opsz' 96;
+  white-space: nowrap;
+  text-align: center;
+  color: var(--ivory);
+  user-select: none;
 }
 
 .base {
@@ -71,22 +69,19 @@
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 8px 24px;
-  margin-top: clamp(48px, 6vw, 80px);
-  padding-top: 20px;
+  margin-top: clamp(20px, 3vw, 36px);
+  padding-top: 18px;
   border-top: 1px solid var(--on-night-rule);
   font-size: 0.8125rem;
   color: var(--on-night-muted);
 }
 
 @media (min-width: 860px) {
-  .inner {
-    grid-template-columns: 1.4fr 1fr 1fr;
-    gap: 48px;
+  .top {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   }
-}
 
-@media (hover: hover) {
-  .link:hover {
-    color: var(--on-night);
+  .nav {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }

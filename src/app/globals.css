@@ -1,71 +1,85 @@
 /*
-  Design system: paper and ink, one signal green, and the work brings the colour.
-  A quiet, exact frame with strong type; client work sits in bands of its own palette.
+  A dark racing-green stage, ivory type, one brass light. Display type is a high-contrast
+  editorial serif (Bodoni Moda); working text is Geist. Client work keeps its own colours and
+  takes over the screen in scenes. Motion is choreographed per scene (GSAP on native scroll),
+  never one fade applied to everything.
 */
 :root {
-  /* Neutrals lean very slightly toward the signal green */
-  --paper: #f2f4f0;
-  --paper-2: #e9ece6;
-  --card: #fbfcfa;
-  --ink: #121417;
-  --ink-2: #2b2f34;
-  --muted: #5a6068;
-  --faint: #868c93;
-  --rule: #d6dad3;
-  --rule-soft: #e3e6e0;
+  /* Stage */
+  --stage: #13271f;
+  --stage-raised: #1a3129;
+  --stage-deep: #0c1813;
+  --ivory: #efe9dd;
+  --ivory-2: #d6cfbf;
+  --brass: #c9a35f;
+  --brass-hi: #e0bf7e;
+  --brass-ink: #7f5f24; /* brass for small text on ivory paper */
 
-  /* Dark sections */
-  --night: #0f1113;
-  --night-2: #171a1d;
-  --on-night: #eceeea;
-  --on-night-muted: #9aa1a8;
-  --on-night-rule: rgba(236, 238, 234, 0.13);
+  /* Roles (the components read these) */
+  --paper: var(--stage);
+  --paper-2: var(--stage-raised);
+  --card: var(--stage-raised);
+  --ink: var(--ivory);
+  --ink-2: var(--ivory-2);
+  --muted: #a7b0a5;
+  --faint: #8a958b;
+  --rule: rgba(239, 233, 221, 0.14);
+  --rule-soft: rgba(239, 233, 221, 0.08);
+
+  /* Deeper sections */
+  --night: var(--stage-deep);
+  --night-2: #12201a;
+  --on-night: var(--ivory);
+  --on-night-muted: #a7b0a5;
+  --on-night-rule: rgba(239, 233, 221, 0.12);
 
   /* Signal: booked, counted, working */
-  --signal: #13704a;
-  --signal-soft: #d9ede2;
-  --signal-on-night: #5bd59c;
-  /* Focus rings: at least 3:1 against what they sit on. Dark sections and dark client grounds use the light blue. */
-  --focus-on-light: #2d68d8;
-  --focus-on-dark: #8ab4ff;
-  --focus: var(--focus-on-light);
+  --signal: var(--brass);
+  --signal-soft: rgba(201, 163, 95, 0.16);
+  --signal-on-night: var(--brass-hi);
 
-  --font-display: var(--font-schibsted), 'Helvetica Neue', Arial, sans-serif;
+  /* Focus rings: at least 3:1 against what they sit on */
+  --focus-on-light: #2d5bd8;
+  --focus-on-dark: #f3d79c;
+  --focus: var(--focus-on-dark);
+
+  --font-display: var(--font-bodoni), 'Didot', 'Bodoni 72', Georgia, serif;
   --font-body: var(--font-geist), 'Segoe UI', system-ui, -apple-system, sans-serif;
   /* --font-mono-face is set on <html> by the layout: Geist Mono without next/font's resized Arial fallback */
   --font-mono: var(--font-mono-face), ui-monospace, 'Cascadia Mono', Consolas, monospace;
 
-  /* Type scale */
-  --t-hero: clamp(2.7rem, 1.15rem + 5.7vw, 6.5rem);
-  --t-h1: clamp(2.35rem, 1.2rem + 4vw, 4.9rem);
-  --t-h2: clamp(1.85rem, 1.05rem + 2.7vw, 3.35rem);
-  --t-h3: clamp(1.25rem, 1.02rem + 0.75vw, 1.62rem);
+  /* Type scale: display sizes are large, because the serif carries the identity */
+  --t-mega: clamp(3.4rem, 1.2rem + 11vw, 13.5rem);
+  --t-hero: clamp(3rem, 1.2rem + 7.6vw, 9.25rem);
+  --t-h1: clamp(2.6rem, 1.2rem + 5.4vw, 6.6rem);
+  --t-h2: clamp(2.05rem, 1.1rem + 3.4vw, 4.4rem);
+  --t-h3: clamp(1.4rem, 1.1rem + 1.1vw, 2.05rem);
   --t-lede: clamp(1.12rem, 1rem + 0.42vw, 1.4rem);
   --t-body: 1.0625rem;
   --t-small: 0.9375rem;
-  --t-label: 0.75rem;
+  --t-label: 1rem;
 
   /* Space */
   --gutter-l: max(20px, env(safe-area-inset-left, 0px));
   --gutter-r: max(20px, env(safe-area-inset-right, 0px));
-  --maxw: 1240px;
-  --section: clamp(72px, 9vw, 140px);
+  --maxw: 1320px;
+  --section: clamp(88px, 11vw, 176px);
   --gap: clamp(20px, 2.4vw, 32px);
-  --radius: 14px;
-  --radius-s: 8px;
+  --radius: 6px;
+  --radius-s: 4px;
 
   /* Motion: one set of durations and curves for the whole site */
-  --dur-press: 120ms; /* pressed states */
-  --dur-hover: 200ms; /* hover and focus colour changes */
-  --dur-ui: 320ms; /* a control changing state: tabs, toggles, the menu */
-  --dur-move: 560ms; /* larger movement: panels, media, cards */
-  --ease-out: cubic-bezier(0.16, 1, 0.3, 1); /* entrances and most movement */
-  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1); /* things that travel and settle in place */
-  --ease-in: cubic-bezier(0.55, 0, 1, 0.45); /* exits */
-  --ease-colour: cubic-bezier(0.25, 0.1, 0.25, 1); /* colour and shadow changes */
-  --header-h: 64px;
+  --dur-press: 120ms;
+  --dur-hover: 220ms;
+  --dur-ui: 360ms;
+  --dur-move: 720ms;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-in: cubic-bezier(0.55, 0, 1, 0.45);
+  --ease-colour: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --header-h: 72px;
 
-  color-scheme: light;
+  color-scheme: dark;
 }
 
 *,
@@ -77,15 +91,9 @@
 html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
-  /* No grey or blue flash on tap; controls give their own pressed feedback */
   -webkit-tap-highlight-color: transparent;
   scroll-padding-top: calc(var(--header-h) + 16px);
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  html {
-    scroll-behavior: smooth;
-  }
+  background: var(--stage);
 }
 
 body {
@@ -98,7 +106,8 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
-  font-feature-settings: 'ss01' on;
+  /* The page background follows the scene on screen (set by the scene controller) */
+  transition: background-color 0.7s var(--ease-colour);
 }
 
 img,
@@ -125,7 +134,7 @@ select {
 a {
   color: inherit;
   text-decoration-thickness: 1px;
-  text-underline-offset: 0.2em;
+  text-underline-offset: 0.22em;
 }
 
 h1,
@@ -134,6 +143,7 @@ h3,
 h4 {
   margin: 0;
   font-family: var(--font-display);
+  font-weight: 400;
   text-wrap: balance;
 }
 
@@ -148,15 +158,19 @@ ol {
   padding: 0;
 }
 
+em {
+  font-style: italic;
+}
+
 :focus-visible {
   outline: 2px solid var(--focus);
   outline-offset: 3px;
-  border-radius: 4px;
+  border-radius: 2px;
 }
 
 ::selection {
-  background: var(--signal-soft);
-  color: var(--ink);
+  background: var(--brass);
+  color: var(--stage-deep);
 }
 
 .sr-only {
@@ -194,32 +208,70 @@ ol {
   --focus: var(--focus-on-dark);
 }
 
-/* Type */
-.t-hero {
-  font: 800 var(--t-hero) / 0.92 var(--font-display);
-  letter-spacing: -0.04em;
+/* Light ivory scenes: the same system, inverted */
+.paper {
+  background: var(--ivory);
+  color: var(--stage);
+  --paper: var(--ivory);
+  --paper-2: #e6dfd0;
+  --card: #f6f2ea;
+  --ink: var(--stage);
+  --ink-2: #24392f;
+  --muted: #4c5b52;
+  --faint: #66746b;
+  --rule: rgba(19, 39, 31, 0.16);
+  --rule-soft: rgba(19, 39, 31, 0.08);
+  --signal: var(--brass-ink);
+  --signal-soft: rgba(127, 95, 36, 0.12);
+  --focus: var(--focus-on-light);
 }
 
-.t-h1 {
-  font: 800 var(--t-h1) / 0.95 var(--font-display);
+/*
+  A section that rises over the one before it like a sheet: rounded top corners, overlapping the
+  previous section's last few pixels. Used where the page turns from the dark stage to ivory and back.
+*/
+.sheet-up {
+  position: relative;
+  z-index: 1;
+  margin-top: calc(-1 * var(--sheet-r));
+  border-radius: var(--sheet-r) var(--sheet-r) 0 0;
+}
+
+:root {
+  --sheet-r: clamp(22px, 3vw, 44px);
+}
+
+/* Type */
+.t-mega {
+  font: 400 var(--t-mega) / 0.86 var(--font-display);
   letter-spacing: -0.035em;
 }
 
-.t-h2 {
-  font: 800 var(--t-h2) / 1 var(--font-display);
+.t-hero {
+  font: 400 var(--t-hero) / 0.9 var(--font-display);
   letter-spacing: -0.03em;
 }
 
+.t-h1 {
+  font: 400 var(--t-h1) / 0.94 var(--font-display);
+  letter-spacing: -0.025em;
+}
+
+.t-h2 {
+  font: 400 var(--t-h2) / 1 var(--font-display);
+  letter-spacing: -0.02em;
+}
+
 .t-h3 {
-  font: 700 var(--t-h3) / 1.15 var(--font-display);
-  letter-spacing: -0.015em;
+  font: 500 var(--t-h3) / 1.12 var(--font-display);
+  letter-spacing: -0.01em;
 }
 
 .t-lede {
   font-size: var(--t-lede);
   line-height: 1.5;
   color: var(--muted);
-  max-width: 62ch;
+  max-width: 60ch;
 }
 
 .t-small {
@@ -227,11 +279,11 @@ ol {
   line-height: 1.55;
 }
 
+/* A small italic caption in the display serif, in brass: editorial, never an uppercase eyebrow */
 .t-label {
-  font: 500 var(--t-label) / 1.4 var(--font-mono);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--muted);
+  font: italic 400 var(--t-label) / 1.35 var(--font-display);
+  letter-spacing: 0;
+  color: var(--signal);
 }
 
 .prose {
@@ -243,13 +295,13 @@ ol {
 }
 
 .prose h2 {
-  font: 800 clamp(1.5rem, 1.1rem + 1.4vw, 2.1rem) / 1.08 var(--font-display);
-  letter-spacing: -0.02em;
+  font: 400 clamp(1.7rem, 1.2rem + 1.7vw, 2.6rem) / 1.05 var(--font-display);
+  letter-spacing: -0.015em;
   margin-top: 2em;
 }
 
 .prose h3 {
-  font: 700 1.25rem / 1.2 var(--font-display);
+  font: 500 1.35rem / 1.2 var(--font-display);
   margin-top: 1.6em;
 }
 
@@ -273,46 +325,72 @@ ol {
 }
 
 /*
-  Scroll-linked entrance, CSS only. Content is fully visible where unsupported. The entrance ends
-  within the first 30vh of a block's arrival, so a tall block that starts mid-screen is never left
-  half drawn at rest.
+  data-reveal is now inert: one fade applied to everything reads as a template. Scenes and
+  headings that deserve motion get their own choreography from the motion components.
 */
-@supports (animation-timeline: view()) {
-  @media (prefers-reduced-motion: no-preference) {
-    [data-reveal] {
-      animation: reveal linear both;
-      animation-timeline: view();
-      animation-range: entry 0% entry min(55%, 30vh);
-    }
-  }
-}
 
-@keyframes reveal {
-  from {
-    opacity: 0.001;
-    transform: translateY(22px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-/* Page entrance for the first screen: compositor-only, starts visible enough to count as painted */
+/* First-screen entrance for blocks that are not split into lines */
 @media (prefers-reduced-motion: no-preference) {
   [data-enter] {
-    animation: enter 0.9s var(--ease-out) both;
-    animation-delay: calc(var(--i, 0) * 70ms);
+    animation: enter 1s var(--ease-out) both;
+    animation-delay: calc(120ms + var(--i, 0) * 90ms);
   }
 }
 
 @keyframes enter {
   from {
     opacity: 0.01;
-    transform: translateY(14px);
+    transform: translateY(18px);
   }
   to {
     opacity: 1;
     transform: none;
   }
+}
+
+/*
+  Page transitions (React ViewTransition around the page in the layout): the old page sinks and
+  dims quickly, the new one rises into place. The header stays put.
+*/
+::view-transition-old(.page-swap) {
+  animation: 260ms var(--ease-in) both page-out;
+}
+
+::view-transition-new(.page-swap) {
+  animation: 620ms var(--ease-out) 140ms both page-in;
+}
+
+@keyframes page-out {
+  to {
+    opacity: 0;
+    transform: translateY(-2.5vh) scale(0.985);
+    filter: brightness(0.7);
+  }
+}
+
+@keyframes page-in {
+  from {
+    opacity: 0;
+    transform: translateY(5vh);
+  }
+}
+
+/* Shared images between a work preview and its case page */
+::view-transition-group(.case-morph) {
+  animation-duration: 640ms;
+  animation-timing-function: var(--ease-in-out);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+
+/* SplitText line masks (SplitReveal): room below the baseline so descenders and italics are never clipped */
+.sl-mask {
+  padding-bottom: 0.1em;
+  margin-bottom: -0.1em;
 }
