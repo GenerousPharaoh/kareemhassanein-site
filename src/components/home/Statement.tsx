@@ -8,8 +8,21 @@ import { getGsap, useGsap } from '@/lib/gsap';
 import type { Still } from '@/lib/media';
 import s from './Statement.module.css';
 
-/** A run of text, or a small picture set into the line beside the words it shows. */
-export type Piece = string | { still: Still; label: string };
+/**
+ * A run of text, or a small piece of the work set into the line beside the words it shows: a still
+ * (a pill, or a circle) or a short clip on a little screen that plays once as the line lights.
+ */
+export type Piece = string | { still: Still; label: string; shape?: 'pill' | 'round' } | { clip: { src: string; poster: string }; label: string };
+
+/** The clip stops before five seconds, so it needs no pause control. */
+const CLIP_STOP = 4.8;
+
+/** How each kind of chip opens as the sentence lights: the screen wipes on, the circle irises, the pill extends. */
+const OPENING = {
+  screen: ['inset(0% 100% 0% 0% round 0.16em)', 'inset(0% 0% 0% 0% round 0.16em)'],
+  round: ['inset(50% 50% 50% 50% round 50%)', 'inset(0% 0% 0% 0% round 50%)'],
+  pill: ['inset(0% 100% 0% 0% round 999px)', 'inset(0% 0% 0% 0% round 999px)'],
+} as const;
 
 type Props = {
   pieces: Piece[];
@@ -27,7 +40,7 @@ export function Statement({ pieces, body, link, portrait }: Props) {
 
   useGsap(root, ({ reduce }) => {
     if (reduce) return;
-    const { gsap, SplitText } = getGsap();
+    const { gsap, ScrollTrigger, SplitText } = getGsap();
     const el = root.current!;
     const text = el.querySelector<HTMLElement>('[data-lit]')!;
     const split = SplitText.create(text.querySelectorAll('[data-words]'), { type: 'words', wordsClass: s.word });
@@ -37,15 +50,40 @@ export function Statement({ pieces, body, link, portrait }: Props) {
     const tl = gsap.timeline({ scrollTrigger: { trigger: text, start: 'top 78%', end: 'bottom 52%', scrub: 0.6 } });
     words.forEach((w, i) => {
       if (w.hasAttribute('data-chip')) {
-        tl.fromTo(w.querySelector('[data-chip-img]'), { clipPath: 'inset(50% 50% 50% 50% round 999px)', scale: 1.4 }, { clipPath: 'inset(0% 0% 0% 0% round 999px)', scale: 1, ease: 'power2.out', duration: 1.6 }, i * 0.35);
+        const [from, to] = OPENING[(w.getAttribute('data-shape') ?? 'pill') as keyof typeof OPENING];
+        const inner = w.querySelector('[data-chip-img]');
+        tl.fromTo(inner, { clipPath: from }, { clipPath: to, ease: 'power2.out', duration: 1.6 }, i * 0.35)
+          .fromTo(inner?.firstElementChild ?? null, { scale: 1.45 }, { scale: 1, ease: 'power2.out', duration: 1.9 }, i * 0.35);
       } else {
         tl.fromTo(w, { opacity: 0.16 }, { opacity: 1, ease: 'none', duration: 1 }, i * 0.35);
       }
     });
 
+    // The clip plays once, when its screen has lit, and stops on a still frame
+    const clip = el.querySelector<HTMLVideoElement>('[data-chip-video]');
+    const stopClip = () => {
+      if (clip && clip.currentTime >= CLIP_STOP) clip.pause();
+    };
+    clip?.addEventListener('timeupdate', stopClip);
+    if (clip) {
+      ScrollTrigger.create({
+        trigger: clip.closest('[data-chip]'),
+        start: 'top 62%',
+        once: true,
+        onEnter: () => {
+          clip.currentTime = 0;
+          clip.play().catch(() => {});
+        },
+      });
+    }
+
     gsap.fromTo(el.querySelectorAll('[data-after]'), { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 1.1, ease: 'expo.out', stagger: 0.08, scrollTrigger: { trigger: el.querySelector('[data-after]'), start: 'top 90%', once: true } });
 
-    return () => split.revert();
+    return () => {
+      clip?.removeEventListener('timeupdate', stopClip);
+      clip?.pause();
+      split.revert();
+    };
   });
 
   return (
@@ -58,10 +96,18 @@ export function Statement({ pieces, body, link, portrait }: Props) {
                 <span key={i} data-words>
                   {p}
                 </span>
-              ) : (
-                <span key={i} className={s.chip} data-chip aria-hidden="true" title={p.label}>
+              ) : 'clip' in p ? (
+                <span key={i} className={s.chip} data-chip data-shape="screen" aria-hidden="true" title={p.label}>
                   <span className={s.chipImg} data-chip-img>
-                    <Picture media={p.still} sizes="120px" />
+                    <span className={s.clipFrame}>
+                      <video className={s.clip} src={p.clip.src} poster={p.clip.poster} muted playsInline preload="none" data-chip-video />
+                    </span>
+                  </span>
+                </span>
+              ) : (
+                <span key={i} className={s.chip} data-chip data-shape={p.shape ?? 'pill'} aria-hidden="true" title={p.label}>
+                  <span className={s.chipImg} data-chip-img>
+                    <Picture media={p.still} sizes="140px" />
                   </span>
                 </span>
               ),

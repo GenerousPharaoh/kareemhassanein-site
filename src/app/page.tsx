@@ -169,9 +169,11 @@ export default function Home() {
       <Statement
         pieces={[
           'I build and run the online side of law firms and independent practices: the website ',
-          { still: still('tax-relief-counsel/home-hero--desktop', ''), label: 'Tax Relief Counsel' },
-          ', the Google profile, booking or intake ',
-          { still: still('endorphins/lp-physio--desktop', ''), label: 'Endorphins' },
+          { clip: { src: loop('physiomax/treat-chart--desktop', '').src, poster: loop('physiomax/treat-chart--desktop', '').poster }, label: 'PhysioMax body chart' },
+          ', the Google profile ',
+          { still: still('endorphins/maps-pin', ''), label: 'Endorphins on Google Maps', shape: 'round' },
+          ', booking or intake ',
+          { still: still('endorphins/lp-book--desktop', ''), label: 'Endorphins booking button', shape: 'pill' },
           ', ads, and the tracking that ties them together.',
         ]}
         body="I’m Kareem Hassanein. I’ve worked in healthcare for 13 years, across different roles."
@@ -181,14 +183,14 @@ export default function Home() {
       <PathExplorer items={PATH.map((stop) => {
         const c = caseBySlug(stop.caseSlug)!;
         const images = {
-          found: c.plate.desktop,
+          found: still('endorphins/maps-listing--desktop', 'The Endorphins Health and Wellness Centre listing on Google Maps, beside its pin on the map.'),
           chosen: c.stills.find((image) => image.src.includes('lp-physio--desktop')),
           booked: still('physiomax/service--desktop', 'The PhysioMax physiotherapy page, with its Book Appointment button.'),
           counted: c.plate.desktop,
           grown: c.stills.find((image) => image.src.includes('consult--desktop')),
           kept: c.stills.find((image) => image.src.includes('team--desktop')),
         };
-        return { ...stop, image: images[stop.id] ?? c.plate.desktop, anchor: stop.id === 'booked' || stop.id === 'grown' ? '0 0' : undefined, ground: c.palette.ground, ink: c.palette.ink, domain: c.domain };
+        return { ...stop, image: images[stop.id] ?? c.plate.desktop, anchor: ['found', 'booked', 'grown'].includes(stop.id) ? '0 0' : undefined, ground: c.palette.ground, ink: c.palette.ink, domain: c.domain };
       })} />
       <Offer />
       <Close />

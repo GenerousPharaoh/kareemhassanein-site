@@ -43,6 +43,12 @@ export const ASSETS = {
       ['stills/lp-physio--phone.png', 'lp-physio--phone'],
       ['stills/team--desktop.png', 'team--desktop'],
       ['stills/team--phone.png', 'team--phone'],
+      // The clinic's Google Maps listing (captured 2026-10-27), cut above the hours row, whose open or
+      // closed state depends on the time of capture; the pin alone for the home introduction
+      ['stills/maps-listing--desktop.png', 'maps-listing--desktop', { crop: { left: 144, top: 0, width: 1687, height: 1205 } }],
+      ['stills/maps-listing--desktop.png', 'maps-pin', { crop: { left: 1374, top: 815, width: 100, height: 100 } }],
+      // The ad page's booking button and next openings, for the home introduction
+      ['stills/lp-physio--desktop.png', 'lp-book--desktop', { crop: { left: 236, top: 1080, width: 704, height: 276 } }],
       ['before/old-home-hero-sept--desktop.png', 'old-home-hero--desktop', { ba: true, only: 'ba' }],
     ],
     loops: [

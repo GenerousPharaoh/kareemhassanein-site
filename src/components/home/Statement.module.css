@@ -47,15 +47,51 @@
   display: block;
   width: 100%;
   height: 100%;
-  border-radius: 999px;
+  border-radius: inherit;
   overflow: hidden;
+}
+
+.chipImg > * {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 .chipImg img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 50% 0;
+  object-position: 50% 50%;
+}
+
+/* Three different objects, so the line does not repeat itself: a small screen playing a site,
+   the map pin as a circle, and the booking button as the pill it is */
+.chip[data-shape='screen'] {
+  width: 1.8em;
+  border-radius: 0.16em;
+}
+
+.chip[data-shape='round'] {
+  width: 0.98em;
+}
+
+.chip[data-shape='pill'] {
+  width: 2.55em;
+}
+
+/* The clip is held larger than its screen, framed on the body chart's figure */
+.clipFrame {
+  position: relative;
+  overflow: hidden;
+}
+
+.clip {
+  position: absolute;
+  left: -12%;
+  top: -93%;
+  width: 225%;
+  max-width: none;
+  height: auto;
 }
 
 .body {

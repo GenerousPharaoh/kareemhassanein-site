@@ -208,7 +208,7 @@ export function PathExplorer({ items }: { items: PathExample[] }) {
                   </Link>
                 </div>
                 <figure className={s.stage} data-stage style={{ '--path-ground': item.ground, '--path-ink': item.ink, '--path-anchor': item.anchor } as CSSProperties}>
-                  <figcaption className={s.domain}>{item.domain}</figcaption>
+                  <figcaption className={s.domain}>{item.source ?? item.domain}</figcaption>
                   <div className={s.screen} data-screen data-record={item.record ? true : undefined}>
                     {item.record ? <RecordPanel record={item.record} /> : <Picture media={item.image} sizes="(min-width: 1000px) 52vw, min(84vw, 440px)" />}
                   </div>

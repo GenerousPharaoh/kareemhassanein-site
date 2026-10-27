@@ -17,6 +17,8 @@ export type Stop = {
   caseSlug: string;
   caseName: string;
   record?: ProofRecord;
+  /** Where the proof was captured, when that is not the client's own site. */
+  source?: string;
 };
 
 export const PATH: Stop[] = [
@@ -24,19 +26,10 @@ export const PATH: Stop[] = [
     id: 'found',
     name: 'Found',
     line: 'Showing up when someone searches for what you treat or handle.',
-    example: 'Business Profile categories chosen so a clinic would not compete with its own physiotherapist’s listing.',
+    example: 'A clinic’s Google listing redone: its categories, photos, services and description, with links straight to its site and its booking page.',
     caseSlug: 'endorphins',
     caseName: 'Endorphins',
-    record: {
-      source: 'Google Business Profile',
-      title: 'Business categories',
-      rows: [
-        { label: 'Chiropractor', value: 'Primary' },
-        { label: 'Massage therapist', value: 'Additional' },
-        { label: 'Acupuncture clinic', value: 'Additional' },
-        { label: 'Physiotherapist', value: 'On the physiotherapist’s own listing', off: true },
-      ],
-    },
+    source: 'Google Maps',
   },
   {
     id: 'chosen',
