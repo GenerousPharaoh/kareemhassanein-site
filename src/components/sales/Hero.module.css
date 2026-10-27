@@ -21,24 +21,24 @@
   gap: 10px;
 }
 
-.label::before {
-  content: '';
-  width: 18px;
-  height: 1px;
-  background: currentColor;
-  opacity: 0.6;
-}
-
-.title {
+.hero .title {
   max-width: 12ch;
+  font-size: clamp(3.2rem, 6.3vw, 6.6rem);
+  font-weight: 560;
+  font-stretch: 92%;
+  line-height: .94;
+  letter-spacing: -.05em;
+  text-wrap: balance;
 }
 
 /* Without work beside it, a longer headline can use the width */
+
 .hero:not([data-aside]) .title {
   max-width: 17ch;
 }
 
 /* The outcome word carries the signal colour: signed, seen, counted */
+
 .title em {
   font-style: normal;
   color: var(--signal);
@@ -71,9 +71,9 @@
 }
 
 .spec dt {
-  font: 500 var(--t-label) / 1.4 var(--font-mono);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  font: 450 .8125rem/1.4 var(--font-body);
+  letter-spacing: 0;
+  text-transform: none;
   color: var(--muted);
 }
 
@@ -91,30 +91,33 @@
 }
 
 /* With work beside it: the pitch and its facts on the left, the work on the right */
+
 @media (min-width: 1000px) {
   .hero[data-aside] .inner {
-    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
     grid-template-rows: auto 1fr;
-    grid-template-areas:
-      'copy aside'
+    grid-template-areas: 'copy aside'
       'specs aside';
-    column-gap: clamp(48px, 6vw, 96px);
+    column-gap: clamp(40px, 5vw, 80px);
     row-gap: 48px;
   }
-
   .hero[data-aside] .copy {
     grid-area: copy;
   }
-
   /* The work panel fills the column, so its caption ends level with the facts beside it */
   .hero[data-aside] .aside {
     grid-area: aside;
     display: grid;
   }
-
   .hero[data-aside] .specs {
     grid-area: specs;
     align-self: end;
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .hero .title {
+    font-size: clamp(2.8rem, 11.5vw, 4.5rem);
   }
 }

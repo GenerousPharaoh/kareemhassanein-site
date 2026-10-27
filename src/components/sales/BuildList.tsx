@@ -1,4 +1,5 @@
 import { SectionHead } from './SectionHead';
+import { Disclosure } from '@/components/ui/Disclosure';
 import styles from './BuildList.module.css';
 
 export type BuildItem = { title: string; text: string };
@@ -17,14 +18,13 @@ export function BuildList({ id, label, title, intro, items }: Props) {
     <section className={`section ${styles.section}`} aria-labelledby={id}>
       <div className={`container ${styles.inner}`}>
         <SectionHead id={id} label={label} title={title} intro={intro} split />
-        <ul className={styles.list}>
+        <div>
           {items.map((it) => (
-            <li key={it.title} className={styles.item} data-reveal>
-              <h3 className={styles.title}>{it.title}</h3>
+            <Disclosure key={it.title} title={it.title}>
               <p className={styles.text}>{it.text}</p>
-            </li>
+            </Disclosure>
           ))}
-        </ul>
+        </div>
       </div>
     </section>
   );

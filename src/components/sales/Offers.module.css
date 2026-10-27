@@ -12,7 +12,8 @@
 }
 
 .figure {
-  font: 800 clamp(2.2rem, 1.6rem + 2vw, 3.4rem) / 0.95 var(--font-display);
+  font: 520 clamp(2.2rem, 1.6rem + 2vw, 3.4rem) / 0.95 var(--font-display);
+  font-stretch: 108%;
   letter-spacing: -0.04em;
 }
 
@@ -21,7 +22,7 @@
   letter-spacing: -0.05em;
 }
 
-/* What is included: a small check before each line */
+/* The scope reads as a short specification. */
 .includes {
   list-style: none;
   display: grid;
@@ -31,13 +32,14 @@
 
 .includes li {
   position: relative;
-  padding-left: 26px;
+  padding-block: 8px;
+  border-bottom: 1px solid var(--rule);
   font-size: var(--t-small);
   line-height: 1.5;
 }
 
 .includes li::before {
-  content: '';
+  content: none;
   position: absolute;
   left: 3px;
   top: 0.42em;
@@ -87,7 +89,7 @@
 }
 
 .featureName {
-  font: 800 var(--t-h2) / 1 var(--font-display);
+  font: 520 var(--t-h2) / 1 var(--font-display);
   letter-spacing: -0.03em;
 }
 
@@ -129,29 +131,25 @@
 }
 
 /* The other four: cards whose parts line up across each row */
-.card {
+.row {
   display: grid;
-  gap: 16px;
-  align-content: start;
-  padding: clamp(24px, 3vw, 40px);
-  border-radius: 20px;
-  background: var(--card);
-  box-shadow:
-    inset 0 0 0 1px var(--rule),
-    0 1px 2px rgba(18, 20, 23, 0.03);
+  gap: clamp(24px, 4vw, 56px);
+  padding-block: clamp(32px, 4.4vw, 64px);
+  border-top: 1px solid var(--rule);
   scroll-margin-top: calc(var(--header-h) + 24px);
 }
 
-.label {
-  font: 500 var(--t-label) / 1.4 var(--font-mono);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--muted);
+.heading,
+.description {
+  display: grid;
+  gap: 20px;
+  min-width: 0;
+  align-content: start;
 }
 
 .name {
-  font: 700 var(--t-h3) / 1.15 var(--font-display);
-  letter-spacing: -0.015em;
+  font: 500 clamp(1.6rem, 2.5vw, 2.5rem) / 1.1 var(--font-display);
+  letter-spacing: -0.035em;
 }
 
 .priceBlock {
@@ -173,8 +171,6 @@
 
 /* Fills its row, so beside a longer note the rule above stays level with its neighbour's */
 .terms {
-  padding-top: 16px;
-  border-top: 1px solid var(--rule);
   font-size: var(--t-small);
   color: var(--muted);
 }
@@ -193,12 +189,11 @@
   }
 }
 
-@supports (grid-template-rows: subgrid) {
-  @media (min-width: 900px) {
-    .card {
-      grid-row: span 6;
-      grid-template-rows: subgrid;
-      row-gap: 16px;
-    }
+@media (min-width: 900px) {
+  .row {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  }
+  .heading {
+    gap: 28px;
   }
 }

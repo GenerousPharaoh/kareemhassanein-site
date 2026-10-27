@@ -87,7 +87,6 @@
 @media (hover: hover) {
   .wrap:hover .toggle {
     opacity: 1;
-    transform: none;
   }
 }
 

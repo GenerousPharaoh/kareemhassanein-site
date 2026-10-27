@@ -1,4 +1,4 @@
-import type { CSSProperties } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 import type { CaseStudy } from '@/content/cases';
 import { BrowserFrame, PhoneFrame, ScreenFrame } from '@/components/media/Frames';
 import { LoopVideo } from '@/components/media/LoopVideo';
@@ -7,8 +7,16 @@ import type { Loop, Still } from '@/lib/media';
 import { isStrip, isWindow, phoneRowSizes, ratio, rowSizes, shotRows, type Shot } from './layout';
 import { toneOf } from './palette';
 import styles from './CaseMedia.module.css';
+import { GalleryViewer } from './GalleryViewer';
 
 const shape = (r: number) => ({ ['--r' as string]: r }) as CSSProperties;
+const fullSrc = (media: Still) => `${media.src}-${media.widths[media.widths.length - 1]}.webp`;
+
+function ZoomCapture({ media, children }: { media: Still; children: ReactNode }) {
+  return <a href={fullSrc(media)} target="_blank" rel="noopener" className={styles.zoom} data-zoom={media.src} aria-label={`Enlarge image: ${media.alt}`}>
+    {children}<span className={styles.zoomMark} aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 4H4v4m12-4h4v4M4 16v4h4m12-4v4h-4" fill="none" stroke="currentColor" strokeWidth="1.5" /></svg></span>
+  </a>;
+}
 
 /* Captions repeat the media's own alt text or label, so assistive technology hears it once */
 
@@ -42,7 +50,7 @@ function ShotFigure({ shot, share, solo }: { shot: Shot; share: number; solo: bo
   return (
     <figure className={styles.shot} style={shape(ratio(shot.media))}>
       <ScreenFrame className={styles.frame}>
-        {shot.kind === 'loop' ? <LoopVideo loop={shot.media} /> : <Picture media={shot.media} sizes={rowSizes(share, cap)} />}
+        {shot.kind === 'loop' ? <LoopVideo loop={shot.media} /> : <ZoomCapture media={shot.media}><Picture media={shot.media} sizes={rowSizes(share, cap)} /></ZoomCapture>}
       </ScreenFrame>
       <figcaption className={styles.caption} aria-hidden="true">
         {caption}
@@ -57,7 +65,7 @@ function PhoneFigure({ media, sizes }: { media: Loop | Still; sizes: string }) {
     <li className={styles.phoneItem}>
       <figure className={styles.phoneFigure}>
         <PhoneFrame className={styles.phoneFrame}>
-          {isLoop ? <LoopVideo loop={media} /> : <Picture media={media} sizes={sizes} />}
+          {isLoop ? <LoopVideo loop={media} /> : <ZoomCapture media={media}><Picture media={media} sizes={sizes} /></ZoomCapture>}
         </PhoneFrame>
         <figcaption className={styles.caption} aria-hidden="true">
           {isLoop ? media.label : media.alt}
@@ -83,7 +91,8 @@ export function Gallery({ c }: { c: CaseStudy }) {
   if (!rows.length && !phones.length) return null;
 
   return (
-    <section className={styles.band} data-tone={toneOf(c.palette)} aria-labelledby="case-screens">
+    <GalleryViewer items={shots.filter((shot) => shot.kind === 'still').map((shot) => shot.media as Still).concat(phones.filter((media): media is Still => !('poster' in media))).map((media) => ({ key: media.src, src: fullSrc(media), alt: media.alt, width: media.w, height: media.h }))}>
+    <section className={styles.band} data-tone={toneOf(c.palette)} data-theme={toneOf(c.palette)} aria-labelledby="case-screens">
       <div className="container">
         <h2 id="case-screens" className={styles.title}>
           What it looks like
@@ -114,5 +123,6 @@ export function Gallery({ c }: { c: CaseStudy }) {
         ) : null}
       </div>
     </section>
+    </GalleryViewer>
   );
 }

@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { DisplayTitle } from '@/components/ui/DisplayTitle';
 import { BookActions } from './BookActions';
 import { enterAt } from './style';
 import styles from './Hero.module.css';
@@ -26,9 +27,9 @@ export function Hero({ label, title, lede, track, specs, aside }: Props) {
           <p className={`t-label ${styles.label}`} data-enter style={enterAt(0)}>
             {label}
           </p>
-          <h1 id="page-title" className={`t-hero ${styles.title}`} data-enter style={enterAt(1)}>
+          <DisplayTitle id="page-title" className={`t-hero ${styles.title}`}>
             {title}
-          </h1>
+          </DisplayTitle>
           <p className={`t-lede ${styles.lede}`} data-enter style={enterAt(2)}>
             {lede}
           </p>

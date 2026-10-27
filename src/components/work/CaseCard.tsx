@@ -6,10 +6,11 @@ import { Picture } from '@/components/media/Picture';
 import { ratio } from './layout';
 import { paletteVars, toneOf } from './palette';
 import styles from './CaseCard.module.css';
+import { Exhibit } from './Exhibit';
 
 type Props = {
   c: CaseStudy;
-  /** Feature: text beside the media, for practices. Compact: media above the text, three to a row. */
+  /** Feature: a large stage for a practice. Compact: a smaller exhibit for the other work. */
   variant?: 'feature' | 'compact';
 };
 
@@ -28,7 +29,7 @@ export function CaseCard({ c, variant = 'feature' }: Props) {
   const feature = variant === 'feature';
 
   return (
-    <article className={styles.card} data-variant={variant} data-tone={toneOf(c.palette)} style={paletteVars(c.palette)}>
+    <article className={styles.card} data-variant={variant} data-tone={toneOf(c.palette)} data-theme={toneOf(c.palette)} style={paletteVars(c.palette)}>
       <div className={styles.text}>
         <p className={styles.kind}>{c.kindLabel}</p>
         <h3 className={styles.name}>
@@ -41,7 +42,8 @@ export function CaseCard({ c, variant = 'feature' }: Props) {
         <p className={styles.services}>{c.services.join('\u00a0· ')}</p>
         {c.status ? <p className={styles.status}>{c.status}</p> : null}
       </div>
-      <div className={styles.media}>
+      <Exhibit className={styles.exhibit}>
+      <div className={styles.media} data-exhibit>
         <BrowserFrame domain={c.domain} className={styles.desk}>
           <div className={styles.clip}>
             {deskLoop ? (
@@ -51,8 +53,8 @@ export function CaseCard({ c, variant = 'feature' }: Props) {
                 media={c.plate.desktop}
                 sizes={
                   feature
-                    ? '(min-width: 1280px) 530px, (min-width: 960px) 44vw, (min-width: 600px) 80vw, calc(100vw - 84px)'
-                    : '(min-width: 1280px) 290px, (min-width: 960px) 23vw, (min-width: 600px) 80vw, calc(100vw - 84px)'
+                    ? '(min-width: 1280px) 1000px, (min-width: 760px) 78vw, calc(100vw - 80px)'
+                    : '(min-width: 960px) 40vw, calc(100vw - 80px)'
                 }
               />
             )}
@@ -65,12 +67,13 @@ export function CaseCard({ c, variant = 'feature' }: Props) {
             ) : (
               <Picture
                 media={c.plate.phone}
-                sizes={feature ? '(min-width: 1280px) 156px, (min-width: 960px) 13vw, 23vw' : '(min-width: 1280px) 84px, (min-width: 960px) 7vw, 23vw'}
+                sizes={feature ? '(min-width: 1280px) 220px, (min-width: 960px) 18vw, 23vw' : '(min-width: 960px) 10vw, 23vw'}
               />
             )}
           </div>
         </PhoneFrame>
       </div>
+      </Exhibit>
       <span className={styles.more} aria-hidden="true">
         Read the case
         <svg viewBox="0 0 16 16" className={styles.arrow}>

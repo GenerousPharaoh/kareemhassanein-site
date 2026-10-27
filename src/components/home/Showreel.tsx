@@ -63,14 +63,13 @@ export function Showreel({ items, title }: Props) {
   const [glOn, setGlOn] = useState(false);
   const [reduce, setReduce] = useState(false);
   const [wanted, setWanted] = useState<number[]>([0, 1]);
-  const [intro, setIntro] = useState(true);
   const hydrated = useHydrated();
 
   const live = useRef({ index: 0, busy: false, pending: -1, phone: false, reduce: false, running: true, introDone: false });
   const gl = useRef<ReelGL | null>(null);
   // go() calls itself for a request that arrived during a change; it does so through this ref
   const goNext = useRef<(to: number) => void>(() => {});
-  const motion = useRef({ progress: 0, mouse: [0, 0] as [number, number], target: [0, 0] as [number, number], started: [] as number[], slotItem: [0, -1] as [number, number] });
+  const motion = useRef({ progress: 0, started: [] as number[], slotItem: [0, -1] as [number, number] });
 
   const media = (i: number) => (live.current.phone ? items[i].phone : items[i].desktop);
   const focusOf = (i: number) => (live.current.phone ? items[i].focus.phone : items[i].focus.desktop);
@@ -115,9 +114,9 @@ export function Showreel({ items, title }: Props) {
         return;
       }
       const from = L.index;
+      root.current?.removeAttribute('data-route-intro');
       L.busy = true;
       L.introDone = true;
-      setIntro(false);
       L.index = to;
       motion.current.started[to] = performance.now();
       want(to, (to + 1) % n);
@@ -189,14 +188,14 @@ export function Showreel({ items, title }: Props) {
     const reduceQ = window.matchMedia('(prefers-reduced-motion: reduce)');
     L.phone = phoneQ.matches;
     L.reduce = reduceQ.matches;
+    if (document.documentElement.hasAttribute('data-route-arrival')) root.current?.setAttribute('data-route-intro', '');
     setReduce(L.reduce);
     motion.current.started[0] = performance.now();
     playVideo(0);
-    // The opening (the screen opening, the first still settling) owns the first two seconds
+    // Match the first-frame fade before handing the unchanged crop to WebGL.
     const introTimer = window.setTimeout(() => {
       L.introDone = true;
-      setIntro(false);
-    }, L.reduce ? 0 : 2400);
+    }, L.reduce || document.documentElement.hasAttribute('data-route-arrival') ? 0 : 700);
     const onReduce = () => {
       L.reduce = reduceQ.matches;
       setReduce(L.reduce);
@@ -285,9 +284,7 @@ export function Showreel({ items, title }: Props) {
 
       let shown = false;
       tick = () => {
-        if (!L.running && m.progress === 0 && Math.abs(m.mouse[0] - m.target[0]) < 0.001 && Math.abs(m.mouse[1] - m.target[1]) < 0.001 && shown) return;
-        m.mouse[0] += (m.target[0] - m.mouse[0]) * 0.05;
-        m.mouse[1] += (m.target[1] - m.mouse[1]) * 0.05;
+        if (!L.running && m.progress === 0 && shown) return;
         // Swap a still for its video as soon as the video has a frame
         for (const slot of [0, 1] as const) {
           const i = m.slotItem[slot];
@@ -302,7 +299,7 @@ export function Showreel({ items, title }: Props) {
           const t = Math.min(1, (now - (m.started[i] ?? now)) / (items[i].seconds * 1000 + CHANGE * 1000));
           return BASE_ZOOM + 0.05 * t;
         };
-        r.render({ progress: m.progress, time: now / 1000, mouse: m.mouse, zoom: [zoomOf(m.slotItem[0]), zoomOf(m.slotItem[1])] });
+        r.render({ progress: m.progress, time: now / 1000, mouse: [0, 0], zoom: [zoomOf(m.slotItem[0]), zoomOf(m.slotItem[1])] });
         if (!shown && r.ready(0) && L.introDone) {
           shown = true;
           setGlOn(true);
@@ -311,10 +308,15 @@ export function Showreel({ items, title }: Props) {
       gsap.ticker.add(tick);
     };
 
-    const idle = window.setTimeout(boot, 250);
+    // Compiling shaders during a page reveal can stall the compositor on integrated graphics.
+    let idle = 0;
+    const queueBoot = () => { idle = window.setTimeout(boot, 250); };
+    if (document.documentElement.hasAttribute('data-route-changing')) window.addEventListener('route-settled', queueBoot, { once: true });
+    else queueBoot();
     return () => {
       cancelled = true;
       window.clearTimeout(idle);
+      window.removeEventListener('route-settled', queueBoot);
       ro?.disconnect();
       if (tick) gsap.ticker.remove(tick);
       gl.current?.destroy();
@@ -322,16 +324,6 @@ export function Showreel({ items, title }: Props) {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  // The screen leans away from the pointer a little
-  const onPointerMove = (e: React.PointerEvent) => {
-    if (e.pointerType !== 'mouse') return;
-    const b = e.currentTarget.getBoundingClientRect();
-    motion.current.target = [((e.clientX - b.left) / b.width) * 2 - 1, -(((e.clientY - b.top) / b.height) * 2 - 1)];
-  };
-  const onPointerLeave = () => {
-    motion.current.target = [0, 0];
-  };
 
   // As the work list slides over it, the reel sinks back and dims
   useGsap(root, ({ reduce: r }) => {
@@ -365,7 +357,7 @@ export function Showreel({ items, title }: Props) {
       <h1 className="sr-only">{title}</h1>
       <div className={s.sink} data-sink>
         <div className={s.frame}>
-          <div ref={screen} className={s.screen} data-gl={glOn || undefined} data-intro={intro || undefined} onPointerMove={onPointerMove} onPointerLeave={onPointerLeave}>
+          <div ref={screen} className={s.screen} data-gl={glOn || undefined}>
             <div className={s.layers} aria-hidden="true">
               {items.map((it, i) => (
                 <div key={it.slug} className={s.layer} data-state={stateOf(i)} style={{ ['--focus-d' as string]: `${it.focus.desktop * 100}%`, ['--focus-p' as string]: `${it.focus.phone * 100}%` }}>
@@ -431,12 +423,12 @@ export function Showreel({ items, title }: Props) {
                   </li>
                 ))}
               </ol>
-              <button type="button" className={s.pause} onClick={() => setPaused((p) => !p)} aria-pressed={paused} aria-label={paused ? 'Play the reel' : 'Pause the reel'}>
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  {paused ? <path d="M8 5.5v13l10.5-6.5z" fill="currentColor" /> : <path d="M8 5h2.6v14H8zM13.4 5H16v14h-2.6z" fill="currentColor" />}
-                </svg>
-              </button>
             </div>
+            <button type="button" className={s.pause} onClick={() => setPaused((p) => !p)} aria-pressed={paused} aria-label={paused ? 'Play the reel' : 'Pause the reel'}>
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                {paused ? <path d="M8 5.5v13l10.5-6.5z" fill="currentColor" /> : <path d="M8 5h2.6v14H8zM13.4 5H16v14h-2.6z" fill="currentColor" />}
+              </svg>
+            </button>
           </div>
         </div>
       </div>

@@ -1,11 +1,15 @@
 import { pageMeta } from '@/lib/meta';
+import Link from 'next/link';
+import { ButtonLink } from '@/components/ui/ButtonLink';
+import { DisplayTitle } from '@/components/ui/DisplayTitle';
 import { CloseCall } from '@/components/sales/CloseCall';
 import { Faq } from '@/components/sales/Faq';
-import { Hero } from '@/components/sales/Hero';
-import { CheckOffer, OfferCard } from '@/components/sales/Offers';
+import { CheckOffer, OfferRow } from '@/components/sales/Offers';
+import { splitPrice } from '@/components/sales/style';
 import { Steps, type Step } from '@/components/sales/Steps';
 import { PRICING_FAQ } from '@/content/faq';
 import { OFFERS, PRICE_NOTE } from '@/content/offers';
+import { SITE } from '@/content/site';
 import styles from './page.module.css';
 
 export const metadata = pageMeta({
@@ -48,28 +52,46 @@ export default function PricingPage() {
 
   return (
     <>
-      <Hero
-        label="Pricing"
-        title="Know the cost before anything starts."
-        lede="Start with the website check, or go straight to a fix if you already know the problem. Every price is fixed, and agreed before any work begins."
-        track="pricing-hero"
-        specs={[
-          { term: 'Prices', detail: 'Fixed, and agreed before work starts' },
-          { term: 'The check', detail: 'Credited in full toward work within 60 days' },
-          { term: 'Payment', detail: 'Up front, or in stages for larger work' },
-          { term: 'Ad spend', detail: 'Paid by you, directly to Google' },
-        ]}
-      />
+      <section className={styles.opening} aria-labelledby="pricing-title">
+        <div className={`container ${styles.overview}`}>
+          <div className={styles.intro}>
+            <p className="t-label">Pricing</p>
+            <DisplayTitle id="pricing-title" className={styles.title}>Know the cost before anything starts.</DisplayTitle>
+            <p className={styles.lede}>Start with the website check, or go straight to a fix if you already know the problem. Every price is fixed, and agreed before any work begins.</p>
+            <ButtonLink href={SITE.bookingHref} variant="text" arrow track="pricing-hero-call">Book a 20-minute call</ButtonLink>
+          </div>
+          <div className={styles.index}>
+            <nav aria-label="Compare offers">
+              {OFFERS.map((offer) => {
+                const price = splitPrice(offer.price);
+                return (
+                  <Link key={offer.id} href={`#${offer.id}`} className={styles.offerLink}>
+                    <span className={styles.offerName}>{offer.name}</span>
+                    <span className={styles.indexPrice}>
+                      {price.from ? <span className={styles.priceQualifier}>from </span> : null}
+                      <span className={styles.priceFigure}>{price.figure}</span>
+                      {price.suffix ? <span className={styles.priceQualifier}> {price.suffix}</span> : null}
+                    </span>
+                    <svg className={styles.indexArrow} viewBox="0 0 16 16" aria-hidden="true">
+                      <path d="M8 2.5v10M4 8.5l4 4 4-4" fill="none" stroke="currentColor" strokeWidth="1.4" />
+                    </svg>
+                  </Link>
+                );
+              })}
+            </nav>
+            <p className={styles.note}>{PRICE_NOTE}</p>
+          </div>
+        </div>
+      </section>
 
       <section className={styles.offers} aria-label="Offers">
         <div className={`container ${styles.inner}`}>
           {check ? <CheckOffer offer={check} /> : null}
           <div className={styles.cards}>
             {rest.map((o) => (
-              <OfferCard key={o.id} offer={o} />
+              <OfferRow key={o.id} offer={o} />
             ))}
           </div>
-          <p className={styles.note}>{PRICE_NOTE}</p>
         </div>
       </section>
 
@@ -78,6 +100,7 @@ export default function PricingPage() {
         title="How working together goes"
         intro="From the first call to the handover, you know what happens next and what it costs."
         steps={STEPS}
+        collapsible
         note="If you already know the problem, the check can be skipped: the call goes straight to a proposal for the fix."
       />
 

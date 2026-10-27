@@ -6,7 +6,7 @@
 }
 
 .label {
-  font: 700 var(--t-h3) / 1.15 var(--font-display);
+  font: 500 var(--t-h3)/1.2 var(--font-display);
   letter-spacing: -0.018em;
 }
 
@@ -23,7 +23,6 @@
     grid-template-columns: minmax(0, 3fr) minmax(0, 9fr);
     column-gap: var(--gap);
   }
-
   .label {
     position: sticky;
     top: calc(var(--header-h) + 28px);
@@ -33,6 +32,7 @@
 }
 
 /* Numbered: findings and decisions */
+
 .numbered {
   list-style: none;
   counter-reset: item;
@@ -65,6 +65,7 @@
 }
 
 /* Shipped: a short specification, two columns where there is room */
+
 .shipped {
   list-style: none;
   display: grid;
@@ -94,7 +95,6 @@
   .shipped {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-
   .shipped > li:nth-child(-n + 2) {
     padding-top: 2px;
   }
@@ -107,6 +107,7 @@
 }
 
 /* Measured: the facts, large, with the method in small type beneath */
+
 .measured {
   list-style: none;
   display: grid;
@@ -123,30 +124,20 @@
 
 .fact {
   max-width: 26ch;
-  font: 700 clamp(1.45rem, 1.05rem + 1.25vw, 2.15rem) / 1.1 var(--font-display);
+  font: 500 clamp(1.5rem, 2.8vw, 2.75rem)/1.1 var(--font-display);
   letter-spacing: -0.024em;
   text-wrap: balance;
 }
 
 .how {
-  display: flex;
+  display: block;
   align-items: baseline;
   gap: 10px;
   margin-top: 12px;
-  font: 500 0.75rem / 1.5 var(--font-mono);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  font: 400 .875rem/1.5 var(--font-body);
+  letter-spacing: 0;
+  text-transform: none;
   color: var(--muted);
-}
-
-.how::before {
-  content: '';
-  flex: none;
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--signal);
-  transform: translateY(-1px);
 }
 
 .credit {
@@ -160,8 +151,8 @@
 }
 
 .creditLabel {
-  font: 500 var(--t-label) / 1.4 var(--font-mono);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  font: 450 var(--t-label)/1.4 var(--font-body);
+  letter-spacing: 0;
+  text-transform: none;
   color: var(--muted);
 }

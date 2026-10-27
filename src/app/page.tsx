@@ -2,10 +2,13 @@ import { Close, Offer } from '@/components/home/HomeEnd';
 import s from '@/components/home/Home.module.css';
 import { Showreel, type ReelItem, type ReelMedia } from '@/components/home/Showreel';
 import { Statement } from '@/components/home/Statement';
+import { PathExplorer } from '@/components/home/PathExplorer';
 import { WorkIndex, type IndexItem } from '@/components/home/WorkIndex';
 import { CASES, caseBySlug } from '@/content/cases';
 import { SITE } from '@/content/site';
-import { loop, still, type Still } from '@/lib/media';
+import { PATH } from '@/content/path';
+import { PORTRAIT } from '@/content/portrait';
+import { loop, still } from '@/lib/media';
 import { pageMeta } from '@/lib/meta';
 
 export const metadata = pageMeta({
@@ -15,16 +18,6 @@ export const metadata = pageMeta({
     'I build and run the online side of law firms and of dental and medical practices: the website, the Google profile, booking or intake, ads, and the tracking that ties them together.',
   path: '/',
 });
-
-// The portrait, cut out on a transparent ground (responsive AVIF and WebP in public/work-media/site)
-const PORTRAIT: Still = {
-  src: '/work-media/site/kareem',
-  w: 1054,
-  h: 1492,
-  widths: [480, 760, 1054],
-  alt: 'Kareem Hassanein',
-  device: 'desktop',
-};
 
 /** A loop for the reel: its first frame as the still, the video on top. */
 const reelLoop = (key: string): ReelMedia => {
@@ -157,7 +150,7 @@ export default function Home() {
     return { ...r, kind: c.kindLabel, href: `/work/${c.slug}` };
   });
 
-  const index: IndexItem[] = CASES.map((c) => ({
+  const index: IndexItem[] = CASES.filter((c) => ['tax-relief-counsel', 'endorphins', 'physiomax'].includes(c.slug)).map((c) => ({
     slug: c.slug,
     name: REEL.find((r) => r.slug === c.slug)?.name ?? c.short,
     kind: c.kindLabel,
@@ -171,7 +164,7 @@ export default function Home() {
     <>
       <div className={s.opening}>
         <Showreel items={reel} title={`${SITE.name} · ${SITE.descriptor}`} />
-        <WorkIndex items={index} />
+        <WorkIndex items={index} title="Selected work" />
       </div>
       <Statement
         pieces={[
@@ -181,10 +174,22 @@ export default function Home() {
           { still: still('endorphins/lp-physio--desktop', ''), label: 'Endorphins' },
           ', ads, and the tracking that ties them together.',
         ]}
-        body="I’m Kareem Hassanein, a Registered Physiotherapist in Ontario. I still treat patients every week at clinics in Burlington."
-        link={{ href: '/about', label: 'Why a physiotherapist' }}
+        body="I’m Kareem Hassanein. I’ve worked in healthcare for 13 years, across different roles."
+        link={{ href: '/about', label: 'More about me' }}
         portrait={PORTRAIT}
       />
+      <PathExplorer items={PATH.map((stop) => {
+        const c = caseBySlug(stop.caseSlug)!;
+        const images = {
+          found: c.plate.desktop,
+          chosen: c.stills.find((image) => image.src.includes('lp-physio--desktop')),
+          booked: still('physiomax/service--desktop', 'The PhysioMax physiotherapy page, with its Book Appointment button.'),
+          counted: c.plate.desktop,
+          grown: c.stills.find((image) => image.src.includes('consult--desktop')),
+          kept: c.stills.find((image) => image.src.includes('team--desktop')),
+        };
+        return { ...stop, image: images[stop.id] ?? c.plate.desktop, anchor: stop.id === 'booked' || stop.id === 'grown' ? '0 0' : undefined, ground: c.palette.ground, ink: c.palette.ink, domain: c.domain };
+      })} />
       <Offer />
       <Close />
     </>

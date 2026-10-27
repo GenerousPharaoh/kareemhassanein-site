@@ -3,13 +3,6 @@
   overflow: hidden;
   background: var(--case-ground);
   color: var(--case-ink);
-  box-shadow:
-    inset 0 1px 0 var(--case-rule),
-    inset 0 -1px 0 var(--case-rule);
-}
-
-/* Focus rings here sit on the next case's ground, so they take the ring colour made for it */
-.next {
   --focus: var(--case-focus);
 }
 
@@ -25,8 +18,8 @@
 
 .inner {
   display: grid;
-  gap: 36px;
-  padding-top: clamp(48px, 6vw, 96px);
+  gap: 40px;
+  padding-top: clamp(48px, 7vw, 112px);
 }
 
 .text {
@@ -36,111 +29,79 @@
 }
 
 .label {
-  font: 500 var(--t-label) / 1.4 var(--font-mono);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
   color: var(--case-muted);
+  font-size: .9375rem;
 }
 
 .name {
-  margin-top: 16px;
+  margin-top: 24px;
   max-width: 15ch;
-  font: 800 var(--t-h2) / 1 var(--font-display);
-  letter-spacing: -0.032em;
+  font: 500 clamp(2.8rem, 6vw, 6rem)/.96 var(--font-display);
+  letter-spacing: -.055em;
   text-wrap: balance;
 }
 
 .kind {
-  margin-top: 14px;
-  font: 500 var(--t-label) / 1.4 var(--font-mono);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  margin-top: 24px;
   color: var(--case-muted);
+  font-size: .875rem;
 }
 
 .go {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  margin-top: 28px;
-  font: 600 0.9375rem / 1 var(--font-body);
+  gap: 24px;
+  min-height: 44px;
+  margin-top: 32px;
+  font-size: 1rem;
 }
 
 .go svg {
-  width: 16px;
-  height: 16px;
-  transition: transform var(--dur-ui) var(--ease-out);
+  width: 28px;
+  height: 28px;
+  transform: rotate(-35deg);
 }
 
-/* Only the top of the page shows; the band crops the rest */
 .peek {
-  height: clamp(150px, 40vw, 260px);
+  height: clamp(220px, 55vw, 420px);
 }
 
 .frame {
-  transition: transform var(--dur-move) var(--ease-out);
+  transform: none;
+  transform-origin: 50% 100%;
 }
 
 .next[data-tone='dark'] .frame {
-  box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.1),
-    0 30px 60px -30px rgba(0, 0, 0, 0.75);
+  box-shadow: 0 0 0 1px #ffffff20, 0 30px 60px -30px #0009;
 }
 
 @media (min-width: 960px) {
   .inner {
-    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-    column-gap: var(--gap);
-    min-height: clamp(320px, 30vw, 420px);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(48px, 7vw, 112px);
+    min-height: 580px;
   }
-
   .text {
-    padding-bottom: clamp(48px, 6vw, 96px);
+    padding-bottom: 80px;
   }
-
   .peek {
     position: relative;
     height: auto;
   }
-
   .frame {
     position: absolute;
-    inset: 0 0 auto;
+    inset: 32px -8vw auto 0;
   }
 }
 
-/* Pressed: the page rises a little and the arrow nudges, at once; under a pointer the risen page
-   gives back a few pixels */
+@media (max-width: 760px) {
+  .name {
+    font-size: 2.8rem;
+  }
+}
+
 @media (prefers-reduced-motion: no-preference) {
-  .link:active .frame {
-    transform: translateY(-8px);
-    transition-duration: var(--dur-press);
-  }
-
-  .link:active .go svg {
-    transform: translateX(3px);
-    transition-duration: var(--dur-press);
-  }
-}
-
-/* On touch a scroll can start on the band; the short wait keeps it from twitching under the finger */
-@media (hover: none) and (prefers-reduced-motion: no-preference) {
-  .link:active .frame,
-  .link:active .go svg {
-    transition-delay: 50ms;
-  }
-}
-
-@media (hover: hover) and (prefers-reduced-motion: no-preference) {
-  .link:hover .frame {
-    transform: translateY(-14px);
-  }
-
-  .link:hover:active .frame {
-    transform: translateY(-10px);
-  }
-
-  .link:hover .go svg {
-    transform: translateX(3px);
+  .frame, .go svg {
+    transition: transform 800ms var(--ease-out);
   }
 }

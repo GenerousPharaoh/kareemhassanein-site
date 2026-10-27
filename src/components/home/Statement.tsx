@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useRef } from 'react';
 import { Picture } from '@/components/media/Picture';
+import { PortraitFrame } from '@/components/media/PortraitFrame';
 import { getGsap, useGsap } from '@/lib/gsap';
 import type { Still } from '@/lib/media';
 import s from './Statement.module.css';
@@ -19,7 +20,7 @@ type Props = {
 
 /**
  * Who builds it: one long sentence on a light sheet, lit word by word as it scrolls into place,
- * with small pictures of the work set into the line, and the portrait standing at the edge.
+ * with client captures in the line and a printed portrait beside its caption.
  */
 export function Statement({ pieces, body, link, portrait }: Props) {
   const root = useRef<HTMLElement>(null);
@@ -42,7 +43,6 @@ export function Statement({ pieces, body, link, portrait }: Props) {
       }
     });
 
-    gsap.fromTo(el.querySelector('[data-portrait]'), { yPercent: 10 }, { yPercent: 0, ease: 'none', scrollTrigger: { trigger: el, start: 'top bottom', end: 'top 20%', scrub: true } });
     gsap.fromTo(el.querySelectorAll('[data-after]'), { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 1.1, ease: 'expo.out', stagger: 0.08, scrollTrigger: { trigger: el.querySelector('[data-after]'), start: 'top 90%', once: true } });
 
     return () => split.revert();
@@ -67,18 +67,20 @@ export function Statement({ pieces, body, link, portrait }: Props) {
               ),
             )}
           </h2>
-          <p className={s.body} data-after>
-            {body}
-          </p>
-          <Link href={link.href} className={s.more} data-after>
-            {link.label}
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M5 12h13m-5-6 6 6-6 6" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </Link>
         </div>
-        <div className={s.portrait} data-portrait>
-          <Picture media={portrait} sizes="(min-width: 900px) min(520px, 38vw), 80vw" />
+        <figure className={s.portrait}>
+          <PortraitFrame media={portrait} sizes="(min-width: 900px) 230px, clamp(82px, 23vw, 132px)" />
+        </figure>
+        <div className={s.caption}>
+            <p className={s.body} data-after>
+              {body}
+            </p>
+            <Link href={link.href} className={s.more} data-after>
+              {link.label}
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M5 12h13m-5-6 6 6-6 6" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </Link>
         </div>
       </div>
     </section>

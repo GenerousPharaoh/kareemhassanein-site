@@ -47,24 +47,29 @@
   box-shadow: 0 30px 80px -40px rgba(0, 0, 0, 0.55);
 }
 
-/* First load: the screen opens from a narrow band in the middle of the stage */
+/* First load: the work arrives at its final size, without a separate shape reveal. */
 @media (prefers-reduced-motion: no-preference) {
   .screen {
-    animation: open 1.5s var(--ease-out) 0.1s both;
+    animation: screen-arrive 650ms var(--ease-out) both;
   }
 }
 
-@keyframes open {
+@keyframes screen-arrive {
   from {
-    clip-path: inset(46% 30% 46% 30% round 6px);
-  }
-  45% {
-    clip-path: inset(28% 6% 28% 6% round 10px);
+    opacity: 0;
   }
   to {
-    clip-path: inset(0 0 0 0 round var(--r));
+    opacity: 1;
   }
 }
+
+/* A route reveal is already an entrance. Returning home shows the reel fully open. */
+:global(html[data-route-arrival]) .screen,
+:global(html[data-route-arrival]) .bars {
+  animation: none;
+}
+
+.reel[data-route-intro] .caption[data-phase='in'] .line { animation: none; }
 
 /* Layers: one per project, stacked inside their own context; only the one on screen (and the one arriving) shows */
 .layers {
@@ -124,10 +129,6 @@
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .screen[data-intro] .layer[data-state='on'] {
-    animation: settle 2.2s var(--ease-out) both;
-  }
-
   .layer[data-state='enter'] {
     animation: layer-in 1.5s var(--ease-in-out) both;
   }
@@ -139,15 +140,6 @@
   /* With the WebGL screen on top, the layers only feed it frames */
   .screen[data-gl] .layer {
     animation: none;
-  }
-}
-
-@keyframes settle {
-  from {
-    transform: scale(1.16);
-  }
-  to {
-    transform: scale(1.03);
   }
 }
 
@@ -197,13 +189,15 @@
 /* The foot: the project on the left, every project's bar on the right */
 .foot {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  grid-template-areas: 'caption bars pause';
   align-items: end;
-  gap: 16px 32px;
+  gap: 16px 20px;
   padding: 0 2px 2px;
 }
 
 .captions {
+  grid-area: caption;
   position: relative;
   display: grid;
   min-width: 0;
@@ -285,7 +279,6 @@
 
   .nameLink:hover .go svg {
     color: var(--tone);
-    transform: translateX(8%);
   }
 }
 
@@ -325,6 +318,7 @@
 
 /* Bars: one per project, each a button that names it */
 .bars {
+  grid-area: bars;
   display: flex;
   align-items: flex-end;
   gap: 14px;
@@ -398,7 +392,6 @@
 @media (hover: hover) {
   .bar:hover .barLabel {
     opacity: 1;
-    transform: translate(-50%, 0);
   }
 }
 
@@ -436,6 +429,7 @@
 }
 
 .pause {
+  grid-area: pause;
   flex: none;
   display: grid;
   place-items: center;
@@ -470,7 +464,7 @@
 /* Entrance of the foot with the opening */
 @media (prefers-reduced-motion: no-preference) {
   .bars {
-    animation: foot-in 1.2s var(--ease-out) 0.9s both;
+    animation: foot-in 650ms var(--ease-out) 150ms both;
   }
 }
 
@@ -506,15 +500,16 @@
 @media (max-width: 760px) {
   .reel {
     --bezel: 8px;
-    --foot-h: 96px;
+    --foot-h: 116px;
     --r: 12px;
   }
 
   .foot {
-    grid-template-columns: minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr) 44px;
+    grid-template-areas: 'bars bars' 'caption pause';
     grid-template-rows: auto auto;
     gap: 10px;
-    padding: 14px 2px 0;
+    padding: 4px 2px 0;
     align-content: start;
   }
 
@@ -538,13 +533,14 @@
   }
 
   .bar {
-    min-height: 24px;
+    min-height: 44px;
   }
 
   .pause {
-    width: 36px;
-    height: 36px;
-    margin: -10px -6px -8px 0;
+    width: 44px;
+    height: 44px;
+    margin: 0;
+    align-self: center;
   }
 
   .name {

@@ -19,7 +19,7 @@
   inset: 0;
   z-index: -1;
   border-radius: inherit;
-  box-shadow: 0 30px 60px -36px rgba(18, 20, 23, 0.45);
+  box-shadow: inset 0 0 0 1px var(--case-ink);
   opacity: 0;
   pointer-events: none;
   transition: opacity var(--dur-ui) var(--ease-out);
@@ -96,36 +96,16 @@
     opacity: 1;
   }
 }
-
-/*
-  The house card: it lifts 3px on hover with a deeper shadow, the arrow leans on, and a press
-  gives at once. None of it moves with reduced motion.
-*/
 @media (prefers-reduced-motion: no-preference) {
   .card {
     transition: transform var(--dur-ui) var(--ease-out);
   }
 
   .card:active {
-    transform: scale(0.99);
     transition-duration: var(--dur-press);
   }
 
   .more svg {
     transition: transform var(--dur-ui) var(--ease-out);
-  }
-
-  @media (hover: hover) {
-    .card:hover {
-      transform: translateY(-3px);
-    }
-
-    .card:hover:active {
-      transform: translateY(-1px) scale(0.99);
-    }
-
-    .card:hover .more svg {
-      transform: translateX(3px);
-    }
   }
 }

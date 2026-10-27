@@ -1,6 +1,5 @@
 import { CopyEmail } from '@/components/ui/CopyEmail';
 import { enter } from '@/components/pages/enter';
-import { Keep } from '@/components/pages/Keep';
 import { PageHead } from '@/components/pages/PageHead';
 import { RequestForm, type Topic } from '@/components/pages/RequestForm';
 import { OFFERS } from '@/content/offers';
@@ -23,17 +22,6 @@ const CHECK_NOTE = `I walk your whole path from search to booked, then send a re
   check?.terms ?? ''
 }`.trim();
 
-const NEXT = [
-  <>
-    I reply within one business day with times for a <Keep>20-minute</Keep> call.
-  </>,
-  <>On the call, you tell me what is not working. There is nothing to prepare except your site address.</>,
-  <>
-    If there is a clear next step, I recommend one: usually the website check, or the matching fix when the problem is
-    obvious.
-  </>,
-];
-
 export function BookView({ initialTopic }: { initialTopic: Topic }) {
   return (
     <div className={`container ${styles.layout}`}>
@@ -44,26 +32,19 @@ export function BookView({ initialTopic }: { initialTopic: Topic }) {
         lede="A few lines about your practice or firm are enough. I read every request myself."
       />
 
-      <section className={styles.formCol} aria-label="Request a call" data-enter style={enter(3)}>
-        <div className={styles.card} data-form-card="">
+      <section className={styles.formCol} aria-label="Send a request" data-enter style={enter(1)}>
+        <div className={`paper ${styles.card}`} data-form-card="" data-theme="light">
           <RequestForm initialTopic={initialTopic} checkPrice={CHECK_PRICE} checkNote={CHECK_NOTE} email={SITE.email} />
         </div>
       </section>
 
-      <aside className={styles.aside} aria-labelledby="next-title" data-enter style={enter(4)}>
-        <h2 id="next-title" className={styles.asideTitle}>
-          What happens next
-        </h2>
-        <ol className={styles.next}>
-          {NEXT.map((line, i) => (
-            <li key={i} className={styles.nextItem}>
-              <span className={styles.nextNum} aria-hidden="true">
-                {i + 1}
-              </span>
-              <p>{line}</p>
-            </li>
-          ))}
-        </ol>
+      <aside className={styles.aside} aria-labelledby="next-title" data-enter style={enter(2)}>
+        <div className={styles.next}>
+          <h2 id="next-title" className={styles.asideTitle}>
+            What happens next
+          </h2>
+          <p>I reply within one business day to arrange a call or confirm the website check. Any paid work is agreed before it starts.</p>
+        </div>
 
         <div className={styles.mail}>
           <p className="t-label">Prefer email?</p>

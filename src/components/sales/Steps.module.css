@@ -9,6 +9,10 @@
   max-width: 640px;
 }
 
+.disclosure > div {
+  max-width: none;
+}
+
 /* Phones: a vertical route, the line running between the numbered stops */
 .step {
   position: relative;

@@ -147,10 +147,6 @@
   .primary:hover::before {
     transform: none;
   }
-
-  .primary:hover svg {
-    transform: translateX(4px);
-  }
 }
 
 .primary:active {
@@ -188,15 +184,9 @@
   z-index: 4;
   margin-top: calc(-1 * var(--sheet-r));
   border-radius: var(--sheet-r) var(--sheet-r) 0 0;
-  padding: clamp(64px, 8vw, 128px) 0 clamp(40px, 5vw, 72px);
+  padding: clamp(64px, 8vw, 128px) 0 clamp(16px, 2vw, 32px);
   background: var(--stage);
   color: var(--ink);
-}
-
-.kicker {
-  margin-bottom: clamp(16px, 2vw, 28px);
-  color: var(--muted);
-  font-size: 0.9375rem;
 }
 
 .closeTitle {
@@ -285,10 +275,6 @@
 @media (hover: hover) {
   .band:hover .fill {
     clip-path: inset(0 0 0 0);
-  }
-
-  .band:hover .bandArrow svg {
-    transform: translateX(10%);
   }
 }
 

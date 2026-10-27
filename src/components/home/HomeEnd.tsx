@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useRef } from 'react';
+import { Disclosure } from '@/components/ui/Disclosure';
 import { OFFERS } from '@/content/offers';
 import { SITE } from '@/content/site';
 import { getGsap, useGsap } from '@/lib/gsap';
@@ -41,11 +42,13 @@ export function Offer() {
           </h2>
           <div className={s.offerBody} data-up>
             <p className={s.offerSummary}>{check.summary}</p>
-            <ul className={s.includes}>
-              {check.includes.map((line) => (
-                <li key={line}>{line}</li>
-              ))}
-            </ul>
+            <Disclosure title="What you get" compact>
+              <ul className={s.includes}>
+                {check.includes.map((line) => (
+                  <li key={line}>{line}</li>
+                ))}
+              </ul>
+            </Disclosure>
           </div>
           <div className={s.offerSide} data-up>
             <p className={s.price}>{check.price}</p>
@@ -83,9 +86,6 @@ export function Close() {
   return (
     <section ref={root} className={s.close} aria-labelledby="close-h">
       <div className="container">
-        <p className={s.kicker} data-up>
-          {SITE.reply}
-        </p>
         <h2 id="close-h" className={s.closeTitle}>
           <Link href={SITE.bookingHref} className={s.band} data-track="home-close-book">
             <span className={s.rule} data-rule aria-hidden="true" />

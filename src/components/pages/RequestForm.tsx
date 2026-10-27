@@ -243,7 +243,6 @@ export function RequestForm({ initialTopic, checkPrice, checkNote, email }: Prop
                 />
                 <span className={styles.topicText}>
                   <span className={styles.topicName}>A 20-minute call</span>
-                  <span className={styles.topicLine}>Talk through what is not working.</span>
                 </span>
               </label>
               <label className={styles.topic}>
@@ -260,7 +259,6 @@ export function RequestForm({ initialTopic, checkPrice, checkNote, email }: Prop
                   <span className={styles.topicName}>
                     Website check <span className={styles.price}>{checkPrice}</span>
                   </span>
-                  <span className={styles.topicLine}>Your whole path from search to booked, checked.</span>
                 </span>
               </label>
             </div>
@@ -357,7 +355,7 @@ export function RequestForm({ initialTopic, checkPrice, checkNote, email }: Prop
                 id={id('message')}
                 name="message"
                 className={`${styles.input} ${styles.textarea}`}
-                rows={6}
+                rows={4}
                 required
                 maxLength={LIMIT.message}
                 value={values.message}

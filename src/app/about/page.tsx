@@ -1,23 +1,23 @@
 import Link from 'next/link';
-import { Picture } from '@/components/media/Picture';
+import { DisplayTitle } from '@/components/ui/DisplayTitle';
+import { Disclosure } from '@/components/ui/Disclosure';
+import { PortraitFrame } from '@/components/media/PortraitFrame';
 import { CaseChips } from '@/components/pages/CaseChips';
 import { CloseBand } from '@/components/pages/CloseBand';
 import { enter } from '@/components/pages/enter';
 import { pageMeta } from '@/lib/meta';
-import { still } from '@/lib/media';
+import { PORTRAIT as portrait } from '@/content/portrait';
 import styles from './page.module.css';
 
 export const metadata = pageMeta({
   title: 'About',
   description:
-    'I am a Registered Physiotherapist in Ontario who still treats patients every week, and I build and run the online side of law firms and of dental and medical practices.',
+    'I have worked in healthcare for 13 years, across different roles. I build and run the online side of law firms and independent practices.',
   path: '/about',
 });
 
-const portrait = still('site/portrait', 'Kareem Hassanein');
-
 const FACTS = [
-  { term: 'Practice', lines: ['Registered Physiotherapist', 'Ontario'] },
+  { term: 'Experience', lines: ['13 years in healthcare', 'Across different roles'] },
   { term: 'Education', lines: ['MSc Physiotherapy, Robert Gordon University', 'BSc Kinesiology, McMaster University'] },
   { term: 'Mentoring', lines: ['Lab2Market Validate', 'McMaster University'] },
   { term: 'Based in', lines: ['Burlington, Ontario', 'Working across Canada and the US'] },
@@ -51,7 +51,7 @@ const QUESTIONS = [
   },
   {
     q: 'Will you understand my field?',
-    a: 'Booking systems, college rules and how patients choose are part of my working week. At Endorphins, I named the colleges in text instead of showing their logos, which the colleges restrict. For a tax law firm, I built tools around IRS procedures, with the IRS source beside every figure.',
+    a: 'Booking systems, practice websites and how patients choose are part of my work. At Endorphins, I named the colleges in text instead of showing their logos, which the colleges restrict. For a tax law firm, I built tools around IRS procedures, with the IRS source beside every figure.',
     cases: ['endorphins', 'tax-relief-counsel'],
   },
   {
@@ -74,26 +74,26 @@ const QUESTIONS = [
 export default function AboutPage() {
   return (
     <>
+      <div className={`paper ${styles.opening}`} data-theme="light">
       <section className={`container ${styles.hero}`} aria-labelledby="about-title">
         <div className={styles.heroCopy}>
           <p className="t-label" data-enter style={enter(0)}>
             About
           </p>
-          <h1 id="about-title" className={`t-h1 ${styles.title}`} data-enter style={enter(1)}>
-            The physiotherapist who builds.
-          </h1>
+          <DisplayTitle id="about-title" className={`t-h1 ${styles.title}`}>
+            I know healthcare from the inside.
+          </DisplayTitle>
           <p className={`t-lede ${styles.lede}`} data-enter style={enter(2)}>
-            I am Kareem Hassanein, a Registered Physiotherapist in Ontario. I still treat patients every week at clinics in
-            Burlington, and I build and run the online side of independent practices: the website, the Google profile,
+            I’m Kareem Hassanein. I’ve worked in the healthcare industry for 13 years, across different roles.
+            I build and run the online side of law firms and independent practices: the website, the Google profile,
             booking or intake, ads, and the tracking that ties them together.
           </p>
         </div>
         <figure className={styles.portrait} data-enter style={enter(2)}>
-          <Picture
+          <PortraitFrame
             media={portrait}
-            sizes="(min-width: 1240px) 400px, (min-width: 960px) 32vw, 76vw"
+            sizes="(min-width: 960px) 263px, min(52.5vw, 230px)"
             priority
-            className={styles.portraitPic}
           />
         </figure>
         <dl className={styles.facts} data-enter style={enter(3)}>
@@ -109,24 +109,25 @@ export default function AboutPage() {
           ))}
         </dl>
       </section>
+      </div>
 
       <section className={`container ${styles.whySection}`} aria-labelledby="why-title">
         <div className={styles.why}>
           <div className={styles.whyHead} data-reveal>
-            <p className="t-label">Why a physiotherapist</p>
+            <p className="t-label">Why healthcare experience matters</p>
             <h2 id="why-title" className={`t-h2 ${styles.whyTitle}`}>
-              I know regulated practice from the inside.
+              I look beyond the website.
             </h2>
           </div>
           <div className={styles.whyBody} data-reveal>
             <p>
-              Treating patients every week means I know how people choose a professional, how booking works at the front desk,
-              and what a regulator will and will not let you say. Law firms have their own version of each, and I learn yours
-              before changing anything.
+              Working in healthcare has shown me how people choose a practice, how booking works at the front desk,
+              and how much happens between an enquiry and an appointment. Law firms have their own version of that path.
+              I learn yours before changing anything.
             </p>
             <p>
-              I work on a practice the way I work with a patient. I assess before I treat, look for the cause rather than the
-              symptom, and check the result afterwards. A patient can come in about a sore knee when the cause is the hip.
+              I start with the whole path, then trace the problem to its cause. A website can look like the problem when
+              the gap is inside the booking system or the way leads are counted.
             </p>
             <p className={styles.whyAside}>
               Outside the practice and the build work, I volunteer as a mentor for Lab2Market Validate at McMaster University,
@@ -176,13 +177,12 @@ export default function AboutPage() {
         </div>
         <div className={styles.rows}>
           {QUESTIONS.map((item) => (
-            <article key={item.q} className={styles.row} data-reveal>
-              <h3 className={styles.question}>{item.q}</h3>
+            <Disclosure key={item.q} title={item.q}>
               <div className={styles.answer}>
                 <p>{item.a}</p>
                 <CaseChips slugs={item.cases} label={`Cases for: ${item.q}`} />
               </div>
-            </article>
+            </Disclosure>
           ))}
         </div>
       </section>

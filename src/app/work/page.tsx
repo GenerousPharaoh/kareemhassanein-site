@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { DisplayTitle } from '@/components/ui/DisplayTitle';
 import { preload } from 'react-dom';
 import { CaseCard } from '@/components/work/CaseCard';
 import { CloseCall } from '@/components/work/CloseCall';
@@ -39,9 +40,9 @@ export default function WorkPage() {
       </noscript>
 
       <header className={`container ${styles.intro}`}>
-        <h1 className={styles.title} data-enter>
+        <DisplayTitle className={styles.title}>
           Work
-        </h1>
+        </DisplayTitle>
         <p className={styles.lede} data-enter style={{ ['--i' as string]: 1 }}>
           Each case starts with the owner’s question, then what I found, what I decided, what shipped and what was measured.
         </p>

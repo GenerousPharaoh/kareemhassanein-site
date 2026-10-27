@@ -77,9 +77,3 @@
     color: var(--ink);
   }
 }
-
-@media (hover: hover) and (prefers-reduced-motion: no-preference) {
-  .chip:hover .arrow {
-    transform: translateX(3px);
-  }
-}

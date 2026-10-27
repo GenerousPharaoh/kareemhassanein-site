@@ -11,9 +11,13 @@
   gap: 10px;
 }
 
-.title {
+.head .title {
   max-width: 15ch;
   hyphens: manual;
+  font: 560 clamp(3rem, 6.9vw, 7rem)/.94 var(--font-display);
+  font-stretch: 92%;
+  letter-spacing: -.05em;
+  text-wrap: balance;
 }
 
 .title[data-measure='wide'] {

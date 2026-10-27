@@ -14,7 +14,7 @@ import { CLINIC_FAQ } from '@/content/faq';
 export const metadata = pageMeta({
   title: 'Websites, online booking and Google Ads for clinics',
   description:
-    'Websites, online booking, Google profiles, ads and tracking for dental, medical and health clinics, from a Registered Physiotherapist who still treats patients every week.',
+    'Websites, online booking, Google profiles, ads and tracking for clinics. I bring 13 years of experience in healthcare, across different roles.',
   path: '/clinics',
 });
 
@@ -65,7 +65,7 @@ export default function ClinicsPage() {
             From search to <em>seen.</em>
           </>
         }
-        lede="Websites, online booking, Google profiles, ads and tracking for dental, medical and health clinics, from a regulated clinician who still treats patients every week. I build and run all of it myself, and every account stays in the clinic’s name."
+        lede="Websites, online booking, Google profiles, ads and tracking for dental, medical and health clinics. I bring 13 years of experience in healthcare, across different roles. I build and run it myself, and every account stays in the clinic’s name."
         track="clinics-hero"
         specs={[
           { term: 'Booking', detail: 'Jane, or the system you already use' },
@@ -78,7 +78,7 @@ export default function ClinicsPage() {
             palette={endorphins.palette}
             loop={pickLoop(endorphins, 'lp-scroll--phone')}
             domain={endorphins.domain}
-            caption="Endorphins, the clinic where I treat patients: its physiotherapy ad page, with the next openings read live from Jane."
+            caption="Endorphins: its physiotherapy ad page, with the next openings read live from Jane."
           />
         }
       />
@@ -105,7 +105,7 @@ export default function ClinicsPage() {
             Written to your college’s rules. <span>You approve every word.</span>
           </>
         }
-        text="I am a Registered Physiotherapist, so I write under a college’s advertising standard myself. Before I write for your clinic, I read the standard your college sets: what you can call yourself, what you can promise, and how testimonials and logos can be used. Nothing goes live until you have approved it."
+        text="Before I write for your clinic, I read the advertising standard your college sets: what you can call yourself, what you can promise, and how testimonials and logos can be used. Nothing goes live until you have approved it."
         examples={[
           { slug: 'endorphins', name: 'Endorphins', text: 'The colleges named in plain text instead of shown as logos.' },
           { slug: 'physiomax', name: 'PhysioMax', text: 'Outcome claims removed, and a service the clinic does not offer taken down, with a redirect.' },

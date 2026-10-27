@@ -1,0 +1,23 @@
+.frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: #d9dbd7;
+  border: 1px solid rgba(30, 37, 38, 0.08);
+}
+
+.picture {
+  position: absolute;
+  bottom: 0;
+  left: 9%;
+  display: block;
+  width: 82%;
+}
+
+.picture img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: saturate(0.7);
+}

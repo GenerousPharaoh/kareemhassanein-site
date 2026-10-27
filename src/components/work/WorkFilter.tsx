@@ -1,7 +1,8 @@
 'use client';
 
-import { useRef, useState, type ReactNode } from 'react';
+import { useLayoutEffect, useRef, useState, type ReactNode } from 'react';
 import { flushSync } from 'react-dom';
+import { getGsap } from '@/lib/gsap';
 import styles from './WorkFilter.module.css';
 
 const FILTERS = [
@@ -59,6 +60,11 @@ export function WorkFilter({ children }: { children: ReactNode }) {
   const [status, setStatus] = useState('');
   const results = useRef<HTMLDivElement>(null);
   const run = useRef(0);
+
+  useLayoutEffect(() => {
+    // Filtering changes where each screen sits, so its scroll composition needs fresh positions.
+    getGsap().ScrollTrigger.refresh();
+  }, [filter]);
 
   const choose = (id: FilterId) => {
     if (id === filter) return;

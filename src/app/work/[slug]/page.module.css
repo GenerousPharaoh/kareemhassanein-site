@@ -26,3 +26,11 @@
   max-width: 60ch;
   color: var(--muted);
 }
+
+@media (min-width: 960px) {
+  .details > details > div {
+    margin-left: calc(25% + var(--gap) / 4);
+    padding-right: 0;
+    max-width: 50rem;
+  }
+}

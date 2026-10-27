@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import type { MouseEvent } from 'react';
 import { NAV, SITE } from '@/content/site';
 import { prefersReducedMotion } from '@/lib/useReducedMotion';
@@ -17,12 +17,12 @@ export function Header() {
   const pathname = usePathname();
   const [phase, setPhase] = useState<Phase>('closed');
   const open = phase === 'open';
-  // Close the menu once the new page is in place, so it fades out over the page it led to.
+  // The route reveal owns the handoff, including dismissal of the phone menu.
   // (Adjusting state during render, not in an effect.)
   const [routeSeen, setRouteSeen] = useState(pathname);
   if (routeSeen !== pathname) {
     setRouteSeen(pathname);
-    if (phase === 'open') setPhase('closing');
+    if (phase !== 'closed') setPhase('closed');
   }
   const [scrolled, setScrolled] = useState(false);
   const [tucked, setTucked] = useState(false);
@@ -90,14 +90,21 @@ export function Header() {
       window.removeEventListener('stagechange', onStage);
     };
   }, []);
-  useEffect(() => {
+  useLayoutEffect(() => {
     let frame = 0;
     const read = () => {
       frame = 0;
       const header = document.querySelector('body > header');
       const y = (header?.getBoundingClientRect().height ?? 72) / 2;
-      const under = document.elementsFromPoint(window.innerWidth / 2, y).find((el) => !el.closest('body > header'));
-      const host = under?.closest('[data-theme], .paper, .night');
+      const x = window.innerWidth / 2;
+      const under = document.elementsFromPoint(x, y).find((el) => !el.closest('body > header'));
+      // An open menu makes main inert, which excludes its surfaces from hit testing.
+      // Geometry still identifies the incoming sheet while that menu is being dismissed.
+      const host = under?.closest('[data-theme], .paper, .night') ??
+        [...document.querySelectorAll<HTMLElement>('main [data-theme], main .paper, main .night')].reverse().find((el) => {
+          const box = el.getBoundingClientRect();
+          return box.width > 0 && box.left <= x && box.right > x && box.top <= y && box.bottom > y && getComputedStyle(el).visibility !== 'hidden';
+        });
       const t = host?.getAttribute('data-theme') ?? (host?.classList.contains('paper') ? 'light' : 'dark');
       setTheme(t === 'light' ? 'light' : 'dark');
     };
@@ -108,17 +115,19 @@ export function Header() {
     window.addEventListener('scroll', queue, { passive: true });
     window.addEventListener('resize', queue);
     window.addEventListener('stagechange', queue);
+    window.addEventListener('route-capture', read);
     return () => {
       cancelAnimationFrame(frame);
       window.removeEventListener('scroll', queue);
       window.removeEventListener('resize', queue);
       window.removeEventListener('stagechange', queue);
+      window.removeEventListener('route-capture', read);
     };
   }, [pathname]);
 
   // While open: the page behind cannot scroll or take focus, focus stays in the menu, Escape closes it,
   // and widening the window past the phone layout closes it at once.
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!open) return;
     const root = document.documentElement;
     const before = { overflow: root.style.overflow, gutter: root.style.scrollbarGutter };

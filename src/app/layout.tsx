@@ -1,9 +1,9 @@
 import type { Metadata, Viewport } from 'next';
 import { Mona_Sans } from 'next/font/google';
-import { ViewTransition } from 'react';
 import { Footer } from '@/components/site/Footer';
 import { Header } from '@/components/site/Header';
 import { SmoothScroll } from '@/components/site/SmoothScroll';
+import { PageTransition } from '@/components/site/PageTransition';
 import { SITE } from '@/content/site';
 import './globals.css';
 
@@ -66,12 +66,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en-CA" className={sans.variable}>
       <body>
         <Header />
-        {/* Each route change swaps the page inside this boundary with the page-swap animation; the header stays */}
-        <ViewTransition update="page-swap" default="none">
-          <main id="main">{children}</main>
-        </ViewTransition>
+        <main id="main">{children}</main>
         <Footer />
         <SmoothScroll />
+        <PageTransition />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       </body>
     </html>

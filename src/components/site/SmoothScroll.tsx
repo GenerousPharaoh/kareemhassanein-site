@@ -39,10 +39,33 @@ export function SmoothScroll() {
     };
     const sync = () => (query.matches ? start() : stop());
 
+    // Recalculate reading distances once an expanding section has settled.
+    const main = document.getElementById('main');
+    let height = main?.getBoundingClientRect().height ?? 0;
+    let resizeTimer = 0;
+    const refresh = () => {
+      if (document.documentElement.hasAttribute('data-route-changing')) {
+        resizeTimer = window.setTimeout(refresh, 120);
+        return;
+      }
+      lenis?.resize();
+      ScrollTrigger.refresh();
+      window.dispatchEvent(new Event('content-resized'));
+    };
+    const observer = new ResizeObserver(([entry]) => {
+      if (Math.abs(entry.contentRect.height - height) < 1) return;
+      height = entry.contentRect.height;
+      window.clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(refresh, 180);
+    });
+    if (main) observer.observe(main);
+
     sync();
     query.addEventListener('change', sync);
     return () => {
       query.removeEventListener('change', sync);
+      observer.disconnect();
+      window.clearTimeout(resizeTimer);
       stop();
     };
   }, []);

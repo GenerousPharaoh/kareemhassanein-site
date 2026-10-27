@@ -361,9 +361,9 @@ ol {
 
 /* First-screen entrance for blocks that are not split into lines */
 @media (prefers-reduced-motion: no-preference) {
-  [data-enter] {
-    animation: enter 1.1s var(--ease-out) both;
-    animation-delay: calc(140ms + var(--i, 0) * 90ms);
+  html:not([data-route-arrival]) [data-enter] {
+    animation: enter 700ms var(--ease-out) both;
+    animation-delay: calc(70ms + var(--i, 0) * 55ms);
   }
 }
 
@@ -378,34 +378,82 @@ ol {
   }
 }
 
-/*
-  Page transitions (React ViewTransition around the page in the layout): the old page sinks back
-  and dims, and the new one rises over it as a sheet with rounded top corners. The header stays.
-*/
-::view-transition-old(.page-swap) {
-  animation: 760ms var(--ease-in-out) both page-out;
+/* The page arrives as one surface; navigation stays anchored above it. */
+body > header { view-transition-name: site-header; }
+
+/* Light opening stages have readable navigation before hydration, too. */
+html:not([data-route-arrival]) body:has(main > :first-child[data-theme='light'], main > article > header:first-child[data-theme='light']) > header:not([data-scrolled]):not([data-open]) {
+  --hdr-bg: #e9e8e3;
+  --hdr-ink: #0c0c0b;
+  --hdr-muted: rgba(12, 12, 11, 0.6);
+  --hdr-rule: rgba(12, 12, 11, 0.12);
 }
 
-::view-transition-new(.page-swap) {
-  animation: 860ms var(--ease-in-out) 60ms both page-in;
+:root:active-view-transition-type(page) {
+  --page-duration: 420ms;
+  --page-ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-@keyframes page-out {
-  to {
-    opacity: 0.2;
-    transform: translateY(-6vh) scale(0.94);
-  }
+:root:active-view-transition-type(page)::view-transition {
+  pointer-events: none;
 }
 
-@keyframes page-in {
-  from {
-    clip-path: inset(100% 0 0 0 round 32px 32px 0 0);
-    transform: translateY(12vh);
-  }
-  to {
-    clip-path: inset(0 0 0 0 round 0);
-    transform: none;
-  }
+:root:active-view-transition-type(page)::view-transition-group(root) {
+  animation: none;
+  z-index: 0;
+}
+
+:root:active-view-transition-type(page)::view-transition-image-pair(root) {
+  isolation: isolate;
+}
+
+:root:active-view-transition-type(page)::view-transition-old(root) {
+  animation: page-retreat 160ms ease-out both;
+  mix-blend-mode: normal;
+}
+
+:root:active-view-transition-type(page)::view-transition-new(root) {
+  animation: page-reveal var(--page-duration) var(--page-ease) both;
+  mix-blend-mode: normal;
+  background: var(--stage);
+}
+
+:root:active-view-transition-type(back)::view-transition-old(root) {
+  animation-name: page-retreat-back;
+}
+
+:root:active-view-transition-type(back)::view-transition-new(root) {
+  animation-name: page-reveal-back;
+}
+
+::view-transition-group(site-header) {
+  animation: none;
+  z-index: 10;
+}
+
+::view-transition-old(site-header) { display: none; }
+::view-transition-new(site-header) { animation: none; mix-blend-mode: normal; }
+
+@keyframes page-retreat {
+  to { opacity: 0; transform: translateY(-6px); }
+}
+
+@keyframes page-reveal {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes page-retreat-back {
+  to { opacity: 0; transform: translateY(6px); }
+}
+
+@keyframes page-reveal-back {
+  from { opacity: 0; transform: translateY(-16px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (max-width: 760px) {
+  :root:active-view-transition-type(page) { --page-duration: 320ms; }
 }
 
 /* Shared images between a work preview and its case page */

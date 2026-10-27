@@ -10,6 +10,8 @@ import { paletteVars } from '@/components/work/palette';
 import { CASES, caseBySlug } from '@/content/cases';
 import { SITE } from '@/content/site';
 import styles from './page.module.css';
+import { CaseNavigator } from '@/components/work/CaseNavigator';
+import { Disclosure } from '@/components/ui/Disclosure';
 
 export function generateStaticParams() {
   return CASES.map((c) => ({ slug: c.slug }));
@@ -53,6 +55,11 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
   return (
     <article className={styles.page} style={paletteVars(c.palette)}>
       <CaseHeader c={c} />
+      <CaseNavigator name={c.short} sections={[
+        { id: 'case-short', label: 'The story' },
+        { id: 'case-screens', label: 'The work' },
+        ...(c.pairs.length ? [{ id: 'case-before-after', label: 'Before & after' }] : [{ id: 'case-shipped', label: 'What shipped' }]),
+      ]} />
 
       <div className={`container ${styles.story} ${styles.first}`}>
         <StoryBlock id="case-short" label="In short">
@@ -64,23 +71,9 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
 
       {heroInHeader(c) ? null : <HeroLoop c={c} />}
 
-      <div className={`container ${styles.story}`}>
-        {c.found?.length ? (
-          <StoryBlock id="case-found" label="What I found">
-            <NumberedList items={c.found} />
-          </StoryBlock>
-        ) : null}
-        <StoryBlock id="case-decided" label="What I decided">
-          <NumberedList items={c.decided} />
-        </StoryBlock>
-      </div>
-
       <Gallery c={c} />
 
       <div className={`container ${styles.story} ${styles.after}`}>
-        <StoryBlock id="case-shipped" label="What shipped">
-          <ShippedList items={c.shipped} />
-        </StoryBlock>
         {c.measured?.length ? (
           <StoryBlock id="case-measured" label="What was measured">
             <MeasuredList items={c.measured} />
@@ -91,6 +84,19 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
             <p className={styles.summary}>{c.credit}</p>
           </StoryBlock>
         ) : null}
+        <div className={styles.details}>
+          {c.found?.length ? (
+            <Disclosure id="case-found" title="What I found" heading={2}>
+              <NumberedList items={c.found} />
+            </Disclosure>
+          ) : null}
+          <Disclosure id="case-decided" title="What I decided" heading={2}>
+            <NumberedList items={c.decided} />
+          </Disclosure>
+          <Disclosure id="case-shipped" title="What shipped" heading={2}>
+            <ShippedList items={c.shipped} />
+          </Disclosure>
+        </div>
       </div>
 
       <Pairs pairs={c.pairs} note={c.note} />

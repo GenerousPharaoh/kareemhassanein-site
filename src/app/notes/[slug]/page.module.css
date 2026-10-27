@@ -316,9 +316,3 @@
     border-left-color: var(--ink);
   }
 }
-
-@media (hover: hover) and (prefers-reduced-motion: no-preference) {
-  .back:hover svg {
-    transform: translateX(-3px);
-  }
-}

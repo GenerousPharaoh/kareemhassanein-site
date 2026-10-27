@@ -13,6 +13,21 @@
     transform 0.6s var(--ease-out);
 }
 
+/* Route snapshots already animate the page. Do not tween the header's theme at the same time. */
+:global(html[data-route-changing]) .header,
+:global(html[data-route-changing]) .header *,
+:global(html[data-route-changing]) .header::before {
+  transition: none;
+}
+
+/* Give the anchored navigation its own surface while the page passes underneath. */
+:global(html[data-route-changing]) .header::before {
+  opacity: 1;
+  background: var(--hdr-bg);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
 /* Over light sheets the header turns to dark type */
 .header[data-theme='light'] {
   --hdr-bg: #e9e8e3;
@@ -23,6 +38,7 @@
 
 /* The phone menu is the dark stage, whatever is behind it */
 .header[data-open] {
+  transition-property: transform;
   --hdr-bg: var(--stage);
   --hdr-ink: var(--ivory);
   --hdr-muted: rgba(238, 237, 232, 0.62);
@@ -65,6 +81,9 @@
 
 .header[data-scrolled]::before {
   opacity: 1;
+  background: var(--hdr-bg);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
 }
 
 /* While the menu is open, the header and the sheet are one solid sheet */
@@ -200,7 +219,7 @@
 .cta {
   position: relative;
   display: none;
-  min-height: 40px;
+  min-height: 44px;
   align-items: center;
   padding: 0 18px;
   margin-left: 8px;
@@ -410,6 +429,13 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .header,
+  .header *,
+  .header::before,
+  .header::after {
+    transition: none;
+  }
+
   .sheet[data-phase='closing'] {
     visibility: hidden;
   }

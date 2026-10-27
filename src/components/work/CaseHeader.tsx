@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { DisplayTitle } from '@/components/ui/DisplayTitle';
 import { preload } from 'react-dom';
 import type { CaseStudy } from '@/content/cases';
 import { BrowserFrame, PhoneFrame } from '@/components/media/Frames';
@@ -8,6 +9,7 @@ import { Plate } from '@/components/media/Plate';
 import { isWindow, LIVE_PHONE_SIZES } from './layout';
 import { toneOf } from './palette';
 import styles from './CaseHeader.module.css';
+import { Exhibit } from './Exhibit';
 
 const enter = (i: number) => ({ ['--i' as string]: i });
 
@@ -26,7 +28,7 @@ export function CaseHeader({ c }: { c: CaseStudy }) {
   if (live) preload(c.hero.poster, { as: 'image', fetchPriority: 'high' });
 
   return (
-    <header className={styles.header} data-tone={toneOf(c.palette)}>
+    <header className={styles.header} data-tone={toneOf(c.palette)} data-theme={toneOf(c.palette)}>
       <div className={`container ${styles.top}`}>
         <Link href="/work" className={styles.back} data-enter>
           <svg viewBox="0 0 16 16" aria-hidden="true">
@@ -37,9 +39,9 @@ export function CaseHeader({ c }: { c: CaseStudy }) {
         <p className={styles.kind} data-enter style={enter(1)}>
           {c.kindLabel}
         </p>
-        <h1 className={styles.name} data-enter style={enter(1)}>
+        <DisplayTitle className={styles.name}>
           {c.name}
-        </h1>
+        </DisplayTitle>
         <div className={styles.lead}>
           <p className={styles.question} data-enter style={enter(2)}>
             {c.question}
@@ -57,7 +59,8 @@ export function CaseHeader({ c }: { c: CaseStudy }) {
           </div>
         </div>
       </div>
-      <div className={`container ${styles.plateWrap}`} data-enter style={enter(4)}>
+      <Exhibit className={`container ${styles.plateWrap}`}>
+      <div data-exhibit>
         {live ? (
           <div className={styles.live}>
             <BrowserFrame domain={c.domain}>
@@ -71,6 +74,7 @@ export function CaseHeader({ c }: { c: CaseStudy }) {
           <Plate desktop={c.plate.desktop} phone={c.plate.phone} domain={c.domain} priority />
         )}
       </div>
+      </Exhibit>
     </header>
   );
 }

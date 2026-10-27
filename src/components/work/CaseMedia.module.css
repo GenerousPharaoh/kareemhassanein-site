@@ -1,4 +1,5 @@
 /* Hero loop: full width for window-shaped loops; a taller crop is held to a sensible height */
+
 .heroWrap {
   padding-block: clamp(4px, 1.5vw, 20px) clamp(36px, 4.6vw, 64px);
 }
@@ -17,6 +18,7 @@
 }
 
 /* The band of screens, in the case palette */
+
 .band {
   padding-block: var(--section);
   background: var(--case-ground);
@@ -24,6 +26,7 @@
 }
 
 /* Focus rings here sit on the case's ground, so they take the ring colour made for it */
+
 .band {
   --focus: var(--case-focus);
 }
@@ -34,8 +37,8 @@
 
 .title {
   margin-bottom: clamp(24px, 3vw, 40px);
-  font: 700 var(--t-h3) / 1.15 var(--font-display);
-  letter-spacing: -0.018em;
+  font: 500 clamp(2.2rem, 3.6vw, 3.75rem)/1.05 var(--font-display);
+  letter-spacing: -.045em;
 }
 
 .rows {
@@ -59,12 +62,10 @@
     align-items: flex-start;
     gap: var(--gap);
   }
-
   /* Widths follow each capture's shape, so every item in a row has the same height */
   .row > .shot {
     flex: var(--r) 1 0%;
   }
-
   .row[data-solo] > .shot {
     max-width: calc(820px * var(--r));
     margin-inline: auto;
@@ -72,15 +73,16 @@
 }
 
 /* Phones */
+
 .phones {
   margin-top: clamp(56px, 7vw, 104px);
 }
 
 .subtitle {
   margin-bottom: 22px;
-  font: 500 var(--t-label) / 1.4 var(--font-mono);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  font: 450 1rem/1.4 var(--font-body);
+  letter-spacing: 0;
+  text-transform: none;
   color: var(--case-muted);
 }
 
@@ -111,6 +113,7 @@
 }
 
 /* Every phone the same shape, so the row lines up; a shorter capture loses a sliver of side margin */
+
 .phoneFrame img,
 .phoneFrame video {
   aspect-ratio: 1170 / 2532;
@@ -126,7 +129,6 @@
     margin: 0;
     padding: 0;
   }
-
   .phoneItem {
     flex: 0 1 260px;
     min-width: 0;
@@ -134,14 +136,50 @@
 }
 
 /* On dark grounds a shadow disappears, so frames get a fine light edge instead */
+
 .band[data-tone='dark'] .frame {
-  box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.1),
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1),
     0 30px 60px -30px rgba(0, 0, 0, 0.75);
 }
 
 .band[data-tone='dark'] .phoneFrame > * {
-  box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.16),
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.16),
     0 28px 52px -24px rgba(0, 0, 0, 0.75);
+}
+
+.zoom {
+  position: relative;
+  display: block;
+  color: #eeede8;
+  cursor: zoom-in;
+}
+
+.zoomMark {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #0c0c0be8;
+  box-shadow: 0 0 0 1px #ffffff30;
+  pointer-events: none;
+}
+
+.zoomMark svg {
+  width: 22px;
+  height: 22px;
+}
+
+.zoom:focus-visible {
+  outline: 3px solid var(--case-focus);
+  outline-offset: -4px;
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .zoomMark {
+    transition: transform 350ms var(--ease-out);
+  }
 }

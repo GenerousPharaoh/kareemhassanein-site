@@ -1,4 +1,5 @@
 import { ButtonLink } from '@/components/ui/ButtonLink';
+import { Disclosure } from '@/components/ui/Disclosure';
 import type { Offer } from '@/content/offers';
 import { SITE } from '@/content/site';
 import { enterAt, splitPrice } from './style';
@@ -44,9 +45,8 @@ function Includes({ items }: { items: string[] }) {
 export function CheckOffer({ offer }: { offer: Offer }) {
   const id = `offer-${offer.id}`;
   return (
-    <article className={`night ${styles.feature}`} id={offer.id} aria-labelledby={id} data-enter style={enterAt(5)}>
+    <article className={`paper ${styles.feature}`} id={offer.id} aria-labelledby={id} data-enter style={enterAt(5)} data-theme="light">
       <div className={styles.featureMain}>
-        <p className={styles.wayIn}>{offer.label}</p>
         <h2 id={id} className={styles.featureName}>
           {offer.name}
         </h2>
@@ -68,21 +68,26 @@ export function CheckOffer({ offer }: { offer: Offer }) {
 }
 
 /** One offer: what it is for, its price, what is included and how payment works. */
-export function OfferCard({ offer }: { offer: Offer }) {
+export function OfferRow({ offer }: { offer: Offer }) {
   const id = `offer-${offer.id}`;
   return (
-    <article className={styles.card} id={offer.id} aria-labelledby={id} data-reveal>
-      <p className={styles.label}>{offer.label}</p>
-      <h2 id={id} className={styles.name}>
-        {offer.name}
-      </h2>
-      <div className={styles.priceBlock}>
-        <Price price={offer.price} />
-        {offer.priceNote ? <p className={styles.priceNote}>{offer.priceNote}</p> : null}
+    <article className={styles.row} id={offer.id} aria-labelledby={id}>
+      <div className={styles.heading}>
+        <h2 id={id} className={styles.name}>
+          {offer.name}
+        </h2>
+        <div className={styles.priceBlock}>
+          <Price price={offer.price} />
+          {offer.priceNote ? <p className={styles.priceNote}>{offer.priceNote}</p> : null}
+        </div>
       </div>
-      <p className={styles.summary}>{offer.summary}</p>
-      <Includes items={offer.includes} />
-      <p className={styles.terms}>{offer.terms}</p>
+      <div className={styles.description}>
+        <p className={styles.summary}>{offer.summary}</p>
+        <p className={styles.terms}>{offer.terms}</p>
+        <Disclosure title="What’s included" compact>
+          <Includes items={offer.includes} />
+        </Disclosure>
+      </div>
     </article>
   );
 }

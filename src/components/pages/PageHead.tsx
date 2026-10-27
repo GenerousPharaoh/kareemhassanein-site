@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { DisplayTitle } from '@/components/ui/DisplayTitle';
 import { enter } from './enter';
 import styles from './PageHead.module.css';
 
@@ -20,9 +21,9 @@ export function PageHead({ label, title, lede, children, measure = 'tight', clas
       <p className={`t-label ${styles.label}`} data-enter style={enter(0)}>
         {label}
       </p>
-      <h1 className={`t-h1 ${styles.title}`} data-measure={measure} data-enter style={enter(1)}>
+      <DisplayTitle className={`t-h1 ${styles.title}`} data-measure={measure}>
         {title}
-      </h1>
+      </DisplayTitle>
       {lede ? (
         <p className="t-lede" data-enter style={enter(2)}>
           {lede}

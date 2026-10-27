@@ -4,7 +4,7 @@ Branch `rebuild-2026`. Nothing here goes to `main` (which deploys the live site)
 
 ## What the site is for
 
-Kareem Hassanein owns the whole path from a Google search to a booked appointment for independent practices: the website, the Google profile, booking or intake, ads, and the tracking that ties them together. He is one person, a Registered Physiotherapist who still treats patients every week, and he builds and runs this work himself.
+Kareem Hassanein owns the whole path from a Google search to a booked appointment for independent practices: the website, the Google profile, booking or intake, ads, and the tracking that ties them together. He has worked in the healthcare industry for 13 years, across different roles, and he builds and runs this work himself. Lead with that breadth of healthcare experience. His education may be referenced, but do not describe him as a Registered Physiotherapist or make registration his differentiator. Do not imply 13 years of clinical practice.
 
 Readers: owners and partners of law firms (Canada and US), dental practices and private-pay medical clinics. Physio, chiro and massage clinics are welcome but no longer lead. They read on a phone, between patients or meetings.
 
@@ -44,7 +44,7 @@ Quality bar: Kareem expects award-level craft. Calm and exact, with strong type,
 - Plain, calm, specific; short sentences. Write from the reader's side: their worries, their words.
 - No em dashes or en dashes used as dashes anywhere. Use commas, colons, full stops or parentheses.
 - Never: "specialist", "specialized", "expert", "best", "advanced", "leading", "cutting-edge", "state-of-the-art", "seamless", "solutions", "digital transformation", "unlock", "elevate", "empower", guarantees of rankings or bookings, superlatives, emojis.
-- No numbers about Kareem (years, clients, hours, projects). Never mention hours or hourly billing. Client numbers only as already written in `cases.ts`.
+- The approved exception to the rule against numbers about Kareem is 13 years in healthcare, across different roles. Do not turn this into 13 years of clinical practice or web work. No other numbers about Kareem (clients, hours, projects). Never mention hours or hourly billing. Client numbers only as already written in `cases.ts`.
 - No categorical claims ("always", "never", "everyone"); prefer "often", "usually", "can".
 - Canadian spelling (colour, centre, licence as a noun).
 - Prices exactly as in `offers.ts`: the check at $1,500, everything else "from". Prices in CAD; US firms pay the same figures in USD; larger practices are quoted.
@@ -55,6 +55,8 @@ Quality bar: Kareem expects award-level craft. Calm and exact, with strong type,
 - This copy is a draft for Kareem's markup; he approves every visible word before launch. Write it as if it will ship.
 
 ## Engineering rules
+
+- Kareem's interaction preference: hovering must not move, tilt, scale or lift cards, containers, project previews or the hero screen. Keep hover feedback to colour, borders and underlines. Do not reintroduce cursor-following previews.
 
 - Server Components by default; `'use client'` only for real interaction, and keep client components small.
 - Accessible: one `h1` per page, ordered headings, landmarks, descriptive alt text (already on media), visible focus, 44px touch targets, labels on every form field, `aria-live` for form status.

@@ -8,7 +8,7 @@ import styles from './NextCase.module.css';
 /** The next case, in its own palette, with its home page rising from the band's lower edge. */
 export function NextCase({ c }: { c: CaseStudy }) {
   return (
-    <nav className={styles.next} style={paletteVars(c.palette)} data-tone={toneOf(c.palette)} aria-label="Next case">
+    <nav className={styles.next} style={paletteVars(c.palette)} data-tone={toneOf(c.palette)} data-theme={toneOf(c.palette)} data-case-next aria-label="Next case">
       <Link href={`/work/${c.slug}`} className={styles.link} aria-label={`Next case: ${c.name}`}>
         <div className={`container ${styles.inner}`}>
           <div className={styles.text}>

@@ -1,0 +1,25 @@
+.word {
+  display: inline-block;
+  max-width: 100%;
+  overflow: clip;
+  vertical-align: top;
+  padding: .07em .02em .18em;
+  margin: -.07em -.02em -.18em;
+}
+
+.ink {
+  display: block;
+  overflow-wrap: anywhere;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  :global(html:not([data-route-arrival])) [data-display] .ink {
+    animation: ink-arrive 900ms cubic-bezier(.16, 1, .3, 1) both;
+    animation-delay: calc(70ms + var(--word) * 38ms);
+  }
+}
+
+@keyframes ink-arrive {
+  from { transform: translateY(115%) rotate(2deg); opacity: .2; }
+  to { transform: none; opacity: 1; }
+}

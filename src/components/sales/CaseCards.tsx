@@ -34,7 +34,7 @@ export function CaseCards({ items }: { items: CaseCard[] }) {
       {items.map(({ c, point }, n) => {
         const sizes = n === 0 ? SIZES.lead : SIZES.half;
         return (
-          // The scroll reveal sits on the item, so the card inside it is free to lift on hover
+          // The item carries the entrance while the card stays still during interaction.
           <li key={c.slug} className={styles.item} data-lead={n === 0 || undefined} data-reveal>
             <div className={styles.card} data-lead={n === 0 || undefined} style={paletteVars(c.palette)}>
               <div className={styles.media}>
