@@ -16,10 +16,6 @@
   padding-block: clamp(40px, 4.5vw, 64px);
 }
 
-.statement .grid {
-  max-width: 1120px;
-}
-
 .copy {
   grid-area: copy;
   display: grid;
@@ -108,16 +104,19 @@
   gap: 8px;
 }
 
+/* Larger screens: the sentence starts on the same edge as every other section, at a set measure,
+   with the portrait beside it rather than out at the far edge; spare width falls to the right. */
 @media (min-width: 900px) {
   .grid {
-    grid-template-columns: minmax(0, 1fr) 280px;
+    grid-template-columns: minmax(0, max-content) 280px;
     grid-template-areas: 'copy portrait' 'caption portrait';
+    justify-content: start;
     align-items: start;
-    gap: 24px 48px;
+    gap: 24px clamp(48px, 5vw, 80px);
   }
 
   .text {
-    max-width: none;
+    max-width: 20.5em;
   }
 
   .copy {
