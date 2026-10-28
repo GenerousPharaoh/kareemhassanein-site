@@ -1,6 +1,7 @@
 import { Close, Offer } from '@/components/home/HomeEnd';
 import s from '@/components/home/Home.module.css';
-import { Showreel, type ReelItem, type ReelMedia } from '@/components/home/Showreel';
+import type { ReelItem, ReelMedia } from '@/components/home/Showreel';
+import { HeroAssembly, type HeroSite } from '@/components/home/HeroAssembly';
 import { Statement } from '@/components/home/Statement';
 import { PathExplorer } from '@/components/home/PathExplorer';
 import { WorkIndex, type IndexItem } from '@/components/home/WorkIndex';
@@ -148,11 +149,6 @@ const servicesLine = (list: string[]) =>
   list.map((x, i) => (i === 0 || KEEP_CASE.includes(x) || /^[A-Z]{2,}$/.test(x) ? x : x.charAt(0).toLowerCase() + x.slice(1))).join(', ');
 
 export default function Home() {
-  const reel: ReelItem[] = REEL.map(({ deep: _deep, ...r }) => {
-    const c = caseBySlug(r.slug)!;
-    return { ...r, kind: c.kindLabel, href: `/work/${c.slug}` };
-  });
-
   const index: IndexItem[] = CASES.filter((c) => ['tax-relief-counsel', 'endorphins', 'physiomax'].includes(c.slug)).map((c) => ({
     slug: c.slug,
     name: REEL.find((r) => r.slug === c.slug)?.name ?? c.short,
@@ -163,10 +159,33 @@ export default function Home() {
     still: still(PREVIEW[c.slug], c.plate.desktop.alt),
   }));
 
+  // The opening: a website (cycling through the work), a Google profile, a booking page and a tracking record
+  const site = (slug: string, key: string): HeroSite => {
+    const c = caseBySlug(slug)!;
+    return { client: REEL.find((r) => r.slug === slug)?.name ?? c.short, domain: c.domain, ground: c.palette.ground, ink: c.palette.ink, still: still(key, `The ${c.name} website.`) };
+  };
+  const endorphins = caseBySlug('endorphins')!;
+  const physiomax = caseBySlug('physiomax')!;
+  const counted = PATH.find((p) => p.id === 'counted')!;
+
   return (
     <>
       <div className={s.opening}>
-        <Showreel items={reel} title={`${SITE.name} · ${SITE.descriptor}`} />
+        <HeroAssembly
+          name={SITE.name}
+          title={SITE.descriptor}
+          bookingHref={SITE.bookingHref}
+          sites={[
+            site('tax-relief-counsel', 'tax-relief-counsel/home-hero--desktop'),
+            site('endorphins', 'endorphins/home-hero--desktop'),
+            site('physiomax', 'physiomax/home-hero--desktop'),
+            site('kinetikare', 'kinetikare/knee-hub--desktop'),
+            site('techniques-combat', 'techniques-combat/home-hero--desktop'),
+          ]}
+          profile={{ client: 'Endorphins', ground: endorphins.palette.ground, ink: endorphins.palette.ink, still: still('endorphins/maps-listing--desktop', 'The Endorphins Health and Wellness Centre listing on Google Maps.') }}
+          booking={{ client: 'Endorphins', ground: endorphins.palette.ground, ink: endorphins.palette.ink, loop: loop('endorphins/lp-scroll--phone', 'The Endorphins physiotherapy ad page on a phone, down to the booking bar.') }}
+          tracking={{ client: 'PhysioMax', ground: physiomax.palette.ground, ink: physiomax.palette.ink, record: counted.record! }}
+        />
         <WorkIndex items={index} title="Selected work" />
       </div>
       <Statement

@@ -510,3 +510,8 @@
     color: var(--muted);
   }
 }
+
+/* On the homepage the opening's headline already says it */
+:global(body:has([data-hero-opening])) .markLine {
+  display: none !important;
+}
