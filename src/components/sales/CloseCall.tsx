@@ -14,7 +14,6 @@ export function CloseCall({ id, title, text, track }: Props) {
   return (
     <section className={`night ${styles.close}`} aria-labelledby={id}>
       <div className={`container ${styles.inner}`} data-reveal>
-        <p className="t-label">Next step</p>
         <h2 id={id} className={`t-h1 ${styles.title}`}>
           {title}
         </h2>

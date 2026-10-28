@@ -18,7 +18,7 @@ export function PriceLine({ id, track }: { id: string; track: string }) {
   return (
     <section className={`section ${styles.section}`} aria-labelledby={id}>
       <div className={`container ${styles.inner}`}>
-        <SectionHead id={id} label="Prices" title="What it costs" intro="Fixed prices, agreed before anything starts." split />
+        <SectionHead id={id} title="What it costs" intro="Fixed prices, agreed before anything starts." split />
         <ul className={styles.line} data-reveal>
           {PRICE_LINE.map((p, n) => {
             const { from, figure, suffix } = splitPrice(p.price);

@@ -100,7 +100,6 @@ export default function PricingPage() {
         title="How working together goes"
         intro="From the first call to the handover, you know what happens next and what it costs."
         steps={STEPS}
-        collapsible
         note="If you already know the problem, the check can be skipped: the call goes straight to a proposal for the fix."
       />
 

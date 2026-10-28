@@ -60,7 +60,8 @@
 }
 
 .factMain {
-  font-weight: 500;
+  font: 500 clamp(1.125rem, 1.02rem + 0.35vw, 1.3rem) / 1.25 var(--font-display);
+  letter-spacing: -0.015em;
   color: var(--ink);
 }
 

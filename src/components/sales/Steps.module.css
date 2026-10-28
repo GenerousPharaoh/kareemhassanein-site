@@ -63,7 +63,8 @@
 
 .title {
   padding-top: 4px;
-  font: 700 1.1875rem / 1.25 var(--font-display);
+  font: 500 1.25rem / 1.2 var(--font-display);
+  letter-spacing: -0.018em;
   letter-spacing: -0.012em;
 }
 

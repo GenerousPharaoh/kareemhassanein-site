@@ -31,7 +31,6 @@ export function CloseBand({
     <section className={styles.band} aria-labelledby="close-title">
       <div className={`container ${styles.inner}`} data-reveal>
         <div className={styles.copy}>
-          <p className="t-label">Next step</p>
           <h2 id="close-title" className={`t-h2 ${styles.title}`}>
             {title}
           </h2>

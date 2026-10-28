@@ -49,8 +49,8 @@
 
 .title {
   max-width: 22ch;
-  font: 800 clamp(2.15rem, 1.2rem + 3.3vw, 4.1rem) / 0.98 var(--font-display);
-  letter-spacing: -0.034em;
+  font: 500 clamp(2.15rem, 1.2rem + 3.3vw, 4.1rem) / 0.98 var(--font-display);
+  letter-spacing: -0.04em;
 }
 
 .titleTail {
@@ -251,8 +251,8 @@
 }
 
 .checkTitle {
-  font: 800 clamp(1.8rem, 1.2rem + 2vw, 2.9rem) / 1 var(--font-display);
-  letter-spacing: -0.03em;
+  font: 500 clamp(1.8rem, 1.2rem + 2vw, 2.9rem) / 1 var(--font-display);
+  letter-spacing: -0.035em;
 }
 
 .checkLine {
@@ -268,8 +268,8 @@
 }
 
 .price {
-  font: 800 clamp(2.4rem, 1.6rem + 2.6vw, 3.6rem) / 1 var(--font-display);
-  letter-spacing: -0.035em;
+  font: 500 clamp(2.4rem, 1.6rem + 2.6vw, 3.6rem) / 1 var(--font-display);
+  letter-spacing: -0.04em;
   color: var(--on-night);
 }
 

@@ -38,6 +38,26 @@ export function ShippedList({ items }: { items: string[] }) {
   );
 }
 
+export type LedgerColumn = { id: string; label: string; items: string[]; kind: 'numbered' | 'shipped' };
+
+/** What I found, what I decided and what shipped, side by side on the case's own colours. */
+export function Ledger({ columns }: { columns: LedgerColumn[] }) {
+  return (
+    <div className={styles.ledger}>
+      <div className={`container ${styles.ledgerGrid}`} style={{ ['--cols' as string]: columns.length }}>
+        {columns.map((col) => (
+          <section key={col.id} className={styles.column} aria-labelledby={col.id}>
+            <h2 id={col.id} className={styles.columnTitle}>
+              {col.label}
+            </h2>
+            {col.kind === 'shipped' ? <ShippedList items={col.items} /> : <NumberedList items={col.items} />}
+          </section>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 /** Each measured fact stated plainly, with how it was measured underneath. */
 export function MeasuredList({ items }: { items: Measured[] }) {
   return (

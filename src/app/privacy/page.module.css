@@ -21,8 +21,8 @@
 
 .summaryItem dd {
   margin: 0;
-  font: 700 clamp(1.25rem, 1.05rem + 0.8vw, 1.7rem) / 1.15 var(--font-display);
-  letter-spacing: -0.02em;
+  font: 500 clamp(1.25rem, 1.05rem + 0.8vw, 1.7rem) / 1.15 var(--font-display);
+  letter-spacing: -0.025em;
 }
 
 @media (min-width: 760px) {
@@ -80,7 +80,7 @@
 
 .prose h2 {
   margin-top: 1.9em;
-  font: 700 1.3rem / 1.2 var(--font-display);
+  font: 500 1.3rem / 1.2 var(--font-display);
   letter-spacing: -0.015em;
   color: var(--ink);
 }

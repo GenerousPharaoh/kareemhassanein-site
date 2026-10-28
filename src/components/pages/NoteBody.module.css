@@ -18,8 +18,8 @@
 
 .body > .h2 {
   margin-top: 2.3em;
-  font: 800 clamp(1.45rem, 1.1rem + 1.2vw, 2rem) / 1.12 var(--font-display);
-  letter-spacing: -0.022em;
+  font: 500 clamp(1.45rem, 1.1rem + 1.2vw, 2rem) / 1.12 var(--font-display);
+  letter-spacing: -0.028em;
   color: var(--ink);
 }
 
@@ -32,8 +32,8 @@
 
 .body > .h3 {
   margin-top: 2em;
-  font: 700 clamp(1.15rem, 1.05rem + 0.35vw, 1.3rem) / 1.25 var(--font-display);
-  letter-spacing: -0.01em;
+  font: 500 clamp(1.15rem, 1.05rem + 0.35vw, 1.3rem) / 1.25 var(--font-display);
+  letter-spacing: -0.015em;
   color: var(--ink);
 }
 

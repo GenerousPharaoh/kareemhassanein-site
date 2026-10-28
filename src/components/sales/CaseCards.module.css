@@ -62,8 +62,8 @@
 }
 
 .name {
-  font: 800 clamp(1.45rem, 1.1rem + 1.1vw, 2.05rem) / 1.02 var(--font-display);
-  letter-spacing: -0.025em;
+  font: 500 clamp(1.45rem, 1.1rem + 1.1vw, 2.05rem) / 1.02 var(--font-display);
+  letter-spacing: -0.032em;
 }
 
 /* The whole card is the link; the name carries its accessible text */
@@ -92,7 +92,7 @@
   margin-top: 4px;
   padding-top: 14px;
   border-top: 1px solid var(--case-rule);
-  font: 600 1rem / 1.4 var(--font-display);
+  font: 500 1rem / 1.4 var(--font-display);
   letter-spacing: -0.005em;
 }
 

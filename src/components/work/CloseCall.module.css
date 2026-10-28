@@ -10,8 +10,8 @@
 }
 
 .title {
-  font: 800 var(--t-h2) / 1 var(--font-display);
-  letter-spacing: -0.03em;
+  font: 500 var(--t-h2) / 1 var(--font-display);
+  letter-spacing: -0.035em;
   max-width: 15ch;
 }
 

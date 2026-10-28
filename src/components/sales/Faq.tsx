@@ -15,7 +15,6 @@ export function Faq({ id, title, intro, items }: Props) {
     <section className={`section ${styles.section}`} aria-labelledby={id}>
       <div className={`container ${styles.inner}`}>
         <div className={styles.head}>
-          <p className="t-label">Questions</p>
           <h2 id={id} className={`t-h2 ${styles.title}`}>
             {title}
           </h2>

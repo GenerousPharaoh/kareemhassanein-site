@@ -521,8 +521,8 @@
 
 .doneTitle {
   max-width: 17ch;
-  font: 800 clamp(1.8rem, 1.25rem + 1.8vw, 2.6rem) / 1.04 var(--font-display);
-  letter-spacing: -0.03em;
+  font: 500 clamp(1.8rem, 1.25rem + 1.8vw, 2.6rem) / 1.04 var(--font-display);
+  letter-spacing: -0.035em;
 }
 
 /* Focus is moved here for screen readers; a heading is not a control, so it shows no ring */

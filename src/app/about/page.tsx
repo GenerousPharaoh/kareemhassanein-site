@@ -140,7 +140,6 @@ export default function AboutPage() {
       <section className={`night ${styles.how}`} aria-labelledby="how-title">
         <div className="container">
           <div className={styles.howHead} data-reveal>
-            <p className="t-label">How I work</p>
             <h2 id="how-title" className="t-h2">
               I work in four steps.
             </h2>
@@ -170,7 +169,6 @@ export default function AboutPage() {
 
       <section className={`container section ${styles.hire}`} aria-labelledby="hire-title">
         <div className={styles.hireHead} data-reveal>
-          <p className="t-label">Questions owners ask</p>
           <h2 id="hire-title" className="t-h2">
             Why owners hire me
           </h2>

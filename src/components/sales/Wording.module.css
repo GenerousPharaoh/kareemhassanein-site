@@ -157,7 +157,7 @@
 
 .line {
   padding: clamp(16px, 2vw, 22px) 0;
-  font: 600 clamp(1.15rem, 1rem + 0.6vw, 1.5rem) / 1.5 var(--font-display);
+  font: 500 clamp(1.15rem, 1rem + 0.6vw, 1.5rem) / 1.5 var(--font-display);
   letter-spacing: -0.012em;
 }
 

@@ -5,13 +5,12 @@ import { Gallery, HeroLoop } from '@/components/work/CaseMedia';
 import { CloseCall } from '@/components/work/CloseCall';
 import { NextCase } from '@/components/work/NextCase';
 import { Pairs } from '@/components/work/Pairs';
-import { Credit, MeasuredList, NumberedList, ShippedList, StoryBlock } from '@/components/work/Story';
+import { Credit, Ledger, MeasuredList, StoryBlock } from '@/components/work/Story';
 import { paletteVars } from '@/components/work/palette';
 import { CASES, caseBySlug } from '@/content/cases';
 import { SITE } from '@/content/site';
 import styles from './page.module.css';
 import { CaseNavigator } from '@/components/work/CaseNavigator';
-import { Disclosure } from '@/components/ui/Disclosure';
 
 export function generateStaticParams() {
   return CASES.map((c) => ({ slug: c.slug }));
@@ -84,20 +83,15 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
             <p className={styles.summary}>{c.credit}</p>
           </StoryBlock>
         ) : null}
-        <div className={styles.details}>
-          {c.found?.length ? (
-            <Disclosure id="case-found" title="What I found" heading={2}>
-              <NumberedList items={c.found} />
-            </Disclosure>
-          ) : null}
-          <Disclosure id="case-decided" title="What I decided" heading={2}>
-            <NumberedList items={c.decided} />
-          </Disclosure>
-          <Disclosure id="case-shipped" title="What shipped" heading={2}>
-            <ShippedList items={c.shipped} />
-          </Disclosure>
-        </div>
       </div>
+
+      <Ledger
+        columns={[
+          ...(c.found?.length ? [{ id: 'case-found', label: 'What I found', items: c.found, kind: 'numbered' as const }] : []),
+          { id: 'case-decided', label: 'What I decided', items: c.decided, kind: 'numbered' },
+          { id: 'case-shipped', label: 'What shipped', items: c.shipped, kind: 'shipped' },
+        ]}
+      />
 
       <Pairs pairs={c.pairs} note={c.note} />
 

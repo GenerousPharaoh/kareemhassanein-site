@@ -88,7 +88,6 @@ export default function FirmsPage() {
 
       <BuildList
         id="firm-build"
-        label="The build"
         title="What I build"
         intro="Each piece works on its own. Together they carry a reader from the first search to a signed engagement, with the source attached all the way."
         items={BUILD}

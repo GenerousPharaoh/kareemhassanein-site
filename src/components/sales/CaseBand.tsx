@@ -27,7 +27,6 @@ export function CaseBand({ c, findings, wide, phone }: Props) {
           <header className={styles.head}>
             <p className={styles.kicker}>
               <span className={styles.kickerLine}>
-                <span>The work</span>
                 <span>{keepDots(c.kindLabel)}</span>
               </span>
             </p>

@@ -29,7 +29,7 @@ export function Steps({ id, title, intro, steps, note, collapsible = false }: Pr
   return (
     <section className={`night section ${styles.section}`} aria-labelledby={id}>
       <div className={`container ${styles.inner}`}>
-        <SectionHead id={id} label="Working together" title={title} intro={intro} split />
+        <SectionHead id={id} title={title} intro={intro} split />
         {collapsible ? (
           <Disclosure title="From the first call to handover" compact className={styles.disclosure}>
             {sequence}

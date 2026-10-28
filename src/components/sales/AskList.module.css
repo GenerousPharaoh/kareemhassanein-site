@@ -41,8 +41,8 @@
 /* Their words, with the opening quotation mark hung into the margin */
 .quote {
   position: relative;
-  font: 700 clamp(1.32rem, 1rem + 1.25vw, 2.1rem) / 1.16 var(--font-display);
-  letter-spacing: -0.022em;
+  font: 500 clamp(1.32rem, 1rem + 1.25vw, 2.1rem) / 1.16 var(--font-display);
+  letter-spacing: -0.028em;
   color: var(--on-night);
   text-wrap: balance;
 }
