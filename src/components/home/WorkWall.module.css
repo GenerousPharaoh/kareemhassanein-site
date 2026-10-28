@@ -1,9 +1,11 @@
 /*
   The opening: a wall of all the work, tilted away from the viewer, its rows drifting past in opposite
-  directions. Each tile is a client screen on its client's own colour.
+  directions. Each tile is a client screen, desktop or phone, on its client's own colour. Rows are moved
+  by script (WorkWall.tsx); without it the wall stands still at its tilt.
 */
 .wall {
-  --tile-w: 420px;
+  --tile-h: 262px;
+  --mat: 8px;
   --gap: 22px;
   position: sticky;
   top: 0;
@@ -12,8 +14,9 @@
   min-height: 520px;
   overflow: hidden;
   background: var(--stage);
-  perspective: 1500px;
-  perspective-origin: 50% 45%;
+  touch-action: pan-y;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 /* A shade under the navigation, so the name and links read over the busiest screens */
@@ -36,15 +39,18 @@
   will-change: transform;
 }
 
-/* The plane is much wider and taller than the screen, centred on it, so the tilt never shows an edge */
+/* A point at the middle of the screen that the plane hangs from, and the eye it is seen with */
 .planeBox {
   position: absolute;
   left: 50%;
   top: 50%;
   width: 0;
   height: 0;
+  perspective: 1500px;
+  perspective-origin: 0 -5vh;
 }
 
+/* The plane is much wider and taller than the screen, centred on it, so the tilt never shows an edge */
 .plane {
   position: absolute;
   left: 0;
@@ -52,46 +58,58 @@
   display: grid;
   gap: var(--gap);
   width: 200vw;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%) rotate(-7deg) rotateX(24deg);
   transform-origin: 50% 50%;
-  will-change: transform;
+  will-change: transform, opacity;
 }
 
 .row {
   display: flex;
   gap: var(--gap);
   width: max-content;
-  /* Rows start at different points, so the wall does not read as a grid of columns */
-  margin-left: calc(var(--offset) * -6px);
   padding-right: var(--gap);
+  will-change: transform;
 }
 
 .tile {
   flex: none;
   display: block;
-  width: var(--tile-w);
-  padding: 8px;
+  padding: var(--mat);
   border-radius: 12px;
   background: var(--ground);
   box-shadow: 0 30px 60px -34px rgba(0, 0, 0, 0.8);
   cursor: pointer;
+  -webkit-user-drag: none;
 }
 
 .screen {
   display: block;
-  aspect-ratio: 1.6;
+  height: calc(var(--tile-h) - 2 * var(--mat));
+  aspect-ratio: var(--ratio);
   overflow: hidden;
   border-radius: 6px;
-  background: #fff;
+  /* What shows while a screen loads: the client's colour, a shade deeper */
+  background: color-mix(in srgb, var(--ground) 82%, #000);
+}
+
+.tile[data-device='phone'] .screen {
+  border-radius: 14px;
 }
 
 .screen picture,
-.screen img {
+.screen img,
+.screen video {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: 50% 0;
+  pointer-events: none;
+}
+
+.wall[data-dragging],
+.wall[data-dragging] .tile {
+  cursor: grabbing;
 }
 
 @media (hover: hover) {
@@ -99,30 +117,112 @@
     transition: filter var(--dur-hover) var(--ease-colour);
   }
 
-  :global(html:not([data-scrolling])) .tile:hover {
+  :global(html:not([data-scrolling])) .wall:not([data-dragging]) .tile:hover {
     filter: brightness(1.08);
   }
 }
 
-/* The drift: each row travels one copy's length, then starts again where it began */
-@media (prefers-reduced-motion: no-preference) {
-  .row {
-    animation: drift var(--speed) linear infinite;
-    animation-play-state: paused;
-  }
+/* The name, before it flies up into the header */
+.intro {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 0.85rem;
+  padding: 0 var(--gutter-r) 0 var(--gutter-l);
+  color: var(--ivory);
+  text-align: center;
+  pointer-events: none;
+  /* A shade behind the name while the wall arrives under it; it fades as the name leaves */
+  background: radial-gradient(ellipse 46% 34% at 50% 50%, rgba(12, 12, 11, calc(0.82 * var(--scrim, 1))), rgba(12, 12, 11, 0));
+}
 
-  .row[data-dir='right'] {
-    animation-direction: reverse;
-  }
+.mask {
+  display: block;
+  width: fit-content;
+  overflow: hidden;
+  /* Room for descenders inside the mask */
+  padding-bottom: 0.06em;
+  transform-origin: 50% 50%;
+}
 
-  .wall[data-moving] .row {
-    animation-play-state: running;
+.name,
+.line {
+  display: block;
+  white-space: nowrap;
+}
+
+.name {
+  font: 600 clamp(2.4rem, 0.6rem + 6vw, 5.6rem) / 1.05 var(--font-display);
+  letter-spacing: -0.035em;
+}
+
+.line {
+  max-width: 22em;
+  font-size: clamp(0.875rem, 0.8rem + 0.3vw, 1.0625rem);
+  line-height: 1.3;
+  color: rgba(238, 237, 232, 0.62);
+  white-space: normal;
+  text-wrap: balance;
+}
+
+/* Where the header shows it, the descriptor flies there too, so it keeps to one line */
+@media (min-width: 1100px) {
+  .line {
+    max-width: none;
+    white-space: nowrap;
   }
 }
 
-@keyframes drift {
-  from { transform: translate3d(0, 0, 0); }
-  to { transform: translate3d(calc(-100% / 3), 0, 0); }
+@media (prefers-reduced-motion: no-preference) {
+  .mask > span {
+    animation: rise 0.62s var(--ease-out) both;
+  }
+
+  .mask + .mask > span {
+    animation-delay: 0.08s;
+  }
+
+  /* Until the script takes the opening over, the wall and the header wait behind the name.
+     If the script never runs, both appear on their own after a moment and the name goes. */
+  .wall[data-wall-intro] .plane {
+    opacity: 0;
+  }
+
+  .wall[data-wall-intro]:not([data-ready]) .plane {
+    animation: appear 0.4s 3s both;
+  }
+
+  .wall:not([data-ready]) .intro {
+    animation: appear 0.4s 3s reverse both;
+  }
+
+  /* The header waits too: see Header.module.css */
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro {
+    display: none;
+  }
+}
+
+@keyframes rise {
+  from {
+    transform: translate3d(0, 110%, 0);
+  }
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+    visibility: hidden;
+  }
+  to {
+    opacity: 1;
+    visibility: visible;
+  }
 }
 
 .pause {
@@ -163,16 +263,20 @@
 
 @media (max-width: 760px) {
   .wall {
-    --tile-w: 260px;
+    --tile-h: 162px;
+    --mat: 5px;
     --gap: 14px;
   }
 
   .tile {
-    padding: 5px;
     border-radius: 9px;
   }
 
   .screen {
     border-radius: 5px;
+  }
+
+  .tile[data-device='phone'] .screen {
+    border-radius: 9px;
   }
 }

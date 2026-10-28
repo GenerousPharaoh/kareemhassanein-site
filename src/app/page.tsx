@@ -9,8 +9,20 @@ import { CASES, caseBySlug } from '@/content/cases';
 import { SITE } from '@/content/site';
 import { PATH } from '@/content/path';
 import { PORTRAIT } from '@/content/portrait';
-import { loop, still } from '@/lib/media';
+import { loop, still, type Loop, type Still } from '@/lib/media';
 import { pageMeta } from '@/lib/meta';
+
+/**
+ * The loops that play on the wall: ones that start and end on the same frame, so a repeat does not
+ * jump. Each names the still it stands in for, so the same screen does not appear twice.
+ */
+const WALL_LOOPS: Record<string, string | null> = {
+  'physiomax/treat-chart--desktop': null,
+  'tax-relief-counsel/map--desktop': null,
+  'tax-relief-counsel/decoder--desktop': 'tax-relief-counsel/decoder--desktop',
+  'techniques-combat/hero-film--desktop': 'techniques-combat/home-hero--desktop',
+};
+const wallLoopKey = (l: Loop) => l.src.replace('/work-media/', '').replace(/\.mp4$/, '');
 
 export const metadata = pageMeta({
   title: `${SITE.name} · ${SITE.descriptor}`,
@@ -149,21 +161,34 @@ const servicesLine = (list: string[]) =>
   list.map((x, i) => (i === 0 || KEEP_CASE.includes(x) || /^[A-Z]{2,}$/.test(x) ? x : x.charAt(0).toLowerCase() + x.slice(1))).join(', ');
 
 export default function Home() {
-  // The wall: every full desktop screen of the work on its client's colour, mixed so neighbours come
-  // from different clients, with the Tax Relief Counsel home page in the middle row to open on.
-  const pools = CASES.map((c) =>
-    [c.plate.desktop, ...c.stills]
-      .filter((st, i, all) => st.device === 'desktop' && st.w / st.h > 1.45 && st.w / st.h < 1.75 && all.findIndex((o) => o.src === st.src) === i)
-      .map((st): WallTile => ({ key: st.src, still: st, ground: c.palette.ground, href: `/work/${c.slug}`, lead: st.src.endsWith('tax-relief-counsel/home-hero--desktop') })),
-  );
-  const mixed: WallTile[] = [];
-  for (let i = 0; pools.some((p) => p[i]); i++) pools.forEach((p) => p[i] && mixed.push(p[i]));
-  const ROWS = 5;
-  const leadAt = mixed.findIndex((t) => t.lead);
-  // Rotate the order so the lead lands in the middle row
-  const shift = (((leadAt - 2) % ROWS) + ROWS) % ROWS;
-  const ordered = [...mixed.slice(shift), ...mixed.slice(0, shift)];
-  const wall: WallTile[][] = Array.from({ length: ROWS }, (_, r) => ordered.filter((_, i) => i % ROWS === r));
+  // The wall: every screen of the work, desktop and phone, on its client's colour, with a few of the
+  // loops playing among them. Each client's screens are spaced out with its phone screens, then the
+  // clients are dealt across the rows in turn, so neighbours always come from different clients.
+  const pools = CASES.map((c, ci) => {
+    const tile = (media: Still | Loop, ratio: number): WallTile => ({
+      key: media.src,
+      ground: c.palette.ground,
+      href: `/work/${c.slug}`,
+      device: media.device,
+      ratio,
+      ...('widths' in media ? { still: media } : { loop: media }),
+    });
+    const loops = [c.hero, ...c.loops].filter((l, i, all) => wallLoopKey(l) in WALL_LOOPS && all.findIndex((o) => o.src === l.src) === i);
+    const replaced = loops.map((l) => WALL_LOOPS[wallLoopKey(l)]).filter(Boolean).map((k) => `/work-media/${k}`);
+    const screens = [c.plate.desktop, c.plate.phone, ...c.stills].filter((st, i, all) => all.findIndex((o) => o.src === st.src) === i && !replaced.includes(st.src));
+    const wide = [
+      ...loops.map((l) => tile(l, l.w / l.h)),
+      ...screens.filter((st) => st.device === 'desktop' && st.w / st.h >= 1.35 && st.w / st.h <= 2).map((st) => tile(st, st.w / st.h)),
+    ];
+    const tall = screens.filter((st) => st.device === 'phone').map((st) => tile(st, 0.56));
+    const pool: WallTile[] = [];
+    for (let k = 0; wide.length || tall.length; k++) pool.push(((tall.length && (k + ci) % 3 === 2) || !wide.length ? tall : wide).shift()!);
+    return pool;
+  });
+  const dealt: WallTile[] = [];
+  for (let i = 0; pools.some((p) => p[i]); i++) pools.forEach((p) => p[i] && dealt.push(p[i]));
+  const ROWS = 6;
+  const wall: WallTile[][] = Array.from({ length: ROWS }, (_, r) => dealt.filter((_, i) => i % ROWS === r));
 
   const index: IndexItem[] = CASES.filter((c) => ['tax-relief-counsel', 'endorphins', 'physiomax'].includes(c.slug)).map((c) => ({
     slug: c.slug,
@@ -178,7 +203,7 @@ export default function Home() {
   return (
     <>
       <div className={s.opening}>
-        <WorkWall rows={wall} title={`${SITE.name} · ${SITE.descriptor}`} />
+        <WorkWall rows={wall} name={SITE.name} line={SITE.descriptor} />
         <WorkIndex items={index} title="Selected work" />
       </div>
       <Statement

@@ -13,6 +13,30 @@
     transform 0.6s var(--ease-out);
 }
 
+/* On a full load of the homepage the header waits while my name flies up into it (WorkWall.tsx).
+   If the script never takes the opening over, it appears on its own after a moment. */
+@media (prefers-reduced-motion: no-preference) {
+  :global(body:has([data-wall-intro])) .header {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  :global(body:has([data-wall-intro]:not([data-ready]))) .header {
+    animation: header-appear 0.4s 3s both;
+  }
+}
+
+@keyframes header-appear {
+  from {
+    opacity: 0;
+    visibility: hidden;
+  }
+  to {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
 /* Route snapshots already animate the page. Do not tween the header's theme at the same time. */
 :global(html[data-route-changing]) .header,
 :global(html[data-route-changing]) .header *,
