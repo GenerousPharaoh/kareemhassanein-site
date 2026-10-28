@@ -25,10 +25,10 @@ const reelLoop = (key: string): ReelMedia => {
   return { image: { src: l.poster, srcSet: `${l.poster} ${l.w}w`, w: l.w, h: l.h }, video: l.src };
 };
 
-/** A still for the reel, at the two large widths. */
-const reelStill = (key: string): ReelMedia => {
+/** A still for the reel, at its large widths (1600 and up for desktop, 780 and up for a phone). */
+const reelStill = (key: string, min = 1600): ReelMedia => {
   const st = still(key, '');
-  const widths = st.widths.filter((w) => w >= 1600);
+  const widths = st.widths.filter((w) => w >= min);
   return { image: { src: `${st.src}-${widths[0]}.webp`, srcSet: widths.map((w) => `${st.src}-${w}.webp ${w}w`).join(', '), w: st.w, h: st.h } };
 };
 
@@ -47,8 +47,8 @@ const REEL: Array<Omit<ReelItem, 'kind' | 'href'> & { deep: string }> = [
     deep: '#1b2740',
     focus: { desktop: 0.35, phone: 0.2 },
     desktop: reelLoop('tax-relief-counsel/hero-arrive--desktop'),
-    phone: reelLoop('tax-relief-counsel/hero-arrive--phone'),
-    seconds: { desktop: 6.1, phone: 6.4 },
+    phone: reelLoop('tax-relief-counsel/home-scroll--phone'),
+    seconds: { desktop: 6.1, phone: 7.3 },
   },
   {
     slug: 'endorphins',
@@ -84,10 +84,11 @@ const REEL: Array<Omit<ReelItem, 'kind' | 'href'> & { deep: string }> = [
     ink: '#1a2233',
     dark: false,
     deep: '#141b2b',
-    focus: { desktop: 0.35, phone: 0.1 },
-    desktop: reelStill('kinetikare/home-hero--desktop'),
-    phone: reelLoop('kinetikare/home-scroll--phone'),
-    seconds: { desktop: 4.4, phone: 6.4 },
+    // The knee pain page: the illustrated runner, with the navigation kept in frame
+    focus: { desktop: 0.1, phone: 0 },
+    desktop: reelStill('kinetikare/knee-hub--desktop'),
+    phone: reelStill('kinetikare/knee-hub--phone', 780),
+    seconds: { desktop: 4.4, phone: 4.4 },
   },
   {
     slug: 'techniques-combat',
@@ -171,11 +172,11 @@ export default function Home() {
       <Statement
         pieces={[
           'I build and run the online side of law firms and independent practices: the website ',
-          { clip: { src: loop('physiomax/treat-chart--desktop', '').src, poster: loop('physiomax/treat-chart--desktop', '').poster }, label: 'PhysioMax body chart' },
+          { still: still('tax-relief-counsel/chip-headline', ''), label: 'The Tax Relief Counsel headline' },
           ', the Google profile ',
-          { still: still('endorphins/maps-pin', ''), label: 'Endorphins on Google Maps', shape: 'round' },
+          { still: still('endorphins/chip-map', ''), label: 'Endorphins on Google Maps' },
           ', booking or intake ',
-          { still: still('endorphins/lp-book--desktop', ''), label: 'Endorphins booking button', shape: 'pill' },
+          { still: still('endorphins/chip-book', ''), label: 'The Endorphins Book Appointment button' },
           ', ads, and the tracking that ties them together.',
         ]}
         body="I’m Kareem Hassanein. I’ve worked in healthcare for 13 years, across different roles."

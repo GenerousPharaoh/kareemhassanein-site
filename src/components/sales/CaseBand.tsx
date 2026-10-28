@@ -20,7 +20,7 @@ type Props = {
 export function CaseBand({ c, findings, wide, phone }: Props) {
   const id = `case-${c.slug}`;
   return (
-    <section className={styles.band} style={paletteVars(c.palette)} aria-labelledby={id}>
+    <section className={`sheet-up ${styles.band}`} style={paletteVars(c.palette)} aria-labelledby={id}>
       <div className={`container ${styles.inner}`}>
         {/* The wrapper spans only the plate and findings rows, so the pinned story stops before the gallery */}
         <div className={styles.aside}>

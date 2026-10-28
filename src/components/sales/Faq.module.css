@@ -3,6 +3,11 @@
   border-top: 1px solid var(--rule);
 }
 
+.section[data-sheet] {
+  border-top: 0;
+  background: var(--stage);
+}
+
 .inner {
   display: grid;
   gap: clamp(32px, 4vw, 48px);

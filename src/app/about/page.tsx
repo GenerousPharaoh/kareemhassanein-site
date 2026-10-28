@@ -137,7 +137,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className={`night ${styles.how}`} aria-labelledby="how-title">
+      <section className={`paper sheet-up ${styles.how}`} aria-labelledby="how-title">
         <div className="container">
           <div className={styles.howHead} data-reveal>
             <h2 id="how-title" className="t-h2">
@@ -167,7 +167,8 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className={`container section ${styles.hire}`} aria-labelledby="hire-title">
+      <section className={`section sheet-up ${styles.hireBand}`} aria-labelledby="hire-title">
+        <div className={`container ${styles.hire}`}>
         <div className={styles.hireHead} data-reveal>
           <h2 id="hire-title" className="t-h2">
             Why owners hire me
@@ -182,6 +183,7 @@ export default function AboutPage() {
               </div>
             </Disclosure>
           ))}
+        </div>
         </div>
       </section>
 

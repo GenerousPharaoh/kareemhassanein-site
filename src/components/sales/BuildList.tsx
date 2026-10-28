@@ -14,7 +14,7 @@ type Props = {
 /** What I build, each piece with one plain sentence on what it means for the practice. */
 export function BuildList({ id, label, title, intro, items }: Props) {
   return (
-    <section className={`section ${styles.section}`} aria-labelledby={id}>
+    <section className={`paper section sheet-up ${styles.section}`} aria-labelledby={id}>
       <div className={`container ${styles.inner}`}>
         <SectionHead id={id} label={label} title={title} intro={intro} split />
         <ul className={styles.list}>

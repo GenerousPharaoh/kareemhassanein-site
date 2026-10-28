@@ -1,5 +1,4 @@
 import { ButtonLink } from '@/components/ui/ButtonLink';
-import { Disclosure } from '@/components/ui/Disclosure';
 import type { Offer } from '@/content/offers';
 import { SITE } from '@/content/site';
 import { enterAt, splitPrice } from './style';
@@ -84,9 +83,10 @@ export function OfferRow({ offer }: { offer: Offer }) {
       <div className={styles.description}>
         <p className={styles.summary}>{offer.summary}</p>
         <p className={styles.terms}>{offer.terms}</p>
-        <Disclosure title="What’s included" compact>
+        <div className={styles.included}>
+          <h3 className={styles.includedTitle}>What’s included</h3>
           <Includes items={offer.includes} />
-        </Disclosure>
+        </div>
       </div>
     </article>
   );

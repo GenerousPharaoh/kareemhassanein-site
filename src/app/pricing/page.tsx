@@ -103,7 +103,7 @@ export default function PricingPage() {
         note="If you already know the problem, the check can be skipped: the call goes straight to a proposal for the fix."
       />
 
-      <Faq id="pricing-faq" title="Questions about price" intro="If yours is not here, ask me on the call." items={PRICING_FAQ} />
+      <Faq sheet id="pricing-faq" title="Questions about price" intro="If yours is not here, ask me on the call." items={PRICING_FAQ} />
 
       <CloseCall
         id="pricing-close"

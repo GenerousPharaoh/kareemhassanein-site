@@ -27,7 +27,7 @@ export function Steps({ id, title, intro, steps, note, collapsible = false }: Pr
     </ol>
   );
   return (
-    <section className={`night section ${styles.section}`} aria-labelledby={id}>
+    <section className={`paper section sheet-up ${styles.section}`} aria-labelledby={id}>
       <div className={`container ${styles.inner}`}>
         <SectionHead id={id} title={title} intro={intro} split />
         {collapsible ? (

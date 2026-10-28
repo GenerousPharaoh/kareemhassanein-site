@@ -14,6 +14,8 @@ export const ASSETS = {
       ['stills/home-decoder--desktop.png', 'decoder--desktop'],
       ['stills/home-decoder--phone.png', 'decoder--phone'],
       ['stills/home-practice--desktop.png', 'practice--desktop', { crop: { left: 0, top: 0, width: 2880, height: 1500 } }],
+      // The headline, for the introduction's "the website"
+      ['stills/home-hero--desktop.png', 'chip-headline', { crop: { left: 112, top: 548, width: 1176, height: 560 } }],
       ['stills/home-map--desktop.png', 'map--desktop'],
       ['stills/audits-figure--desktop.png', 'audits-figure--desktop'],
       ['stills/audits-top--desktop.png', 'audits-top--desktop', { ba: true }],
@@ -28,6 +30,7 @@ export const ASSETS = {
     loops: [
       ['loops/hero-arrive--desktop.mp4', 'hero-arrive--desktop'],
       ['loops/hero-arrive--phone.mp4', 'hero-arrive--phone'],
+      ['loops/home-scroll--phone.mp4', 'home-scroll--phone'],
       ['loops/decoder--desktop.mp4', 'decoder--desktop'],
       ['loops/map--desktop.mp4', 'map--desktop'],
     ],
@@ -49,6 +52,9 @@ export const ASSETS = {
       ['stills/maps-listing--desktop.png', 'maps-pin', { crop: { left: 1374, top: 815, width: 100, height: 100 } }],
       // The ad page's booking button and next openings, for the home introduction
       ['stills/lp-physio--desktop.png', 'lp-book--desktop', { crop: { left: 236, top: 1080, width: 704, height: 276 } }],
+      // The map around the pin and the Book Appointment button, for "the Google profile" and "booking"
+      ['stills/maps-listing--desktop.png', 'chip-map', { crop: { left: 1240, top: 690, width: 640, height: 305 } }],
+      ['stills/lp-physio--desktop.png', 'chip-book', { crop: { left: 2232, top: 80, width: 452, height: 164 } }],
       ['before/old-home-hero-sept--desktop.png', 'old-home-hero--desktop', { ba: true, only: 'ba' }],
     ],
     loops: [

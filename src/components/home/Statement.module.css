@@ -30,68 +30,33 @@
   text-wrap: pretty;
 }
 
-/* A small picture of the work, set into the line like a word */
+/* A small picture of the work, set into the line like a word: the same height and corners for
+   all three, centred on the capitals, its width following the picture */
 .chip {
   display: inline-block;
   vertical-align: middle;
-  width: 1.9em;
-  height: 0.98em;
-  margin: -0.12em 0.04em 0;
-  border-radius: 999px;
-  background: rgba(12, 12, 11, 0.08);
+  height: 0.8em;
+  width: calc(0.8em * var(--ratio, 2));
+  margin: 0 0.06em;
+  border-radius: 0.16em;
   overflow: hidden;
-  transform: translateY(-0.06em);
+  transform: translateY(-0.07em);
+  box-shadow: 0 0 0 1px rgba(12, 12, 11, 0.1), 0 0.14em 0.42em -0.2em rgba(12, 12, 11, 0.4);
 }
 
 .chipImg {
   display: block;
   width: 100%;
   height: 100%;
-  border-radius: inherit;
   overflow: hidden;
 }
 
-.chipImg > * {
+.chipImg picture,
+.chipImg img {
   display: block;
   width: 100%;
   height: 100%;
-}
-
-.chipImg img {
-  width: 100%;
-  height: 100%;
   object-fit: cover;
-  object-position: 50% 50%;
-}
-
-/* Three different objects, so the line does not repeat itself: a small screen playing a site,
-   the map pin as a circle, and the booking button as the pill it is */
-.chip[data-shape='screen'] {
-  width: 1.8em;
-  border-radius: 0.16em;
-}
-
-.chip[data-shape='round'] {
-  width: 0.98em;
-}
-
-.chip[data-shape='pill'] {
-  width: 2.55em;
-}
-
-/* The clip is held larger than its screen, framed on the body chart's figure */
-.clipFrame {
-  position: relative;
-  overflow: hidden;
-}
-
-.clip {
-  position: absolute;
-  left: -12%;
-  top: -93%;
-  width: 225%;
-  max-width: none;
-  height: auto;
 }
 
 .body {

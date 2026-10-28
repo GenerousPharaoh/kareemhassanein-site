@@ -7,12 +7,14 @@ type Props = {
   title: string;
   intro?: string;
   items: FaqItem[];
+  /** Rise over a light sheet above it, with rounded top corners. */
+  sheet?: boolean;
 };
 
 /** Questions as native disclosure widgets: no script, keyboard and screen-reader ready. */
-export function Faq({ id, title, intro, items }: Props) {
+export function Faq({ id, title, intro, items, sheet = false }: Props) {
   return (
-    <section className={`section ${styles.section}`} aria-labelledby={id}>
+    <section className={`section ${sheet ? 'sheet-up' : ''} ${styles.section}`} data-sheet={sheet || undefined} aria-labelledby={id}>
       <div className={`container ${styles.inner}`}>
         <div className={styles.head}>
           <h2 id={id} className={`t-h2 ${styles.title}`}>

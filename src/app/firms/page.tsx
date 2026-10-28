@@ -72,7 +72,7 @@ export default function FirmsPage() {
         aside={
           <HeroPhone
             palette={trc.palette}
-            loop={pickLoop(trc, 'hero-arrive--phone')}
+            loop={pickLoop(trc, 'home-scroll--phone')}
             domain={trc.domain}
             caption="The rebuilt home page of Tax Relief Counsel, a tax law firm in Washington, D.C. Finished, and waiting on launch."
           />

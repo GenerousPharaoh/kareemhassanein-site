@@ -94,7 +94,7 @@ export const CASES: CaseStudy[] = [
     loops: [
       loop('tax-relief-counsel/decoder--desktop', 'The notice decoder: choosing a notice shows its deadline and what it means.'),
       loop('tax-relief-counsel/map--desktop', 'Routes drawing out from Washington to clients abroad.'),
-      loop('tax-relief-counsel/hero-arrive--phone', 'The opening on a phone.'),
+      loop('tax-relief-counsel/home-scroll--phone', 'The home page on a phone, from the opening down to the practice areas.'),
     ],
     stills: [
       still('tax-relief-counsel/decoder--desktop', 'The notice decoder with the CP14 balance-due deadline open.'),

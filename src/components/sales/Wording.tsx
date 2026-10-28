@@ -36,7 +36,7 @@ export function Added({ children }: { children: ReactNode }) {
 /** How the wording is written: to the college's rules, approved by the owner, with a marked-up sample. */
 export function Wording({ id, title, text, examples, lines, sheetNote }: Props) {
   return (
-    <section className={`section ${styles.section}`} aria-labelledby={id}>
+    <section className={`section sheet-up ${styles.section}`} aria-labelledby={id}>
       <div className={`container ${styles.inner}`}>
         <div className={styles.copy}>
           <p className="t-label">Wording</p>

@@ -50,14 +50,14 @@
   place-items: center;
   border-radius: 50%;
   font: 500 0.75rem / 1 var(--font-mono);
-  color: var(--on-night);
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--on-night) 34%, transparent);
+  color: var(--ink);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ink) 34%, transparent);
 }
 
 /* The last stop is handover: everything in your name, working */
 .step[data-last] .node {
   background: var(--signal);
-  color: var(--night);
+  color: var(--paper);
   box-shadow: 0 0 0 5px color-mix(in srgb, var(--signal) 18%, transparent);
 }
 
@@ -70,7 +70,7 @@
 
 .text {
   max-width: 46ch;
-  font-size: var(--t-small);
+  font-size: 0.9375rem;
   line-height: 1.55;
   color: var(--muted);
 }
