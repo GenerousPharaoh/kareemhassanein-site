@@ -1,0 +1,178 @@
+/*
+  The opening: a wall of all the work, tilted away from the viewer, its rows drifting past in opposite
+  directions. Each tile is a client screen on its client's own colour.
+*/
+.wall {
+  --tile-w: 420px;
+  --gap: 22px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  min-height: 520px;
+  overflow: hidden;
+  background: var(--stage);
+  perspective: 1500px;
+  perspective-origin: 50% 45%;
+}
+
+/* A shade under the navigation, so the name and links read over the busiest screens */
+.wall::before {
+  content: '';
+  position: absolute;
+  z-index: 2;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: calc(var(--header-h) + 96px);
+  background: linear-gradient(rgba(12, 12, 11, 0.92), rgba(12, 12, 11, 0.6) 45%, rgba(12, 12, 11, 0));
+  pointer-events: none;
+}
+
+.sink {
+  position: absolute;
+  inset: 0;
+  transform-origin: 50% 30%;
+  will-change: transform;
+}
+
+/* The plane is much wider and taller than the screen, centred on it, so the tilt never shows an edge */
+.planeBox {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0;
+  height: 0;
+}
+
+.plane {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: grid;
+  gap: var(--gap);
+  width: 200vw;
+  transform: translate(-50%, -50%);
+  transform-origin: 50% 50%;
+  will-change: transform;
+}
+
+.row {
+  display: flex;
+  gap: var(--gap);
+  width: max-content;
+  /* Rows start at different points, so the wall does not read as a grid of columns */
+  margin-left: calc(var(--offset) * -6px);
+  padding-right: var(--gap);
+}
+
+.tile {
+  flex: none;
+  display: block;
+  width: var(--tile-w);
+  padding: 8px;
+  border-radius: 12px;
+  background: var(--ground);
+  box-shadow: 0 30px 60px -34px rgba(0, 0, 0, 0.8);
+  cursor: pointer;
+}
+
+.screen {
+  display: block;
+  aspect-ratio: 1.6;
+  overflow: hidden;
+  border-radius: 6px;
+  background: #fff;
+}
+
+.screen picture,
+.screen img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 0;
+}
+
+@media (hover: hover) {
+  .tile {
+    transition: filter var(--dur-hover) var(--ease-colour);
+  }
+
+  :global(html:not([data-scrolling])) .tile:hover {
+    filter: brightness(1.08);
+  }
+}
+
+/* The drift: each row travels one copy's length, then starts again where it began */
+@media (prefers-reduced-motion: no-preference) {
+  .row {
+    animation: drift var(--speed) linear infinite;
+    animation-play-state: paused;
+  }
+
+  .row[data-dir='right'] {
+    animation-direction: reverse;
+  }
+
+  .wall[data-moving] .row {
+    animation-play-state: running;
+  }
+}
+
+@keyframes drift {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(calc(-100% / 3), 0, 0); }
+}
+
+.pause {
+  position: absolute;
+  z-index: 3;
+  right: calc(var(--gutter-r) - 10px);
+  bottom: calc(var(--sheet-r) + 14px);
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(12, 12, 11, 0.55);
+  color: var(--ivory);
+  cursor: pointer;
+}
+
+.pause svg {
+  width: 16px;
+  height: 16px;
+}
+
+@media (hover: hover) {
+  .pause:hover {
+    background: rgba(12, 12, 11, 0.8);
+  }
+}
+
+.dim {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  background: #000;
+  opacity: 0;
+  pointer-events: none;
+}
+
+@media (max-width: 760px) {
+  .wall {
+    --tile-w: 260px;
+    --gap: 14px;
+  }
+
+  .tile {
+    padding: 5px;
+    border-radius: 9px;
+  }
+
+  .screen {
+    border-radius: 5px;
+  }
+}

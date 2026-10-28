@@ -1,6 +1,7 @@
 import { Close, Offer } from '@/components/home/HomeEnd';
 import s from '@/components/home/Home.module.css';
-import { Showreel, type ReelItem, type ReelMedia } from '@/components/home/Showreel';
+import type { ReelItem, ReelMedia } from '@/components/home/Showreel';
+import { WorkWall, type WallTile } from '@/components/home/WorkWall';
 import { Statement } from '@/components/home/Statement';
 import { PathExplorer } from '@/components/home/PathExplorer';
 import { WorkIndex, type IndexItem } from '@/components/home/WorkIndex';
@@ -148,10 +149,21 @@ const servicesLine = (list: string[]) =>
   list.map((x, i) => (i === 0 || KEEP_CASE.includes(x) || /^[A-Z]{2,}$/.test(x) ? x : x.charAt(0).toLowerCase() + x.slice(1))).join(', ');
 
 export default function Home() {
-  const reel: ReelItem[] = REEL.map(({ deep: _deep, ...r }) => {
-    const c = caseBySlug(r.slug)!;
-    return { ...r, kind: c.kindLabel, href: `/work/${c.slug}` };
-  });
+  // The wall: every full desktop screen of the work on its client's colour, mixed so neighbours come
+  // from different clients, with the Tax Relief Counsel home page in the middle row to open on.
+  const pools = CASES.map((c) =>
+    [c.plate.desktop, ...c.stills]
+      .filter((st, i, all) => st.device === 'desktop' && st.w / st.h > 1.45 && st.w / st.h < 1.75 && all.findIndex((o) => o.src === st.src) === i)
+      .map((st): WallTile => ({ key: st.src, still: st, ground: c.palette.ground, href: `/work/${c.slug}`, lead: st.src.endsWith('tax-relief-counsel/home-hero--desktop') })),
+  );
+  const mixed: WallTile[] = [];
+  for (let i = 0; pools.some((p) => p[i]); i++) pools.forEach((p) => p[i] && mixed.push(p[i]));
+  const ROWS = 5;
+  const leadAt = mixed.findIndex((t) => t.lead);
+  // Rotate the order so the lead lands in the middle row
+  const shift = (((leadAt - 2) % ROWS) + ROWS) % ROWS;
+  const ordered = [...mixed.slice(shift), ...mixed.slice(0, shift)];
+  const wall: WallTile[][] = Array.from({ length: ROWS }, (_, r) => ordered.filter((_, i) => i % ROWS === r));
 
   const index: IndexItem[] = CASES.filter((c) => ['tax-relief-counsel', 'endorphins', 'physiomax'].includes(c.slug)).map((c) => ({
     slug: c.slug,
@@ -166,7 +178,7 @@ export default function Home() {
   return (
     <>
       <div className={s.opening}>
-        <Showreel items={reel} title={`${SITE.name} · ${SITE.descriptor}`} />
+        <WorkWall rows={wall} title={`${SITE.name} · ${SITE.descriptor}`} />
         <WorkIndex items={index} title="Selected work" />
       </div>
       <Statement
