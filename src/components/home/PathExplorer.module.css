@@ -119,7 +119,7 @@
 
 /* Large screens: the section holds still while the page scrolls through the six stops */
 @media (min-width: 1000px) and (min-height: 560px) {
-  .section[data-pin] { height: calc(100svh + var(--n) * 56svh); }
+  .section[data-pin] { height: calc(100svh + var(--n) * 44svh); }
   .pin { position: sticky; top: 0; height: 100svh; display: flex; flex-direction: column; justify-content: center; padding-block: calc(var(--header-h) + 24px) 32px; }
   .frame {
     flex: 1 1 auto;

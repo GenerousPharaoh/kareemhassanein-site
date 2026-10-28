@@ -19,8 +19,8 @@
   color: var(--tone-ink, var(--ivory));
   overflow: hidden;
   transition:
-    background-color 1.4s var(--ease-in-out),
-    color 1.4s var(--ease-in-out);
+    background-color var(--change, 0.9s) var(--ease-in-out),
+    color var(--change, 0.9s) var(--ease-in-out);
 }
 
 .sink {
@@ -50,7 +50,7 @@
 /* First load: the work arrives at its final size, without a separate shape reveal. */
 @media (prefers-reduced-motion: no-preference) {
   .screen {
-    animation: screen-arrive 650ms var(--ease-out) both;
+    animation: screen-arrive 450ms var(--ease-out) both;
   }
 }
 
@@ -130,11 +130,11 @@
 
 @media (prefers-reduced-motion: no-preference) {
   .layer[data-state='enter'] {
-    animation: layer-in 1.5s var(--ease-in-out) both;
+    animation: layer-in var(--change, 0.9s) var(--ease-in-out) both;
   }
 
   .layer[data-state='leave'] {
-    animation: layer-out 1.5s var(--ease-in-out) both;
+    animation: layer-out var(--change, 0.9s) var(--ease-in-out) both;
   }
 
   /* With the WebGL screen on top, the layers only feed it frames */
@@ -283,17 +283,18 @@
 }
 
 @media (prefers-reduced-motion: no-preference) {
+  /* The new name rises while the screen is still changing, not after it */
   .caption[data-phase='in'] .line {
-    animation: line-in 1.1s var(--ease-out) both;
-    animation-delay: 0.5s;
+    animation: line-in 0.75s var(--ease-out) both;
+    animation-delay: 0.2s;
   }
 
   .caption[data-phase='in'] .name .line {
-    animation-delay: 0.58s;
+    animation-delay: 0.26s;
   }
 
   .caption[data-phase='out'] .line {
-    animation: line-out 0.5s var(--ease-in) both;
+    animation: line-out 0.3s var(--ease-in) both;
   }
 
   .caption[data-phase='out'] .name .line {
@@ -464,7 +465,7 @@
 /* Entrance of the foot with the opening */
 @media (prefers-reduced-motion: no-preference) {
   .bars {
-    animation: foot-in 650ms var(--ease-out) 150ms both;
+    animation: foot-in 450ms var(--ease-out) 80ms both;
   }
 }
 

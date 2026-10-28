@@ -17,7 +17,7 @@ async function prepareImages() {
   let timeout = 0;
   await Promise.race([
     Promise.all(images.map((image) => image.decode().catch(() => {}))),
-    new Promise<void>((done) => { timeout = window.setTimeout(done, 180); }),
+    new Promise<void>((done) => { timeout = window.setTimeout(done, 120); }),
   ]);
   window.clearTimeout(timeout);
 }

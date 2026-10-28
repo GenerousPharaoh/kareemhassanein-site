@@ -14,7 +14,7 @@ export function getGsap() {
     gsap.registerPlugin(ScrollTrigger, SplitText, Flip);
     // Phones resize the viewport as the address bar slides; do not recalculate every scene for that.
     ScrollTrigger.config({ ignoreMobileResize: true });
-    gsap.defaults({ ease: 'power3.out', duration: 0.9 });
+    gsap.defaults({ ease: 'power3.out', duration: 0.7 });
     registered = true;
   }
   return { gsap, ScrollTrigger, SplitText, Flip };

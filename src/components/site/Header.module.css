@@ -48,7 +48,7 @@
 /* Over the reel, the header turns with the stage, at the stage's pace */
 .header[data-slow],
 .header[data-slow] :is(.markLine, .link, .cta, .menuIcon span) {
-  transition-duration: 1.4s;
+  transition-duration: 0.9s;
   transition-timing-function: var(--ease-in-out);
 }
 
@@ -385,7 +385,7 @@
 /* First load: the header settles in with the reel */
 @media (prefers-reduced-motion: no-preference) {
   .inner {
-    animation: header-in 1.2s var(--ease-out) 0.5s both;
+    animation: header-in 0.7s var(--ease-out) 0.15s both;
   }
 
   .skip {

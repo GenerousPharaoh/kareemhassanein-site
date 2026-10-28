@@ -6,7 +6,7 @@
   border-radius: var(--sheet-r) var(--sheet-r) 0 0;
   background: color-mix(in srgb, var(--hover-tone, var(--stage)) 55%, var(--stage));
   color: var(--ink);
-  transition: background-color 0.9s var(--ease-colour);
+  transition: background-color 0.45s var(--ease-colour);
 }
 
 .inner {
@@ -183,7 +183,7 @@
   .kind,
   .services,
   .arrow {
-    transition: color 0.5s var(--ease-colour);
+    transition: color var(--dur-hover) var(--ease-colour);
   }
 
   .row[data-current] .arrow {

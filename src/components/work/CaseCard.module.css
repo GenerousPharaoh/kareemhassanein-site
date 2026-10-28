@@ -212,10 +212,10 @@
 
 @media (prefers-reduced-motion: no-preference) {
   .arrow {
-    transition: transform 500ms var(--ease-out);
+    transition: transform var(--dur-ui) var(--ease-out);
   }
   .clip img, .clip video {
-    transition: transform 900ms var(--ease-out);
+    transition: transform var(--dur-move) var(--ease-out);
   }
 }
 

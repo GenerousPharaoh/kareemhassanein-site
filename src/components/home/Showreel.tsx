@@ -28,11 +28,14 @@ export type ReelItem = {
   focus: { desktop: number; phone: number };
   desktop: ReelMedia;
   phone: ReelMedia;
-  /** Seconds on screen, the change into it included */
-  seconds: number;
+  /** Seconds on screen, the change into it included: about the length of that layout's loop, so nothing sits on a frozen last frame */
+  seconds: { desktop: number; phone: number };
 };
 
-const CHANGE = 1.5;
+/** The change between projects, in seconds; the CSS reads it as --change */
+const CHANGE = 0.9;
+/** A change that is still running when another project is asked for finishes this much faster */
+const RUSH = 4;
 const noop = () => () => {};
 /** True once the page is hydrated (false in the server render), without an effect. */
 const useHydrated = () => useSyncExternalStore(noop, () => true, () => false);
@@ -63,12 +66,16 @@ export function Showreel({ items, title }: Props) {
   const [glOn, setGlOn] = useState(false);
   const [reduce, setReduce] = useState(false);
   const [wanted, setWanted] = useState<number[]>([0, 1]);
+  // Only read once hydrated (the bars' timing), so the server render cannot disagree with it
+  const [phone, setPhone] = useState(() => typeof window !== 'undefined' && window.matchMedia(PHONE).matches);
   const hydrated = useHydrated();
 
   const live = useRef({ index: 0, busy: false, pending: -1, phone: false, reduce: false, running: true, introDone: false });
   const gl = useRef<ReelGL | null>(null);
   // go() calls itself for a request that arrived during a change; it does so through this ref
   const goNext = useRef<(to: number) => void>(() => {});
+  // Speeds the running change to its end, so a click on a bar never waits behind it
+  const hurry = useRef<() => void>(() => {});
   const motion = useRef({ progress: 0, started: [] as number[], slotItem: [0, -1] as [number, number] });
 
   const media = (i: number) => (live.current.phone ? items[i].phone : items[i].desktop);
@@ -86,7 +93,7 @@ export function Showreel({ items, title }: Props) {
     const v = videoOf(i);
     if (!v || live.current.reduce) return;
     v.preload = 'auto';
-    if (v.readyState === 0) v.load();
+    if (v.readyState === 0 && v.networkState !== v.NETWORK_LOADING) v.load();
     try {
       v.currentTime = 0;
     } catch {
@@ -97,6 +104,15 @@ export function Showreel({ items, title }: Props) {
   }, []);
 
   const pauseVideo = (i: number) => videoOf(i)?.pause();
+
+  /** Start fetching a loop before its turn, so it has frames when the change into it begins. */
+  const preloadVideo = useCallback((i: number) => {
+    const v = videoOf(i);
+    if (!v || live.current.reduce || v.preload === 'auto') return;
+    v.preload = 'auto';
+    v.load();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const want = (...list: number[]) =>
     setWanted((w) => {
@@ -111,6 +127,7 @@ export function Showreel({ items, title }: Props) {
       if (to === L.index && !L.busy) return;
       if (L.busy) {
         L.pending = to;
+        hurry.current();
         return;
       }
       const from = L.index;
@@ -124,10 +141,15 @@ export function Showreel({ items, title }: Props) {
       setIndex(to);
       setLeaving(from);
 
+      let done = false;
       const finish = () => {
+        if (done) return;
+        done = true;
+        hurry.current = () => {};
         pauseVideo(from);
         setLeaving(null);
         L.busy = false;
+        preloadVideo((L.index + 1) % n);
         if (L.pending >= 0) {
           const p = L.pending;
           L.pending = -1;
@@ -142,21 +164,27 @@ export function Showreel({ items, title }: Props) {
         m.slotItem[1] = to;
         r.setSource(1, sourceOf(to), focusOf(to));
         let waited = 0;
+        let rush = false;
+        let tween: gsap.core.Tween | null = null;
+        hurry.current = () => {
+          rush = true;
+          tween?.timeScale(RUSH);
+        };
         const start = () => {
           // Give a slow network up to a few seconds to deliver the next still before the change
-          if (!r.ready(1) && waited < 180) {
+          if (!r.ready(1) && waited < 180 && !rush) {
             waited++;
             r.setSource(1, sourceOf(to), focusOf(to));
             requestAnimationFrame(start);
             return;
           }
-          gsap.fromTo(
+          tween = gsap.fromTo(
             m,
             { progress: 0 },
             {
               progress: 1,
               duration: CHANGE,
-              ease: 'power2.inOut',
+              ease: 'power3.inOut',
               onComplete: () => {
                 r.swap();
                 m.slotItem = [to, -1];
@@ -165,14 +193,19 @@ export function Showreel({ items, title }: Props) {
               },
             },
           );
+          if (rush) tween.timeScale(RUSH);
         };
         start();
       } else {
-        window.setTimeout(finish, L.reduce ? 0 : CHANGE * 1000);
+        const timer = window.setTimeout(finish, L.reduce ? 0 : CHANGE * 1000);
+        hurry.current = () => {
+          window.clearTimeout(timer);
+          finish();
+        };
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [n, playVideo],
+    [n, playVideo, preloadVideo],
   );
 
   useEffect(() => {
@@ -188,6 +221,7 @@ export function Showreel({ items, title }: Props) {
     const reduceQ = window.matchMedia('(prefers-reduced-motion: reduce)');
     L.phone = phoneQ.matches;
     L.reduce = reduceQ.matches;
+    setPhone(L.phone);
     if (document.documentElement.hasAttribute('data-route-arrival')) root.current?.setAttribute('data-route-intro', '');
     setReduce(L.reduce);
     motion.current.started[0] = performance.now();
@@ -195,13 +229,16 @@ export function Showreel({ items, title }: Props) {
     // Match the first-frame fade before handing the unchanged crop to WebGL.
     const introTimer = window.setTimeout(() => {
       L.introDone = true;
-    }, L.reduce || document.documentElement.hasAttribute('data-route-arrival') ? 0 : 700);
+    }, L.reduce || document.documentElement.hasAttribute('data-route-arrival') ? 0 : 450);
+    // The second loop loads while the first plays
+    const preloadTimer = window.setTimeout(() => preloadVideo(1), 1200);
     const onReduce = () => {
       L.reduce = reduceQ.matches;
       setReduce(L.reduce);
     };
     const onPhone = () => {
       L.phone = phoneQ.matches;
+      setPhone(L.phone);
       // The <source media> choice is made at load: reload the videos for the new layout
       videos.current.forEach((v) => v && v.readyState > 0 && v.load());
       playVideo(L.index);
@@ -210,10 +247,11 @@ export function Showreel({ items, title }: Props) {
     phoneQ.addEventListener('change', onPhone);
     return () => {
       window.clearTimeout(introTimer);
+      window.clearTimeout(preloadTimer);
       reduceQ.removeEventListener('change', onReduce);
       phoneQ.removeEventListener('change', onPhone);
     };
-  }, [playVideo]);
+  }, [playVideo, preloadVideo]);
 
   // Rest off screen and in a background tab
   useEffect(() => {
@@ -296,7 +334,7 @@ export function Showreel({ items, title }: Props) {
         const zoomOf = (i: number) => {
           if (i < 0 || media(i).video) return BASE_ZOOM;
           // Stills drift slowly closer while they are on screen
-          const t = Math.min(1, (now - (m.started[i] ?? now)) / (items[i].seconds * 1000 + CHANGE * 1000));
+          const t = Math.min(1, (now - (m.started[i] ?? now)) / (items[i].seconds.desktop * 1000 + CHANGE * 1000));
           return BASE_ZOOM + 0.05 * t;
         };
         r.render({ progress: m.progress, time: now / 1000, mouse: [0, 0], zoom: [zoomOf(m.slotItem[0]), zoomOf(m.slotItem[1])] });
@@ -352,7 +390,7 @@ export function Showreel({ items, title }: Props) {
       className={s.reel}
       aria-label="Selected work"
       data-theme={item.dark ? 'dark' : 'light'}
-      style={{ ['--tone' as string]: item.tone, ['--tone-ink' as string]: item.ink }}
+      style={{ ['--tone' as string]: item.tone, ['--tone-ink' as string]: item.ink, ['--change' as string]: `${CHANGE}s` }}
     >
       <h1 className="sr-only">{title}</h1>
       <div className={s.sink} data-sink>
@@ -415,7 +453,7 @@ export function Showreel({ items, title }: Props) {
                       </span>
                       <span className={s.barTrack} aria-hidden="true">
                         {i === index && hydrated && !reduce && (
-                          <span key={`${index}`} className={s.barFill} style={{ animationDuration: `${it.seconds}s` }} onAnimationEnd={advance} />
+                          <span key={`${index}`} className={s.barFill} style={{ animationDuration: `${it.seconds[phone ? 'phone' : 'desktop']}s` }} onAnimationEnd={advance} />
                         )}
                       </span>
                       <span className="sr-only">Show {it.name}</span>

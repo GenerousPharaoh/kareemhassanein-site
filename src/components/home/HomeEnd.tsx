@@ -24,11 +24,11 @@ export function Offer() {
     const { gsap } = getGsap();
     const el = root.current!;
     const tl = gsap.timeline({ scrollTrigger: { trigger: el, start: 'top 80%', once: true } });
-    tl.fromTo(el.querySelector('[data-rule]'), { scaleX: 0 }, { scaleX: 1, duration: 1.4, ease: 'expo.out' }, 0).fromTo(
+    tl.fromTo(el.querySelector('[data-rule]'), { scaleX: 0 }, { scaleX: 1, duration: 0.9, ease: 'expo.out' }, 0).fromTo(
       el.querySelectorAll('[data-up]'),
       { y: 24, opacity: 0 },
-      { y: 0, opacity: 1, duration: 1.1, ease: 'expo.out', stagger: 0.08 },
-      0.15,
+      { y: 0, opacity: 1, duration: 0.8, ease: 'expo.out', stagger: 0.06 },
+      0.08,
     );
   });
 
@@ -78,9 +78,9 @@ export function Close() {
     const { gsap } = getGsap();
     const el = root.current!;
     const tl = gsap.timeline({ scrollTrigger: { trigger: el, start: 'top 75%', once: true } });
-    tl.fromTo(el.querySelectorAll('[data-rule]'), { scaleX: 0 }, { scaleX: 1, duration: 1.4, ease: 'expo.out', stagger: 0.1 }, 0)
-      .fromTo(el.querySelector('[data-big]'), { yPercent: 105 }, { yPercent: 0, duration: 1.2, ease: 'expo.out' }, 0.1)
-      .fromTo(el.querySelectorAll('[data-up]'), { y: 18, opacity: 0 }, { y: 0, opacity: 1, duration: 1, ease: 'expo.out', stagger: 0.08 }, 0.3);
+    tl.fromTo(el.querySelectorAll('[data-rule]'), { scaleX: 0 }, { scaleX: 1, duration: 0.9, ease: 'expo.out', stagger: 0.07 }, 0)
+      .fromTo(el.querySelector('[data-big]'), { yPercent: 105 }, { yPercent: 0, duration: 0.85, ease: 'expo.out' }, 0.06)
+      .fromTo(el.querySelectorAll('[data-up]'), { y: 18, opacity: 0 }, { y: 0, opacity: 1, duration: 0.75, ease: 'expo.out', stagger: 0.06 }, 0.18);
   });
 
   return (

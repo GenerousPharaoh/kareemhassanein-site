@@ -43,7 +43,7 @@ const Arrow = () => (
 
 /**
  * The route from a search to a booked appointment. On a large screen the section holds still while
- * the page scrolls through it: each stop's proof rises over the last in that client's colours and the
+ * the page scrolls through it (44svh of scroll per stop): each stop's proof rises over the last in that client's colours and the
  * track along the bottom fills. Smaller screens swipe through the stops as cards.
  */
 export function PathExplorer({ items }: { items: PathExample[] }) {
@@ -99,21 +99,21 @@ export function PathExplorer({ items }: { items: PathExample[] }) {
         if (up) {
           // The next proof rises over the last, which sinks into shade; its screen settles a beat behind the wipe
           gsap.set(stages[prev], { zIndex: 1 });
-          tl.fromTo(stages[next], { autoAlpha: 1, zIndex: 2, clipPath: SHUT, '--shade': 0 }, { clipPath: OPEN, duration: 0.95, ease: 'expo.inOut' }, 0)
-            .fromTo(screens[next], { yPercent: 16 }, { yPercent: 0, duration: 1.15, ease: 'expo.out' }, 0.2)
-            .to(screens[prev], { yPercent: -6, duration: 0.95, ease: 'expo.inOut' }, 0)
-            .to(stages[prev], { '--shade': 0.42, duration: 0.95, ease: 'expo.inOut' }, 0);
+          tl.fromTo(stages[next], { autoAlpha: 1, zIndex: 2, clipPath: SHUT, '--shade': 0 }, { clipPath: OPEN, duration: 0.62, ease: 'expo.inOut' }, 0)
+            .fromTo(screens[next], { yPercent: 16 }, { yPercent: 0, duration: 0.8, ease: 'expo.out' }, 0.1)
+            .to(screens[prev], { yPercent: -6, duration: 0.62, ease: 'expo.inOut' }, 0)
+            .to(stages[prev], { '--shade': 0.42, duration: 0.62, ease: 'expo.inOut' }, 0);
         } else {
           // Scrolling back, the current proof drops away to uncover the one before it, coming out of shade
           gsap.set(stages[next], { autoAlpha: 1, zIndex: 1, clipPath: OPEN });
           gsap.set(stages[prev], { zIndex: 2 });
-          tl.to(stages[prev], { clipPath: SHUT, duration: 0.9, ease: 'expo.inOut' }, 0)
-            .fromTo(stages[next], { '--shade': 0.42 }, { '--shade': 0, duration: 0.9, ease: 'expo.inOut' }, 0)
-            .fromTo(screens[next], { yPercent: -6 }, { yPercent: 0, duration: 0.9, ease: 'expo.inOut' }, 0);
+          tl.to(stages[prev], { clipPath: SHUT, duration: 0.6, ease: 'expo.inOut' }, 0)
+            .fromTo(stages[next], { '--shade': 0.42 }, { '--shade': 0, duration: 0.6, ease: 'expo.inOut' }, 0)
+            .fromTo(screens[next], { yPercent: -6 }, { yPercent: 0, duration: 0.6, ease: 'expo.inOut' }, 0);
         }
-        tl.to(copies[prev], { autoAlpha: 0, y: up ? -16 : 16, duration: 0.32, ease: 'power2.in' }, 0)
-          .set(copies[next], { autoAlpha: 1, y: 0, zIndex: 2 }, 0.28)
-          .fromTo(copies[next].children, { y: up ? 26 : -26, opacity: 0 }, { y: 0, opacity: 1, duration: 0.9, ease: 'expo.out', stagger: 0.055 }, 0.28)
+        tl.to(copies[prev], { autoAlpha: 0, y: up ? -16 : 16, duration: 0.2, ease: 'power2.in' }, 0)
+          .set(copies[next], { autoAlpha: 1, y: 0, zIndex: 2 }, 0.16)
+          .fromTo(copies[next].children, { y: up ? 26 : -26, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: 'expo.out', stagger: 0.04 }, 0.16)
           .set(stages[prev], { autoAlpha: 0, clipPath: OPEN, '--shade': 0 })
           .set(screens[prev], { yPercent: 0 });
       };
@@ -178,7 +178,7 @@ export function PathExplorer({ items }: { items: PathExample[] }) {
       // The middle of that stop's stretch of the scroll
       const y = range.start + ((index + 0.5) / n) * (range.end - range.start);
       const lenis = getLenis();
-      if (lenis) lenis.scrollTo(y, { duration: 1.2 + Math.abs(index - active) * 0.15 });
+      if (lenis) lenis.scrollTo(y, { duration: 0.8 + Math.abs(index - active) * 0.08 });
       else window.scrollTo({ top: y, behavior: reduce ? 'auto' : 'smooth' });
       return;
     }

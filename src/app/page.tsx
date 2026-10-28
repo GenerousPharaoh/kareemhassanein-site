@@ -33,7 +33,9 @@ const reelStill = (key: string): ReelMedia => {
 };
 
 // The reel: what each project looks like on a desktop and on a phone, the stage it sits on (its
-// own colours, dark or light), and its time on screen. deep is the dark version the work list uses.
+// own colours, dark or light), and its time on screen. Each time is about the length of that
+// layout's loop (a still gets 4.4 s), so the reel moves on as a loop ends instead of holding its
+// last frame. deep is the dark version the work list uses.
 const REEL: Array<Omit<ReelItem, 'kind' | 'href'> & { deep: string }> = [
   {
     slug: 'tax-relief-counsel',
@@ -46,7 +48,7 @@ const REEL: Array<Omit<ReelItem, 'kind' | 'href'> & { deep: string }> = [
     focus: { desktop: 0.35, phone: 0.2 },
     desktop: reelLoop('tax-relief-counsel/hero-arrive--desktop'),
     phone: reelLoop('tax-relief-counsel/hero-arrive--phone'),
-    seconds: 7.6,
+    seconds: { desktop: 6.1, phone: 6.4 },
   },
   {
     slug: 'endorphins',
@@ -59,7 +61,7 @@ const REEL: Array<Omit<ReelItem, 'kind' | 'href'> & { deep: string }> = [
     focus: { desktop: 0.62, phone: 0.1 },
     desktop: reelStill('endorphins/home-hero--desktop'),
     phone: reelLoop('endorphins/home-scroll--phone'),
-    seconds: 6.6,
+    seconds: { desktop: 4.4, phone: 5.8 },
   },
   {
     slug: 'physiomax',
@@ -72,7 +74,7 @@ const REEL: Array<Omit<ReelItem, 'kind' | 'href'> & { deep: string }> = [
     focus: { desktop: 0.3, phone: 0.1 },
     desktop: reelLoop('physiomax/treat-chart--desktop'),
     phone: reelLoop('physiomax/home-scroll--phone'),
-    seconds: 7.8,
+    seconds: { desktop: 7.1, phone: 6.2 },
   },
   {
     slug: 'kinetikare',
@@ -85,7 +87,7 @@ const REEL: Array<Omit<ReelItem, 'kind' | 'href'> & { deep: string }> = [
     focus: { desktop: 0.35, phone: 0.1 },
     desktop: reelStill('kinetikare/home-hero--desktop'),
     phone: reelLoop('kinetikare/home-scroll--phone'),
-    seconds: 6.6,
+    seconds: { desktop: 4.4, phone: 6.4 },
   },
   {
     slug: 'techniques-combat',
@@ -98,7 +100,7 @@ const REEL: Array<Omit<ReelItem, 'kind' | 'href'> & { deep: string }> = [
     focus: { desktop: 0.5, phone: 0.3 },
     desktop: reelLoop('techniques-combat/hero-film--desktop'),
     phone: reelLoop('techniques-combat/hero-film--phone'),
-    seconds: 8.6,
+    seconds: { desktop: 7.2, phone: 7.2 },
   },
   {
     slug: 'travel-journal',
@@ -111,7 +113,7 @@ const REEL: Array<Omit<ReelItem, 'kind' | 'href'> & { deep: string }> = [
     focus: { desktop: 0.3, phone: 0.1 },
     desktop: reelLoop('travel-journal/opening--desktop'),
     phone: reelLoop('travel-journal/travels-scroll--phone'),
-    seconds: 6.6,
+    seconds: { desktop: 4.3, phone: 5.7 },
   },
   {
     slug: 'wedding',
@@ -124,7 +126,7 @@ const REEL: Array<Omit<ReelItem, 'kind' | 'href'> & { deep: string }> = [
     focus: { desktop: 0.45, phone: 0.3 },
     desktop: reelLoop('wedding/opening--desktop'),
     phone: reelLoop('wedding/opening--phone'),
-    seconds: 6.2,
+    seconds: { desktop: 3.5, phone: 3.5 },
   },
 ];
 

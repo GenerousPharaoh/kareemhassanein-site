@@ -102,6 +102,6 @@
 
 @media (prefers-reduced-motion: no-preference) {
   .frame, .go svg {
-    transition: transform 800ms var(--ease-out);
+    transition: transform var(--dur-move) var(--ease-out);
   }
 }

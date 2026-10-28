@@ -82,7 +82,7 @@ export function Header() {
     const onStage = () => {
       setSlow(true);
       window.clearTimeout(t);
-      t = window.setTimeout(() => setSlow(false), 1600);
+      t = window.setTimeout(() => setSlow(false), 1000);
     };
     window.addEventListener('stagechange', onStage);
     return () => {

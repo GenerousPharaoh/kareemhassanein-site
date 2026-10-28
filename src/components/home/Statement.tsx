@@ -47,7 +47,7 @@ export function Statement({ pieces, body, link, portrait }: Props) {
     const words = [...split.words, ...el.querySelectorAll<HTMLElement>('[data-chip]')];
     // In reading order, so the chips light with the words around them
     words.sort((a, b) => (a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1));
-    const tl = gsap.timeline({ scrollTrigger: { trigger: text, start: 'top 78%', end: 'bottom 52%', scrub: 0.6 } });
+    const tl = gsap.timeline({ scrollTrigger: { trigger: text, start: 'top 78%', end: 'bottom 52%', scrub: 0.3 } });
     words.forEach((w, i) => {
       if (w.hasAttribute('data-chip')) {
         const [from, to] = OPENING[(w.getAttribute('data-shape') ?? 'pill') as keyof typeof OPENING];
@@ -77,7 +77,7 @@ export function Statement({ pieces, body, link, portrait }: Props) {
       });
     }
 
-    gsap.fromTo(el.querySelectorAll('[data-after]'), { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 1.1, ease: 'expo.out', stagger: 0.08, scrollTrigger: { trigger: el.querySelector('[data-after]'), start: 'top 90%', once: true } });
+    gsap.fromTo(el.querySelectorAll('[data-after]'), { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, ease: 'expo.out', stagger: 0.06, scrollTrigger: { trigger: el.querySelector('[data-after]'), start: 'top 90%', once: true } });
 
     return () => {
       clip?.removeEventListener('timeupdate', stopClip);

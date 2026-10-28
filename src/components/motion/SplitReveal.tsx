@@ -32,8 +32,8 @@ export function SplitReveal({ as: Tag = 'h2', id, className, children, delay = 0
       onSplit(self) {
         return gsap.from(self.lines, {
           yPercent: 105,
-          duration: 1.15,
-          stagger: 0.085,
+          duration: 0.85,
+          stagger: 0.06,
           delay,
           ease: 'expo.out',
           scrollTrigger: { trigger: el, start: 'top 88%', once: true },
