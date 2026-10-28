@@ -69,7 +69,7 @@ export function Offer() {
   );
 }
 
-/** The end of the page: one large way to book, a full-width band that fills on hover. */
+/** The end of the page: one large way to book, a full-width band whose arrow answers the pointer. */
 export function Close() {
   const root = useRef<HTMLElement>(null);
 
@@ -93,15 +93,6 @@ export function Close() {
               <span className={s.bandRow} data-big>
                 <span className={s.bandText}>Book a 20-minute call</span>
                 <span className={s.bandArrow} aria-hidden="true">
-                  <Arrow />
-                </span>
-              </span>
-            </span>
-            {/* The fill: the same row in dark type on ivory, revealed from below on hover */}
-            <span className={s.fill} aria-hidden="true">
-              <span className={s.bandRow}>
-                <span className={s.bandText}>Book a 20-minute call</span>
-                <span className={s.bandArrow}>
                   <Arrow />
                 </span>
               </span>

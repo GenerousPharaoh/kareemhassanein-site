@@ -255,27 +255,36 @@
   transition: transform 0.6s var(--ease-out);
 }
 
-/* The fill sits exactly over the row and is clipped away until hover */
-.fill {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  display: flex;
-  align-items: center;
-  background: var(--ivory);
-  color: var(--stage);
-  clip-path: inset(100% 0 0 0);
-  transition: clip-path 0.7s var(--ease-out);
-}
-
-.fill .bandRow {
-  width: 100%;
+/* Hover, only when the pointer moved there (not when the page scrolled under it): the rules
+   brighten, the arrow's circle fills and the arrow steps forward */
+.rule,
+.bandArrow {
+  transition:
+    background-color var(--dur-hover) var(--ease-colour),
+    color var(--dur-hover) var(--ease-colour),
+    box-shadow var(--dur-hover) var(--ease-colour);
 }
 
 @media (hover: hover) {
-  .band:hover .fill {
-    clip-path: inset(0 0 0 0);
+  :global(html:not([data-scrolling])) .band:hover .rule {
+    background: var(--ink);
   }
+
+  :global(html:not([data-scrolling])) .band:hover .bandArrow {
+    background: var(--ink);
+    color: var(--stage);
+    box-shadow: none;
+  }
+
+  :global(html:not([data-scrolling])) .band:hover .bandArrow svg {
+    transform: translateX(3px);
+  }
+}
+
+.band:focus-visible .bandArrow {
+  background: var(--ink);
+  color: var(--stage);
+  box-shadow: none;
 }
 
 .band:focus-visible {

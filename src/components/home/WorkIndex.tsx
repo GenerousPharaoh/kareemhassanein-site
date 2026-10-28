@@ -37,7 +37,7 @@ export function WorkIndex({ items, title = 'Work', allHref = '/work' }: { items:
         </div>
         <ul className={s.list} data-list onPointerLeave={() => setActive(-1)} data-active={active >= 0 || undefined}>
           {items.map((item, i) => (
-            <li key={item.slug} className={s.row} data-row={i} data-current={i === active || undefined} onPointerEnter={(event) => { if (event.pointerType === 'mouse') setActive(i); }}>
+            <li key={item.slug} className={s.row} data-row={i} data-current={i === active || undefined} onPointerEnter={(event) => { if (event.pointerType === 'mouse' && !document.documentElement.hasAttribute('data-scrolling')) setActive(i); }} onPointerMove={(event) => { if (event.pointerType === 'mouse' && active !== i && !document.documentElement.hasAttribute('data-scrolling')) setActive(i); }}>
               <span className={s.rule} data-rule aria-hidden="true" />
               <Link href={item.href} className={s.link} onFocus={() => setActive(i)} onBlur={() => setActive(-1)}>
                 <span className={s.nameMask}><span className={s.name} data-rise>{item.name}</span></span>

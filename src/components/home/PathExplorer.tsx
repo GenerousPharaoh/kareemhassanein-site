@@ -4,11 +4,16 @@ import Link from 'next/link';
 import { useEffect, useId, useRef, useState, type CSSProperties } from 'react';
 import { Picture } from '@/components/media/Picture';
 import type { ProofRecord, Stop } from '@/content/path';
-import { getGsap, useGsap } from '@/lib/gsap';
+import { useReducedMotion } from '@/lib/useReducedMotion';
 import type { Still } from '@/lib/media';
 import s from './PathExplorer.module.css';
 
 export type PathExample = Stop & { image: Still; ground: string; ink: string; domain: string; /** Where a cropped screen is anchored, as object-position. */ anchor?: string };
+
+/** Seconds on each stop before the route moves on by itself. */
+const DWELL = 5.5;
+/** How long the outgoing proof stays under the incoming one, in ms (the CSS wipe is a little shorter). */
+const COVER = 760;
 
 /** A setting shown as the record it lives in: a small panel in the case's own colours. */
 function RecordPanel({ record }: { record: ProofRecord }) {
@@ -36,103 +41,126 @@ const Arrow = () => (
 );
 
 /**
- * The route from a search to a booked appointment, as six numbered stops in reading order, each with
- * its proof in that client's colours. Wide screens show the whole route at once (two rows of three,
- * joined by a line through the numbers); phones swipe through the stops as cards, with a dot for each.
+ * The route from a search to a booked appointment. The six stops are listed in order beside one large
+ * stage; choosing a stop shows its proof there, in that client's colours. Left alone, the route moves
+ * on by itself, a bar filling under the current stop; it rests while the pointer is over it, off
+ * screen, or paused.
  */
 export function PathExplorer({ items }: { items: PathExample[] }) {
   const uid = useId();
   const root = useRef<HTMLElement>(null);
-  const row = useRef<HTMLOListElement>(null);
+  const reduce = useReducedMotion();
   const [active, setActive] = useState(0);
+  const [prev, setPrev] = useState<number | null>(null);
+  const [paused, setPaused] = useState(false);
+  const [resting, setResting] = useState(true);
+  const [hovered, setHovered] = useState(false);
   const n = items.length;
+  const item = items[active];
 
-  // The stops rise into place in order as the section arrives, and the line runs on through them
-  useGsap(root, ({ reduce, mobile }) => {
-    if (reduce || mobile) return;
-    const { gsap } = getGsap();
-    const el = root.current!;
-    const tl = gsap.timeline({ scrollTrigger: { trigger: el.querySelector('[data-route]'), start: 'top 82%', once: true } });
-    tl.fromTo(el.querySelectorAll('[data-step]'), { y: 28, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, ease: 'expo.out', stagger: 0.07, clearProps: 'transform,opacity' }, 0)
-      .fromTo(el.querySelectorAll('[data-link]'), { scaleX: 0 }, { scaleX: 1, duration: 0.9, ease: 'expo.out', stagger: 0.07, clearProps: 'transform' }, 0.15);
-  });
+  const show = (next: number) => {
+    if (next === active) return;
+    setPrev(active);
+    setActive(next);
+  };
 
-  // Swiping: the card nearest the start of the row is the current stop.
+  // The outgoing proof is released once the incoming one covers it
   useEffect(() => {
-    const list = row.current;
-    if (!list) return;
-    let frame = 0;
-    const read = () => {
-      frame = 0;
-      const cards = [...list.children] as HTMLElement[];
-      if (cards.length < 2 || list.scrollWidth <= list.clientWidth + 2) return;
-      const step = cards[1].offsetLeft - cards[0].offsetLeft;
-      const atEnd = list.scrollLeft >= list.scrollWidth - list.clientWidth - 2;
-      setActive(atEnd ? cards.length - 1 : Math.round(list.scrollLeft / step));
-    };
-    const queue = () => {
-      if (!frame) frame = requestAnimationFrame(read);
-    };
-    list.addEventListener('scroll', queue, { passive: true });
+    if (prev === null) return;
+    const t = window.setTimeout(() => setPrev(null), reduce ? 0 : COVER);
+    return () => window.clearTimeout(t);
+  }, [prev, active, reduce]);
+
+  // Rest off screen and in a background tab
+  useEffect(() => {
+    const el = root.current;
+    if (!el) return;
+    let inView = false;
+    const sync = () => setResting(!inView || document.hidden);
+    const io = new IntersectionObserver(([e]) => {
+      inView = e.isIntersecting;
+      sync();
+    }, { threshold: 0.35 });
+    io.observe(el);
+    document.addEventListener('visibilitychange', sync);
     return () => {
-      cancelAnimationFrame(frame);
-      list.removeEventListener('scroll', queue);
+      io.disconnect();
+      document.removeEventListener('visibilitychange', sync);
     };
   }, []);
 
-  const jump = (index: number) => {
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const list = row.current;
-    const cards = list ? ([...list.children] as HTMLElement[]) : [];
-    if (!list || !cards[index]) return;
-    list.scrollTo({ left: cards[index].offsetLeft - cards[0].offsetLeft, behavior: reduce ? 'auto' : 'smooth' });
-  };
+  const running = !reduce && !paused && !resting && !hovered;
+  const stateOf = (i: number) => (i === active ? 'on' : i === prev ? 'prev' : 'off');
 
   return (
-    <section ref={root} className={'night ' + s.section} aria-labelledby={uid + '-title'} data-theme="dark" style={{ '--n': n, '--i': active } as CSSProperties}>
+    <section
+      ref={root}
+      className={'night ' + s.section}
+      aria-labelledby={uid + '-title'}
+      data-theme="dark"
+      style={{ '--path-ground': item.ground, '--path-ink': item.ink, '--dwell': `${DWELL}s` } as CSSProperties}
+    >
       <div className={'container ' + s.frame}>
         <h2 id={uid + '-title'} className={s.heading}>
           From search <span>to booked.</span>
         </h2>
-        <ol ref={row} className={s.steps} data-route aria-label="Six stops between a search and a booked appointment">
-          {items.map((item, index) => (
-            <li key={item.id} id={uid + '-' + item.id} className={s.step} data-step aria-current={active === index ? 'step' : undefined}>
-              <div className={s.top}>
-                <span className={s.num} aria-hidden="true">
-                  {index + 1}
-                </span>
-                <span className={s.link} data-link aria-hidden="true" />
-              </div>
-              <h3 className={s.name}>{item.name}</h3>
-              <p className={s.line}>{item.line}</p>
-              <figure className={s.stage} style={{ '--path-ground': item.ground, '--path-ink': item.ink, '--path-anchor': item.anchor } as CSSProperties}>
-                <figcaption className={s.domain}>{item.source ?? item.domain}</figcaption>
-                <div className={s.screen} data-record={item.record ? true : undefined}>
-                  {item.record ? <RecordPanel record={item.record} /> : <Picture media={item.image} sizes="(min-width: 1000px) 30vw, (min-width: 700px) 45vw, min(84vw, 440px)" />}
-                </div>
-              </figure>
-              <p className={s.example}>{item.example}</p>
-              <Link href={'/work/' + item.caseSlug} className={s.caseLink}>
-                {item.caseName}
-                <Arrow />
-              </Link>
-            </li>
-          ))}
-        </ol>
-        <div className={s.track}>
-          <div className={s.stations} role="group" aria-label="Go to a stop">
-            {items.map((item, index) => (
-              <button
-                key={item.id}
-                type="button"
-                className={s.station}
-                aria-controls={uid + '-' + item.id}
-                aria-current={active === index ? 'step' : undefined}
-                onClick={() => jump(index)}
-              >
-                <span className={s.stationName}>{item.name}</span>
-              </button>
+
+        <div className={s.route} onPointerEnter={(e) => e.pointerType === 'mouse' && setHovered(true)} onPointerLeave={() => setHovered(false)}>
+          <ol className={s.stops} aria-label="Six stops between a search and a booked appointment">
+            {items.map((it, i) => (
+              <li key={it.id}>
+                <button type="button" className={s.stop} aria-controls={uid + '-stage'} aria-current={i === active ? 'step' : undefined} onClick={() => show(i)}>
+                  <span className={s.num} aria-hidden="true">
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                  <span className={s.name}>{it.name}</span>
+                  <span className={s.bar} aria-hidden="true">
+                    {i === active && !reduce && (
+                      <span key={active} className={s.fill} data-running={running || undefined} onAnimationEnd={() => show((active + 1) % n)} />
+                    )}
+                  </span>
+                </button>
+              </li>
             ))}
+          </ol>
+          {!reduce && (
+            <button type="button" className={s.pause} onClick={() => setPaused((p) => !p)} aria-pressed={paused} aria-label={paused ? 'Play the route' : 'Pause the route'}>
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                {paused ? <path d="M8 5.5v13l10.5-6.5z" fill="currentColor" /> : <path d="M8 5h2.6v14H8zM13.4 5H16v14h-2.6z" fill="currentColor" />}
+              </svg>
+            </button>
+          )}
+        </div>
+
+        <div className={s.stageCol} id={uid + '-stage'}>
+          <figure className={s.stage}>
+            <figcaption className={s.domain}>
+              <span key={active} className={s.domainText}>
+                {item.source ?? item.domain}
+              </span>
+            </figcaption>
+            <div className={s.screens}>
+              {items.map((it, i) => (
+                <div
+                  key={it.id}
+                  className={s.proof}
+                  data-state={stateOf(i)}
+                  data-record={it.record ? true : undefined}
+                  aria-hidden={i !== active || undefined}
+                  style={{ '--proof-ground': it.ground, '--proof-ink': it.ink, '--path-anchor': it.anchor } as CSSProperties}
+                >
+                  {it.record ? <RecordPanel record={it.record} /> : <Picture media={it.image} sizes="(min-width: 1000px) 56vw, 92vw" />}
+                </div>
+              ))}
+            </div>
+          </figure>
+          <div key={active} className={s.caption}>
+            <p className={s.line}>{item.line}</p>
+            <p className={s.example}>{item.example}</p>
+            <Link href={'/work/' + item.caseSlug} className={s.caseLink}>
+              {item.caseName}
+              <Arrow />
+            </Link>
           </div>
         </div>
       </div>

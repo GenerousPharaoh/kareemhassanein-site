@@ -15,6 +15,25 @@ export const getLenis = () => instance;
  * Lenis follows native scroll changes (Next's scroll restoration, the keyboard, find-in-page) on its own.
  */
 export function SmoothScroll() {
+  // Scrolling moves the page under a resting pointer. Until the pointer itself moves again, html carries
+  // data-scrolling and hover effects that would otherwise light up by themselves hold back.
+  useEffect(() => {
+    const root = document.documentElement;
+    const onScroll = () => {
+      if (!root.hasAttribute('data-scrolling')) root.setAttribute('data-scrolling', '');
+    };
+    const onMove = (e: PointerEvent) => {
+      if ((e.movementX || e.movementY) && root.hasAttribute('data-scrolling')) root.removeAttribute('data-scrolling');
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('pointermove', onMove, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('pointermove', onMove);
+      root.removeAttribute('data-scrolling');
+    };
+  }, []);
+
   useEffect(() => {
     const query = window.matchMedia('(pointer: fine) and (prefers-reduced-motion: no-preference)');
     let lenis: Lenis | null = null;
