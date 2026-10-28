@@ -31,6 +31,7 @@ export const ASSETS = {
       ['loops/hero-arrive--desktop.mp4', 'hero-arrive--desktop'],
       ['loops/hero-arrive--phone.mp4', 'hero-arrive--phone'],
       ['loops/home-scroll--phone.mp4', 'home-scroll--phone'],
+      ['loops/home-scroll--desktop.mp4', 'home-scroll--desktop'],
       ['loops/decoder--desktop.mp4', 'decoder--desktop'],
       ['loops/map--desktop.mp4', 'map--desktop'],
     ],

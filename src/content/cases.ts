@@ -90,7 +90,9 @@ export const CASES: CaseStudy[] = [
       desktop: still('tax-relief-counsel/home-hero--desktop', 'Tax Relief Counsel home page: the attorney standing against a limestone wall beside the headline “Your Trusted Tax Attorney”.'),
       phone: still('tax-relief-counsel/home-hero--phone', 'Tax Relief Counsel home page on a phone.'),
     },
-    hero: loop('tax-relief-counsel/hero-arrive--desktop', 'The home page opening: light moves across the stone and the practice line changes.'),
+    // Where the loop repeats (the work page, the case page) it starts on the settled opening, so a repeat
+    // does not snap back to the arrival; the home reel, which plays once, keeps the arrival itself.
+    hero: loop('tax-relief-counsel/home-scroll--desktop', 'The home page, from its opening down to the practice areas.'),
     loops: [
       loop('tax-relief-counsel/decoder--desktop', 'The notice decoder: choosing a notice shows its deadline and what it means.'),
       loop('tax-relief-counsel/map--desktop', 'Routes drawing out from Washington to clients abroad.'),
