@@ -3,10 +3,12 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { Picture } from '@/components/media/Picture';
 import { CaseCard } from '@/components/pages/CaseCard';
+import { ContentsSpy } from '@/components/pages/ContentsSpy';
 import { enter } from '@/components/pages/enter';
 import { Keep } from '@/components/pages/Keep';
 import { pageMeta } from '@/lib/meta';
 import { NoteBody, NoteTitle } from '@/components/pages/NoteBody';
+import { NoteCover } from '@/components/pages/NoteCover';
 import { ButtonLink } from '@/components/ui/ButtonLink';
 import { caseBySlug } from '@/content/cases';
 import { NOTES, noteBySlug, readingMinutes, type Block } from '@/content/notes';
@@ -57,40 +59,44 @@ export default async function NotePage({ params }: Props) {
   return (
     <article className={styles.article}>
       <header className={`container ${styles.head}`}>
-        <Link href="/notes" className={styles.back} data-enter style={enter(0)}>
-          <svg viewBox="0 0 16 16" aria-hidden="true">
-            <path d="M13 8H3.5M7.5 4l-4 4 4 4" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-          Notes
-        </Link>
-        <p className="t-label" data-enter style={enter(0)}>
-          {note.audience}
-        </p>
-        <h1 className={styles.title} data-enter style={enter(1)}>
-          <NoteTitle text={note.title} tailClassName={styles.titleTail} />
-        </h1>
-        <p className={`t-lede ${styles.standfirst}`} data-enter style={enter(2)}>
-          {note.summary}
-        </p>
-        <div className={styles.byline} data-enter style={enter(3)}>
-          <span className={styles.avatar} aria-hidden="true">
-            <Picture media={avatar} sizes="88px" />
-          </span>
-          <span className={styles.bylineText}>
-            <span className={styles.author}>{SITE.name}</span>
-            <span className={styles.when}>
-              <time dateTime={note.month}>{note.monthLabel}</time>
-              <span aria-hidden="true"> · </span>
-              {minutes} min read
+        <div className={styles.headText}>
+          <Link href="/notes" className={styles.back} data-enter style={enter(0)}>
+            <svg viewBox="0 0 16 16" aria-hidden="true">
+              <path d="M13 8H3.5M7.5 4l-4 4 4 4" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            Notes
+          </Link>
+          <p className="t-label" data-enter style={enter(0)}>
+            {note.audience}
+          </p>
+          <h1 className={styles.title} data-enter style={enter(1)}>
+            <NoteTitle text={note.title} tailClassName={styles.titleTail} />
+          </h1>
+          <p className={`t-lede ${styles.standfirst}`} data-enter style={enter(2)}>
+            {note.summary}
+          </p>
+          <div className={styles.byline} data-enter style={enter(3)}>
+            <span className={styles.avatar} aria-hidden="true">
+              <Picture media={avatar} sizes="88px" />
             </span>
-          </span>
+            <span className={styles.bylineText}>
+              <span className={styles.author}>{SITE.name}</span>
+              <span className={styles.when}>
+                <time dateTime={note.month}>{note.monthLabel}</time>
+                <span aria-hidden="true"> · </span>
+                {minutes} min read
+              </span>
+            </span>
+          </div>
         </div>
+        {/* The same cover as on the notes list, so opening the note carries it here */}
+        <NoteCover slug={note.slug} cases={cases} className={styles.cover} sizes="(min-width: 960px) 150px, 30vw" priority />
       </header>
 
       <div className="container">
         {/* On wide screens the note starts in the first screen, so it enters after the heading and byline */}
         <div className={styles.layout} data-enter style={enter(4)}>
-          <nav className={styles.contents} aria-label="In this note">
+          <ContentsSpy className={styles.contents} label="In this note">
             <p className="t-label">In this note</p>
             <ol className={styles.contentsList}>
               {contents.map((h) => (
@@ -102,7 +108,7 @@ export default async function NotePage({ params }: Props) {
                 </li>
               ))}
             </ol>
-          </nav>
+          </ContentsSpy>
           <div className={styles.main}>
             <NoteBody blocks={note.body} />
             <p className={styles.signoff}>

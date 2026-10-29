@@ -4,6 +4,7 @@ import { enter } from '@/components/pages/enter';
 import { Keep } from '@/components/pages/Keep';
 import { pageMeta } from '@/lib/meta';
 import { NoteTitle } from '@/components/pages/NoteBody';
+import { NoteCover } from '@/components/pages/NoteCover';
 import { PageHead } from '@/components/pages/PageHead';
 import { caseBySlug } from '@/content/cases';
 import { NOTES, readingMinutes } from '@/content/notes';
@@ -28,41 +29,41 @@ export default function NotesPage() {
         />
 
         <ol className={styles.list} data-enter style={enter(3)}>
-          {NOTES.map((note) => {
+          {NOTES.map((note, i) => {
             const cases = note.cases.map(caseBySlug).filter((c) => c !== undefined);
             return (
               <li key={note.slug} className={styles.item}>
                 <Link href={`/notes/${note.slug}`} className={styles.link}>
-                  <span className={styles.side}>
-                    <span className={styles.meta}>
-                      <time dateTime={note.month}>{note.monthLabel}</time>
-                      <span aria-hidden="true">·</span>
-                      <span>{readingMinutes(note)} min read</span>
+                  {/* Sizes: one phone, about a third of the cover's width */}
+                  <NoteCover slug={note.slug} cases={cases} className={styles.cover} sizes="(min-width: 960px) 150px, 30vw" priority={i === 0} />
+                  <span className={styles.text}>
+                    <span className={styles.side}>
+                      <span className={styles.meta}>
+                        <time dateTime={note.month}>{note.monthLabel}</time>
+                        <span aria-hidden="true">·</span>
+                        <span>{readingMinutes(note)} min read</span>
+                      </span>
+                      <span className={styles.audience}>{note.audience}</span>
                     </span>
-                    <span className={styles.audience}>{note.audience}</span>
-                  </span>
-                  <h2 className={styles.title}>
-                    <NoteTitle text={note.title} tailClassName={styles.titleTail} />
-                  </h2>
-                  <span className={styles.summary}>{note.summary}</span>
-                  <span className={styles.foot}>
-                    <span className={styles.cases}>
-                      {cases.map((c) => (
-                        <span
-                          key={c.slug}
-                          className={styles.case}
-                          style={paletteVars(c.palette)}
-                        >
-                          <span className={styles.dot} aria-hidden="true" />
-                          {c.short}
-                        </span>
-                      ))}
-                    </span>
-                    <span className={styles.read}>
-                      Read the note
-                      <svg viewBox="0 0 16 16" aria-hidden="true">
-                        <path d="M3 8h9.5M8.5 4l4 4-4 4" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
+                    <h2 className={styles.title}>
+                      <NoteTitle text={note.title} tailClassName={styles.titleTail} />
+                    </h2>
+                    <span className={styles.summary}>{note.summary}</span>
+                    <span className={styles.foot}>
+                      <span className={styles.cases}>
+                        {cases.map((c) => (
+                          <span key={c.slug} className={styles.case} style={paletteVars(c.palette)}>
+                            <span className={styles.dot} aria-hidden="true" />
+                            {c.short}
+                          </span>
+                        ))}
+                      </span>
+                      <span className={styles.read}>
+                        Read the note
+                        <svg viewBox="0 0 16 16" aria-hidden="true">
+                          <path d="M3 8h9.5M8.5 4l4 4-4 4" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                      </span>
                     </span>
                   </span>
                 </Link>

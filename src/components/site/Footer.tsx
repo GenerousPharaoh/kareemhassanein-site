@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { CopyEmail } from '@/components/ui/CopyEmail';
 import { FOOTER_NAV, SITE } from '@/content/site';
 import styles from './Footer.module.css';
+import { Wordmark } from './Wordmark';
 
 export function Footer() {
   return (
@@ -24,9 +25,7 @@ export function Footer() {
         </nav>
       </div>
       {/* The name, as wide as the page */}
-      <p className={styles.wordmark} aria-hidden="true">
-        Kareem Hassanein
-      </p>
+      <Wordmark text="Kareem Hassanein" />
       <div className={`container ${styles.base}`}>
         <p>
           © {new Date().getFullYear()} {SITE.name}. {SITE.descriptor}, from {SITE.location}.

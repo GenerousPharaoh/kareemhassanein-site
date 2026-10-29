@@ -17,14 +17,16 @@
 
 .link {
   display: grid;
-  grid-template-areas: 'side'
-    'title'
-    'summary'
-    'foot';
-  gap: 14px;
+  gap: clamp(22px, 3vw, 32px);
   padding: clamp(28px, 3.6vw, 48px) 0;
   color: inherit;
   text-decoration: none;
+}
+
+.text {
+  display: grid;
+  align-content: center;
+  gap: 14px;
 }
 
 /* The ring stands clear of the words, which start flush with the column */
@@ -35,7 +37,6 @@
 }
 
 .side {
-  grid-area: side;
   display: grid;
   align-content: start;
   gap: 8px;
@@ -60,8 +61,7 @@
 }
 
 .title {
-  grid-area: title;
-  max-width: 26ch;
+  max-width: 22ch;
   padding-top: 4px;
   font: 500 clamp(1.75rem, 3.2vw, 3.5rem)/1.05 var(--font-display);
   letter-spacing: -.045em;
@@ -74,15 +74,13 @@
 }
 
 .summary {
-  grid-area: summary;
-  max-width: 58ch;
+  max-width: 52ch;
   font-size: var(--t-lede);
   line-height: 1.5;
   color: var(--muted);
 }
 
 .foot {
-  grid-area: foot;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -156,17 +154,22 @@
   }
 }
 
+/* Wide screens: the note beside its cover */
 @media (min-width: 960px) {
   .link {
-    grid-template-columns: minmax(0, 3fr) minmax(0, 9fr);
-    grid-template-areas: 'side title'
-      'side summary'
-      'side foot';
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
     column-gap: clamp(40px, 5vw, 80px);
-    row-gap: 16px;
+    align-items: center;
   }
-  .side {
-    padding-top: 12px;
+
+  .cover {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .text {
+    grid-column: 1;
+    grid-row: 1;
   }
 }
 

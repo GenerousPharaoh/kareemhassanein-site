@@ -66,7 +66,7 @@ export function PageTransition() {
       lenis?.scrollTo(window.scrollY, { immediate: true, force: true });
 
       if (!document.startViewTransition || typeof ViewTransition === 'undefined' || !('types' in ViewTransition.prototype) || reduce.matches) {
-        root.dataset.routeArrival = '';
+        root.dataset.routeArrival = direction;
         if (navigate) {
           // The same history accounting works when animation is disabled.
           pending.current = { pathname: destination, position: position.current + 1, finish: () => { pending.current = null; } };
@@ -91,7 +91,8 @@ export function PageTransition() {
       const update = () => {
         // A later click can supersede a transition before the browser has captured its old view.
         if (pending.current !== route) return;
-        root.dataset.routeArrival = '';
+        // Its value is the direction, for anything that should keep still on the way back
+        root.dataset.routeArrival = direction;
         navigate?.();
         return committed.then(async () => {
           if (active !== transition || location.pathname !== destination) return;
@@ -129,7 +130,8 @@ export function PageTransition() {
       const url = new URL(link.href);
       if (url.origin !== location.origin || url.pathname === currentPath.current) return;
       event.preventDefault();
-      const up = url.pathname === '/' || (url.pathname === '/work' && currentPath.current.startsWith('/work/'));
+      const up = url.pathname === '/' || (url.pathname === '/work' && currentPath.current.startsWith('/work/'))
+        || (url.pathname === '/notes' && currentPath.current.startsWith('/notes/'));
       begin(url.pathname, () => router.push(url.pathname + url.search + url.hash), up ? 'back' : 'forward');
     };
 

@@ -2,6 +2,7 @@ import { CloseBand } from '@/components/pages/CloseBand';
 import { enter } from '@/components/pages/enter';
 import { pageMeta } from '@/lib/meta';
 import { PageHead } from '@/components/pages/PageHead';
+import { Rise } from '@/components/ui/Rise';
 import styles from './page.module.css';
 
 export const metadata = pageMeta({
@@ -34,14 +35,15 @@ export default function AiPage() {
           label="How I use AI"
           title={
             <>
-              I use AI to build.
+              <span className={styles.quiet}>I use AI to build.</span>
               <br /> I decide what ships.
             </>
           }
           lede="AI tools write and check code, draft text and run tests for me. I review and test every change myself before it goes live."
         />
 
-        <section className={styles.split} aria-labelledby="split-title" data-enter style={enter(3)}>
+        {/* The tools' rows come up, then mine */}
+        <Rise as="section" items="li" className={styles.split} aria-labelledby="split-title" data-enter style={enter(3)}>
           <h2 id="split-title" className="sr-only">
             Who does what
           </h2>
@@ -53,7 +55,7 @@ export default function AiPage() {
               ))}
             </ul>
           </div>
-          <div className={`night ${styles.panel} ${styles.panelMe}`}>
+          <div className={`paper ${styles.panel} ${styles.panelMe}`} data-theme="light">
             <p className={`t-label ${styles.panelLabel}`}>
               <span className={styles.dot} aria-hidden="true" />
               Me
@@ -64,7 +66,7 @@ export default function AiPage() {
               ))}
             </ul>
           </div>
-        </section>
+        </Rise>
       </div>
 
       <section className={`container section ${styles.settings}`} aria-labelledby="settings-title">

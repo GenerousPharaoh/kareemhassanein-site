@@ -482,6 +482,20 @@ html:not([data-route-arrival]) body:has(main > :first-child[data-theme='light'],
   animation-timing-function: var(--ease-in-out);
 }
 
+/* A note's cover flies from the notes list into the note, and back; on any other page change it leaves and arrives with the page */
+::view-transition-group(*.note-cover) {
+  animation-duration: 520ms;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+::view-transition-old(*.note-cover):only-child {
+  animation: page-retreat 140ms ease-out both;
+}
+
+::view-transition-new(*.note-cover):only-child {
+  animation: page-reveal var(--page-duration) var(--page-ease) both;
+}
+
 @media (prefers-reduced-motion: reduce) {
   ::view-transition-group(*),
   ::view-transition-old(*),

@@ -85,6 +85,17 @@
   text-align: center;
   color: var(--ivory);
   user-select: none;
+  /* Words below the line are hidden; the tops of the letters are never cut */
+  clip-path: inset(-50% 0 -0.06em 0);
+}
+
+.word {
+  display: inline;
+}
+
+.wordInk {
+  display: inline-block;
+  transform-origin: 0 100%;
 }
 
 .base {

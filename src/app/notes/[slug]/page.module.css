@@ -5,10 +5,25 @@
 /* Header */
 .head {
   display: grid;
-  justify-items: start;
-  gap: clamp(14px, 1.6vw, 20px);
+  gap: clamp(32px, 4vw, 48px);
   padding-top: clamp(28px, 4.5vw, 72px);
   padding-bottom: clamp(36px, 5vw, 64px);
+}
+
+.headText {
+  display: grid;
+  justify-items: start;
+  align-content: center;
+  gap: clamp(14px, 1.6vw, 20px);
+}
+
+/* Wide screens: the heading beside the note's cover, placed as it sits on the notes list */
+@media (min-width: 960px) {
+  .head {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    column-gap: clamp(40px, 5vw, 80px);
+    align-items: center;
+  }
 }
 
 /* Padded sideways and pulled back by the same amount: a larger target, and room for the focus ring */
@@ -163,9 +178,28 @@
 }
 
 .contentsList {
+  position: relative;
   list-style: none;
   display: grid;
   border-left: 1px solid var(--rule);
+}
+
+/* The line down the contents fills as the note is read */
+.contentsList::before {
+  content: '';
+  position: absolute;
+  left: -1px;
+  top: 0;
+  width: 1px;
+  height: 100%;
+  background: var(--ink);
+  transform: scaleY(var(--read, 0));
+  transform-origin: 50% 0;
+}
+
+/* The section on screen */
+.contentsLink[data-current] {
+  color: var(--ink);
 }
 
 .contentsLink {

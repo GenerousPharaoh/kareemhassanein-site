@@ -5,7 +5,12 @@
   padding-bottom: var(--section);
 }
 
-/* The tools beside me: two lists, the second in ink */
+/* The headline's first line steps back, so the second carries it */
+.quiet {
+  color: var(--muted);
+}
+
+/* The tools beside me: two lists, mine on the light sheet */
 .split {
   display: grid;
   gap: 12px;
@@ -21,9 +26,13 @@
   box-shadow: inset 0 0 0 1px var(--rule-soft);
 }
 
+/* Mine on the light sheet: the part a person answers for stands forward of the tools */
 .panelMe {
-  background: var(--night);
   box-shadow: none;
+}
+
+.panel:not(.panelMe) .list li {
+  color: var(--ink-2);
 }
 
 .panelLabel {
@@ -36,8 +45,8 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: var(--signal-on-night);
-  box-shadow: 0 0 0 3px rgba(91, 213, 156, 0.18);
+  background: var(--signal);
+  box-shadow: 0 0 0 3px var(--signal-soft);
 }
 
 .list {
@@ -60,9 +69,11 @@
 }
 
 /* Settings and accounts */
+/* The page's first block already ends with a section's space */
 .settings {
   display: grid;
   gap: clamp(28px, 4vw, 48px);
+  padding-top: 0;
 }
 
 .settingsTitle {
