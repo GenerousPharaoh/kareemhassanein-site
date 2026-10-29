@@ -1,14 +1,13 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import { Fragment, useEffect, useRef, useState, type CSSProperties } from 'react';
 import { Picture } from '@/components/media/Picture';
 import { getGsap, useGsap } from '@/lib/gsap';
-import type { Device, Loop, Still } from '@/lib/media';
-import { prefersReducedMotion, useReducedMotion } from '@/lib/useReducedMotion';
+import type { Device, Still } from '@/lib/media';
+import { useReducedMotion } from '@/lib/useReducedMotion';
 import s from './WorkWall.module.css';
 
-export type WallTile = { key: string; ground: string; href: string; device: Device; ratio: number; still?: Still; loop?: Loop };
+export type WallTile = { key: string; ground: string; device: Device; ratio: number; still: Still };
 
 type Props = { rows: WallTile[][]; name: string; line: string };
 
@@ -22,8 +21,6 @@ const DEPTH = [0.9, -0.75, 1, -0.95, 0.65, -0.85];
 const PART = { exit: 260, speed: 120 };
 /** How long the title holds before the work shows through it, and how far it pushes toward the eye meanwhile. */
 const HOLD = { seconds: 1.1, push: 1.04 };
-/** Now and then one row breaks away: its sprint in px a second, how far it comes toward the eye, and the seconds between. */
-const BURST = { v: 760, lift: 80, every: [3.6, 6.4] };
 
 const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v));
 const wrap = (x: number, w: number) => (w ? ((x % w) + w) % w : 0);
@@ -32,12 +29,11 @@ const wrap = (x: number, w: number) => (w ? ((x % w) + w) % w : 0);
  * The opening of the homepage. On a full load it opens on my name; the work streams past inside its
  * letters, then the eye flies through one of them into the wall. The wall is every screen of the work on its
  * client's colour, tilted away, its rows drifting in opposite directions. Scrolling pushes the rows
- * along (and back, scrolling up), a drag or swipe throws them, and a few tiles play their loops.
+ * along (and back, scrolling up), and a drag or swipe throws them.
  * Off screen it rests; paused or with reduced motion it holds still.
  */
 export function WorkWall({ rows, name, line }: Props) {
   const root = useRef<HTMLElement>(null);
-  const router = useRouter();
   const reduce = useReducedMotion();
   const [paused, setPaused] = useState(false);
   const [intro, setIntro] = useState(true);
@@ -58,7 +54,6 @@ export function WorkWall({ rows, name, line }: Props) {
       skew: 0,
       // How far behind the wall the row still is as it arrives, in px
       enter: 0,
-      burst: 0,
     }));
     const measure = () =>
       lanes.forEach((l, i) => {
@@ -73,7 +68,7 @@ export function WorkWall({ rows, name, line }: Props) {
     const place = () => {
       const part = PART.exit * (1 - (1 - exit) ** 2) + PART.speed * spread;
       lanes.forEach((l) => {
-        const z = l.enter + l.depth * part + (l.burst / BURST.v) * BURST.lift;
+        const z = l.enter + l.depth * part;
         l.row.style.transform = `translate3d(${-l.x}px, 0, ${z.toFixed(1)}px) skewX(${l.skew.toFixed(2)}deg)`;
       });
     };
@@ -97,13 +92,11 @@ export function WorkWall({ rows, name, line }: Props) {
     const m = { rush: 0, fling: 0, scrollV: 0, dragV: 0, dragging: false };
     let lastY = window.scrollY;
     let clock = 0;
-    let nextBurst = BURST.every[1];
-    let burstRow = 0;
     const step = (_time: number, deltaMs: number) => {
       const dt = Math.min(deltaMs, 50) / 1000;
       if (!dt) return;
       const y = window.scrollY;
-      m.scrollV += (clamp((y - lastY) / dt, -4000, 4000) - m.scrollV) * (1 - Math.exp(-dt / 0.1));
+      m.scrollV += (clamp((y - lastY) / dt, -4000, 4000) - m.scrollV) * (1 - Math.exp(-dt / 0.16));
       lastY = y;
       m.rush *= Math.exp(-dt / 0.42);
       m.fling *= Math.exp(-dt / 0.55);
@@ -115,15 +108,8 @@ export function WorkWall({ rows, name, line }: Props) {
       sway.rz = Math.sin(clock * 0.37) * 1.1;
       sway.rx = Math.sin(clock * 0.29 + 0.6) * 1.6;
       pose();
-      if (!held && !m.dragging && clock >= nextBurst) {
-        // Never the same row twice running
-        burstRow = (burstRow + 1 + Math.floor(Math.random() * (lanes.length - 1))) % lanes.length;
-        lanes[burstRow].burst = BURST.v;
-        nextBurst = clock + BURST.every[0] + Math.random() * (BURST.every[1] - BURST.every[0]);
-      }
       for (const l of lanes) {
-        l.burst *= Math.exp(-dt / 0.65);
-        const auto = held ? 0 : l.dir * ((m.dragging ? 0 : l.speed + l.burst) + m.rush + m.scrollV * 0.5);
+        const auto = held ? 0 : l.dir * ((m.dragging ? 0 : l.speed) + m.rush + m.scrollV * 0.5);
         const v = auto + m.fling;
         l.x = wrap(l.x + v * dt, l.width);
         const lean = clamp(-(v - (held ? 0 : l.dir * l.speed)) * 0.0035, -7, 7);
@@ -153,15 +139,10 @@ export function WorkWall({ rows, name, line }: Props) {
     sync();
 
     // A drag or swipe moves every row with the pointer, and a throw keeps them going for a moment.
-    // Vertical swipes stay with the page (touch-action: pan-y); a drag never opens a tile.
+    // Vertical swipes stay with the page (touch-action: pan-y).
     let drag: { id: number; x: number; y: number; lastX: number; lastT: number; v: number; on: boolean } | null = null;
-    let swallowClick = false;
     const down = (e: PointerEvent) => {
       if (e.button !== 0 || (e.target as Element).closest('button')) return;
-      swallowClick = false;
-      // Fetch the case while the pointer is still down, so it is ready when the colour has filled the screen
-      const href = (e.target as Element).closest('a[data-device]')?.getAttribute('href');
-      if (href) router.prefetch(href);
       drag = { id: e.pointerId, x: e.clientX, y: e.clientY, lastX: e.clientX, lastT: e.timeStamp, v: 0, on: false };
     };
     const move = (e: PointerEvent) => {
@@ -195,71 +176,15 @@ export function WorkWall({ rows, name, line }: Props) {
         // A pointer that stopped before letting go is not a throw
         m.fling = e.timeStamp - drag.lastT > 90 ? 0 : clamp(-drag.v, -5000, 5000);
         m.dragging = false;
-        swallowClick = e.type === 'pointerup';
         el.removeAttribute('data-dragging');
       }
       drag = null;
-    };
-    // Opening a case: the client's colour floods the screen from the pointer as the wall surges on, and
-    // the case page (which opens on that same colour) rises out of it. The tile's own click then goes
-    // through to the page transition.
-    let flood: HTMLElement | null = null;
-    let passing = false;
-    const floodInto = (tile: HTMLAnchorElement, x: number, y: number) => {
-      if (flood) return;
-      const doc = document.documentElement;
-      const f = (flood = document.createElement('div'));
-      f.className = s.flood;
-      f.style.background = getComputedStyle(tile).getPropertyValue('--ground');
-      document.body.append(f);
-      const reach = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
-      m.rush = 2600;
-      gsap.fromTo(
-        f,
-        { clipPath: `circle(0px at ${x}px ${y}px)` },
-        {
-          clipPath: `circle(${reach}px at ${x}px ${y}px)`,
-          duration: 0.46,
-          ease: 'expo.inOut',
-          onComplete: () => {
-            doc.dataset.flood = '';
-            window.addEventListener('route-settled', () => delete doc.dataset.flood, { once: true });
-            passing = true;
-            tile.click();
-            passing = false;
-          },
-        },
-      );
-      // If the page never changes, give the wall back
-      window.setTimeout(() => {
-        if (flood !== f) return;
-        f.remove();
-        flood = null;
-        delete doc.dataset.flood;
-      }, 4000);
-    };
-
-    // Registered on window so it runs before the page transition's own click handler on document
-    const click = (e: MouseEvent) => {
-      if (passing || !el.contains(e.target as Node)) return;
-      if (swallowClick) {
-        swallowClick = false;
-        e.preventDefault();
-        e.stopPropagation();
-        return;
-      }
-      const tile = (e.target as Element).closest<HTMLAnchorElement>('a[data-device]');
-      if (!tile || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-      e.preventDefault();
-      e.stopPropagation();
-      floodInto(tile, e.clientX, e.clientY);
     };
     const noGhost = (e: DragEvent) => e.preventDefault();
     el.addEventListener('pointerdown', down);
     window.addEventListener('pointermove', move, { passive: true });
     window.addEventListener('pointerup', up);
     window.addEventListener('pointercancel', up);
-    window.addEventListener('click', click, true);
     el.addEventListener('dragstart', noGhost);
 
     const onResize = () => {
@@ -290,10 +215,10 @@ export function WorkWall({ rows, name, line }: Props) {
     const knock = title?.querySelector<HTMLCanvasElement>('[data-knock]');
     const ctx = knock?.getContext('2d');
     if (!arrived && title && ink && knock && ctx && header && window.scrollY < 40) {
-      // Hidden until the cut-out is drawn, so the wall only ever shows inside the letters at first.
-      // It starts a little back and comes forward as the eye flies in, so the two move the same way.
-      Object.assign(view, { rx: 32, rz: -10, s: 0.8, y: 2, o: 0 });
-      lanes.forEach((l) => (l.enter = -700));
+      // Through the hold the wall stands at its final pose behind the solid cut-out, unseen, so the browser
+      // has drawn every screen before the letters open (drawn for the first time as they open, it stalls).
+      // At the opening it steps back, and comes forward as the eye flies in, so the two move the same way.
+      const start = { rx: 32, rz: -10, s: 0.8, y: 2 };
       const ground = el.querySelector<HTMLElement>('[data-ground]')!;
       pose();
       place();
@@ -355,9 +280,11 @@ export function WorkWall({ rows, name, line }: Props) {
         // Then the letters open onto the work rushing past behind them, as the white wipes away on a soft, slanted edge
         .add(() => {
           m.rush = 3000;
-          view.o = 1;
+          Object.assign(view, start);
+          lanes.forEach((l) => (l.enter = -700));
           cut.holes = true;
           pose();
+          place();
           paint();
         }, open)
         .set(ground, { opacity: 1 }, open)
@@ -391,13 +318,11 @@ export function WorkWall({ rows, name, line }: Props) {
       window.removeEventListener('pointermove', move);
       window.removeEventListener('pointerup', up);
       window.removeEventListener('pointercancel', up);
-      window.removeEventListener('click', click, true);
       el.removeEventListener('dragstart', noGhost);
       window.removeEventListener('resize', onResize);
       window.removeEventListener('content-resized', onResize);
       el.removeAttribute('data-ready');
       el.removeAttribute('data-dragging');
-      flood?.remove();
     };
   });
 
@@ -409,32 +334,8 @@ export function WorkWall({ rows, name, line }: Props) {
     header.style.removeProperty('visibility');
   }, [intro]);
 
-  // The loops play while on screen, on wider screens, unless paused; phones and reduced motion get the poster
   useEffect(() => {
     pausedRef.current = paused;
-    const el = root.current;
-    if (!el) return;
-    const canPlay = () => !pausedRef.current && !prefersReducedMotion() && window.matchMedia('(min-width: 761px)').matches;
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const e of entries) {
-          const v = e.target as HTMLVideoElement;
-          if (e.isIntersecting) {
-            if (!v.getAttribute('poster')) v.poster = v.dataset.poster!;
-            if (canPlay()) {
-              if (!v.getAttribute('src')) v.src = v.dataset.src!;
-              v.play().catch(() => {});
-            }
-          } else if (!v.paused) v.pause();
-        }
-      },
-      { rootMargin: '10% 0px' },
-    );
-    el.querySelectorAll('video').forEach((v) => {
-      if (!canPlay()) v.pause();
-      io.observe(v);
-    });
-    return () => io.disconnect();
   }, [paused]);
 
   return (
@@ -451,22 +352,16 @@ export function WorkWall({ rows, name, line }: Props) {
               <div key={r} className={s.row} data-row data-dir={r % 2 ? 'right' : 'left'}>
                 {Array.from({ length: COPIES }, (_, copy) =>
                   row.map((tile) => (
-                    <a
+                    <div
                       key={`${copy}-${tile.key}`}
-                      href={tile.href}
-                      tabIndex={-1}
                       className={s.tile}
                       data-device={tile.device}
                       style={{ '--ground': tile.ground, '--ratio': tile.ratio } as CSSProperties}
                     >
                       <span className={s.screen}>
-                        {tile.loop ? (
-                          <video data-src={tile.loop.src} data-poster={tile.loop.poster} width={tile.loop.w} height={tile.loop.h} muted loop playsInline preload="none" />
-                        ) : (
-                          tile.still && <Picture media={tile.still} sizes={tile.device === 'phone' ? '(min-width: 761px) 140px, 90px' : '(min-width: 761px) 420px, 260px'} />
-                        )}
+                        <Picture media={tile.still} sizes={tile.device === 'phone' ? '(min-width: 761px) 140px, 90px' : '(min-width: 761px) 420px, 260px'} />
                       </span>
-                    </a>
+                    </div>
                   )),
                 )}
               </div>

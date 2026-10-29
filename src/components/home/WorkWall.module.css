@@ -73,7 +73,7 @@
   /* The rows keep their own depth, so they can part from the wall toward the eye or away from it */
   transform-style: preserve-3d;
   will-change: transform;
-  /* In depth, the plane's own box would sit over the rows behind it and take their clicks */
+  /* Nothing on the wall is a link; a drag starts on the wall itself */
   pointer-events: none;
 }
 
@@ -87,14 +87,11 @@
 
 .tile {
   flex: none;
-  pointer-events: auto;
   display: block;
   padding: var(--mat);
   border-radius: 12px;
   background: var(--ground);
   box-shadow: 0 30px 60px -34px rgba(0, 0, 0, 0.8);
-  cursor: pointer;
-  -webkit-user-drag: none;
 }
 
 .screen {
@@ -112,8 +109,7 @@
 }
 
 .screen picture,
-.screen img,
-.screen video {
+.screen img {
   display: block;
   width: 100%;
   height: 100%;
@@ -122,19 +118,8 @@
   pointer-events: none;
 }
 
-.wall[data-dragging],
-.wall[data-dragging] .tile {
+.wall[data-dragging] {
   cursor: grabbing;
-}
-
-@media (hover: hover) {
-  .tile {
-    transition: filter var(--dur-hover) var(--ease-colour);
-  }
-
-  :global(html:not([data-scrolling])) .wall:not([data-dragging]) .tile:hover {
-    filter: brightness(1.08);
-  }
 }
 
 /* The name, before the eye flies through it into the wall */
@@ -285,14 +270,6 @@
   .intro {
     display: none;
   }
-}
-
-/* A client's colour filling the screen on the way into its case (placed on the page by the wall's script) */
-.flood {
-  position: fixed;
-  z-index: 90;
-  inset: 0;
-  pointer-events: none;
 }
 
 @keyframes rise {

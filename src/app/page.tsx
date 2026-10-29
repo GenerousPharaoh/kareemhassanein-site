@@ -7,20 +7,9 @@ import { WorkIndex, type IndexItem } from '@/components/home/WorkIndex';
 import { CASES } from '@/content/cases';
 import { SITE } from '@/content/site';
 import { PORTRAIT } from '@/content/portrait';
-import { loop, still, type Loop, type Still } from '@/lib/media';
+import { loop, still, type Still } from '@/lib/media';
 import { pageMeta } from '@/lib/meta';
 
-/**
- * The loops that play on the wall: ones that start and end on the same frame, so a repeat does not
- * jump. Each names the still it stands in for, so the same screen does not appear twice.
- */
-const WALL_LOOPS: Record<string, string | null> = {
-  'physiomax/treat-chart--desktop': null,
-  'tax-relief-counsel/map--desktop': null,
-  'tax-relief-counsel/decoder--desktop': 'tax-relief-counsel/decoder--desktop',
-  'techniques-combat/hero-film--desktop': 'techniques-combat/home-hero--desktop',
-};
-const wallLoopKey = (l: Loop) => l.src.replace('/work-media/', '').replace(/\.mp4$/, '');
 
 export const metadata = pageMeta({
   title: `${SITE.name} · ${SITE.descriptor}`,
@@ -159,25 +148,14 @@ const servicesLine = (list: string[]) =>
   list.map((x, i) => (i === 0 || KEEP_CASE.includes(x) || /^[A-Z]{2,}$/.test(x) ? x : x.charAt(0).toLowerCase() + x.slice(1))).join(', ');
 
 export default function Home() {
-  // The wall: every screen of the work, desktop and phone, on its client's colour, with a few of the
-  // loops playing among them. Each client's screens are spaced out with its phone screens, then the
-  // clients are dealt across the rows in turn, so neighbours always come from different clients.
+  // The wall: every screen of the work, desktop and phone, on its client's colour. Stills only: video
+  // among the moving rows cost the wall its smoothness. Each client's screens are spaced out with its
+  // phone screens, then the clients are dealt across the rows in turn, so neighbours always come from
+  // different clients.
   const pools = CASES.map((c, ci) => {
-    const tile = (media: Still | Loop, ratio: number): WallTile => ({
-      key: media.src,
-      ground: c.palette.ground,
-      href: `/work/${c.slug}`,
-      device: media.device,
-      ratio,
-      ...('widths' in media ? { still: media } : { loop: media }),
-    });
-    const loops = [c.hero, ...c.loops].filter((l, i, all) => wallLoopKey(l) in WALL_LOOPS && all.findIndex((o) => o.src === l.src) === i);
-    const replaced = loops.map((l) => WALL_LOOPS[wallLoopKey(l)]).filter(Boolean).map((k) => `/work-media/${k}`);
-    const screens = [c.plate.desktop, c.plate.phone, ...c.stills].filter((st, i, all) => all.findIndex((o) => o.src === st.src) === i && !replaced.includes(st.src));
-    const wide = [
-      ...loops.map((l) => tile(l, l.w / l.h)),
-      ...screens.filter((st) => st.device === 'desktop' && st.w / st.h >= 1.35 && st.w / st.h <= 2).map((st) => tile(st, st.w / st.h)),
-    ];
+    const tile = (still: Still, ratio: number): WallTile => ({ key: still.src, ground: c.palette.ground, device: still.device, ratio, still });
+    const screens = [c.plate.desktop, c.plate.phone, ...c.stills].filter((st, i, all) => all.findIndex((o) => o.src === st.src) === i);
+    const wide = screens.filter((st) => st.device === 'desktop' && st.w / st.h >= 1.35 && st.w / st.h <= 2).map((st) => tile(st, st.w / st.h));
     const tall = screens.filter((st) => st.device === 'phone').map((st) => tile(st, 0.56));
     const pool: WallTile[] = [];
     for (let k = 0; wide.length || tall.length; k++) pool.push(((tall.length && (k + ci) % 3 === 2) || !wide.length ? tall : wide).shift()!);
