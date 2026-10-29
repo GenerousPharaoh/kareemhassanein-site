@@ -467,9 +467,7 @@ export const CASES: CaseStudy[] = [
     ],
     stills: [
       still('wedding/welcome--desktop', 'The welcome, counting down to the day.'),
-      still('wedding/day--desktop', 'The day, hour by hour, on a blue band.'),
       still('wedding/story--desktop', 'Their story, beside the couple’s photographs.'),
-      still('wedding/day--phone', 'The day on a phone.'),
     ],
     pairs: [],
   },

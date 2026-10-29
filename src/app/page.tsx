@@ -139,7 +139,7 @@ const PREVIEW: Record<string, string> = {
   kinetikare: 'kinetikare/knee-hub--desktop',
   'techniques-combat': 'techniques-combat/home-hero--desktop',
   'travel-journal': 'travel-journal/travels-top--desktop',
-  wedding: 'wedding/day--desktop',
+  wedding: 'wedding/welcome--desktop',
 };
 
 const KEEP_CASE = ['Business Profile', 'Shopify'];
