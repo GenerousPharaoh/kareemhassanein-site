@@ -3,11 +3,9 @@ import s from '@/components/home/Home.module.css';
 import type { ReelItem, ReelMedia } from '@/components/home/Showreel';
 import { WorkWall, type WallTile } from '@/components/home/WorkWall';
 import { Statement } from '@/components/home/Statement';
-import { PathExplorer } from '@/components/home/PathExplorer';
 import { WorkIndex, type IndexItem } from '@/components/home/WorkIndex';
-import { CASES, caseBySlug } from '@/content/cases';
+import { CASES } from '@/content/cases';
 import { SITE } from '@/content/site';
-import { PATH } from '@/content/path';
 import { PORTRAIT } from '@/content/portrait';
 import { loop, still, type Loop, type Still } from '@/lib/media';
 import { pageMeta } from '@/lib/meta';
@@ -220,18 +218,6 @@ export default function Home() {
         link={{ href: '/about', label: 'More about me' }}
         portrait={PORTRAIT}
       />
-      <PathExplorer items={PATH.map((stop) => {
-        const c = caseBySlug(stop.caseSlug)!;
-        const images = {
-          found: still('endorphins/maps-listing--desktop', 'The Endorphins Health and Wellness Centre listing on Google Maps, beside its pin on the map.'),
-          chosen: c.stills.find((image) => image.src.includes('lp-physio--desktop')),
-          booked: still('physiomax/service--desktop', 'The PhysioMax physiotherapy page, with its Book Appointment button.'),
-          counted: c.plate.desktop,
-          grown: c.stills.find((image) => image.src.includes('consult--desktop')),
-          kept: c.stills.find((image) => image.src.includes('team--desktop')),
-        };
-        return { ...stop, image: images[stop.id] ?? c.plate.desktop, anchor: ['found', 'booked', 'grown'].includes(stop.id) ? '0 0' : undefined, ground: c.palette.ground, ink: c.palette.ink, domain: c.domain };
-      })} />
       <Offer />
       <Close />
     </>
