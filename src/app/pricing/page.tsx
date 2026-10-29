@@ -62,10 +62,10 @@ export default function PricingPage() {
           </div>
           <div className={styles.index}>
             <nav aria-label="Compare offers">
-              {OFFERS.map((offer) => {
+              {OFFERS.map((offer, i) => {
                 const price = splitPrice(offer.price);
                 return (
-                  <Link key={offer.id} href={`#${offer.id}`} className={styles.offerLink}>
+                  <Link key={offer.id} href={`#${offer.id}`} className={styles.offerLink} data-enter style={{ ['--i' as string]: i + 2 }}>
                     <span className={styles.offerName}>{offer.name}</span>
                     <span className={styles.indexPrice}>
                       {price.from ? <span className={styles.priceQualifier}>from </span> : null}

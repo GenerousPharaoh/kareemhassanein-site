@@ -4,6 +4,7 @@ import { Footer } from '@/components/site/Footer';
 import { Header } from '@/components/site/Header';
 import { SmoothScroll } from '@/components/site/SmoothScroll';
 import { PageTransition } from '@/components/site/PageTransition';
+import { Reveals } from '@/components/site/Reveals';
 import { SITE } from '@/content/site';
 import './globals.css';
 
@@ -70,6 +71,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Footer />
         <SmoothScroll />
         <PageTransition />
+        <Reveals />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       </body>
     </html>

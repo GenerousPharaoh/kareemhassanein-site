@@ -58,7 +58,7 @@ export default function WorkPage() {
           <CaseStack className={styles.features}>
             {PRACTICE_CASES.map((c) => (
               <li key={c.slug} className={styles.item} data-sectors={c.sectors.join(' ')} data-work-item>
-                <div className={styles.reveal} data-reveal>
+                <div className={styles.reveal}>
                   <CaseCard c={c} variant="feature" />
                 </div>
               </li>
@@ -76,7 +76,7 @@ export default function WorkPage() {
           <ul className={styles.compacts}>
             {BEYOND_CASES.map((c) => (
               <li key={c.slug} className={styles.item} data-sectors={c.sectors.join(' ')} data-work-item>
-                <div className={styles.reveal} data-reveal>
+                <div className={styles.reveal}>
                   <CaseCard c={c} variant="compact" />
                 </div>
               </li>

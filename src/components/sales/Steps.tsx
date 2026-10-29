@@ -16,9 +16,9 @@ type Props = {
 /** What happens, in order, from the first call to the handover. */
 export function Steps({ id, title, intro, steps, note, collapsible = false }: Props) {
   const sequence = (
-    <ol className={styles.steps}>
+    <ol className={styles.steps} data-reveal>
       {steps.map((s, n) => (
-        <li key={s.title} className={styles.step} data-last={n === steps.length - 1 || undefined}>
+        <li key={s.title} className={styles.step} data-last={n === steps.length - 1 || undefined} style={{ ['--n' as string]: n }}>
           <span className={styles.node} aria-hidden="true">{n + 1}</span>
           <h3 className={styles.title}>{s.title}</h3>
           <p className={styles.text}>{s.text}</p>

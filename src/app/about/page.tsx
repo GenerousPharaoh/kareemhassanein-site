@@ -89,7 +89,7 @@ export default function AboutPage() {
             booking or intake, ads, and the tracking that ties them together.
           </p>
         </div>
-        <figure className={styles.portrait} data-enter style={enter(2)}>
+        <figure className={styles.portrait}>
           <PortraitFrame
             media={portrait}
             sizes="(min-width: 960px) 263px, min(52.5vw, 230px)"

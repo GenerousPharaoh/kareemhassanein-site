@@ -367,6 +367,18 @@ ol {
   }
 }
 
+/* Blocks further down a page come up as they enter the screen (see Reveals.tsx) */
+@media (prefers-reduced-motion: no-preference) {
+  html[data-reveals] [data-reveal] {
+    transition: opacity 560ms var(--ease-out), translate 700ms var(--ease-out);
+  }
+
+  html[data-reveals] [data-reveal]:not([data-shown]) {
+    opacity: 0.01;
+    translate: 0 36px;
+  }
+}
+
 /* Arriving from another page: the same entrance, quicker, so a page change still lands with motion */
 @media (prefers-reduced-motion: no-preference) {
   html[data-route-arrival] [data-enter] {

@@ -366,3 +366,29 @@
     font-size: clamp(2.5rem, 10.5vw, 4rem);
   }
 }
+
+/* The portrait opens from the foot up as the page arrives, settling as it does */
+@media (prefers-reduced-motion: no-preference) {
+  .portrait {
+    animation: portrait-open 900ms var(--ease-out) 120ms both;
+  }
+
+  .portrait :global(img) {
+    animation: portrait-settle 1300ms var(--ease-out) 120ms both;
+  }
+}
+
+@keyframes portrait-open {
+  from {
+    clip-path: inset(100% 0 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes portrait-settle {
+  from {
+    transform: scale(1.14) translateY(4%);
+  }
+}

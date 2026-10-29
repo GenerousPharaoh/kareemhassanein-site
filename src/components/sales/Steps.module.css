@@ -129,3 +129,30 @@
     display: none;
   }
 }
+
+/* As the sequence comes into view, the route draws from stop to stop and each stop comes in after the last */
+@media (prefers-reduced-motion: no-preference) {
+  .step::before {
+    transform-origin: 0 0;
+    transition: scale 520ms var(--ease-out) calc(160ms + var(--n) * 110ms);
+  }
+
+  .node {
+    transition: scale 420ms var(--ease-out) calc(var(--n) * 110ms), opacity 300ms ease calc(var(--n) * 110ms);
+  }
+
+  :global(html[data-reveals]) .steps:not([data-shown]) .step::before {
+    scale: 1 0;
+  }
+
+  :global(html[data-reveals]) .steps:not([data-shown]) .node {
+    scale: 0.4;
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) and (min-width: 860px) {
+  :global(html[data-reveals]) .steps:not([data-shown]) .step::before {
+    scale: 0 1;
+  }
+}
