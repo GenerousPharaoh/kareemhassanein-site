@@ -158,18 +158,22 @@
 }
 
 .ink {
+  --wipe: -24%;
   z-index: 4;
   color: var(--ivory);
+  /* The wall's script moves this edge across to wipe the white away */
+  -webkit-mask-image: linear-gradient(100deg, transparent var(--wipe), #000 calc(var(--wipe) + 16%));
+  mask-image: linear-gradient(100deg, transparent var(--wipe), #000 calc(var(--wipe) + 16%));
 }
 
-/* The stage colour with the letters cut out of it: white letters, darkened onto whatever is behind,
-   show it as it is, and the dark keeps the stage colour */
+/* Black with the letters cut out of it. Darkened onto the wall behind, white letters show the wall as it
+   is and the black stays black (true black, so no dark screen shows through it). The letters start
+   black too, unseen, until the script turns them white with the wall behind them. */
 .knock {
   z-index: 3;
-  background: var(--stage);
-  color: #fff;
+  background: #000;
+  color: #000;
   mix-blend-mode: darken;
-  opacity: 0;
   will-change: transform, opacity;
 }
 
@@ -263,6 +267,14 @@
   .intro {
     display: none;
   }
+}
+
+/* A client's colour filling the screen on the way into its case (placed on the page by the wall's script) */
+.flood {
+  position: fixed;
+  z-index: 90;
+  inset: 0;
+  pointer-events: none;
 }
 
 @keyframes rise {

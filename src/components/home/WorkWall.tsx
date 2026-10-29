@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { Fragment, useEffect, useRef, useState, type CSSProperties } from 'react';
 import { Picture } from '@/components/media/Picture';
 import { getGsap, useGsap } from '@/lib/gsap';
@@ -36,6 +37,7 @@ const wrap = (x: number, w: number) => (w ? ((x % w) + w) % w : 0);
  */
 export function WorkWall({ rows, name, line }: Props) {
   const root = useRef<HTMLElement>(null);
+  const router = useRouter();
   const reduce = useReducedMotion();
   const [paused, setPaused] = useState(false);
   const [intro, setIntro] = useState(true);
@@ -157,6 +159,9 @@ export function WorkWall({ rows, name, line }: Props) {
     const down = (e: PointerEvent) => {
       if (e.button !== 0 || (e.target as Element).closest('button')) return;
       swallowClick = false;
+      // Fetch the case while the pointer is still down, so it is ready when the colour has filled the screen
+      const href = (e.target as Element).closest('a[data-device]')?.getAttribute('href');
+      if (href) router.prefetch(href);
       drag = { id: e.pointerId, x: e.clientX, y: e.clientY, lastX: e.clientX, lastT: e.timeStamp, v: 0, on: false };
     };
     const move = (e: PointerEvent) => {
@@ -195,12 +200,59 @@ export function WorkWall({ rows, name, line }: Props) {
       }
       drag = null;
     };
+    // Opening a case: the client's colour floods the screen from the pointer as the wall surges on, and
+    // the case page (which opens on that same colour) rises out of it. The tile's own click then goes
+    // through to the page transition.
+    let flood: HTMLElement | null = null;
+    let passing = false;
+    const floodInto = (tile: HTMLAnchorElement, x: number, y: number) => {
+      if (flood) return;
+      const doc = document.documentElement;
+      const f = (flood = document.createElement('div'));
+      f.className = s.flood;
+      f.style.background = getComputedStyle(tile).getPropertyValue('--ground');
+      document.body.append(f);
+      const reach = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+      m.rush = 2600;
+      gsap.fromTo(
+        f,
+        { clipPath: `circle(0px at ${x}px ${y}px)` },
+        {
+          clipPath: `circle(${reach}px at ${x}px ${y}px)`,
+          duration: 0.46,
+          ease: 'expo.inOut',
+          onComplete: () => {
+            doc.dataset.flood = '';
+            window.addEventListener('route-settled', () => delete doc.dataset.flood, { once: true });
+            passing = true;
+            tile.click();
+            passing = false;
+          },
+        },
+      );
+      // If the page never changes, give the wall back
+      window.setTimeout(() => {
+        if (flood !== f) return;
+        f.remove();
+        flood = null;
+        delete doc.dataset.flood;
+      }, 4000);
+    };
+
     // Registered on window so it runs before the page transition's own click handler on document
     const click = (e: MouseEvent) => {
-      if (!swallowClick || !el.contains(e.target as Node)) return;
-      swallowClick = false;
+      if (passing || !el.contains(e.target as Node)) return;
+      if (swallowClick) {
+        swallowClick = false;
+        e.preventDefault();
+        e.stopPropagation();
+        return;
+      }
+      const tile = (e.target as Element).closest<HTMLAnchorElement>('a[data-device]');
+      if (!tile || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
       e.preventDefault();
       e.stopPropagation();
+      floodInto(tile, e.clientX, e.clientY);
     };
     const noGhost = (e: DragEvent) => e.preventDefault();
     el.addEventListener('pointerdown', down);
@@ -238,7 +290,7 @@ export function WorkWall({ rows, name, line }: Props) {
     const knock = title?.querySelector<HTMLElement>('[data-knock]');
     if (!arrived && title && ink && knock && header && window.scrollY < 40) {
       // Hidden until the dark layer is up, so the wall only ever shows inside the letters at first
-      Object.assign(view, { rx: 40, rz: -12, s: 1.3, y: 3, o: 0 });
+      Object.assign(view, { rx: 32, rz: -10, s: 1.8, y: 0, o: 0 });
       lanes.forEach((l) => (l.enter = -600));
       const sink = el.querySelector<HTMLElement>('[data-sink]')!;
       pose();
@@ -270,15 +322,15 @@ export function WorkWall({ rows, name, line }: Props) {
           view.o = 1;
           pose();
         }, 0)
-        .set(knock, { opacity: 1 }, 0)
+        .set(knock, { color: '#fff' }, 0)
         .set(sink, { backgroundColor: `rgb(${GROUND})` }, 0)
-        // The white of the name wipes away, and its letters show the work rushing past behind them
-        .fromTo(ink, { clipPath: 'inset(-10% 0% -10% 0%)' }, { clipPath: 'inset(-10% 0% -10% 100%)', duration: 0.5, ease: 'power3.inOut' }, 0.04)
+        // The white of the name wipes away on a soft, slanted edge, and its letters show the work rushing past behind them
+        .fromTo(ink, { '--wipe': '-24%' }, { '--wipe': '112%', duration: 0.56, ease: 'power2.inOut' }, 0.04)
         // The rows come in out of the distance, the nearest first, and lock into the wall
         .to(lanes, { enter: 0, duration: 1.4, ease: 'expo.out', stagger: { each: 0.05, from: 'end' } }, 0)
         // Then through a letter: the dark around it falls away as the wall settles to its tilt
         .set(knock, { transformOrigin: () => `${target().x}px ${target().y}px` }, 0.62)
-        .to(knock, { scale: () => target().scale, duration: 0.62, ease: 'expo.in' }, 0.62)
+        .to(knock, { scale: () => target().scale, rotation: TILT.rz + 1, duration: 0.62, ease: 'expo.in' }, 0.62)
         .to(knock, { opacity: 0, duration: 0.16, ease: 'none' }, 1.04)
         // The light ground behind the wall goes dark as the wall opens out
         .to(sink, { backgroundColor: `rgba(${GROUND}, 0)`, duration: 0.5, ease: 'power1.inOut', clearProps: 'backgroundColor' }, 0.8)
@@ -307,6 +359,7 @@ export function WorkWall({ rows, name, line }: Props) {
       window.removeEventListener('content-resized', onResize);
       el.removeAttribute('data-ready');
       el.removeAttribute('data-dragging');
+      flood?.remove();
     };
   });
 

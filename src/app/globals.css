@@ -456,6 +456,12 @@ html:not([data-route-arrival]) body:has(main > :first-child[data-theme='light'],
   :root:active-view-transition-type(page) { --page-duration: 260ms; }
 }
 
+/* After a tile floods the screen with its client's colour, the case page rises out of that colour
+   instead of the old view fading first */
+:root[data-flood]:active-view-transition-type(page)::view-transition-old(root) {
+  animation: none;
+}
+
 /* Shared images between a work preview and its case page */
 ::view-transition-group(.case-morph) {
   animation-duration: 560ms;
