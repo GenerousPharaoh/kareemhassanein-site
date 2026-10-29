@@ -202,10 +202,10 @@ export function Header() {
       </a>
       <div className={`container ${styles.inner}`}>
         <Link href="/" className={styles.mark} aria-label={`${SITE.name}, home`}>
-          <span className={styles.markName} data-mark="name">
+          <span className={styles.markName}>
             {SITE.name}
           </span>
-          <span className={styles.markLine} aria-hidden="true" data-mark="line">
+          <span className={styles.markLine} aria-hidden="true">
             {SITE.descriptor}
           </span>
         </Link>
