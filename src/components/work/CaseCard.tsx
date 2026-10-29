@@ -7,6 +7,7 @@ import { ratio } from './layout';
 import { paletteVars, toneOf } from './palette';
 import styles from './CaseCard.module.css';
 import { Exhibit } from './Exhibit';
+import { Rise } from '@/components/ui/Rise';
 
 type Props = {
   c: CaseStudy;
@@ -30,7 +31,7 @@ export function CaseCard({ c, variant = 'feature' }: Props) {
 
   return (
     <article className={styles.card} data-variant={variant} data-tone={toneOf(c.palette)} data-theme={toneOf(c.palette)} style={paletteVars(c.palette)}>
-      <div className={styles.text}>
+      <Rise className={styles.text}>
         <p className={styles.kind}>{c.kindLabel}</p>
         <h3 className={styles.name}>
           <Link href={`/work/${c.slug}`} className={styles.link}>
@@ -41,7 +42,7 @@ export function CaseCard({ c, variant = 'feature' }: Props) {
         {/* A no-break space keeps each separator with the word before it, so no line starts with one */}
         <p className={styles.services}>{c.services.join('\u00a0· ')}</p>
         {c.status ? <p className={styles.status}>{c.status}</p> : null}
-      </div>
+      </Rise>
       <Exhibit className={styles.exhibit}>
       <div className={styles.media} data-exhibit>
         <BrowserFrame domain={c.domain} className={styles.desk}>

@@ -367,6 +367,14 @@ ol {
   }
 }
 
+/* Arriving from another page: the same entrance, quicker, so a page change still lands with motion */
+@media (prefers-reduced-motion: no-preference) {
+  html[data-route-arrival] [data-enter] {
+    animation: enter 460ms var(--ease-out) both;
+    animation-delay: calc(70ms + var(--i, 0) * 40ms);
+  }
+}
+
 @keyframes enter {
   from {
     opacity: 0.01;

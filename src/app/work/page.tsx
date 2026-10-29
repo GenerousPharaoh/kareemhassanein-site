@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { DisplayTitle } from '@/components/ui/DisplayTitle';
 import { preload } from 'react-dom';
 import { CaseCard } from '@/components/work/CaseCard';
+import { CaseStack } from '@/components/work/CaseStack';
 import { CloseCall } from '@/components/work/CloseCall';
 import { WorkFilter } from '@/components/work/WorkFilter';
 import { BEYOND_CASES, PRACTICE_CASES } from '@/content/cases';
@@ -54,7 +55,7 @@ export default function WorkPage() {
           <h2 id="work-practices" className={styles.groupTitle} data-work-item>
             Law firms and clinics
           </h2>
-          <ul className={styles.features}>
+          <CaseStack className={styles.features}>
             {PRACTICE_CASES.map((c) => (
               <li key={c.slug} className={styles.item} data-sectors={c.sectors.join(' ')} data-work-item>
                 <div className={styles.reveal} data-reveal>
@@ -62,7 +63,7 @@ export default function WorkPage() {
                 </div>
               </li>
             ))}
-          </ul>
+          </CaseStack>
         </section>
 
         <section className={`container ${styles.group} ${styles.beyond}`} data-group="beyond" aria-labelledby="work-beyond">

@@ -59,7 +59,7 @@ export function CaseHeader({ c }: { c: CaseStudy }) {
           </div>
         </div>
       </div>
-      <Exhibit className={`container ${styles.plateWrap}`}>
+      <Exhibit className={`container ${styles.plateWrap}`} arrive>
       <div data-exhibit>
         {live ? (
           <div className={styles.live}>
