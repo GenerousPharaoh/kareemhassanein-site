@@ -1,3 +1,4 @@
+import { Rise } from '@/components/ui/Rise';
 import { SectionHead } from './SectionHead';
 import styles from './BuildList.module.css';
 
@@ -17,14 +18,14 @@ export function BuildList({ id, label, title, intro, items }: Props) {
     <section className={`paper section sheet-up ${styles.section}`} aria-labelledby={id}>
       <div className={`container ${styles.inner}`}>
         <SectionHead id={id} label={label} title={title} intro={intro} split />
-        <ul className={styles.list}>
+        <Rise as="ul" className={styles.list}>
           {items.map((it) => (
             <li key={it.title} className={styles.item}>
               <h3 className={styles.title}>{it.title}</h3>
               <p className={styles.text}>{it.text}</p>
             </li>
           ))}
-        </ul>
+        </Rise>
       </div>
     </section>
   );

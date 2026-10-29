@@ -1,3 +1,7 @@
+'use client';
+
+import { useRef } from 'react';
+import { getGsap, useGsap } from '@/lib/gsap';
 import styles from './AskList.module.css';
 
 type Props = {
@@ -8,10 +12,23 @@ type Props = {
   note?: string;
 };
 
-/** The problems owners bring, set as their own words on a dark band. */
+/**
+ * The problems owners bring, in their own words, large on a dark band. Each comes up to full
+ * brightness as it reaches the middle of the screen.
+ */
 export function AskList({ id, title, items, note }: Props) {
+  const root = useRef<HTMLElement>(null);
+
+  useGsap(root, ({ reduce }) => {
+    if (reduce) return;
+    const { gsap } = getGsap();
+    root.current!.querySelectorAll('[data-ask]').forEach((item) => {
+      gsap.fromTo(item, { opacity: 0.18 }, { opacity: 1, ease: 'none', scrollTrigger: { trigger: item, start: 'top 85%', end: 'top 55%', scrub: true } });
+    });
+  });
+
   return (
-    <section className={`night section ${styles.section}`} aria-labelledby={id}>
+    <section ref={root} className={`night section ${styles.section}`} aria-labelledby={id}>
       <div className={`container ${styles.inner}`}>
         <div className={styles.head}>
           <h2 id={id} className={`t-h2 ${styles.title}`}>
@@ -19,16 +36,13 @@ export function AskList({ id, title, items, note }: Props) {
           </h2>
           {note ? <p className={styles.note}>{note}</p> : null}
         </div>
-        <ol className={styles.list}>
-          {items.map((q, n) => (
-            <li key={q} className={styles.item} data-reveal>
-              <span className={styles.num} aria-hidden="true">
-                {String(n + 1).padStart(2, '0')}
-              </span>
+        <ul className={styles.list}>
+          {items.map((q) => (
+            <li key={q} className={styles.item} data-ask>
               <p className={styles.quote}>{q}</p>
             </li>
           ))}
-        </ol>
+        </ul>
       </div>
     </section>
   );

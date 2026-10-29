@@ -12,38 +12,39 @@ type Props = {
   lede: ReactNode;
   /** Prefix for the buttons' analytics names. */
   track: string;
-  /** Short facts under the pitch, set as a ruled list. */
+  /** Short facts under the work, set as a ruled row. */
   specs?: Spec[];
-  /** Work shown beside the pitch on wide screens and after it on phones. */
-  aside?: ReactNode;
+  /** The work, across the page under the pitch (a HeroStage). */
+  stage?: ReactNode;
 };
 
-/** The first screen of a sales page: what it is, who it is for, and two ways to start. */
-export function Hero({ label, title, lede, track, specs, aside }: Props) {
+/**
+ * The first screen of a sales page: the headline large, what it is and two ways to start beside it,
+ * then the work across the page and the facts under it.
+ */
+export function Hero({ label, title, lede, track, specs, stage }: Props) {
   return (
-    <section className={styles.hero} aria-labelledby="page-title" data-aside={aside ? '' : undefined}>
+    <section className={styles.hero} aria-labelledby="page-title">
       <div className={`container ${styles.inner}`}>
-        <div className={styles.copy}>
+        <div className={styles.head}>
           <p className={`t-label ${styles.label}`} data-enter style={enterAt(0)}>
             {label}
           </p>
           <DisplayTitle id="page-title" className={`t-hero ${styles.title}`}>
             {title}
           </DisplayTitle>
-          <p className={`t-lede ${styles.lede}`} data-enter style={enterAt(2)}>
-            {lede}
-          </p>
-          <div data-enter style={enterAt(3)}>
-            <BookActions track={track} />
+          <div className={styles.side}>
+            <p className={`t-lede ${styles.lede}`} data-enter style={enterAt(2)}>
+              {lede}
+            </p>
+            <div data-enter style={enterAt(3)}>
+              <BookActions track={track} />
+            </div>
           </div>
         </div>
-        {aside ? (
-          <div className={styles.aside} data-enter style={enterAt(4)}>
-            {aside}
-          </div>
-        ) : null}
+        {stage ? <div className={styles.stage}>{stage}</div> : null}
         {specs?.length ? (
-          <dl className={styles.specs} data-enter style={enterAt(aside ? 5 : 4)}>
+          <dl className={styles.specs} data-enter style={enterAt(4)}>
             {specs.map((s) => (
               <div key={s.term} className={styles.spec}>
                 <dt>{s.term}</dt>

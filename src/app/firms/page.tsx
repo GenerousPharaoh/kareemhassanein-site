@@ -5,7 +5,7 @@ import { CaseBand } from '@/components/sales/CaseBand';
 import { CloseCall } from '@/components/sales/CloseCall';
 import { Faq } from '@/components/sales/Faq';
 import { Hero } from '@/components/sales/Hero';
-import { HeroPhone } from '@/components/sales/HeroPhone';
+import { HeroStage } from '@/components/sales/HeroStage';
 import { pickLine, pickLoop, pickStill, requireCase } from '@/components/sales/pick';
 import { PriceLine } from '@/components/sales/PriceLine';
 import { FIRM_FAQ } from '@/content/faq';
@@ -69,10 +69,11 @@ export default function FirmsPage() {
           { term: 'Client information', detail: 'Never goes into AI tools' },
           { term: 'Your accounts', detail: 'Stay in the firm’s name' },
         ]}
-        aside={
-          <HeroPhone
+        stage={
+          <HeroStage
             palette={trc.palette}
-            loop={pickLoop(trc, 'home-scroll--phone')}
+            desktop={pickStill(trc, 'home-hero--desktop')}
+            phone={pickLoop(trc, 'home-scroll--phone')}
             domain={trc.domain}
             caption="The rebuilt home page of Tax Relief Counsel, a tax law firm in Washington, D.C. Finished, and waiting on launch."
           />

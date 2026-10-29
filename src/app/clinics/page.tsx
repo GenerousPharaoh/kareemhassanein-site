@@ -5,8 +5,8 @@ import { CaseCardsSection } from '@/components/sales/CaseCards';
 import { CloseCall } from '@/components/sales/CloseCall';
 import { Faq } from '@/components/sales/Faq';
 import { Hero } from '@/components/sales/Hero';
-import { HeroPhone } from '@/components/sales/HeroPhone';
-import { pickLine, pickLoop, requireCase } from '@/components/sales/pick';
+import { HeroStage } from '@/components/sales/HeroStage';
+import { pickLine, pickLoop, pickStill, requireCase } from '@/components/sales/pick';
 import { PriceLine } from '@/components/sales/PriceLine';
 import { Added, Removed, Wording } from '@/components/sales/Wording';
 import { CLINIC_FAQ } from '@/content/faq';
@@ -73,10 +73,11 @@ export default function ClinicsPage() {
           { term: 'Patient information', detail: 'Not needed, and never in AI tools' },
           { term: 'Your accounts', detail: 'Stay in the clinic’s name' },
         ]}
-        aside={
-          <HeroPhone
+        stage={
+          <HeroStage
             palette={endorphins.palette}
-            loop={pickLoop(endorphins, 'lp-scroll--phone')}
+            desktop={pickStill(endorphins, 'lp-physio--desktop')}
+            phone={pickLoop(endorphins, 'lp-scroll--phone')}
             domain={endorphins.domain}
             caption="Endorphins: its physiotherapy ad page, with the next openings read live from Jane."
           />

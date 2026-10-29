@@ -3,12 +3,15 @@
 import { useRef, type ReactNode } from 'react';
 import { getGsap, useGsap } from '@/lib/gsap';
 
+type Props = { children: ReactNode; className?: string; as?: 'div' | 'ul' | 'ol' };
+
 /**
  * A block whose children come up one after another as it enters the screen: quick, once. The element
  * itself keeps its class and layout; only its children move.
  */
-export function Rise({ children, className }: { children: ReactNode; className?: string }) {
-  const root = useRef<HTMLDivElement>(null);
+export function Rise({ children, className, as: Tag = 'div' }: Props) {
+  // One ref for whichever of the three elements this renders
+  const root = useRef<HTMLDivElement & HTMLUListElement & HTMLOListElement>(null);
   useGsap(root, ({ reduce }) => {
     if (reduce) return;
     const el = root.current!;
@@ -19,8 +22,8 @@ export function Rise({ children, className }: { children: ReactNode; className?:
     );
   });
   return (
-    <div ref={root} className={className}>
+    <Tag ref={root} className={className}>
       {children}
-    </div>
+    </Tag>
   );
 }

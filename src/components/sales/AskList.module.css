@@ -20,29 +20,22 @@
 
 .list {
   list-style: none;
-  border-top: 1px solid var(--rule);
 }
 
 .item {
-  display: grid;
-  grid-template-columns: 2.6rem minmax(0, 1fr);
-  gap: 12px;
-  padding: clamp(18px, 2.2vw, 28px) 0;
-  border-bottom: 1px solid var(--rule);
+  padding: clamp(18px, 2.4vw, 34px) 0;
 }
 
-.num {
-  padding-top: 0.75em;
-  font: 500 var(--t-label) / 1 var(--font-mono);
-  letter-spacing: 0.06em;
-  color: var(--signal);
+.item + .item {
+  border-top: 1px solid var(--rule);
 }
 
-/* Their words, with the opening quotation mark hung into the margin */
+/* Their words, large, with the opening quotation mark hung into the margin */
 .quote {
   position: relative;
-  font: 500 clamp(1.32rem, 1rem + 1.25vw, 2.1rem) / 1.16 var(--font-display);
-  letter-spacing: -0.028em;
+  max-width: 24ch;
+  font: 500 clamp(1.65rem, 0.9rem + 2.7vw, 3.4rem) / 1.06 var(--font-display);
+  letter-spacing: -0.04em;
   color: var(--on-night);
   text-wrap: balance;
 }
@@ -51,7 +44,7 @@
   content: '\201C';
   position: absolute;
   right: 100%;
-  padding-right: 0.06em;
+  padding-right: 0.05em;
   color: var(--muted);
 }
 
@@ -71,8 +64,16 @@
     position: sticky;
     top: calc(var(--header-h) + 40px);
   }
+}
 
-  .item {
-    grid-template-columns: 4.5rem minmax(0, 1fr);
+@media (max-width: 760px) {
+  /* No margin to hang the mark in on a phone */
+  .quote {
+    padding-left: 0.5em;
+  }
+
+  .quote::before {
+    right: auto;
+    left: 0;
   }
 }
