@@ -15,6 +15,10 @@ type Props = { rows: WallTile[][]; name: string; line: string };
 const COPIES = 3;
 /** The wall's resting pose, in degrees. */
 const TILT = { rx: 24, rz: -7 };
+/** Which way each row parts from the wall when it moves (toward the eye or away), in turn. */
+const DEPTH = [0.9, -0.75, 1, -0.95, 0.65, -0.85];
+/** How far the rows part, in px: as the work list rises over the wall, and with speed. */
+const PART = { exit: 260, speed: 120 };
 
 const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v));
 const wrap = (x: number, w: number) => (w ? ((x % w) + w) % w : 0);
@@ -37,13 +41,17 @@ export function WorkWall({ rows, name, line }: Props) {
     const { gsap } = getGsap();
     const el = root.current!;
     const plane = el.querySelector<HTMLElement>('[data-plane]')!;
+    const box = plane.parentElement!;
     const lanes = [...el.querySelectorAll<HTMLElement>('[data-row]')].map((row, i) => ({
       row,
       dir: row.dataset.dir === 'right' ? -1 : 1,
       speed: 34 + (i % 3) * 11,
+      depth: DEPTH[i % DEPTH.length],
       width: 0,
       x: 0,
       skew: 0,
+      // How far behind the wall the row still is as it arrives, in px
+      enter: 0,
     }));
     const measure = () =>
       lanes.forEach((l, i) => {
@@ -51,13 +59,20 @@ export function WorkWall({ rows, name, line }: Props) {
         l.x = l.width ? (l.x / l.width) * width : ((i * 0.37) % 1) * width;
         l.width = width;
       });
-    const place = () => lanes.forEach((l) => (l.row.style.transform = `translate3d(${-l.x}px, 0, 0) skewX(${l.skew.toFixed(2)}deg)`));
-    // The plane's pose. exit grows as the work list rises over the wall, which then falls away.
-    const view = { ...TILT, s: 1, y: 0, o: 1 };
+    // exit grows as the work list rises over the wall, which parts into its rows and falls away;
+    // spread grows with speed, so a rush, a throw or a fast scroll opens the rows a little too.
     let exit = 0;
+    let spread = 0;
+    const place = () => {
+      const part = PART.exit * (1 - (1 - exit) ** 2) + PART.speed * spread;
+      lanes.forEach((l) => (l.row.style.transform = `translate3d(${-l.x}px, 0, ${(l.enter + l.depth * part).toFixed(1)}px) skewX(${l.skew.toFixed(2)}deg)`));
+    };
+    // The plane's pose, with a slow sway of the eye on top while the wall runs
+    const view = { ...TILT, s: 1, y: 0, o: 1 };
+    const sway = { rx: 0, rz: 0 };
     const pose = () => {
-      plane.style.transform = `translate(-50%, -50%) translate3d(0, ${(view.y - exit * 6).toFixed(2)}vh, 0) rotate(${view.rz}deg) rotateX(${view.rx + exit * 14}deg) scale(${view.s})`;
-      plane.style.opacity = String(view.o);
+      plane.style.transform = `translate(-50%, -50%) translate3d(0, ${(view.y - exit * 6).toFixed(2)}vh, 0) rotate(${(view.rz + sway.rz).toFixed(3)}deg) rotateX(${(view.rx + sway.rx + exit * 14).toFixed(3)}deg) scale(${view.s})`;
+      box.style.opacity = String(view.o);
     };
     el.setAttribute('data-ready', '');
     measure();
@@ -69,8 +84,9 @@ export function WorkWall({ rows, name, line }: Props) {
     }
 
     // Motion that is not the steady drift: the arrival's rush, a throw, and the scroll, in px a second
-    const m = { rush: 0, fling: 0, scrollV: 0, dragging: false };
+    const m = { rush: 0, fling: 0, scrollV: 0, dragV: 0, dragging: false };
     let lastY = window.scrollY;
+    let clock = 0;
     const step = (_time: number, deltaMs: number) => {
       const dt = Math.min(deltaMs, 50) / 1000;
       if (!dt) return;
@@ -79,7 +95,14 @@ export function WorkWall({ rows, name, line }: Props) {
       lastY = y;
       m.rush *= Math.exp(-dt / 0.42);
       m.fling *= Math.exp(-dt / 0.55);
+      if (!m.dragging) m.dragV *= Math.exp(-dt / 0.2);
       const held = pausedRef.current;
+      const surge = m.rush + Math.abs(m.scrollV) * 0.5 + Math.abs(m.fling) + m.dragV;
+      spread += (clamp(surge / 2600, 0, 1) - spread) * (1 - Math.exp(-dt / 0.28));
+      if (!held) clock += dt;
+      sway.rz = Math.sin(clock * 0.37) * 1.1;
+      sway.rx = Math.sin(clock * 0.29 + 0.6) * 1.6;
+      pose();
       for (const l of lanes) {
         const auto = held ? 0 : l.dir * ((m.dragging ? 0 : l.speed) + m.rush + m.scrollV * 0.5);
         const v = auto + m.fling;
@@ -138,6 +161,7 @@ export function WorkWall({ rows, name, line }: Props) {
       const dx = e.clientX - drag.lastX;
       const dt = Math.max(1, e.timeStamp - drag.lastT);
       drag.v = drag.v * 0.6 + ((dx / dt) * 1000) * 0.4;
+      m.dragV = Math.abs(drag.v);
       drag.lastX = e.clientX;
       drag.lastT = e.timeStamp;
       for (const l of lanes) l.x = wrap(l.x - dx, l.width);
@@ -190,9 +214,13 @@ export function WorkWall({ rows, name, line }: Props) {
     const hurry = () => tl?.timeScale(4);
     const hurryOn = ['wheel', 'touchstart', 'keydown', 'pointerdown'] as const;
     const after = el.querySelectorAll('[data-after]');
+    // The work list, whose top edge waits below the screen until the wall has arrived
+    const sheet = el.nextElementSibling as HTMLElement | null;
     if (!arrived && title && header && window.scrollY < 40) {
       Object.assign(view, { rx: 56, rz: -15, s: 0.84, y: 10, o: 0 });
+      lanes.forEach((l) => (l.enter = -1900));
       pose();
+      place();
       gsap.set(after, { autoAlpha: 0 });
       // Start once the name has nearly finished rising
       const rising = title.getAnimations({ subtree: true }).map((a) => Number(a.effect?.getComputedTiming().endTime ?? 0) - Number(a.currentTime ?? 0));
@@ -203,7 +231,9 @@ export function WorkWall({ rows, name, line }: Props) {
           m.rush = 2600;
         }, 0)
         .to(view, { o: 1, duration: 0.5, ease: 'power2.out', onUpdate: pose }, 0)
-        .to(view, { ...TILT, s: 1, y: 0, duration: 1.6, ease: 'expo.out', onUpdate: pose }, 0);
+        .to(view, { ...TILT, s: 1, y: 0, duration: 1.6, ease: 'expo.out', onUpdate: pose }, 0)
+        // The rows come in out of the distance, the nearest first, and lock into the wall
+        .to(lanes, { enter: 0, duration: 1.5, ease: 'expo.out', stagger: { each: 0.06, from: 'end' } }, 0);
 
       // Each line of the title lands on its twin in the header (the descriptor fades where the header hides it)
       // Both ends are measured as the flight starts: the header settles a few pixels after hydration.
@@ -226,10 +256,12 @@ export function WorkWall({ rows, name, line }: Props) {
           .to(from, { x: () => route().x, y: () => route().y, scale: () => route().scale, duration: 0.85, ease: 'expo.inOut' }, 0.3)
           .to(from, { autoAlpha: 0, duration: 0.2, ease: 'none' }, 1.05);
       };
-      timeline.to(title, { '--scrim': 0, duration: 0.7, ease: 'power1.inOut' }, 0.35);
+      // The shade behind the name holds while the rows arrive under it, and goes as the name leaves
+      timeline.to(title, { '--scrim': 0, duration: 0.45, ease: 'power1.in' }, 0.7);
       fly(title.querySelector('[data-fly="name"]'), header.querySelector('[data-mark="name"]'));
       fly(title.querySelector('[data-fly="line"]'), header.querySelector('[data-mark="line"]'));
       timeline.fromTo(header, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: 'power1.out' }, 0.95).to(after, { autoAlpha: 1, duration: 0.5 }, 1.1);
+      if (sheet) timeline.to(sheet, { y: 0, duration: 0.9, ease: 'expo.out' }, 1.05);
       hurryOn.forEach((t) => window.addEventListener(t, hurry, { once: true, passive: true }));
     } else setIntro(false);
 

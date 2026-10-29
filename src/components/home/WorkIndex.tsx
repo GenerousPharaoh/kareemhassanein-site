@@ -24,7 +24,6 @@ export function WorkIndex({ items, title = 'Work', allHref = '/work' }: { items:
     tl.fromTo(el.querySelectorAll('[data-rule]'), { scaleX: 0 }, { scaleX: 1, duration: 0.9, ease: 'expo.out', stagger: 0.05, clearProps: 'transform' }, 0)
       .fromTo(el.querySelectorAll('[data-rise]'), { yPercent: 110 }, { yPercent: 0, duration: 0.8, ease: 'expo.out', stagger: 0.05, clearProps: 'transform' }, 0.06)
       .fromTo(el.querySelectorAll('[data-fade]'), { opacity: 0 }, { opacity: 1, duration: 0.6, ease: 'power2.out', stagger: 0.04, clearProps: 'opacity' }, 0.2);
-    gsap.fromTo(el.querySelector('[data-head]'), { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, ease: 'expo.out', scrollTrigger: { trigger: el, start: 'top 80%', once: true } });
   });
 
   const tone = active >= 0 ? items[active].tone : undefined;

@@ -154,13 +154,18 @@ export function PathExplorer({ items }: { items: PathExample[] }) {
               ))}
             </div>
           </figure>
-          <div key={active} className={s.caption}>
-            <p className={s.line}>{item.line}</p>
-            <p className={s.example}>{item.example}</p>
-            <Link href={'/work/' + item.caseSlug} className={s.caseLink}>
-              {item.caseName}
-              <Arrow />
-            </Link>
+          {/* Every caption sits in the same cell, so the tallest sets its height and nothing below it moves */}
+          <div className={s.captions}>
+            {items.map((it, i) => (
+              <div key={it.id} className={s.caption} data-state={i === active ? 'on' : 'off'} aria-hidden={i !== active || undefined}>
+                <p className={s.line}>{it.line}</p>
+                <p className={s.example}>{it.example}</p>
+                <Link href={'/work/' + it.caseSlug} className={s.caseLink} tabIndex={i === active ? undefined : -1}>
+                  {it.caseName}
+                  <Arrow />
+                </Link>
+              </div>
+            ))}
           </div>
         </div>
       </div>

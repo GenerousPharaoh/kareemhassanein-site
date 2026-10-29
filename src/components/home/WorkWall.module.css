@@ -19,6 +19,16 @@
   user-select: none;
 }
 
+/* Edges that fall into shadow, so the eye settles in the middle of the wall */
+.wall::after {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  background: radial-gradient(ellipse 80% 75% at 50% 52%, rgba(12, 12, 11, 0) 55%, rgba(12, 12, 11, 0.55));
+  pointer-events: none;
+}
+
 /* A shade under the navigation, so the name and links read over the busiest screens */
 .wall::before {
   content: '';
@@ -60,7 +70,11 @@
   width: 200vw;
   transform: translate(-50%, -50%) rotate(-7deg) rotateX(24deg);
   transform-origin: 50% 50%;
-  will-change: transform, opacity;
+  /* The rows keep their own depth, so they can part from the wall toward the eye or away from it */
+  transform-style: preserve-3d;
+  will-change: transform;
+  /* In depth, the plane's own box would sit over the rows behind it and take their clicks */
+  pointer-events: none;
 }
 
 .row {
@@ -73,6 +87,7 @@
 
 .tile {
   flex: none;
+  pointer-events: auto;
   display: block;
   padding: var(--mat);
   border-radius: 12px;
@@ -136,7 +151,7 @@
   text-align: center;
   pointer-events: none;
   /* A shade behind the name while the wall arrives under it; it fades as the name leaves */
-  background: radial-gradient(ellipse 46% 34% at 50% 50%, rgba(12, 12, 11, calc(0.82 * var(--scrim, 1))), rgba(12, 12, 11, 0));
+  background: radial-gradient(ellipse 52% 38% at 50% 50%, rgba(12, 12, 11, calc(0.88 * var(--scrim, 1))) 30%, rgba(12, 12, 11, 0));
 }
 
 .mask {
@@ -187,11 +202,11 @@
 
   /* Until the script takes the opening over, the wall and the header wait behind the name.
      If the script never runs, both appear on their own after a moment and the name goes. */
-  .wall[data-wall-intro] .plane {
+  .wall[data-wall-intro] .planeBox {
     opacity: 0;
   }
 
-  .wall[data-wall-intro]:not([data-ready]) .plane {
+  .wall[data-wall-intro]:not([data-ready]) .planeBox {
     animation: appear 0.4s 3s both;
   }
 
@@ -199,7 +214,7 @@
     animation: appear 0.4s 3s reverse both;
   }
 
-  /* The header waits too: see Header.module.css */
+  /* The header and the work list wait too: see Header.module.css and WorkIndex.module.css */
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -229,7 +244,7 @@
   position: absolute;
   z-index: 3;
   right: calc(var(--gutter-r) - 10px);
-  bottom: calc(var(--sheet-r) + 14px);
+  bottom: calc(var(--peek, var(--sheet-r)) + 14px);
   display: grid;
   place-items: center;
   width: 44px;

@@ -1,8 +1,9 @@
-/* The work list rises over the reel as a dark sheet, and leans toward the colour of the row under the pointer */
+/* The work list rises over the wall as a dark sheet, and leans toward the colour of the row under the pointer.
+   Its top edge and heading already show under the wall before any scroll. */
 .index {
   position: relative;
   z-index: 2;
-  margin-top: calc(-1 * var(--sheet-r));
+  margin-top: calc(-1 * var(--peek, var(--sheet-r)));
   border-radius: var(--sheet-r) var(--sheet-r) 0 0;
   background: color-mix(in srgb, var(--hover-tone, var(--stage)) 55%, var(--stage));
   color: var(--ink);
@@ -10,7 +11,8 @@
 }
 
 .inner {
-  padding-top: clamp(56px, 7vw, 104px);
+  /* The heading sits in the middle of the part that shows under the wall */
+  padding-top: calc((var(--peek, 120px) - 44px) / 2);
   padding-bottom: clamp(56px, 7vw, 104px);
 }
 
@@ -198,4 +200,22 @@
 .link:focus-visible {
   outline-offset: -2px;
   border-radius: 4px;
+}
+
+/* While the wall arrives, the sheet waits just below the screen; the wall's script brings it up
+   (or, without the script, it comes up on its own after a moment) */
+@media (prefers-reduced-motion: no-preference) {
+  :global(body:has([data-wall-intro])) .index {
+    transform: translate3d(0, var(--peek, 0px), 0);
+  }
+
+  :global(body:has([data-wall-intro]:not([data-ready]))) .index {
+    animation: sheet-up 0.6s 3s var(--ease-out) both;
+  }
+}
+
+@keyframes sheet-up {
+  to {
+    transform: none;
+  }
 }

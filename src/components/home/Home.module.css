@@ -1,5 +1,7 @@
 /* The reel stays pinned while the work list slides up over it; it lets go once the list has covered it */
 .opening {
+  /* How much of the work list shows under the wall before any scroll */
+  --peek: clamp(84px, 6vw + 20px, 104px);
   position: relative;
   margin-top: calc(-1 * (var(--header-h) + env(safe-area-inset-top, 0px)));
 }
