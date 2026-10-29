@@ -18,7 +18,12 @@ export type Loop = {
   h: number;
   label: string;
   device: Device;
+  /** A page's opening sequence: it plays once and holds its last frame, since repeating reads as the page reloading. */
+  once?: boolean;
 };
+
+/** Loops that are a site's opening on a full load, not a moment that can repeat. */
+const OPENINGS = new Set(['travel-journal/opening--desktop', 'wedding/opening--desktop', 'wedding/opening--phone', 'tax-relief-counsel/hero-arrive--desktop', 'tax-relief-counsel/hero-arrive--phone']);
 
 const deviceOf = (key: string): Device => (key.includes('--phone') ? 'phone' : 'desktop');
 
@@ -39,5 +44,5 @@ export function baStill(key: string, alt: string): Still {
 export function loop(key: string, label: string): Loop {
   const info = LOOPS[key];
   if (!info) throw new Error(`No loop named ${key}`);
-  return { src: `/work-media/${key}.mp4`, poster: `/work-media/${key}-poster.webp`, w: info.w, h: info.h, label, device: deviceOf(key) };
+  return { src: `/work-media/${key}.mp4`, poster: `/work-media/${key}-poster.webp`, w: info.w, h: info.h, label, device: deviceOf(key), ...(OPENINGS.has(key) ? { once: true } : {}) };
 }

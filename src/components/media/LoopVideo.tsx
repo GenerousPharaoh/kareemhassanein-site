@@ -10,7 +10,8 @@ type Props = { loop: Loop; className?: string };
 /**
  * A silent loop: the poster shows first, the video loads and plays only while on screen,
  * pauses when it leaves, and waits for a tap when the viewer prefers reduced motion.
- * A pause control is always reachable, as autoplaying motion needs one.
+ * A pause control is always reachable, as autoplaying motion needs one. A site's opening
+ * sequence (loop.once) plays once and holds its last frame; a tap plays it again.
  */
 export function LoopVideo({ loop, className }: Props) {
   const ref = useRef<HTMLVideoElement>(null);
@@ -37,7 +38,8 @@ export function LoopVideo({ loop, className }: Props) {
         if (entry.isIntersecting) {
           if (v.preload !== 'auto') v.preload = 'auto';
           const wait = choiceRef.current === 'pause' || (choiceRef.current === null && prefersReducedMotion());
-          if (!wait) v.play().catch(() => {});
+          // An opening that has played stays on its last frame when it comes back into view
+          if (!wait && !v.ended) v.play().catch(() => {});
         } else if (!v.paused) v.pause();
       },
       { threshold: 0.25 }
@@ -74,7 +76,7 @@ export function LoopVideo({ loop, className }: Props) {
         width={loop.w}
         height={loop.h}
         muted
-        loop
+        loop={!loop.once}
         playsInline
         preload="none"
         aria-label={loop.label}
