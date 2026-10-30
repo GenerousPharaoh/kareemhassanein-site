@@ -49,7 +49,7 @@ try {
     });
     assert.ok(markerAligned);
     await page.screenshot({ path: path.join(out, `filter-${width}.png`) });
-    await page.getByRole('button', { name: 'All', exact: true }).click();
+    await page.getByRole('button', { name: 'All cases', exact: true }).click();
     await page.waitForTimeout(650);
     const card = page.locator('[data-case-card]').first();
     await card.locator('[data-case-preview]').scrollIntoViewIfNeeded();

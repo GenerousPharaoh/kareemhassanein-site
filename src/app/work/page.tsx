@@ -15,7 +15,7 @@ const description =
 const ogImage = PRACTICE_CASES[0].plate.desktop;
 
 export const metadata: Metadata = {
-  title: 'Work',
+  title: 'Case studies',
   description,
   alternates: { canonical: '/work' },
   openGraph: {
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     siteName: SITE.name,
     locale: 'en_CA',
     url: '/work',
-    title: `Work · ${SITE.name}`,
+    title: `Case studies · ${SITE.name}`,
     description,
     images: [{ url: `${ogImage.src}-1600.webp`, width: 1600, height: Math.round((1600 * ogImage.h) / ogImage.w), alt: ogImage.alt }],
   },
@@ -42,7 +42,7 @@ export default function WorkPage() {
 
       <header className={`container ${styles.intro}`}>
         <DisplayTitle className={styles.title}>
-          Work
+          Case studies
         </DisplayTitle>
         <p className={styles.lede} data-enter style={{ ['--i' as string]: 1 }}>
           Each case starts with the owner’s question, then what I found, what I decided, what shipped and what was measured.
@@ -53,7 +53,7 @@ export default function WorkPage() {
       <WorkFilter>
         <section className={`container ${styles.group}`} data-group="practices" aria-labelledby="work-practices">
           <h2 id="work-practices" className={styles.groupTitle} data-work-item>
-            Law firms and clinics
+            Practice projects
           </h2>
           <CaseStack className={styles.features}>
             {PRACTICE_CASES.map((c) => (
@@ -69,7 +69,7 @@ export default function WorkPage() {
         <section className={`container ${styles.group} ${styles.beyond}`} data-group="beyond" aria-labelledby="work-beyond">
           <div className={styles.groupHead} data-work-item>
             <h2 id="work-beyond" className={styles.groupTitle}>
-              Beyond practices
+              Other projects
             </h2>
             <p className={styles.groupLine}>The same way of working, outside practices: a gear store, a travel journal and a wedding.</p>
           </div>

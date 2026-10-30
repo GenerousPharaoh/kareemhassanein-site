@@ -1,6 +1,5 @@
 import type { ReactNode } from 'react';
-import { BookActions } from './BookActions';
-import styles from './CloseCall.module.css';
+import { CallInvitation } from '@/components/pages/CallInvitation';
 
 type Props = {
   id: string;
@@ -11,17 +10,5 @@ type Props = {
 
 /** Every page ends with a way to book a call, on the dark band that runs into the footer. */
 export function CloseCall({ id, title, text, track }: Props) {
-  return (
-    <section className={`night ${styles.close}`} aria-labelledby={id}>
-      <div className={`container ${styles.inner}`} data-reveal>
-        <h2 id={id} className={`t-h1 ${styles.title}`}>
-          {title}
-        </h2>
-        <div className={styles.row}>
-          <p className={`t-lede ${styles.text}`}>{text}</p>
-          <BookActions track={track} />
-        </div>
-      </div>
-    </section>
-  );
+  return <CallInvitation id={id} title={title} text={text} track={track} />;
 }

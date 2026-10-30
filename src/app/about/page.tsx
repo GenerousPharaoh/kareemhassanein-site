@@ -1,9 +1,9 @@
-import Link from 'next/link';
 import { DisplayTitle } from '@/components/ui/DisplayTitle';
 import { Disclosure } from '@/components/ui/Disclosure';
 import { PortraitFrame } from '@/components/media/PortraitFrame';
 import { CaseChips } from '@/components/pages/CaseChips';
 import { CloseBand } from '@/components/pages/CloseBand';
+import { Process } from '@/components/pages/Process';
 import { enter } from '@/components/pages/enter';
 import { pageMeta } from '@/lib/meta';
 import { PORTRAIT as portrait } from '@/content/portrait';
@@ -137,35 +137,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className={`paper sheet-up ${styles.how}`} aria-labelledby="how-title">
-        <div className="container">
-          <div className={styles.howHead} data-reveal>
-            <h2 id="how-title" className="t-h2">
-              I work in four steps.
-            </h2>
-          </div>
-          <ol className={styles.steps}>
-            {STEPS.map((s, i) => (
-              <li key={s.name} className={styles.step} data-reveal>
-                <span className={styles.node} aria-hidden="true" />
-                <p className={`t-label ${styles.stepNum}`} aria-hidden="true">
-                  {String(i + 1).padStart(2, '0')}
-                </p>
-                <h3 className={styles.stepName}>{s.name}</h3>
-                <p className={styles.stepText}>{s.text}</p>
-                {s.link ? (
-                  <Link href={s.link.href} className={styles.stepLink}>
-                    {s.link.label}
-                    <svg viewBox="0 0 16 16" aria-hidden="true">
-                      <path d="M3 8h9.5M8.5 4l4 4-4 4" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </Link>
-                ) : null}
-              </li>
-            ))}
-          </ol>
-        </div>
-      </section>
+      <Process steps={STEPS} />
 
       <section className={`section sheet-up ${styles.hireBand}`} aria-labelledby="hire-title">
         <div className={`container ${styles.hire}`}>

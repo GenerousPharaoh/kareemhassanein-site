@@ -1,4 +1,5 @@
 .header {
+  --focus: var(--focus-on-dark);
   --hdr-bg: var(--stage);
   --hdr-ink: var(--ivory);
   --hdr-muted: rgba(238, 237, 232, 0.62);
@@ -54,6 +55,7 @@
 
 /* Over light sheets the header turns to dark type */
 .header[data-theme='light'] {
+  --focus: var(--focus-on-light);
   --hdr-bg: #e9e8e3;
   --hdr-ink: #0c0c0b;
   --hdr-muted: rgba(12, 12, 11, 0.6);
@@ -62,6 +64,7 @@
 
 /* The phone menu is the dark stage, whatever is behind it */
 .header[data-open] {
+  --focus: var(--focus-on-dark);
   transition-property: transform;
   --hdr-bg: var(--stage);
   --hdr-ink: var(--ivory);
@@ -205,6 +208,46 @@
   align-items: center;
   gap: 2px;
 }
+
+.services { position: relative; }
+.serviceToggle {
+  display: flex; align-items: center; gap: 7px; min-height: 48px;
+  padding: 12px 11px; font-size: .9375rem; font-weight: 500;
+  color: var(--hdr-muted); cursor: pointer; list-style: none;
+}
+.serviceToggle::-webkit-details-marker { display: none; }
+.serviceToggle svg { width: 12px; height: 12px; }
+.serviceToggle[data-active], .services[open] .serviceToggle { color: var(--hdr-ink); }
+.serviceToggle[data-active] { text-decoration: underline; text-underline-offset: 9px; }
+.services[open] .serviceToggle svg { rotate: 180deg; }
+.servicePanel {
+  position: absolute; top: calc(100% + 8px); left: -22px; width: 310px;
+  padding: 8px; border: 1px solid #ffffff1c; border-radius: 16px;
+  background: var(--stage-raised); color: var(--ivory);
+  box-shadow: 0 20px 50px #0003;
+  --focus: var(--focus-on-dark);
+}
+.serviceLink { display: grid; gap: 5px; padding: 18px 16px; border-radius: 9px; text-decoration: none; }
+.serviceLink + .serviceLink { border-top: 1px solid #ffffff14; }
+.serviceLink > span { display: flex; align-items: center; justify-content: space-between; gap: 20px; font-size: 1.125rem; font-weight: 500; }
+.serviceLink svg { width: 14px; height: 14px; }
+.serviceLink small { color: var(--ivory-2); font-size: .8125rem; }
+.serviceLink[aria-current='page'] { background: #ffffff0d; }
+.sheetServices { display: grid; padding: 15px 0; border-bottom: 1px solid #ffffff14; }
+.sheetServices > p { color: var(--muted); font-size: .8125rem; margin-bottom: 6px; }
+.sheetServiceLink { display: grid; gap: 3px; min-height: 66px; padding: 8px 0; text-decoration: none; }
+.sheetServiceLink > span { font: 500 1.5rem/1.1 var(--font-display); letter-spacing: -.035em; }
+.sheetServiceLink small { font-size: .8125rem; color: var(--muted); }
+.sheetServiceLink[aria-current='page'] > span { text-decoration: underline; text-underline-offset: .2em; }
+@media (hover: hover) {
+  .serviceToggle:hover { color: var(--hdr-ink); }
+  .serviceLink:hover { background: #ffffff0d; }
+  .sheetServiceLink:hover > span { text-decoration: underline; text-underline-offset: .2em; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .services[open] .servicePanel { animation: services-in 200ms var(--ease-out); }
+}
+@keyframes services-in { from { opacity: 0; translate: 0 -5px; } }
 
 /* A line draws in under the link on hover and stays under the page you are on */
 .link {

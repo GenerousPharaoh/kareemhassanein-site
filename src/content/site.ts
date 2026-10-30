@@ -17,20 +17,19 @@ export const SITE = {
 } as const;
 
 export const NAV = [
-  { href: '/work', label: 'Work' },
-  { href: '/firms', label: 'Law firms' },
-  { href: '/clinics', label: 'Clinics' },
+  { href: '/work', label: 'Case studies' },
   { href: '/pricing', label: 'Pricing' },
   { href: '/about', label: 'About' },
 ] as const;
 
+export const SERVICES = [
+  { href: '/firms', label: 'For law firms', description: 'Websites, intake and ads' },
+  { href: '/clinics', label: 'For clinics', description: 'Websites, booking and ads' },
+] as const;
+
 export const FOOTER_NAV = [
-  { href: '/work', label: 'Work' },
-  { href: '/firms', label: 'Law firms' },
-  { href: '/clinics', label: 'Clinics' },
-  { href: '/pricing', label: 'Pricing' },
-  { href: '/notes', label: 'Notes' },
+  { href: '/work', label: 'Case studies' },
   { href: '/about', label: 'About' },
+  { href: '/notes', label: 'Notes' },
   { href: '/ai', label: 'How I use AI' },
-  { href: '/privacy', label: 'Privacy' },
 ] as const;

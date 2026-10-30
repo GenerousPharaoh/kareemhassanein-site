@@ -2,9 +2,9 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { Fragment, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import type { MouseEvent } from 'react';
-import { NAV, SITE } from '@/content/site';
+import { NAV, SERVICES, SITE } from '@/content/site';
 import { prefersReducedMotion } from '@/lib/useReducedMotion';
 import styles from './Header.module.css';
 
@@ -28,6 +28,35 @@ export function Header() {
   const [tucked, setTucked] = useState(false);
   const menuButton = useRef<HTMLButtonElement>(null);
   const sheet = useRef<HTMLDivElement>(null);
+  const services = useRef<HTMLDetailsElement>(null);
+
+  // Native details keeps the service destinations reachable without JavaScript.
+  useEffect(() => {
+    const menu = services.current;
+    if (!menu) return;
+    menu.open = false;
+    const outside = (event: Event) => {
+      if (event.target instanceof Node && !menu.contains(event.target)) menu.open = false;
+    };
+    const escape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && menu.open) {
+        menu.open = false;
+        menu.querySelector('summary')?.focus();
+      }
+    };
+    const narrow = window.matchMedia('(max-width: 959px)');
+    const resize = () => { if (narrow.matches) menu.open = false; };
+    document.addEventListener('pointerdown', outside);
+    document.addEventListener('focusin', outside);
+    document.addEventListener('keydown', escape);
+    narrow.addEventListener('change', resize);
+    return () => {
+      document.removeEventListener('pointerdown', outside);
+      document.removeEventListener('focusin', outside);
+      document.removeEventListener('keydown', escape);
+      narrow.removeEventListener('change', resize);
+    };
+  }, [pathname]);
 
   const close = useCallback((returnFocus = false) => {
     setPhase((p) => (p === 'open' ? 'closing' : p));
@@ -211,10 +240,23 @@ export function Header() {
           </span>
         </Link>
         <nav className={styles.nav} aria-label="Main">
-          {NAV.map((item) => (
+          {NAV.map((item, i) => (
+            <Fragment key={item.href}>
             <Link key={item.href} href={item.href} className={styles.link} aria-current={isActive(item.href) ? 'page' : undefined}>
               {item.label}
             </Link>
+            {i === 0 ? <details ref={services} className={styles.services}>
+              <summary className={styles.serviceToggle} data-active={SERVICES.some((service) => isActive(service.href)) || undefined}>
+                Services<svg viewBox="0 0 12 12" aria-hidden="true"><path d="m3 4.5 3 3 3-3" fill="none" stroke="currentColor" strokeWidth="1.3" /></svg>
+              </summary>
+              <div className={styles.servicePanel}>
+                {SERVICES.map((service) => <Link key={service.href} href={service.href} className={styles.serviceLink} aria-current={isActive(service.href) ? 'page' : undefined}>
+                  <span>{service.label}<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 13 13 3M3 3h10v10" fill="none" stroke="currentColor" strokeWidth="1.2" /></svg></span>
+                  <small>{service.description}</small>
+                </Link>)}
+              </div>
+            </details> : null}
+            </Fragment>
           ))}
         </nav>
         <Link href={SITE.bookingHref} className={styles.cta} data-track="header-book">
@@ -249,6 +291,7 @@ export function Header() {
       >
         <nav aria-label="Menu" className={`container ${styles.sheetNav}`} onClick={onSheetClick}>
           {MENU.map((item, i) => (
+            <Fragment key={item.href}>
             <Link
               key={item.href}
               href={item.href}
@@ -258,6 +301,13 @@ export function Header() {
             >
               {item.label}
             </Link>
+            {item.href === '/work' ? <div className={styles.sheetServices}>
+              <p>Services</p>
+              {SERVICES.map((service) => <Link key={service.href} href={service.href} className={styles.sheetServiceLink} aria-current={isActive(service.href) ? 'page' : undefined}>
+                <span>{service.label}</span><small>{service.description}</small>
+              </Link>)}
+            </div> : null}
+            </Fragment>
           ))}
           <div className={styles.sheetFoot} style={{ ['--i' as string]: MENU.length }}>
             <Link href={SITE.bookingHref} className={styles.sheetCta} data-track="menu-book">

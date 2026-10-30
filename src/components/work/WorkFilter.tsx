@@ -6,10 +6,10 @@ import { getGsap } from '@/lib/gsap';
 import styles from './WorkFilter.module.css';
 
 const FILTERS = [
-  { id: 'all', label: 'All', status: 'Showing all the work.' },
+  { id: 'all', label: 'All cases', status: 'Showing all case studies.' },
   { id: 'firms', label: 'Law firms', status: 'Showing law firms.' },
   { id: 'clinics', label: 'Clinics', status: 'Showing clinics.' },
-  { id: 'beyond', label: 'Beyond practices', status: 'Showing work beyond practices.' },
+  { id: 'beyond', label: 'Other projects', status: 'Showing other projects.' },
 ] as const;
 
 type FilterId = (typeof FILTERS)[number]['id'];
@@ -153,7 +153,8 @@ export function WorkFilter({ children }: { children: ReactNode }) {
   return (
     <>
       <div className={`container ${styles.bar}`} data-work-filter data-enter style={{ ['--i' as string]: 2 }}>
-        <div ref={chips} className={styles.chips} role="group" aria-label="Show work for">
+        <p className={styles.filterLabel} id="work-filter-label">Filter case studies</p>
+        <div ref={chips} className={styles.chips} role="group" aria-labelledby="work-filter-label">
           {FILTERS.map((f) => (
             <button key={f.id} type="button" className={styles.chip} aria-pressed={filter === f.id} onClick={() => choose(f.id)}>
               {f.label}

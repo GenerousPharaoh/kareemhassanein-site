@@ -68,7 +68,7 @@ const jsonLd = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en-CA" className={sans.variable} style={{ ['--font-mona-narrow' as string]: narrowFamily }}>
-      <body>
+      <body id="top">
         <Header />
         <main id="main">{children}</main>
         <Footer />

@@ -28,7 +28,7 @@ const SIZES = {
 };
 
 /** Cases as cards in their clients' own palettes; the first leads, wider, on large screens. */
-export function CaseCards({ items }: { items: CaseCard[] }) {
+export function CaseCards({ items, concise = false }: { items: CaseCard[]; concise?: boolean }) {
   return (
     <ul className={styles.grid}>
       {items.map(({ c, point }, n) => {
@@ -54,7 +54,7 @@ export function CaseCards({ items }: { items: CaseCard[] }) {
                     <span className="sr-only">: read the case</span>
                   </Link>
                 </h3>
-                <p className={styles.question}>{c.question}</p>
+                {!concise ? <p className={styles.question}>{c.question}</p> : null}
                 <p className={styles.point}>
                   <span className={styles.pointLabel}>{point.label}</span>
                   <span>{point.text}</span>
@@ -74,15 +74,15 @@ export function CaseCards({ items }: { items: CaseCard[] }) {
   );
 }
 
-type SectionProps = { id: string; label?: string; title: string; intro?: string; items: CaseCard[] };
+type SectionProps = { id: string; label?: string; title: string; intro?: string; items: CaseCard[]; concise?: boolean };
 
 /** The cards with their heading, as a section of a page. */
-export function CaseCardsSection({ id, label, title, intro, items }: SectionProps) {
+export function CaseCardsSection({ id, label, title, intro, items, concise }: SectionProps) {
   return (
     <section className={`section ${styles.section}`} aria-labelledby={id}>
       <div className={`container ${styles.inner}`}>
         <SectionHead id={id} label={label} title={title} intro={intro} split />
-        <CaseCards items={items} />
+        <CaseCards items={items} concise={concise} />
       </div>
     </section>
   );
