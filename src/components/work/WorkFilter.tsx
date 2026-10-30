@@ -59,11 +59,33 @@ export function WorkFilter({ children }: { children: ReactNode }) {
   const [filter, setFilter] = useState<FilterId>('all');
   const [status, setStatus] = useState('');
   const results = useRef<HTMLDivElement>(null);
+  const chips = useRef<HTMLDivElement>(null);
+  const marker = useRef<HTMLSpanElement>(null);
   const run = useRef(0);
 
   useLayoutEffect(() => {
     // Filtering changes where each screen sits, so its scroll composition needs fresh positions.
     getGsap().ScrollTrigger.refresh();
+  }, [filter]);
+
+  useLayoutEffect(() => {
+    const row = chips.current;
+    if (!row) return;
+    let alive = true;
+    const measure = () => {
+      const selected = row.querySelector<HTMLElement>('[aria-pressed="true"]');
+      if (!alive || !selected) return;
+      row.style.setProperty('--selection-x', `${selected.offsetLeft}px`);
+      row.style.setProperty('--selection-y', `${selected.offsetTop + selected.offsetHeight - 2}px`);
+      row.style.setProperty('--selection-width', `${selected.offsetWidth}px`);
+      row.dataset.measured = '';
+    };
+    measure();
+    const resize = new ResizeObserver(measure);
+    resize.observe(row);
+    row.querySelectorAll('button').forEach((button) => resize.observe(button));
+    void document.fonts.ready.then(measure);
+    return () => { alive = false; resize.disconnect(); };
   }, [filter]);
 
   const choose = (id: FilterId) => {
@@ -99,6 +121,11 @@ export function WorkFilter({ children }: { children: ReactNode }) {
     });
 
     const mine = ++run.current;
+    const line = marker.current;
+    if (line) {
+      line.style.viewTransitionName = 'work-filter-marker';
+      line.dataset.transitioning = '';
+    }
     const transition = document.startViewTransition({
       types: ['work-filter'],
       update: () => {
@@ -113,8 +140,11 @@ export function WorkFilter({ children }: { children: ReactNode }) {
       },
     });
     const done = () => {
-      if (run.current === mine) items.forEach((el) => setName(el, ''));
+      if (run.current !== mine) return;
+      items.forEach((el) => setName(el, ''));
+      if (line) { line.style.removeProperty('view-transition-name'); delete line.dataset.transitioning; }
     };
+    void transition.ready.catch(() => {});
     transition.finished.then(done, done);
   };
 
@@ -123,12 +153,13 @@ export function WorkFilter({ children }: { children: ReactNode }) {
   return (
     <>
       <div className={`container ${styles.bar}`} data-work-filter data-enter style={{ ['--i' as string]: 2 }}>
-        <div className={styles.chips} role="group" aria-label="Show work for">
+        <div ref={chips} className={styles.chips} role="group" aria-label="Show work for">
           {FILTERS.map((f) => (
             <button key={f.id} type="button" className={styles.chip} aria-pressed={filter === f.id} onClick={() => choose(f.id)}>
               {f.label}
             </button>
           ))}
+          <span ref={marker} className={styles.marker} aria-hidden="true" />
         </div>
         <p className="sr-only" role="status">
           {status}

@@ -60,7 +60,7 @@ export function CaseHeader({ c }: { c: CaseStudy }) {
         </div>
       </div>
       <Exhibit className={`container ${styles.plateWrap}`} arrive>
-      <div data-exhibit>
+      <div data-exhibit data-case-hero data-case-preview={c.slug}>
         {live ? (
           <div className={styles.live}>
             <BrowserFrame domain={c.domain}>

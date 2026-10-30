@@ -99,9 +99,9 @@ try {
     await zoom.click();
     const dialog = page.getByRole('dialog');
     await dialog.waitFor({ state: 'visible' });
-    const firstImage = await dialog.locator('img').getAttribute('src');
+    const firstImage = await dialog.getByRole('img').getAttribute('src');
     await page.keyboard.press('ArrowRight');
-    assert.notEqual(await dialog.locator('img').getAttribute('src'), firstImage);
+    await page.waitForFunction((src) => document.querySelector('dialog img[alt]:not([alt=""])')?.getAttribute('src') !== src, firstImage);
     await page.keyboard.press('Escape');
     await dialog.waitFor({ state: 'hidden' });
     assert.equal(await zoom.evaluate((el) => el === document.activeElement), true);

@@ -5,8 +5,23 @@ import { useEffect, useLayoutEffect, useRef } from 'react';
 import { flushSync } from 'react-dom';
 import { getLenis } from './SmoothScroll';
 
-type PendingRoute = { pathname: string; position?: number; finish: () => void };
+type PendingRoute = { pathname: string; position?: number; caseSlug?: string; finish: () => void };
 const POSITION = '__khMotionPosition';
+
+function shareCase(element: HTMLElement) {
+  element.style.viewTransitionName = 'case-exhibit';
+  element.style.setProperty('view-transition-class', 'case-morph');
+  element.dataset.sharedCase = '';
+}
+
+function clearCase() {
+  document.querySelectorAll<HTMLElement>('[data-shared-case]').forEach((element) => {
+    element.style.removeProperty('view-transition-name');
+    element.style.removeProperty('view-transition-class');
+    delete element.dataset.sharedCase;
+  });
+  delete document.documentElement.dataset.caseTransition;
+}
 
 /** Give visible stills a brief chance to decode before the browser takes the incoming snapshot. */
 async function prepareImages() {
@@ -41,6 +56,8 @@ export function PageTransition() {
     lenis?.scrollTo(window.scrollY, { immediate: true, force: true });
     const route = pending.current;
     if (route?.pathname === pathname) {
+      const hero = document.querySelector<HTMLElement>('[data-case-hero]');
+      if (route.caseSlug && hero?.dataset.casePreview === route.caseSlug) shareCase(hero);
       if (route.position !== undefined) {
         position.current = route.position;
         window.history.replaceState({ ...window.history.state, [POSITION]: route.position }, '');
@@ -58,9 +75,10 @@ export function PageTransition() {
     position.current = typeof savedPosition === 'number' ? savedPosition : 0;
     window.history.replaceState({ ...window.history.state, [POSITION]: position.current }, '');
 
-    const begin = (destination: string, navigate?: () => void, direction: 'forward' | 'back' = 'forward', targetPosition?: number) => {
+    const begin = (destination: string, navigate?: () => void, direction: 'forward' | 'back' = 'forward', targetPosition?: number, source?: HTMLElement | null) => {
       pending.current?.finish();
       active?.skipTransition();
+      clearCase();
       window.clearTimeout(timeout);
       const lenis = getLenis();
       lenis?.scrollTo(window.scrollY, { immediate: true, force: true });
@@ -76,9 +94,16 @@ export function PageTransition() {
       }
 
       let resolve: () => void;
+      const box = source?.getBoundingClientRect();
+      const caseSlug = source && box && box.bottom > 0 && box.top < innerHeight && CSS.supports('view-transition-class', 'case-morph') ? source.dataset.casePreview : undefined;
+      if (source && caseSlug) {
+        root.dataset.caseTransition = caseSlug;
+        shareCase(source);
+      }
       const committed = new Promise<void>((done) => { resolve = done; });
       const route: PendingRoute = {
         pathname: destination,
+        caseSlug,
         position: navigate ? position.current + 1 : targetPosition,
         finish: () => {
           if (pending.current === route) pending.current = null;
@@ -117,6 +142,7 @@ export function PageTransition() {
         active = null;
         window.clearTimeout(timeout);
         delete root.dataset.routeChanging;
+        clearCase();
         window.dispatchEvent(new Event('route-settled'));
       };
       void transition.ready.catch(() => {});
@@ -132,7 +158,9 @@ export function PageTransition() {
       event.preventDefault();
       const up = url.pathname === '/' || (url.pathname === '/work' && currentPath.current.startsWith('/work/'))
         || (url.pathname === '/notes' && currentPath.current.startsWith('/notes/'));
-      begin(url.pathname, () => router.push(url.pathname + url.search + url.hash), up ? 'back' : 'forward');
+      const preview = link.closest('[data-case-card]')?.querySelector<HTMLElement>('[data-case-preview]');
+      const source = preview && url.pathname === `/work/${preview.dataset.casePreview}` ? preview : null;
+      begin(url.pathname, () => router.push(url.pathname + url.search + url.hash), up ? 'back' : 'forward', undefined, source);
     };
 
     const onPopState = (event: PopStateEvent) => {
@@ -153,6 +181,7 @@ export function PageTransition() {
       active?.skipTransition();
       window.clearTimeout(timeout);
       delete root.dataset.routeChanging;
+      clearCase();
     };
   }, [router]);
 

@@ -30,7 +30,7 @@ export function CaseCard({ c, variant = 'feature' }: Props) {
   const feature = variant === 'feature';
 
   return (
-    <article className={styles.card} data-variant={variant} data-tone={toneOf(c.palette)} data-theme={toneOf(c.palette)} style={paletteVars(c.palette)}>
+    <article className={styles.card} data-case-card data-variant={variant} data-tone={toneOf(c.palette)} data-theme={toneOf(c.palette)} style={paletteVars(c.palette)}>
       <Rise className={styles.text}>
         <p className={styles.kind}>{c.kindLabel}</p>
         <h3 className={styles.name}>
@@ -44,7 +44,7 @@ export function CaseCard({ c, variant = 'feature' }: Props) {
         {c.status ? <p className={styles.status}>{c.status}</p> : null}
       </Rise>
       <Exhibit className={styles.exhibit}>
-      <div className={styles.media} data-exhibit>
+      <div className={styles.media} data-exhibit data-case-preview={c.slug}>
         <BrowserFrame domain={c.domain} className={styles.desk}>
           <div className={styles.clip}>
             {deskLoop ? (

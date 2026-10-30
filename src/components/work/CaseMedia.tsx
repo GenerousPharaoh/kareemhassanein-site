@@ -91,7 +91,7 @@ export function Gallery({ c }: { c: CaseStudy }) {
   if (!rows.length && !phones.length) return null;
 
   return (
-    <GalleryViewer items={shots.filter((shot) => shot.kind === 'still').map((shot) => shot.media as Still).concat(phones.filter((media): media is Still => !('poster' in media))).map((media) => ({ key: media.src, src: fullSrc(media), alt: media.alt, width: media.w, height: media.h }))}>
+    <GalleryViewer items={shots.filter((shot) => shot.kind === 'still').map((shot) => shot.media as Still).concat(phones.filter((media): media is Still => !('poster' in media))).map((media) => ({ key: media.src, src: fullSrc(media), thumbnail: `${media.src}-${media.widths[0]}.avif`, alt: media.alt, width: media.w, height: media.h }))}>
     <section className={styles.band} data-tone={toneOf(c.palette)} data-theme={toneOf(c.palette)} aria-labelledby="case-screens">
       <div className="container">
         <h2 id="case-screens" className={styles.title}>

@@ -477,9 +477,22 @@ html:not([data-route-arrival]) body:has(main > :first-child[data-theme='light'],
 }
 
 /* Shared images between a work preview and its case page */
-::view-transition-group(.case-morph) {
-  animation-duration: 560ms;
-  animation-timing-function: var(--ease-in-out);
+::view-transition-group(*.case-morph) {
+  animation-duration: 520ms;
+  animation-timing-function: cubic-bezier(.22, 1, .36, 1);
+  z-index: 2;
+}
+
+::view-transition-image-pair(*.case-morph) { isolation: isolate; }
+::view-transition-old(*.case-morph),
+::view-transition-new(*.case-morph) { mix-blend-mode: normal; height: 100%; object-fit: fill; }
+::view-transition-old(*.case-morph) { animation: case-out 240ms ease-out both; }
+::view-transition-new(*.case-morph) { animation: case-in 360ms ease-out both; }
+@keyframes case-out { to { opacity: 0; } }
+@keyframes case-in { from { opacity: 0; } to { opacity: 1; } }
+
+@media (max-width: 760px) {
+  ::view-transition-group(*.case-morph) { animation-duration: 420ms; }
 }
 
 /* A note's cover flies from the notes list into the note, and back; on any other page change it leaves and arrives with the page */

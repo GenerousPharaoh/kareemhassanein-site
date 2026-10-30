@@ -16,7 +16,7 @@ export function Exhibit({ children, className, arrive = false }: { children: Rea
     const target = wrap?.querySelector('[data-exhibit]');
     if (!wrap || !target) return;
     if (arrive) {
-      gsap.fromTo(
+      if (!document.documentElement.hasAttribute('data-case-transition')) gsap.fromTo(
         target,
         { y: 110, scale: 0.9, rotationX: 22, rotation: -5, transformPerspective: 1600, transformOrigin: '50% 100%' },
         { y: 0, scale: 1, rotationX: 0, rotation: 0, duration: 1.1, ease: 'expo.out', delay: 0.1 },
