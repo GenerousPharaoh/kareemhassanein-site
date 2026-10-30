@@ -1,0 +1,25 @@
+.head {
+  display: grid;
+  gap: 18px;
+}
+
+.main {
+  display: grid;
+  gap: 14px;
+}
+
+.title {
+  max-width: 18ch;
+}
+
+.intro {
+  max-width: 52ch;
+}
+
+@media (min-width: 1000px) {
+  .head[data-split] {
+    grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+    column-gap: clamp(40px, 6vw, 96px);
+    align-items: end;
+  }
+}

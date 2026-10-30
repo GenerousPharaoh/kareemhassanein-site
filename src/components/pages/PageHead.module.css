@@ -1,0 +1,29 @@
+.head {
+  display: grid;
+  align-content: start;
+  justify-items: start;
+  gap: clamp(16px, 1.9vw, 24px);
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.head .title {
+  max-width: 15ch;
+  hyphens: manual;
+  font: 560 clamp(3rem, 6.9vw, 7rem)/.94 var(--font-display);
+  font-stretch: 92%;
+  letter-spacing: -.05em;
+  text-wrap: balance;
+}
+
+.title[data-measure='wide'] {
+  max-width: 21ch;
+}
+
+.extra {
+  padding-top: clamp(6px, 1.2vw, 14px);
+}

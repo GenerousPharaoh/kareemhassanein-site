@@ -1,0 +1,160 @@
+'use client';
+
+import { usePathname, useRouter } from 'next/navigation';
+import { useEffect, useLayoutEffect, useRef } from 'react';
+import { flushSync } from 'react-dom';
+import { getLenis } from './SmoothScroll';
+
+type PendingRoute = { pathname: string; position?: number; finish: () => void };
+const POSITION = '__khMotionPosition';
+
+/** Give visible stills a brief chance to decode before the browser takes the incoming snapshot. */
+async function prepareImages() {
+  const images = [...document.images].filter((image) => {
+    const box = image.getBoundingClientRect();
+    return box.width > 0 && box.height > 0 && box.top < innerHeight && box.bottom > 0 && getComputedStyle(image).visibility === 'visible';
+  });
+  let timeout = 0;
+  await Promise.race([
+    Promise.all(images.map((image) => image.decode().catch(() => {}))),
+    new Promise<void>((done) => { timeout = window.setTimeout(done, 120); }),
+  ]);
+  window.clearTimeout(timeout);
+}
+
+/**
+ * Capture the viewport, rather than a main element thousands of pixels tall. Next still owns
+ * navigation, prefetching, focus and history; the promise only holds the reveal until it commits.
+ */
+export function PageTransition() {
+  const router = useRouter();
+  const pathname = usePathname();
+  const currentPath = useRef(pathname);
+  const pending = useRef<PendingRoute | null>(null);
+  const position = useRef(0);
+
+  useLayoutEffect(() => {
+    currentPath.current = pathname;
+    // Discard wheel inertia from the old page without overriding Next's anchor/history position.
+    const lenis = getLenis();
+    lenis?.resize();
+    lenis?.scrollTo(window.scrollY, { immediate: true, force: true });
+    const route = pending.current;
+    if (route?.pathname === pathname) {
+      if (route.position !== undefined) {
+        position.current = route.position;
+        window.history.replaceState({ ...window.history.state, [POSITION]: route.position }, '');
+      }
+      route.finish();
+    }
+  }, [pathname]);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    let active: ViewTransition | null = null;
+    let timeout = 0;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const savedPosition = window.history.state?.[POSITION];
+    position.current = typeof savedPosition === 'number' ? savedPosition : 0;
+    window.history.replaceState({ ...window.history.state, [POSITION]: position.current }, '');
+
+    const begin = (destination: string, navigate?: () => void, direction: 'forward' | 'back' = 'forward', targetPosition?: number) => {
+      pending.current?.finish();
+      active?.skipTransition();
+      window.clearTimeout(timeout);
+      const lenis = getLenis();
+      lenis?.scrollTo(window.scrollY, { immediate: true, force: true });
+
+      if (!document.startViewTransition || typeof ViewTransition === 'undefined' || !('types' in ViewTransition.prototype) || reduce.matches) {
+        root.dataset.routeArrival = direction;
+        if (navigate) {
+          // The same history accounting works when animation is disabled.
+          pending.current = { pathname: destination, position: position.current + 1, finish: () => { pending.current = null; } };
+        } else if (targetPosition !== undefined) position.current = targetPosition;
+        navigate?.();
+        return;
+      }
+
+      let resolve: () => void;
+      const committed = new Promise<void>((done) => { resolve = done; });
+      const route: PendingRoute = {
+        pathname: destination,
+        position: navigate ? position.current + 1 : targetPosition,
+        finish: () => {
+          if (pending.current === route) pending.current = null;
+          resolve();
+        },
+      };
+      pending.current = route;
+      root.dataset.routeChanging = '';
+
+      const update = () => {
+        // A later click can supersede a transition before the browser has captured its old view.
+        if (pending.current !== route) return;
+        // Its value is the direction, for anything that should keep still on the way back
+        root.dataset.routeArrival = direction;
+        navigate?.();
+        return committed.then(async () => {
+          if (active !== transition || location.pathname !== destination) return;
+          await prepareImages();
+          // Commit the incoming header theme before the browser freezes its snapshot.
+          flushSync(() => window.dispatchEvent(new Event('route-capture')));
+        });
+      };
+
+      const transition = document.startViewTransition({
+        update,
+        types: ['page', direction],
+      });
+      active = transition;
+      // A failed navigation must not leave a frozen snapshot or an unresolved update callback.
+      timeout = window.setTimeout(() => {
+        route.finish();
+        transition.skipTransition();
+      }, 8000);
+      const settle = () => {
+        if (active !== transition) return;
+        active = null;
+        window.clearTimeout(timeout);
+        delete root.dataset.routeChanging;
+        window.dispatchEvent(new Event('route-settled'));
+      };
+      void transition.ready.catch(() => {});
+      void transition.finished.then(settle, settle);
+    };
+
+    const onClick = (event: MouseEvent) => {
+      if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.altKey || event.shiftKey) return;
+      const link = event.target instanceof Element ? event.target.closest<HTMLAnchorElement>('a[href]') : null;
+      if (!link || link.hasAttribute('download') || (link.target && link.target !== '_self')) return;
+      const url = new URL(link.href);
+      if (url.origin !== location.origin || url.pathname === currentPath.current) return;
+      event.preventDefault();
+      const up = url.pathname === '/' || (url.pathname === '/work' && currentPath.current.startsWith('/work/'))
+        || (url.pathname === '/notes' && currentPath.current.startsWith('/notes/'));
+      begin(url.pathname, () => router.push(url.pathname + url.search + url.hash), up ? 'back' : 'forward');
+    };
+
+    const onPopState = (event: PopStateEvent) => {
+      const target = event.state?.[POSITION];
+      const targetPosition = typeof target === 'number' ? target : undefined;
+      const direction = targetPosition !== undefined && targetPosition > position.current ? 'forward' : 'back';
+      if (location.pathname !== currentPath.current) begin(location.pathname, undefined, direction, targetPosition);
+    };
+    const onPreference = () => { if (reduce.matches) active?.skipTransition(); };
+    document.addEventListener('click', onClick, true);
+    window.addEventListener('popstate', onPopState, true);
+    reduce.addEventListener('change', onPreference);
+    return () => {
+      document.removeEventListener('click', onClick, true);
+      window.removeEventListener('popstate', onPopState, true);
+      reduce.removeEventListener('change', onPreference);
+      pending.current?.finish();
+      active?.skipTransition();
+      window.clearTimeout(timeout);
+      delete root.dataset.routeChanging;
+    };
+  }, [router]);
+
+  return null;
+}

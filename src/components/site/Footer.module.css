@@ -1,0 +1,122 @@
+.footer {
+  overflow: hidden;
+  padding-top: clamp(48px, 6vw, 88px);
+  padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+  background: var(--stage);
+  color: var(--ivory);
+}
+
+.top {
+  display: grid;
+  gap: 40px;
+}
+
+.contact {
+  display: grid;
+  gap: 8px;
+  align-content: start;
+}
+
+.label {
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+
+.email {
+  font-size: clamp(1.15rem, 1rem + 0.6vw, 1.5rem);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+}
+
+.reply {
+  font-size: var(--t-small);
+  color: var(--muted);
+}
+
+.nav {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 24px;
+  align-content: start;
+}
+
+/* A line draws in under the link on hover */
+.link {
+  position: relative;
+  justify-self: start;
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  min-width: 44px;
+  color: var(--ivory-2);
+  text-decoration: none;
+  transition: color var(--dur-hover) var(--ease-colour);
+}
+
+.link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 10px;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: 100% 50%;
+  transition: transform 0.5s var(--ease-out);
+}
+
+@media (hover: hover) {
+  .link:hover {
+    color: var(--ivory);
+  }
+
+  .link:hover::after {
+    transform: none;
+    transform-origin: 0 50%;
+  }
+}
+
+.wordmark {
+  margin: clamp(48px, 7vw, 104px) 0 0;
+  padding: 0 2vw;
+  font: 600 11.6vw / 0.8 var(--font-display);
+  letter-spacing: -0.06em;
+  white-space: nowrap;
+  text-align: center;
+  color: var(--ivory);
+  user-select: none;
+  /* Words below the line are hidden; the tops of the letters are never cut */
+  clip-path: inset(-50% 0 -0.06em 0);
+}
+
+.word {
+  display: inline;
+}
+
+.wordInk {
+  display: inline-block;
+  transform-origin: 0 100%;
+}
+
+.base {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px 24px;
+  margin-top: clamp(20px, 3vw, 36px);
+  padding-top: 18px;
+  border-top: 1px solid var(--rule);
+  font-size: 0.8125rem;
+  color: var(--muted);
+}
+
+@media (min-width: 860px) {
+  .top {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  .nav {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

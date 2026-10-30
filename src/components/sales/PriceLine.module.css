@@ -1,0 +1,182 @@
+.section {
+  padding-bottom: clamp(64px, 7vw, 104px);
+  border-top: 1px solid var(--rule);
+}
+
+.inner {
+  display: grid;
+  gap: clamp(36px, 4.5vw, 56px);
+}
+
+.line {
+  list-style: none;
+  display: grid;
+  border-top: 1px solid var(--ink);
+}
+
+.cell {
+  position: relative;
+  border-bottom: 1px solid var(--rule);
+}
+
+/* Each price is a link to its own card on the pricing page */
+.link {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    'label price'
+    'tag tag';
+  align-items: baseline;
+  column-gap: 16px;
+  min-height: 64px;
+  padding: 18px 0 19px;
+  color: inherit;
+  text-decoration: none;
+}
+
+/* The ring stands clear of the words and the rules (the first price starts flush with the column) */
+.link:focus-visible {
+  outline-offset: 6px;
+  border-radius: 10px;
+}
+
+.label {
+  grid-area: label;
+  font: 500 1rem / 1.35 var(--font-body);
+  color: var(--ink-2);
+  transition: color var(--dur-hover) var(--ease-colour);
+}
+
+.price {
+  grid-area: price;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.from {
+  font: 500 0.875rem / 1 var(--font-body);
+  color: var(--muted);
+}
+
+.figure {
+  font: 500 clamp(1.5rem, 1.15rem + 1.2vw, 2.4rem) / 1 var(--font-display);
+  letter-spacing: -0.035em;
+  transition: color var(--dur-hover) var(--ease-colour);
+}
+
+.tag {
+  grid-area: tag;
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  font: 500 var(--t-label) / 1.4 var(--font-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--signal);
+}
+
+.tag::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--signal);
+}
+
+.foot {
+  display: grid;
+  gap: 20px;
+  justify-items: start;
+}
+
+.note {
+  max-width: 60ch;
+  font-size: var(--t-small);
+  color: var(--muted);
+}
+
+@media (hover: hover) {
+  .link:hover .figure {
+    color: var(--signal);
+  }
+
+  .link:hover .label {
+    color: var(--ink);
+  }
+}
+
+/* Pressed, on touch as well: the same change as hover, at once */
+.link:active .figure {
+  color: var(--signal);
+  transition-duration: 0s;
+}
+
+.link:active .label {
+  color: var(--ink);
+  transition-duration: 0s;
+}
+
+/* Wide screens: five columns, each price set large under its name */
+@media (min-width: 900px) {
+  .line {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    border-bottom: 1px solid var(--rule);
+  }
+
+  /* Each column measures itself, so a price can never run into the next one */
+  .cell {
+    container-type: inline-size;
+    border-bottom: 0;
+    border-left: 1px solid var(--rule);
+  }
+
+  .cell:first-child {
+    border-left: 0;
+  }
+
+  /* As designed from about 1100px; narrower, the figure shrinks just enough for "from $10,000" to fit */
+  .figure {
+    font-size: min(clamp(1.5rem, 1.15rem + 1.2vw, 2.4rem), 14.5cqi);
+  }
+
+  .link {
+    height: 100%;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      'label'
+      'price'
+      'tag';
+    align-content: start;
+    row-gap: 14px;
+    padding: 22px 20px 26px;
+  }
+
+  .cell:first-child .link {
+    padding-left: 0;
+  }
+
+  .tag {
+    margin-top: 0;
+  }
+
+  /* The way in: a signal rule over the first price */
+  .cell[data-lead]::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: 0;
+    right: 20px;
+    height: 3px;
+    background: var(--signal);
+  }
+
+  .foot {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    column-gap: 40px;
+  }
+}

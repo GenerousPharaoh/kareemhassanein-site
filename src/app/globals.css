@@ -1,526 +1,511 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
+/*
+  A quiet studio frame around loud work: near-black, warm white type, one sharp grotesk (Mona Sans).
+  The colour comes from the client work itself: full-screen loops, and a stage that takes on the
+  colour of whichever project is in view. Light sheets give the page its rhythm.
+  Sizes are set for a 1280 by 680 laptop window first, then phones, then large screens.
+*/
 :root {
-  --background: 220 15% 8%;
-  --foreground: 38 8% 97%;
-  /* Warm off-white */
-  --card: 222 12% 12% / 0.5;
-  --card-foreground: 38 8% 97%;
-  --popover: 222 12% 10%;
-  --popover-foreground: 38 8% 97%;
-  --primary: 38 8% 97%;
-  --primary-foreground: 222 14% 9%;
-  --secondary: 225 7% 18%;
-  --secondary-foreground: 38 8% 97%;
-  --muted: 225 7% 22%;
-  --muted-foreground: 220 7% 72%;
-  --accent: 38 28% 72%;
-  --accent-secondary: 38 20% 60%;
-  --accent-foreground: 222 14% 9%;
-  --destructive: 0 62.8% 30.6%;
-  --destructive-foreground: 38 8% 97%;
-  --border: 225 7% 20%;
-  --input: 225 7% 18%;
-  --ring: 38 30% 75%;
+  /* Stage */
+  --stage: #0c0c0b;
+  --stage-raised: #161615;
+  --stage-deep: #070707;
+  --ivory: #eeede8;
+  --ivory-2: #cbcac4;
+  /* Older components read these names; the system no longer has a brass accent */
+  --brass: var(--ivory);
+  --brass-hi: #ffffff;
+  --brass-ink: #0c0c0b;
+
+  /* Roles (the components read these) */
+  --paper: var(--stage);
+  --paper-2: var(--stage-raised);
+  --card: var(--stage-raised);
+  --ink: var(--ivory);
+  --ink-2: var(--ivory-2);
+  --muted: #8f8e88;
+  --faint: #6d6c67;
+  --rule: rgba(238, 237, 232, 0.13);
+  --rule-soft: rgba(238, 237, 232, 0.07);
+
+  --night: var(--stage-deep);
+  --night-2: #101010;
+  --on-night: var(--ivory);
+  --on-night-muted: #8f8e88;
+  --on-night-rule: rgba(238, 237, 232, 0.12);
+
+  --signal: var(--ivory);
+  --signal-soft: rgba(238, 237, 232, 0.1);
+  --signal-on-night: var(--ivory);
+
+  /* Focus rings: at least 3:1 against what they sit on */
+  --focus-on-light: #1f4fd6;
+  --focus-on-dark: #ffffff;
+  --focus: var(--focus-on-dark);
+
+  --font-sans: var(--font-mona), 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-display: var(--font-sans);
+  --font-body: var(--font-sans);
+  /* Older components ask for a mono face; the system has one family, with tabular figures there */
+  --font-mono: var(--font-sans);
+
+  /* Type scale: the largest type stays smaller than the work it introduces */
+  --t-mega: clamp(2.75rem, 1.4rem + 4.2vw, 6rem);
+  --t-hero: clamp(2.4rem, 1.3rem + 3.2vw, 4.75rem);
+  --t-h1: clamp(2.2rem, 1.25rem + 2.8vw, 4.25rem);
+  --t-h2: clamp(1.75rem, 1.1rem + 1.9vw, 3rem);
+  --t-h3: clamp(1.2rem, 1.05rem + 0.55vw, 1.6rem);
+  --t-lede: clamp(1.0625rem, 0.98rem + 0.3vw, 1.25rem);
+  --t-body: 1rem;
+  --t-small: 0.875rem;
+  --t-label: 0.875rem;
+
+  /* Space */
+  --gutter-l: max(20px, env(safe-area-inset-left, 0px));
+  --gutter-r: max(20px, env(safe-area-inset-right, 0px));
+  --maxw: 1600px;
+  --section: clamp(64px, 7.5vw, 120px);
+  --gap: clamp(16px, 2vw, 28px);
+  --radius: 10px;
+  --radius-s: 6px;
+  --sheet-r: clamp(20px, 2.4vw, 32px);
+
+  /* Motion: one set of durations and curves for the whole site */
+  --dur-press: 120ms;
+  --dur-hover: 200ms;
+  --dur-ui: 320ms;
+  --dur-move: 600ms;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.76, 0, 0.24, 1);
+  --ease-in: cubic-bezier(0.55, 0, 1, 0.45);
+  --ease-colour: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --header-h: 64px;
+
+  color-scheme: dark;
 }
 
-body {
-  background-color: hsl(var(--background));
-  color: hsl(var(--foreground));
-  font-feature-settings: 'rlig' 1, 'calt' 1, 'ss01' 1;
-  -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
+@media (min-width: 900px) {
+  :root {
+    --gutter-l: max(32px, env(safe-area-inset-left, 0px));
+    --gutter-r: max(32px, env(safe-area-inset-right, 0px));
+  }
+}
+
+@media (min-width: 1600px) {
+  :root {
+    --gutter-l: 48px;
+    --gutter-r: 48px;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 html {
-  scroll-padding-top: 6rem;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+  scroll-padding-top: calc(var(--header-h) + 16px);
+  background: var(--stage);
 }
 
-@layer base {
-  body {
-    background-color: hsl(var(--background));
-    color: hsl(var(--foreground));
-  }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    @apply font-sans;
-  }
+/* Lenis (weighted scrolling on desktop pointers) */
+html.lenis,
+html.lenis body {
+  height: auto;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
 }
 
-
-/* ---------------------------------------------------------------------------
-   Two surfaces.
-
-   The site has one organizing idea: the screens Kareem ships are dark, and the
-   record he keeps (context, role, approach, outcomes) is paper. The
-   `.paper` scope re-points the same design tokens at ink-on-bone, so every
-   component built against --foreground / --accent / --surface flips without a
-   light variant of its own.
-   --------------------------------------------------------------------------- */
-:root {
-  --surface: 222 12% 12%;
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
 }
 
-.paper {
-  --background: 41 33% 89%;
-  --foreground: 36 22% 9%;
-  --muted-foreground: 42 16% 29%;
-  --accent: 40 48% 30%;
-  --accent-secondary: 40 42% 25%;
-  --accent-foreground: 41 33% 89%;
-  --surface: 0 0% 100%;
-  position: relative;
-  background-color: hsl(var(--background));
-  color: hsl(var(--foreground));
+.lenis.lenis-stopped {
+  overflow: hidden;
 }
 
-/* Paper grain. Subtle enough to read as stock rather than texture. */
-.paper::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  opacity: 0.05;
-  mix-blend-mode: multiply;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E");
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--t-body);
+  line-height: 1.6;
+  font-kerning: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
-.paper > * {
-  position: relative;
-  z-index: 1;
+img,
+video,
+svg,
+picture,
+canvas {
+  display: block;
+  max-width: 100%;
 }
 
-/* White-alpha hairlines and washes are written for the dark surface; retint
-   them to ink so shared components keep their structure on paper. */
-.paper [class*="border-white/"] {
-  border-color: hsl(36 22% 9% / 0.13);
+img,
+video {
+  height: auto;
 }
 
-.paper [class*="divide-white/"] > :not([hidden]) ~ :not([hidden]) {
-  border-color: hsl(36 22% 9% / 0.13);
+button,
+input,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
 }
 
-.paper [class*="bg-white/"] {
-  background-color: hsl(36 22% 9% / 0.03);
+a {
+  color: inherit;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.22em;
 }
 
-/* Figure elevation reads as a sheet lifted off the desk, not a hole in it. */
-.figure-shadow {
-  box-shadow: 0 28px 70px -42px rgba(0, 0, 0, 0.9);
-}
-
-.paper .figure-shadow {
-  box-shadow: 0 24px 55px -30px rgba(35, 28, 14, 0.42);
-}
-
-/* Compact display rules, with the serif reserved for intentional accents. */
-h1 {
-  letter-spacing: -0.045em;
-  line-height: 0.94;
-}
-
-h2 {
-  letter-spacing: -0.035em;
-  line-height: 1;
-}
-
-h3 {
-  letter-spacing: -0.01em;
-  line-height: 1.15;
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  text-wrap: balance;
 }
 
 p {
-  line-height: 1.68;
+  margin: 0;
+  text-wrap: pretty;
 }
 
-/* Native smooth scrolling is intentionally NOT set here: Lenis drives
-   scrolling on desktop and the two fight when both are active. */
-
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
+ul,
+ol {
+  margin: 0;
+  padding: 0;
 }
 
-::-webkit-scrollbar-track {
-  background: transparent;
+/* Emphasis inside headings is a second tone, not a second typeface */
+:is(h1, h2, h3, .t-mega, .t-hero, .t-h1, .t-h2) em {
+  font-style: normal;
+  color: var(--muted);
 }
 
-::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 3px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.2);
-}
-
-/* Focus states */
-a:focus-visible,
-button:focus-visible,
-input:focus-visible,
-textarea:focus-visible,
-select:focus-visible {
-  outline: 2px solid hsl(var(--accent));
+:focus-visible {
+  outline: 2px solid var(--focus);
   outline-offset: 3px;
   border-radius: 2px;
 }
 
-/* Skip to main content link for keyboard users.
-   Hidden until focused; appears at top-left when tabbed to. */
-.skip-link {
-  position: fixed;
-  top: -100px;
-  left: 16px;
-  z-index: 100;
-  padding: 12px 20px;
-  border-radius: 999px;
-  background: hsl(var(--accent));
-  color: hsl(var(--accent-foreground));
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-decoration: none;
-  transition: top 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.skip-link:focus,
-.skip-link:focus-visible {
-  top: 16px;
-  outline-offset: 4px;
-}
-
-/* Noise overlay for texture */
-.noise-overlay {
-  position: fixed;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-  opacity: 0.02;
-  pointer-events: none;
-  z-index: 100;
-  mix-blend-mode: overlay;
-}
-
-@media (max-width: 767px) {
-  .noise-overlay {
-    display: none;
-  }
-}
-
-/* Premium text selection */
 ::selection {
-  background-color: hsl(var(--accent) / 0.3);
-  color: hsl(var(--foreground));
+  background: var(--ink);
+  color: var(--paper);
 }
 
-/* Smooth image loading */
-img {
-  transition: opacity 0.5s ease;
-}
-
-/* Mobile entrance sequence.
-   The desktop choreography below is gated at >=768px because blur() and
-   scale() during iOS Safari's URL-bar resize flicker. Opacity alone is
-   compositor-safe, so mobile gets the same reading order -- eyebrow,
-   headline, supporting copy, actions -- without the expensive properties. */
-@media (max-width: 767px) and (prefers-reduced-motion: no-preference) {
-  .enter-word,
-  .enter-fade {
-    animation: enter-fade-lite var(--enter-dur, 0.7s) cubic-bezier(0.16, 1, 0.3, 1) var(--hero-delay, 0s) both;
-  }
-
-  .enter-rule-x {
-    animation: enter-rule-x 0.7s cubic-bezier(0.16, 1, 0.3, 1) var(--hero-delay, 0s) both;
-  }
-}
-
-@keyframes enter-fade-lite {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-/* Accessibility: respect reduced motion preference */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-}
-
-/* Hero entrance.
-   Deliberately CSS rather than framer-motion. Motion components write their
-   `initial` styles into the prerendered HTML, which left the entire hero at
-   opacity:0 / translateY(105%) in the served document, so nothing painted
-   until JS hydrated. That was the mobile LCP.
-
-   The MotionConfig reducedMotion guard in LayoutWrapper cannot fix it:
-   useIsMobile is false during SSR and first render, and framer-motion's
-   reduced-motion only suppresses positional keys (transforms, width, height,
-   top/left/right/bottom), never opacity.
-
-   Here the animation only exists inside the media query, so on mobile the
-   hero is simply static markup that paints with the document. */
-
-.enter-rule-x {
-  transform-origin: left;
-}
-
-/* The rule beside the hero intro draws downward as the copy settles. */
-.hero-rule {
-  position: relative;
-}
-
-.hero-rule::before {
-  content: '';
+.sr-only {
   position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
   width: 1px;
-  background: rgba(255, 255, 255, 0.12);
-  transform-origin: top;
-}
-
-@media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
-  /* The headline resolves one word at a time. A line-level reveal, however it
-     is drawn, still arrives as a block of words; only per-word timing reads as
-     a sentence assembling itself. */
-  .enter-word {
-    animation: enter-word var(--enter-dur, 1s) cubic-bezier(0.16, 1, 0.3, 1) var(--hero-delay, 0s) both;
-  }
-
-  /* Supporting content arrives quickly enough to remain usable. */
-  .enter-fade {
-    animation: enter-fade var(--enter-dur, 0.9s) cubic-bezier(0.16, 1, 0.3, 1) var(--hero-delay, 0s) both;
-  }
-
-  /* The small gold mark that opens the page. */
-  .enter-rule-x {
-    animation: enter-rule-x 0.7s cubic-bezier(0.16, 1, 0.3, 1) var(--hero-delay, 0s) both;
-  }
-
-
-  .hero-rule::before {
-    animation: rule-draw 0.8s cubic-bezier(0.16, 1, 0.3, 1) var(--hero-delay, 0s) both;
-  }
-}
-
-@keyframes enter-word {
-  from {
-    opacity: 0;
-    filter: blur(4px);
-    scale: 1.015;
-  }
-  to {
-    opacity: 1;
-    filter: blur(0);
-    scale: 1;
-  }
-}
-
-@keyframes enter-fade {
-  from {
-    opacity: 0;
-    filter: blur(3px);
-  }
-  to {
-    opacity: 1;
-    filter: blur(0);
-  }
-}
-
-@keyframes enter-rule-x {
-  from {
-    transform: scaleX(0);
-    opacity: 0;
-  }
-  to {
-    transform: scaleX(1);
-    opacity: 1;
-  }
-}
-
-
-@keyframes rule-draw {
-  from {
-    transform: scaleY(0);
-  }
-  to {
-    transform: scaleY(1);
-  }
-}
-
-/* ---------------------------------------------------------------------------
-   Scroll choreography.
-
-   The same vocabulary as the hero entrance, carried down the page: content
-   resolves out of blur on a gentle cubic rather than sliding in. Each role
-   carries its own weight, so a section heading, a screenshot and a list row
-   do not all arrive on the same gesture.
-
-   The hidden state is gated on `html[data-reveal-js]`, which an inline script
-   in the document head sets before first paint. Without JavaScript the
-   attribute never appears, so nothing is ever hidden and the page reads as
-   plain static markup. IntersectionObserver then adds [data-revealed].
-   --------------------------------------------------------------------------- */
-@media (prefers-reduced-motion: no-preference) {
-  html[data-reveal-js] [data-reveal] {
-    opacity: 0;
-    transition: opacity var(--reveal-dur, 0.66s) cubic-bezier(0.22, 0.61, 0.36, 1)
-      var(--reveal-delay, 0s);
-    will-change: opacity;
-  }
-
-  html[data-reveal-js] [data-reveal][data-revealed] {
-    opacity: 1;
-    will-change: auto;
-  }
-
-  /* Mobile stops at opacity. Desktop adds the rise, the blur resolve and the
-     settle, which are the expensive properties. */
-  @media (min-width: 768px) {
-    html[data-reveal-js] [data-reveal] {
-      transform: translateY(var(--reveal-y, 16px)) scale(var(--reveal-scale, 1));
-      filter: blur(var(--reveal-blur, 3px));
-      transition:
-        opacity var(--reveal-dur, 0.66s) cubic-bezier(0.22, 0.61, 0.36, 1) var(--reveal-delay, 0s),
-        transform var(--reveal-dur, 0.66s) cubic-bezier(0.22, 0.61, 0.36, 1) var(--reveal-delay, 0s),
-        filter var(--reveal-dur, 0.66s) cubic-bezier(0.22, 0.61, 0.36, 1) var(--reveal-delay, 0s);
-      will-change: opacity, transform, filter;
-    }
-
-    html[data-reveal-js] [data-reveal][data-revealed] {
-      transform: none;
-      filter: blur(0);
-    }
-
-    /* Signposts. They lead their section, so they move first and least. */
-    html[data-reveal-js] [data-reveal='heading'] {
-      --reveal-y: 20px;
-      --reveal-blur: 5px;
-      --reveal-dur: 0.72s;
-    }
-
-    /* Prose. Enough movement to feel authored, not enough to read as a slide. */
-    html[data-reveal-js] [data-reveal='text'] {
-      --reveal-y: 16px;
-      --reveal-blur: 3px;
-      --reveal-dur: 0.66s;
-    }
-
-    /* Screens and diagrams. The evidence, so it pulls into focus the way the
-       hero does instead of sliding into place. */
-    html[data-reveal-js] [data-reveal='figure'] {
-      --reveal-y: 26px;
-      --reveal-blur: 9px;
-      --reveal-scale: 1.018;
-      --reveal-dur: 0.95s;
-    }
-
-    /* Rows in a list. Quick, so a stagger of them stays crisp. */
-    html[data-reveal-js] [data-reveal='item'] {
-      --reveal-y: 12px;
-      --reveal-blur: 0px;
-      --reveal-dur: 0.5s;
-    }
-  }
-}
-
-/* Screen wall.
-
-   The cards stand on a cylinder. Each is rotated to its own angle and pushed
-   out by the radius; the ring itself is pulled back by the same radius so the
-   front card lands on the z=0 plane at full size. Everything else follows from
-   the perspective value, which is why nothing here scales cards by hand.
-
-   Two rings share the stage: the near one you read, and a wider one behind it
-   turning the other way. The far ring is not styled smaller or blurred; it is
-   simply further away, and perspective does the rest. That is the backdrop.
-
-   Sizes are set here and the radius is derived from the measured card width in
-   ScreenWall.tsx, so the geometry stays correct across breakpoints. */
-.wall-stage {
-  position: relative;
-  height: 330px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
   overflow: hidden;
-  perspective: 1500px;
-  perspective-origin: 50% 50%;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
-.wall-layer {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transform-style: preserve-3d;
+/* Layout primitives */
+.container {
+  width: 100%;
+  max-width: calc(var(--maxw) + var(--gutter-l) + var(--gutter-r));
+  margin-inline: auto;
+  padding-left: var(--gutter-l);
+  padding-right: var(--gutter-r);
 }
 
-.wall-ring {
+.section {
+  padding-block: var(--section);
+}
+
+.night {
+  background: var(--night);
+  color: var(--on-night);
+  --muted: var(--on-night-muted);
+  --rule: var(--on-night-rule);
+  --rule-soft: var(--on-night-rule);
+  --signal: var(--signal-on-night);
+  --focus: var(--focus-on-dark);
+}
+
+/* Light sheets: the same system, inverted, on a warm light grey */
+.paper {
+  background: #e9e8e3;
+  color: #0c0c0b;
+  --paper: #e9e8e3;
+  --paper-2: #deddd7;
+  --card: #f3f2ee;
+  --ink: #0c0c0b;
+  --ink-2: #2b2b29;
+  --muted: #5d5c57;
+  --faint: #76756f;
+  --rule: rgba(12, 12, 11, 0.14);
+  --rule-soft: rgba(12, 12, 11, 0.07);
+  --signal: #0c0c0b;
+  --signal-soft: rgba(12, 12, 11, 0.08);
+  --brass: #0c0c0b;
+  --focus: var(--focus-on-light);
+  color-scheme: light;
+}
+
+/*
+  A section that rises over the one before it like a sheet: rounded top corners, overlapping the
+  previous section's last few pixels.
+*/
+.sheet-up {
   position: relative;
-  width: 300px;
-  height: 178px;
-  transform-style: preserve-3d;
-  will-change: transform;
+  z-index: 1;
+  margin-top: calc(-1 * var(--sheet-r));
+  border-radius: var(--sheet-r) var(--sheet-r) 0 0;
 }
 
-.wall-cell {
-  position: absolute;
-  inset: 0;
-  transform-style: preserve-3d;
-  backface-visibility: hidden;
+/* Type */
+.t-mega {
+  font: 500 var(--t-mega) / 0.96 var(--font-display);
+  letter-spacing: -0.045em;
 }
 
-@media (min-width: 640px) {
-  .wall-stage { height: 375px; }
-  .wall-ring { width: 400px; height: 230px; }
+.t-hero {
+  font: 500 var(--t-hero) / 0.98 var(--font-display);
+  letter-spacing: -0.04em;
 }
 
-@media (min-width: 1024px) {
-  .wall-stage { height: 420px; }
-  .wall-ring { width: 460px; height: 262px; }
+.t-h1 {
+  font: 500 var(--t-h1) / 1 var(--font-display);
+  letter-spacing: -0.035em;
 }
 
-/* Case-study title.
-   Sizing this off the viewport cannot work: the column is lg:col-span-5 in a
-   12-column grid whose gap jumps from 56px to 80px at xl, so the column is
-   NARROWER at 1280px (418px) than at 1200px (425px) while a vw-based font is
-   still growing. Any viewport clamp that fits 1280 is undersized elsewhere.
-   Sizing off the container removes the coupling entirely. */
-.case-title {
-  font-size: clamp(2.6rem, 5vw, 4.6rem);
+.t-h2 {
+  font: 500 var(--t-h2) / 1.05 var(--font-display);
+  letter-spacing: -0.03em;
 }
 
-@supports (container-type: inline-size) {
-  .case-title-col {
-    container-type: inline-size;
+.t-h3 {
+  font: 500 var(--t-h3) / 1.2 var(--font-display);
+  letter-spacing: -0.015em;
+}
+
+.t-lede {
+  font-size: var(--t-lede);
+  line-height: 1.5;
+  color: var(--muted);
+  max-width: 58ch;
+  letter-spacing: -0.005em;
+}
+
+.t-small {
+  font-size: var(--t-small);
+  line-height: 1.55;
+}
+
+/* A small caption in the body face, in the muted tone: never an uppercase eyebrow */
+.t-label {
+  font: 400 var(--t-label) / 1.4 var(--font-body);
+  letter-spacing: 0;
+  color: var(--muted);
+}
+
+.prose {
+  max-width: 66ch;
+}
+
+.prose > * + * {
+  margin-top: 1.1em;
+}
+
+.prose h2 {
+  font: 500 clamp(1.4rem, 1.15rem + 1vw, 2rem) / 1.15 var(--font-display);
+  letter-spacing: -0.025em;
+  margin-top: 2em;
+}
+
+.prose h3 {
+  font: 500 1.2rem / 1.25 var(--font-display);
+  letter-spacing: -0.01em;
+  margin-top: 1.6em;
+}
+
+.prose ul,
+.prose ol {
+  padding-left: 1.2em;
+}
+
+.prose li + li {
+  margin-top: 0.45em;
+}
+
+.prose a {
+  text-decoration-color: color-mix(in srgb, currentColor 40%, transparent);
+}
+
+@media (hover: hover) {
+  .prose a:hover {
+    text-decoration-color: currentColor;
+  }
+}
+
+/* First-screen entrance for blocks that are not split into lines */
+@media (prefers-reduced-motion: no-preference) {
+  html:not([data-route-arrival]) [data-enter] {
+    animation: enter 560ms var(--ease-out) both;
+    animation-delay: calc(40ms + var(--i, 0) * 45ms);
+  }
+}
+
+/* Blocks further down a page come up as they enter the screen (see Reveals.tsx) */
+@media (prefers-reduced-motion: no-preference) {
+  html[data-reveals] [data-reveal] {
+    transition: opacity 560ms var(--ease-out), translate 700ms var(--ease-out);
   }
 
-  /* The binding constraint is the longest unbreakable word. At this weight and
-     tracking that runs about 6.5em, so the font has to stay under ~15.3% of
-     the column. 14.5cqw leaves a margin. */
-  .case-title {
-    font-size: clamp(2.6rem, 14.5cqw, 4.6rem);
+  html[data-reveals] [data-reveal]:not([data-shown]) {
+    opacity: 0.01;
+    translate: 0 36px;
   }
+}
+
+/* Arriving from another page: the same entrance, quicker, so a page change still lands with motion */
+@media (prefers-reduced-motion: no-preference) {
+  html[data-route-arrival] [data-enter] {
+    animation: enter 460ms var(--ease-out) both;
+    animation-delay: calc(70ms + var(--i, 0) * 40ms);
+  }
+}
+
+@keyframes enter {
+  from {
+    opacity: 0.01;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* The page arrives as one surface; navigation stays anchored above it. */
+body > header { view-transition-name: site-header; }
+
+/* Light opening stages have readable navigation before hydration, too. */
+html:not([data-route-arrival]) body:has(main > :first-child[data-theme='light'], main > article > header:first-child[data-theme='light']) > header:not([data-scrolled]):not([data-open]) {
+  --hdr-bg: #e9e8e3;
+  --hdr-ink: #0c0c0b;
+  --hdr-muted: rgba(12, 12, 11, 0.6);
+  --hdr-rule: rgba(12, 12, 11, 0.12);
+}
+
+:root:active-view-transition-type(page) {
+  --page-duration: 320ms;
+  --page-ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+:root:active-view-transition-type(page)::view-transition {
+  pointer-events: none;
+}
+
+:root:active-view-transition-type(page)::view-transition-group(root) {
+  animation: none;
+  z-index: 0;
+}
+
+:root:active-view-transition-type(page)::view-transition-image-pair(root) {
+  isolation: isolate;
+}
+
+:root:active-view-transition-type(page)::view-transition-old(root) {
+  animation: page-retreat 140ms ease-out both;
+  mix-blend-mode: normal;
+}
+
+:root:active-view-transition-type(page)::view-transition-new(root) {
+  animation: page-reveal var(--page-duration) var(--page-ease) both;
+  mix-blend-mode: normal;
+  background: var(--stage);
+}
+
+:root:active-view-transition-type(back)::view-transition-old(root) {
+  animation-name: page-retreat-back;
+}
+
+:root:active-view-transition-type(back)::view-transition-new(root) {
+  animation-name: page-reveal-back;
+}
+
+::view-transition-group(site-header) {
+  animation: none;
+  z-index: 10;
+}
+
+::view-transition-old(site-header) { display: none; }
+::view-transition-new(site-header) { animation: none; mix-blend-mode: normal; }
+
+@keyframes page-retreat {
+  to { opacity: 0; transform: translateY(-6px); }
+}
+
+@keyframes page-reveal {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes page-retreat-back {
+  to { opacity: 0; transform: translateY(6px); }
+}
+
+@keyframes page-reveal-back {
+  from { opacity: 0; transform: translateY(-12px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (max-width: 760px) {
+  :root:active-view-transition-type(page) { --page-duration: 260ms; }
+}
+
+/* Shared images between a work preview and its case page */
+::view-transition-group(.case-morph) {
+  animation-duration: 560ms;
+  animation-timing-function: var(--ease-in-out);
+}
+
+/* A note's cover flies from the notes list into the note, and back; on any other page change it leaves and arrives with the page */
+::view-transition-group(*.note-cover) {
+  animation-duration: 520ms;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+::view-transition-old(*.note-cover):only-child {
+  animation: page-retreat 140ms ease-out both;
+}
+
+::view-transition-new(*.note-cover):only-child {
+  animation: page-reveal var(--page-duration) var(--page-ease) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+
+/* SplitText line masks (SplitReveal): room below the baseline so descenders are never clipped */
+.sl-mask {
+  padding-bottom: 0.12em;
+  margin-bottom: -0.12em;
 }

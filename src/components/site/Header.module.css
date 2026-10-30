@@ -1,0 +1,536 @@
+.header {
+  --hdr-bg: var(--stage);
+  --hdr-ink: var(--ivory);
+  --hdr-muted: rgba(238, 237, 232, 0.62);
+  --hdr-rule: rgba(238, 237, 232, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  padding-top: env(safe-area-inset-top, 0px);
+  color: var(--hdr-ink);
+  transition:
+    color var(--dur-ui) var(--ease-colour),
+    transform 0.6s var(--ease-out);
+}
+
+/* On a full load of the homepage the header waits while my name flies up into it (WorkWall.tsx).
+   If the script never takes the opening over, it appears on its own after a moment. */
+@media (prefers-reduced-motion: no-preference) {
+  :global(body:has([data-wall-intro])) .header {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  :global(body:has([data-wall-intro]:not([data-ready]))) .header {
+    animation: header-appear 0.4s 3s both;
+  }
+}
+
+@keyframes header-appear {
+  from {
+    opacity: 0;
+    visibility: hidden;
+  }
+  to {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+/* Route snapshots already animate the page. Do not tween the header's theme at the same time. */
+:global(html[data-route-changing]) .header,
+:global(html[data-route-changing]) .header *,
+:global(html[data-route-changing]) .header::before {
+  transition: none;
+}
+
+/* Give the anchored navigation its own surface while the page passes underneath. */
+:global(html[data-route-changing]) .header::before {
+  opacity: 1;
+  background: var(--hdr-bg);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+/* Over light sheets the header turns to dark type */
+.header[data-theme='light'] {
+  --hdr-bg: #e9e8e3;
+  --hdr-ink: #0c0c0b;
+  --hdr-muted: rgba(12, 12, 11, 0.6);
+  --hdr-rule: rgba(12, 12, 11, 0.12);
+}
+
+/* The phone menu is the dark stage, whatever is behind it */
+.header[data-open] {
+  transition-property: transform;
+  --hdr-bg: var(--stage);
+  --hdr-ink: var(--ivory);
+  --hdr-muted: rgba(238, 237, 232, 0.62);
+  --hdr-rule: rgba(238, 237, 232, 0.1);
+}
+
+/* Over the reel, the header turns with the stage, at the stage's pace */
+.header[data-slow],
+.header[data-slow] :is(.markLine, .link, .cta, .menuIcon span) {
+  transition-duration: 0.9s;
+  transition-timing-function: var(--ease-in-out);
+}
+
+/* Reading down the page, the header steps out of the way; any scroll up brings it back */
+.header[data-tucked] {
+  transform: translateY(-100%);
+  transition:
+    color var(--dur-ui) var(--ease-colour),
+    transform 0.5s var(--ease-in-out);
+}
+
+/*
+  The frosted background lives on a layer behind the content: a backdrop-filter on the header
+  itself would make it the containing block for the fixed menu sheet and collapse the sheet.
+  At the top of the page there is none, so the header sits straight on what is below it.
+*/
+.header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: color-mix(in srgb, var(--hdr-bg) 72%, transparent);
+  -webkit-backdrop-filter: saturate(1.4) blur(18px);
+  backdrop-filter: saturate(1.4) blur(18px);
+  opacity: 0;
+  transition:
+    opacity var(--dur-ui) var(--ease-colour),
+    background-color var(--dur-ui) var(--ease-colour);
+}
+
+.header[data-scrolled]::before {
+  opacity: 1;
+  background: var(--hdr-bg);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+/* While the menu is open, the header and the sheet are one solid sheet */
+.header[data-open]::before {
+  opacity: 1;
+  background: var(--stage);
+}
+
+.header::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 1px;
+  background: var(--hdr-rule);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur-ui) var(--ease-colour);
+}
+
+.header[data-scrolled]::after {
+  opacity: 1;
+}
+
+.header[data-open]::after {
+  visibility: hidden;
+}
+
+.skip {
+  position: absolute;
+  left: 12px;
+  top: calc(8px + env(safe-area-inset-top, 0px));
+  z-index: 60;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: var(--ink);
+  color: var(--paper);
+  font-weight: 600;
+  text-decoration: none;
+  transform: translateY(calc(-100% - 24px - env(safe-area-inset-top, 0px)));
+}
+
+.skip:focus-visible {
+  transform: none;
+}
+
+.inner {
+  height: var(--header-h);
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+/* The name, with what I do beneath it on wide screens */
+.mark {
+  display: grid;
+  align-content: center;
+  gap: 1px;
+  min-height: 44px;
+  margin-right: auto;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: opacity var(--dur-press) var(--ease-colour);
+}
+
+.mark:active {
+  opacity: 0.7;
+}
+
+.markName {
+  font: 600 1rem / 1.15 var(--font-display);
+  letter-spacing: -0.02em;
+}
+
+.markLine {
+  display: none;
+  font-size: 0.8125rem;
+  line-height: 1.25;
+  color: var(--hdr-muted);
+  transition: color var(--dur-ui) var(--ease-colour);
+}
+
+@media (min-width: 1100px) {
+  .markLine {
+    display: block;
+  }
+}
+
+.nav {
+  display: none;
+  align-items: center;
+  gap: 2px;
+}
+
+/* A line draws in under the link on hover and stays under the page you are on */
+.link {
+  position: relative;
+  padding: 12px 11px;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--hdr-muted);
+  text-decoration: none;
+  transition: color var(--dur-hover) var(--ease-colour);
+}
+
+.link::before {
+  content: '';
+  position: absolute;
+  left: 11px;
+  right: 11px;
+  bottom: 7px;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: 100% 50%;
+  transition: transform 0.5s var(--ease-out);
+}
+
+.link[aria-current='page'] {
+  color: var(--hdr-ink);
+}
+
+.link[aria-current='page']::before {
+  transform: none;
+}
+
+.link:active {
+  transition-duration: var(--dur-press);
+}
+
+/* A solid button whose ivory fill gives way to the outline from below on hover */
+.cta {
+  position: relative;
+  display: none;
+  min-height: 44px;
+  align-items: center;
+  padding: 0 18px;
+  margin-left: 8px;
+  border-radius: 999px;
+  background: var(--hdr-ink);
+  color: var(--hdr-bg);
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+  overflow: hidden;
+  isolation: isolate;
+  transition:
+    color 0.4s var(--ease-colour),
+    background-color var(--dur-ui) var(--ease-colour),
+    transform var(--dur-press) var(--ease-out);
+}
+
+.cta::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--hdr-bg);
+  box-shadow: inset 0 0 0 1px var(--hdr-ink);
+  transform: translateY(101%);
+  transition: transform 0.5s var(--ease-out);
+}
+
+.cta:active {
+  transform: scale(0.97);
+}
+
+.cta::after {
+  content: '';
+  position: absolute;
+  inset: -2px 0;
+}
+
+.menuButton {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  margin-right: -10px;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  transition: background-color var(--dur-press) var(--ease-colour);
+}
+
+.menuButton:active {
+  background: color-mix(in srgb, var(--hdr-ink) 8%, transparent);
+}
+
+/* Two bars that become a cross */
+.menuIcon {
+  position: relative;
+  width: 22px;
+  height: 12px;
+}
+
+.menuIcon span {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 22px;
+  height: 1.5px;
+  margin-top: -0.75px;
+  border-radius: 2px;
+  background: var(--hdr-ink);
+}
+
+.menuIcon span:nth-child(1) {
+  translate: 0 -4px;
+}
+
+.menuIcon span:nth-child(2) {
+  scale: 0 1;
+}
+
+.menuIcon span:nth-child(3) {
+  translate: 0 4px;
+}
+
+.header[data-open] .menuIcon span:nth-child(1) {
+  translate: 0 0;
+  rotate: 45deg;
+}
+
+.header[data-open] .menuIcon span:nth-child(3) {
+  translate: 0 0;
+  rotate: -45deg;
+}
+
+/* The sheet covers the page below the header */
+.sheet {
+  position: fixed;
+  inset: calc(var(--header-h) + env(safe-area-inset-top, 0px)) 0 0;
+  background: var(--stage);
+  color: var(--ivory);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+}
+
+.sheetNav {
+  display: flex;
+  flex-direction: column;
+  padding-top: 16px;
+}
+
+.sheetLink {
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(238, 237, 232, 0.08);
+  font: 500 clamp(2.1rem, 9.5vw, 3rem) / 1.05 var(--font-display);
+  letter-spacing: -0.04em;
+  text-decoration: none;
+  transition: color var(--dur-press) var(--ease-colour);
+}
+
+.sheetLink[aria-current='page'] {
+  color: var(--muted);
+}
+
+.sheetLink:active {
+  color: var(--muted);
+}
+
+.sheetFoot {
+  display: grid;
+  gap: 12px;
+  padding-top: 28px;
+}
+
+.sheetCta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  border-radius: 999px;
+  background: var(--ivory);
+  color: var(--stage);
+  font-weight: 500;
+  text-decoration: none;
+  transition:
+    background-color var(--dur-hover) var(--ease-colour),
+    transform var(--dur-press) var(--ease-out);
+}
+
+.sheetCta:active {
+  transform: scale(0.97);
+}
+
+.sheetNote {
+  text-align: center;
+  font-size: var(--t-small);
+  color: var(--muted);
+}
+
+/* First load: the header settles in with the reel */
+@media (prefers-reduced-motion: no-preference) {
+  .inner {
+    animation: header-in 0.7s var(--ease-out) 0.15s both;
+  }
+
+  .skip {
+    transition: transform var(--dur-hover) var(--ease-in);
+  }
+
+  .skip:focus-visible {
+    transition: transform var(--dur-ui) var(--ease-out);
+  }
+
+  .menuIcon span:nth-child(1),
+  .menuIcon span:nth-child(3) {
+    transition:
+      rotate var(--dur-press) var(--ease-in-out),
+      translate var(--dur-press) var(--ease-out) var(--dur-press);
+  }
+
+  .header[data-open] .menuIcon span:nth-child(1),
+  .header[data-open] .menuIcon span:nth-child(3) {
+    transition:
+      translate var(--dur-press) var(--ease-in-out),
+      rotate var(--dur-hover) var(--ease-out) calc(var(--dur-press) - 20ms);
+  }
+
+  .sheet[data-phase='open'] {
+    animation: sheet-in 200ms var(--ease-out) both;
+  }
+
+  .sheet[data-phase='open'] :is(.sheetLink, .sheetFoot) {
+    animation: item-in 600ms var(--ease-out) both;
+    animation-delay: calc(80ms + var(--i) * 40ms);
+  }
+
+  .sheet[data-phase='closing'] {
+    animation: sheet-out 160ms var(--ease-in) 90ms both;
+  }
+
+  .sheet[data-phase='closing'] :is(.sheetLink, .sheetFoot) {
+    animation: item-out 90ms var(--ease-in) both;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .header,
+  .header *,
+  .header::before,
+  .header::after {
+    transition: none;
+  }
+
+  .sheet[data-phase='closing'] {
+    visibility: hidden;
+  }
+}
+
+@keyframes header-in {
+  from {
+    opacity: 0.01;
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes sheet-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes sheet-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes item-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+
+@keyframes item-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@media (min-width: 960px) {
+  .nav {
+    display: flex;
+  }
+
+  .cta {
+    display: inline-flex;
+  }
+
+  .menuButton,
+  .sheet {
+    display: none;
+  }
+}
+
+@media (hover: hover) {
+  .link:hover {
+    color: var(--hdr-ink);
+  }
+
+  .link:hover::before {
+    transform: none;
+    transform-origin: 0 50%;
+  }
+
+  .cta:hover {
+    color: var(--hdr-ink);
+  }
+
+  .cta:hover::before {
+    transform: none;
+  }
+
+  .sheetLink:hover {
+    color: var(--muted);
+  }
+}

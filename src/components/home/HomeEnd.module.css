@@ -1,0 +1,298 @@
+/* ---------- Offer: the bottom half of the light sheet ---------- */
+
+.offer {
+  position: relative;
+  z-index: 3;
+}
+
+.offerInner {
+  position: relative;
+  padding-top: clamp(40px, 5vw, 72px);
+  padding-bottom: calc(clamp(64px, 8vw, 120px) + var(--sheet-r));
+}
+
+.offerRule {
+  position: absolute;
+  left: var(--gutter-l);
+  right: var(--gutter-r);
+  top: 0;
+  height: 1px;
+  background: var(--rule);
+  transform-origin: 0 50%;
+}
+
+.offerGrid {
+  display: grid;
+  gap: 28px;
+}
+
+.offerTitle {
+  font: 500 var(--t-h2) / 1.04 var(--font-display);
+  letter-spacing: -0.035em;
+  max-width: 12ch;
+}
+
+.offerBody {
+  display: grid;
+  gap: 20px;
+  align-content: start;
+}
+
+.offerSummary {
+  max-width: 40ch;
+  font-size: var(--t-lede);
+  line-height: 1.5;
+}
+
+.includes {
+  list-style: none;
+  display: grid;
+  gap: 8px;
+  max-width: 44ch;
+  color: var(--muted);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+
+.includes li {
+  position: relative;
+  padding-left: 18px;
+}
+
+.includes li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.72em;
+  width: 8px;
+  height: 1px;
+  background: currentColor;
+}
+
+.offerSide {
+  display: grid;
+  gap: 14px;
+  align-content: start;
+}
+
+.price {
+  font: 500 clamp(2.6rem, 1.6rem + 3vw, 4.5rem) / 1 var(--font-display);
+  letter-spacing: -0.045em;
+}
+
+.terms {
+  max-width: 34ch;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.offerLinks {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 22px;
+  margin-top: 8px;
+}
+
+/* A solid button whose dark fill lifts away from below on hover, leaving the outline */
+.primary {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 50px;
+  padding: 0 22px 0 24px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--paper);
+  font-weight: 500;
+  text-decoration: none;
+  overflow: hidden;
+  isolation: isolate;
+  transition: color 0.4s var(--ease-colour);
+}
+
+.primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: #f6f5f1;
+  transform: translateY(101%);
+  transition: transform 0.55s var(--ease-out);
+}
+
+.primary::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 1px var(--ink);
+  pointer-events: none;
+}
+
+.primary svg {
+  width: 18px;
+  height: 18px;
+  transition: transform 0.5s var(--ease-out);
+}
+
+@media (hover: hover) {
+  .primary:hover {
+    color: var(--ink);
+  }
+
+  .primary:hover::before {
+    transform: none;
+  }
+}
+
+.primary:active {
+  transform: scale(0.98);
+}
+
+.secondary {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-weight: 500;
+  text-decoration: none;
+  background: linear-gradient(currentColor, currentColor) 0 calc(100% - 10px) / 100% 1px no-repeat;
+  transition: background-size 0.6s var(--ease-out);
+}
+
+@media (hover: hover) {
+  .secondary:hover {
+    background-size: 0% 1px;
+    background-position: 100% calc(100% - 10px);
+  }
+}
+
+@media (min-width: 900px) {
+  .offerGrid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr) minmax(0, 0.85fr);
+    gap: clamp(28px, 4vw, 64px);
+  }
+}
+
+/* ---------- Close: a dark sheet over the light one, with the booking band ---------- */
+
+.close {
+  position: relative;
+  z-index: 4;
+  margin-top: calc(-1 * var(--sheet-r));
+  border-radius: var(--sheet-r) var(--sheet-r) 0 0;
+  padding: clamp(64px, 8vw, 128px) 0 clamp(16px, 2vw, 32px);
+  background: var(--stage);
+  color: var(--ink);
+}
+
+.closeTitle {
+  font: inherit;
+}
+
+.band {
+  --band-x: clamp(12px, 1.6vw, 24px);
+  position: relative;
+  display: block;
+  margin-inline: calc(-1 * var(--band-x));
+  color: var(--ink);
+  text-decoration: none;
+  isolation: isolate;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.rule {
+  position: absolute;
+  left: var(--band-x);
+  right: var(--band-x);
+  top: 0;
+  height: 1px;
+  background: var(--rule);
+  transform-origin: 0 50%;
+  z-index: 2;
+}
+
+.ruleEnd {
+  top: auto;
+  bottom: 0;
+}
+
+.bandMask {
+  display: block;
+  overflow: hidden;
+}
+
+.bandRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: clamp(22px, 3vw, 44px) var(--band-x);
+}
+
+.bandText {
+  font: 500 var(--t-mega) / 1 var(--font-display);
+  letter-spacing: -0.045em;
+}
+
+.bandArrow {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: clamp(48px, 5vw, 84px);
+  height: clamp(48px, 5vw, 84px);
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px currentColor;
+}
+
+.bandArrow svg {
+  width: 42%;
+  height: 42%;
+  transition: transform 0.6s var(--ease-out);
+}
+
+/* Hover, only when the pointer moved there (not when the page scrolled under it): the rules
+   brighten, the arrow's circle fills and the arrow steps forward */
+.rule,
+.bandArrow {
+  transition:
+    background-color var(--dur-hover) var(--ease-colour),
+    color var(--dur-hover) var(--ease-colour),
+    box-shadow var(--dur-hover) var(--ease-colour);
+}
+
+@media (hover: hover) {
+  :global(html:not([data-scrolling])) .band:hover .rule {
+    background: var(--ink);
+  }
+
+  :global(html:not([data-scrolling])) .band:hover .bandArrow {
+    background: var(--ink);
+    color: var(--stage);
+    box-shadow: none;
+  }
+
+  :global(html:not([data-scrolling])) .band:hover .bandArrow svg {
+    transform: translateX(3px);
+  }
+}
+
+.band:focus-visible .bandArrow {
+  background: var(--ink);
+  color: var(--stage);
+  box-shadow: none;
+}
+
+.band:focus-visible {
+  outline-offset: 4px;
+}
+
+.alt {
+  margin-top: clamp(16px, 2vw, 28px);
+  max-width: 48ch;
+  color: var(--muted);
+}

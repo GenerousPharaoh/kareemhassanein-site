@@ -1,36 +1,13 @@
-import { MetadataRoute } from 'next';
-import { projects } from '@/lib/work';
+import type { MetadataRoute } from 'next';
+import { CASES } from '@/content/cases';
+import { NOTES } from '@/content/notes';
+import { SITE } from '@/content/site';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://www.khassanein.bio';
-
-  const caseStudies: MetadataRoute.Sitemap = projects.map((project) => ({
-    url: `${baseUrl}/work/${project.slug}`,
-    changeFrequency: 'monthly',
-    priority: 0.8,
-  }));
-
+  const pages = ['', '/work', '/firms', '/clinics', '/pricing', '/about', '/notes', '/book', '/ai', '/privacy'];
   return [
-    {
-      url: baseUrl,
-      changeFrequency: 'monthly',
-      priority: 1,
-    },
-    {
-      url: `${baseUrl}/work`,
-      changeFrequency: 'monthly',
-      priority: 0.9,
-    },
-    ...caseStudies,
-    {
-      url: `${baseUrl}/about`,
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/contact`,
-      changeFrequency: 'monthly',
-      priority: 0.6,
-    },
+    ...pages.map((p) => ({ url: `${SITE.url}${p}`, changeFrequency: 'monthly' as const, priority: p === '' ? 1 : 0.8 })),
+    ...CASES.map((c) => ({ url: `${SITE.url}/work/${c.slug}`, changeFrequency: 'monthly' as const, priority: 0.7 })),
+    ...NOTES.map((n) => ({ url: `${SITE.url}/notes/${n.slug}`, changeFrequency: 'yearly' as const, priority: 0.6 })),
   ];
 }

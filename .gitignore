@@ -26,7 +26,8 @@ yarn-debug.log*
 yarn-error.log*
 
 # local env files
-.env*.local
+.env*
+!.env.example
 
 # vercel
 .vercel
@@ -36,6 +37,8 @@ yarn-error.log*
 next-env.d.ts
 CLAUDE.md
 AGENTS.md
+/docs/
+/legacy/
 
 # local artifacts
 /output

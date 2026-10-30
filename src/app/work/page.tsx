@@ -1,134 +1,97 @@
-import type { CSSProperties } from 'react';
 import type { Metadata } from 'next';
-import Link from 'next/link';
-import { ArrowUpRight } from 'lucide-react';
-import ScreenFrame from '@/components/ScreenFrame';
-import WorkCard from '@/components/WorkCard';
-import HeadlineReveal from '@/components/HeadlineReveal';
-import ScrollReveal from '@/components/ScrollReveal';
-import { additionalProjects, advisory, principalProjects } from '@/lib/work';
+import { DisplayTitle } from '@/components/ui/DisplayTitle';
+import { preload } from 'react-dom';
+import { CaseCard } from '@/components/work/CaseCard';
+import { CaseStack } from '@/components/work/CaseStack';
+import { CloseCall } from '@/components/work/CloseCall';
+import { WorkFilter } from '@/components/work/WorkFilter';
+import { BEYOND_CASES, PRACTICE_CASES } from '@/content/cases';
+import { SITE } from '@/content/site';
+import styles from './page.module.css';
 
-const workHeadline = [
-  { text: 'Selected' },
-  { text: 'projects.', className: 'font-serif font-normal italic text-accent', duration: '1s' },
-];
+const description =
+  'Case studies from a tax law firm and health clinics, then a gear store, a travel journal and a wedding. Each starts with the owner’s question, then what I found, what I decided and what shipped.';
+
+const ogImage = PRACTICE_CASES[0].plate.desktop;
 
 export const metadata: Metadata = {
-  title: 'Work | Kareem Hassanein',
-  description: 'Case studies covering a clinical documentation rollout, two clinic websites, and a legal drafting workflow.',
+  title: 'Work',
+  description,
+  alternates: { canonical: '/work' },
   openGraph: {
-    title: 'Work | Kareem Hassanein',
-    description: 'Case studies covering a clinical documentation rollout, two clinic websites, and a legal drafting workflow.',
-    url: 'https://www.khassanein.bio/work',
     type: 'website',
+    siteName: SITE.name,
     locale: 'en_CA',
-    siteName: 'Kareem Hassanein',
-    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'Selected implementation and operations work by Kareem Hassanein' }],
+    url: '/work',
+    title: `Work · ${SITE.name}`,
+    description,
+    images: [{ url: `${ogImage.src}-1600.webp`, width: 1600, height: Math.round((1600 * ogImage.h) / ogImage.w), alt: ogImage.alt }],
   },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Work | Kareem Hassanein',
-    description: 'Case studies covering a clinical documentation rollout, two clinic websites, and a legal drafting workflow.',
-    images: ['/og-image.png'],
-  },
-  alternates: { canonical: 'https://www.khassanein.bio/work' },
 };
 
 export default function WorkPage() {
+  // The first card's loop poster is the largest thing on the first screen; fetch it first.
+  preload(PRACTICE_CASES[0].hero.poster, { as: 'image', fetchPriority: 'high' });
+
   return (
-    <main className="bg-background pb-8 pt-32 text-foreground md:pt-40">
-      <section className="relative px-6 pb-20 sm:px-8 md:pb-28 lg:px-12 xl:px-20">
-        <div className="relative mx-auto max-w-[1320px]">
-          <p
-            className="enter-fade mb-6 flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-accent/80"
-            style={{ '--hero-delay': '0.16s', '--enter-dur': '0.85s' } as CSSProperties}
-          >
-            <span aria-hidden="true" className="enter-rule-x h-px w-10 bg-accent/50" style={{ '--hero-delay': '0.06s' } as CSSProperties} />
-            Work
-          </p>
-          <div className="grid gap-8 lg:grid-cols-12 lg:items-end">
-            <h1 className="max-w-5xl text-[clamp(3rem,8.5vw,8.2rem)] font-medium leading-[0.89] tracking-[-0.065em] lg:col-span-8">
-              <HeadlineReveal lines={workHeadline} start={0.3} step={0.1} />
-            </h1>
-            <p
-              className="enter-fade max-w-lg border-l border-white/[0.12] pl-6 text-lg leading-relaxed text-foreground/72 lg:col-span-4"
-              style={{ '--hero-delay': '0.72s', '--enter-dur': '0.95s' } as CSSProperties}
-            >
-              Projects across healthcare platforms, clinic operations, professional services, and digital
-              delivery. Each shows the problem, the work, and what changed.
-            </p>
-          </div>
-        </div>
-      </section>
+    <>
+      {/* The chips need JavaScript; without it the full list shows and the chips stay out of the way. */}
+      <noscript>
+        <style>{'[data-work-filter]{display:none}'}</style>
+      </noscript>
 
-      <section className="bg-[#ECE6D9] px-6 py-20 text-[#1c1812] sm:px-8 md:py-28 lg:px-12 xl:px-20">
-        <div className="mx-auto max-w-[1320px]">
-          <ScrollReveal variant="heading" className="mb-14 flex items-baseline justify-between border-b border-black/[0.14] pb-5 md:mb-20">
-            <h2 className="text-sm font-semibold uppercase tracking-[0.18em] text-[#1c1812]/74">Principal projects</h2>
-            <span className="font-mono text-xs text-[#6b6353]">
-              01–{String(principalProjects.length).padStart(2, '0')}
-            </span>
-          </ScrollReveal>
-          <div className="grid gap-16 md:gap-32">
-            {principalProjects.map((project, index) => (
-              <WorkCard key={project.slug} project={project} index={index} variant="row" flip={index % 2 === 1} headingLevel={3} tone="light" />
+      <header className={`container ${styles.intro}`}>
+        <DisplayTitle className={styles.title}>
+          Work
+        </DisplayTitle>
+        <p className={styles.lede} data-enter style={{ ['--i' as string]: 1 }}>
+          Each case starts with the owner’s question, then what I found, what I decided, what shipped and what was measured.
+        </p>
+      </header>
+
+      {/* data-work-item marks what takes part when the filter changes (see WorkFilter) */}
+      <WorkFilter>
+        <section className={`container ${styles.group}`} data-group="practices" aria-labelledby="work-practices">
+          <h2 id="work-practices" className={styles.groupTitle} data-work-item>
+            Law firms and clinics
+          </h2>
+          <CaseStack className={styles.features}>
+            {PRACTICE_CASES.map((c) => (
+              <li key={c.slug} className={styles.item} data-sectors={c.sectors.join(' ')} data-work-item>
+                <div className={styles.reveal}>
+                  <CaseCard c={c} variant="feature" />
+                </div>
+              </li>
             ))}
-          </div>
-        </div>
-      </section>
+          </CaseStack>
+        </section>
 
-      <section className="border-t border-white/[0.09] px-6 py-20 sm:px-8 md:py-24 lg:px-12 xl:px-20">
-        <div className="mx-auto max-w-[1320px]">
-          <div className="grid gap-12 lg:grid-cols-12 lg:gap-20">
-            <ScrollReveal variant="heading" className="lg:col-span-4">
-              <p className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-accent/80">Additional work</p>
-              <h2 className="text-4xl font-medium tracking-[-0.045em]">Additional projects.</h2>
-            </ScrollReveal>
-            <div className="lg:col-span-8">
-              {additionalProjects.map((project, index) => (
-                <ScrollReveal key={project.slug} variant="item" delay={0.08 + index * 0.09}>
-                <Link
-                  href={`/work/${project.slug}`}
-                  className="group grid min-h-28 items-center gap-6 border-y border-white/[0.1] py-7 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent sm:grid-cols-[auto_1fr_auto]"
-                >
-                  {project.card ? (
-                    <div className="hidden w-44 shrink-0 transition-transform duration-500 group-hover:-translate-y-0.5 sm:block">
-                      <ScreenFrame shot={project.card} sizes="176px" />
-                    </div>
-                  ) : (
-                    <span className="hidden sm:block" aria-hidden="true" />
-                  )}
-                  <div>
-                    <h3 className="text-2xl font-medium tracking-[-0.035em] transition-colors group-hover:text-accent">{project.title}</h3>
-                    <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted-foreground">{project.summary}</p>
-                  </div>
-                  <ArrowUpRight aria-hidden="true" className="text-foreground/55 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-accent" />
-                </Link>
-                </ScrollReveal>
-              ))}
-            </div>
+        <section className={`container ${styles.group} ${styles.beyond}`} data-group="beyond" aria-labelledby="work-beyond">
+          <div className={styles.groupHead} data-work-item>
+            <h2 id="work-beyond" className={styles.groupTitle}>
+              Beyond practices
+            </h2>
+            <p className={styles.groupLine}>The same way of working, outside practices: a gear store, a travel journal and a wedding.</p>
           </div>
-        </div>
-      </section>
-
-      <section className="border-t border-white/[0.09] px-6 py-20 sm:px-8 md:py-24 lg:px-12 xl:px-20">
-        <div className="mx-auto grid max-w-[1320px] gap-12 lg:grid-cols-12 lg:gap-20">
-          <ScrollReveal variant="heading" className="lg:col-span-4">
-            <p className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-accent/80">Current work</p>
-            <h2 className="text-4xl font-medium tracking-[-0.045em]">Advisory &amp; Mentorship.</h2>
-          </ScrollReveal>
-          <div className="border-t border-white/[0.1] lg:col-span-8">
-            {advisory.map((item, index) => (
-              <ScrollReveal key={item.title} variant="item" delay={0.08 + index * 0.09}>
-                <article className="grid gap-4 border-b border-white/[0.1] py-7 sm:grid-cols-[11rem_1fr] sm:gap-8">
-                  <h3 className="text-lg font-medium">{item.title}</h3>
-                  <p className="text-sm leading-relaxed text-muted-foreground sm:text-base">{item.desc}</p>
-                </article>
-              </ScrollReveal>
+          <ul className={styles.compacts}>
+            {BEYOND_CASES.map((c) => (
+              <li key={c.slug} className={styles.item} data-sectors={c.sectors.join(' ')} data-work-item>
+                <div className={styles.reveal}>
+                  <CaseCard c={c} variant="compact" />
+                </div>
+              </li>
             ))}
-          </div>
-        </div>
-      </section>
-    </main>
+          </ul>
+        </section>
+      </WorkFilter>
+
+      <div data-work-item>
+        <CloseCall
+          track="work"
+          title="Not sure where to start?"
+          body="Book a short call and tell me what is not working, or begin with the website check. Its price is credited in full toward any work within 60 days."
+        />
+      </div>
+    </>
   );
 }

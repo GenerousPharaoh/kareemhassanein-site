@@ -1,0 +1,36 @@
+.close {
+  padding-top: clamp(80px, 9vw, 140px);
+  padding-bottom: clamp(32px, 4vw, 56px);
+}
+
+.inner {
+  display: grid;
+  gap: 22px;
+}
+
+.title {
+  max-width: 19ch;
+}
+
+/* A second, quieter clause in the heading, on its own line */
+.title span {
+  display: block;
+  color: var(--muted);
+}
+
+.row {
+  display: grid;
+  gap: 28px;
+  justify-items: start;
+  margin-top: clamp(8px, 1.5vw, 16px);
+}
+
+.text {
+  max-width: 54ch;
+}
+
+@media (max-width: 559px) {
+  .row {
+    justify-items: stretch;
+  }
+}

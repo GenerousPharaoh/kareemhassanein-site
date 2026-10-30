@@ -1,0 +1,54 @@
+/* Two grounds side by side, each with its practice's site on a phone standing up from the bottom edge */
+.cover {
+  view-transition-class: note-cover;
+  position: relative;
+  display: grid;
+  grid-auto-columns: minmax(0, 1fr);
+  grid-auto-flow: column;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: 22px;
+  isolation: isolate;
+}
+
+.half {
+  position: relative;
+  background: var(--case-ground);
+  box-shadow: inset 0 0 0 1px var(--case-rule);
+}
+
+.phone {
+  position: absolute;
+  left: 50%;
+  top: 13%;
+  width: 62%;
+  margin-left: -31%;
+  transform-origin: 50% 100%;
+}
+
+/* The second phone stands lower, so the pair reads as two sites rather than one repeated */
+.half + .half .phone {
+  top: 27%;
+}
+
+.half:first-child {
+  border-radius: 22px 0 0 22px;
+}
+
+.half:last-child {
+  border-radius: 0 22px 22px 0;
+}
+
+@media (max-width: 760px) {
+  .cover {
+    border-radius: 16px;
+  }
+
+  .half:first-child {
+    border-radius: 16px 0 0 16px;
+  }
+
+  .half:last-child {
+    border-radius: 0 16px 16px 0;
+  }
+}

@@ -1,151 +1,207 @@
-'use client';
+import { Close, Offer } from '@/components/home/HomeEnd';
+import s from '@/components/home/Home.module.css';
+import type { ReelItem, ReelMedia } from '@/components/home/Showreel';
+import { WorkWall, type WallTile } from '@/components/home/WorkWall';
+import { Statement } from '@/components/home/Statement';
+import { WorkIndex, type IndexItem } from '@/components/home/WorkIndex';
+import { CASES } from '@/content/cases';
+import { SITE } from '@/content/site';
+import { PORTRAIT } from '@/content/portrait';
+import wallWidths from '@/content/wall-media.json';
+import { loop, still, type Still } from '@/lib/media';
+import { pageMeta } from '@/lib/meta';
 
-import type { CSSProperties } from 'react';
-import Link from 'next/link';
-import { ArrowUpRight } from 'lucide-react';
-import HeadlineReveal from '@/components/HeadlineReveal';
-import ScrollReveal from '@/components/ScrollReveal';
-import ScreenWall from '@/components/ScreenWall';
-import WorkCard from '@/components/WorkCard';
-import { advisory, principalProjects, wallShots } from '@/lib/work';
 
-const heroLines = [
-  { text: 'Selected work in' },
-  { text: 'implementation, service operations,' },
-  { text: 'and digital delivery.', className: 'font-serif font-normal italic text-accent', duration: '1s' },
+export const metadata = pageMeta({
+  title: `${SITE.name} · ${SITE.descriptor}`,
+  absoluteTitle: true,
+  description:
+    'I build and run the online side of law firms and of dental and medical practices: the website, the Google profile, booking or intake, ads, and the tracking that ties them together.',
+  path: '/',
+});
+
+/** A loop for the reel: its first frame as the still, the video on top. */
+const reelLoop = (key: string): ReelMedia => {
+  const l = loop(key, '');
+  return { image: { src: l.poster, srcSet: `${l.poster} ${l.w}w`, w: l.w, h: l.h }, video: l.src };
+};
+
+/** A still for the reel, at its large widths (1600 and up for desktop, 780 and up for a phone). */
+const reelStill = (key: string, min = 1600): ReelMedia => {
+  const st = still(key, '');
+  const widths = st.widths.filter((w) => w >= min);
+  return { image: { src: `${st.src}-${widths[0]}.webp`, srcSet: widths.map((w) => `${st.src}-${w}.webp ${w}w`).join(', '), w: st.w, h: st.h } };
+};
+
+// The reel: what each project looks like on a desktop and on a phone, the stage it sits on (its
+// own colours, dark or light), and its time on screen. Each time is about the length of that
+// layout's loop (a still gets 4.4 s), so the reel moves on as a loop ends instead of holding its
+// last frame. deep is the dark version the work list uses.
+const REEL: Array<Omit<ReelItem, 'kind' | 'href'> & { deep: string }> = [
+  {
+    slug: 'tax-relief-counsel',
+    name: 'Tax Relief Counsel',
+    label: 'Tax Relief Counsel',
+    tone: '#1b2740',
+    ink: '#efeae1',
+    dark: true,
+    deep: '#1b2740',
+    focus: { desktop: 0.35, phone: 0.2 },
+    desktop: reelLoop('tax-relief-counsel/hero-arrive--desktop'),
+    phone: reelLoop('tax-relief-counsel/home-scroll--phone'),
+    seconds: { desktop: 6.1, phone: 7.3 },
+  },
+  {
+    slug: 'endorphins',
+    name: 'Endorphins',
+    label: 'Endorphins',
+    tone: '#dfe7d5',
+    ink: '#17230f',
+    dark: false,
+    deep: '#17231a',
+    focus: { desktop: 0.62, phone: 0.1 },
+    desktop: reelStill('endorphins/home-hero--desktop'),
+    phone: reelLoop('endorphins/home-scroll--phone'),
+    seconds: { desktop: 4.4, phone: 5.8 },
+  },
+  {
+    slug: 'physiomax',
+    name: 'PhysioMax',
+    label: 'PhysioMax',
+    tone: '#132b40',
+    ink: '#eef1f4',
+    dark: true,
+    deep: '#11273a',
+    focus: { desktop: 0.3, phone: 0.1 },
+    desktop: reelLoop('physiomax/treat-chart--desktop'),
+    phone: reelLoop('physiomax/home-scroll--phone'),
+    seconds: { desktop: 7.1, phone: 6.2 },
+  },
+  {
+    slug: 'kinetikare',
+    name: 'KinetiKare',
+    label: 'KinetiKare',
+    tone: '#efe9dd',
+    ink: '#1a2233',
+    dark: false,
+    deep: '#141b2b',
+    // The knee pain page: the illustrated runner, with the navigation kept in frame
+    focus: { desktop: 0.1, phone: 0 },
+    desktop: reelStill('kinetikare/knee-hub--desktop'),
+    phone: reelStill('kinetikare/knee-hub--phone', 780),
+    seconds: { desktop: 4.4, phone: 4.4 },
+  },
+  {
+    slug: 'techniques-combat',
+    name: 'Techniques Combat',
+    label: 'Techniques',
+    tone: '#e7e6e1',
+    ink: '#0c0c0c',
+    dark: false,
+    deep: '#151515',
+    focus: { desktop: 0.5, phone: 0.3 },
+    desktop: reelLoop('techniques-combat/hero-film--desktop'),
+    phone: reelLoop('techniques-combat/hero-film--phone'),
+    seconds: { desktop: 7.2, phone: 7.2 },
+  },
+  {
+    slug: 'travel-journal',
+    name: 'A travel journal',
+    label: 'Travel journal',
+    tone: '#182d3d',
+    ink: '#f6f1e7',
+    dark: true,
+    deep: '#172b3a',
+    focus: { desktop: 0.3, phone: 0.1 },
+    desktop: reelLoop('travel-journal/opening--desktop'),
+    phone: reelLoop('travel-journal/travels-scroll--phone'),
+    seconds: { desktop: 4.3, phone: 5.7 },
+  },
+  {
+    slug: 'wedding',
+    name: 'A destination wedding',
+    label: 'Wedding',
+    tone: '#efede6',
+    ink: '#1e2630',
+    dark: false,
+    deep: '#1c2430',
+    focus: { desktop: 0.45, phone: 0.3 },
+    desktop: reelLoop('wedding/opening--desktop'),
+    phone: reelLoop('wedding/opening--phone'),
+    seconds: { desktop: 3.5, phone: 3.5 },
+  },
 ];
 
-const featured = principalProjects;
+// The list below the reel shows a second screen from each project
+const PREVIEW: Record<string, string> = {
+  'tax-relief-counsel': 'tax-relief-counsel/decoder--desktop',
+  endorphins: 'endorphins/lp-physio--desktop',
+  physiomax: 'physiomax/home-hero--desktop',
+  kinetikare: 'kinetikare/knee-hub--desktop',
+  'techniques-combat': 'techniques-combat/home-hero--desktop',
+  'travel-journal': 'travel-journal/travels-top--desktop',
+  wedding: 'wedding/welcome--desktop',
+};
+
+const KEEP_CASE = ['Business Profile', 'Shopify'];
+/** "Diagnosis, Website, Tools" reads as "Diagnosis, website, tools". */
+const servicesLine = (list: string[]) =>
+  list.map((x, i) => (i === 0 || KEEP_CASE.includes(x) || /^[A-Z]{2,}$/.test(x) ? x : x.charAt(0).toLowerCase() + x.slice(1))).join(', ');
 
 export default function Home() {
+  // The wall: every screen of the work, desktop and phone, on its client's colour. Stills only: video
+  // among the moving rows cost the wall its smoothness. Each client's screens are spaced out with its
+  // phone screens, then the clients are dealt across the rows in turn, so neighbours always come from
+  // different clients.
+  const pools = CASES.map((c, ci) => {
+    const tile = (still: Still, ratio: number): WallTile => ({
+      key: still.src, ground: c.palette.ground, device: still.device, ratio,
+      still: { ...still, src: still.src.replace('/work-media/', '/work-media/wall/'), widths: wallWidths[still.device] },
+    });
+    const screens = [c.plate.desktop, c.plate.phone, ...c.stills].filter((st, i, all) => all.findIndex((o) => o.src === st.src) === i);
+    const wide = screens.filter((st) => st.device === 'desktop' && st.w / st.h >= 1.35 && st.w / st.h <= 2).map((st) => tile(st, st.w / st.h));
+    const tall = screens.filter((st) => st.device === 'phone').map((st) => tile(st, 0.56));
+    const pool: WallTile[] = [];
+    for (let k = 0; wide.length || tall.length; k++) pool.push(((tall.length && (k + ci) % 3 === 2) || !wide.length ? tall : wide).shift()!);
+    return pool;
+  });
+  const dealt: WallTile[] = [];
+  for (let i = 0; pools.some((p) => p[i]); i++) pools.forEach((p) => p[i] && dealt.push(p[i]));
+  const ROWS = 6;
+  const wall: WallTile[][] = Array.from({ length: ROWS }, (_, r) => dealt.filter((_, i) => i % ROWS === r));
+
+  const index: IndexItem[] = CASES.filter((c) => ['tax-relief-counsel', 'endorphins', 'physiomax'].includes(c.slug)).map((c) => ({
+    slug: c.slug,
+    name: REEL.find((r) => r.slug === c.slug)?.name ?? c.short,
+    kind: c.kindLabel,
+    services: servicesLine(c.services),
+    href: `/work/${c.slug}`,
+    tone: REEL.find((r) => r.slug === c.slug)?.deep ?? '#0c0c0b',
+    still: still(PREVIEW[c.slug], c.plate.desktop.alt),
+  }));
+
   return (
-    <main className="overflow-hidden bg-background text-foreground">
-      <section className="relative px-6 pb-20 pt-28 sm:px-8 sm:pt-32 md:pb-24 md:pt-40 lg:px-12 xl:px-20">
-        <div className="relative mx-auto max-w-[1440px]">
-          <div className="grid gap-14 lg:grid-cols-12 lg:items-end lg:gap-16">
-            <div className="lg:col-span-8">
-              <p className="mb-7 flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-accent/82">
-                <span
-                  aria-hidden="true"
-                  className="enter-rule-x h-px w-10 bg-accent/50"
-                  style={{ '--hero-delay': '0.06s' } as CSSProperties}
-                />
-                <span className="enter-fade" style={{ '--hero-delay': '0.16s', '--enter-dur': '0.85s' } as CSSProperties}>
-                  Kareem Hassanein
-                </span>
-              </p>
-              <h1 className="max-w-[1100px] text-[clamp(2.5rem,7vw,6.6rem)] font-medium leading-[0.92] tracking-[-0.055em]">
-                <HeadlineReveal lines={heroLines} />
-              </h1>
-            </div>
-
-            <div className="hero-rule pl-6 lg:col-span-4 lg:mb-4 lg:pl-8" style={{ '--hero-delay': '0.80s' } as CSSProperties}>
-              <p
-                className="enter-fade max-w-lg text-base leading-relaxed text-foreground/76 sm:text-lg lg:text-xl"
-                style={{ '--hero-delay': '0.88s', '--enter-dur': '0.95s' } as CSSProperties}
-              >
-                I work across healthcare and professional services, drawing on more than 10,000 hours of direct client
-                work. The projects below cover a clinical software rollout, two clinic websites, and a legal drafting
-                workflow.
-              </p>
-              <div
-                className="enter-fade mt-8 flex flex-col gap-3 sm:flex-row lg:flex-col xl:flex-row xl:gap-2"
-                style={{ '--hero-delay': '1.08s', '--enter-dur': '0.9s' } as CSSProperties}
-              >
-                <Link
-                  href="#selected-work"
-                  className="group inline-flex min-h-12 items-center justify-center gap-3 whitespace-nowrap rounded-full bg-accent px-5 text-sm font-semibold text-background transition-colors duration-500 hover:bg-accent/90"
-                >
-                  View selected work
-                  <ArrowUpRight aria-hidden="true" size={16} className="transition-transform duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-                </Link>
-                <Link
-                  href="/about"
-                  className="hidden min-h-12 items-center justify-center whitespace-nowrap rounded-full border border-white/[0.14] px-5 text-sm font-semibold text-foreground/78 transition-colors duration-500 hover:border-accent/45 hover:text-foreground sm:inline-flex"
-                >
-                  About Kareem
-                </Link>
-              </div>
-              <p
-                className="enter-fade mt-6 max-w-lg text-xs leading-relaxed text-muted-foreground"
-                style={{ '--hero-delay': '1.22s', '--enter-dur': '0.9s' } as CSSProperties}
-              >
-                Hamilton and Burlington, Ontario · Open to on-site, hybrid, or remote opportunities
-              </p>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      {/* The live screens on a slowly turning wall, with a second ring of the
-          same work turning against it behind. Full bleed: the cylinders are
-          meant to run past the edges rather than sit in the page gutter. */}
-      <section aria-label="Screens from live projects" className="relative z-10 pb-2 md:pb-6">
-        <ScreenWall shots={wallShots} />
-      </section>
-
-      {/* Featured work on warm paper */}
-      <section id="selected-work" className="scroll-mt-20 bg-[#ECE6D9] px-6 pb-24 pt-20 text-[#1c1812] sm:px-8 md:pb-32 md:pt-28 lg:px-12 xl:px-20">
-        <div className="mx-auto max-w-[1320px]">
-          {/* Two beats, not one slab: the signpost and title land, then the
-              framing sentence follows them in. */}
-          <div className="mb-16 grid gap-6 lg:grid-cols-12 lg:items-end md:mb-24">
-            <ScrollReveal variant="heading" className="lg:col-span-7">
-              <p className="mb-5 text-xs font-semibold uppercase tracking-[0.2em] text-[#705829]">Selected work</p>
-              <h2 className="text-4xl font-medium tracking-[-0.045em] text-[#1c1812] sm:text-5xl md:text-6xl">
-                Projects and <span className="font-serif font-normal italic text-[#705829]">results.</span>
-              </h2>
-            </ScrollReveal>
-            <ScrollReveal variant="text" delay={0.12} className="lg:col-span-5 lg:pb-2">
-              <p className="max-w-md text-base leading-relaxed text-[#57503f] lg:ml-auto">
-                Four projects across clinical software, clinic operations, professional services, and patient-facing digital products.
-              </p>
-            </ScrollReveal>
-          </div>
-
-          <div className="grid gap-16 md:grid-cols-2 md:gap-x-10 md:gap-y-20">
-            {featured.map((project, index) => (
-              <WorkCard
-                key={project.slug}
-                project={project}
-                summary={project.cardSummary}
-                index={index}
-                variant="stack"
-                tone="light"
-              />
-            ))}
-          </div>
-
-          <ScrollReveal variant="item" className="mt-16 border-t border-black/[0.12] pt-8 text-right md:mt-24">
-            <Link href="/work" className="group inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-[#1c1812]/74 hover:text-[#705829]">
-              See all work
-              <ArrowUpRight aria-hidden="true" size={16} className="transition-transform duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-            </Link>
-          </ScrollReveal>
-        </div>
-      </section>
-
-      <section className="border-t border-white/[0.09] px-6 py-24 sm:px-8 md:py-32 lg:px-12 xl:px-20">
-        <div className="mx-auto max-w-[1320px]">
-          <div className="grid gap-12 lg:grid-cols-12 lg:gap-20">
-            <ScrollReveal variant="heading" className="lg:col-span-5">
-              <p className="mb-5 text-xs font-semibold uppercase tracking-[0.2em] text-accent/80">Current work</p>
-              <h2 className="max-w-xl text-4xl font-medium tracking-[-0.045em] sm:text-5xl">Advisory &amp; Mentorship.</h2>
-            </ScrollReveal>
-            <div className="border-t border-white/[0.11] lg:col-span-7">
-              {advisory.map((item, index) => (
-                <ScrollReveal key={item.title} variant="item" delay={0.08 + index * 0.09}>
-                  <article className="grid gap-4 border-b border-white/[0.11] py-7 sm:grid-cols-[11rem_1fr] sm:gap-8">
-                    <h3 className="text-lg font-medium tracking-tight text-foreground">{item.title}</h3>
-                    <p className="text-sm leading-relaxed text-muted-foreground sm:text-base">{item.desc}</p>
-                  </article>
-                </ScrollReveal>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-    </main>
+    <>
+      <div className={s.opening}>
+        <WorkWall rows={wall} name={SITE.name} line={SITE.descriptor} />
+        <WorkIndex items={index} title="Selected work" />
+      </div>
+      <Statement
+        pieces={[
+          'I build and run the online side of law firms and independent practices: the website ',
+          { still: still('tax-relief-counsel/chip-headline', ''), label: 'The Tax Relief Counsel headline' },
+          ', the Google profile ',
+          { still: still('endorphins/chip-map', ''), label: 'Endorphins on Google Maps' },
+          ', booking or intake ',
+          { still: still('endorphins/chip-book', ''), label: 'The Endorphins Book Appointment button' },
+          ', ads, and the tracking that ties them together.',
+        ]}
+        body="I’m Kareem Hassanein. I’ve worked in healthcare for 13 years, across different roles."
+        link={{ href: '/about', label: 'More about me' }}
+        portrait={PORTRAIT}
+      />
+      <Offer />
+      <Close />
+    </>
   );
 }

@@ -1,0 +1,550 @@
+/*
+  The reel fills the first screen: a stage in the project's own colour, a large screen showing
+  the work, and a foot beneath it with the project's name and a bar for every project. The stage
+  (and the header on it) changes colour with each project, dark or light.
+*/
+.reel {
+  --bezel: 14px;
+  --foot-h: 86px;
+  --r: 14px;
+  --peek: var(--sheet-r);
+  --screen-h: max(240px, calc(100svh - var(--header-h) - env(safe-area-inset-top, 0px) - var(--foot-h) - var(--bezel) - var(--peek)));
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  min-height: 520px;
+  padding: calc(var(--header-h) + env(safe-area-inset-top, 0px)) var(--bezel) calc(var(--bezel) + var(--peek));
+  background: var(--tone, var(--stage));
+  color: var(--tone-ink, var(--ivory));
+  overflow: hidden;
+  transition:
+    background-color var(--change, 0.9s) var(--ease-in-out),
+    color var(--change, 0.9s) var(--ease-in-out);
+}
+
+.sink {
+  height: 100%;
+  transform-origin: 50% 30%;
+  will-change: transform;
+}
+
+/* The screen is as large as the height allows, never wider than 1.9 to 1, and the foot shares its width */
+.frame {
+  display: grid;
+  grid-template-columns: min(100%, calc(var(--screen-h) * 1.9));
+  grid-template-rows: var(--screen-h) var(--foot-h);
+  justify-content: center;
+  height: 100%;
+}
+
+.screen {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--r);
+  background: #000;
+  isolation: isolate;
+  box-shadow: 0 30px 80px -40px rgba(0, 0, 0, 0.55);
+}
+
+/* First load: the work arrives at its final size, without a separate shape reveal. */
+@media (prefers-reduced-motion: no-preference) {
+  .screen {
+    animation: screen-arrive 450ms var(--ease-out) both;
+  }
+}
+
+@keyframes screen-arrive {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* A route reveal is already an entrance. Returning home shows the reel fully open. */
+:global(html[data-route-arrival]) .screen,
+:global(html[data-route-arrival]) .bars {
+  animation: none;
+}
+
+.reel[data-route-intro] .caption[data-phase='in'] .line { animation: none; }
+
+/* Layers: one per project, stacked inside their own context; only the one on screen (and the one arriving) shows */
+.layers {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.layer {
+  position: absolute;
+  inset: 0;
+  visibility: hidden;
+  background: #000;
+  transform: scale(1.03);
+}
+
+.layer[data-state='on'],
+.layer[data-state='enter'],
+.layer[data-state='leave'] {
+  visibility: visible;
+}
+
+.layer[data-state='enter'] {
+  z-index: 2;
+}
+
+.layer[data-state='leave'] {
+  z-index: 1;
+}
+
+.layer picture,
+.layer img,
+.layer video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% var(--focus-d);
+}
+
+@media (max-width: 760px) {
+  .layer img,
+  .layer video {
+    object-position: 50% var(--focus-p);
+  }
+
+  .layer video[data-only='desktop'] {
+    display: none;
+  }
+}
+
+@media (min-width: 761px) {
+  .layer video[data-only='phone'] {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .layer[data-state='enter'] {
+    animation: layer-in var(--change, 0.9s) var(--ease-in-out) both;
+  }
+
+  .layer[data-state='leave'] {
+    animation: layer-out var(--change, 0.9s) var(--ease-in-out) both;
+  }
+
+  /* With the WebGL screen on top, the layers only feed it frames */
+  .screen[data-gl] .layer {
+    animation: none;
+  }
+}
+
+@keyframes layer-in {
+  from {
+    clip-path: inset(100% 0 0 0);
+    transform: scale(1.14) translateY(8%);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+    transform: scale(1.03);
+  }
+}
+
+@keyframes layer-out {
+  to {
+    transform: scale(1.08) translateY(-10%);
+    opacity: 0.4;
+  }
+}
+
+.canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s var(--ease-colour);
+}
+
+.screen[data-gl] .canvas {
+  opacity: 1;
+}
+
+/* As the list slides over, the whole stage darkens */
+.dim {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: #000;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* The foot: the project on the left, every project's bar on the right */
+.foot {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  grid-template-areas: 'caption bars pause';
+  align-items: end;
+  gap: 16px 20px;
+  padding: 0 2px 2px;
+}
+
+.captions {
+  grid-area: caption;
+  position: relative;
+  display: grid;
+  min-width: 0;
+}
+
+.caption {
+  grid-area: 1 / 1;
+  display: grid;
+  gap: 4px;
+}
+
+.kind {
+  font-size: 0.875rem;
+  line-height: 1.3;
+  opacity: 0.66;
+}
+
+.name {
+  font: 500 clamp(1.6rem, 1.1rem + 1.35vw, 2.6rem) / 1.05 var(--font-display);
+  letter-spacing: -0.04em;
+}
+
+.nameLink {
+  color: inherit;
+  text-decoration: none;
+}
+
+.mask {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.12em;
+  margin-bottom: -0.12em;
+}
+
+.line {
+  display: flex;
+  align-items: center;
+  gap: 0.36em;
+  white-space: nowrap;
+}
+
+/* A ring with an arrow after the name: it fills with the type colour on hover */
+.go {
+  position: relative;
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 0.92em;
+  height: 0.92em;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1.5px currentColor;
+  overflow: hidden;
+  transition: color 0.4s var(--ease-colour);
+}
+
+.go::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: currentColor;
+  transform: scale(0);
+  transition: transform 0.5s var(--ease-out);
+}
+
+.go svg {
+  position: relative;
+  width: 46%;
+  height: 46%;
+  transition:
+    transform 0.5s var(--ease-out),
+    color 0.3s var(--ease-colour);
+}
+
+@media (hover: hover) {
+  .nameLink:hover .go::before {
+    transform: none;
+  }
+
+  .nameLink:hover .go svg {
+    color: var(--tone);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* The new name rises while the screen is still changing, not after it */
+  .caption[data-phase='in'] .line {
+    animation: line-in 0.75s var(--ease-out) both;
+    animation-delay: 0.2s;
+  }
+
+  .caption[data-phase='in'] .name .line {
+    animation-delay: 0.26s;
+  }
+
+  .caption[data-phase='out'] .line {
+    animation: line-out 0.3s var(--ease-in) both;
+  }
+
+  .caption[data-phase='out'] .name .line {
+    animation-delay: 0.04s;
+  }
+}
+
+@keyframes line-in {
+  from {
+    transform: translateY(110%);
+  }
+  to {
+    transform: none;
+  }
+}
+
+@keyframes line-out {
+  to {
+    transform: translateY(-110%);
+  }
+}
+
+/* Bars: one per project, each a button that names it */
+.bars {
+  grid-area: bars;
+  display: flex;
+  align-items: flex-end;
+  gap: 14px;
+  padding-bottom: 4px;
+}
+
+.track {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+  list-style: none;
+}
+
+.track li {
+  flex: none;
+  width: 44px;
+}
+
+.bar {
+  position: relative;
+  display: grid;
+  gap: 8px;
+  width: 100%;
+  min-height: 44px;
+  align-content: end;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  opacity: 0.5;
+  text-align: left;
+  cursor: pointer;
+  transition: opacity var(--dur-hover) var(--ease-colour);
+}
+
+.bar[aria-current] {
+  opacity: 1;
+}
+
+@media (hover: hover) {
+  .bar:hover {
+    opacity: 1;
+  }
+}
+
+.barLabel {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% - 14px);
+  padding: 5px 9px;
+  border-radius: 6px;
+  background: var(--tone-ink);
+  color: var(--tone);
+  font-size: 0.75rem;
+  line-height: 1.2;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, 6px);
+  transition:
+    opacity 0.25s var(--ease-colour),
+    transform 0.4s var(--ease-out);
+}
+
+.bar:focus-visible .barLabel {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+@media (hover: hover) {
+  .bar:hover .barLabel {
+    opacity: 1;
+  }
+}
+
+.barTrack {
+  position: relative;
+  height: 2px;
+  border-radius: 2px;
+  background: color-mix(in srgb, currentColor 28%, transparent);
+  overflow: hidden;
+}
+
+.bar[data-done] .barTrack {
+  background: color-mix(in srgb, currentColor 55%, transparent);
+}
+
+.barFill {
+  position: absolute;
+  inset: 0;
+  background: currentColor;
+  transform-origin: 0 50%;
+  animation: fill linear both;
+}
+
+.bars[data-paused] .barFill {
+  animation-play-state: paused;
+}
+
+@keyframes fill {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.pause {
+  grid-area: pause;
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  margin: 0 -10px -10px 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+  transition: background-color var(--dur-hover) var(--ease-colour);
+}
+
+.pause svg {
+  width: 18px;
+  height: 18px;
+}
+
+@media (hover: hover) {
+  .pause:hover {
+    background: color-mix(in srgb, currentColor 12%, transparent);
+  }
+}
+
+.bar:focus-visible,
+.pause:focus-visible,
+.nameLink:focus-visible {
+  outline-color: currentColor;
+}
+
+/* Entrance of the foot with the opening */
+@media (prefers-reduced-motion: no-preference) {
+  .bars {
+    animation: foot-in 450ms var(--ease-out) 80ms both;
+  }
+}
+
+@keyframes foot-in {
+  from {
+    opacity: 0.01;
+    transform: translateY(10px);
+  }
+}
+
+/* Very wide screens: every bar carries its name */
+@media (min-width: 1600px) {
+  .track {
+    gap: 20px;
+  }
+
+  .track li {
+    width: auto;
+  }
+
+  .barLabel {
+    position: static;
+    padding: 0;
+    background: none;
+    color: inherit;
+    font-size: 0.8125rem;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Phones: a portrait screen; bars over the caption, across the full width */
+@media (max-width: 760px) {
+  .reel {
+    --bezel: 8px;
+    --foot-h: 116px;
+    --r: 12px;
+  }
+
+  .foot {
+    grid-template-columns: minmax(0, 1fr) 44px;
+    grid-template-areas: 'bars bars' 'caption pause';
+    grid-template-rows: auto auto;
+    gap: 10px;
+    padding: 4px 2px 0;
+    align-content: start;
+  }
+
+  .bars {
+    order: -1;
+    width: 100%;
+    padding-bottom: 0;
+  }
+
+  .track {
+    gap: 5px;
+  }
+
+  .track li {
+    flex: 1;
+    width: auto;
+  }
+
+  .barLabel {
+    display: none;
+  }
+
+  .bar {
+    min-height: 44px;
+  }
+
+  .pause {
+    width: 44px;
+    height: 44px;
+    margin: 0;
+    align-self: center;
+  }
+
+  .name {
+    font-size: clamp(1.45rem, 1rem + 2.4vw, 1.9rem);
+  }
+}

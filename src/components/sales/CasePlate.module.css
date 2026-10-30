@@ -1,0 +1,16 @@
+.plate {
+  position: relative;
+  padding-right: clamp(28px, 9%, 112px);
+  padding-bottom: clamp(48px, 12%, 132px);
+}
+
+.desktop {
+  position: relative;
+}
+
+.phone {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: clamp(92px, 23%, 248px);
+}

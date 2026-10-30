@@ -1,0 +1,75 @@
+.intro {
+  display: grid;
+  gap: 24px;
+  padding-top: clamp(32px, 5vw, 64px);
+  padding-bottom: 40px;
+}
+
+.title {
+  font: 620 clamp(6rem, 14vw, 13rem)/.87 var(--font-display);
+  font-stretch: 118%;
+  letter-spacing: -.065em;
+}
+
+.lede {
+  max-width: 38ch;
+  font-size: var(--t-lede);
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.group {
+  display: grid;
+  gap: 24px;
+}
+
+.beyond {
+  padding-top: clamp(64px, 8vw, 120px);
+}
+
+.groupHead {
+  display: grid;
+  gap: 12px;
+}
+
+.groupTitle {
+  font: 450 1rem/1.4 var(--font-body);
+  color: var(--muted);
+}
+
+.groupLine {
+  max-width: 52ch;
+  color: var(--muted);
+}
+
+.features, .compacts {
+  list-style: none;
+  display: grid;
+  gap: clamp(28px, 4vw, 56px);
+}
+
+.item {
+  min-width: 0;
+}
+
+.reveal {
+  height: 100%;
+}
+
+@media (min-width: 960px) {
+  .intro {
+    grid-template-columns: 1fr 1fr;
+    align-items: end;
+    gap: 80px;
+  }
+  .lede {
+    justify-self: end;
+    padding-bottom: .3em;
+  }
+  .compacts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .compacts > :last-child {
+    grid-column: 1 / -1;
+  }
+}

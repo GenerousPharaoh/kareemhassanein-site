@@ -1,69 +1,112 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import ProjectDetail from '@/components/CaseStudy';
-import { orderedProjects, getProject } from '@/lib/work';
-
-interface Params {
-  params: { slug: string };
-}
+import { CaseHeader, heroInHeader } from '@/components/work/CaseHeader';
+import { Gallery, HeroLoop } from '@/components/work/CaseMedia';
+import { CloseCall } from '@/components/work/CloseCall';
+import { NextCase } from '@/components/work/NextCase';
+import { Pairs } from '@/components/work/Pairs';
+import { Credit, Ledger, MeasuredList, StoryBlock } from '@/components/work/Story';
+import { paletteVars } from '@/components/work/palette';
+import { CASES, caseBySlug } from '@/content/cases';
+import { SITE } from '@/content/site';
+import styles from './page.module.css';
+import { CaseNavigator } from '@/components/work/CaseNavigator';
 
 export function generateStaticParams() {
-  return orderedProjects.map((project) => ({ slug: project.slug }));
+  return CASES.map((c) => ({ slug: c.slug }));
 }
 
-export function generateMetadata({ params }: Params): Metadata {
-  const project = getProject(params.slug);
-  if (!project) return {};
-  const url = `https://www.khassanein.bio/work/${project.slug}`;
-  const image = project.card?.src ?? '/og-image.png';
+export const dynamicParams = false;
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const c = caseBySlug(slug);
+  if (!c) return {};
+  const img = c.plate.desktop;
+  const width = img.widths.includes(1600) ? 1600 : Math.max(...img.widths.filter((w) => w <= 1600));
+  const image = { url: `${img.src}-${width}.webp`, width, height: Math.round((width * img.h) / img.w), alt: img.alt };
+  const description = `${c.kindLabel}${c.kindLabel.endsWith('.') ? '' : '.'} ${c.summary}`;
   return {
-    title: `${project.title} | Kareem Hassanein`,
-    description: project.summary,
+    title: c.name,
+    description,
+    alternates: { canonical: `/work/${c.slug}` },
     openGraph: {
-      title: `${project.title} | Kareem Hassanein`,
-      description: project.summary,
-      url,
-      type: 'website',
+      type: 'article',
+      siteName: SITE.name,
       locale: 'en_CA',
-      siteName: 'Kareem Hassanein',
-      images: [{ url: image, alt: project.card?.alt ?? `${project.title} project by Kareem Hassanein` }],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: `${project.title} | Kareem Hassanein`,
-      description: project.summary,
+      url: `/work/${c.slug}`,
+      title: `${c.name} · ${SITE.name}`,
+      description,
       images: [image],
     },
-    alternates: {
-      canonical: url,
-    },
+    twitter: { card: 'summary_large_image', title: `${c.name} · ${SITE.name}`, description, images: [image.url] },
   };
 }
 
-export default function ProjectPage({ params }: Params) {
-  const project = getProject(params.slug);
-  if (!project) notFound();
-
-  const index = orderedProjects.findIndex((p) => p.slug === project.slug);
-  const next = orderedProjects[(index + 1) % orderedProjects.length];
-
-  const breadcrumbJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.khassanein.bio' },
-      { '@type': 'ListItem', position: 2, name: 'Work', item: 'https://www.khassanein.bio/work' },
-      { '@type': 'ListItem', position: 3, name: project.title, item: `https://www.khassanein.bio/work/${project.slug}` },
-    ],
-  };
+export default async function CasePage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const c = caseBySlug(slug);
+  if (!c) notFound();
+  const next = CASES[(CASES.indexOf(c) + 1) % CASES.length];
+  // The note explains the before shots when there are any; otherwise it belongs with the summary.
+  const noteWithSummary = c.note && !c.pairs.length ? c.note : undefined;
 
   return (
-    <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd).replace(/</g, '\\u003c') }}
+    <article className={styles.page} style={paletteVars(c.palette)}>
+      <CaseHeader c={c} />
+      <CaseNavigator name={c.short} sections={[
+        { id: 'case-short', label: 'The story' },
+        { id: 'case-screens', label: 'The work' },
+        ...(c.pairs.length ? [{ id: 'case-before-after', label: 'Before & after' }] : [{ id: 'case-shipped', label: 'What shipped' }]),
+      ]} />
+
+      <div className={`container ${styles.story} ${styles.first}`}>
+        <StoryBlock id="case-short" label="In short">
+          <p className={styles.summary}>{c.summary}</p>
+          {c.context ? <p className={styles.aside}>{c.context}</p> : null}
+          {noteWithSummary ? <p className={styles.aside}>{noteWithSummary}</p> : null}
+        </StoryBlock>
+      </div>
+
+      {heroInHeader(c) ? null : <HeroLoop c={c} />}
+
+      <Gallery c={c} />
+
+      <div className={`container ${styles.story} ${styles.after}`}>
+        {c.measured?.length ? (
+          <StoryBlock id="case-measured" label="What was measured">
+            <MeasuredList items={c.measured} />
+            {c.credit ? <Credit>{c.credit}</Credit> : null}
+          </StoryBlock>
+        ) : c.credit ? (
+          <StoryBlock id="case-credit" label="Credit">
+            <p className={styles.summary}>{c.credit}</p>
+          </StoryBlock>
+        ) : null}
+      </div>
+
+      <Ledger
+        columns={[
+          ...(c.found?.length ? [{ id: 'case-found', label: 'What I found', items: c.found, kind: 'numbered' as const }] : []),
+          { id: 'case-decided', label: 'What I decided', items: c.decided, kind: 'numbered' },
+          { id: 'case-shipped', label: 'What shipped', items: c.shipped, kind: 'shipped' },
+        ]}
       />
-      <ProjectDetail project={project} next={next} />
-    </>
+
+      <Pairs pairs={c.pairs} note={c.note} />
+
+      <NextCase c={next} />
+
+      <CloseCall
+        track="case"
+        title="Does your practice have a question like this one?"
+        body={
+          <>
+            Tell me what is not working on a <span style={{ whiteSpace: 'nowrap' }}>20-minute</span> call. Or start with a website check: I walk your whole path from
+            search to booked, then send a ranked list with a fixed price beside each fix.
+          </>
+        }
+      />
+    </article>
   );
 }

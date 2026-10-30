@@ -1,0 +1,120 @@
+.hero {
+  padding-top: clamp(28px, 4vw, 64px);
+  padding-bottom: clamp(64px, 8vw, 112px);
+}
+
+.inner {
+  display: grid;
+  gap: clamp(36px, 4.5vw, 56px);
+}
+
+.head {
+  display: grid;
+  gap: clamp(18px, 2vw, 26px);
+  min-width: 0;
+}
+
+.label {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* The headline as large as the page allows, the outcome word in the signal colour */
+.hero .title {
+  max-width: 11ch;
+  font-size: clamp(3.2rem, 7vw, 7.6rem);
+  font-weight: 560;
+  font-stretch: 92%;
+  line-height: 0.9;
+  letter-spacing: -0.055em;
+  text-wrap: balance;
+}
+
+.title em {
+  font-style: normal;
+  color: var(--signal);
+}
+
+.side {
+  display: grid;
+  gap: clamp(20px, 2.2vw, 28px);
+  align-content: end;
+  min-width: 0;
+}
+
+.lede {
+  max-width: 46ch;
+}
+
+.stage {
+  min-width: 0;
+}
+
+.specs {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 20px;
+  border-top: 1px solid var(--rule);
+}
+
+.spec {
+  min-width: 0;
+  padding: 16px 0 18px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.spec dt {
+  font: 450 0.8125rem/1.4 var(--font-body);
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--muted);
+}
+
+/* The fact itself reads first; its label stays small above it */
+.spec dd {
+  margin: 8px 0 0;
+  font: 500 1.125rem / 1.35 var(--font-display);
+  letter-spacing: -0.012em;
+  color: var(--ink);
+}
+
+@media (min-width: 760px) {
+  .specs {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    column-gap: 28px;
+  }
+}
+
+/* Wide screens: the headline on the left, what it is and the two ways to start beside its foot */
+@media (min-width: 1000px) {
+  /* The side is wide enough for both buttons on one line, so it stands no taller than the headline */
+  .head {
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+    grid-template-areas:
+      'label label'
+      'title side';
+    column-gap: clamp(32px, 4vw, 72px);
+    align-items: end;
+  }
+
+  .label {
+    grid-area: label;
+  }
+
+  .hero .title {
+    grid-area: title;
+  }
+
+  .side {
+    grid-area: side;
+    padding-bottom: 0.4em;
+  }
+}
+
+@media (max-width: 760px) {
+  .hero .title {
+    font-size: clamp(2.8rem, 12vw, 4.6rem);
+  }
+}

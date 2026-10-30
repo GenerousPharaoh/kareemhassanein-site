@@ -1,0 +1,159 @@
+.figure {
+  margin: 0;
+  min-width: 0;
+}
+
+.figure[data-device='phone'] {
+  max-width: 340px;
+}
+
+/* Vertical swipes still scroll the page; sideways drags move the line */
+.stage {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #fff;
+  touch-action: pan-y;
+  cursor: ew-resize;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  box-shadow:
+    0 0 0 1px rgba(18, 20, 23, 0.08),
+    0 22px 44px -26px rgba(18, 20, 23, 0.34);
+}
+
+.figure[data-device='phone'] .stage {
+  border-radius: 28px;
+  border: 7px solid #0d0e10;
+}
+
+.stage img {
+  display: block;
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+}
+
+.after {
+  position: absolute;
+  inset: 0;
+  clip-path: inset(0 0 0 var(--pos));
+}
+
+/* A full-width layer whose left edge is the line, moved with transform so dragging never relayouts */
+.divider {
+  position: absolute;
+  inset: 0;
+  transform: translateX(var(--pos));
+  pointer-events: none;
+}
+
+.line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -1px;
+  width: 2px;
+  background: #fff;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.18);
+}
+
+.handle {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 40px;
+  height: 40px;
+  margin: -20px 0 0 -20px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #fff;
+  color: #121417;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+  transition:
+    scale var(--dur-press) var(--ease-out),
+    box-shadow var(--dur-hover) var(--ease-colour);
+}
+
+.handle svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Held: the handle gives a little, at once, like every pressed control */
+.stage[data-dragging] {
+  cursor: grabbing;
+}
+
+.stage[data-dragging] .handle {
+  scale: 0.94;
+}
+
+.tag {
+  position: absolute;
+  top: 12px;
+  font: 500 11px/1 var(--font-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 6px 8px;
+  border-radius: 6px;
+  background: rgba(14, 15, 17, 0.72);
+  color: #fff;
+  pointer-events: none;
+  transition: opacity var(--dur-hover) var(--ease-colour);
+}
+
+.tagBefore {
+  left: 12px;
+}
+
+.tagAfter {
+  right: 12px;
+}
+
+/* A label steps aside while the line passes over it */
+.stage[data-near='before'] .tagBefore,
+.stage[data-near='after'] .tagAfter {
+  opacity: 0;
+}
+
+/* Keyboard and screen-reader access only; the stage takes the pointer */
+.range {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.stage:has(.range:focus-visible) {
+  outline: 2px solid var(--focus);
+  outline-offset: 4px;
+}
+
+.caption {
+  margin-top: 12px;
+  font-size: var(--t-small);
+  color: var(--muted);
+}
+
+@media (hover: hover) {
+  .stage:hover .handle {
+    box-shadow: 0 6px 22px rgba(0, 0, 0, 0.3);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .handle {
+    transition: none;
+  }
+
+  .stage[data-dragging] .handle {
+    scale: none;
+  }
+}

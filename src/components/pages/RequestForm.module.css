@@ -1,0 +1,654 @@
+.wrap {
+  --error: #b42318;
+  --field-line: color-mix(in srgb, var(--ink) 15%, transparent);
+  display: grid;
+}
+
+.form {
+  display: grid;
+  gap: 16px;
+}
+
+.fields {
+  display: contents;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.fallback {
+  display: grid;
+  gap: 12px;
+  overflow-wrap: anywhere;
+}
+
+/* Topic: two cards that read as one choice */
+
+.topics {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  display: grid;
+}
+
+.legend {
+  padding: 0 0 12px;
+  font: 600 var(--t-small) / 1.3 var(--font-body);
+}
+
+.topicGrid {
+  --topic-gap: 10px;
+  position: relative;
+  display: grid;
+  gap: var(--topic-gap);
+  grid-auto-rows: 1fr;
+}
+
+/* The chosen card is one ink tab under both cards, sliding to the one picked */
+.topicGrid::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: calc((100% - var(--topic-gap)) / 2);
+  border-radius: 4px;
+  background: var(--ink);
+  pointer-events: none;
+}
+
+.topicGrid:has(.radio[value='check']:checked)::before {
+  transform: translateY(calc(100% + var(--topic-gap)));
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .topicGrid::before {
+    transition: transform 420ms var(--ease-out);
+  }
+}
+
+.topic {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+  min-height: 56px;
+  padding: 12px;
+  border-radius: 4px;
+  background: transparent;
+  box-shadow: inset 0 0 0 1px var(--rule);
+  /* White, inverted against whatever is beneath: ink on the card, light on the tab, and split
+     letter by letter while the tab passes under them */
+  color: #fff;
+  cursor: pointer;
+  transition: box-shadow var(--dur-hover) var(--ease-colour);
+}
+
+.topic > * {
+  mix-blend-mode: difference;
+}
+
+.topic:has(.radio:checked) {
+  box-shadow: none;
+}
+
+.topic:has(.radio:focus-visible) {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+}
+
+.radio {
+  appearance: none;
+  -webkit-appearance: none;
+  flex: none;
+  width: 20px;
+  height: 20px;
+  margin: 1px 0 0;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1.5px solid var(--faint);
+  background: transparent;
+  cursor: pointer;
+  transition: border-color var(--dur-hover) var(--ease-colour);
+  border-color: currentColor;
+}
+
+/* The dot: grows in when chosen; the old one lets go at once, so the eye moves to the new choice */
+
+.radio::after {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: currentColor;
+  transform: scale(0);
+  transition: transform var(--dur-press) var(--ease-out);
+}
+
+.radio:checked {
+  border-color: currentColor;
+}
+
+.radio:checked::after {
+  transform: scale(1);
+  transition: transform var(--dur-ui) var(--ease-out);
+}
+
+.radio:focus-visible {
+  outline: none;
+}
+
+.topicText {
+  display: grid;
+  gap: 3px;
+}
+
+.topicName {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 10px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+/* Inverted with the rest of the card's words, so it reads on the tab and off it */
+.price {
+  font: 500 0.8125rem/1 var(--font-mono);
+  letter-spacing: 0.02em;
+  opacity: 0.75;
+}
+
+/* Its space is inside the opening note, so nothing is left behind when the call is chosen */
+
+.checkNote {
+  margin-top: 12px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: var(--signal-soft);
+  color: color-mix(in srgb, var(--signal) 60%, var(--ink));
+  font-size: var(--t-small);
+  line-height: 1.5;
+}
+
+@media (min-width: 560px) {
+  .topicGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .topicGrid::before {
+    width: calc((100% - var(--topic-gap)) / 2);
+    height: 100%;
+  }
+
+  .topicGrid:has(.radio[value='check']:checked)::before {
+    transform: translateX(calc(100% + var(--topic-gap)));
+  }
+}
+
+/*
+
+  A note that comes and goes under a control (the check's details, a field's error, a problem with
+
+  sending). The space opens and the words arrive once there is room for them; closing is quicker
+
+  and the words leave first, so a line is never sliced in half. Instant with reduced motion.
+
+*/
+
+.reveal {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.reveal[data-show] {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  visibility: visible;
+}
+
+.revealClip {
+  min-height: 0;
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Closing: the words fade at once, then the space closes behind them */
+  .reveal {
+    transition: grid-template-rows var(--dur-hover) var(--ease-in-out) 60ms,
+
+      opacity var(--dur-press) var(--ease-out),
+
+      visibility 0s linear calc(var(--dur-hover) + 60ms);
+  }
+  .reveal[data-show] {
+    transition: grid-template-rows var(--dur-ui) var(--ease-out),
+
+      opacity var(--dur-hover) var(--ease-out) 100ms,
+
+      visibility 0s;
+  }
+}
+
+/* Fields */
+
+.pair {
+  display: grid;
+  gap: 18px;
+}
+
+@media (min-width: 640px) {
+  .pair {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+  }
+}
+
+.field {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  min-width: 0;
+}
+
+/* The input and its error, with no gap of their own: the error brings its space with it */
+
+.control {
+  display: grid;
+  min-width: 0;
+}
+
+.label {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  font: 600 var(--t-small) / 1.3 var(--font-body);
+}
+
+.optional {
+  font: 500 0.75rem/1 var(--font-mono);
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+
+.hint {
+  margin-top: -4px;
+  font-size: 0.875rem;
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+/* Text fields show focus on a click too, so they use :focus, with a soft halo instead of the ring */
+
+.input {
+  display: block;
+  width: 100%;
+  min-height: 52px;
+  margin: 0;
+  padding: 13px 15px;
+  border: 1px solid var(--field-line);
+  border-radius: 8px;
+  background: #fff;
+  color: #0c0c0b;
+  font-size: 1.0625rem;
+  line-height: 1.45;
+  -webkit-appearance: none;
+  appearance: none;
+  transition: border-color var(--dur-hover) var(--ease-colour),
+
+    box-shadow var(--dur-hover) var(--ease-colour);
+  caret-color: #0c0c0b;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--ink);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--focus) 22%, transparent);
+}
+
+.input[aria-invalid='true'] {
+  border-color: var(--error);
+}
+
+.input[aria-invalid='true']:focus {
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--error) 18%, transparent);
+}
+
+/* The resize grip only where a pointer can use it; on a touch screen it is too small to drag
+
+   (iOS ignores it), and drawing it stalls the first scroll past the field */
+
+.textarea {
+  min-height: 124px;
+  resize: none;
+}
+
+@media (pointer: fine) {
+  .textarea {
+    resize: vertical;
+  }
+}
+
+.error {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+  margin-top: 8px;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  color: var(--error);
+}
+
+.error svg {
+  flex: none;
+  width: 16px;
+  height: 16px;
+  margin-top: 1px;
+}
+
+/* Off screen, out of the tab order and the accessibility tree */
+
+.trap {
+  position: absolute;
+  left: -10000px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* Send */
+
+.foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px 22px;
+  padding-top: 4px;
+}
+
+.submit {
+  display: inline-grid;
+  place-items: center;
+  min-height: 52px;
+  padding: 0 26px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--paper);
+  font: 600 1rem/1 var(--font-body);
+  cursor: pointer;
+  transition: background-color var(--dur-hover) var(--ease-colour);
+}
+
+/* Pressed, like the site's solid buttons: the fill lightens at once and, with motion, it gives a little */
+
+.submit:active:not([aria-disabled='true']) {
+  background: var(--ink-2);
+  transition-duration: var(--dur-press);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .submit {
+    transition: background-color var(--dur-hover) var(--ease-colour),
+
+      transform var(--dur-press) var(--ease-out);
+  }
+  .submit:active:not([aria-disabled='true']) {
+    transform: scale(0.97);
+  }
+}
+
+.submit[aria-disabled='true'] {
+  cursor: progress;
+  background: var(--ink-2);
+}
+
+/* The two labels share one cell, so the button keeps its size while it sends */
+
+.submitLabel,
+
+.submitBusy {
+  grid-area: 1 / 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.submitBusy {
+  opacity: 0;
+}
+
+.submit[data-sending] .submitLabel {
+  opacity: 0;
+}
+
+.submit[data-sending] .submitBusy {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /*
+
+    The label rolls up and out, then "Sending" rolls in from below, never both at once:
+
+    whichever is leaving goes quickly, and whichever is arriving waits for it.
+
+  */
+  .submitBusy,
+
+  .submit[data-sending] .submitLabel {
+    transition: opacity var(--dur-press) var(--ease-out),
+
+      transform var(--dur-hover) var(--ease-in);
+  }
+  .submitLabel,
+
+  .submit[data-sending] .submitBusy {
+    transition: opacity var(--dur-hover) var(--ease-out) 70ms,
+
+      transform var(--dur-ui) var(--ease-out) 40ms;
+  }
+  .submitBusy {
+    transform: translateY(8px);
+  }
+  .submit[data-sending] .submitLabel {
+    transform: translateY(-8px);
+  }
+  .submit[data-sending] .submitBusy {
+    transform: none;
+  }
+}
+
+.arrow {
+  width: 16px;
+  height: 16px;
+  transition: transform var(--dur-ui) var(--ease-out);
+}
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+}
+
+/* It turns only while a request is on its way, and not at all with reduced motion */
+
+@media (prefers-reduced-motion: no-preference) {
+  .submit[data-sending] .spinner {
+    animation: spin 0.75s linear infinite;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.reply {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-size: var(--t-small);
+  color: var(--muted);
+}
+
+.replyDot {
+  width: 7px;
+  height: 7px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--signal);
+  box-shadow: 0 0 0 3px var(--signal-soft);
+}
+
+@media (max-width: 559px) {
+  .submit {
+    width: 100%;
+  }
+}
+
+@media (hover: hover) {
+  .topic:hover:not(:has(.radio:checked)) {
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ink) 40%, transparent);
+  }
+  .topic:hover .radio:not(:checked) {
+    border-color: var(--muted);
+  }
+  .input:hover:not(:focus) {
+    border-color: color-mix(in srgb, var(--ink) 32%, transparent);
+  }
+  .input[aria-invalid='true']:hover:not(:focus) {
+    border-color: var(--error);
+  }
+  .submit:hover:not([aria-disabled='true']) {
+    background: var(--ink-2);
+  }
+}
+
+/* What went wrong, under the form; its space is inside the note so it leaves nothing behind */
+
+.status {
+  margin-top: 14px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--error) 7%, transparent);
+  font-size: var(--t-small);
+  line-height: 1.5;
+  color: var(--error);
+}
+
+/* Sent */
+
+.done {
+  display: grid;
+  justify-items: start;
+  gap: 18px;
+  padding-block: clamp(8px, 2vw, 20px);
+}
+
+.doneIcon {
+  width: 56px;
+  height: 56px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--signal-soft);
+  color: var(--signal);
+}
+
+.doneIcon svg {
+  width: 26px;
+  height: 26px;
+}
+
+.doneTitle {
+  max-width: 17ch;
+  font: 500 clamp(1.8rem, 1.25rem + 1.8vw, 2.6rem) / 1.04 var(--font-display);
+  letter-spacing: -0.035em;
+}
+
+/* Focus is moved here for screen readers; a heading is not a control, so it shows no ring */
+
+.doneTitle:focus {
+  outline: none;
+}
+
+.doneText {
+  color: var(--muted);
+}
+
+.doneLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  font-weight: 500;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, currentColor 35%, transparent);
+  text-underline-offset: 0.3em;
+  transition: text-decoration-color var(--dur-hover) var(--ease-colour);
+}
+
+.doneLink:active {
+  text-decoration-color: currentColor;
+}
+
+.doneLink svg {
+  width: 15px;
+  height: 15px;
+  transition: transform var(--dur-ui) var(--ease-out);
+}
+
+@media (hover: hover) {
+  .doneLink:hover {
+    text-decoration-color: currentColor;
+  }
+}
+
+.address {
+  color: var(--ink);
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+
+/* The thanks rises into place, then the tick draws itself */
+
+@media (prefers-reduced-motion: no-preference) {
+  .done {
+    animation: done-in var(--dur-move) var(--ease-out) both;
+  }
+  .doneIcon path {
+    stroke-dasharray: 24;
+    stroke-dashoffset: 24;
+    animation: draw var(--dur-move) var(--ease-out) 180ms forwards;
+  }
+}
+
+@keyframes done-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}

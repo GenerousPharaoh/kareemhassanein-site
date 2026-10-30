@@ -1,0 +1,232 @@
+.block {
+  display: grid;
+  gap: 20px;
+  padding-block: clamp(36px, 4.6vw, 64px);
+  border-top: 1px solid var(--rule);
+}
+
+.label {
+  font: 500 var(--t-h3)/1.2 var(--font-display);
+  letter-spacing: -0.018em;
+}
+
+.body {
+  display: grid;
+  gap: 22px;
+  align-content: start;
+  min-width: 0;
+  max-width: 50rem;
+}
+
+@media (min-width: 960px) {
+  .block {
+    grid-template-columns: minmax(0, 3fr) minmax(0, 9fr);
+    column-gap: var(--gap);
+  }
+  .label {
+    position: sticky;
+    top: calc(var(--header-h) + 28px);
+    align-self: start;
+    padding-right: 12px;
+  }
+}
+
+/* Numbered: findings and decisions */
+
+.numbered {
+  list-style: none;
+  counter-reset: item;
+}
+
+.numbered > li {
+  counter-increment: item;
+  display: grid;
+  grid-template-columns: 2.6rem minmax(0, 1fr);
+  padding-block: 15px;
+  font-size: 1.0625rem;
+  line-height: 1.55;
+}
+
+.numbered > li:first-child {
+  padding-top: 2px;
+}
+
+.numbered > li + li {
+  border-top: 1px solid var(--rule-soft);
+}
+
+.numbered > li::before {
+  content: counter(item, decimal-leading-zero);
+  padding-top: 0.3em;
+  font: 500 0.75rem / 1.5 var(--font-mono);
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Shipped: a short specification, two columns where there is room */
+
+.shipped {
+  list-style: none;
+  display: grid;
+  column-gap: 32px;
+}
+
+.shipped > li {
+  display: flex;
+  gap: 14px;
+  padding-block: 14px;
+  border-bottom: 1px solid var(--rule);
+  font: 500 1.0625rem / 1.4 var(--font-display);
+  letter-spacing: -0.01em;
+}
+
+.shipped > li::before {
+  content: '';
+  flex: none;
+  width: 8px;
+  height: 8px;
+  margin-top: 0.5em;
+  border-radius: 2px;
+  background: var(--case-accent);
+}
+
+@media (min-width: 640px) {
+  .shipped {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .shipped > li:nth-child(-n + 2) {
+    padding-top: 2px;
+  }
+}
+
+@media (max-width: 639px) {
+  .shipped > li:first-child {
+    padding-top: 2px;
+  }
+}
+
+/* Measured: the facts, large, with the method in small type beneath */
+
+.measured {
+  list-style: none;
+  display: grid;
+}
+
+.measured > li {
+  padding-block: 22px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.measured > li:first-child {
+  padding-top: 0;
+}
+
+.fact {
+  max-width: 26ch;
+  font: 500 clamp(1.5rem, 2.8vw, 2.75rem)/1.1 var(--font-display);
+  letter-spacing: -0.024em;
+  text-wrap: balance;
+}
+
+.how {
+  display: block;
+  align-items: baseline;
+  gap: 10px;
+  margin-top: 12px;
+  font: 400 .875rem/1.5 var(--font-body);
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--muted);
+}
+
+.credit {
+  display: grid;
+  gap: 6px;
+  padding: 16px 18px;
+  border-radius: var(--radius-s);
+  background: var(--paper-2);
+  font-size: var(--t-small);
+  line-height: 1.55;
+}
+
+.creditLabel {
+  font: 450 var(--t-label)/1.4 var(--font-body);
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--muted);
+}
+
+/* Ledger: found, decided and shipped side by side, on the client's ground */
+
+.ledger {
+  --rule: var(--case-rule);
+  --rule-soft: var(--case-rule);
+  --muted: var(--case-muted);
+  --focus: var(--case-focus);
+  margin-top: clamp(28px, 3.4vw, 48px);
+  padding-block: clamp(48px, 6vw, 88px);
+  border-radius: var(--sheet-r);
+  background: var(--case-ground);
+  color: var(--case-ink);
+}
+
+.ledgerGrid {
+  display: grid;
+  gap: 48px;
+}
+
+.column {
+  display: grid;
+  gap: 22px;
+  align-content: start;
+  min-width: 0;
+}
+
+/* Each column opens with a short bar in the client's accent */
+.columnTitle {
+  display: grid;
+  gap: 16px;
+  font: 500 var(--t-h3) / 1.15 var(--font-display);
+  letter-spacing: -0.02em;
+}
+
+.columnTitle::before {
+  content: '';
+  width: 28px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--case-accent);
+}
+
+.column .numbered > li {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.column .shipped {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.column .shipped > li {
+  font-size: 1rem;
+}
+
+.column .shipped > li:first-child {
+  padding-top: 2px;
+}
+
+.column .shipped > li:nth-child(2) {
+  padding-top: 14px;
+}
+
+.column .shipped > li:last-child {
+  border-bottom: 0;
+}
+
+@media (min-width: 960px) {
+  .ledgerGrid {
+    grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+    column-gap: clamp(32px, 3.6vw, 56px);
+  }
+}

@@ -1,0 +1,158 @@
+.inner {
+  display: grid;
+  gap: clamp(44px, 5vw, 72px);
+}
+
+.steps {
+  list-style: none;
+  display: grid;
+  max-width: 640px;
+}
+
+.disclosure > div {
+  max-width: none;
+}
+
+/* Phones: a vertical route, the line running between the numbered stops */
+.step {
+  position: relative;
+  display: grid;
+  gap: 8px;
+  align-content: start;
+  padding: 0 0 34px 52px;
+}
+
+.step::before {
+  content: '';
+  position: absolute;
+  left: 15px;
+  top: 40px;
+  bottom: 6px;
+  width: 1px;
+  background: var(--rule);
+}
+
+.step[data-last] {
+  padding-bottom: 0;
+}
+
+.step[data-last]::before {
+  display: none;
+}
+
+.node {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 31px;
+  height: 31px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  font: 500 0.75rem / 1 var(--font-mono);
+  color: var(--ink);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ink) 34%, transparent);
+}
+
+/* The last stop is handover: everything in your name, working */
+.step[data-last] .node {
+  background: var(--signal);
+  color: var(--paper);
+  box-shadow: 0 0 0 5px color-mix(in srgb, var(--signal) 18%, transparent);
+}
+
+.title {
+  padding-top: 4px;
+  font: 500 1.25rem / 1.2 var(--font-display);
+  letter-spacing: -0.018em;
+  letter-spacing: -0.012em;
+}
+
+.text {
+  max-width: 46ch;
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+.note {
+  max-width: 62ch;
+  padding-top: 24px;
+  border-top: 1px solid var(--rule);
+  font-size: var(--t-small);
+  color: var(--muted);
+}
+
+/* Wider screens: the same route laid out left to right, in rows of three, then all six */
+@media (min-width: 860px) {
+  .steps {
+    max-width: none;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: 28px;
+    row-gap: 48px;
+  }
+
+  .step,
+  .step[data-last] {
+    padding: 52px 0 0;
+  }
+
+  .step::before {
+    left: 43px;
+    right: -16px;
+    top: 15px;
+    bottom: auto;
+    width: auto;
+    height: 1px;
+  }
+
+  /* The route ends each row; it does not run off the edge */
+  .step:nth-child(3n)::before {
+    display: none;
+  }
+
+  .text {
+    max-width: none;
+  }
+}
+
+@media (min-width: 1280px) {
+  .steps {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  .step:nth-child(3n)::before {
+    display: block;
+  }
+
+  .step[data-last]::before {
+    display: none;
+  }
+}
+
+/* As the sequence comes into view, the route draws from stop to stop and each stop comes in after the last */
+@media (prefers-reduced-motion: no-preference) {
+  .step::before {
+    transform-origin: 0 0;
+    transition: scale 520ms var(--ease-out) calc(160ms + var(--n) * 110ms);
+  }
+
+  .node {
+    transition: scale 420ms var(--ease-out) calc(var(--n) * 110ms), opacity 300ms ease calc(var(--n) * 110ms);
+  }
+
+  :global(html[data-reveals]) .steps:not([data-shown]) .step::before {
+    scale: 1 0;
+  }
+
+  :global(html[data-reveals]) .steps:not([data-shown]) .node {
+    scale: 0.4;
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) and (min-width: 860px) {
+  :global(html[data-reveals]) .steps:not([data-shown]) .step::before {
+    scale: 0 1;
+  }
+}

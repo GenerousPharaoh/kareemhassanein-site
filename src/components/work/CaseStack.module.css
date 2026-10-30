@@ -1,0 +1,30 @@
+/* Set by the script: each card stops at --stop and the next one covers it */
+.stack[data-stacking] > li {
+  position: sticky;
+  top: var(--stop, 80px);
+}
+
+.stack[data-stacking] > li > * {
+  --shade: 0;
+  position: relative;
+  transform-origin: 50% 0;
+  will-change: transform;
+}
+
+/* The card underneath darkens as it sinks back */
+.stack[data-stacking] > li > *::after {
+  content: '';
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  border-radius: 16px;
+  background: #000;
+  opacity: var(--shade);
+  pointer-events: none;
+}
+
+@media (max-width: 760px) {
+  .stack[data-stacking] > li > *::after {
+    border-radius: 12px;
+  }
+}

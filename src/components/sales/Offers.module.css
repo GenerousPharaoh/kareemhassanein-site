@@ -1,0 +1,229 @@
+/* Prices */
+.price {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 8px;
+}
+
+.small {
+  font: 500 0.9375rem / 1.2 var(--font-body);
+  color: var(--muted);
+}
+
+.figure {
+  font: 520 clamp(2.2rem, 1.6rem + 2vw, 3.4rem) / 0.95 var(--font-display);
+  font-stretch: 108%;
+  letter-spacing: -0.04em;
+}
+
+.price[data-large] .figure {
+  font-size: clamp(3.4rem, 2.2rem + 4.6vw, 6.5rem);
+  letter-spacing: -0.05em;
+}
+
+/* The scope reads as a short specification. */
+.includes {
+  list-style: none;
+  display: grid;
+  gap: 10px;
+  align-content: start;
+}
+
+.includes li {
+  position: relative;
+  padding-block: 8px;
+  border-bottom: 1px solid var(--rule);
+  font-size: var(--t-small);
+  line-height: 1.5;
+}
+
+.includes li::before {
+  content: none;
+  position: absolute;
+  left: 3px;
+  top: 0.42em;
+  width: 10px;
+  height: 5.5px;
+  border-left: 1.7px solid var(--signal);
+  border-bottom: 1.7px solid var(--signal);
+  transform: rotate(-45deg);
+}
+
+.includes strong {
+  font-weight: 600;
+}
+
+/* The way in: the website check on a dark card */
+.feature {
+  display: grid;
+  gap: clamp(32px, 4vw, 48px);
+  padding: clamp(28px, 4.5vw, 64px);
+  border-radius: 24px;
+  scroll-margin-top: calc(var(--header-h) + 24px);
+}
+
+.featureMain {
+  display: grid;
+  gap: 18px;
+  align-content: start;
+}
+
+.wayIn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font: 500 var(--t-label) / 1.4 var(--font-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--signal);
+}
+
+.wayIn::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--signal);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--signal) 20%, transparent);
+}
+
+.featureName {
+  font: 520 var(--t-h2) / 1 var(--font-display);
+  letter-spacing: -0.03em;
+}
+
+.featureSummary {
+  max-width: 46ch;
+  font-size: var(--t-lede);
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.featureAction {
+  margin-top: 8px;
+}
+
+.featureSide {
+  display: grid;
+  gap: 18px;
+  align-content: start;
+  padding-top: clamp(24px, 3vw, 32px);
+  border-top: 1px solid var(--rule);
+}
+
+.sideTitle {
+  font: 500 var(--t-label) / 1.4 var(--font-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.feature .includes li {
+  font-size: 1rem;
+}
+
+.featureTerms {
+  padding-top: 18px;
+  border-top: 1px solid var(--rule);
+  font-size: var(--t-small);
+  color: var(--muted);
+}
+
+/* The other four: cards whose parts line up across each row */
+.row {
+  display: grid;
+  gap: clamp(24px, 4vw, 56px);
+  padding-block: clamp(32px, 4.4vw, 64px);
+  border-top: 1px solid var(--rule);
+  scroll-margin-top: calc(var(--header-h) + 24px);
+}
+
+.heading,
+.description {
+  display: grid;
+  gap: 20px;
+  min-width: 0;
+  align-content: start;
+}
+
+/* What each price includes, in view: the same small label as the check's "What you get" */
+.included {
+  display: grid;
+  gap: 8px;
+  padding-top: 18px;
+  border-top: 1px solid var(--rule);
+}
+
+.includedTitle {
+  font: 500 var(--t-label) / 1.4 var(--font-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.included .includes {
+  gap: 0;
+}
+
+.included .includes li:last-child {
+  border-bottom: 0;
+}
+
+@media (min-width: 1000px) {
+  .included .includes {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 28px;
+  }
+}
+
+.name {
+  font: 500 clamp(1.6rem, 2.5vw, 2.5rem) / 1.1 var(--font-display);
+  letter-spacing: -0.035em;
+}
+
+.priceBlock {
+  display: grid;
+  gap: 8px;
+  align-content: start;
+  padding-bottom: 6px;
+}
+
+.priceNote {
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+
+.summary {
+  color: var(--ink-2);
+  max-width: 50ch;
+}
+
+/* Fills its row, so beside a longer note the rule above stays level with its neighbour's */
+.terms {
+  font-size: var(--t-small);
+  color: var(--muted);
+}
+
+@media (min-width: 900px) {
+  .feature {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    column-gap: clamp(40px, 5vw, 80px);
+  }
+
+  .featureSide {
+    padding-top: 0;
+    padding-left: clamp(32px, 4vw, 56px);
+    border-top: 0;
+    border-left: 1px solid var(--rule);
+  }
+}
+
+@media (min-width: 900px) {
+  .row {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  }
+  .heading {
+    gap: 28px;
+  }
+}

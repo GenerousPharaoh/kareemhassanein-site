@@ -1,288 +1,193 @@
-'use client';
-
-import type { CSSProperties } from 'react';
-
-import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRight } from 'lucide-react';
-import HeadlineReveal from '@/components/HeadlineReveal';
-import ScrollReveal from '@/components/ScrollReveal';
+import { DisplayTitle } from '@/components/ui/DisplayTitle';
+import { Disclosure } from '@/components/ui/Disclosure';
+import { PortraitFrame } from '@/components/media/PortraitFrame';
+import { CaseChips } from '@/components/pages/CaseChips';
+import { CloseBand } from '@/components/pages/CloseBand';
+import { enter } from '@/components/pages/enter';
+import { pageMeta } from '@/lib/meta';
+import { PORTRAIT as portrait } from '@/content/portrait';
+import styles from './page.module.css';
 
-const aboutHeadline = [
-  { text: 'About' },
-  { text: 'Kareem.', className: 'font-serif italic font-normal text-accent/90', duration: '1.05s' },
+export const metadata = pageMeta({
+  title: 'About',
+  description:
+    'I have worked in healthcare for 13 years, across different roles. I build and run the online side of law firms and independent practices.',
+  path: '/about',
+});
+
+const FACTS = [
+  { term: 'Experience', lines: ['13 years in healthcare', 'Across different roles'] },
+  { term: 'Education', lines: ['MSc Physiotherapy, Robert Gordon University', 'BSc Kinesiology, McMaster University'] },
+  { term: 'Mentoring', lines: ['Lab2Market Validate', 'McMaster University'] },
+  { term: 'Based in', lines: ['Burlington, Ontario', 'Working across Canada and the US'] },
 ];
 
-
-const currentRoles = [
+const STEPS = [
   {
-    role: 'Physiotherapist & Digital Strategy and Operations Lead',
-    organization: 'Endorphins Health and Wellness Centre',
-    period: '2024 to present',
-    description:
-      'Provide physiotherapy care while leading the clinic’s day-to-day digital operations, including its website, online booking, analytics, and service information. Launched physiotherapy as a new service within the established multidisciplinary clinic.',
+    name: 'Assess',
+    text: 'I walk the whole path, from the search result to the booked appointment or signed client, and tell you what is actually happening.',
   },
   {
-    role: 'Workflow Improvement Consultant',
-    organization: 'Tax Relief Counsel',
-    period: '2025 to present',
-    description:
-      'Worked with the practitioner to restructure a recurring drafting workflow, reducing document-generation time from about three hours to 30 minutes per matter and documenting the process for independent use.',
+    name: 'Plan',
+    text: 'You get a short, ranked list with a fixed price beside each item. You choose what gets done.',
   },
   {
-    role: 'Clinical Advisor',
-    organization: 'Neuro-Mod',
-    period: '2025 to present',
-    description:
-      'Advise on clinical deployment for an augmented-reality pain-management device, including clinician workflow, onboarding, patient education, interface considerations, and rollout readiness.',
+    name: 'Build',
+    text: 'I design and build it, with real options to choose from. I direct AI build tools the way a lead directs a studio; every decision, review and test is mine.',
+    link: { href: '/ai', label: 'How I use AI' },
+  },
+  {
+    name: 'Run',
+    text: 'I keep it working, report bookings or signed clients by source, and answer for it. Every change is logged and can be undone.',
   },
 ];
 
-const education = [
+const QUESTIONS = [
   {
-    qualification: 'MSc Physiotherapy with Distinction',
-    institution: 'Robert Gordon University',
+    q: 'Will you find what is actually wrong?',
+    a: 'Tax Relief Counsel asked about its website. The larger problem was in the ad account, where most of the reported conversions were clicks on the consultation button. At PhysioMax, bookings had never reached Analytics, and the gap was inside the booking system, not the website.',
+    cases: ['tax-relief-counsel', 'physiomax'],
   },
   {
-    qualification: 'BSc Kinesiology Honours',
-    institution: 'McMaster University',
+    q: 'Will you understand my field?',
+    a: 'Booking systems, practice websites and how patients choose are part of my work. At Endorphins, I named the colleges in text instead of showing their logos, which the colleges restrict. For a tax law firm, I built tools around IRS procedures, with the IRS source beside every figure.',
+    cases: ['endorphins', 'tax-relief-counsel'],
+  },
+  {
+    q: 'How fast, and what if something breaks?',
+    a: 'A gear store’s redesign went live the same evening, built on a copy of its theme with a one-step rollback. A law firm’s new site launches with one DNS change, reversible the same way.',
+    cases: ['techniques-combat', 'tax-relief-counsel'],
+  },
+  {
+    q: 'Will I have to manage you?',
+    a: 'There is one person to deal with: strategy, design, build, tracking and ads all stay with me. You choose between rendered designs instead of imagining them, approve a one-page list with a fixed price beside each item, and get a short update every week until handover.',
+    cases: ['endorphins', 'tax-relief-counsel'],
+  },
+  {
+    q: 'Whose side are you on?',
+    a: 'Yours. Your domain, hosting, Google accounts and booking system stay in your name, and you pay those bills directly. At Endorphins, every account is in the clinic’s name and the agency has limited access. On my own practice’s ads, I keep a running log of every change, corrections included.',
+    cases: ['endorphins', 'kinetikare'],
   },
 ];
 
-export default function About() {
+export default function AboutPage() {
   return (
-    <main className="overflow-hidden bg-background text-foreground pt-20">
-      <section className="relative px-6 pb-10 pt-14 md:px-12 md:pb-16 md:pt-24 xl:px-20">
-        <div className="relative max-w-[1280px] mx-auto">
-          <div className="max-w-3xl">
-            <p
-              className="enter-fade flex items-center gap-3 text-xs font-medium tracking-[0.24em] uppercase text-accent/75 mb-8"
-              style={{ '--hero-delay': '0.06s' } as CSSProperties}
-            >
-              <span aria-hidden="true" className="h-px w-10 bg-accent/[0.45]" />
-              Kareem Hassanein · About
-            </p>
-
-            <h1 className="max-w-4xl text-[clamp(3rem,7.2vw,6.8rem)] font-medium tracking-[-0.055em] leading-[0.91] text-balance">
-              <HeadlineReveal lines={aboutHeadline} layout="inline" start={0.28} step={0.11} />
-            </h1>
-
-            <p
-              className="enter-fade mt-9 max-w-2xl text-lg md:text-[1.35rem] text-foreground/[0.76] font-light leading-relaxed"
-              style={{ '--hero-delay': '0.74s', '--enter-dur': '0.95s' } as CSSProperties}
-            >
-              My approach to implementation comes from years of direct patient care, one-to-one coaching, team
-              leadership, and responsibility for day-to-day services.
-            </p>
-          </div>
-
+    <>
+      <div className={`paper ${styles.opening}`} data-theme="light">
+      <section className={`container ${styles.hero}`} aria-labelledby="about-title">
+        <div className={styles.heroCopy}>
+          <p className="t-label" data-enter style={enter(0)}>
+            About
+          </p>
+          <DisplayTitle id="about-title" className={`t-h1 ${styles.title}`}>
+            I know healthcare from the inside.
+          </DisplayTitle>
+          <p className={`t-lede ${styles.lede}`} data-enter style={enter(2)}>
+            I’m Kareem Hassanein. I’ve worked in the healthcare industry for 13 years, across different roles.
+            I build and run the online side of law firms and independent practices: the website, the Google profile,
+            booking or intake, ads, and the tracking that ties them together.
+          </p>
         </div>
+        <figure className={styles.portrait}>
+          <PortraitFrame
+            media={portrait}
+            sizes="(min-width: 960px) 263px, min(52.5vw, 230px)"
+            priority
+          />
+        </figure>
+        <dl className={styles.facts} data-enter style={enter(3)}>
+          {FACTS.map((f) => (
+            <div key={f.term} className={styles.fact}>
+              <dt className="t-label">{f.term}</dt>
+              {f.lines.map((line, i) => (
+                <dd key={line} className={i === 0 ? styles.factMain : styles.factSub}>
+                  {line}
+                </dd>
+              ))}
+            </div>
+          ))}
+        </dl>
       </section>
+      </div>
 
-
-      <section className="px-6 pb-20 pt-12 md:px-12 md:pb-28 md:pt-20 xl:px-20">
-        <div className="max-w-[1160px] mx-auto">
-          <div className="grid lg:grid-cols-12 gap-12 lg:gap-20">
-            <ScrollReveal variant="heading" className="lg:col-span-5">
-              <p className="text-xs font-medium tracking-[0.24em] uppercase text-accent/70 mb-5">Where this comes from</p>
-              <h2 className="text-3xl md:text-5xl font-medium tracking-tight text-balance">
-                Background.
-              </h2>
-            </ScrollReveal>
-
-            <ScrollReveal variant="text" delay={0.12} className="lg:col-span-7 lg:pt-10">
-              <div className="space-y-6 max-w-2xl">
-                <p className="text-lg md:text-xl text-foreground/[0.82] font-light leading-relaxed">
-                  More than 10,000 hours of patient care and one-to-one coaching taught me to begin with the actual
-                  need: what the person or team is trying to achieve, what constraints are real, what information is
-                  missing, and how progress will be measured. From there, I work toward a practical approach, support
-                  execution, and adjust when the work reveals something the original plan did not.
-                </p>
-                <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
-                  I now bring that perspective to implementation, workflow improvement, technology adoption, digital
-                  products, and advisory work. I am most useful where success depends not only on the quality of the
-                  solution, but on whether people can understand, use, and sustain it.
-                </p>
-                <article className="mt-10 border-t border-white/[0.09] pt-7">
-                  <h3 className="text-xl font-medium tracking-tight text-foreground/[0.92]">Client and team leadership</h3>
-                  <p className="mt-4 text-base leading-relaxed text-muted-foreground md:text-lg">
-                    Managing a 25-person fitness team added responsibility for coaching others, performance, and
-                    commercial results. That experience still shapes how I communicate expectations, support adoption,
-                    and stay accountable for outcomes.
-                  </p>
-                </article>
-              </div>
-            </ScrollReveal>
-
-            <ScrollReveal variant="figure" delay={0.16} className="lg:col-span-12">
-              <figure className="mt-2">
-                <div className="relative aspect-[3/2] overflow-hidden rounded-[1.5rem] border border-white/[0.09] bg-[#090a09]">
-                  <Image
-                    src="/images/about-clinical-workflow-final.webp"
-                    alt="Illustration of Kareem mapping a route from a physiotherapy treatment room through booking and documentation interfaces"
-                    fill
-                    sizes="(min-width: 1280px) 1160px, calc(100vw - 3rem)"
-                    className="object-cover"
-                  />
-                </div>
-              </figure>
-            </ScrollReveal>
-          </div>
-
-        </div>
-      </section>
-
-      <section className="px-6 py-20 md:px-12 md:py-28 xl:px-20">
-        <div className="max-w-[1160px] mx-auto grid lg:grid-cols-12 gap-12 lg:gap-20">
-          <ScrollReveal variant="heading" className="lg:col-span-5">
-            <p className="text-xs font-medium tracking-[0.24em] uppercase text-accent/70 mb-5">
-              Method
-            </p>
-            <h2 className="text-3xl md:text-5xl font-medium tracking-tight text-balance">
-              How I work.
+      <section className={`container ${styles.whySection}`} aria-labelledby="why-title">
+        <div className={styles.why}>
+          <div className={styles.whyHead} data-reveal>
+            <p className="t-label">Why healthcare experience matters</p>
+            <h2 id="why-title" className={`t-h2 ${styles.whyTitle}`}>
+              I look beyond the website.
             </h2>
-          </ScrollReveal>
-
-          <ScrollReveal variant="text" delay={0.12} className="lg:col-span-7 lg:pt-10">
-            <div className="max-w-2xl border-t border-white/[0.09]">
-              <p className="py-6 text-lg md:text-xl font-light leading-relaxed text-foreground/[0.82] border-b border-white/[0.08]">
-                Every workflow carries more than its visible steps. It also carries judgment, responsibility, time
-                pressure, incomplete information, and workarounds people developed to keep things moving. Some create
-                waste. Others compensate for something the formal process never solved.
-              </p>
-              <p className="py-6 text-base md:text-lg leading-relaxed text-muted-foreground border-b border-white/[0.08]">
-                Before changing anything, I try to understand what decisions are being made, who relies on them, where
-                the information comes from, and what cannot be lost. That reduces the risk of solving one problem by
-                moving the burden somewhere else.
-              </p>
-              <p className="pt-6 text-base md:text-lg leading-relaxed text-muted-foreground">
-                Technology and automation are useful when they reduce effort without weakening judgment, quality, or
-                accountability. I focus on the operating result as a whole, not simply whether one step became faster.
-              </p>
-            </div>
-          </ScrollReveal>
+          </div>
+          <div className={styles.whyBody} data-reveal>
+            <p>
+              Working in healthcare has shown me how people choose a practice, how booking works at the front desk,
+              and how much happens between an enquiry and an appointment. Law firms have their own version of that path.
+              I learn yours before changing anything.
+            </p>
+            <p>
+              I start with the whole path, then trace the problem to its cause. A website can look like the problem when
+              the gap is inside the booking system or the way leads are counted.
+            </p>
+            <p className={styles.whyAside}>
+              Outside the practice and the build work, I volunteer as a mentor for Lab2Market Validate at McMaster University,
+              supporting Canadian researchers who are taking health innovations to market.
+            </p>
+          </div>
         </div>
       </section>
 
-      <section className="border-y border-white/[0.07] bg-white/[0.012] px-6 py-20 md:px-12 md:py-28 xl:px-20">
-        <div className="max-w-[1160px] mx-auto">
-          <ScrollReveal variant="heading" className="grid lg:grid-cols-12 gap-8 lg:gap-16 mb-14 md:mb-20">
-            <div className="lg:col-span-4">
-              <p className="text-xs font-medium tracking-[0.24em] uppercase text-accent/70">Current work</p>
-            </div>
-            <div className="lg:col-span-8">
-              <h2 className="text-3xl md:text-5xl font-medium tracking-tight text-balance">
-                Current roles.
-              </h2>
-            </div>
-          </ScrollReveal>
-
-          <div className="border-t border-white/[0.09]">
-            {currentRoles.map((item, index) => (
-              <ScrollReveal key={item.role} variant="item" delay={0.06 + index * 0.09}>
-                <article className="grid md:grid-cols-12 gap-4 md:gap-8 py-8 md:py-10 border-b border-white/[0.07]">
-                  <div className="md:col-span-5">
-                    <h3 className="text-xl md:text-2xl font-medium tracking-tight text-foreground/[0.92]">{item.role}</h3>
-                    <p className="mt-2 text-sm text-accent/[0.72]">{item.organization}</p>
-                  </div>
-                  <p className="md:col-span-2 font-mono text-[11px] tracking-[0.14em] uppercase text-muted-foreground/70 md:pt-1">
-                    {item.period}
-                  </p>
-                  <p className="md:col-span-5 text-sm md:text-base text-muted-foreground leading-relaxed">
-                    {item.description}
-                  </p>
-                </article>
-              </ScrollReveal>
+      <section className={`paper sheet-up ${styles.how}`} aria-labelledby="how-title">
+        <div className="container">
+          <div className={styles.howHead} data-reveal>
+            <h2 id="how-title" className="t-h2">
+              I work in four steps.
+            </h2>
+          </div>
+          <ol className={styles.steps}>
+            {STEPS.map((s, i) => (
+              <li key={s.name} className={styles.step} data-reveal>
+                <span className={styles.node} aria-hidden="true" />
+                <p className={`t-label ${styles.stepNum}`} aria-hidden="true">
+                  {String(i + 1).padStart(2, '0')}
+                </p>
+                <h3 className={styles.stepName}>{s.name}</h3>
+                <p className={styles.stepText}>{s.text}</p>
+                {s.link ? (
+                  <Link href={s.link.href} className={styles.stepLink}>
+                    {s.link.label}
+                    <svg viewBox="0 0 16 16" aria-hidden="true">
+                      <path d="M3 8h9.5M8.5 4l4 4-4 4" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </Link>
+                ) : null}
+              </li>
             ))}
-          </div>
+          </ol>
         </div>
       </section>
 
-      <section className="border-t border-white/[0.07] px-6 py-20 md:px-12 md:py-28 xl:px-20">
-        <div className="max-w-[1160px] mx-auto grid lg:grid-cols-12 gap-14 lg:gap-20">
-          <ScrollReveal variant="heading" className="lg:col-span-4">
-            <p className="text-xs font-medium tracking-[0.24em] uppercase text-accent/70 mb-5">Foundation</p>
-            <h2 className="text-3xl md:text-4xl font-medium tracking-tight text-balance">
-              Clinical practice and formal training.
-            </h2>
-          </ScrollReveal>
-
-          <div className="lg:col-span-8 space-y-12">
-            <ScrollReveal variant="text">
-              <article className="border-t border-white/[0.09] pt-7">
-                <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-2 mb-4">
-                  <h3 className="text-xl md:text-2xl font-medium tracking-tight">Registered Physiotherapist</h3>
-                  <p className="text-xs font-medium tracking-[0.12em] uppercase text-muted-foreground/80">
-                    Ontario · 2021 to present
-                  </p>
-                </div>
-                <p className="text-base text-muted-foreground leading-relaxed max-w-2xl">
-                  At a private physiotherapy clinic, I led a documentation-platform rollout while carrying a full
-                  clinical caseload, keeping the implementation connected to how the team actually worked.
-                </p>
-              </article>
-            </ScrollReveal>
-
-            <ScrollReveal variant="text">
-              <div>
-                <p className="text-xs font-medium tracking-[0.2em] uppercase text-accent/75 mb-5">Education</p>
-                <div className="border-t border-white/[0.09]">
-                  {education.map((item) => (
-                    <article
-                      key={item.qualification}
-                      className="grid sm:grid-cols-[1.2fr_0.8fr] gap-2 sm:gap-8 py-6 border-b border-white/[0.07]"
-                    >
-                      <h3 className="text-lg font-medium tracking-tight">{item.qualification}</h3>
-                      <p className="text-sm text-muted-foreground sm:text-right">{item.institution}</p>
-                    </article>
-                  ))}
-                </div>
+      <section className={`section sheet-up ${styles.hireBand}`} aria-labelledby="hire-title">
+        <div className={`container ${styles.hire}`}>
+        <div className={styles.hireHead} data-reveal>
+          <h2 id="hire-title" className="t-h2">
+            Why owners hire me
+          </h2>
+        </div>
+        <div className={styles.rows}>
+          {QUESTIONS.map((item) => (
+            <Disclosure key={item.q} title={item.q}>
+              <div className={styles.answer}>
+                <p>{item.a}</p>
+                <CaseChips slugs={item.cases} label={`Cases for: ${item.q}`} />
               </div>
-            </ScrollReveal>
-
-            <ScrollReveal variant="text">
-              <article className="border-t border-white/[0.09] pt-7">
-                <p className="text-xs font-medium tracking-[0.2em] uppercase text-accent/75 mb-3">Mentorship</p>
-                <h3 className="text-lg font-medium tracking-tight mb-2">Lab2Market Validate · McMaster University</h3>
-                <p className="text-sm md:text-base text-muted-foreground leading-relaxed max-w-2xl">
-                  Mentoring health-tech and health-innovation teams on clinical fit, workflow burden, onboarding,
-                  adoption, and the practical realities of introducing new products into care environments.
-                </p>
-              </article>
-            </ScrollReveal>
-          </div>
+            </Disclosure>
+          ))}
+        </div>
         </div>
       </section>
 
-      <section className="border-t border-white/[0.07] px-6 py-20 md:px-12 md:py-28 xl:px-20">
-        <ScrollReveal variant="heading" className="max-w-[1160px] mx-auto flex flex-col lg:flex-row lg:items-end lg:justify-between gap-10">
-          <div className="max-w-2xl">
-            <p className="text-xs font-medium tracking-[0.24em] uppercase text-accent/70 mb-5">Next</p>
-            <h2 className="text-3xl md:text-5xl font-medium tracking-tight text-balance mb-5">
-              Selected work.
-            </h2>
-            <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
-              Explore the implementation, workflow, service, and digital-platform work in more detail.
-            </p>
-          </div>
-
-          <div className="flex flex-col sm:flex-row gap-3">
-            <Link
-              href="/work"
-              className="group inline-flex items-center justify-center gap-2.5 rounded-full bg-accent px-7 py-3.5 text-sm font-medium text-background transition-colors duration-300 hover:bg-accent/90"
-            >
-              See the work
-              <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-0.5" />
-            </Link>
-            <Link
-              href="/contact"
-              className="inline-flex items-center justify-center rounded-full border border-white/[0.13] px-7 py-3.5 text-sm font-medium text-foreground/[0.78] transition-colors duration-300 hover:border-accent/[0.35] hover:text-foreground"
-            >
-              Contact
-            </Link>
-          </div>
-        </ScrollReveal>
-      </section>
-    </main>
+      <CloseBand track="about-close" />
+    </>
   );
 }

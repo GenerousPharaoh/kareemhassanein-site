@@ -1,0 +1,111 @@
+.card {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  isolation: isolate;
+  border-radius: 22px;
+  background: var(--case-ground);
+  color: var(--case-ink);
+  text-decoration: none;
+  box-shadow:
+    inset 0 0 0 1px var(--case-rule),
+    0 1px 2px rgba(18, 20, 23, 0.04);
+}
+
+/* The deeper hover shadow sits on its own layer and fades in, so only opacity animates */
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 1px var(--case-ink);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur-ui) var(--ease-out);
+}
+
+.copy {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  padding: clamp(22px, 3vw, 32px) clamp(22px, 3vw, 32px) 0;
+}
+
+.kind {
+  font: 500 0.75rem/1.4 var(--font-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--case-muted);
+}
+
+.name {
+  font: 500 clamp(1.45rem, 1.15rem + 1vw, 1.95rem) / 1.05 var(--font-display);
+  letter-spacing: -0.032em;
+}
+
+.summary {
+  max-width: 44ch;
+  font-size: var(--t-small);
+  line-height: 1.55;
+  color: var(--case-muted);
+}
+
+.more {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  font-weight: 600;
+  font-size: var(--t-small);
+}
+
+.more svg {
+  width: 15px;
+  height: 15px;
+  color: var(--case-accent-text);
+}
+
+/* The page itself, cropped to its top, sitting on the card's bottom edge (inset from the corners) */
+.shot {
+  align-self: end;
+  display: block;
+  margin: 8px clamp(22px, 3vw, 32px) 0;
+  aspect-ratio: 16 / 7;
+  overflow: hidden;
+  border-radius: 10px 10px 0 0;
+  background: #fff;
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.1),
+    0 -10px 30px -18px rgba(0, 0, 0, 0.35);
+}
+
+.shot img {
+  width: 100%;
+  height: auto;
+}
+
+.card:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 4px;
+  border-radius: 22px;
+}
+
+@media (hover: hover) {
+  .card:hover::before {
+    opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .card {
+    transition: transform var(--dur-ui) var(--ease-out);
+  }
+
+  .card:active {
+    transition-duration: var(--dur-press);
+  }
+
+  .more svg {
+    transition: transform var(--dur-ui) var(--ease-out);
+  }
+}

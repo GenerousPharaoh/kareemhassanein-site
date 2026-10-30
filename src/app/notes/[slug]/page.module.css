@@ -1,0 +1,364 @@
+.article {
+  display: grid;
+}
+
+/* Header */
+.head {
+  display: grid;
+  gap: clamp(32px, 4vw, 48px);
+  padding-top: clamp(28px, 4.5vw, 72px);
+  padding-bottom: clamp(36px, 5vw, 64px);
+}
+
+.headText {
+  display: grid;
+  justify-items: start;
+  align-content: center;
+  gap: clamp(14px, 1.6vw, 20px);
+}
+
+/* Wide screens: the heading beside the note's cover, placed as it sits on the notes list */
+@media (min-width: 960px) {
+  .head {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    column-gap: clamp(40px, 5vw, 80px);
+    align-items: center;
+  }
+}
+
+/* Padded sideways and pulled back by the same amount: a larger target, and room for the focus ring */
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  margin: 0 -10px clamp(4px, 1vw, 12px);
+  padding-inline: 10px;
+  border-radius: 10px;
+  font: 500 var(--t-small) / 1 var(--font-body);
+  color: var(--muted);
+  text-decoration: none;
+  transition: color var(--dur-hover) var(--ease-colour);
+}
+
+.back:focus-visible {
+  outline-offset: 0;
+  border-radius: 10px;
+}
+
+.back:active {
+  color: var(--ink);
+  transition-duration: 0s;
+}
+
+.back svg {
+  width: 15px;
+  height: 15px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .back svg {
+    transition: transform var(--dur-ui) var(--ease-out);
+  }
+}
+
+.title {
+  max-width: 22ch;
+  font: 500 clamp(2.15rem, 1.2rem + 3.3vw, 4.1rem) / 0.98 var(--font-display);
+  letter-spacing: -0.04em;
+}
+
+.titleTail {
+  display: block;
+  color: var(--muted);
+}
+
+.standfirst {
+  max-width: 50ch;
+}
+
+.byline {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-top: 8px;
+}
+
+/* His face, cropped from the cut-out portrait */
+.avatar {
+  position: relative;
+  width: 46px;
+  height: 46px;
+  flex: none;
+  overflow: hidden;
+  border-radius: 50%;
+  background: var(--paper-2);
+  box-shadow: inset 0 0 0 1px var(--rule-soft);
+}
+
+.avatar picture {
+  position: absolute;
+  left: -21px;
+  top: 2px;
+  width: 88px;
+  max-width: none;
+}
+
+.avatar img {
+  width: 88px;
+  max-width: none;
+}
+
+.bylineText {
+  display: grid;
+  gap: 2px;
+  line-height: 1.3;
+}
+
+.author {
+  font-weight: 600;
+}
+
+.when {
+  font-size: var(--t-small);
+  color: var(--muted);
+}
+
+/* Body with contents beside it on wide screens */
+.layout {
+  display: grid;
+  gap: 40px;
+  padding-top: clamp(32px, 4vw, 56px);
+  padding-bottom: var(--section);
+  border-top: 1px solid var(--rule);
+}
+
+.contents {
+  display: none;
+}
+
+.main .mobileContents {
+  border-top: 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.main {
+  min-width: 0;
+  display: grid;
+  align-content: start;
+  gap: clamp(40px, 5vw, 56px);
+}
+
+.signoff {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font: 500 var(--t-label) / 1.4 var(--font-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.signoffRule {
+  width: 28px;
+  height: 1px;
+  background: var(--ink);
+}
+
+@media (min-width: 1040px) {
+  .mobileContents {
+    display: none;
+  }
+
+  .layout {
+    grid-template-columns: minmax(0, 3fr) minmax(0, 9fr);
+    column-gap: clamp(48px, 5vw, 80px);
+  }
+
+  .contents {
+    display: grid;
+    align-content: start;
+    gap: 14px;
+    position: sticky;
+    top: calc(var(--header-h) + 32px);
+    align-self: start;
+    padding-top: 6px;
+    max-height: calc(100dvh - var(--header-h) - 48px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+}
+
+.contentsList {
+  position: relative;
+  list-style: none;
+  display: grid;
+  border-left: 1px solid var(--rule);
+}
+
+/* The line down the contents fills as the note is read */
+.contentsList::before {
+  content: '';
+  position: absolute;
+  left: -1px;
+  top: 0;
+  width: 1px;
+  height: 100%;
+  background: var(--ink);
+  transform: scaleY(var(--read, 0));
+  transform-origin: 50% 0;
+}
+
+/* The section on screen */
+.contentsLink[data-current] {
+  color: var(--ink);
+}
+
+.contentsLink {
+  display: grid;
+  align-content: center;
+  gap: 2px;
+  min-height: 44px;
+  padding: 8px 12px 8px 16px;
+  margin-left: -1px;
+  border-left: 1px solid transparent;
+  font-size: 0.875rem;
+  line-height: 1.35;
+  color: var(--muted);
+  text-decoration: none;
+  transition:
+    color var(--dur-hover) var(--ease-colour),
+    border-color var(--dur-hover) var(--ease-colour);
+}
+
+/* Inside the link, so the ring never straddles the list's rule */
+.contentsLink:focus-visible {
+  outline-offset: -3px;
+  border-radius: 8px;
+}
+
+.contentsLink:active {
+  color: var(--ink);
+  border-left-color: var(--ink);
+  transition-duration: 0s;
+}
+
+.step {
+  font: 500 0.6875rem/1.3 var(--font-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--signal);
+}
+
+/* The end: the cases it came from, then the check */
+.end {
+  background: var(--paper-2);
+  border-top: 1px solid var(--rule-soft);
+  padding-block: var(--section);
+}
+
+.endInner {
+  display: grid;
+  gap: clamp(28px, 4vw, 48px);
+}
+
+.endHead {
+  display: grid;
+  gap: 14px;
+}
+
+.cases {
+  display: grid;
+  gap: 16px;
+}
+
+.cases > div {
+  display: grid;
+}
+
+@media (min-width: 760px) {
+  .cases {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+  }
+}
+
+.check {
+  display: grid;
+  gap: clamp(24px, 4vw, 48px);
+  padding: clamp(26px, 4vw, 56px);
+  border-radius: 24px;
+}
+
+.checkCopy {
+  display: grid;
+  align-content: start;
+  gap: 14px;
+}
+
+.checkTitle {
+  font: 500 clamp(1.8rem, 1.2rem + 2vw, 2.9rem) / 1 var(--font-display);
+  letter-spacing: -0.035em;
+}
+
+.checkLine {
+  max-width: 50ch;
+  color: var(--on-night-muted);
+}
+
+.checkSide {
+  display: grid;
+  align-content: start;
+  justify-items: start;
+  gap: 12px;
+}
+
+.price {
+  font: 500 clamp(2.4rem, 1.6rem + 2.6vw, 3.6rem) / 1 var(--font-display);
+  letter-spacing: -0.04em;
+  color: var(--on-night);
+}
+
+.terms {
+  max-width: 36ch;
+  font-size: var(--t-small);
+  color: var(--on-night-muted);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding-top: 8px;
+}
+
+.reply {
+  font-size: var(--t-small);
+  color: var(--on-night-muted);
+}
+
+@media (max-width: 559px) {
+  .actions {
+    display: grid;
+    width: 100%;
+  }
+}
+
+@media (min-width: 1040px) {
+  .check {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    column-gap: clamp(48px, 6vw, 96px);
+    align-items: start;
+  }
+}
+
+@media (hover: hover) {
+  .back:hover {
+    color: var(--ink);
+  }
+
+  .contentsLink:hover {
+    color: var(--ink);
+    border-left-color: var(--ink);
+  }
+}

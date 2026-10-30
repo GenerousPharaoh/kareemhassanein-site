@@ -1,0 +1,79 @@
+.chips {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* A small ghost button: the ring darkens on hover, the arrow leans on, and a press gives at once */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 44px;
+  padding: 0 14px 0 12px;
+  border-radius: 999px;
+  background: var(--card);
+  box-shadow: inset 0 0 0 1px var(--rule);
+  font: 500 0.875rem/1 var(--font-body);
+  color: var(--ink);
+  text-decoration: none;
+  transition:
+    box-shadow var(--dur-hover) var(--ease-colour),
+    background-color var(--dur-hover) var(--ease-colour);
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--chip-ground);
+  box-shadow:
+    inset 0 0 0 1px rgba(18, 20, 23, 0.16),
+    inset 0 0 0 3.5px var(--chip-ground),
+    inset 0 0 0 6px var(--chip-accent);
+}
+
+.arrow {
+  width: 14px;
+  height: 14px;
+  color: var(--muted);
+  transition: color var(--dur-hover) var(--ease-colour);
+}
+
+/* Pressed, like the site's ghost buttons: the ring darkens and the fill tints at once */
+.chip:active {
+  box-shadow: inset 0 0 0 1px var(--ink);
+  background: color-mix(in srgb, var(--ink) 7%, var(--card));
+  transition-duration: var(--dur-press);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .chip {
+    transition:
+      box-shadow var(--dur-hover) var(--ease-colour),
+      background-color var(--dur-hover) var(--ease-colour),
+      transform var(--dur-press) var(--ease-out);
+  }
+
+  .chip:active {
+    transform: scale(0.97);
+  }
+
+  .arrow {
+    transition:
+      color var(--dur-hover) var(--ease-colour),
+      transform var(--dur-ui) var(--ease-out);
+  }
+}
+
+@media (hover: hover) {
+  .chip:hover {
+    box-shadow: inset 0 0 0 1px var(--ink);
+  }
+
+  .chip:hover .arrow {
+    color: var(--ink);
+  }
+}
