@@ -210,11 +210,11 @@
 
 /* The portrait opens from the foot up as the page arrives, settling as it does */
 @media (prefers-reduced-motion: no-preference) {
-  .portrait {
+  :global(html:not([data-route-arrival])) .portrait {
     animation: portrait-open 900ms var(--ease-out) 120ms both;
   }
 
-  .portrait :global(img) {
+  :global(html:not([data-route-arrival])) .portrait :global(img) {
     animation: portrait-settle 1300ms var(--ease-out) 120ms both;
   }
 }

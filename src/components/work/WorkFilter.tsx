@@ -1,6 +1,6 @@
 'use client';
 
-import { useLayoutEffect, useRef, useState, type ReactNode } from 'react';
+import { useLayoutEffect, useRef, useState, useSyncExternalStore, type ReactNode } from 'react';
 import { flushSync } from 'react-dom';
 import { getGsap } from '@/lib/gsap';
 import styles from './WorkFilter.module.css';
@@ -13,6 +13,21 @@ const FILTERS = [
 ] as const;
 
 type FilterId = (typeof FILTERS)[number]['id'];
+const FILTER_KEY = '__khWorkFilter';
+const FILTER_EVENT = 'work-filter-change';
+const initialFilter = (): FilterId => 'all';
+const savedFilter = (): FilterId => {
+  const saved = window.history.state?.[FILTER_KEY];
+  return FILTERS.some((item) => item.id === saved) ? saved : 'all';
+};
+const subscribeFilter = (changed: () => void) => {
+  window.addEventListener('popstate', changed);
+  window.addEventListener(FILTER_EVENT, changed);
+  return () => {
+    window.removeEventListener('popstate', changed);
+    window.removeEventListener(FILTER_EVENT, changed);
+  };
+};
 
 /**
  * The change animates only where the browser has transition types and classes (they keep these
@@ -56,7 +71,8 @@ function setName(el: HTMLElement, name: string, kind = '') {
  * the candidates); whatever keeps its place does not move or flicker.
  */
 export function WorkFilter({ children }: { children: ReactNode }) {
-  const [filter, setFilter] = useState<FilterId>('all');
+  // The choice belongs to this history entry, so Back restores the same list and scroll position.
+  const filter = useSyncExternalStore(subscribeFilter, savedFilter, initialFilter);
   const [status, setStatus] = useState('');
   const results = useRef<HTMLDivElement>(null);
   const chips = useRef<HTMLDivElement>(null);
@@ -91,7 +107,8 @@ export function WorkFilter({ children }: { children: ReactNode }) {
   const choose = (id: FilterId) => {
     if (id === filter) return;
     const apply = () => {
-      setFilter(id);
+      window.history.replaceState({ ...window.history.state, [FILTER_KEY]: id }, '');
+      window.dispatchEvent(new Event(FILTER_EVENT));
       setStatus(FILTERS.find((f) => f.id === id)?.status ?? '');
     };
     const box = results.current;

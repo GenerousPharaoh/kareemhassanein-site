@@ -6,6 +6,7 @@ import { Fragment, useCallback, useEffect, useLayoutEffect, useRef, useState } f
 import type { MouseEvent } from 'react';
 import { NAV, SERVICES, SITE } from '@/content/site';
 import { prefersReducedMotion } from '@/lib/useReducedMotion';
+import { getLenis } from './SmoothScroll';
 import styles from './Header.module.css';
 
 const MENU = [{ href: '/', label: 'Home' }, ...NAV, { href: '/notes', label: 'Notes' }];
@@ -17,6 +18,7 @@ export function Header() {
   const pathname = usePathname();
   const [phase, setPhase] = useState<Phase>('closed');
   const open = phase === 'open';
+  const menuVisible = phase !== 'closed';
   // The route reveal owns the handoff, including dismissal of the phone menu.
   // (Adjusting state during render, not in an effect.)
   const [routeSeen, setRouteSeen] = useState(pathname);
@@ -29,6 +31,7 @@ export function Header() {
   const menuButton = useRef<HTMLButtonElement>(null);
   const sheet = useRef<HTMLDivElement>(null);
   const services = useRef<HTMLDetailsElement>(null);
+  const [servicesOpen, setServicesOpen] = useState(false);
 
   // Native details keeps the service destinations reachable without JavaScript.
   useEffect(() => {
@@ -60,7 +63,7 @@ export function Header() {
 
   const close = useCallback((returnFocus = false) => {
     setPhase((p) => (p === 'open' ? 'closing' : p));
-    if (returnFocus) menuButton.current?.focus();
+    if (returnFocus) menuButton.current?.focus({ preventScroll: true });
   }, []);
 
   // iOS Safari shows :active (every pressed state on the site) only when a touch listener exists;
@@ -130,7 +133,7 @@ export function Header() {
       // An open menu makes main inert, which excludes its surfaces from hit testing.
       // Geometry still identifies the incoming sheet while that menu is being dismissed.
       const host = under?.closest('[data-theme], .paper, .night') ??
-        [...document.querySelectorAll<HTMLElement>('main [data-theme], main .paper, main .night')].reverse().find((el) => {
+        [...document.querySelectorAll<HTMLElement>('main [data-theme], main .paper, main .night, body > footer')].reverse().find((el) => {
           const box = el.getBoundingClientRect();
           return box.width > 0 && box.left <= x && box.right > x && box.top <= y && box.bottom > y && getComputedStyle(el).visibility !== 'hidden';
         });
@@ -157,11 +160,14 @@ export function Header() {
   // While open: the page behind cannot scroll or take focus, focus stays in the menu, Escape closes it,
   // and widening the window past the phone layout closes it at once.
   useLayoutEffect(() => {
-    if (!open) return;
+    if (!menuVisible) return;
     const root = document.documentElement;
     const before = { overflow: root.style.overflow, gutter: root.style.scrollbarGutter };
     root.style.overflow = 'hidden';
     root.style.scrollbarGutter = 'stable';
+    const lenis = getLenis();
+    const resumeScroll = !!lenis && !lenis.isStopped;
+    lenis?.stop();
     const behind = [document.getElementById('main'), document.querySelector<HTMLElement>('body > footer')].filter((el): el is HTMLElement => !!el);
     behind.forEach((el) => el.setAttribute('inert', ''));
     sheet.current?.querySelector<HTMLElement>('a[href]')?.focus({ preventScroll: true });
@@ -194,11 +200,12 @@ export function Header() {
     return () => {
       root.style.overflow = before.overflow;
       root.style.scrollbarGutter = before.gutter;
+      if (resumeScroll && getLenis() === lenis) lenis?.start();
       behind.forEach((el) => el.removeAttribute('inert'));
       document.removeEventListener('keydown', onKey);
       wide.removeEventListener('change', onWide);
     };
-  }, [open, close]);
+  }, [menuVisible, close]);
 
   // The exit normally ends on the sheet's own animationend; this is the backstop (and the whole
   // exit for reduced motion, where there is no animation).
@@ -221,8 +228,8 @@ export function Header() {
       className={styles.header}
       data-home={pathname === '/' || undefined}
       data-scrolled={scrolled || undefined}
-      data-tucked={(tucked && phase === 'closed') || undefined}
-      data-open={open || undefined}
+      data-tucked={(tucked && phase === 'closed' && !servicesOpen) || undefined}
+      data-open={menuVisible || undefined}
       data-theme={theme}
       data-slow={slow || undefined}
       onFocusCapture={() => setTucked(false)}
@@ -232,8 +239,9 @@ export function Header() {
       </a>
       <div className={`container ${styles.inner}`}>
         <Link href="/" className={styles.mark} aria-label={`${SITE.name}, home`}>
+          <span className={styles.monogram} aria-hidden="true"><span>K</span><span>H</span></span>
           <span className={styles.markName}>
-            {SITE.name}
+            <span>Kareem</span>{' '}<span>Hassanein</span>
           </span>
           <span className={styles.markLine} aria-hidden="true">
             {SITE.descriptor}
@@ -245,7 +253,7 @@ export function Header() {
             <Link key={item.href} href={item.href} className={styles.link} aria-current={isActive(item.href) ? 'page' : undefined}>
               {item.label}
             </Link>
-            {i === 0 ? <details ref={services} className={styles.services}>
+            {i === 0 ? <details ref={services} className={styles.services} onToggle={(event) => setServicesOpen(event.currentTarget.open)}>
               <summary className={styles.serviceToggle} data-active={SERVICES.some((service) => isActive(service.href)) || undefined}>
                 Services<svg viewBox="0 0 12 12" aria-hidden="true"><path d="m3 4.5 3 3 3-3" fill="none" stroke="currentColor" strokeWidth="1.3" /></svg>
               </summary>
@@ -259,7 +267,7 @@ export function Header() {
             </Fragment>
           ))}
         </nav>
-        <Link href={SITE.bookingHref} className={styles.cta} data-track="header-book">
+        <Link href={SITE.bookingHref} className={styles.cta} data-track="header-book" aria-current={pathname.startsWith('/book') ? 'page' : undefined}>
           <span className={styles.ctaText}>Book a call</span>
         </Link>
         <button
@@ -268,18 +276,20 @@ export function Header() {
           className={styles.menuButton}
           aria-expanded={open}
           aria-controls="site-menu"
+          aria-label={open ? 'Close menu' : 'Open menu'}
           onClick={() => setPhase((p) => (p === 'open' ? 'closing' : 'open'))}
         >
+          <span className={styles.menuLabel} aria-hidden="true">{open ? 'Close' : 'Menu'}</span>
           <span className={styles.menuIcon} aria-hidden="true">
             <span />
             <span />
             <span />
           </span>
-          <span className="sr-only">{open ? 'Close menu' : 'Open menu'}</span>
         </button>
       </div>
       <div
         id="site-menu"
+        data-lenis-prevent
         ref={sheet}
         className={styles.sheet}
         data-phase={phase}

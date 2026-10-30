@@ -16,7 +16,7 @@ export function Exhibit({ children, className, arrive = false }: { children: Rea
     const target = wrap?.querySelector('[data-exhibit]');
     if (!wrap || !target) return;
     if (arrive) {
-      if (!document.documentElement.hasAttribute('data-case-transition')) gsap.fromTo(
+      if (!document.documentElement.hasAttribute('data-route-arrival')) gsap.fromTo(
         target,
         { y: 110, scale: 0.9, rotationX: 22, rotation: -5, transformPerspective: 1600, transformOrigin: '50% 100%' },
         { y: 0, scale: 1, rotationX: 0, rotation: 0, duration: 1.1, ease: 'expo.out', delay: 0.1 },
@@ -30,6 +30,9 @@ export function Exhibit({ children, className, arrive = false }: { children: Rea
       }
       return;
     }
+    // A restored or incoming viewport is already composed before its route snapshot.
+    const box = wrap.getBoundingClientRect();
+    if (document.documentElement.hasAttribute('data-route-arrival') && box.top < innerHeight && box.bottom > 0) return;
     // Elsewhere it swings up off the same tilt as it comes into view: quick, once
     gsap.fromTo(
       target,

@@ -21,6 +21,8 @@ export function Rise({ children, className, as: Tag = 'div', items, ...rest }: P
   useGsap(root, ({ reduce }) => {
     if (reduce) return;
     const el = root.current!;
+    const box = el.getBoundingClientRect();
+    if (document.documentElement.hasAttribute('data-route-arrival') && box.top < innerHeight && box.bottom > 0) return;
     getGsap().gsap.fromTo(
       items ? el.querySelectorAll(items) : el.children,
       { y: 30, opacity: 0.01 },

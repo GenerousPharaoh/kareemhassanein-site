@@ -90,10 +90,6 @@
   background: var(--case-accent);
 }
 
-.plate {
-  min-width: 0;
-}
-
 .found {
   display: grid;
   gap: 16px;
@@ -261,7 +257,6 @@
   .inner {
     grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
     grid-template-areas:
-      'head plate'
       'head found'
       'gallery gallery'
       'foot foot';
@@ -276,10 +271,6 @@
   .head {
     position: sticky;
     top: calc(var(--header-h) + 40px);
-  }
-
-  .plate {
-    grid-area: plate;
   }
 
   .found {

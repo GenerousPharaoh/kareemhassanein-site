@@ -4,7 +4,6 @@ import { LoopVideo } from '@/components/media/LoopVideo';
 import { Picture } from '@/components/media/Picture';
 import type { CaseStudy } from '@/content/cases';
 import type { Loop, Still } from '@/lib/media';
-import { CasePlate } from './CasePlate';
 import { keepDots, paletteVars } from './style';
 import styles from './CaseBand.module.css';
 
@@ -22,7 +21,7 @@ export function CaseBand({ c, findings, wide, phone }: Props) {
   return (
     <section className={`sheet-up ${styles.band}`} style={paletteVars(c.palette)} aria-labelledby={id}>
       <div className={`container ${styles.inner}`}>
-        {/* The wrapper spans only the plate and findings rows, so the pinned story stops before the gallery */}
+        {/* The homepage is already shown above. This band goes straight to the findings and tools. */}
         <div className={styles.aside}>
           <header className={styles.head}>
             <p className={styles.kicker}>
@@ -41,17 +40,6 @@ export function CaseBand({ c, findings, wide, phone }: Props) {
               </p>
             ) : null}
           </header>
-        </div>
-
-        {/* Sizes follow the layout: full width less the 9% inset on phones, the 8fr column from 1000px */}
-        <div className={styles.plate} data-reveal>
-          <CasePlate
-            desktop={c.plate.desktop}
-            phone={c.plate.phone}
-            domain={c.domain}
-            desktopSizes="(min-width: 1280px) 710px, (min-width: 1000px) calc(57.6vw - 24px), calc(91vw - 36px)"
-            phoneSizes="(min-width: 1280px) 171px, (min-width: 1000px) calc(13.9vw - 6px), max(88px, calc(21.9vw - 9px))"
-          />
         </div>
 
         <div className={styles.found} data-reveal>

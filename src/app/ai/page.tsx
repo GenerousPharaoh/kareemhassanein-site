@@ -21,11 +21,6 @@ const ME = [
   'Decide what ships, and answer for it',
 ];
 
-const SETTINGS = [
-  { term: 'Your accounts', value: 'Your Google accounts and your booking system stay in your name. I work in them with access you grant, and you can remove it at any time.' },
-  { term: 'Your wording', value: 'Nothing that speaks for your practice goes live until you have approved it.' },
-];
-
 export default function AiPage() {
   return (
     <>
@@ -66,22 +61,9 @@ export default function AiPage() {
               ))}
             </ul>
           </div>
+          <p className={styles.approval}>Nothing that speaks for your practice goes live until you have approved it.</p>
         </Rise>
       </div>
-
-      <section className={`container section ${styles.settings}`} aria-labelledby="settings-title">
-        <h2 id="settings-title" className={`t-h2 ${styles.settingsTitle}`} data-reveal>
-          Settings and accounts
-        </h2>
-        <dl className={styles.facts}>
-          {SETTINGS.map((s) => (
-            <div key={s.term} className={styles.fact} data-reveal>
-              <dt className="t-label">{s.term}</dt>
-              <dd>{s.value}</dd>
-            </div>
-          ))}
-        </dl>
-      </section>
 
       <CloseBand
         title="Questions about how I work?"

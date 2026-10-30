@@ -35,8 +35,6 @@
 .details { display: grid; gap: 6px; padding-top: 14px; }
 .check { display: flex; justify-content: space-between; align-items: center; gap: 16px; min-height: 48px; font-size: .9375rem; text-decoration: underline; text-underline-offset: .3em; text-decoration-color: #ffffff4d; }
 .check span { font-size: 1.3rem; }
-.reply { display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: .8125rem; }
-.reply::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--ivory-2); flex: none; }
 @media (min-width: 600px) {
   .call { grid-template-columns: 170px minmax(0, 1fr) 32px; min-height: 240px; padding: 24px; gap: 24px; border-radius: 24px; }
   .duration { font-size: 3.7rem; }

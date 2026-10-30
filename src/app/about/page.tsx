@@ -50,11 +50,6 @@ const QUESTIONS = [
     cases: ['tax-relief-counsel', 'physiomax'],
   },
   {
-    q: 'Will you understand my field?',
-    a: 'Booking systems, practice websites and how patients choose are part of my work. At Endorphins, I named the colleges in text instead of showing their logos, which the colleges restrict. For a tax law firm, I built tools around IRS procedures, with the IRS source beside every figure.',
-    cases: ['endorphins', 'tax-relief-counsel'],
-  },
-  {
     q: 'How fast, and what if something breaks?',
     a: 'A gear store’s redesign went live the same evening, built on a copy of its theme with a one-step rollback. A law firm’s new site launches with one DNS change, reversible the same way.',
     cases: ['techniques-combat', 'tax-relief-counsel'],
@@ -63,11 +58,6 @@ const QUESTIONS = [
     q: 'Will I have to manage you?',
     a: 'There is one person to deal with: strategy, design, build, tracking and ads all stay with me. You choose between rendered designs instead of imagining them, approve a one-page list with a fixed price beside each item, and get a short update every week until handover.',
     cases: ['endorphins', 'tax-relief-counsel'],
-  },
-  {
-    q: 'Whose side are you on?',
-    a: 'Yours. Your domain, hosting, Google accounts and booking system stay in your name, and you pay those bills directly. At Endorphins, every account is in the clinic’s name and the agency has limited access. On my own practice’s ads, I keep a running log of every change, corrections included.',
-    cases: ['endorphins', 'kinetikare'],
   },
 ];
 

@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
+import { useProcessDrawing } from './useProcessDrawing';
 import s from './Process.module.css';
 
 export type ProcessStep = { name: string; text: string; link?: { href: string; label: string } };
@@ -10,6 +11,7 @@ export type ProcessStep = { name: string; text: string; link?: { href: string; l
 export function Process({ steps }: { steps: ProcessStep[] }) {
   const root = useRef<HTMLElement>(null);
   const [active, setActive] = useState(0);
+  useProcessDrawing(root, active);
 
   useEffect(() => {
     const el = root.current;
@@ -94,6 +96,9 @@ export function Process({ steps }: { steps: ProcessStep[] }) {
                   <path d="m351 147 12 12 24-25" />
                   <rect className={s.surface} x="178" y="192" width="84" height="72" rx="10" />
                   <path d="M194 211h50m-50 14h36m-36 14h44" />
+                </g>
+                <g className={s.morph}>
+                  {[0, 1, 2].map((i) => <rect key={i} data-morph-surface />)}
                 </g>
               </svg>
             </div>

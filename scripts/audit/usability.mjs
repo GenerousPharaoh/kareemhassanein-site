@@ -60,11 +60,12 @@ try {
       await page.getByRole('button', { name: 'Open menu', exact: true }).click();
       assert.equal(await page.locator('main').evaluate((el) => el.inert), true);
       await page.keyboard.press('Escape');
-      await page.waitForFunction(() => document.activeElement?.textContent === 'Open menu');
+      await page.waitForFunction(() => document.activeElement?.getAttribute('aria-label') === 'Open menu');
       await page.waitForTimeout(450);
       await page.getByRole('button', { name: 'Open menu', exact: true }).click();
       await page.locator('#site-menu').getByRole('link', { name: 'Notes', exact: true }).click();
-      await page.waitForFunction(() => document.activeElement?.textContent === 'Open menu');
+      await page.waitForFunction(() => document.activeElement?.getAttribute('aria-label') === 'Open menu');
+      await page.waitForFunction(() => document.querySelector('#site-menu').hidden);
       assert.equal(await page.locator('main').evaluate((el) => el.inert), false);
       record('390: menu Escape, same-page focus and scroll unlock');
     }
@@ -119,8 +120,8 @@ try {
     await page.locator('body > footer').getByRole('link', { name: 'How I use AI', exact: true }).click();
     await page.waitForURL(`${base}/ai`);
     await page.emulateMedia({ reducedMotion: 'no-preference' });
-    await page.locator('#settings-title').scrollIntoViewIfNeeded();
-    await page.waitForFunction(() => getComputedStyle(document.getElementById('settings-title')).opacity === '1');
+    await page.locator('[aria-labelledby="split-title"]').scrollIntoViewIfNeeded();
+    await page.waitForFunction(() => [...document.querySelectorAll('[aria-labelledby="split-title"] li')].every(el => getComputedStyle(el).opacity === '1'));
     record(`${width}: reduced-motion changes across page navigation`);
 
     await page.goto(`${base}/privacy`, { waitUntil: 'networkidle' });

@@ -70,6 +70,7 @@ export function PageTransition() {
     const root = document.documentElement;
     let active: ViewTransition | null = null;
     let timeout = 0;
+    let captureDeadline = 0;
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
     const savedPosition = window.history.state?.[POSITION];
     position.current = typeof savedPosition === 'number' ? savedPosition : 0;
@@ -80,6 +81,7 @@ export function PageTransition() {
       active?.skipTransition();
       clearCase();
       window.clearTimeout(timeout);
+      window.clearTimeout(captureDeadline);
       const lenis = getLenis();
       lenis?.scrollTo(window.scrollY, { immediate: true, force: true });
 
@@ -132,6 +134,17 @@ export function PageTransition() {
         types: ['page', direction],
       });
       active = transition;
+      // An uncached route must not freeze the old screen while the network catches up.
+      // Skipping the animation leaves the router's update intact.
+      const deadline = window.setTimeout(() => {
+        transition.skipTransition();
+        if (active === transition) {
+          route.caseSlug = undefined;
+          delete root.dataset.routeChanging;
+          clearCase();
+        }
+      }, 300);
+      captureDeadline = deadline;
       // A failed navigation must not leave a frozen snapshot or an unresolved update callback.
       timeout = window.setTimeout(() => {
         route.finish();
@@ -141,11 +154,12 @@ export function PageTransition() {
         if (active !== transition) return;
         active = null;
         window.clearTimeout(timeout);
+        window.clearTimeout(captureDeadline);
         delete root.dataset.routeChanging;
         clearCase();
         window.dispatchEvent(new Event('route-settled'));
       };
-      void transition.ready.catch(() => {});
+      void transition.ready.then(() => window.clearTimeout(deadline), () => window.clearTimeout(deadline));
       void transition.finished.then(settle, settle);
     };
 
@@ -156,6 +170,8 @@ export function PageTransition() {
       const url = new URL(link.href);
       if (url.origin !== location.origin || url.pathname === currentPath.current) return;
       event.preventDefault();
+      // A quick second tap on the same destination must not add another history entry.
+      if (pending.current?.pathname === url.pathname) return;
       const up = url.pathname === '/' || (url.pathname === '/work' && currentPath.current.startsWith('/work/'))
         || (url.pathname === '/notes' && currentPath.current.startsWith('/notes/'));
       const preview = link.closest('[data-case-card]')?.querySelector<HTMLElement>('[data-case-preview]');
@@ -180,6 +196,7 @@ export function PageTransition() {
       pending.current?.finish();
       active?.skipTransition();
       window.clearTimeout(timeout);
+      window.clearTimeout(captureDeadline);
       delete root.dataset.routeChanging;
       clearCase();
     };

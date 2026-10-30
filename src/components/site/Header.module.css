@@ -70,6 +70,9 @@
   --hdr-ink: var(--ivory);
   --hdr-muted: rgba(238, 237, 232, 0.62);
   --hdr-rule: rgba(238, 237, 232, 0.1);
+  /* A transformed ancestor would trap the fixed phone menu inside the header. */
+  transform: none;
+  transition: none;
 }
 
 /* Over the reel, the header turns with the stage, at the stage's pace */
@@ -117,6 +120,7 @@
 .header[data-open]::before {
   opacity: 1;
   background: var(--stage);
+  transition: none;
 }
 
 .header::after {
@@ -185,6 +189,7 @@
   font: 600 1rem / 1.15 var(--font-display);
   letter-spacing: -0.02em;
 }
+.monogram { display: none; }
 
 .markLine {
   display: none;
@@ -328,20 +333,25 @@
   position: absolute;
   inset: -2px 0;
 }
+.cta[aria-current='page'] { display: none; }
 
 .menuButton {
   position: relative;
-  width: 44px;
+  width: 78px;
   height: 44px;
-  display: grid;
-  place-items: center;
-  margin-right: -10px;
-  border: 0;
-  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex: none;
+  padding: 0;
+  border: 1px solid var(--hdr-rule);
+  border-radius: 999px;
   background: transparent;
   cursor: pointer;
   transition: background-color var(--dur-press) var(--ease-colour);
 }
+.menuLabel { font-size: .75rem; font-weight: 500; }
 
 .menuButton:active {
   background: color-mix(in srgb, var(--hdr-ink) 8%, transparent);
@@ -350,7 +360,7 @@
 /* Two bars that become a cross */
 .menuIcon {
   position: relative;
-  width: 22px;
+  width: 15px;
   height: 12px;
 }
 
@@ -358,7 +368,7 @@
   position: absolute;
   left: 0;
   top: 50%;
-  width: 22px;
+  width: 15px;
   height: 1.5px;
   margin-top: -0.75px;
   border-radius: 2px;
@@ -396,7 +406,23 @@
   overflow-y: auto;
   overscroll-behavior: contain;
   padding-bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
 }
+
+/* A compact identity and two explicit actions, without an extra asset request. */
+@media (max-width: 959px) {
+  .inner { gap: 8px; }
+  .mark { grid-template-columns: 34px auto; align-items: center; column-gap: 9px; flex: none; }
+  .monogram { display: flex; align-items: center; justify-content: center; width: 34px; height: 38px; border: 1px solid var(--hdr-rule); border-radius: 9px; font: 600 1rem/.8 var(--font-display); letter-spacing: -.09em; }
+  .monogram span:last-child { margin-top: 8px; }
+  .markName { font-size: .8125rem; line-height: 1.13; letter-spacing: -.025em; }
+  .markName > span { display: block; }
+  .cta { margin-left: 0; padding: 0 13px; font-size: .75rem; flex: none; }
+  .header[data-open] .cta { visibility: hidden; }
+  .header[data-scrolled]::before { border-bottom: 1px solid var(--hdr-rule); }
+}
+@media (min-width: 360px) and (max-width: 959px) { .cta { display: inline-flex; } }
 
 .sheetNav {
   display: flex;
@@ -452,6 +478,14 @@
   color: var(--muted);
 }
 
+@media (max-height: 500px) and (max-width: 959px) {
+  .sheetNav { display: grid; grid-template-columns: 1fr 1fr; gap: 0 32px; }
+  .sheetServices { grid-column: 2; grid-row: 1 / 4; }
+  .sheetLink { font-size: 1.7rem; padding-block: 9px; }
+  .sheetFoot { grid-column: 2; grid-row: 4 / 6; padding-top: 14px; }
+  .sheetServiceLink > span { font-size: 1.35rem; }
+}
+
 /* First load: the header settles in with the reel */
 @media (prefers-reduced-motion: no-preference) {
   .inner {
@@ -485,8 +519,8 @@
   }
 
   .sheet[data-phase='open'] :is(.sheetLink, .sheetFoot) {
-    animation: item-in 600ms var(--ease-out) both;
-    animation-delay: calc(80ms + var(--i) * 40ms);
+    animation: item-in 360ms var(--ease-out) both;
+    animation-delay: calc(30ms + var(--i) * 25ms);
   }
 
   .sheet[data-phase='closing'] {
@@ -520,13 +554,13 @@
 
 @keyframes sheet-in {
   from {
-    opacity: 0;
+    clip-path: inset(0 0 100% 0);
   }
 }
 
 @keyframes sheet-out {
   to {
-    opacity: 0;
+    clip-path: inset(0 0 100% 0);
   }
 }
 

@@ -34,7 +34,7 @@ export function CaseHeader({ c }: { c: CaseStudy }) {
           <svg viewBox="0 0 16 16" aria-hidden="true">
             <path d="M13 8H3.5M7.5 4l-4 4 4 4" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
-          Work
+          Case studies
         </Link>
         <p className={styles.kind} data-enter style={enter(1)}>
           {c.kindLabel}

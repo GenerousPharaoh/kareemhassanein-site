@@ -25,7 +25,6 @@ export function CallInvitation({ id, title, text, track, check = true }: Props) 
           </Link>
           <div className={s.details}>
             {check ? <Link href={SITE.checkHref} className={s.check} data-track={`${track}-check`}>Start with a website check, {price}<span aria-hidden="true">↗</span></Link> : null}
-            <p className={s.reply}>{SITE.reply}</p>
           </div>
         </div>
       </div>
