@@ -49,38 +49,35 @@
   will-change: transform;
 }
 
-/* The work fills the frame, with a quiet field behind the lasting service statement. */
+/* Keep type legible while the client's own colours show through the centre. */
 .readingShade {
   position: absolute;
   z-index: 2;
   inset: 0;
   background:
-    linear-gradient(90deg, #0c0c0bf5 0%, #0c0c0be8 23%, #0c0c0bba 43%, #0c0c0b33 66%, transparent 84%),
-    linear-gradient(0deg, #0c0c0b 0%, #0c0c0b88 24%, transparent 60%);
+    linear-gradient(0deg, #0c0c0b 0%, #0c0c0be8 15%, transparent 48%),
+    linear-gradient(180deg, #0c0c0bf5 0%, #0c0c0bd9 25%, #0c0c0b66 58%, #0c0c0b33 78%);
   pointer-events: none;
 }
-
 .copy {
   position: absolute;
   z-index: 3;
   left: var(--gutter-l);
   right: var(--gutter-r);
-  bottom: calc(var(--peek, var(--sheet-r)) + clamp(42px, 6vh, 80px));
-  display: grid;
-  justify-items: start;
-  gap: clamp(28px, 3vw, 44px);
-  width: fit-content;
-  max-width: calc(100% - var(--gutter-l) - var(--gutter-r));
+  bottom: calc(var(--peek, var(--sheet-r)) + clamp(32px, 5vh, 64px));
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 28px;
   -webkit-user-select: text;
   user-select: text;
 }
-
 .statement {
-  max-width: 11em;
-  font-size: clamp(3rem, 5.1vw, 5.75rem);
-  font-weight: 500;
-  line-height: 1.04;
-  letter-spacing: -0.055em;
+  max-width: 15em;
+  font-size: clamp(1.25rem, 2vw, 2rem);
+  font-weight: 450;
+  line-height: 1.2;
+  letter-spacing: -.035em;
   text-wrap: balance;
 }
 
@@ -166,254 +163,43 @@
   cursor: grabbing;
 }
 
-/* The name, before the eye flies through it into the wall */
-.intro {
-  position: absolute;
-  inset: 0;
-  z-index: 4;
-  pointer-events: none;
-}
-
-/* The stage colour with the letters cut out of it, drawn by the wall's script */
-.knock {
+/* One permanent name, set as an asymmetric two-line signature. */
+.name {
   position: absolute;
   z-index: 3;
-  inset: 0;
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-
-.ink {
-  --wipe: -24%;
-  position: absolute;
-  z-index: 4;
-  inset: 0;
+  top: calc(var(--header-h) + clamp(28px, 5svh, 64px));
+  left: var(--gutter-l);
+  right: var(--gutter-r);
   display: grid;
-  place-content: center;
-  justify-items: center;
-  gap: 1.1rem;
-  padding: 0 var(--gutter-r) 0 var(--gutter-l);
+  grid-template-columns: minmax(0, 1fr);
+  gap: .015em;
+  font: 550 min(16.7vw, 26svh, 310px) / .87 var(--font-display);
+  font-stretch: 100%;
+  letter-spacing: -.065em;
   color: var(--ivory);
-  text-align: center;
-  /* The wall's script moves this edge across to wipe the white away */
-  -webkit-mask-image: linear-gradient(100deg, transparent var(--wipe), #000 calc(var(--wipe) + 16%));
-  mask-image: linear-gradient(100deg, transparent var(--wipe), #000 calc(var(--wipe) + 16%));
-  will-change: transform;
+  pointer-events: none;
+  contain: layout style;
 }
-
-/* Light behind the screens while the wall shows only through the name */
-.ground {
-  position: absolute;
-  inset: 0;
-  background: rgb(207 204 194);
-  opacity: 0;
-}
-
-.mask,
-.wordMask {
-  overflow: hidden;
-  /* Room for descenders inside the mask */
-  padding-bottom: 0.06em;
-}
-
-.mask {
+.word {
+  position: relative;
   display: block;
   width: fit-content;
-}
-
-.wordMask {
-  display: inline-block;
-  vertical-align: top;
-}
-
-.word {
-  display: inline-block;
-}
-
-.name,
-.line {
-  display: block;
+  padding: .035em .06em .09em 0;
   white-space: nowrap;
+  transform: translateX(var(--name-anchor, 0%));
 }
-
-/* Heavy and wide enough that the work shows through the letters, and as wide as the screen allows */
-.name {
-  font: 800 min(9vw, 11.5rem) / 0.96 var(--font-display);
-  font-stretch: expanded;
-  letter-spacing: -0.04em;
-}
-
-.base {
-  display: inline-block;
-  width: 0;
-  height: 0;
-}
-
-.line {
-  max-width: 22em;
-  font-size: clamp(0.95rem, 0.85rem + 0.4vw, 1.2rem);
-  line-height: 1.3;
-  color: rgba(238, 237, 232, 0.66);
-  white-space: normal;
-  text-wrap: balance;
-}
-
-@media (min-width: 1100px) {
-  .line {
-    max-width: none;
-    white-space: nowrap;
-  }
-}
-
-/* A phone sets the name on two lines, as large as the longer word allows */
-@media (max-width: 760px) {
-  .name {
-    font-size: 15vw;
-    line-height: 0.98;
-  }
-
-  .wordMask {
-    display: block;
-    width: fit-content;
-    margin-inline: auto;
-  }
-}
+/* Anchor with a transform so changing glyph widths never shifts the page layout. */
+.word:last-child { --name-anchor: -100%; left: 100%; }
 
 @media (prefers-reduced-motion: no-preference) {
-  /* The name comes up word by word, the descriptor after it */
-  .ink .word {
-    animation: rise 0.9s var(--ease-out) both;
-  }
-
-  .ink .wordMask:nth-of-type(2) .word {
-    animation-delay: 0.09s;
-  }
-
-  .ink .mask > span {
-    animation: rise 0.7s var(--ease-out) 0.32s both;
-  }
-
-  /* Until the script takes the opening over, the wall and the header wait behind the name.
-     If the script never runs, both appear on their own after a moment and the name goes. */
-  .wall[data-wall-intro] .planeBox {
-    opacity: 0;
-  }
-
-  .wall[data-wall-intro] [data-after] { visibility: hidden; opacity: 0; }
-  .wall[data-wall-intro]:not([data-ready]) [data-after] { animation: appear 0.4s 3s both; }
-
-  .wall[data-wall-intro]:not([data-ready]) .planeBox {
-    animation: appear 0.4s 3s both;
-  }
-
-  .wall:not([data-ready]) .intro {
-    animation: appear 0.4s 3s reverse both;
-  }
-
-  /* The header and the work list wait too: see Header.module.css and WorkIndex.module.css */
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .intro {
-    display: none;
+  :global(html[data-motion='on']:not([data-route-arrival])) .wall[data-hero-opening] .word {
+    animation: name-open 1450ms cubic-bezier(.32, 0, .16, 1) calc(var(--word-index) * 120ms) both;
   }
 }
-
-@keyframes rise {
-  from {
-    transform: translate3d(0, 110%, 0);
-  }
+@keyframes name-open {
+  from { font-stretch: 78%; font-weight: 380; opacity: .3; transform: translate3d(var(--name-anchor, 0%), .14em, 0); }
+  to { font-stretch: 100%; font-weight: 550; opacity: 1; transform: translate3d(var(--name-anchor, 0%), 0, 0); }
 }
-
-@keyframes appear {
-  from {
-    opacity: 0;
-    visibility: hidden;
-  }
-  to {
-    opacity: 1;
-    visibility: visible;
-  }
-}
-
-/* Returning home already has a page transition. Its first frame is the finished hero. */
-:global(html[data-route-arrival]) .wall[data-wall-intro] .intro { display: none; }
-:global(html[data-route-arrival]) .wall[data-wall-intro] .planeBox,
-:global(html[data-route-arrival]) .wall[data-wall-intro] [data-after] {
-  animation: none;
-  opacity: 1;
-  visibility: visible;
-}
-
-/* A phone opens the real work like a contact sheet, with the page usable throughout. */
-@media (max-width: 760px) and (prefers-reduced-motion: no-preference) {
-  .wall[data-wall-intro] .planeBox,
-  .wall[data-wall-intro]:not([data-ready]) .planeBox,
-  .wall[data-wall-intro] [data-after],
-  .wall[data-wall-intro]:not([data-ready]) [data-after] {
-    animation: none;
-    visibility: visible;
-    opacity: 1;
-  }
-
-  .wall[data-wall-intro] .sink {
-    animation: phone-aperture 1.5s cubic-bezier(.22, 1, .36, 1) both;
-  }
-
-  .wall .intro,
-  .wall:not([data-ready]) .intro {
-    animation: phone-title-away 1.5s linear both;
-  }
-
-  .knock { display: none; }
-
-  .ink {
-    top: calc(var(--header-h) + 34px);
-    bottom: auto;
-    min-height: clamp(150px, 27svh, 240px);
-    gap: 0;
-    mask-image: none;
-    -webkit-mask-image: none;
-  }
-
-  .ink .mask { display: none; }
-  .ink .word { animation: phone-name-up 1.2s cubic-bezier(.22, 1, .36, 1) both; }
-  .ink .wordMask:nth-of-type(2) .word { animation: phone-name-down 1.2s cubic-bezier(.22, 1, .36, 1) .07s both; }
-
-  :global(html[data-route-arrival]) .wall[data-wall-intro] .sink { animation: none; }
-}
-
-@keyframes phone-aperture {
-  0%, 42% { clip-path: inset(43% 8% 49% 8% round 14px); }
-  100% { clip-path: inset(0 round 0); }
-}
-
-@keyframes phone-name-up {
-  0% { transform: translateY(110%); }
-  30%, 55% { transform: translateY(0); }
-  100% { transform: translateY(-110%); }
-}
-
-@keyframes phone-name-down {
-  0% { transform: translateY(110%); }
-  30%, 55% { transform: translateY(0); }
-  100% { transform: translateY(110%); }
-}
-
-@keyframes phone-title-away {
-  0%, 80% { opacity: 1; visibility: visible; }
-  100% { opacity: 0; visibility: hidden; }
-}
-
-:global(html[data-motion='off']) .wall .intro { display: none; }
-:global(html[data-motion='off']) .wall[data-wall-intro] .planeBox,
-:global(html[data-motion='off']) .wall[data-wall-intro] [data-after] {
-  animation: none;
-  opacity: 1;
-  visibility: visible;
-}
-:global(html[data-motion='off']) .wall[data-wall-intro] .sink { animation: none; clip-path: none; }
 
 .dim {
   position: absolute;
@@ -433,19 +219,29 @@
   }
 
   .readingShade {
-    background: linear-gradient(0deg, #0c0c0b 0%, #0c0c0bf5 23%, #0c0c0be3 39%, #0c0c0b55 65%, transparent 83%);
+    background:
+      linear-gradient(0deg, #0c0c0b 0%, #0c0c0bf5 18%, #0c0c0b77 38%, transparent 57%),
+      linear-gradient(180deg, #0c0c0b 0%, #0c0c0be8 14%, #0c0c0b77 38%, transparent 60%);
   }
 
   .copy {
     bottom: calc(var(--peek, var(--sheet-r)) + 30px);
-    gap: 24px;
+    display: grid;
+    gap: 22px;
   }
 
+  .name {
+    top: calc(var(--header-h) + 40px);
+    font-size: 16.8vw;
+    gap: .09em;
+  }
+  .word:first-child { font-size: 1.24em; }
+
   .statement {
-    max-width: 11em;
-    font-size: clamp(2rem, 8.7vw, 3.25rem);
-    line-height: 1.07;
-    letter-spacing: -0.045em;
+    max-width: 17em;
+    font-size: clamp(1.2rem, 5.7vw, 1.6rem);
+    line-height: 1.2;
+    letter-spacing: -.035em;
   }
 
   .actions { gap: 12px 20px; }
@@ -465,6 +261,7 @@
 }
 
 @media (min-width: 761px) and (max-height: 650px) {
-  .statement { font-size: clamp(2.5rem, 4.7vw, 4rem); }
+  .name { font-size: min(14vw, 27svh); top: calc(var(--header-h) + 14px); }
+  .statement { font-size: 1.25rem; }
   .copy { bottom: calc(var(--peek, var(--sheet-r)) + 28px); gap: 24px; }
 }
