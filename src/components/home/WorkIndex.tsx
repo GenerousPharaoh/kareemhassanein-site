@@ -28,7 +28,7 @@ export function WorkIndex({ items, title = 'Work', allHref = '/work' }: { items:
 
   const tone = active >= 0 ? items[active].tone : undefined;
   return (
-    <section ref={root} className={s.index} aria-labelledby="work-h" data-theme="dark" style={tone ? { ['--hover-tone' as string]: tone } : undefined}>
+    <section ref={root} id="selected-work" className={s.index} aria-labelledby="work-h" data-theme="dark" style={tone ? { ['--hover-tone' as string]: tone } : undefined}>
       <div className={'container ' + s.inner}>
         <div className={s.head} data-head>
           <h2 id="work-h" className={s.title}>{title}</h2>

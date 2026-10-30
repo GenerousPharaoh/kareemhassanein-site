@@ -49,6 +49,50 @@
   will-change: transform;
 }
 
+/* The work fills the frame, with a quiet field behind the lasting service statement. */
+.readingShade {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  background:
+    linear-gradient(90deg, #0c0c0bf5 0%, #0c0c0be8 23%, #0c0c0bba 43%, #0c0c0b33 66%, transparent 84%),
+    linear-gradient(0deg, #0c0c0b 0%, #0c0c0b88 24%, transparent 60%);
+  pointer-events: none;
+}
+
+.copy {
+  position: absolute;
+  z-index: 3;
+  left: var(--gutter-l);
+  right: var(--gutter-r);
+  bottom: calc(var(--peek, var(--sheet-r)) + clamp(42px, 6vh, 80px));
+  display: grid;
+  justify-items: start;
+  gap: clamp(28px, 3vw, 44px);
+  width: fit-content;
+  max-width: calc(100% - var(--gutter-l) - var(--gutter-r));
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+.statement {
+  max-width: 11em;
+  font-size: clamp(3rem, 5.1vw, 5.75rem);
+  font-weight: 500;
+  line-height: 1.04;
+  letter-spacing: -0.055em;
+  text-wrap: balance;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px 28px;
+}
+
+.actions > a:last-child > span { display: inline-flex; align-items: center; gap: 10px; }
+
 /* A point at the middle of the screen that the plane hangs from, and the eye it is seen with */
 .planeBox {
   position: absolute;
@@ -126,6 +170,7 @@
 .intro {
   position: absolute;
   inset: 0;
+  z-index: 4;
   pointer-events: none;
 }
 
@@ -255,6 +300,9 @@
     opacity: 0;
   }
 
+  .wall[data-wall-intro] [data-after] { visibility: hidden; opacity: 0; }
+  .wall[data-wall-intro]:not([data-ready]) [data-after] { animation: appear 0.4s 3s both; }
+
   .wall[data-wall-intro]:not([data-ready]) .planeBox {
     animation: appear 0.4s 3s both;
   }
@@ -292,13 +340,13 @@
 .pause {
   position: absolute;
   z-index: 3;
-  right: calc(var(--gutter-r) - 10px);
-  bottom: calc(var(--peek, var(--sheet-r)) + 14px);
+  right: var(--gutter-r);
+  bottom: calc(var(--peek, var(--sheet-r)) + clamp(42px, 6vh, 80px));
   display: grid;
   place-items: center;
   width: 44px;
   height: 44px;
-  border: 0;
+  border: 1px solid #eeede840;
   border-radius: 50%;
   background: rgba(12, 12, 11, 0.55);
   color: var(--ivory);
@@ -309,6 +357,8 @@
   width: 16px;
   height: 16px;
 }
+
+.wall:not([data-ready]) .pause { display: none; }
 
 @media (hover: hover) {
   .pause:hover {
@@ -330,7 +380,28 @@
     --tile-h: 162px;
     --mat: 5px;
     --gap: 14px;
+    min-height: 620px;
   }
+
+  .readingShade {
+    background: linear-gradient(0deg, #0c0c0b 0%, #0c0c0bf5 23%, #0c0c0be3 39%, #0c0c0b55 65%, transparent 83%);
+  }
+
+  .copy {
+    bottom: calc(var(--peek, var(--sheet-r)) + 30px);
+    gap: 24px;
+  }
+
+  .statement {
+    max-width: 11em;
+    font-size: clamp(2rem, 8.7vw, 3.25rem);
+    line-height: 1.07;
+    letter-spacing: -0.045em;
+  }
+
+  .actions { gap: 12px 20px; }
+  .actions > a { font-size: .875rem; }
+  .pause { top: calc(var(--header-h) + 16px); bottom: auto; }
 
   .tile {
     border-radius: 9px;
@@ -343,4 +414,10 @@
   .tile[data-device='phone'] .screen {
     border-radius: 9px;
   }
+}
+
+@media (min-width: 761px) and (max-height: 650px) {
+  .statement { font-size: clamp(2.5rem, 4.7vw, 4rem); }
+  .copy { bottom: calc(var(--peek, var(--sheet-r)) + 28px); gap: 24px; }
+  .pause { bottom: calc(var(--peek, var(--sheet-r)) + 28px); }
 }

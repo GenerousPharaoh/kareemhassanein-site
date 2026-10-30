@@ -190,6 +190,7 @@ export function Header() {
   return (
     <header
       className={styles.header}
+      data-home={pathname === '/' || undefined}
       data-scrolled={scrolled || undefined}
       data-tucked={(tucked && phase === 'closed') || undefined}
       data-open={open || undefined}

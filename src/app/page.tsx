@@ -183,7 +183,7 @@ export default function Home() {
   return (
     <>
       <div className={s.opening}>
-        <WorkWall rows={wall} name={SITE.name} line={SITE.descriptor} />
+        <WorkWall rows={wall} name={SITE.name} line={SITE.descriptor} bookingHref={SITE.bookingHref} />
         <WorkIndex items={index} title="Selected work" />
       </div>
       <Statement

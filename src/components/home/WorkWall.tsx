@@ -2,6 +2,7 @@
 
 import { Fragment, useEffect, useRef, useState, type CSSProperties } from 'react';
 import { Picture } from '@/components/media/Picture';
+import { ButtonLink } from '@/components/ui/ButtonLink';
 import { getGsap, useGsap } from '@/lib/gsap';
 import type { Device, Still } from '@/lib/media';
 import { useReducedMotion } from '@/lib/useReducedMotion';
@@ -9,7 +10,7 @@ import s from './WorkWall.module.css';
 
 export type WallTile = { key: string; ground: string; device: Device; ratio: number; still: Still };
 
-type Props = { rows: WallTile[][]; name: string; line: string };
+type Props = { rows: WallTile[][]; name: string; line: string; bookingHref: string };
 
 /** Copies of each row laid end to end, so a row can travel one copy's length and start again unseen. */
 const COPIES = 3;
@@ -18,9 +19,9 @@ const TILT = { rx: 24, rz: -7 };
 /** Which way each row parts from the wall when it moves (toward the eye or away), in turn. */
 const DEPTH = [0.9, -0.75, 1, -0.95, 0.65, -0.85];
 /** How far the rows part, in px: as the work list rises over the wall, and with speed. */
-const PART = { exit: 260, speed: 120 };
+const PART = { exit: 200, speed: 72 };
 /** How long the title holds before the work shows through it, and how far it pushes toward the eye meanwhile. */
-const HOLD = { seconds: 1.1, push: 1.04 };
+const HOLD = { seconds: 0.65, push: 1.04 };
 
 const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v));
 const wrap = (x: number, w: number) => (w ? ((x % w) + w) % w : 0);
@@ -32,14 +33,15 @@ const wrap = (x: number, w: number) => (w ? ((x % w) + w) % w : 0);
  * along (and back, scrolling up), and a drag or swipe throws them.
  * Off screen it rests; paused or with reduced motion it holds still.
  */
-export function WorkWall({ rows, name, line }: Props) {
+export function WorkWall({ rows, name, line, bookingHref }: Props) {
   const root = useRef<HTMLElement>(null);
   const reduce = useReducedMotion();
   const [paused, setPaused] = useState(false);
   const [intro, setIntro] = useState(true);
   const pausedRef = useRef(paused);
+  const syncMotion = useRef<() => void>(() => {});
 
-  useGsap(root, ({ reduce: r }) => {
+  useGsap(root, ({ reduce: r, mobile }) => {
     const { gsap } = getGsap();
     const el = root.current!;
     const plane = el.querySelector<HTMLElement>('[data-plane]')!;
@@ -47,7 +49,7 @@ export function WorkWall({ rows, name, line }: Props) {
     const lanes = [...el.querySelectorAll<HTMLElement>('[data-row]')].map((row, i) => ({
       row,
       dir: row.dataset.dir === 'right' ? -1 : 1,
-      speed: 34 + (i % 3) * 11,
+      speed: (mobile ? 13 : 20) + (i % 3) * 6,
       depth: DEPTH[i % DEPTH.length],
       width: 0,
       x: 0,
@@ -105,8 +107,8 @@ export function WorkWall({ rows, name, line }: Props) {
       const surge = m.rush + Math.abs(m.scrollV) * 0.5 + Math.abs(m.fling) + m.dragV;
       spread += (clamp(surge / 2600, 0, 1) - spread) * (1 - Math.exp(-dt / 0.28));
       if (!held) clock += dt;
-      sway.rz = Math.sin(clock * 0.37) * 1.1;
-      sway.rx = Math.sin(clock * 0.29 + 0.6) * 1.6;
+      sway.rz = Math.sin(clock * 0.3) * 0.45;
+      sway.rx = Math.sin(clock * 0.24 + 0.6) * 0.7;
       pose();
       for (const l of lanes) {
         const auto = held ? 0 : l.dir * ((m.dragging ? 0 : l.speed) + m.rush + m.scrollV * 0.5);
@@ -123,13 +125,22 @@ export function WorkWall({ rows, name, line }: Props) {
     let inView = true;
     let ticking = false;
     const sync = () => {
-      const on = inView && !document.hidden && exit < 1;
+      const on = inView && !document.hidden && exit < 1 && !pausedRef.current;
       if (on === ticking) return;
       ticking = on;
       if (on) {
         lastY = window.scrollY;
         gsap.ticker.add(step);
       } else gsap.ticker.remove(step);
+    };
+    syncMotion.current = () => {
+      if (pausedRef.current) {
+        m.rush = 0;
+        m.fling = 0;
+        m.dragV = 0;
+        m.scrollV = 0;
+      }
+      sync();
     };
     const io = new IntersectionObserver(([e]) => {
       inView = e.isIntersecting;
@@ -143,7 +154,7 @@ export function WorkWall({ rows, name, line }: Props) {
     // Vertical swipes stay with the page (touch-action: pan-y).
     let drag: { id: number; x: number; y: number; lastX: number; lastT: number; v: number; on: boolean } | null = null;
     const down = (e: PointerEvent) => {
-      if (e.button !== 0 || (e.target as Element).closest('button')) return;
+      if (e.button !== 0 || (e.target as Element).closest('button, a, [data-hero-copy]')) return;
       drag = { id: e.pointerId, x: e.clientX, y: e.clientY, lastX: e.clientX, lastT: e.timeStamp, v: 0, on: false };
     };
     const move = (e: PointerEvent) => {
@@ -175,7 +186,7 @@ export function WorkWall({ rows, name, line }: Props) {
       if (!drag || e.pointerId !== drag.id) return;
       if (drag.on) {
         // A pointer that stopped before letting go is not a throw
-        m.fling = e.timeStamp - drag.lastT > 90 ? 0 : clamp(-drag.v, -5000, 5000);
+        m.fling = pausedRef.current || e.timeStamp - drag.lastT > 90 ? 0 : clamp(-drag.v, -5000, 5000);
         m.dragging = false;
         el.removeAttribute('data-dragging');
       }
@@ -210,6 +221,7 @@ export function WorkWall({ rows, name, line }: Props) {
     const hurry = () => tl?.timeScale(4);
     const hurryOn = ['wheel', 'touchstart', 'keydown', 'pointerdown'] as const;
     const after = el.querySelectorAll('[data-after]');
+    const copy = el.querySelector('[data-hero-copy]');
     // The work list, whose top edge waits below the screen until the wall has arrived
     const sheet = el.nextElementSibling as HTMLElement | null;
     const ink = title?.querySelector<HTMLElement>('[data-ink]');
@@ -306,6 +318,7 @@ export function WorkWall({ rows, name, line }: Props) {
         // The header and the work list come in once the wall has landed, not on top of the flight
         .fromTo(header, { autoAlpha: 0, y: -14 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: 'expo.out', clearProps: 'transform' }, open + 1.4)
         .to(after, { autoAlpha: 1, duration: 0.5 }, open + 1.6);
+      if (copy) timeline.fromTo(copy, { y: 18 }, { y: 0, duration: 0.8, ease: 'expo.out', clearProps: 'transform' }, open + 1.5);
       if (sheet) timeline.to(sheet, { y: 0, duration: 0.9, ease: 'expo.out' }, open + 1.5);
       hurryOn.forEach((t) => window.addEventListener(t, hurry, { once: true, passive: true }));
     } else setIntro(false);
@@ -313,6 +326,7 @@ export function WorkWall({ rows, name, line }: Props) {
     return () => {
       hurryOn.forEach((t) => window.removeEventListener(t, hurry));
       gsap.ticker.remove(step);
+      syncMotion.current = () => {};
       io.disconnect();
       document.removeEventListener('visibilitychange', sync);
       el.removeEventListener('pointerdown', down);
@@ -337,13 +351,11 @@ export function WorkWall({ rows, name, line }: Props) {
 
   useEffect(() => {
     pausedRef.current = paused;
+    syncMotion.current();
   }, [paused]);
 
   return (
     <section ref={root} className={s.wall} aria-labelledby="wall-title" data-theme="dark" data-wall-intro={intro || undefined}>
-      <h1 id="wall-title" className="sr-only">
-        {name} · {line}
-      </h1>
       <div className={s.sink} data-sink>
         {/* Light behind the screens while they show only through the name, so a gap never empties a letter */}
         <div className={s.ground} data-ground />
@@ -368,6 +380,14 @@ export function WorkWall({ rows, name, line }: Props) {
               </div>
             ))}
           </div>
+        </div>
+      </div>
+      <div className={s.readingShade} aria-hidden="true" data-after />
+      <div className={s.copy} data-hero-copy data-after>
+        <h1 id="wall-title" className={s.statement}><span className="sr-only">{name}. </span>{line}</h1>
+        <div className={s.actions}>
+          <ButtonLink href={bookingHref} arrow track="hero-book">Book a call</ButtonLink>
+          <ButtonLink href="#selected-work" variant="text" track="hero-work">Selected work<span aria-hidden="true">↓</span></ButtonLink>
         </div>
       </div>
       {intro && (
