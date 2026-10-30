@@ -2,12 +2,12 @@
 
 import Link from 'next/link';
 import { useRef, useState } from 'react';
-import { Picture } from '@/components/media/Picture';
+import { WorkPreview } from './WorkPreview';
 import { getGsap, useGsap } from '@/lib/gsap';
 import type { Still } from '@/lib/media';
 import s from './WorkIndex.module.css';
 
-export type IndexItem = { slug: string; name: string; kind: string; services: string; href: string; tone: string; still: Still };
+export type IndexItem = { slug: string; name: string; kind: string; services: string; href: string; tone: string; frames: Still[] };
 
 const Arrow = () => <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13m-5-6 6 6-6 6" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg>;
 
@@ -43,8 +43,8 @@ export function WorkIndex({ items, title = 'Work', allHref = '/work' }: { items:
                 <span className={s.kind} data-fade>{item.kind}</span>
                 <span className={s.services} data-fade>{item.services}</span>
                 <span className={s.arrow} data-fade><Arrow /></span>
-                <span className={s.thumb}><Picture media={item.still} sizes="(max-width: 899px) calc(100vw - 40px), 232px" /></span>
               </Link>
+              <WorkPreview frames={item.frames} name={item.name} interval={1800 + i * 100} className={s.thumb} />
             </li>
           ))}
           <li className={s.end} aria-hidden="true"><span className={s.rule} data-rule /></li>

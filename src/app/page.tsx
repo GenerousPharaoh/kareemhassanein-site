@@ -132,15 +132,25 @@ const REEL: Array<Omit<ReelItem, 'kind' | 'href'> & { deep: string }> = [
   },
 ];
 
-// The list below the reel shows a second screen from each project
-const PREVIEW: Record<string, string> = {
-  'tax-relief-counsel': 'tax-relief-counsel/decoder--desktop',
-  endorphins: 'endorphins/lp-physio--desktop',
-  physiomax: 'physiomax/home-hero--desktop',
-  kinetikare: 'kinetikare/knee-hub--desktop',
-  'techniques-combat': 'techniques-combat/home-hero--desktop',
-  'travel-journal': 'travel-journal/travels-top--desktop',
-  wedding: 'wedding/welcome--desktop',
+// Each selected project has a short visual sequence, beginning with a strong standalone image.
+const PREVIEWS: Record<string, [string, string][]> = {
+  'tax-relief-counsel': [
+    ['home-hero--desktop', 'The Tax Relief Counsel homepage, with its attorney portrait and ivory and navy palette.'],
+    ['practice--desktop', 'The practice-area layout on the Tax Relief Counsel website.'],
+    ['attorney--desktop', 'The attorney profile on the Tax Relief Counsel website.'],
+    ['map--desktop', 'The map showing the reach of Tax Relief Counsel.'],
+  ],
+  endorphins: [
+    ['home-hero--desktop', 'The Endorphins homepage, with its dark clinic photograph and green booking controls.'],
+    ['team--desktop', 'The practitioner portraits on the Endorphins team page.'],
+    ['lp-physio--desktop', 'The physiotherapy page on the Endorphins website.'],
+  ],
+  physiomax: [
+    ['care--desktop', 'The illustrated clinic rooms and services on the PhysioMax website.'],
+    ['treat--desktop', 'The body-area explorer on the PhysioMax website.'],
+    ['service--desktop', 'The physiotherapy page and treatment illustration on the PhysioMax website.'],
+    ['home-hero--desktop', 'The PhysioMax homepage, with its orange and navy typography.'],
+  ],
 };
 
 const KEEP_CASE = ['Business Profile', 'Shopify'];
@@ -177,7 +187,7 @@ export default function Home() {
     services: servicesLine(c.services),
     href: `/work/${c.slug}`,
     tone: REEL.find((r) => r.slug === c.slug)?.deep ?? '#0c0c0b',
-    still: still(PREVIEW[c.slug], c.plate.desktop.alt),
+    frames: PREVIEWS[c.slug].map(([key, alt]) => still(`${c.slug}/${key}`, alt)),
   }));
 
   return (
