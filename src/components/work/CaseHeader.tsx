@@ -2,14 +2,11 @@ import Link from 'next/link';
 import { DisplayTitle } from '@/components/ui/DisplayTitle';
 import { preload } from 'react-dom';
 import type { CaseStudy } from '@/content/cases';
-import { BrowserFrame, PhoneFrame } from '@/components/media/Frames';
-import { LoopVideo } from '@/components/media/LoopVideo';
-import { Picture } from '@/components/media/Picture';
-import { Plate } from '@/components/media/Plate';
-import { isWindow, LIVE_PHONE_SIZES } from './layout';
+import { isWindow } from './layout';
 import { toneOf } from './palette';
 import styles from './CaseHeader.module.css';
 import { Exhibit } from './Exhibit';
+import { CaseSurface } from './CaseSurface';
 
 const enter = (i: number) => ({ ['--i' as string]: i });
 
@@ -61,18 +58,7 @@ export function CaseHeader({ c }: { c: CaseStudy }) {
       </div>
       <Exhibit className={`container ${styles.plateWrap}`} arrive>
       <div data-exhibit data-case-hero data-case-preview={c.slug}>
-        {live ? (
-          <div className={styles.live}>
-            <BrowserFrame domain={c.domain}>
-              <LoopVideo loop={c.hero} className={styles.liveLoop} />
-            </BrowserFrame>
-            <PhoneFrame className={styles.livePhone}>
-              <Picture media={c.plate.phone} sizes={LIVE_PHONE_SIZES} priority />
-            </PhoneFrame>
-          </div>
-        ) : (
-          <Plate desktop={c.plate.desktop} phone={c.plate.phone} domain={c.domain} priority />
-        )}
+        <CaseSurface c={c} />
       </div>
       </Exhibit>
     </header>

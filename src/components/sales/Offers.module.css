@@ -130,11 +130,11 @@
   color: var(--muted);
 }
 
-/* The other four: cards whose parts line up across each row */
+/* Keep the decision and payment terms visible; supporting scope opens on request. */
 .row {
   display: grid;
   gap: clamp(24px, 4vw, 56px);
-  padding-block: clamp(32px, 4.4vw, 64px);
+  padding-block: clamp(28px, 3.5vw, 48px);
   border-top: 1px solid var(--rule);
   scroll-margin-top: calc(var(--header-h) + 24px);
 }
@@ -147,20 +147,8 @@
   align-content: start;
 }
 
-/* What each price includes, in view: the same small label as the check's "What you get" */
-.included {
-  display: grid;
-  gap: 8px;
-  padding-top: 18px;
-  border-top: 1px solid var(--rule);
-}
-
-.includedTitle {
-  font: 500 var(--t-label) / 1.4 var(--font-mono);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
+/* Each offer already supplies its outer divider. */
+.row .description .included { border-bottom: 0; }
 
 .included .includes {
   gap: 0;

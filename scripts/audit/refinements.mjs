@@ -78,7 +78,7 @@ try {
     const dialog = page.getByRole('dialog');
     await dialog.waitFor({ state: 'visible' });
     const mainImage = dialog.getByRole('img');
-    await page.waitForFunction(() => document.querySelector('dialog img[alt]:not([alt=""])')?.complete);
+    await page.waitForFunction(() => document.querySelector('dialog img[data-ready]')?.complete);
     const rail = dialog.getByRole('group', { name: 'Choose a screen' });
     const count = await rail.getByRole('button').count();
     assert.ok(count > 2);

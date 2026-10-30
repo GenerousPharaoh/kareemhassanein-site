@@ -1,4 +1,3 @@
-import { CopyEmail } from '@/components/ui/CopyEmail';
 import { enter } from '@/components/pages/enter';
 import { PageHead } from '@/components/pages/PageHead';
 import { RequestForm, type Topic } from '@/components/pages/RequestForm';
@@ -46,21 +45,6 @@ export function BookView({ initialTopic }: { initialTopic: Topic }) {
           <p>I reply within one business day to arrange a call or confirm the website check. Any paid work is agreed before it starts.</p>
         </div>
 
-        <div className={styles.mail}>
-          <p className="t-label">Prefer email?</p>
-          <CopyEmail className={styles.mailAddress} />
-        </div>
-
-        <p className={styles.safe}>
-          <svg viewBox="0 0 20 20" aria-hidden="true">
-            <rect x="4" y="9" width="12" height="8.5" rx="2" fill="none" stroke="currentColor" strokeWidth="1.5" />
-            <path d="M6.75 9V6.75a3.25 3.25 0 0 1 6.5 0V9" fill="none" stroke="currentColor" strokeWidth="1.5" />
-          </svg>
-          <span>
-            I never ask for passwords or patient information by email. When work needs access, you add me as a user in your
-            own accounts.
-          </span>
-        </p>
       </aside>
     </div>
   );

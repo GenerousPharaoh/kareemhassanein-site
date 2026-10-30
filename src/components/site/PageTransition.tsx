@@ -174,7 +174,7 @@ export function PageTransition() {
       if (pending.current?.pathname === url.pathname) return;
       const up = url.pathname === '/' || (url.pathname === '/work' && currentPath.current.startsWith('/work/'))
         || (url.pathname === '/notes' && currentPath.current.startsWith('/notes/'));
-      const preview = link.closest('[data-case-card]')?.querySelector<HTMLElement>('[data-case-preview]');
+      const preview = link.closest('[data-case-card], [data-case-next]')?.querySelector<HTMLElement>('[data-case-preview]');
       const source = preview && url.pathname === `/work/${preview.dataset.casePreview}` ? preview : null;
       begin(url.pathname, () => router.push(url.pathname + url.search + url.hash), up ? 'back' : 'forward', undefined, source);
     };

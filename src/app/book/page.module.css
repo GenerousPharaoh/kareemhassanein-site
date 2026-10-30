@@ -32,8 +32,8 @@ div.layout { max-width: 1280px; }
 }
 
 .card {
-  padding: clamp(20px, 2vw, 28px);
-  border-radius: 4px;
+  padding: clamp(20px, 2.5vw, 36px);
+  border-radius: 20px;
   background: var(--paper);
   box-shadow: none;
 }
@@ -61,31 +61,6 @@ div.layout { max-width: 1280px; }
   font-size: var(--t-small);
   line-height: 1.6;
   color: var(--muted);
-}
-
-.mail {
-  display: grid;
-  gap: 10px;
-}
-
-.mailAddress {
-  font-size: 1.0625rem;
-}
-
-.safe {
-  display: grid;
-  grid-template-columns: 20px minmax(0, 1fr);
-  gap: 12px;
-  padding-top: 4px;
-  font-size: .8125rem;
-  line-height: 1.5;
-  color: var(--ink-2);
-}
-
-.safe svg {
-  width: 20px;
-  height: 20px;
-  color: var(--signal);
 }
 
 @media (min-width: 1000px) {

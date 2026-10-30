@@ -1,11 +1,10 @@
 import Link from 'next/link';
 import type { CaseStudy } from '@/content/cases';
-import { BrowserFrame } from '@/components/media/Frames';
-import { Picture } from '@/components/media/Picture';
+import { CaseSurface } from './CaseSurface';
 import { paletteVars, toneOf } from './palette';
 import styles from './NextCase.module.css';
 
-/** The next case, in its own palette, with its home page rising from the band's lower edge. */
+/** A complete view of the next project, ready to carry into its case header. */
 export function NextCase({ c }: { c: CaseStudy }) {
   return (
     <nav className={styles.next} style={paletteVars(c.palette)} data-tone={toneOf(c.palette)} data-theme={toneOf(c.palette)} data-case-next aria-label="Next case">
@@ -22,10 +21,8 @@ export function NextCase({ c }: { c: CaseStudy }) {
               </svg>
             </p>
           </div>
-          <div className={styles.peek} aria-hidden="true">
-            <BrowserFrame domain={c.domain} className={styles.frame}>
-              <Picture media={c.plate.desktop} sizes="(min-width: 1280px) 705px, (min-width: 960px) calc(57vw - 23px), calc(100vw - 40px)" />
-            </BrowserFrame>
+          <div className={styles.peek} aria-hidden="true" data-case-preview={c.slug}>
+            <CaseSurface c={c} preview />
           </div>
         </div>
       </Link>

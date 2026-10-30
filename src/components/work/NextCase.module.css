@@ -19,7 +19,8 @@
 .inner {
   display: grid;
   gap: 40px;
-  padding-top: clamp(48px, 7vw, 112px);
+  align-items: center;
+  padding-block: clamp(48px, 7vw, 112px);
 }
 
 .text {
@@ -63,34 +64,17 @@
 }
 
 .peek {
-  height: clamp(220px, 55vw, 420px);
-}
-
-.frame {
-  transform: none;
-  transform-origin: 50% 100%;
-}
-
-.next[data-tone='dark'] .frame {
-  box-shadow: 0 0 0 1px #ffffff20, 0 30px 60px -30px #0009;
+  width: 100%;
+  max-width: 840px;
+  min-width: 0;
+  justify-self: end;
 }
 
 @media (min-width: 960px) {
   .inner {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
     gap: clamp(48px, 7vw, 112px);
     min-height: 580px;
-  }
-  .text {
-    padding-bottom: 80px;
-  }
-  .peek {
-    position: relative;
-    height: auto;
-  }
-  .frame {
-    position: absolute;
-    inset: 32px -8vw auto 0;
   }
 }
 
@@ -101,7 +85,11 @@
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .frame, .go svg {
+  .go svg {
     transition: transform var(--dur-move) var(--ease-out);
   }
+}
+
+@media (hover: hover) {
+  .link:hover .go { text-decoration: underline; text-underline-offset: .3em; }
 }

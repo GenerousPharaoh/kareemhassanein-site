@@ -479,12 +479,15 @@ html:not([data-route-arrival]) body:has(main > :first-child[data-theme='light'],
 }
 
 ::view-transition-image-pair(*.case-morph) { isolation: isolate; }
-::view-transition-old(*.case-morph),
-::view-transition-new(*.case-morph) { mix-blend-mode: normal; height: 100%; object-fit: fill; }
-::view-transition-old(*.case-morph) { animation: case-out 240ms ease-out both; }
-::view-transition-new(*.case-morph) { animation: case-in 360ms ease-out both; }
-@keyframes case-out { to { opacity: 0; } }
-@keyframes case-in { from { opacity: 0; } to { opacity: 1; } }
+/* Carry one opaque composition. Two fading captures doubled small type and let
+   the page show through the screen while its desktop and phone frames resized. */
+::view-transition-old(*.case-morph) { display: none; }
+::view-transition-new(*.case-morph) {
+  animation: none;
+  mix-blend-mode: normal;
+  height: 100%;
+  object-fit: fill;
+}
 
 @media (max-width: 760px) {
   ::view-transition-group(*.case-morph) { animation-duration: 420ms; }

@@ -2,6 +2,7 @@
 
 import { useId, useLayoutEffect, useRef, useState, type CSSProperties, type MouseEvent, type ReactNode } from 'react';
 import { prefersReducedMotion } from '@/lib/useReducedMotion';
+import { getLenis } from '@/components/site/SmoothScroll';
 import s from './GalleryViewer.module.css';
 
 export type ZoomItem = { key: string; src: string; thumbnail: string; alt: string; width: number; height: number };
@@ -12,6 +13,7 @@ export function GalleryViewer({ items, children }: { items: ZoomItem[]; children
   const [expanded, setExpanded] = useState(false);
   const [pending, setPending] = useState<number | null>(null);
   const [error, setError] = useState('');
+  const [failed, setFailed] = useState<number | null>(null);
   const [direction, setDirection] = useState(0);
   const [loaded, setLoaded] = useState('');
   const dialog = useRef<HTMLDialogElement>(null);
@@ -19,6 +21,7 @@ export function GalleryViewer({ items, children }: { items: ZoomItem[]; children
   const strip = useRef<HTMLDivElement>(null);
   const opener = useRef<HTMLAnchorElement | null>(null);
   const requested = useRef(0);
+  const shown = useRef<number | null>(null);
   const run = useRef(0);
   const gesture = useRef<{ x: number; y: number } | null>(null);
   const swiped = useRef(false);
@@ -26,13 +29,21 @@ export function GalleryViewer({ items, children }: { items: ZoomItem[]; children
   const open = index !== null;
   const item = index !== null ? items[index] : null;
 
-  const close = () => { run.current += 1; setPending(null); setIndex(null); };
-  const choose = async (next: number) => {
-    if (next === requested.current) return;
-    const arrival = next > requested.current ? 1 : -1;
+  const close = () => {
+    run.current += 1;
+    shown.current = null;
+    setPending(null);
+    setFailed(null);
+    setError('');
+    setIndex(null);
+  };
+  const choose = async (next: number, retry = false) => {
+    if (next === requested.current && !retry && failed !== next) return;
+    const arrival = next === shown.current ? 0 : next > requested.current ? 1 : -1;
     requested.current = next;
     const mine = ++run.current;
     setPending(next);
+    setFailed(null);
     setError('');
     const image = new Image();
     image.src = items[next].src;
@@ -40,33 +51,56 @@ export function GalleryViewer({ items, children }: { items: ZoomItem[]; children
     try {
       // Keep the current capture visible while its replacement decodes, even on a slow phone.
       await Promise.race([image.decode(), new Promise<never>((_, reject) => { timer = window.setTimeout(() => reject(new Error('timeout')), 12000); })]);
-      if (run.current !== mine) return;
+      if (run.current !== mine || shown.current === null) return;
       setDirection(arrival);
       setLoaded(items[next].src);
       setExpanded(false);
+      shown.current = next;
       setIndex(next);
       setPending(null);
+      setFailed(null);
+      setError('');
     } catch {
-      if (run.current !== mine) return;
-      requested.current = index ?? 0;
+      if (run.current !== mine || shown.current === null) return;
+      requested.current = shown.current;
       setPending(null);
+      setFailed(next);
       setError('That screen could not load. Please try again.');
     } finally { window.clearTimeout(timer); }
   };
   const move = (step: number) => void choose((requested.current + step + items.length) % items.length);
+  const retryImage = () => {
+    if (failed === null) return;
+    const rail = strip.current;
+    const thumb = rail?.querySelectorAll<HTMLButtonElement>('button')[failed];
+    // The failed destination may differ from the image still on screen. Its persistent
+    // thumbnail keeps focus while the temporary error action is removed for loading.
+    if (rail && thumb) {
+      rail.scrollTo({ left: thumb.offsetLeft - rail.clientWidth / 2 + thumb.offsetWidth / 2, behavior: 'instant' });
+      thumb.focus({ preventScroll: true });
+    }
+    void choose(failed, true);
+  };
 
   useLayoutEffect(() => {
     if (!open) return;
     const el = dialog.current;
     if (!el) return;
     const root = document.documentElement;
-    const before = root.style.overflow;
+    const before = { overflow: root.style.overflow, gutter: root.style.scrollbarGutter };
     root.style.overflow = 'hidden';
+    root.style.scrollbarGutter = 'stable';
+    const lenis = getLenis();
+    const resumeScroll = !!lenis && !lenis.isStopped;
+    lenis?.stop();
     el.showModal();
     return () => {
       run.current += 1;
+      shown.current = null;
       el.close();
-      root.style.overflow = before;
+      root.style.overflow = before.overflow;
+      root.style.scrollbarGutter = before.gutter;
+      if (resumeScroll && getLenis() === lenis) lenis?.start();
       if (opener.current?.isConnected) opener.current.focus({ preventScroll: true });
     };
   }, [open]);
@@ -87,16 +121,17 @@ export function GalleryViewer({ items, children }: { items: ZoomItem[]; children
     if (next < 0) return;
     event.preventDefault();
     opener.current = link;
-    requested.current = next;
+    shown.current = next;
     setDirection(0);
-    setError('');
+    setLoaded('');
     setExpanded(false);
     setIndex(next);
+    void choose(next, true);
   };
 
   return <div onClick={onClick}>
     {children}
-    <dialog ref={dialog} className={s.dialog} aria-labelledby={`${uid}-caption`} onClose={close} onClick={(event) => { if (event.target === event.currentTarget) close(); }} onKeyDown={(event) => {
+    <dialog ref={dialog} className={s.dialog} data-lenis-prevent aria-labelledby={`${uid}-caption`} onClose={() => { if (!dialog.current?.open) close(); }} onClick={(event) => { if (event.target === event.currentTarget) close(); }} onKeyDown={(event) => {
       if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') { event.preventDefault(); move(event.key === 'ArrowLeft' ? -1 : 1); }
       if (event.key === 'Home' || event.key === 'End') { event.preventDefault(); void choose(event.key === 'Home' ? 0 : items.length - 1); }
     }}>
@@ -124,11 +159,16 @@ export function GalleryViewer({ items, children }: { items: ZoomItem[]; children
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={item.thumbnail} alt="" width={item.width} height={item.height} className={s.placeholder} aria-hidden="true" />
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img key={item.src} src={item.src} alt={item.alt} width={item.width} height={item.height} className={s.image} data-ready={loaded === item.src || undefined} onLoad={() => setLoaded(item.src)} onError={() => setError('That screen could not load. Please try again.')} style={{ '--image-direction': direction } as CSSProperties} />
+            <img key={item.src} src={loaded === item.src ? item.src : undefined} alt={item.alt} width={item.width} height={item.height} className={s.image} data-ready={loaded === item.src || undefined} onError={() => {
+              if (shown.current !== index) return;
+              setLoaded('');
+              setFailed(index);
+              setError('That screen could not load. Please try again.');
+            }} style={{ '--image-direction': direction } as CSSProperties} />
           </button>
         </div>
         <div className={s.bottom}>
-          {error && <p className={s.error} role="alert">{error}</p>}
+          {error && <div className={s.error} role="alert"><p>{error}</p>{failed !== null && <button type="button" className={s.retry} onClick={retryImage}>Retry image</button>}</div>}
           <div ref={strip} className={s.strip} role="group" aria-label="Choose a screen">
             {items.map((screen, i) => <button key={screen.key} className={s.thumb} type="button" aria-label={`Screen ${i + 1}: ${screen.alt}`} aria-current={index === i ? 'true' : undefined} data-pending={pending === i || undefined} onClick={() => void choose(i)}>
               {/* eslint-disable-next-line @next/next/no-img-element */}

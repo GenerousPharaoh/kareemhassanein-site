@@ -1,0 +1,7 @@
+.surface { width: 100%; }
+.live { position: relative; padding-right: 10%; padding-bottom: 6%; }
+.livePhone { position: absolute; right: 0; bottom: 0; width: clamp(104px, 21%, 268px); }
+.surface[data-tone='dark'] .live > :first-child { box-shadow: 0 0 0 1px #ffffff20, 0 36px 70px -30px #0008; }
+.surface[data-tone='dark'] .livePhone > * { box-shadow: 0 0 0 1px #ffffff30, 0 28px 52px -24px #0009; }
+.poster { display: block; width: 100%; height: auto; background: #0b0c0d; }
+.liveLoop button { right: auto; left: 12px; }

@@ -134,7 +134,13 @@ export function RequestForm({ initialTopic, checkPrice, checkNote, email }: Prop
   };
 
   const chooseTopic = (next: Topic) => {
+    if (phase === 'sending' || next === topic) return;
     setTopic(next);
+    // Keep the refreshable address in step with the choice without remounting the form.
+    // The request's contents stay in component memory, never in the URL or history state.
+    const url = new URL(window.location.href);
+    url.pathname = next === 'check' ? '/book/check' : '/book';
+    window.history.replaceState({ ...window.history.state }, '', url.pathname + url.search + url.hash);
     setValues((v) => {
       if (next === 'check' && !v.message.trim()) return { ...v, message: CHECK_PREFILL };
       if (next === 'call' && v.message.trim() === CHECK_PREFILL) return { ...v, message: '' };
@@ -241,7 +247,7 @@ export function RequestForm({ initialTopic, checkPrice, checkNote, email }: Prop
         </div>
       ) : (
         <form className={styles.form} method="post" onSubmit={onSubmit} noValidate aria-busy={sending || undefined}>
-          <fieldset className={styles.fields} disabled={!ready}>
+          <fieldset className={styles.fields} disabled={!ready || sending}>
           <fieldset className={styles.topics}>
             <legend className={styles.legend}>What would you like?</legend>
             <div className={styles.topicGrid}>
@@ -386,11 +392,12 @@ export function RequestForm({ initialTopic, checkPrice, checkNote, email }: Prop
             <label htmlFor={id('trap')}>Leave this field empty</label>
             <input ref={trapRef} id={id('trap')} name="hp_extra" type="text" tabIndex={-1} autoComplete="off" defaultValue="" />
           </div>
+          </fieldset>
 
           <div className={styles.foot}>
             {/* aria-disabled rather than disabled, so keyboard focus stays on the button while it sends.
                 Both labels share one cell, so the button keeps its size when one replaces the other. */}
-            <button type="submit" className={styles.submit} aria-disabled={sending || undefined} data-sending={sending || undefined}>
+            <button type="submit" className={styles.submit} disabled={!ready} aria-disabled={sending || undefined} data-sending={sending || undefined}>
               <span className={styles.submitLabel} aria-hidden={sending || undefined}>
                 <span>{topic === 'check' ? 'Request the check' : 'Send request'}</span>
                 <svg className={styles.arrow} viewBox="0 0 16 16" aria-hidden="true">
@@ -402,12 +409,7 @@ export function RequestForm({ initialTopic, checkPrice, checkNote, email }: Prop
                 <span>Sending</span>
               </span>
             </button>
-            <p className={styles.reply}>
-              <span className={styles.replyDot} aria-hidden="true" />
-              Replies within one business day
-            </p>
           </div>
-          </fieldset>
         </form>
       )}
       {phase === 'sent' ? null : (

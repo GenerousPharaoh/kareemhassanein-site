@@ -110,7 +110,7 @@
 }
 
 .offers {
-  padding-bottom: var(--section);
+  padding-bottom: clamp(32px, 4vw, 56px);
 }
 
 .inner {
@@ -122,6 +122,25 @@
   display: grid;
   margin-top: clamp(24px, 4vw, 56px);
   border-bottom: 1px solid var(--rule);
+}
+
+.processLink {
+  display: inline-flex;
+  justify-self: start;
+  align-items: center;
+  gap: 16px;
+  min-height: 44px;
+  font-size: .9375rem;
+  font-weight: 500;
+  text-decoration: underline;
+  text-decoration-color: var(--rule);
+  text-underline-offset: .3em;
+}
+
+.processLink svg { width: 16px; height: 16px; }
+
+@media (hover: hover) {
+  .processLink:hover { text-decoration-color: currentColor; }
 }
 
 .note {

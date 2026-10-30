@@ -162,7 +162,9 @@
 .thumb[aria-current] { border-color: #eeede8; opacity: 1; background: #eeede81a; }
 .thumb[data-pending] { border-color: #8f8e88; opacity: 1; }
 .thumb:focus-visible { outline: 2px solid white; outline-offset: 1px; }
-.error { color: #eeede8; text-align: center; padding-block: 8px; font-size: .875rem; }
+.error { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px 16px; color: #eeede8; text-align: center; padding-block: 8px; font-size: .875rem; }
+.retry { min-height: 44px; padding: 0 14px; border: 1px solid #eeede850; border-radius: 999px; background: transparent; color: inherit; cursor: pointer; }
+.retry:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
 
 .textButton {
   display: inline-flex;
@@ -202,6 +204,7 @@
 }
 
 @media (hover: hover) {
+  .retry:hover { background: #eeede8; color: #0c0c0b; }
   .thumb:hover { opacity: 1; border-color: #eeede880; }
   .control:hover {
     background: #eeede8;

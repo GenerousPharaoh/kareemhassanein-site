@@ -6,7 +6,6 @@ import { CloseCall } from '@/components/sales/CloseCall';
 import { Faq } from '@/components/sales/Faq';
 import { CheckOffer, OfferRow } from '@/components/sales/Offers';
 import { splitPrice } from '@/components/sales/style';
-import { Steps, type Step } from '@/components/sales/Steps';
 import { PRICING_FAQ } from '@/content/faq';
 import { OFFERS, PRICE_NOTE } from '@/content/offers';
 import { SITE } from '@/content/site';
@@ -18,33 +17,6 @@ export const metadata = pageMeta({
     'A $1,500 website check, fixes from $1,000, two-week sprints from $5,000, new websites from $10,000 and monthly plans from $1,000 a month. Fixed prices, agreed before work starts.',
   path: '/pricing',
 });
-
-const STEPS: Step[] = [
-  {
-    title: 'A 20-minute call',
-    text: 'You tell me what is not working, what you have tried, and what a new patient or client is worth to you. I tell you which step makes sense.',
-  },
-  {
-    title: 'The check, in five business days',
-    text: 'A recorded walkthrough of what I found, and a ranked list with a fixed price beside each fix.',
-  },
-  {
-    title: 'A short proposal',
-    text: 'One page: your problem in your words, what I found, and three options from a focused fix to the whole path, with a fixed price for each.',
-  },
-  {
-    title: 'Agreement and deposit',
-    text: 'You choose an option and sign a short agreement. Work starts when the deposit clears.',
-  },
-  {
-    title: 'A short weekly update',
-    text: 'One message a week until handover: what changed, what is next and anything I need from you. Every change is logged and can be undone.',
-  },
-  {
-    title: 'Handover',
-    text: 'Accounts confirmed in your name, a short guide to what was built, and the offer of a monthly plan if you want one.',
-  },
-];
 
 export default function PricingPage() {
   const check = OFFERS.find((o) => o.id === 'check');
@@ -92,18 +64,14 @@ export default function PricingPage() {
               <OfferRow key={o.id} offer={o} />
             ))}
           </div>
+          <Link href="/about#how-title" className={styles.processLink}>
+            How I work
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9.5M8.5 4l4 4-4 4" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" /></svg>
+          </Link>
         </div>
       </section>
 
-      <Steps
-        id="pricing-steps"
-        title="How working together goes"
-        intro="From the first call to the handover, you know what happens next and what it costs."
-        steps={STEPS}
-        note="If you already know the problem, the check can be skipped: the call goes straight to a proposal for the fix."
-      />
-
-      <Faq sheet id="pricing-faq" title="Questions about price" intro="If yours is not here, ask me on the call." items={PRICING_FAQ} />
+      <Faq id="pricing-faq" title="Questions about price" intro="If yours is not here, ask me on the call." items={PRICING_FAQ} />
 
       <CloseCall
         id="pricing-close"
