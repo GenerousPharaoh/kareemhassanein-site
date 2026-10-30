@@ -6,7 +6,7 @@ import { flushSync } from 'react-dom';
 import { getLenis } from './SmoothScroll';
 import { prefersReducedMotion, subscribeMotionPreference } from '@/lib/useReducedMotion';
 
-type PendingRoute = { pathname: string; position?: number; caseSlug?: string; finish: () => void };
+type PendingRoute = { pathname: string; position?: number; caseSlug?: string; caseWindow?: boolean; fallback?: boolean; finish: () => void };
 const POSITION = '__khMotionPosition';
 
 function shareCase(element: HTMLElement) {
@@ -48,6 +48,7 @@ export function PageTransition() {
   const currentPath = useRef(pathname);
   const pending = useRef<PendingRoute | null>(null);
   const position = useRef(0);
+  const arrival = useRef<Animation | null>(null);
 
   useLayoutEffect(() => {
     currentPath.current = pathname;
@@ -57,8 +58,18 @@ export function PageTransition() {
     lenis?.scrollTo(window.scrollY, { immediate: true, force: true });
     const route = pending.current;
     if (route?.pathname === pathname) {
+      if (route.fallback && !prefersReducedMotion()) {
+        arrival.current?.cancel();
+        arrival.current = document.getElementById('main')?.animate(
+          [{ opacity: 0, transform: 'translateY(8px)' }, { opacity: 1, transform: 'none' }],
+          { duration: 480, easing: 'cubic-bezier(.4, 0, .3, 1)' },
+        ) ?? null;
+      }
       const hero = document.querySelector<HTMLElement>('[data-case-hero]');
-      if (route.caseSlug && hero?.dataset.casePreview === route.caseSlug) shareCase(hero);
+      if (route.caseSlug && hero?.dataset.casePreview === route.caseSlug) {
+        const image = route.caseWindow ? hero.querySelector<HTMLElement>('[data-browser-frame]') : hero;
+        if (image) shareCase(image);
+      }
       if (route.position !== undefined) {
         position.current = route.position;
         window.history.replaceState({ ...window.history.state, [POSITION]: route.position }, '');
@@ -77,9 +88,12 @@ export function PageTransition() {
     window.history.replaceState({ ...window.history.state, [POSITION]: position.current }, '');
 
     const begin = (destination: string, navigate?: () => void, direction: 'forward' | 'back' = 'forward', targetPosition?: number, source?: HTMLElement | null) => {
+      window.dispatchEvent(new Event('route-start'));
+      arrival.current?.cancel();
       pending.current?.finish();
       active?.skipTransition();
       clearCase();
+      delete root.dataset.routeFromMenu;
       window.clearTimeout(timeout);
       window.clearTimeout(captureDeadline);
       const lenis = getLenis();
@@ -89,25 +103,33 @@ export function PageTransition() {
         root.dataset.routeArrival = direction;
         if (navigate) {
           // The same history accounting works when animation is disabled.
-          pending.current = { pathname: destination, position: position.current + 1, finish: () => { pending.current = null; } };
+          pending.current = { pathname: destination, position: position.current + 1, fallback: true, finish: () => { pending.current = null; } };
         } else if (targetPosition !== undefined) position.current = targetPosition;
         navigate?.();
         return;
       }
 
       let resolve: () => void;
-      const box = source?.getBoundingClientRect();
+      // A work card and a case header arrange their phone differently. Carry their matching
+      // browser window, so the phone can arrive with the page instead of appearing mid-morph.
+      const caseWindow = !!source?.closest('[data-case-card]');
+      const shared = caseWindow ? source?.querySelector<HTMLElement>('[data-browser-frame]') : source;
+      const box = shared?.getBoundingClientRect();
       const caseSlug = source && box && box.bottom > 0 && box.top < innerHeight && CSS.supports('view-transition-class', 'case-morph') ? source.dataset.casePreview : undefined;
-      if (source && caseSlug) {
+      if (shared && caseSlug) {
         root.dataset.caseTransition = caseSlug;
-        shareCase(source);
+        shareCase(shared);
       }
+      // The outgoing mobile menu belongs to the page snapshot, not the incoming small header.
+      if (document.querySelector('body > header[data-open]')) root.dataset.routeFromMenu = '';
       const committed = new Promise<void>((done) => { resolve = done; });
       const route: PendingRoute = {
         pathname: destination,
         caseSlug,
+        caseWindow,
         position: navigate ? position.current + 1 : targetPosition,
         finish: () => {
+          window.clearTimeout(captureDeadline);
           if (pending.current === route) pending.current = null;
           resolve();
         },
@@ -134,16 +156,18 @@ export function PageTransition() {
         types: ['page', direction],
       });
       active = transition;
-      // An uncached route must not freeze the old screen while the network catches up.
-      // Skipping the animation leaves the router's update intact.
+      // Allow a normal uncached route and its visible images to arrive without cutting off
+      // the handoff. A genuinely slow request still releases the snapshot promptly.
       const deadline = window.setTimeout(() => {
+        route.fallback = true;
         transition.skipTransition();
         if (active === transition) {
           route.caseSlug = undefined;
           delete root.dataset.routeChanging;
+          delete root.dataset.routeFromMenu;
           clearCase();
         }
-      }, 300);
+      }, 900);
       captureDeadline = deadline;
       // A failed navigation must not leave a frozen snapshot or an unresolved update callback.
       timeout = window.setTimeout(() => {
@@ -156,6 +180,7 @@ export function PageTransition() {
         window.clearTimeout(timeout);
         window.clearTimeout(captureDeadline);
         delete root.dataset.routeChanging;
+        delete root.dataset.routeFromMenu;
         clearCase();
         window.dispatchEvent(new Event('route-settled'));
       };
@@ -185,7 +210,11 @@ export function PageTransition() {
       const direction = targetPosition !== undefined && targetPosition > position.current ? 'forward' : 'back';
       if (location.pathname !== currentPath.current) begin(location.pathname, undefined, direction, targetPosition);
     };
-    const onPreference = () => { if (prefersReducedMotion()) active?.skipTransition(); };
+    const onPreference = () => {
+      if (!prefersReducedMotion()) return;
+      active?.skipTransition();
+      arrival.current?.cancel();
+    };
     document.addEventListener('click', onClick, true);
     window.addEventListener('popstate', onPopState, true);
     const unsubscribePreference = subscribeMotionPreference(onPreference);
@@ -195,9 +224,11 @@ export function PageTransition() {
       unsubscribePreference();
       pending.current?.finish();
       active?.skipTransition();
+      arrival.current?.cancel();
       window.clearTimeout(timeout);
       window.clearTimeout(captureDeadline);
       delete root.dataset.routeChanging;
+      delete root.dataset.routeFromMenu;
       clearCase();
     };
   }, [router]);

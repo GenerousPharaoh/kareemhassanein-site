@@ -223,7 +223,8 @@ export function Header() {
   // exit for reduced motion, where there is no animation).
   useEffect(() => {
     if (phase !== 'closing') return;
-    const t = window.setTimeout(() => setPhase('closed'), prefersReducedMotion() ? 0 : 400);
+    // The surface exits over 320ms; allow a short margin if animationend is interrupted.
+    const t = window.setTimeout(() => setPhase('closed'), prefersReducedMotion() ? 0 : 420);
     return () => window.clearTimeout(t);
   }, [phase]);
 

@@ -18,8 +18,8 @@ export function Exhibit({ children, className, arrive = false }: { children: Rea
     if (arrive) {
       if (!document.documentElement.hasAttribute('data-route-arrival')) gsap.fromTo(
         target,
-        { y: 110, scale: 0.9, rotationX: 22, rotation: -5, transformPerspective: 1600, transformOrigin: '50% 100%' },
-        { y: 0, scale: 1, rotationX: 0, rotation: 0, duration: 1.1, ease: 'expo.out', delay: 0.1 },
+        { y: 48, scale: 0.97, rotationX: 8, rotation: -1, transformPerspective: 1600, transformOrigin: '50% 100%' },
+        { y: 0, scale: 1, rotationX: 0, rotation: 0, duration: 0.85, ease: 'power2.inOut', delay: 0.1 },
       );
       if (!mobile) {
         gsap.fromTo(
@@ -33,11 +33,11 @@ export function Exhibit({ children, className, arrive = false }: { children: Rea
     // A restored or incoming viewport is already composed before its route snapshot.
     const box = wrap.getBoundingClientRect();
     if (document.documentElement.hasAttribute('data-route-arrival') && box.top < innerHeight && box.bottom > 0) return;
-    // Elsewhere it swings up off the same tilt as it comes into view: quick, once
+    // A short, gently paced settle keeps the screen readable throughout its entrance.
     gsap.fromTo(
       target,
-      { y: 120, scale: 0.9, rotationX: 20, rotation: -4, transformPerspective: 1600, transformOrigin: '50% 100%' },
-      { y: 0, scale: 1, rotationX: 0, rotation: 0, duration: 0.9, ease: 'expo.out', scrollTrigger: { trigger: wrap, start: 'top 88%', once: true } },
+      { y: 48, scale: 0.97, rotationX: 8, rotation: -1, transformPerspective: 1600, transformOrigin: '50% 100%' },
+      { y: 0, scale: 1, rotationX: 0, rotation: 0, duration: 0.85, ease: 'power2.inOut', scrollTrigger: { trigger: wrap, start: 'top 90%', once: true } },
     );
   });
   return <div ref={root} className={className}>{children}</div>;

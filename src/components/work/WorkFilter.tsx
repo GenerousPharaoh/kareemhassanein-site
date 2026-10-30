@@ -1,10 +1,10 @@
 'use client';
 
-import { useLayoutEffect, useRef, useState, useSyncExternalStore, type ReactNode } from 'react';
+import { useCallback, useLayoutEffect, useRef, useState, useSyncExternalStore, type ReactNode } from 'react';
 import { flushSync } from 'react-dom';
 import { getGsap } from '@/lib/gsap';
 import styles from './WorkFilter.module.css';
-import { prefersReducedMotion } from '@/lib/useReducedMotion';
+import { prefersReducedMotion, subscribeMotionPreference } from '@/lib/useReducedMotion';
 
 const FILTERS = [
   { id: 'all', label: 'All cases', status: 'Showing all case studies.' },
@@ -61,15 +61,29 @@ function setName(el: HTMLElement, name: string, kind = '') {
   el.style.setProperty('view-transition-class', kind || null);
 }
 
+type FilterTransition = {
+  view: ViewTransition | null;
+  items: HTMLElement[];
+  marker: HTMLElement | null;
+  apply: (() => void) | null;
+};
+
+function clearNames(transition: FilterTransition) {
+  transition.items.forEach((el) => setName(el, ''));
+  if (transition.marker) {
+    transition.marker.style.removeProperty('view-transition-name');
+    delete transition.marker.dataset.transitioning;
+  }
+}
+
 /**
  * Filter chips over a list rendered on the server. The cards carry data-sectors and their
  * sections data-group; this component only sets data-filter, and CSS does the hiding,
  * so the full list is there without JavaScript.
  *
- * A change of filter is a fade-through, never a slide: what leaves the screen fades out where it
- * is, then what arrives rises into its place, so two cards never show through each other and
- * nothing travels up from below the fold. Only items on screen take part (data-work-item marks
- * the candidates); whatever keeps its place does not move or flicker.
+ * A change of filter overlaps the outgoing and incoming pictures, with a small settle for the
+ * arrival. Only items on screen take part (data-work-item marks the candidates); nothing travels
+ * up from below the fold, and whatever keeps its place does not move or flicker.
  */
 export function WorkFilter({ children }: { children: ReactNode }) {
   // The choice belongs to this history entry, so Back restores the same list and scroll position.
@@ -79,6 +93,31 @@ export function WorkFilter({ children }: { children: ReactNode }) {
   const chips = useRef<HTMLDivElement>(null);
   const marker = useRef<HTMLSpanElement>(null);
   const run = useRef(0);
+  const active = useRef<FilterTransition | null>(null);
+
+  const cancelTransition = useCallback((commit = false) => {
+    const previous = active.current;
+    active.current = null;
+    run.current++;
+    if (!previous) return;
+    previous.view?.skipTransition();
+    clearNames(previous);
+    // A preference change may interrupt capture before the selected filter commits.
+    // Keep that choice; navigation and newer filter choices discard the pending update.
+    if (commit) previous.apply?.();
+  }, []);
+
+  useLayoutEffect(() => {
+    const onRoute = () => cancelTransition();
+    const onPreference = () => { if (prefersReducedMotion()) cancelTransition(true); };
+    const unsubscribe = subscribeMotionPreference(onPreference);
+    window.addEventListener('route-start', onRoute);
+    return () => {
+      unsubscribe();
+      window.removeEventListener('route-start', onRoute);
+      cancelTransition();
+    };
+  }, [cancelTransition]);
 
   useLayoutEffect(() => {
     // Filtering changes where each screen sits, so its scroll composition needs fresh positions.
@@ -106,7 +145,9 @@ export function WorkFilter({ children }: { children: ReactNode }) {
   }, [filter]);
 
   const choose = (id: FilterId) => {
-    if (id === filter) return;
+    cancelTransition();
+    const current = savedFilter();
+    if (id === current) return;
     const apply = () => {
       window.history.replaceState({ ...window.history.state, [FILTER_KEY]: id }, '');
       window.dispatchEvent(new Event(FILTER_EVENT));
@@ -126,7 +167,7 @@ export function WorkFilter({ children }: { children: ReactNode }) {
     const now = onScreen(items);
     box.dataset.filter = id;
     const next = onScreen(items);
-    box.dataset.filter = filter;
+    box.dataset.filter = current;
     if (window.scrollY !== y) window.scrollTo(0, y);
 
     const stays = (el: HTMLElement) => {
@@ -144,9 +185,13 @@ export function WorkFilter({ children }: { children: ReactNode }) {
       line.style.viewTransitionName = 'work-filter-marker';
       line.dataset.transitioning = '';
     }
-    const transition = document.startViewTransition({
+    const transition: FilterTransition = { view: null, items, marker: line, apply };
+    active.current = transition;
+    transition.view = document.startViewTransition({
       types: ['work-filter'],
       update: () => {
+        if (run.current !== mine || active.current !== transition) return;
+        transition.apply = null;
         flushSync(apply);
         const after = onScreen(items);
         items.forEach((el, i) => {
@@ -158,12 +203,12 @@ export function WorkFilter({ children }: { children: ReactNode }) {
       },
     });
     const done = () => {
-      if (run.current !== mine) return;
-      items.forEach((el) => setName(el, ''));
-      if (line) { line.style.removeProperty('view-transition-name'); delete line.dataset.transitioning; }
+      if (run.current !== mine || active.current !== transition) return;
+      active.current = null;
+      clearNames(transition);
     };
-    void transition.ready.catch(() => {});
-    transition.finished.then(done, done);
+    void transition.view.ready.catch(() => {});
+    void transition.view.finished.then(done, done);
   };
 
   // The first screen enters in order after the page title and lede: the chips, then the list.

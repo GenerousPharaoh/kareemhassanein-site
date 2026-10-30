@@ -395,6 +395,7 @@ html[data-route-arrival] [data-enter] { animation: none; }
 
 /* The page arrives as one surface; navigation stays anchored above it. */
 body > header { view-transition-name: site-header; }
+html[data-route-from-menu] body > header { view-transition-name: none; }
 
 /* The same quiet mode covers CSS entrances, direct manipulation and route snapshots. */
 html[data-motion='off'] { scroll-behavior: auto !important; }
@@ -407,6 +408,9 @@ html[data-motion='off'] *::after {
 }
 html[data-motion='off'] body:has([data-wall-intro]) > header { opacity: 1; visibility: visible; }
 html[data-motion='off'] body:has([data-wall-intro]) #selected-work { transform: none; }
+html[data-motion='off']::view-transition-group(*),
+html[data-motion='off']::view-transition-old(*),
+html[data-motion='off']::view-transition-new(*) { animation: none !important; }
 
 /* Light opening stages have readable navigation before hydration, too. */
 html:not([data-route-arrival]) body:has(main > :first-child[data-theme='light'], main > article > header:first-child[data-theme='light']) > header:not([data-scrolled]):not([data-open]) {
@@ -417,8 +421,8 @@ html:not([data-route-arrival]) body:has(main > :first-child[data-theme='light'],
 }
 
 :root:active-view-transition-type(page) {
-  --page-duration: 320ms;
-  --page-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --page-duration: 560ms;
+  --page-ease: cubic-bezier(.4, 0, .3, 1);
 }
 
 :root:active-view-transition-type(page)::view-transition {
@@ -435,14 +439,14 @@ html:not([data-route-arrival]) body:has(main > :first-child[data-theme='light'],
 }
 
 :root:active-view-transition-type(page)::view-transition-old(root) {
-  animation: page-retreat var(--page-duration) var(--page-ease) both;
-  mix-blend-mode: normal;
+  animation: page-retreat 340ms var(--page-ease) both;
+  mix-blend-mode: plus-lighter;
 }
 
 :root:active-view-transition-type(page)::view-transition-new(root) {
-  animation: page-reveal var(--page-duration) var(--page-ease) both;
-  mix-blend-mode: normal;
-  background: var(--stage);
+  /* Let the old words recede before the new words become readable, without a blank hold. */
+  animation: page-reveal var(--page-duration) var(--page-ease) 60ms both;
+  mix-blend-mode: plus-lighter;
 }
 
 :root:active-view-transition-type(back)::view-transition-old(root) {
@@ -458,57 +462,65 @@ html:not([data-route-arrival]) body:has(main > :first-child[data-theme='light'],
   z-index: 10;
 }
 
-::view-transition-old(site-header) { display: none; }
-::view-transition-new(site-header) { animation: none; mix-blend-mode: normal; }
+::view-transition-image-pair(site-header) { isolation: isolate; }
+:root:active-view-transition-type(page)::view-transition-old(site-header) {
+  animation: surface-leave var(--page-duration) var(--page-ease) both;
+  mix-blend-mode: plus-lighter;
+}
+:root:active-view-transition-type(page)::view-transition-new(site-header) {
+  animation: surface-arrive var(--page-duration) var(--page-ease) both;
+  mix-blend-mode: plus-lighter;
+}
+::view-transition-old(site-header):only-child { display: none; }
+::view-transition-new(site-header):only-child { animation: none; }
 
 @keyframes page-retreat {
-  to { opacity: .72; transform: translateY(-8px); }
+  to { opacity: 0; transform: translateY(-4px); }
 }
 
 @keyframes page-reveal {
-  from { clip-path: inset(0 0 100% 0); }
-  to { clip-path: inset(0); }
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
 }
 
 @keyframes page-retreat-back {
-  to { opacity: .72; transform: translateY(8px); }
+  to { opacity: 0; transform: translateY(4px); }
 }
 
 @keyframes page-reveal-back {
-  from { clip-path: inset(100% 0 0 0); }
-  to { clip-path: inset(0); }
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: none; }
 }
 
-@media (max-width: 760px) {
-  :root:active-view-transition-type(page) { --page-duration: 260ms; }
-}
+@keyframes surface-leave { to { opacity: 0; } }
+@keyframes surface-arrive { from { opacity: 0; } to { opacity: 1; } }
 
 /* Shared images between a work preview and its case page */
 ::view-transition-group(*.case-morph) {
-  animation-duration: 520ms;
-  animation-timing-function: cubic-bezier(.22, 1, .36, 1);
+  animation-duration: 620ms;
+  animation-timing-function: cubic-bezier(.4, 0, .3, 1);
   z-index: 2;
 }
 
 ::view-transition-image-pair(*.case-morph) { isolation: isolate; }
-/* Carry one opaque composition. Two fading captures doubled small type and let
-   the page show through the screen while its desktop and phone frames resized. */
-::view-transition-old(*.case-morph) { display: none; }
+/* Matching browser windows keep the first frame intact while the destination settles in. */
+::view-transition-old(*.case-morph) {
+  animation: surface-leave 620ms cubic-bezier(.4, 0, .3, 1) both;
+  mix-blend-mode: plus-lighter;
+  height: 100%;
+  object-fit: fill;
+}
 ::view-transition-new(*.case-morph) {
-  animation: none;
-  mix-blend-mode: normal;
+  animation: surface-arrive 620ms cubic-bezier(.4, 0, .3, 1) both;
+  mix-blend-mode: plus-lighter;
   height: 100%;
   object-fit: fill;
 }
 
-@media (max-width: 760px) {
-  ::view-transition-group(*.case-morph) { animation-duration: 420ms; }
-}
-
 /* A note's cover flies from the notes list into the note, and back; on any other page change it leaves and arrives with the page */
 ::view-transition-group(*.note-cover) {
-  animation-duration: 520ms;
-  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  animation-duration: 620ms;
+  animation-timing-function: cubic-bezier(.4, 0, .3, 1);
 }
 
 ::view-transition-old(*.note-cover):only-child {

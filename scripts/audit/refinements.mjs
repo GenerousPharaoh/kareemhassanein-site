@@ -28,7 +28,7 @@ try {
         document.startViewTransition = (options) => {
           const transition = start(options);
           transition.ready.then(() => {
-            window.__transition = { types: [...transition.types], caseShared: !!document.querySelector('[data-case-hero][data-shared-case]'), names: document.getAnimations().map((a) => a.animationName || '') };
+            window.__transition = { types: [...transition.types], caseShared: !!document.querySelector('[data-case-hero][data-shared-case], [data-case-hero] [data-shared-case]'), names: document.getAnimations().map((a) => a.animationName || '') };
           }).catch((error) => { window.__transitionError = error.message; });
           return transition;
         };

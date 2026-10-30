@@ -26,12 +26,12 @@
 .chips[data-measured] .chip { border-bottom-color: transparent; }
 
 @media (prefers-reduced-motion: no-preference) {
-  .marker:not([data-transitioning]) { transition: transform 400ms var(--ease-out), width 400ms var(--ease-out); }
+  .marker:not([data-transitioning]) { transition: transform 480ms cubic-bezier(.4, 0, .3, 1), width 480ms cubic-bezier(.4, 0, .3, 1); }
 }
 
 :global(html:active-view-transition-type(work-filter)::view-transition-group(work-filter-marker)) {
-  animation-duration: 420ms;
-  animation-timing-function: cubic-bezier(.16, 1, .3, 1);
+  animation-duration: 480ms;
+  animation-timing-function: cubic-bezier(.4, 0, .3, 1);
 }
 
 /* The selected group is underlined. */
@@ -120,7 +120,7 @@
   The filter's view transition. WorkFilter.tsx names only the items on screen and tags the
   transition "work-filter", so none of this reaches any other transition. The page itself
   swaps at once (the chips recolour by their own transition); what leaves fades out where it is,
-  then what arrives rises into its place; what keeps its place is left alone. Clicks pass through.
+  while the incoming picture settles into its place; what keeps its place is left alone. Clicks pass through.
 */
 
 :global(html:active-view-transition-type(work-filter)::view-transition) {
@@ -146,11 +146,13 @@
 }
 
 :global(html:active-view-transition-type(work-filter)::view-transition-old(*.work-item):only-child) {
-  animation: work-leave var(--dur-hover) var(--ease-in) both;
+  animation: work-leave 240ms cubic-bezier(.4, 0, .3, 1) both;
+  mix-blend-mode: normal;
 }
 
 :global(html:active-view-transition-type(work-filter)::view-transition-new(*.work-item):only-child) {
-  animation: work-arrive var(--dur-ui) var(--ease-out) var(--dur-hover) both;
+  animation: work-arrive 480ms cubic-bezier(.4, 0, .3, 1) 60ms both;
+  mix-blend-mode: normal;
 }
 
 /* The script never starts the transition with reduced motion; should the setting change midway,
@@ -175,6 +177,6 @@
 @keyframes work-arrive {
   from {
     opacity: 0;
-    transform: translateY(14px);
+    transform: translateY(8px);
   }
 }

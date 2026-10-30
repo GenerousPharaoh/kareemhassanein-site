@@ -4,7 +4,7 @@ import styles from './Frames.module.css';
 /** A quiet browser window: a slim bar with the site's address, nothing else. */
 export function BrowserFrame({ domain, children, className }: { domain?: string; children: ReactNode; className?: string }) {
   return (
-    <div className={`${styles.browser} ${className ?? ''}`}>
+    <div className={`${styles.browser} ${className ?? ''}`} data-browser-frame>
       <div className={styles.bar} aria-hidden="true">
         {domain ? <span className={styles.url}>{domain}</span> : null}
       </div>
