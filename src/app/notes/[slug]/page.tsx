@@ -10,6 +10,7 @@ import { pageMeta } from '@/lib/meta';
 import { NoteBody, NoteTitle } from '@/components/pages/NoteBody';
 import { NoteCover } from '@/components/pages/NoteCover';
 import { ButtonLink } from '@/components/ui/ButtonLink';
+import { Disclosure } from '@/components/ui/Disclosure';
 import { caseBySlug } from '@/content/cases';
 import { NOTES, noteBySlug, readingMinutes, type Block } from '@/content/notes';
 import { OFFERS } from '@/content/offers';
@@ -45,6 +46,18 @@ export default async function NotePage({ params }: Props) {
   const cases = note.cases.map(caseBySlug).filter((c) => c !== undefined);
   const contents = note.body.filter((b): b is Heading => b.type === 'h2');
   const minutes = readingMinutes(note);
+  const contentsLinks = (
+    <ol className={styles.contentsList}>
+      {contents.map((h) => (
+        <li key={h.id}>
+          <a href={`#${h.id}`} className={styles.contentsLink}>
+            {h.kicker ? <span className={styles.step}>{h.kicker.split(' · ')[0]}</span> : null}
+            <span>{h.text}</span>
+          </a>
+        </li>
+      ))}
+    </ol>
+  );
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Article',
@@ -98,18 +111,12 @@ export default async function NotePage({ params }: Props) {
         <div className={styles.layout} data-enter style={enter(4)}>
           <ContentsSpy className={styles.contents} label="In this note">
             <p className="t-label">In this note</p>
-            <ol className={styles.contentsList}>
-              {contents.map((h) => (
-                <li key={h.id}>
-                  <a href={`#${h.id}`} className={styles.contentsLink}>
-                    {h.kicker ? <span className={styles.step}>{h.kicker.split(' · ')[0]}</span> : null}
-                    <span>{h.text}</span>
-                  </a>
-                </li>
-              ))}
-            </ol>
+            {contentsLinks}
           </ContentsSpy>
           <div className={styles.main}>
+            <Disclosure title="In this note" className={styles.mobileContents} compact heading={2}>
+              <nav aria-label="In this note">{contentsLinks}</nav>
+            </Disclosure>
             <NoteBody blocks={note.body} />
             <p className={styles.signoff}>
               <span className={styles.signoffRule} aria-hidden="true" />

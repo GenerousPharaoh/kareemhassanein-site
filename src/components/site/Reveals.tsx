@@ -2,7 +2,7 @@
 
 import { usePathname } from 'next/navigation';
 import { useEffect } from 'react';
-import { prefersReducedMotion } from '@/lib/useReducedMotion';
+import { prefersReducedMotion, useReducedMotion } from '@/lib/useReducedMotion';
 
 /**
  * Blocks marked data-reveal come up as they enter the screen: quick, once, a beat apart when several
@@ -11,9 +11,10 @@ import { prefersReducedMotion } from '@/lib/useReducedMotion';
  */
 export function Reveals() {
   const pathname = usePathname();
+  const reduce = useReducedMotion();
 
   useEffect(() => {
-    if (prefersReducedMotion()) return;
+    if (reduce || prefersReducedMotion()) return;
     const items = [...document.querySelectorAll<HTMLElement>('[data-reveal]:not([data-shown])')];
     const fold = window.innerHeight * 0.92;
     for (const el of items) {
@@ -35,8 +36,11 @@ export function Reveals() {
       { rootMargin: '0px 0px -8% 0px' },
     );
     items.forEach((el) => el.hasAttribute('data-shown') || io.observe(el));
-    return () => io.disconnect();
-  }, [pathname]);
+    return () => {
+      io.disconnect();
+      document.documentElement.removeAttribute('data-reveals');
+    };
+  }, [pathname, reduce]);
 
   return null;
 }

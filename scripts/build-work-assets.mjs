@@ -6,6 +6,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import sharp from 'sharp';
 import { ASSETS, CAPTURES } from './work-assets.mjs';
+import { buildWallAssets } from './build-wall-assets.mjs';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1')), '..');
 const OUT = path.join(ROOT, 'public', 'work-media');
@@ -97,3 +98,4 @@ fs.writeFileSync(
     `export const LOOPS: Record<string, LoopInfo> = ${JSON.stringify(out.loops, null, 1)};\n`
 );
 console.log('wrote', GEN);
+await buildWallAssets(only);

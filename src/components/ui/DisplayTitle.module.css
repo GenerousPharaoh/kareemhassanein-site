@@ -1,6 +1,7 @@
 .word {
   display: inline-block;
-  max-width: 100%;
+  /* Include the mask's inline padding when a short heading sizes itself to its text. */
+  max-width: calc(100% + .04em);
   overflow: clip;
   vertical-align: top;
   padding: .07em .02em .18em;

@@ -29,7 +29,11 @@ export function ContentsSpy({ className, label, children }: Props) {
         if (h && h.getBoundingClientRect().top <= line) now = i;
       });
       if (now !== current) {
-        links.forEach((a, i) => a.toggleAttribute('data-current', i === now));
+        links.forEach((a, i) => {
+          a.toggleAttribute('data-current', i === now);
+          if (i === now) a.setAttribute('aria-current', 'location');
+          else a.removeAttribute('aria-current');
+        });
         current = now;
       }
       // From the body's top at the reading line to its foot at the bottom of the screen
@@ -45,15 +49,17 @@ export function ContentsSpy({ className, label, children }: Props) {
     measure();
     addEventListener('scroll', queue, { passive: true });
     addEventListener('resize', queue);
+    addEventListener('content-resized', queue);
     return () => {
       cancelAnimationFrame(frame);
       removeEventListener('scroll', queue);
       removeEventListener('resize', queue);
+      removeEventListener('content-resized', queue);
     };
   }, []);
 
   return (
-    <nav ref={ref} className={className} aria-label={label}>
+    <nav ref={ref} className={className} aria-label={label} data-lenis-prevent>
       {children}
     </nav>
   );

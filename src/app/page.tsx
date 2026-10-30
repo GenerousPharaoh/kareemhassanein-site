@@ -7,6 +7,7 @@ import { WorkIndex, type IndexItem } from '@/components/home/WorkIndex';
 import { CASES } from '@/content/cases';
 import { SITE } from '@/content/site';
 import { PORTRAIT } from '@/content/portrait';
+import wallWidths from '@/content/wall-media.json';
 import { loop, still, type Still } from '@/lib/media';
 import { pageMeta } from '@/lib/meta';
 
@@ -153,7 +154,10 @@ export default function Home() {
   // phone screens, then the clients are dealt across the rows in turn, so neighbours always come from
   // different clients.
   const pools = CASES.map((c, ci) => {
-    const tile = (still: Still, ratio: number): WallTile => ({ key: still.src, ground: c.palette.ground, device: still.device, ratio, still });
+    const tile = (still: Still, ratio: number): WallTile => ({
+      key: still.src, ground: c.palette.ground, device: still.device, ratio,
+      still: { ...still, src: still.src.replace('/work-media/', '/work-media/wall/'), widths: wallWidths[still.device] },
+    });
     const screens = [c.plate.desktop, c.plate.phone, ...c.stills].filter((st, i, all) => all.findIndex((o) => o.src === st.src) === i);
     const wide = screens.filter((st) => st.device === 'desktop' && st.w / st.h >= 1.35 && st.w / st.h <= 2).map((st) => tile(st, st.w / st.h));
     const tall = screens.filter((st) => st.device === 'phone').map((st) => tile(st, 0.56));

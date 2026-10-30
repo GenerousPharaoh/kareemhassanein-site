@@ -33,20 +33,30 @@ export function LoopVideo({ loop, className }: Props) {
     const onPause = () => setPlaying(false);
     v.addEventListener('play', onPlay);
     v.addEventListener('pause', onPause);
+    let inView = false;
+    const preference = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const syncPlayback = () => {
+      const wait = choiceRef.current === 'pause' || (choiceRef.current === null && prefersReducedMotion());
+      if (inView && !document.hidden && !wait) {
+        if (v.preload !== 'auto') v.preload = 'auto';
+        // An opening that has played stays on its last frame when it comes back into view.
+        if (v.paused && !v.ended) v.play().catch(() => {});
+      } else if (!v.paused) v.pause();
+    };
     const io = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          if (v.preload !== 'auto') v.preload = 'auto';
-          const wait = choiceRef.current === 'pause' || (choiceRef.current === null && prefersReducedMotion());
-          // An opening that has played stays on its last frame when it comes back into view
-          if (!wait && !v.ended) v.play().catch(() => {});
-        } else if (!v.paused) v.pause();
+        inView = entry.isIntersecting;
+        syncPlayback();
       },
       { threshold: 0.25 }
     );
     io.observe(v);
+    preference.addEventListener('change', syncPlayback);
+    document.addEventListener('visibilitychange', syncPlayback);
     return () => {
       io.disconnect();
+      preference.removeEventListener('change', syncPlayback);
+      document.removeEventListener('visibilitychange', syncPlayback);
       v.removeEventListener('play', onPlay);
       v.removeEventListener('pause', onPause);
     };

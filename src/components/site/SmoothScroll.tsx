@@ -58,6 +58,18 @@ export function SmoothScroll() {
     };
     const sync = () => (query.matches ? start() : stop());
 
+    // Keyboard focus and browser scrolling can move the page between animation frames.
+    // Read that position before Lenis measures an anchor, otherwise its destination is offset.
+    const syncAnchor = (event: MouseEvent) => {
+      if (!lenis || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.altKey || event.shiftKey) return;
+      const link = event.target instanceof Element ? event.target.closest<HTMLAnchorElement>('a[href]') : null;
+      if (!link || link.hasAttribute('download') || (link.target && link.target !== '_self')) return;
+      const url = new URL(link.href);
+      if (url.origin === location.origin && url.pathname === location.pathname && url.search === location.search && url.hash) {
+        lenis.scrollTo(window.scrollY, { immediate: true, force: true });
+      }
+    };
+
     // Recalculate reading distances once an expanding section has settled.
     const main = document.getElementById('main');
     let height = main?.getBoundingClientRect().height ?? 0;
@@ -81,8 +93,10 @@ export function SmoothScroll() {
 
     sync();
     query.addEventListener('change', sync);
+    document.addEventListener('click', syncAnchor, true);
     return () => {
       query.removeEventListener('change', sync);
+      document.removeEventListener('click', syncAnchor, true);
       observer.disconnect();
       window.clearTimeout(resizeTimer);
       stop();

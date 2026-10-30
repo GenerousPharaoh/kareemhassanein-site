@@ -9,6 +9,20 @@
   gap: 16px;
 }
 
+.fields {
+  display: contents;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.fallback {
+  display: grid;
+  gap: 12px;
+  overflow-wrap: anywhere;
+}
+
 /* Topic: two cards that read as one choice */
 
 .topics {
@@ -29,6 +43,7 @@
   position: relative;
   display: grid;
   gap: var(--topic-gap);
+  grid-auto-rows: 1fr;
 }
 
 /* The chosen card is one ink tab under both cards, sliding to the one picked */
@@ -65,17 +80,19 @@
   border-radius: 4px;
   background: transparent;
   box-shadow: inset 0 0 0 1px var(--rule);
+  /* White, inverted against whatever is beneath: ink on the card, light on the tab, and split
+     letter by letter while the tab passes under them */
+  color: #fff;
   cursor: pointer;
-  transition: box-shadow var(--dur-hover) var(--ease-colour),
-    color 160ms var(--ease-out);
+  transition: box-shadow var(--dur-hover) var(--ease-colour);
 }
 
-/* The words turn light as the tab arrives under them, not before */
+.topic > * {
+  mix-blend-mode: difference;
+}
+
 .topic:has(.radio:checked) {
   box-shadow: none;
-  color: var(--paper);
-  transition: box-shadow var(--dur-hover) var(--ease-colour),
-    color 200ms var(--ease-out) 70ms;
 }
 
 .topic:has(.radio:focus-visible) {
@@ -139,10 +156,11 @@
   line-height: 1.3;
 }
 
+/* Inverted with the rest of the card's words, so it reads on the tab and off it */
 .price {
   font: 500 0.8125rem/1 var(--font-mono);
   letter-spacing: 0.02em;
-  color: var(--signal);
+  opacity: 0.75;
 }
 
 /* Its space is inside the opening note, so nothing is left behind when the call is chosen */
@@ -635,7 +653,3 @@
   }
 }
 
-.topic:has(.radio:checked) .price {
-  color: inherit;
-  opacity: .75;
-}

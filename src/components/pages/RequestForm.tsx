@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useEffect, useId, useLayoutEffect, useRef, useState, type FormEvent, type KeyboardEvent, type ReactNode } from 'react';
+import { useEffect, useId, useLayoutEffect, useRef, useState, useSyncExternalStore, type FormEvent, type KeyboardEvent, type ReactNode } from 'react';
 import styles from './RequestForm.module.css';
 
 export type Topic = 'call' | 'check';
@@ -25,6 +25,9 @@ const LIMIT = { name: 100, email: 200, organization: 200, message: 4800 } as con
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const CHECK_PREFILL = 'I would like to start with the website check.';
 const ORDER: Field[] = ['name', 'email', 'organization', 'message'];
+const subscribeReady = () => () => {};
+const clientReady = () => true;
+const serverReady = () => false;
 
 const MESSAGES = {
   name: 'Please enter your name.',
@@ -51,6 +54,8 @@ function messageFor(f: Field, v: Values): string {
 }
 
 export function RequestForm({ initialTopic, checkPrice, checkNote, email }: Props) {
+  // A request must not fall back to a GET containing someone's inquiry before hydration.
+  const ready = useSyncExternalStore(subscribeReady, clientReady, serverReady);
   const uid = useId();
   const id = (part: string) => `${uid}-${part}`;
 
@@ -207,6 +212,13 @@ export function RequestForm({ initialTopic, checkPrice, checkNote, email }: Prop
 
   return (
     <div ref={wrapRef} className={styles.wrap}>
+      <noscript>
+        <style>{`.${styles.form} { display: none; }`}</style>
+        <p className={styles.fallback}>
+          This form needs JavaScript. You can email me instead.
+          <a href={`mailto:${email}`} className={styles.doneLink}>{email}</a>
+        </p>
+      </noscript>
       {phase === 'sent' ? (
         <div className={styles.done}>
           <span className={styles.doneIcon} aria-hidden="true">
@@ -228,7 +240,8 @@ export function RequestForm({ initialTopic, checkPrice, checkNote, email }: Prop
           </Link>
         </div>
       ) : (
-        <form className={styles.form} onSubmit={onSubmit} noValidate aria-busy={sending || undefined}>
+        <form className={styles.form} method="post" onSubmit={onSubmit} noValidate aria-busy={sending || undefined}>
+          <fieldset className={styles.fields} disabled={!ready}>
           <fieldset className={styles.topics}>
             <legend className={styles.legend}>What would you like?</legend>
             <div className={styles.topicGrid}>
@@ -394,6 +407,7 @@ export function RequestForm({ initialTopic, checkPrice, checkNote, email }: Prop
               Replies within one business day
             </p>
           </div>
+          </fieldset>
         </form>
       )}
       {phase === 'sent' ? null : (

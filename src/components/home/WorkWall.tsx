@@ -118,11 +118,12 @@ export function WorkWall({ rows, name, line }: Props) {
       place();
     };
 
-    // Run only while the wall is on screen and the tab is showing
+    // A sticky wall can still intersect the viewport after the opaque work list covers it.
+    // Stop its ticker at that point as well as when it leaves the viewport or the tab hides.
     let inView = true;
     let ticking = false;
     const sync = () => {
-      const on = inView && !document.hidden;
+      const on = inView && !document.hidden && exit < 1;
       if (on === ticking) return;
       ticking = on;
       if (on) {
@@ -197,7 +198,7 @@ export function WorkWall({ rows, name, line }: Props) {
     // As the work list rises over it, the wall sinks back, falls away and dims
     const scrub = { trigger: el, start: 'top top', end: 'bottom top', scrub: true };
     gsap.fromTo(el.querySelector('[data-sink]'), { scale: 1, yPercent: 0 }, { scale: 0.92, yPercent: 5, ease: 'none', scrollTrigger: scrub });
-    gsap.fromTo(el.querySelector('[data-dim]'), { opacity: 0 }, { opacity: 0.72, ease: 'none', scrollTrigger: { ...scrub, onUpdate: (self) => ((exit = self.progress), pose()) } });
+    gsap.fromTo(el.querySelector('[data-dim]'), { opacity: 0 }, { opacity: 0.72, ease: 'none', scrollTrigger: { ...scrub, onUpdate: (self) => { exit = self.progress; pose(); sync(); } } });
 
     // The arrival, on a full load at the top of the page: the name rises (in CSS, before any script),
     // its letters empty to show the work streaming past behind them, and the eye flies through one of

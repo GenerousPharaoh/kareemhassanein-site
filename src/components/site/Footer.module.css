@@ -47,6 +47,7 @@
   display: flex;
   align-items: center;
   min-height: 44px;
+  min-width: 44px;
   color: var(--ivory-2);
   text-decoration: none;
   transition: color var(--dur-hover) var(--ease-colour);

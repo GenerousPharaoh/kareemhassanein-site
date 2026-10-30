@@ -182,7 +182,7 @@ export function Header() {
   // A link to the page already showing does not change the route, so close the menu for it here.
   const onSheetClick = (e: MouseEvent<HTMLElement>) => {
     const a = (e.target as Element).closest('a');
-    if (a && new URL(a.href).pathname === pathname) close();
+    if (a && new URL(a.href).pathname === pathname) close(true);
   };
 
   const isActive = (href: string) => (href === '/' ? pathname === '/' : pathname === href || pathname.startsWith(href + '/'));

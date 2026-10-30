@@ -1,3 +1,13 @@
+/* Arial metrics matched to Mona Sans at the title's narrower width. */
+@font-face {
+  font-family: 'Mona Sans Narrow Fallback';
+  src: local('Arial');
+  size-adjust: 94%;
+  ascent-override: 115.95%;
+  descent-override: 34.04%;
+  line-gap-override: 0%;
+}
+
 .header {
   position: relative;
   margin-top: calc(-1 * (var(--header-h) + env(safe-area-inset-top, 0px)));
@@ -43,7 +53,7 @@
 .name {
   grid-column: 1 / -1;
   max-width: 22ch;
-  font: 580 clamp(3.2rem, 8.6vw, 9rem)/.93 var(--font-display);
+  font: 580 clamp(3.2rem, 8.6vw, 9rem)/.93 var(--font-mona-narrow);
   font-stretch: 90%;
   letter-spacing: -.055em;
   padding-block: 12px;
