@@ -396,6 +396,18 @@ html[data-route-arrival] [data-enter] { animation: none; }
 /* The page arrives as one surface; navigation stays anchored above it. */
 body > header { view-transition-name: site-header; }
 
+/* The same quiet mode covers CSS entrances, direct manipulation and route snapshots. */
+html[data-motion='off'] { scroll-behavior: auto !important; }
+html[data-motion='off'] *,
+html[data-motion='off'] *::before,
+html[data-motion='off'] *::after {
+  animation: none !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
+}
+html[data-motion='off'] body:has([data-wall-intro]) > header { opacity: 1; visibility: visible; }
+html[data-motion='off'] body:has([data-wall-intro]) #selected-work { transform: none; }
+
 /* Light opening stages have readable navigation before hydration, too. */
 html:not([data-route-arrival]) body:has(main > :first-child[data-theme='light'], main > article > header:first-child[data-theme='light']) > header:not([data-scrolled]):not([data-open]) {
   --hdr-bg: #e9e8e3;

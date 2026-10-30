@@ -99,11 +99,10 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
 
       <CloseCall
         track="case"
-        title="Does your practice have a question like this one?"
+        title="What would you like to build or improve?"
         body={
           <>
-            Tell me what is not working on a <span style={{ whiteSpace: 'nowrap' }}>20-minute</span> call. Or start with a website check: I walk your whole path from
-            search to booked, then send a ranked list with a fixed price beside each fix.
+            Tell me about your business or project on a <span style={{ whiteSpace: 'nowrap' }}>20-minute</span> call.
           </>
         }
       />

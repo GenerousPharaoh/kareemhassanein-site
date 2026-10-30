@@ -1,0 +1,10 @@
+.control { display: inline-flex; color: inherit; }
+:global(html:not([data-motion])) .control { display: none; }
+.switch { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 0; border: 0; background: none; color: inherit; font: inherit; cursor: pointer; }
+.state { min-width: 1.6em; font-size: .9em; text-align: right; }
+.track { display: inline-flex; align-items: center; width: 32px; height: 20px; padding: 3px; border: 1px solid currentColor; border-radius: 999px; }
+.track > span { width: 12px; height: 12px; border-radius: 50%; background: currentColor; }
+.switch[aria-checked='true'] .track { justify-content: flex-end; }
+.switch[aria-disabled='true'] { cursor: default; }
+.switch:focus-visible { outline: 2px solid var(--focus); outline-offset: 5px; border-radius: 3px; }
+@media (hover: hover) { .switch:not([aria-disabled='true']):hover > span:first-child { text-decoration: underline; text-underline-offset: .25em; } }

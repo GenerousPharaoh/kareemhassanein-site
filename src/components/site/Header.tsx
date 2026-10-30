@@ -7,6 +7,7 @@ import type { MouseEvent } from 'react';
 import { NAV, SERVICES, SITE } from '@/content/site';
 import { prefersReducedMotion } from '@/lib/useReducedMotion';
 import { getLenis } from './SmoothScroll';
+import { MotionControl } from './MotionControl';
 import styles from './Header.module.css';
 
 const MENU = [{ href: '/', label: 'Home' }, ...NAV, { href: '/notes', label: 'Notes' }];
@@ -28,6 +29,7 @@ export function Header() {
   }
   const [scrolled, setScrolled] = useState(false);
   const [tucked, setTucked] = useState(false);
+  const brand = useRef<HTMLAnchorElement>(null);
   const menuButton = useRef<HTMLButtonElement>(null);
   const sheet = useRef<HTMLDivElement>(null);
   const services = useRef<HTMLDetailsElement>(null);
@@ -170,8 +172,6 @@ export function Header() {
     lenis?.stop();
     const behind = [document.getElementById('main'), document.querySelector<HTMLElement>('body > footer')].filter((el): el is HTMLElement => !!el);
     behind.forEach((el) => el.setAttribute('inert', ''));
-    sheet.current?.querySelector<HTMLElement>('a[href]')?.focus({ preventScroll: true });
-
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         e.preventDefault();
@@ -193,19 +193,31 @@ export function Header() {
     };
     const wide = window.matchMedia('(min-width: 960px)');
     const onWide = () => {
-      if (wide.matches) setPhase('closed');
+      if (!wide.matches) return;
+      const focused = document.activeElement;
+      const menuHadFocus = focused === menuButton.current || !!(focused && sheet.current?.contains(focused));
+      setPhase('closed');
+      if (menuHadFocus) brand.current?.focus({ preventScroll: true });
     };
     document.addEventListener('keydown', onKey);
     wide.addEventListener('change', onWide);
     return () => {
       root.style.overflow = before.overflow;
       root.style.scrollbarGutter = before.gutter;
-      if (resumeScroll && getLenis() === lenis) lenis?.start();
+      const currentLenis = getLenis();
+      if (resumeScroll || currentLenis !== lenis) currentLenis?.start();
       behind.forEach((el) => el.removeAttribute('inert'));
       document.removeEventListener('keydown', onKey);
       wide.removeEventListener('change', onWide);
     };
   }, [menuVisible, close]);
+
+  useLayoutEffect(() => {
+    if (!open) return;
+    // This also covers reopening during the short close, while the scroll lock is still held.
+    if (sheet.current) sheet.current.scrollTop = 0;
+    sheet.current?.querySelector<HTMLElement>('a[href]')?.focus({ preventScroll: true });
+  }, [open]);
 
   // The exit normally ends on the sheet's own animationend; this is the backstop (and the whole
   // exit for reduced motion, where there is no animation).
@@ -238,7 +250,7 @@ export function Header() {
         Skip to content
       </a>
       <div className={`container ${styles.inner}`}>
-        <Link href="/" className={styles.mark} aria-label={`${SITE.name}, home`}>
+        <Link ref={brand} href="/" className={styles.mark} aria-label={`${SITE.name}, home`}>
           <span className={styles.monogram} aria-hidden="true"><span>K</span><span>H</span></span>
           <span className={styles.markName}>
             <span>Kareem</span>{' '}<span>Hassanein</span>
@@ -259,7 +271,7 @@ export function Header() {
               </summary>
               <div className={styles.servicePanel}>
                 {SERVICES.map((service) => <Link key={service.href} href={service.href} className={styles.serviceLink} aria-current={isActive(service.href) ? 'page' : undefined}>
-                  <span>{service.label}<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 13 13 3M3 3h10v10" fill="none" stroke="currentColor" strokeWidth="1.2" /></svg></span>
+                  <span>{service.label}</span>
                   <small>{service.description}</small>
                 </Link>)}
               </div>
@@ -286,6 +298,25 @@ export function Header() {
             <span />
           </span>
         </button>
+        <noscript>
+          <details className={styles.fallbackMenu}>
+            <summary className={styles.fallbackToggle}>Menu</summary>
+            <nav className={styles.fallbackNav} aria-label="Main navigation">
+              {MENU.map((item) => (
+                <Fragment key={item.href}>
+                  <a href={item.href} aria-current={isActive(item.href) ? 'page' : undefined}>{item.label}</a>
+                  {item.href === '/work' ? <div className={styles.fallbackServices}>
+                    <p>Services</p>
+                    {SERVICES.map((service) => <a key={service.href} href={service.href} aria-current={isActive(service.href) ? 'page' : undefined}>
+                      <span>{service.label}</span><small>{service.description}</small>
+                    </a>)}
+                  </div> : null}
+                </Fragment>
+              ))}
+              <a href={SITE.bookingHref} className={styles.fallbackCta} data-track="menu-book">Book a 20-minute call</a>
+            </nav>
+          </details>
+        </noscript>
       </div>
       <div
         id="site-menu"
@@ -324,6 +355,7 @@ export function Header() {
               Book a 20-minute call
             </Link>
             <p className={styles.sheetNote}>{SITE.reply}</p>
+            <MotionControl />
           </div>
         </nav>
       </div>

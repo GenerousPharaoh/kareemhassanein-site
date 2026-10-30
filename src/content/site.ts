@@ -2,7 +2,8 @@
 // booking tool later is a change here, not a rebuild.
 export const SITE = {
   name: 'Kareem Hassanein',
-  descriptor: 'Websites, booking, search and ads for independent practices',
+  descriptor: 'Websites, booking, search and ads',
+  description: 'I design and build websites for businesses and personal projects, with booking, search, ads and tracking where they are needed.',
   url: 'https://www.khassanein.bio',
   email: 'kareem.hassanein@gmail.com',
   linkedin: 'https://www.linkedin.com/in/kareemhassanein',

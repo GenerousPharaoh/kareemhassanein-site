@@ -45,7 +45,7 @@ export default function WorkPage() {
           Case studies
         </DisplayTitle>
         <p className={styles.lede} data-enter style={{ ['--i' as string]: 1 }}>
-          Each case starts with the owner’s question, then what I found, what I decided, what shipped and what was measured.
+          Each case starts with a question, then what I found, what I decided, what shipped and what was measured.
         </p>
       </header>
 
@@ -53,7 +53,7 @@ export default function WorkPage() {
       <WorkFilter>
         <section className={`container ${styles.group}`} data-group="practices" aria-labelledby="work-practices">
           <h2 id="work-practices" className={styles.groupTitle} data-work-item>
-            Practice projects
+            Law firms and clinics
           </h2>
           <CaseStack className={styles.features}>
             {PRACTICE_CASES.map((c) => (
@@ -71,7 +71,7 @@ export default function WorkPage() {
             <h2 id="work-beyond" className={styles.groupTitle}>
               Other projects
             </h2>
-            <p className={styles.groupLine}>The same way of working, outside practices: a gear store, a travel journal and a wedding.</p>
+            <p className={styles.groupLine}>A gear store, a travel journal and a wedding.</p>
           </div>
           <ul className={styles.compacts}>
             {BEYOND_CASES.map((c) => (

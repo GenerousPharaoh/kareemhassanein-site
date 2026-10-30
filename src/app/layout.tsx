@@ -5,6 +5,7 @@ import { Header } from '@/components/site/Header';
 import { SmoothScroll } from '@/components/site/SmoothScroll';
 import { PageTransition } from '@/components/site/PageTransition';
 import { Reveals } from '@/components/site/Reveals';
+import { MotionPreference } from '@/components/site/MotionPreference';
 import { SITE } from '@/content/site';
 import './globals.css';
 
@@ -21,8 +22,7 @@ export const metadata: Metadata = {
     default: `${SITE.name} · ${SITE.descriptor}`,
     template: `%s · ${SITE.name}`,
   },
-  description:
-    'I build and run the online side of law firms and of dental and medical practices: the website, the Google profile, booking or intake, ads, and the tracking that ties them together.',
+  description: SITE.description,
   openGraph: {
     type: 'website',
     siteName: SITE.name,
@@ -67,8 +67,12 @@ const jsonLd = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en-CA" className={sans.variable} style={{ ['--font-mona-narrow' as string]: narrowFamily }}>
+    <html lang="en-CA" className={sans.variable} style={{ ['--font-mona-narrow' as string]: narrowFamily }} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: "(()=>{let off=matchMedia('(prefers-reduced-motion: reduce)').matches;try{off=off||localStorage.getItem('kh-motion')==='off'}catch{}document.documentElement.dataset.motion=off?'off':'on'})()" }} />
+      </head>
       <body id="top">
+        <MotionPreference />
         <Header />
         <main id="main">{children}</main>
         <Footer />

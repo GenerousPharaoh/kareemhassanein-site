@@ -8,7 +8,7 @@ import styles from './page.module.css';
 export const metadata = pageMeta({
   title: 'How I use AI',
   description:
-    'AI tools help me build. I review and test every change myself and decide what ships, and nothing that speaks for your practice goes live without your approval.',
+    'AI tools help me build. I review and test every change myself and decide what ships, and nothing published on your behalf goes live without your approval.',
   path: '/ai',
 });
 
@@ -61,13 +61,13 @@ export default function AiPage() {
               ))}
             </ul>
           </div>
-          <p className={styles.approval}>Nothing that speaks for your practice goes live until you have approved it.</p>
+          <p className={styles.approval}>Nothing published on your behalf goes live until you have approved it.</p>
         </Rise>
       </div>
 
       <CloseBand
         title="Questions about how I work?"
-        line="Ask on the call. It takes 20 minutes, and there is nothing to prepare except your site address."
+        line="Ask on the call. It takes 20 minutes, and there is nothing to prepare."
         track="ai-close"
       />
     </>

@@ -95,7 +95,7 @@
   margin-top: 8px;
 }
 
-/* A solid button whose dark fill lifts away from below on hover, leaving the outline */
+/* The check is a compact action with a stable label and a precise surface response. */
 .primary {
   position: relative;
   display: inline-flex;
@@ -108,49 +108,38 @@
   color: var(--paper);
   font-weight: 500;
   text-decoration: none;
-  overflow: hidden;
-  isolation: isolate;
-  transition: color 0.4s var(--ease-colour);
-}
-
-.primary::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  border-radius: inherit;
-  background: #f6f5f1;
-  transform: translateY(101%);
-  transition: transform 0.55s var(--ease-out);
-}
-
-.primary::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  box-shadow: inset 0 0 0 1px var(--ink);
-  pointer-events: none;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--paper) 12%, transparent);
+  transition:
+    background-color var(--dur-hover) var(--ease-colour),
+    box-shadow var(--dur-hover) var(--ease-colour);
 }
 
 .primary svg {
-  width: 18px;
-  height: 18px;
-  transition: transform 0.5s var(--ease-out);
+  flex: none;
+  width: 17px;
+  height: 17px;
 }
 
 @media (hover: hover) {
   .primary:hover {
-    color: var(--ink);
-  }
-
-  .primary:hover::before {
-    transform: none;
+    background: color-mix(in srgb, var(--ink) 92%, var(--paper));
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--paper) 24%, transparent);
   }
 }
 
 .primary:active {
-  transform: scale(0.98);
+  background: color-mix(in srgb, var(--ink) 85%, var(--paper));
+  transition-duration: var(--dur-press);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .primary {
+    transition:
+      background-color var(--dur-hover) var(--ease-colour),
+      box-shadow var(--dur-hover) var(--ease-colour),
+      transform var(--dur-press) var(--ease-out);
+  }
+  .primary:active { transform: scale(0.985); }
 }
 
 .secondary {
@@ -158,15 +147,15 @@
   align-items: center;
   min-height: 44px;
   font-weight: 500;
-  text-decoration: none;
-  background: linear-gradient(currentColor, currentColor) 0 calc(100% - 10px) / 100% 1px no-repeat;
-  transition: background-size 0.6s var(--ease-out);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, currentColor 35%, transparent);
+  text-underline-offset: .3em;
+  transition: text-decoration-color var(--dur-hover) var(--ease-colour);
 }
 
 @media (hover: hover) {
   .secondary:hover {
-    background-size: 0% 1px;
-    background-position: 100% calc(100% - 10px);
+    text-decoration-color: currentColor;
   }
 }
 
@@ -246,17 +235,15 @@
   width: clamp(48px, 5vw, 84px);
   height: clamp(48px, 5vw, 84px);
   border-radius: 50%;
-  box-shadow: inset 0 0 0 1px currentColor;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, currentColor 35%, transparent);
 }
 
 .bandArrow svg {
   width: 42%;
   height: 42%;
-  transition: transform 0.6s var(--ease-out);
 }
 
-/* Hover, only when the pointer moved there (not when the page scrolled under it): the rules
-   brighten, the arrow's circle fills and the arrow steps forward */
+/* The full-width invitation stays still. Its edges and the symbol's surface answer together. */
 .rule,
 .bandArrow {
   transition:
@@ -271,20 +258,19 @@
   }
 
   :global(html:not([data-scrolling])) .band:hover .bandArrow {
-    background: var(--ink);
-    color: var(--stage);
-    box-shadow: none;
-  }
-
-  :global(html:not([data-scrolling])) .band:hover .bandArrow svg {
-    transform: translateX(3px);
+    background: color-mix(in srgb, currentColor 8%, transparent);
+    box-shadow: inset 0 0 0 1px currentColor;
   }
 }
 
 .band:focus-visible .bandArrow {
-  background: var(--ink);
-  color: var(--stage);
-  box-shadow: none;
+  background: color-mix(in srgb, currentColor 8%, transparent);
+  box-shadow: inset 0 0 0 1px currentColor;
+}
+
+.band:active .bandArrow {
+  background: color-mix(in srgb, currentColor 14%, transparent);
+  transition-duration: var(--dur-press);
 }
 
 .band:focus-visible {

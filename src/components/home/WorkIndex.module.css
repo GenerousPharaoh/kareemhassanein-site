@@ -196,3 +196,10 @@
     transform: none;
   }
 }
+
+:global(html[data-route-arrival] body:has([data-wall-intro])) .index { animation: none; transform: none; }
+
+@media (max-width: 760px) {
+  :global(body:has([data-wall-intro])) .index,
+  :global(body:has([data-wall-intro]:not([data-ready]))) .index { animation: none; transform: none; }
+}

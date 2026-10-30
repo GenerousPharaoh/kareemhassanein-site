@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Picture } from '@/components/media/Picture';
 import type { Still } from '@/lib/media';
-import { useReducedMotion } from '@/lib/useReducedMotion';
+import { prefersReducedMotion, useReducedMotion } from '@/lib/useReducedMotion';
 import s from './WorkPreview.module.css';
 
 const SIZES = '(min-width: 1664px) 720px, (min-width: 900px) 44vw, calc(100vw - 40px)';
@@ -25,9 +25,7 @@ export function WorkPreview({ frames, name, interval, className }: { frames: Sti
   const root = useRef<HTMLDivElement>(null);
   const current = useRef(0);
   const [view, setView] = useState({ current: 0, previous: -1 });
-  const [choice, setChoice] = useState<'play' | 'pause' | null>(null);
-  const reduce = useReducedMotion();
-  const held = choice === 'pause' || (choice === null && reduce);
+  const held = useReducedMotion();
 
   useEffect(() => {
     const el = root.current;
@@ -58,7 +56,7 @@ export function WorkPreview({ frames, name, interval, className }: { frames: Sti
       ]).then(() => true, () => false).finally(() => { if (generation === mine) window.clearTimeout(timeout); });
       timer = window.setTimeout(async () => {
         const loaded = await ready;
-        if (!running || generation !== mine) return;
+        if (!running || generation !== mine || prefersReducedMotion()) return;
         if (loaded && next !== current.current) {
           const previous = current.current;
           current.current = next;
@@ -69,7 +67,7 @@ export function WorkPreview({ frames, name, interval, className }: { frames: Sti
       }, interval);
     };
     const sync = () => {
-      const on = visible && !document.hidden && !held && frames.length > 1;
+      const on = visible && !document.hidden && !held && !prefersReducedMotion() && frames.length > 1;
       if (on === running) return;
       stop();
       if (on) {
@@ -101,10 +99,6 @@ export function WorkPreview({ frames, name, interval, className }: { frames: Sti
           </div>
         ))}
       </div>
-      <span className={s.count} aria-hidden="true">{String(view.current + 1).padStart(2, '0')}<span>/ {String(frames.length).padStart(2, '0')}</span></span>
-      <button type="button" className={s.pause} onClick={() => setChoice(held ? 'play' : 'pause')} aria-pressed={held} aria-label={`${held ? 'Play' : 'Pause'} ${name} previews`}>
-        <svg viewBox="0 0 20 20" aria-hidden="true">{held ? <path d="m7 4 9 6-9 6z" /> : <path d="M6 4h3v12H6zM12 4h3v12h-3z" />}</svg>
-      </button>
     </div>
   );
 }

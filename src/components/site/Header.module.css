@@ -38,6 +38,21 @@
   }
 }
 
+:global(html[data-route-arrival] body:has([data-wall-intro])) .header {
+  animation: none;
+  opacity: 1;
+  visibility: visible;
+}
+
+@media (max-width: 760px) {
+  :global(body:has([data-wall-intro])) .header,
+  :global(body:has([data-wall-intro]:not([data-ready]))) .header {
+    animation: none;
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
 /* Route snapshots already animate the page. Do not tween the header's theme at the same time. */
 :global(html[data-route-changing]) .header,
 :global(html[data-route-changing]) .header *,
@@ -221,7 +236,7 @@
   color: var(--hdr-muted); cursor: pointer; list-style: none;
 }
 .serviceToggle::-webkit-details-marker { display: none; }
-.serviceToggle svg { width: 12px; height: 12px; }
+.serviceToggle svg { width: 12px; height: 12px; transition: rotate 180ms var(--ease-out); }
 .serviceToggle[data-active], .services[open] .serviceToggle { color: var(--hdr-ink); }
 .serviceToggle[data-active] { text-decoration: underline; text-underline-offset: 9px; }
 .services[open] .serviceToggle svg { rotate: 180deg; }
@@ -232,7 +247,7 @@
   box-shadow: 0 20px 50px #0003;
   --focus: var(--focus-on-dark);
 }
-.serviceLink { display: grid; gap: 5px; padding: 18px 16px; border-radius: 9px; text-decoration: none; }
+.serviceLink { display: grid; gap: 5px; padding: 18px 16px; border-radius: 9px; text-decoration: none; transition: background-color 180ms var(--ease-colour); }
 .serviceLink + .serviceLink { border-top: 1px solid #ffffff14; }
 .serviceLink > span { display: flex; align-items: center; justify-content: space-between; gap: 20px; font-size: 1.125rem; font-weight: 500; }
 .serviceLink svg { width: 14px; height: 14px; }
@@ -250,9 +265,9 @@
   .sheetServiceLink:hover > span { text-decoration: underline; text-underline-offset: .2em; }
 }
 @media (prefers-reduced-motion: no-preference) {
-  .services[open] .servicePanel { animation: services-in 200ms var(--ease-out); }
+  .services[open] .servicePanel { animation: services-in 240ms cubic-bezier(.16, 1, .3, 1); }
 }
-@keyframes services-in { from { opacity: 0; translate: 0 -5px; } }
+@keyframes services-in { from { opacity: 0; translate: 0 5px; } }
 
 /* A line draws in under the link on hover and stays under the page you are on */
 .link {
@@ -273,9 +288,8 @@
   bottom: 7px;
   height: 1px;
   background: currentColor;
-  transform: scaleX(0);
-  transform-origin: 100% 50%;
-  transition: transform 0.5s var(--ease-out);
+  opacity: 0;
+  transition: opacity 180ms var(--ease-colour);
 }
 
 .link[aria-current='page'] {
@@ -283,14 +297,14 @@
 }
 
 .link[aria-current='page']::before {
-  transform: none;
+  opacity: 1;
 }
 
 .link:active {
   transition-duration: var(--dur-press);
 }
 
-/* A solid button whose ivory fill gives way to the outline from below on hover */
+/* A steady surface with a light edge response, without an animated fill or icon. */
 .cta {
   position: relative;
   display: none;
@@ -307,25 +321,13 @@
   overflow: hidden;
   isolation: isolate;
   transition:
-    color 0.4s var(--ease-colour),
-    background-color var(--dur-ui) var(--ease-colour),
-    transform var(--dur-press) var(--ease-out);
-}
-
-.cta::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  border-radius: inherit;
-  background: var(--hdr-bg);
-  box-shadow: inset 0 0 0 1px var(--hdr-ink);
-  transform: translateY(101%);
-  transition: transform 0.5s var(--ease-out);
+    background-color 180ms var(--ease-colour),
+    box-shadow 180ms var(--ease-colour),
+    transform 120ms var(--ease-out);
 }
 
 .cta:active {
-  transform: scale(0.97);
+  transform: scale(0.985);
 }
 
 .cta::after {
@@ -352,6 +354,52 @@
   transition: background-color var(--dur-press) var(--ease-colour);
 }
 .menuLabel { font-size: .75rem; font-weight: 500; }
+
+:global(html:not([data-motion])) .menuButton { display: none; }
+.fallbackMenu { display: none; }
+
+/* Native navigation for phones when scripts are unavailable. */
+@media (max-width: 959px) {
+  .fallbackMenu { display: block; flex: none; }
+  .fallbackToggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 78px;
+    min-height: 44px;
+    border: 1px solid var(--hdr-rule);
+    border-radius: 999px;
+    font-size: .75rem;
+    font-weight: 500;
+    list-style: none;
+    cursor: pointer;
+  }
+  .fallbackToggle::-webkit-details-marker { display: none; }
+  .fallbackMenu[open] .fallbackToggle { background: color-mix(in srgb, var(--hdr-ink) 8%, transparent); }
+  .fallbackNav {
+    --focus: var(--focus-on-dark);
+    position: absolute;
+    top: 100%;
+    left: var(--gutter-l);
+    right: var(--gutter-r);
+    display: grid;
+    max-height: calc(100svh - var(--header-h) - env(safe-area-inset-top, 0px) - 16px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 12px 18px;
+    border: 1px solid var(--on-night-rule);
+    border-radius: 14px;
+    background: var(--stage);
+    color: var(--ivory);
+  }
+  .fallbackNav a { display: flex; align-items: center; min-height: 44px; text-decoration: none; }
+  .fallbackNav a[aria-current='page'] { text-decoration: underline; text-underline-offset: .25em; }
+  .fallbackServices { padding-block: 8px; border-block: 1px solid var(--on-night-rule); }
+  .fallbackServices > p { color: var(--ivory-2); font-size: .8125rem; }
+  .fallbackServices a { display: grid; align-content: center; gap: 3px; min-height: 60px; }
+  .fallbackServices small { color: var(--ivory-2); font-size: .8125rem; }
+  .fallbackNav .fallbackCta { justify-content: center; min-height: 48px; margin-top: 8px; border-radius: 999px; background: var(--ivory); color: var(--stage); font-size: .9375rem; }
+}
 
 .menuButton:active {
   background: color-mix(in srgb, var(--hdr-ink) 8%, transparent);
@@ -469,7 +517,7 @@
 }
 
 .sheetCta:active {
-  transform: scale(0.97);
+  transform: scale(0.985);
 }
 
 .sheetNote {
@@ -501,34 +549,18 @@
   }
 
   .menuIcon span:nth-child(1),
-  .menuIcon span:nth-child(3) {
-    transition:
-      rotate var(--dur-press) var(--ease-in-out),
-      translate var(--dur-press) var(--ease-out) var(--dur-press);
-  }
-
+  .menuIcon span:nth-child(3),
   .header[data-open] .menuIcon span:nth-child(1),
   .header[data-open] .menuIcon span:nth-child(3) {
-    transition:
-      translate var(--dur-press) var(--ease-in-out),
-      rotate var(--dur-hover) var(--ease-out) calc(var(--dur-press) - 20ms);
+    transition: translate 180ms var(--ease-out), rotate 180ms var(--ease-out);
   }
 
-  .sheet[data-phase='open'] {
-    animation: sheet-in 200ms var(--ease-out) both;
-  }
-
-  .sheet[data-phase='open'] :is(.sheetLink, .sheetFoot) {
-    animation: item-in 360ms var(--ease-out) both;
-    animation-delay: calc(30ms + var(--i) * 25ms);
+  .sheet[data-phase='open'] .sheetNav {
+    animation: menu-content-in 280ms cubic-bezier(.16, 1, .3, 1) both;
   }
 
   .sheet[data-phase='closing'] {
-    animation: sheet-out 160ms var(--ease-in) 90ms both;
-  }
-
-  .sheet[data-phase='closing'] :is(.sheetLink, .sheetFoot) {
-    animation: item-out 90ms var(--ease-in) both;
+    animation: menu-surface-out 150ms ease-in both;
   }
 }
 
@@ -552,26 +584,14 @@
   }
 }
 
-@keyframes sheet-in {
-  from {
-    clip-path: inset(0 0 100% 0);
-  }
-}
-
-@keyframes sheet-out {
-  to {
-    clip-path: inset(0 0 100% 0);
-  }
-}
-
-@keyframes item-in {
+@keyframes menu-content-in {
   from {
     opacity: 0;
-    transform: translateY(14px);
+    transform: translateY(8px);
   }
 }
 
-@keyframes item-out {
+@keyframes menu-surface-out {
   to {
     opacity: 0;
   }
@@ -598,16 +618,12 @@
   }
 
   .link:hover::before {
-    transform: none;
-    transform-origin: 0 50%;
+    opacity: 1;
   }
 
   .cta:hover {
-    color: var(--hdr-ink);
-  }
-
-  .cta:hover::before {
-    transform: none;
+    background: color-mix(in srgb, var(--hdr-ink) 88%, var(--hdr-bg));
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--hdr-bg) 18%, transparent);
   }
 
   .sheetLink:hover {

@@ -100,7 +100,8 @@ export function GalleryViewer({ items, children }: { items: ZoomItem[]; children
       el.close();
       root.style.overflow = before.overflow;
       root.style.scrollbarGutter = before.gutter;
-      if (resumeScroll && getLenis() === lenis) lenis?.start();
+      const currentLenis = getLenis();
+      if (resumeScroll || currentLenis !== lenis) currentLenis?.start();
       if (opener.current?.isConnected) opener.current.focus({ preventScroll: true });
     };
   }, [open]);
@@ -138,7 +139,6 @@ export function GalleryViewer({ items, children }: { items: ZoomItem[]; children
       {item && <div className={s.viewer} data-lenis-prevent>
         <div className={s.toolbar}>
           <p id={`${uid}-caption`} className={s.caption}>{item.alt}</p>
-          <span className={s.counter} aria-hidden="true"><span>{String(index! + 1).padStart(2, '0')}</span><span className={s.total}>/ {String(items.length).padStart(2, '0')}</span></span>
           <button type="button" className={s.control} onClick={close} aria-label="Close image"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M6 18 18 6" /></svg></button>
         </div>
         <div ref={viewport} className={s.viewport} data-expanded={expanded || undefined} aria-busy={pending !== null} onPointerDown={(event) => {

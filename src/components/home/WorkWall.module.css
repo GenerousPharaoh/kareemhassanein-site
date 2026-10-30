@@ -337,34 +337,83 @@
   }
 }
 
-.pause {
-  position: absolute;
-  z-index: 3;
-  right: var(--gutter-r);
-  bottom: calc(var(--peek, var(--sheet-r)) + clamp(42px, 6vh, 80px));
-  display: grid;
-  place-items: center;
-  width: 44px;
-  height: 44px;
-  border: 1px solid #eeede840;
-  border-radius: 50%;
-  background: rgba(12, 12, 11, 0.55);
-  color: var(--ivory);
-  cursor: pointer;
+/* Returning home already has a page transition. Its first frame is the finished hero. */
+:global(html[data-route-arrival]) .wall[data-wall-intro] .intro { display: none; }
+:global(html[data-route-arrival]) .wall[data-wall-intro] .planeBox,
+:global(html[data-route-arrival]) .wall[data-wall-intro] [data-after] {
+  animation: none;
+  opacity: 1;
+  visibility: visible;
 }
 
-.pause svg {
-  width: 16px;
-  height: 16px;
-}
-
-.wall:not([data-ready]) .pause { display: none; }
-
-@media (hover: hover) {
-  .pause:hover {
-    background: rgba(12, 12, 11, 0.8);
+/* A phone opens the real work like a contact sheet, with the page usable throughout. */
+@media (max-width: 760px) and (prefers-reduced-motion: no-preference) {
+  .wall[data-wall-intro] .planeBox,
+  .wall[data-wall-intro]:not([data-ready]) .planeBox,
+  .wall[data-wall-intro] [data-after],
+  .wall[data-wall-intro]:not([data-ready]) [data-after] {
+    animation: none;
+    visibility: visible;
+    opacity: 1;
   }
+
+  .wall[data-wall-intro] .sink {
+    animation: phone-aperture 1.5s cubic-bezier(.22, 1, .36, 1) both;
+  }
+
+  .wall .intro,
+  .wall:not([data-ready]) .intro {
+    animation: phone-title-away 1.5s linear both;
+  }
+
+  .knock { display: none; }
+
+  .ink {
+    top: calc(var(--header-h) + 34px);
+    bottom: auto;
+    min-height: clamp(150px, 27svh, 240px);
+    gap: 0;
+    mask-image: none;
+    -webkit-mask-image: none;
+  }
+
+  .ink .mask { display: none; }
+  .ink .word { animation: phone-name-up 1.2s cubic-bezier(.22, 1, .36, 1) both; }
+  .ink .wordMask:nth-of-type(2) .word { animation: phone-name-down 1.2s cubic-bezier(.22, 1, .36, 1) .07s both; }
+
+  :global(html[data-route-arrival]) .wall[data-wall-intro] .sink { animation: none; }
 }
+
+@keyframes phone-aperture {
+  0%, 42% { clip-path: inset(43% 8% 49% 8% round 14px); }
+  100% { clip-path: inset(0 round 0); }
+}
+
+@keyframes phone-name-up {
+  0% { transform: translateY(110%); }
+  30%, 55% { transform: translateY(0); }
+  100% { transform: translateY(-110%); }
+}
+
+@keyframes phone-name-down {
+  0% { transform: translateY(110%); }
+  30%, 55% { transform: translateY(0); }
+  100% { transform: translateY(110%); }
+}
+
+@keyframes phone-title-away {
+  0%, 80% { opacity: 1; visibility: visible; }
+  100% { opacity: 0; visibility: hidden; }
+}
+
+:global(html[data-motion='off']) .wall .intro { display: none; }
+:global(html[data-motion='off']) .wall[data-wall-intro] .planeBox,
+:global(html[data-motion='off']) .wall[data-wall-intro] [data-after] {
+  animation: none;
+  opacity: 1;
+  visibility: visible;
+}
+:global(html[data-motion='off']) .wall[data-wall-intro] .sink { animation: none; clip-path: none; }
 
 .dim {
   position: absolute;
@@ -401,7 +450,6 @@
 
   .actions { gap: 12px 20px; }
   .actions > a { font-size: .875rem; }
-  .pause { top: calc(var(--header-h) + 16px); bottom: auto; }
 
   .tile {
     border-radius: 9px;
@@ -419,5 +467,4 @@
 @media (min-width: 761px) and (max-height: 650px) {
   .statement { font-size: clamp(2.5rem, 4.7vw, 4rem); }
   .copy { bottom: calc(var(--peek, var(--sheet-r)) + 28px); gap: 24px; }
-  .pause { bottom: calc(var(--peek, var(--sheet-r)) + 28px); }
 }

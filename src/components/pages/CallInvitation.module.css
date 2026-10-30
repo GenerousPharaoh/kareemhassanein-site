@@ -19,6 +19,11 @@
   min-height: 150px; padding: 16px;
   background: var(--ivory); color: var(--stage); border: 1px solid transparent; border-radius: 18px;
   text-decoration: none;
+  box-shadow: inset 0 0 0 1px #0c0c0b0a;
+  transition:
+    background-color var(--dur-hover) var(--ease-colour),
+    border-color var(--dur-hover) var(--ease-colour),
+    box-shadow var(--dur-hover) var(--ease-colour);
 }
 .call:focus-visible { outline-offset: 6px; }
 .callText { font: 500 clamp(1.25rem, 2vw, 1.8rem)/1.15 var(--font-display); letter-spacing: -.035em; }
@@ -30,11 +35,11 @@
   font: 500 clamp(2rem, 4vw, 3.7rem)/.85 var(--font-display); letter-spacing: -.07em;
 }
 .duration span { margin-top: 7px; font: 400 .6875rem/1 var(--font-body); letter-spacing: 0; }
-.arrowWindow { display: block; width: 24px; height: 32px; overflow: hidden; }
-.arrowWindow svg { width: 100%; height: 100%; }
+.arrowWindow { display: grid; place-items: center; width: 24px; height: 32px; opacity: .65; transition: opacity var(--dur-hover) var(--ease-colour); }
+.arrowWindow svg { width: 82%; height: 82%; }
 .details { display: grid; gap: 6px; padding-top: 14px; }
-.check { display: flex; justify-content: space-between; align-items: center; gap: 16px; min-height: 48px; font-size: .9375rem; text-decoration: underline; text-underline-offset: .3em; text-decoration-color: #ffffff4d; }
-.check span { font-size: 1.3rem; }
+.check { display: flex; justify-content: space-between; align-items: center; gap: 16px; min-height: 48px; font-size: .9375rem; text-decoration: underline; text-underline-offset: .3em; text-decoration-color: #ffffff4d; transition: text-decoration-color var(--dur-hover) var(--ease-colour); }
+.check span { font-size: 1.125rem; }
 @media (min-width: 600px) {
   .call { grid-template-columns: 170px minmax(0, 1fr) 32px; min-height: 240px; padding: 24px; gap: 24px; border-radius: 24px; }
   .duration { font-size: 3.7rem; }
@@ -51,19 +56,11 @@
   .callText { font-size: 1.125rem; }
   .check { font-size: .8125rem; }
 }
-@media (prefers-reduced-motion: no-preference) {
-  .call { transition: background-color 240ms, border-color 240ms; }
-  .check { transition: text-decoration-color 200ms; }
-  .call:focus-visible .arrowWindow svg { animation: send-arrow 450ms var(--ease-out); }
-  @media (hover: hover) { .call:hover .arrowWindow svg { animation: send-arrow 450ms var(--ease-out); } }
-}
 @media (hover: hover) {
-  .call:hover { background: #fff; border-color: #fff; }
+  .call:hover { background: #f8f8f5; border-color: #cbcac4; box-shadow: inset 0 0 0 1px #0c0c0b14; }
+  .call:hover .arrowWindow { opacity: 1; }
   .check:hover { text-decoration-color: currentColor; }
 }
-@keyframes send-arrow {
-  0% { transform: translate(0); }
-  45% { transform: translate(110%, -110%); }
-  46% { transform: translate(-110%, 110%); }
-  100% { transform: translate(0); }
-}
+.call:focus-visible .arrowWindow { opacity: 1; }
+.call:active { background: #e4e3dd; border-color: #cbcac4; transition-duration: var(--dur-press); }
+.check:active { text-decoration-color: currentColor; }

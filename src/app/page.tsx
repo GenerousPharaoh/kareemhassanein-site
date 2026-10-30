@@ -15,8 +15,7 @@ import { pageMeta } from '@/lib/meta';
 export const metadata = pageMeta({
   title: `${SITE.name} · ${SITE.descriptor}`,
   absoluteTitle: true,
-  description:
-    'I build and run the online side of law firms and of dental and medical practices: the website, the Google profile, booking or intake, ads, and the tracking that ties them together.',
+  description: SITE.description,
   path: '/',
 });
 
@@ -140,16 +139,15 @@ const PREVIEWS: Record<string, [string, string][]> = {
     ['attorney--desktop', 'The attorney profile on the Tax Relief Counsel website.'],
     ['map--desktop', 'The map showing the reach of Tax Relief Counsel.'],
   ],
-  endorphins: [
-    ['home-hero--desktop', 'The Endorphins homepage, with its dark clinic photograph and green booking controls.'],
-    ['team--desktop', 'The practitioner portraits on the Endorphins team page.'],
-    ['lp-physio--desktop', 'The physiotherapy page on the Endorphins website.'],
-  ],
   physiomax: [
-    ['care--desktop', 'The illustrated clinic rooms and services on the PhysioMax website.'],
+    ['home-hero--desktop', 'The PhysioMax homepage, with its orange and navy typography.'],
     ['treat--desktop', 'The body-area explorer on the PhysioMax website.'],
     ['service--desktop', 'The physiotherapy page and treatment illustration on the PhysioMax website.'],
-    ['home-hero--desktop', 'The PhysioMax homepage, with its orange and navy typography.'],
+  ],
+  'techniques-combat': [
+    ['home-hero--desktop', 'The Techniques Combat homepage, with its boxing film and gold typography.'],
+    ['campaign--desktop', 'The campaign collection on the Techniques Combat website.'],
+    ['product--desktop', 'The Techniques Combat product page for a pair of MMA gloves.'],
   ],
 };
 
@@ -180,7 +178,7 @@ export default function Home() {
   const ROWS = 6;
   const wall: WallTile[][] = Array.from({ length: ROWS }, (_, r) => dealt.filter((_, i) => i % ROWS === r));
 
-  const index: IndexItem[] = CASES.filter((c) => ['tax-relief-counsel', 'endorphins', 'physiomax'].includes(c.slug)).map((c) => ({
+  const index: IndexItem[] = CASES.filter((c) => ['tax-relief-counsel', 'physiomax', 'techniques-combat'].includes(c.slug)).map((c) => ({
     slug: c.slug,
     name: REEL.find((r) => r.slug === c.slug)?.name ?? c.short,
     kind: c.kindLabel,
@@ -198,13 +196,13 @@ export default function Home() {
       </div>
       <Statement
         pieces={[
-          'I build and run the online side of law firms and independent practices: the website ',
+          'I build and run websites ',
           { still: still('tax-relief-counsel/chip-headline', ''), label: 'The Tax Relief Counsel headline' },
-          ', the Google profile ',
+          ', Google profiles ',
           { still: still('endorphins/chip-map', ''), label: 'Endorphins on Google Maps' },
           ', booking or intake ',
           { still: still('endorphins/chip-book', ''), label: 'The Endorphins Book Appointment button' },
-          ', ads, and the tracking that ties them together.',
+          ', ads and tracking for businesses and personal projects.',
         ]}
         body="I’m Kareem Hassanein. I’ve worked in healthcare for 13 years, across different roles."
         link={{ href: '/about', label: 'More about me' }}

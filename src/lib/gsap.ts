@@ -5,6 +5,7 @@ import { Flip } from 'gsap/Flip';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { SplitText } from 'gsap/SplitText';
 import { useLayoutEffect, useEffect, type RefObject } from 'react';
+import { prefersReducedMotion, useReducedMotion } from './useReducedMotion';
 
 let registered = false;
 
@@ -28,6 +29,7 @@ const useIsoLayoutEffect = typeof window === 'undefined' ? useEffect : useLayout
  * give reduced motion its own still state.
  */
 export function useGsap(scope: RefObject<HTMLElement | null>, setup: (ctx: { reduce: boolean; mobile: boolean }) => void | (() => void), deps: unknown[] = []) {
+  const preference = useReducedMotion();
   useIsoLayoutEffect(() => {
     const el = scope.current;
     if (!el) return;
@@ -41,9 +43,9 @@ export function useGsap(scope: RefObject<HTMLElement | null>, setup: (ctx: { red
       },
       (context) => {
         const { reduce, mobile } = context.conditions as { reduce: boolean; mobile: boolean };
-        return setup({ reduce, mobile });
+        return setup({ reduce: reduce || preference || prefersReducedMotion(), mobile });
       },
     );
     return () => mm.revert();
-  }, deps);
+  }, [preference, ...deps]);
 }

@@ -1,6 +1,6 @@
 /*
-  The site's buttons. Hover changes the fill, ring or underline and passes the arrow through its window; a press
-  answers at once (solid and ghost scale to 0.97, text dims); focus is the global 2px ring.
+  Quiet, consistent actions: the surface and its edge answer the pointer.
+  Labels and symbols stay in place; only a compact button gives under an actual press.
 */
 .btn {
   display: inline-flex;
@@ -25,28 +25,15 @@
 
 .arrow {
   flex: none;
+  display: block;
   width: 16px;
   height: 16px;
-  transition: transform var(--dur-ui) var(--ease-out);
-}
-
-.arrowWindow { flex: none; width: 16px; height: 16px; overflow: hidden; }
-@media (hover: hover) and (prefers-reduced-motion: no-preference) {
-  .btn:hover .arrow { animation: arrow-through 420ms var(--ease-out); }
-}
-@media (prefers-reduced-motion: no-preference) {
-  .btn:focus-visible .arrow { animation: arrow-through 420ms var(--ease-out); }
-}
-@keyframes arrow-through {
-  0% { transform: translateX(0); }
-  42% { transform: translateX(18px); }
-  43% { transform: translateX(-18px); }
-  100% { transform: translateX(0); }
 }
 
 .solid {
   background: var(--ink);
   color: var(--paper);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--paper) 12%, transparent);
 }
 
 .ghost {
@@ -84,11 +71,12 @@
 }
 
 .solid:active {
-  background: var(--ink-2);
+  background: color-mix(in srgb, var(--ink) 85%, var(--paper));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--paper) 28%, transparent);
 }
 
 :global(.night) .solid:active {
-  background: #fff;
+  background: var(--on-night);
 }
 
 .ghost:active {
@@ -98,27 +86,29 @@
 
 .text:active {
   text-decoration-color: currentColor;
-  opacity: 0.7;
+  opacity: 0.82;
 }
 
 @media (prefers-reduced-motion: no-preference) {
   .solid:active,
   .ghost:active {
-    transform: scale(0.97);
+    transform: scale(0.985);
   }
 }
 
 @media (hover: hover) {
-  .solid:hover {
-    background: var(--ink-2);
+  .solid:hover:not(:active) {
+    background: color-mix(in srgb, var(--ink) 92%, var(--paper));
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--paper) 24%, transparent);
   }
 
-  :global(.night) .solid:hover {
+  :global(.night) .solid:hover:not(:active) {
     background: #fff;
   }
 
-  .ghost:hover {
-    box-shadow: inset 0 0 0 1px currentColor;
+  .ghost:hover:not(:active) {
+    background: color-mix(in srgb, currentColor 4%, transparent);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, currentColor 60%, transparent);
   }
 
   .text:hover {

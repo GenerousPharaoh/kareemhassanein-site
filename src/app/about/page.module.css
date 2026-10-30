@@ -32,6 +32,8 @@
   max-width: 54ch;
 }
 
+.titleLine { display: block; white-space: nowrap; }
+
 .facts {
   grid-area: facts;
   width: 100%;

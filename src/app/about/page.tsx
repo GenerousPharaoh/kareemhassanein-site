@@ -12,7 +12,7 @@ import styles from './page.module.css';
 export const metadata = pageMeta({
   title: 'About',
   description:
-    'I have worked in healthcare for 13 years, across different roles. I build and run the online side of law firms and independent practices.',
+    'I design and build websites for businesses and personal projects, and run the systems around them. My background includes 13 years in healthcare, across different roles.',
   path: '/about',
 });
 
@@ -26,7 +26,7 @@ const FACTS = [
 const STEPS = [
   {
     name: 'Assess',
-    text: 'I walk the whole path, from the search result to the booked appointment or signed client, and tell you what is actually happening.',
+    text: 'I learn what you want to build or improve, look at what is already there, and work out what needs to happen.',
   },
   {
     name: 'Plan',
@@ -39,7 +39,7 @@ const STEPS = [
   },
   {
     name: 'Run',
-    text: 'I keep it working, report bookings or signed clients by source, and answer for it. Every change is logged and can be undone.',
+    text: 'For ongoing work, I look after the site and report what matters to your business: enquiries, bookings or sales. Every change is logged and can be undone.',
   },
 ];
 
@@ -71,12 +71,13 @@ export default function AboutPage() {
             About
           </p>
           <DisplayTitle id="about-title" className={`t-h1 ${styles.title}`}>
-            I know healthcare from the inside.
+            <span className={styles.titleLine}>I design it.</span>{' '}
+            <span className={styles.titleLine}>I build it.</span>{' '}
+            <span className={styles.titleLine}>I run it.</span>
           </DisplayTitle>
           <p className={`t-lede ${styles.lede}`} data-enter style={enter(2)}>
-            I’m Kareem Hassanein. I’ve worked in the healthcare industry for 13 years, across different roles.
-            I build and run the online side of law firms and independent practices: the website, the Google profile,
-            booking or intake, ads, and the tracking that ties them together.
+            I’m Kareem Hassanein. I design and build websites for businesses and personal projects, and run the
+            search, booking, ads and tracking around them. My background includes 13 years in healthcare, across different roles.
           </p>
         </div>
         <figure className={styles.portrait}>
@@ -149,7 +150,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <CloseBand track="about-close" />
+      <CloseBand line="Tell me what you want to build or improve." track="about-close" />
     </>
   );
 }

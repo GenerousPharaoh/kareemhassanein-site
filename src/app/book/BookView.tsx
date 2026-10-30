@@ -11,7 +11,7 @@ import styles from './page.module.css';
 export const BOOK_META = {
   title: 'Book a call',
   description:
-    'Tell me what is not working at your practice or firm. I reply within one business day to set up a 20-minute call, or to start a website check.',
+    'Tell me what you want to build or improve for your business or personal project. I reply within one business day to set up a 20-minute call, or to start a website check.',
   path: '/book',
 };
 
@@ -27,8 +27,8 @@ export function BookView({ initialTopic }: { initialTopic: Topic }) {
       <PageHead
         className={styles.head}
         label="Book a call"
-        title="Tell me what is not working."
-        lede="A few lines about your practice or firm are enough. I read every request myself."
+        title="Tell me what you have in mind."
+        lede="A few lines about what you want to build or improve are enough. I read every request myself."
       />
 
       <section className={styles.formCol} aria-label="Send a request" data-enter style={enter(1)}>

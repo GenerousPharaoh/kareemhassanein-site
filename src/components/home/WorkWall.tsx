@@ -5,7 +5,6 @@ import { Picture } from '@/components/media/Picture';
 import { ButtonLink } from '@/components/ui/ButtonLink';
 import { getGsap, useGsap } from '@/lib/gsap';
 import type { Device, Still } from '@/lib/media';
-import { useReducedMotion } from '@/lib/useReducedMotion';
 import s from './WorkWall.module.css';
 
 export type WallTile = { key: string; ground: string; device: Device; ratio: number; still: Still };
@@ -31,17 +30,16 @@ const wrap = (x: number, w: number) => (w ? ((x % w) + w) % w : 0);
  * letters, then the eye flies through one of them into the wall. The wall is every screen of the work on its
  * client's colour, tilted away, its rows drifting in opposite directions. Scrolling pushes the rows
  * along (and back, scrolling up), and a drag or swipe throws them.
- * Off screen it rests; paused or with reduced motion it holds still.
+ * Off screen it rests; with motion disabled it holds still.
  */
 export function WorkWall({ rows, name, line, bookingHref }: Props) {
   const root = useRef<HTMLElement>(null);
-  const reduce = useReducedMotion();
-  const [paused, setPaused] = useState(false);
   const [intro, setIntro] = useState(true);
-  const pausedRef = useRef(paused);
-  const syncMotion = useRef<() => void>(() => {});
+  const openingLayout = useRef<boolean | null>(null);
 
   useGsap(root, ({ reduce: r, mobile }) => {
+    const layoutChanged = openingLayout.current !== null && openingLayout.current !== mobile;
+    openingLayout.current = mobile;
     const { gsap } = getGsap();
     const el = root.current!;
     const plane = el.querySelector<HTMLElement>('[data-plane]')!;
@@ -85,6 +83,16 @@ export function WorkWall({ rows, name, line, bookingHref }: Props) {
     measure();
     place();
     pose();
+    if (mobile && !document.documentElement.hasAttribute('data-route-arrival') && window.scrollY < 40) {
+      // The opening's crop must not postpone loading the screens it is about to uncover.
+      // Prioritise only a few images in this viewport, after the rows take their measured positions.
+      [...plane.querySelectorAll<HTMLImageElement>('img')]
+        .map((image) => ({ image, rect: image.getBoundingClientRect() }))
+        .filter(({ rect }) => rect.right > 0 && rect.left < innerWidth && rect.bottom > 64 && rect.top < innerHeight)
+        .sort((a, b) => Math.abs(a.rect.top + a.rect.height / 2 - innerHeight * .38) - Math.abs(b.rect.top + b.rect.height / 2 - innerHeight * .38))
+        .slice(0, 6)
+        .forEach(({ image }, i) => { image.loading = 'eager'; if (i < 2) image.fetchPriority = 'high'; });
+    }
     if (r) {
       setIntro(false);
       return () => el.removeAttribute('data-ready');
@@ -103,18 +111,17 @@ export function WorkWall({ rows, name, line, bookingHref }: Props) {
       m.rush *= Math.exp(-dt / 0.42);
       m.fling *= Math.exp(-dt / 0.55);
       if (!m.dragging) m.dragV *= Math.exp(-dt / 0.2);
-      const held = pausedRef.current;
       const surge = m.rush + Math.abs(m.scrollV) * 0.5 + Math.abs(m.fling) + m.dragV;
       spread += (clamp(surge / 2600, 0, 1) - spread) * (1 - Math.exp(-dt / 0.28));
-      if (!held) clock += dt;
+      clock += dt;
       sway.rz = Math.sin(clock * 0.3) * 0.45;
       sway.rx = Math.sin(clock * 0.24 + 0.6) * 0.7;
       pose();
       for (const l of lanes) {
-        const auto = held ? 0 : l.dir * ((m.dragging ? 0 : l.speed) + m.rush + m.scrollV * 0.5);
+        const auto = l.dir * ((m.dragging ? 0 : l.speed) + m.rush + m.scrollV * 0.5);
         const v = auto + m.fling;
         l.x = wrap(l.x + v * dt, l.width);
-        const lean = clamp(-(v - (held ? 0 : l.dir * l.speed)) * 0.0035, -7, 7);
+        const lean = clamp(-(v - l.dir * l.speed) * 0.0035, -7, 7);
         l.skew += (lean - l.skew) * (1 - Math.exp(-dt / 0.12));
       }
       place();
@@ -125,22 +132,13 @@ export function WorkWall({ rows, name, line, bookingHref }: Props) {
     let inView = true;
     let ticking = false;
     const sync = () => {
-      const on = inView && !document.hidden && exit < 1 && !pausedRef.current;
+      const on = inView && !document.hidden && exit < 1;
       if (on === ticking) return;
       ticking = on;
       if (on) {
         lastY = window.scrollY;
         gsap.ticker.add(step);
       } else gsap.ticker.remove(step);
-    };
-    syncMotion.current = () => {
-      if (pausedRef.current) {
-        m.rush = 0;
-        m.fling = 0;
-        m.dragV = 0;
-        m.scrollV = 0;
-      }
-      sync();
     };
     const io = new IntersectionObserver(([e]) => {
       inView = e.isIntersecting;
@@ -186,7 +184,7 @@ export function WorkWall({ rows, name, line, bookingHref }: Props) {
       if (!drag || e.pointerId !== drag.id) return;
       if (drag.on) {
         // A pointer that stopped before letting go is not a throw
-        m.fling = pausedRef.current || e.timeStamp - drag.lastT > 90 ? 0 : clamp(-drag.v, -5000, 5000);
+        m.fling = e.timeStamp - drag.lastT > 90 ? 0 : clamp(-drag.v, -5000, 5000);
         m.dragging = false;
         el.removeAttribute('data-dragging');
       }
@@ -226,8 +224,17 @@ export function WorkWall({ rows, name, line, bookingHref }: Props) {
     const sheet = el.nextElementSibling as HTMLElement | null;
     const ink = title?.querySelector<HTMLElement>('[data-ink]');
     const knock = title?.querySelector<HTMLCanvasElement>('[data-knock]');
-    const ctx = knock?.getContext('2d');
-    if (!arrived && title && ink && knock && ctx && header && window.scrollY < 40) {
+    const ctx = !mobile ? knock?.getContext('2d') : null;
+    const finishMobile = () => { if (window.scrollY >= 40) tl?.progress(1); };
+    if (mobile && !layoutChanged && !arrived && title && window.scrollY < 40) {
+      // The phone's aperture starts in CSS on first paint. Hydration only retires it,
+      // so a slow script cannot restart the opening or leave the name covering the work.
+      const animations = [...title.getAnimations({ subtree: true }), ...el.querySelector<HTMLElement>('[data-sink]')!.getAnimations()];
+      const remaining = Math.max(0, ...animations.map((a) => Number(a.effect?.getComputedTiming().endTime ?? 0) - Number(a.currentTime ?? 0)));
+      tl = gsap.timeline({ onComplete: () => setIntro(false) }).to({}, { duration: Math.min(1.5, remaining / 1000) });
+      // A touch is not an instruction to fast-forward. Only leaving the opening ends it early.
+      window.addEventListener('scroll', finishMobile, { passive: true });
+    } else if (!mobile && !layoutChanged && !arrived && title && ink && knock && ctx && header && window.scrollY < 40) {
       // Through the hold the wall stands at its final pose behind the solid cut-out, unseen, so the browser
       // has drawn every screen before the letters open (drawn for the first time as they open, it stalls).
       // At the opening it steps back, and comes forward as the eye flies in, so the two move the same way.
@@ -324,9 +331,9 @@ export function WorkWall({ rows, name, line, bookingHref }: Props) {
     } else setIntro(false);
 
     return () => {
+      window.removeEventListener('scroll', finishMobile);
       hurryOn.forEach((t) => window.removeEventListener(t, hurry));
       gsap.ticker.remove(step);
-      syncMotion.current = () => {};
       io.disconnect();
       document.removeEventListener('visibilitychange', sync);
       el.removeEventListener('pointerdown', down);
@@ -348,11 +355,6 @@ export function WorkWall({ rows, name, line, bookingHref }: Props) {
     header.style.removeProperty('opacity');
     header.style.removeProperty('visibility');
   }, [intro]);
-
-  useEffect(() => {
-    pausedRef.current = paused;
-    syncMotion.current();
-  }, [paused]);
 
   return (
     <section ref={root} className={s.wall} aria-labelledby="wall-title" data-theme="dark" data-wall-intro={intro || undefined}>
@@ -398,13 +400,6 @@ export function WorkWall({ rows, name, line, bookingHref }: Props) {
             <Title name={name} line={line} />
           </div>
         </div>
-      )}
-      {!reduce && (
-        <button type="button" className={s.pause} onClick={() => setPaused((p) => !p)} aria-pressed={paused} aria-label={paused ? 'Play the wall of work' : 'Pause the wall of work'} data-after>
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            {paused ? <path d="M8 5.5v13l10.5-6.5z" fill="currentColor" /> : <path d="M8 5h2.6v14H8zM13.4 5H16v14h-2.6z" fill="currentColor" />}
-          </svg>
-        </button>
       )}
       <div className={s.dim} data-dim aria-hidden="true" />
     </section>

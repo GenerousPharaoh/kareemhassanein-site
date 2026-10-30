@@ -4,6 +4,7 @@ import { FOOTER_NAV, SERVICES, SITE } from '@/content/site';
 import { PORTRAIT } from '@/content/portrait';
 import { Picture } from '@/components/media/Picture';
 import styles from './Footer.module.css';
+import { MotionControl } from './MotionControl';
 
 export function Footer() {
   return (
@@ -42,6 +43,7 @@ export function Footer() {
           <Link href="/privacy">Privacy</Link>
           <a href={SITE.linkedin} rel="noopener">LinkedIn<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 13 13 3M3 3h10v10" fill="none" stroke="currentColor" strokeWidth="1.2" /></svg></a>
           <a href="#top" className={styles.back}>Back to top<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 13V3M3 8l5-5 5 5" fill="none" stroke="currentColor" strokeWidth="1.2" /></svg></a>
+          <MotionControl />
         </nav>
       </div>
       </div>

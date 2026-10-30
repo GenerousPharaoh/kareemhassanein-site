@@ -10,12 +10,4 @@
 }
 @keyframes dissolve { from { opacity: 0; } to { opacity: 1; } }
 
-/* The case link stretches across the row at z-index 1; its pause control is a separate target. */
-.count, .pause { position: absolute; z-index: 2; bottom: 12px; color: #eeede8; background: #0c0c0be8; border: 1px solid #eeede833; border-radius: 999px; }
-.count { left: 12px; display: flex; align-items: center; gap: 8px; height: 32px; padding-inline: 12px; font-size: .75rem; font-variant-numeric: tabular-nums; pointer-events: none; }
-.count span { color: #b6b5af; }
-.pause { right: 12px; display: grid; place-items: center; width: 44px; height: 44px; padding: 0; cursor: pointer; transition: background-color var(--dur-hover), border-color var(--dur-hover); }
-.pause svg { width: 18px; height: 18px; fill: currentColor; }
-.pause:focus-visible { outline: 2px solid #fff; outline-offset: 3px; border-radius: 999px; }
-.preview:not([data-preview-ready]) :is(.pause, .count) { display: none; }
-@media (hover: hover) { .pause:hover { background: #0c0c0b; border-color: #eeede8; } }
+:global(html[data-motion='off']) .layer[data-arrive] { animation: none; }

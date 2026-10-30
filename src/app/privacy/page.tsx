@@ -53,7 +53,7 @@ export default function PrivacyPage() {
           <div className={`prose ${styles.prose}`}>
             <h2>What the form collects</h2>
             <p>
-              When you send a request, the form collects your name, your email address, your practice or firm if you add it,
+              When you send a request, the form collects your name, your email address, your company or project if you add it,
               and your message. The form sends these details when you press send.
             </p>
 
@@ -92,7 +92,7 @@ export default function PrivacyPage() {
 
       <CloseBand
         title="Questions about any of this?"
-        line="Write to me, or book a call about your own site. There is nothing to prepare except its address."
+        line="Write to me, or book a call about your project. There is nothing to prepare."
         check={false}
         track="privacy-close"
       />

@@ -14,7 +14,7 @@ import styles from './page.module.css';
 export const metadata = pageMeta({
   title: 'Notes',
   description:
-    'Practical notes for owners of law firms and of dental and medical practices: what Google Ads really counts, and which new patients came from the website and ads.',
+    'Practical notes on what Google Ads really counts, and how to track new patients from a website and ads.',
   path: '/notes',
 });
 
@@ -24,8 +24,8 @@ export default function NotesPage() {
       <div className={`container ${styles.page}`}>
         <PageHead
           label="Notes"
-          title="Notes for practice owners"
-          lede="Practical answers to questions owners ask about their ads, tracking and booking, each from work on a real practice."
+          title="Notes from the work"
+          lede="Practical answers about ads, tracking and booking, drawn from real projects."
         />
 
         <ol className={styles.list} data-enter style={enter(3)}>

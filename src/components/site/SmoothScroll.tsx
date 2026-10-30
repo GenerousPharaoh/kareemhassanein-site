@@ -3,6 +3,7 @@
 import Lenis from 'lenis';
 import { useEffect } from 'react';
 import { getGsap } from '@/lib/gsap';
+import { prefersReducedMotion, subscribeMotionPreference } from '@/lib/useReducedMotion';
 
 let instance: Lenis | null = null;
 
@@ -44,6 +45,7 @@ export function SmoothScroll() {
       if (lenis) return;
       lenis = new Lenis({ lerp: 0.105, anchors: true, stopInertiaOnNavigate: true });
       instance = lenis;
+      if (document.documentElement.style.overflow === 'hidden') lenis.stop();
       lenis.on('scroll', ScrollTrigger.update);
       gsap.ticker.add(tick);
       gsap.ticker.lagSmoothing(0);
@@ -56,7 +58,7 @@ export function SmoothScroll() {
       lenis = null;
       instance = null;
     };
-    const sync = () => (query.matches ? start() : stop());
+    const sync = () => (query.matches && !prefersReducedMotion() ? start() : stop());
 
     // Keyboard focus and browser scrolling can move the page between animation frames.
     // Read that position before Lenis measures an anchor, otherwise its destination is offset.
@@ -93,9 +95,11 @@ export function SmoothScroll() {
 
     sync();
     query.addEventListener('change', sync);
+    const unsubscribePreference = subscribeMotionPreference(sync);
     document.addEventListener('click', syncAnchor, true);
     return () => {
       query.removeEventListener('change', sync);
+      unsubscribePreference();
       document.removeEventListener('click', syncAnchor, true);
       observer.disconnect();
       window.clearTimeout(resizeTimer);

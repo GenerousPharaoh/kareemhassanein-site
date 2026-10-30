@@ -1,6 +1,7 @@
 'use client';
 
 import { useLayoutEffect, useRef, type RefObject } from 'react';
+import { prefersReducedMotion, subscribeMotionPreference } from '@/lib/useReducedMotion';
 
 // Three actual surfaces from each drawing: search/page/booking, ranked rows,
 // desktop/image/phone, then search/page/completion. The same outlines carry through.
@@ -26,9 +27,8 @@ export function useProcessDrawing(root: RefObject<HTMLElement | null>, active: n
     const surfaces = [...drawing.querySelectorAll<SVGRectElement>('[data-morph-surface]')];
     const target = SURFACES[active];
     const from = positions.current;
-    const reduce = matchMedia('(prefers-reduced-motion: reduce)');
     const box = drawing.getBoundingClientRect();
-    if (reduce.matches || box.bottom < 0 || box.top > innerHeight) {
+    if (prefersReducedMotion() || box.bottom < 0 || box.top > innerHeight) {
       positions.current = target;
       return;
     }
@@ -72,15 +72,15 @@ export function useProcessDrawing(root: RefObject<HTMLElement | null>, active: n
     paint(from);
     drawing.dataset.morphing = '';
     frame = requestAnimationFrame(tick);
-    const preference = () => { if (reduce.matches) finish(); };
+    const preference = () => { if (prefersReducedMotion()) finish(); };
     const visibility = () => { if (document.hidden) finish(); };
-    reduce.addEventListener('change', preference);
+    const unsubscribePreference = subscribeMotionPreference(preference);
     document.addEventListener('visibilitychange', visibility);
     return () => {
       cancelAnimationFrame(frame);
       details.forEach((animation) => animation.cancel());
       delete drawing.dataset.morphing;
-      reduce.removeEventListener('change', preference);
+      unsubscribePreference();
       document.removeEventListener('visibilitychange', visibility);
     };
   }, [active, root]);

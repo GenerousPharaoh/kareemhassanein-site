@@ -101,7 +101,7 @@ export function Close() {
           </Link>
         </h2>
         <p className={s.alt} data-up>
-          Tell me what is not working. There is nothing to prepare except your site address.
+          Tell me what you want to build or improve. There is nothing to prepare.
         </p>
       </div>
     </section>

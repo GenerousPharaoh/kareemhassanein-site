@@ -19,9 +19,9 @@ export function ButtonLink({ href, children, variant = 'solid', arrow = false, c
     <>
       <span>{children}</span>
       {arrow ? (
-        <span className={styles.arrowWindow} aria-hidden="true"><svg className={styles.arrow} viewBox="0 0 16 16">
-          <path d="M3 8h9.5M8.5 4l4 4-4 4" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-        </svg></span>
+        <svg className={styles.arrow} viewBox="0 0 16 16" aria-hidden="true">
+          <path d="M3.5 8h9M9 4.5 12.5 8 9 11.5" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
       ) : null}
     </>
   );

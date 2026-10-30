@@ -46,29 +46,6 @@
   grid-auto-rows: 1fr;
 }
 
-/* The chosen card is one ink tab under both cards, sliding to the one picked */
-.topicGrid::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: calc((100% - var(--topic-gap)) / 2);
-  border-radius: 11px;
-  background: var(--ink);
-  pointer-events: none;
-}
-
-.topicGrid:has(.radio[value='check']:checked)::before {
-  transform: translateY(calc(100% + var(--topic-gap)));
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .topicGrid::before {
-    transition: transform 420ms var(--ease-out);
-  }
-}
-
 .topic {
   position: relative;
   display: flex;
@@ -78,19 +55,16 @@
   border-radius: 11px;
   background: transparent;
   box-shadow: inset 0 0 0 1px var(--rule);
-  /* White, inverted against whatever is beneath: ink on the card, light on the tab, and split
-     letter by letter while the tab passes under them */
-  color: #fff;
+  color: var(--ink);
   cursor: pointer;
+  /* Selection changes text and surface together, keeping contrast throughout the change. */
   transition: box-shadow var(--dur-hover) var(--ease-colour);
 }
 
-.topic > * {
-  mix-blend-mode: difference;
-}
-
 .topic:has(.radio:checked) {
-  box-shadow: none;
+  background: var(--ink);
+  color: var(--paper);
+  box-shadow: inset 0 0 0 1px var(--ink);
 }
 
 .topic:has(.radio:focus-visible) {
@@ -128,7 +102,7 @@
   line-height: 1.3;
 }
 
-/* Inverted with the rest of the card's words, so it reads on the tab and off it */
+/* The price follows the selected surface without blending through the text. */
 .price {
   display: block;
   margin-top: 4px;
@@ -151,15 +125,6 @@
 @media (min-width: 360px) {
   .topicGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .topicGrid::before {
-    width: calc((100% - var(--topic-gap)) / 2);
-    height: 100%;
-  }
-
-  .topicGrid:has(.radio[value='check']:checked)::before {
-    transform: translateX(calc(100% + var(--topic-gap)));
   }
 }
 
@@ -361,26 +326,29 @@
   border-radius: 999px;
   background: var(--ink);
   color: var(--paper);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--paper) 12%, transparent);
   font: 600 1rem/1 var(--font-body);
   cursor: pointer;
-  transition: background-color var(--dur-hover) var(--ease-colour);
+  transition:
+    background-color var(--dur-hover) var(--ease-colour),
+    box-shadow var(--dur-hover) var(--ease-colour);
 }
 
 /* Pressed, like the site's solid buttons: the fill lightens at once and, with motion, it gives a little */
 
 .submit:active:not([aria-disabled='true']) {
-  background: var(--ink-2);
+  background: color-mix(in srgb, var(--ink) 85%, var(--paper));
   transition-duration: var(--dur-press);
 }
 
 @media (prefers-reduced-motion: no-preference) {
   .submit {
     transition: background-color var(--dur-hover) var(--ease-colour),
-
+      box-shadow var(--dur-hover) var(--ease-colour),
       transform var(--dur-press) var(--ease-out);
   }
   .submit:active:not([aria-disabled='true']) {
-    transform: scale(0.97);
+    transform: scale(0.985);
   }
 }
 
@@ -399,6 +367,7 @@
   align-items: center;
   justify-content: center;
   gap: 10px;
+  transition: opacity var(--dur-press) var(--ease-colour);
 }
 
 .submitBusy {
@@ -413,43 +382,9 @@
   opacity: 1;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  /*
-
-    The label rolls up and out, then "Sending" rolls in from below, never both at once:
-
-    whichever is leaving goes quickly, and whichever is arriving waits for it.
-
-  */
-  .submitBusy,
-
-  .submit[data-sending] .submitLabel {
-    transition: opacity var(--dur-press) var(--ease-out),
-
-      transform var(--dur-hover) var(--ease-in);
-  }
-  .submitLabel,
-
-  .submit[data-sending] .submitBusy {
-    transition: opacity var(--dur-hover) var(--ease-out) 70ms,
-
-      transform var(--dur-ui) var(--ease-out) 40ms;
-  }
-  .submitBusy {
-    transform: translateY(8px);
-  }
-  .submit[data-sending] .submitLabel {
-    transform: translateY(-8px);
-  }
-  .submit[data-sending] .submitBusy {
-    transform: none;
-  }
-}
-
 .arrow {
   width: 16px;
   height: 16px;
-  transition: transform var(--dur-ui) var(--ease-out);
 }
 
 .spinner {
@@ -481,7 +416,8 @@
 }
 
 @media (hover: hover) {
-  .topic:hover:not(:has(.radio:checked)) {
+  .topic:hover:not(:has(.radio:checked, .radio:disabled)) {
+    background: color-mix(in srgb, var(--ink) 4%, transparent);
     box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ink) 40%, transparent);
   }
   .input:hover:not(:focus) {
@@ -490,8 +426,9 @@
   .input[aria-invalid='true']:hover:not(:focus) {
     border-color: var(--error);
   }
-  .submit:hover:not([aria-disabled='true']) {
-    background: var(--ink-2);
+  .submit:hover:not(:active):not([aria-disabled='true']) {
+    background: color-mix(in srgb, var(--ink) 92%, var(--paper));
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--paper) 24%, transparent);
   }
 }
 
@@ -566,7 +503,6 @@
 .doneLink svg {
   width: 15px;
   height: 15px;
-  transition: transform var(--dur-ui) var(--ease-out);
 }
 
 @media (hover: hover) {

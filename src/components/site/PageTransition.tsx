@@ -4,6 +4,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useLayoutEffect, useRef } from 'react';
 import { flushSync } from 'react-dom';
 import { getLenis } from './SmoothScroll';
+import { prefersReducedMotion, subscribeMotionPreference } from '@/lib/useReducedMotion';
 
 type PendingRoute = { pathname: string; position?: number; caseSlug?: string; finish: () => void };
 const POSITION = '__khMotionPosition';
@@ -71,7 +72,6 @@ export function PageTransition() {
     let active: ViewTransition | null = null;
     let timeout = 0;
     let captureDeadline = 0;
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
     const savedPosition = window.history.state?.[POSITION];
     position.current = typeof savedPosition === 'number' ? savedPosition : 0;
     window.history.replaceState({ ...window.history.state, [POSITION]: position.current }, '');
@@ -85,7 +85,7 @@ export function PageTransition() {
       const lenis = getLenis();
       lenis?.scrollTo(window.scrollY, { immediate: true, force: true });
 
-      if (!document.startViewTransition || typeof ViewTransition === 'undefined' || !('types' in ViewTransition.prototype) || reduce.matches) {
+      if (!document.startViewTransition || typeof ViewTransition === 'undefined' || !('types' in ViewTransition.prototype) || prefersReducedMotion()) {
         root.dataset.routeArrival = direction;
         if (navigate) {
           // The same history accounting works when animation is disabled.
@@ -185,14 +185,14 @@ export function PageTransition() {
       const direction = targetPosition !== undefined && targetPosition > position.current ? 'forward' : 'back';
       if (location.pathname !== currentPath.current) begin(location.pathname, undefined, direction, targetPosition);
     };
-    const onPreference = () => { if (reduce.matches) active?.skipTransition(); };
+    const onPreference = () => { if (prefersReducedMotion()) active?.skipTransition(); };
     document.addEventListener('click', onClick, true);
     window.addEventListener('popstate', onPopState, true);
-    reduce.addEventListener('change', onPreference);
+    const unsubscribePreference = subscribeMotionPreference(onPreference);
     return () => {
       document.removeEventListener('click', onClick, true);
       window.removeEventListener('popstate', onPopState, true);
-      reduce.removeEventListener('change', onPreference);
+      unsubscribePreference();
       pending.current?.finish();
       active?.skipTransition();
       window.clearTimeout(timeout);

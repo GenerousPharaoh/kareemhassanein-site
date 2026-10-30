@@ -4,6 +4,7 @@ import { useLayoutEffect, useRef, useState, useSyncExternalStore, type ReactNode
 import { flushSync } from 'react-dom';
 import { getGsap } from '@/lib/gsap';
 import styles from './WorkFilter.module.css';
+import { prefersReducedMotion } from '@/lib/useReducedMotion';
 
 const FILTERS = [
   { id: 'all', label: 'All cases', status: 'Showing all case studies.' },
@@ -39,7 +40,7 @@ function canAnimate() {
     typeof ViewTransition !== 'undefined' &&
     'types' in ViewTransition.prototype &&
     CSS.supports('view-transition-class', 'a') &&
-    !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    !prefersReducedMotion()
   );
 }
 

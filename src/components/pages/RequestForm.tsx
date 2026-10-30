@@ -346,7 +346,7 @@ export function RequestForm({ initialTopic, checkPrice, checkNote, email }: Prop
 
           <div className={styles.field}>
             <label htmlFor={id('organization')} className={styles.label}>
-              Practice or firm <span className={styles.optional}>Optional</span>
+              Company or project <span className={styles.optional}>Optional</span>
             </label>
             <input
               id={id('organization')}
@@ -367,7 +367,7 @@ export function RequestForm({ initialTopic, checkPrice, checkNote, email }: Prop
               What is going on?
             </label>
             <p id={id('message-hint')} className={styles.hint}>
-              Your site address and what is not working is plenty.
+              A site address or a few details about your project is plenty.
             </p>
             <div className={styles.control}>
               <textarea
