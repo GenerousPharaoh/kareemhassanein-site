@@ -33,7 +33,7 @@ try {
   await page.waitForSelector('[data-opening-phase="name"]');
   assert.deepEqual(await page.locator('[data-window-letters] text').allTextContents(),['Kareem','Hassanein']);
   assert.equal(await page.locator('[data-mark-cell]').count(),0);
-  assert.ok(await page.locator('[data-track="hero-book"]').isVisible());
+  assert.ok(await page.locator('[data-track="header-book"]:visible, button[aria-controls="site-menu"]:visible').count()>0,'Header actions are available throughout the opening');
   const words=await page.locator('[data-name-window]').evaluate(svg=>{
    // The first-paint SVG is hidden after its glyphs are captured. Measure without making it visible.
    svg.style.display='block';svg.style.visibility='hidden';
@@ -54,6 +54,7 @@ try {
   assert.ok(coverage.pixels.every(alpha=>alpha<8),`Zoom clears the full viewport without dark mask pixels: ${coverage.pixels}`);
   await page.screenshot({path:path.join(out,`through-${width}.png`),scale:'css'});
   await page.waitForFunction(()=>!document.querySelector('[data-hero-opening]'));
+  assert.ok(await page.locator('[data-track="hero-book"]').isVisible());
   await page.screenshot({path:path.join(out,`wall-${width}.png`),scale:'css'});
   const data=await page.evaluate(()=>({sequence:window.__sequence,cls:window.__shifts.reduce((sum,n)=>sum+n,0),nameOpacity:getComputedStyle(document.querySelector('h1')).opacity,apertureDisplay:getComputedStyle(document.querySelector('[data-name-window]')).display}));
   assert.deepEqual(data.sequence.map(e=>e.phase),['name','zoom','land','ready']);

@@ -24,7 +24,7 @@ const PART = { exit: 200, speed: 72 };
 const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v));
 const wrap = (x: number, w: number) => (w ? ((x % w) + w) % w : 0);
 
-/** The name stays in the hero. The real project screens drift behind it and respond to scrolling and dragging. */
+/** The name rests below the real project screens, which respond to scrolling and dragging. */
 export function WorkWall({ rows, name, line, bookingHref }: Props) {
   const root = useRef<HTMLElement>(null);
   const [opening, setOpening] = useState(true);
@@ -159,7 +159,7 @@ export function WorkWall({ rows, name, line, bookingHref }: Props) {
     // Vertical swipes stay with the page (touch-action: pan-y).
     let drag: { id: number; x: number; y: number; lastX: number; lastT: number; v: number; on: boolean } | null = null;
     const down = (e: PointerEvent) => {
-      if (e.button !== 0 || (e.target as Element).closest('button, a, [data-hero-copy]')) return;
+      if (e.button !== 0 || (e.target as Element).closest('button, a, [data-hero-identity]')) return;
       drag = { id: e.pointerId, x: e.clientX, y: e.clientY, lastX: e.clientX, lastT: e.timeStamp, v: 0, on: false };
     };
     const move = (e: PointerEvent) => {
@@ -227,8 +227,7 @@ export function WorkWall({ rows, name, line, bookingHref }: Props) {
       el.setAttribute('data-opening-phase', 'name');
       const aperture = el.querySelector<SVGSVGElement>('[data-name-window]')!;
       const letters = aperture.querySelector<SVGGElement>('[data-window-letters]')!;
-      const nameNode = el.querySelector<HTMLElement>('[data-hero-name]')!;
-      const shade = el.querySelector<HTMLElement>('[data-reading-shade]')!;
+      const identity = el.querySelector<HTMLElement>('[data-hero-identity]')!;
       let closed = false;
       const settle = () => {
         if (closed) return;
@@ -237,8 +236,7 @@ export function WorkWall({ rows, name, line, bookingHref }: Props) {
         arrival?.kill();
         arrival = null;
         letters.removeAttribute('transform');
-        nameNode.style.removeProperty('opacity');
-        shade.style.removeProperty('opacity');
+        gsap.set(identity, { clearProps: 'opacity,visibility,transform' });
         el.setAttribute('data-opening-phase', 'ready');
         el.removeAttribute('data-window-painted');
         el.removeAttribute('data-hero-opening');
@@ -296,8 +294,8 @@ export function WorkWall({ rows, name, line, bookingHref }: Props) {
         arrival.call(() => el.setAttribute('data-opening-phase', 'zoom'), [], .65)
           .to(flight, { progress: 1, duration: 1.85, ease: 'power2.inOut', onUpdate: paint }, .65)
           .call(() => el.setAttribute('data-opening-phase', 'land'), [], 2.1)
-          .fromTo(shade, { opacity: 0 }, { opacity: 1, duration: .65, ease: 'power2.inOut' }, 2.1)
-          .fromTo(nameNode, { opacity: 0 }, { opacity: 1, duration: .65, ease: 'power2.out' }, 2.2);
+          .set(identity, { autoAlpha: 1 }, 2.1)
+          .fromTo(identity, { yPercent: 100 }, { yPercent: 0, duration: .75, ease: 'power3.out' }, 2.1);
       });
     } else finishOpening.current = () => setOpening(false);
 
@@ -307,8 +305,7 @@ export function WorkWall({ rows, name, line, bookingHref }: Props) {
       arrival?.kill();
       el.removeAttribute('data-window-painted');
       el.querySelector('[data-window-letters]')?.removeAttribute('transform');
-      el.querySelector<HTMLElement>('[data-hero-name]')?.style.removeProperty('opacity');
-      el.querySelector<HTMLElement>('[data-reading-shade]')?.style.removeProperty('opacity');
+      gsap.set(el.querySelector('[data-hero-identity]'), { clearProps: 'opacity,visibility,transform' });
       lanePositions.current = lanes.map(({ x, width }) => ({ x, width }));
       finishOpening.current = null;
       el.removeAttribute('data-arrival-running');
@@ -354,7 +351,6 @@ export function WorkWall({ rows, name, line, bookingHref }: Props) {
           </div>
         </div>
       </div>
-      <div className={s.readingShade} aria-hidden="true" data-reading-shade />
       <svg className={s.aperture} aria-hidden="true" focusable="false" data-name-window>
         <defs>
           <mask id={apertureId} maskUnits="userSpaceOnUse" x="0" y="0" width="100%" height="100%" style={{ maskType: 'luminance' }}>
@@ -367,18 +363,14 @@ export function WorkWall({ rows, name, line, bookingHref }: Props) {
         <rect width="100%" height="100%" fill="var(--stage)" mask={`url(#${apertureId})`} />
       </svg>
       {opening && <canvas className={s.windowCanvas} aria-hidden="true" data-window-canvas />}
-      <div className={s.identity}>
+      <div className={s.identity} data-hero-identity data-theme="light">
         <h1 id="wall-title" className={s.name} aria-label={name} data-hero-name>
           {name.split(' ').map((word, i) => (
             <span key={word} className={s.word}>{word}{i === 0 ? ' ' : ''}</span>
           ))}
         </h1>
         <div className={s.copy} data-hero-copy>
-          <p className={s.statement}>
-            {line.split(/(, | and )/).map((part, i) => (
-              <span key={i} className={i % 2 ? 'sr-only' : s.service}>{part}</span>
-            ))}
-          </p>
+          <p className={s.statement}>{line}</p>
           <div className={s.actions}>
             <ButtonLink href={bookingHref} arrow track="hero-book">Book a call</ButtonLink>
             <ButtonLink href="#selected-work" variant="text" track="hero-work">Selected work<span aria-hidden="true">↓</span></ButtonLink>

@@ -40,17 +40,17 @@ async function withPage(options,check,setup=async()=>{}) {
   } finally {await ctx.close();}
 }
 
-async function available(page) {
+async function available(page,{duringOpening=false}={}) {
   assert.equal(await page.locator('h1').count(),1);
-  const name=page.getByRole('heading',{level:1,name:'Kareem Hassanein',exact:true});
+  const name=page.getByRole('heading',{level:1,name:'Kareem Hassanein',exact:true,includeHidden:duringOpening});
   assert.equal(await name.count(),1);
   assert.equal(await name.evaluate(el=>el.textContent.replace(/\s+/g,'')),'KareemHassanein','The name has one actual text rendering, not duplicate overlays');
   assert.equal(await page.locator('[data-wall-intro], [data-intro-title], [data-mark-cell]').count(),0);
   assert.ok(await page.locator('body > header').evaluate(el=>getComputedStyle(el).visibility==='visible' && +getComputedStyle(el).opacity===1));
-  assert.ok(await page.locator('[data-hero-copy]').evaluate(el=>getComputedStyle(el).visibility==='visible' && +getComputedStyle(el).opacity===1));
+  if(!duringOpening)assert.ok(await page.locator('[data-hero-copy]').evaluate(el=>getComputedStyle(el).visibility==='visible' && +getComputedStyle(el).opacity===1));
   assert.equal(await page.locator('[data-hero-copy] > p').textContent(),'Websites, booking, search and ads');
-  for(const track of ['hero-book','hero-work']) {
-    const link=page.locator(`[data-track="${track}"]`);
+  for(const track of duringOpening?['header']:['hero-book','hero-work']) {
+    const link=track==='header'?page.locator('[data-track="header-book"]:visible, button[aria-controls="site-menu"]:visible').first():page.locator(`[data-track="${track}"]`);
     assert.ok(await link.isVisible());
     assert.ok(await link.evaluate(el=>{
       const b=el.getBoundingClientRect();const hit=document.elementFromPoint(b.left+b.width/2,b.top+b.height/2);
@@ -101,8 +101,8 @@ const routeSettled=page=>page.waitForFunction(()=>!document.documentElement.hasA
 try {
   for(const [width,height] of [[320,844],[390,844],[430,844],[768,1024],[1440,900],[1440,720],[1440,680]]) {
     await withPage({viewport:{width,height},isMobile:width<900,hasTouch:width<900},async page=>{
-      await page.goto(base+'/',{waitUntil:'domcontentloaded'});await available(page);
-      await finish(page);await settledName(page);await noNameMotion(page);
+      await page.goto(base+'/',{waitUntil:'domcontentloaded'});await available(page,{duringOpening:true});
+      await finish(page);await available(page);await settledName(page);await noNameMotion(page);
       await page.screenshot({path:path.join(out,`name-${width}x${height}.png`)});
     });
     pass(`${width}x${height}: permanent name, clear descriptor/actions and no clipping or gaps`);
@@ -114,10 +114,10 @@ try {
       await page.goto(base+'/',{waitUntil:'commit'});
       await page.locator('[data-hero-name]').waitFor({state:'attached'});
       await page.waitForFunction(()=>getComputedStyle(document.querySelector('[data-hero-name]').parentElement).position==='absolute');
-      await available(page);assert.equal(await page.locator('[data-ready]').count(),0);
+      await available(page,{duringOpening:true});assert.equal(await page.locator('[data-ready]').count(),0);
       assert.ok(await page.locator('[data-name-window]').isVisible(),'The full-name screen window is present before app JavaScript');
       await page.waitForFunction(()=>document.documentElement.hasAttribute('data-opening-expired'));
-      await settledName(page);const before=await starts(page);assert.equal(before,0);
+      await available(page);await settledName(page);const before=await starts(page);assert.equal(before,0);
       await page.screenshot({path:path.join(out,'slow-js-settled.png')});
       release();await page.waitForSelector('[data-ready]');await finish(page);
       await page.waitForTimeout(150);assert.equal(await starts(page),before,'Hydration does not replay the entrance');
@@ -127,7 +127,7 @@ try {
     const held=new Promise(resolve=>release=resolve);
     await ctx.route('**/*.js',async route=>{await held;await route.fallback();});
   });
-  pass('Slow JavaScript: name window and controls appear at first paint; deadline resolves without hydration replay');
+  pass('Slow JavaScript: name window and header actions appear at first paint; deadline reveals the reading surface without replay');
 
   for(const mode of ['no-js','os-reduce','saved-off']) {
     await withPage(mode==='no-js'?{javaScriptEnabled:false}:mode==='os-reduce'?{reducedMotion:'reduce'}:{},async page=>{
@@ -182,11 +182,12 @@ try {
       assert.ok(await page.locator('[data-name-window]').isVisible(),'The name window is ready before hydration');
       releaseDrag();await page.waitForSelector('[data-ready]');
       const point=await page.locator('[data-hero-name]').evaluate(name=>{
-        const hero=name.closest('section');const nameBox=name.getBoundingClientRect();
-        const copy=document.querySelector('[data-hero-copy]').getBoundingClientRect();
-        const x=innerWidth*.25;const y=(nameBox.bottom+copy.top)/2;
+        const hero=name.closest('section');
+        const header=document.querySelector('body > header').getBoundingClientRect();
+        const identity=name.parentElement.getBoundingClientRect();
+        const x=innerWidth*.25;const y=(header.bottom+identity.top)/2;
         const target=document.elementFromPoint(x,y);
-        return {x,y,clear:hero.contains(target) && !target.closest('a, button, [data-hero-copy]')};
+        return {x,y,clear:hero.contains(target) && !target.closest('a, button, [data-hero-identity]')};
       });
       assert.ok(point.clear,'Pointer starts on open wall space');
       await page.mouse.click(point.x,point.y);

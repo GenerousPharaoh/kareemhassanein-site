@@ -3,7 +3,7 @@
   directions. Each tile is a client screen, desktop or phone, on its client's own colour. Rows are moved
   by script (WorkWall.tsx); without it the wall stands still at its tilt.
 */
-/* Match the uppercase wordmark while the web font is unavailable. No extra font download. */
+/* Keep the name within its measure while the web font is unavailable. */
 @font-face {
   font-family: 'Mona Sans Wordmark Fallback';
   src: local('Arial');
@@ -59,23 +59,23 @@
   will-change: transform;
 }
 
-/* The wall stays bright above the wordmark; the bottom field supports the type. */
-.readingShade {
-  position: absolute;
-  z-index: 2;
-  inset: 0;
-  background: linear-gradient(0deg, #0c0c0b 0%, #0c0c0bfa 19%, #0c0c0bb0 35%, transparent 70%);
-  pointer-events: none;
-}
+/* A solid reading surface: the screens never sit behind the name or its actions. */
 .identity {
+  --paper: var(--ivory);
+  --ink: #171916;
+  --focus: var(--focus-on-light);
   position: absolute;
   z-index: 4;
-  left: var(--gutter-l);
-  right: var(--gutter-r);
-  bottom: calc(var(--peek, var(--sheet-r)) + 34px);
+  left: 0;
+  right: 0;
+  bottom: 0;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: 32px;
+  gap: 28px;
+  padding: 32px var(--gutter-r) calc(var(--peek, var(--sheet-r)) + 32px) var(--gutter-l);
+  border-radius: var(--sheet-r) var(--sheet-r) 0 0;
+  background: var(--paper);
+  color: var(--ink);
   -webkit-user-select: text;
   user-select: text;
 }
@@ -84,17 +84,17 @@
   align-items: center;
   justify-content: space-between;
   gap: 24px;
+  padding-top: 20px;
+  border-top: 1px solid #17191626;
 }
 .statement {
-  display: flex;
-  gap: clamp(24px, 3.7vw, 54px);
-  color: var(--ivory);
-  font-size: clamp(1.125rem, 1.7vw, 1.625rem);
+  max-width: 26em;
+  color: var(--ink);
+  font-size: clamp(1.0625rem, 1.5vw, 1.375rem);
   font-weight: 450;
-  line-height: 1.2;
-  letter-spacing: -.025em;
+  line-height: 1.35;
+  letter-spacing: -.02em;
 }
-.service { text-transform: capitalize; white-space: nowrap; }
 .actions {
   display: flex;
   flex-wrap: wrap;
@@ -102,7 +102,7 @@
   gap: 14px 24px;
 }
 .actions > a { font-weight: 500; }
-.actions > a:last-child { color: var(--ivory-2); text-decoration-color: #cbcac440; }
+.actions > a:last-child { color: var(--ink); }
 .actions > a:last-child > span { display: inline-flex; align-items: center; gap: 10px; }
 
 /* A point at the middle of the screen that the plane hangs from, and the eye it is seen with */
@@ -178,19 +178,17 @@
   cursor: grabbing;
 }
 
-/* One wordmark, sized to the actual letter widths at the font's 90% width axis. */
+/* Natural case gives the name its own rhythm, with room around the letterforms. */
 .name {
   display: flex;
   align-items: baseline;
-  justify-content: center;
-  gap: .19em;
+  justify-content: flex-start;
+  gap: .23em;
   min-width: 0;
-  font: 550 min(calc((100vw - var(--gutter-l) - var(--gutter-r)) / 8.14), 24svh) / .88 var(--font-mona-wordmark);
-  font-stretch: 90%;
-  letter-spacing: -.055em;
-  text-transform: uppercase;
-  color: var(--ivory);
-  pointer-events: none;
+  font: 500 min(calc((100vw - var(--gutter-l) - var(--gutter-r)) / 8.1), 23svh) / .98 var(--font-mona-wordmark);
+  font-stretch: 100%;
+  letter-spacing: -.065em;
+  color: var(--ink);
 }
 .word {
   display: block;
@@ -220,9 +218,10 @@
   :global(html[data-motion='on']:not([data-route-arrival]):not([data-opening-expired])) .wall[data-hero-opening]:not([data-window-painted]) .aperture {
     display: block;
   }
-  :global(html[data-motion='on']:not([data-route-arrival])) .wall[data-hero-opening][data-arrival-running] :is(.readingShade, .name),
-  :global(html[data-motion='on']:not([data-route-arrival]):not([data-opening-expired])) .wall[data-hero-opening] :is(.readingShade, .name) {
+  :global(html[data-motion='on']:not([data-route-arrival])) .wall[data-hero-opening][data-arrival-running] .identity,
+  :global(html[data-motion='on']:not([data-route-arrival]):not([data-opening-expired])) .wall[data-hero-opening] .identity {
     opacity: 0;
+    visibility: hidden;
   }
   :global(html[data-motion='on']) .wall[data-hero-opening][data-window-painted] .windowCanvas { display: block; }
 }
@@ -245,22 +244,21 @@
   }
 
   .identity {
-    bottom: calc(var(--peek, var(--sheet-r)) + 34px);
+    gap: 22px;
+    padding-top: 24px;
+    padding-bottom: calc(var(--peek, var(--sheet-r)) + 28px);
   }
   .name {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
     justify-content: start;
-    font-size: calc((100vw - var(--gutter-l) - var(--gutter-r)) / 4.62);
-    gap: .04em;
+    font-size: calc((100vw - var(--gutter-l) - var(--gutter-r)) / 4.65);
+    gap: 0;
   }
-  .copy { display: grid; justify-items: start; gap: 24px; }
+  .copy { display: grid; justify-items: start; gap: 20px; padding-top: 16px; }
   .statement {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px 24px;
-    width: min(100%, 320px);
-    font-size: 1.25rem;
+    max-width: 22em;
+    font-size: 1.0625rem;
   }
   .actions { gap: 12px 18px; }
   .actions > a { font-size: .875rem; }
@@ -280,7 +278,7 @@
 }
 
 @media (min-width: 761px) and (max-height: 650px) {
-  .identity { gap: 20px; bottom: calc(var(--peek, var(--sheet-r)) + 24px); }
-  .copy { gap: 18px; }
+  .identity { gap: 20px; padding-top: 24px; padding-bottom: calc(var(--peek, var(--sheet-r)) + 24px); }
+  .copy { gap: 18px; padding-top: 16px; }
   .statement { font-size: 1.125rem; }
 }
