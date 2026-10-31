@@ -1,7 +1,7 @@
 import { Close, Offer } from '@/components/home/HomeEnd';
 import s from '@/components/home/Home.module.css';
 import type { ReelItem, ReelMedia } from '@/components/home/Showreel';
-import { WorkWall, type WallTile } from '@/components/home/WorkWall';
+import { Horizon, type SceneTile } from '@/components/home/Horizon';
 import { Statement } from '@/components/home/Statement';
 import { WorkIndex, type IndexItem } from '@/components/home/WorkIndex';
 import { CASES } from '@/content/cases';
@@ -156,26 +156,22 @@ const servicesLine = (list: string[]) =>
   list.map((x, i) => (i === 0 || KEEP_CASE.includes(x) || /^[A-Z]{2,}$/.test(x) ? x : x.charAt(0).toLowerCase() + x.slice(1))).join(', ');
 
 export default function Home() {
-  // The wall: every screen of the work, desktop and phone, on its client's colour. Stills only: video
-  // among the moving rows cost the wall its smoothness. Each client's screens are spaced out with its
-  // phone screens, then the clients are dealt across the rows in turn, so neighbours always come from
-  // different clients.
+  // The scene: every screen of the work, desktop and phone, on its client's colour. Each client's
+  // screens are spaced out with its phone screens, then the clients are dealt in turn, so neighbours
+  // in a row always come from different clients.
   const pools = CASES.map((c, ci) => {
-    const tile = (still: Still, ratio: number): WallTile => ({
-      key: still.src, ground: c.palette.ground, device: still.device, ratio,
-      still: { ...still, src: still.src.replace('/work-media/', '/work-media/wall/'), widths: wallWidths[still.device] },
+    const tile = (st: Still): SceneTile => ({
+      base: st.src.replace('/work-media/', '/work-media/wall/'), device: st.device, ratio: st.w / st.h, ground: c.palette.ground,
     });
     const screens = [c.plate.desktop, c.plate.phone, ...c.stills].filter((st, i, all) => all.findIndex((o) => o.src === st.src) === i);
-    const wide = screens.filter((st) => st.device === 'desktop' && st.w / st.h >= 1.35 && st.w / st.h <= 2).map((st) => tile(st, st.w / st.h));
-    const tall = screens.filter((st) => st.device === 'phone').map((st) => tile(st, 0.56));
-    const pool: WallTile[] = [];
+    const wide = screens.filter((st) => st.device === 'desktop' && st.w / st.h >= 1.35 && st.w / st.h <= 2).map(tile);
+    const tall = screens.filter((st) => st.device === 'phone').map(tile);
+    const pool: SceneTile[] = [];
     for (let k = 0; wide.length || tall.length; k++) pool.push(((tall.length && (k + ci) % 3 === 2) || !wide.length ? tall : wide).shift()!);
     return pool;
   });
-  const dealt: WallTile[] = [];
-  for (let i = 0; pools.some((p) => p[i]); i++) pools.forEach((p) => p[i] && dealt.push(p[i]));
-  const ROWS = 6;
-  const wall: WallTile[][] = Array.from({ length: ROWS }, (_, r) => dealt.filter((_, i) => i % ROWS === r));
+  const scene: SceneTile[] = [];
+  for (let i = 0; pools.some((p) => p[i]); i++) pools.forEach((p) => p[i] && scene.push(p[i]));
 
   const index: IndexItem[] = CASES.filter((c) => ['tax-relief-counsel', 'physiomax', 'techniques-combat'].includes(c.slug)).map((c) => ({
     slug: c.slug,
@@ -190,7 +186,7 @@ export default function Home() {
   return (
     <>
       <div className={s.opening}>
-        <WorkWall rows={wall} name={SITE.name} line={SITE.descriptor} bookingHref={SITE.bookingHref} />
+        <Horizon tiles={scene} name={SITE.name} line={SITE.descriptor} bookingHref={SITE.bookingHref} />
         <WorkIndex items={index} title="Selected work" />
       </div>
       <Statement

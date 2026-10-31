@@ -1,0 +1,144 @@
+/*
+  The opening scene: rows of client screens on a floor and a ceiling that meet at a dark horizon,
+  drawn in WebGL (Horizon.tsx, lib/gl/horizon.ts). The name sits on the horizon line, where the
+  distance fades to the stage colour, so it always reads on dark.
+*/
+.hero {
+  /* The horizon line, as a share of the part of the screen above the work list */
+  --hz: calc((100svh - var(--peek, 0px)) * .47);
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  min-height: 520px;
+  overflow: hidden;
+  background: var(--stage);
+}
+
+.scene {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* A shade under the navigation, a soft darkening behind the words, and edges that fall into shadow */
+.shade {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(rgba(12, 12, 11, .82), rgba(12, 12, 11, .35) calc(var(--header-h) + 40px), rgba(12, 12, 11, 0) calc(var(--header-h) + 120px)),
+    radial-gradient(ellipse 52% 30% at 50% calc(var(--hz) + 5%), rgba(12, 12, 11, .82), rgba(12, 12, 11, .55) 50%, rgba(12, 12, 11, 0)),
+    radial-gradient(ellipse 85% 80% at 50% 50%, rgba(12, 12, 11, 0) 58%, rgba(12, 12, 11, .5));
+}
+
+.identity {
+  --ink: #f1efe9;
+  --paper: var(--stage);
+  --focus: var(--focus-on-dark);
+  position: absolute;
+  z-index: 2;
+  left: 0;
+  right: 0;
+  top: calc(var(--hz) - var(--name-size) * .5);
+  display: grid;
+  justify-items: center;
+  padding-inline: var(--gutter-l) var(--gutter-r);
+  text-align: center;
+  color: var(--ink);
+}
+
+.name {
+  /* 9.3em is the whole name on one line, so it never runs past the gutters */
+  --name-size: min(10.4vw, 16.5svh, 176px, (100vw - var(--gutter-l) - var(--gutter-r)) / 9.3);
+  font: 600 var(--name-size) / 1 var(--font-display);
+  font-stretch: 118%;
+  letter-spacing: -.058em;
+  white-space: nowrap;
+  color: var(--ink);
+}
+.identity { --name-size: min(10.4vw, 16.5svh, 176px, (100vw - var(--gutter-l) - var(--gutter-r)) / 9.3); }
+
+/* Each word rises out of its own line */
+.mask {
+  display: inline-block;
+  overflow: clip;
+  padding: .06em .03em .16em;
+  margin: -.06em -.03em -.16em;
+  vertical-align: top;
+}
+.word {
+  display: inline-block;
+  will-change: transform;
+}
+
+.line {
+  margin-top: clamp(12px, 2svh, 20px);
+  font-size: clamp(1.125rem, 1.85vw, 1.625rem);
+  font-weight: 400;
+  font-stretch: 108%;
+  letter-spacing: -.018em;
+  color: #d3d4ce;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 14px 26px;
+  margin-top: clamp(18px, 3.2svh, 30px);
+}
+.actions > a { font-weight: 500; }
+.actions > a:last-child { color: var(--ink); }
+.actions > a:last-child > span { display: inline-flex; align-items: center; gap: 10px; }
+
+.dim {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  background: #000;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Before the opening runs (and if the script never does) the words wait; layout.tsx expires this */
+@media (prefers-reduced-motion: no-preference) {
+  :global(html[data-motion='on']:not([data-route-arrival]):not([data-opening-expired])) .hero[data-hero-opening] .identity {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+@media (max-width: 760px) {
+  .hero {
+    --hz: calc((100svh - var(--peek, 0px)) * .45);
+    min-height: 560px;
+  }
+  /* 5.35em is "Hassanein" with a little room */
+  .identity, .name { --name-size: min((100vw - var(--gutter-l) - var(--gutter-r)) / 5.35, 10.5svh, 88px); }
+  .identity { top: calc(var(--hz) - var(--name-size)); }
+  .name {
+    display: grid;
+    justify-items: center;
+    letter-spacing: -.05em;
+    line-height: 1;
+  }
+  .line { font-size: 1.0625rem; margin-top: 12px; }
+  .actions { gap: 12px 20px; margin-top: 18px; }
+  .actions > a { font-size: .9375rem; }
+  .shade {
+    background:
+      linear-gradient(rgba(12, 12, 11, .82), rgba(12, 12, 11, .35) calc(var(--header-h) + 30px), rgba(12, 12, 11, 0) calc(var(--header-h) + 90px)),
+      radial-gradient(ellipse 80% 22% at 50% calc(var(--hz) + 6%), rgba(12, 12, 11, .8), rgba(12, 12, 11, .5) 55%, rgba(12, 12, 11, 0)),
+      radial-gradient(ellipse 110% 80% at 50% 50%, rgba(12, 12, 11, 0) 60%, rgba(12, 12, 11, .45));
+  }
+}
+
+@media (min-width: 761px) and (max-height: 650px) {
+  .identity, .name { --name-size: min(9vw, 16svh); }
+  .actions { margin-top: 16px; }
+}
