@@ -1,4 +1,6 @@
 .intro {
+  /* The title sizes against this box, so its longest word always fits its column */
+  container-type: inline-size;
   display: grid;
   gap: 24px;
   padding-top: clamp(32px, 5vw, 64px);
@@ -6,7 +8,9 @@
 }
 
 .title {
-  font: 620 clamp(6rem, 14vw, 13rem)/.87 var(--font-display);
+  /* 3.45em is "studies" at this width and tracking, with its mask padding */
+  --fit: 100cqi;
+  font: 620 min(clamp(6rem, 14vw, 13rem), var(--fit) / 3.45)/.87 var(--font-display);
   font-stretch: 118%;
   letter-spacing: -.065em;
 }
@@ -61,6 +65,9 @@
     grid-template-columns: 1fr 1fr;
     align-items: end;
     gap: 80px;
+  }
+  .title {
+    --fit: (100cqi - 80px) / 2;
   }
   .lede {
     justify-self: end;
