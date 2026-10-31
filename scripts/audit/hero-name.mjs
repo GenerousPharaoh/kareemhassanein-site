@@ -1,4 +1,4 @@
-// Screen monogram and permanent homepage name: layout, first paint and interruptions. Contact is blocked.
+// Full-name window and permanent homepage name: layout, first paint and interruptions. Contact is blocked.
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -26,9 +26,9 @@ async function withPage(options,check,setup=async()=>{}) {
     });
     await ctx.addInitScript(()=>{
       window.__heroNameStarts=[];
-      document.addEventListener('animationstart',event=>{
-        if(event.target instanceof Element && event.target.closest('[data-mark-cell]')) window.__heroNameStarts.push({name:event.animationName,time:performance.now()});
-      },true);
+      new MutationObserver(records=>records.forEach(({target})=>{
+        if(target.getAttribute('data-opening-phase')==='name') window.__heroNameStarts.push(performance.now());
+      })).observe(document,{subtree:true,attributes:true,attributeFilter:['data-opening-phase']});
     });
     await setup(ctx);
     const page=await ctx.newPage();
@@ -45,7 +45,7 @@ async function available(page) {
   const name=page.getByRole('heading',{level:1,name:'Kareem Hassanein',exact:true});
   assert.equal(await name.count(),1);
   assert.equal(await name.evaluate(el=>el.textContent.replace(/\s+/g,'')),'KareemHassanein','The name has one actual text rendering, not duplicate overlays');
-  assert.equal(await page.locator('[data-wall-intro], [data-intro-title], section:has([data-hero-name]) canvas').count(),0);
+  assert.equal(await page.locator('[data-wall-intro], [data-intro-title], [data-mark-cell]').count(),0);
   assert.ok(await page.locator('body > header').evaluate(el=>getComputedStyle(el).visibility==='visible' && +getComputedStyle(el).opacity===1));
   assert.ok(await page.locator('[data-hero-copy]').evaluate(el=>getComputedStyle(el).visibility==='visible' && +getComputedStyle(el).opacity===1));
   assert.match(await page.locator('[data-hero-copy] > p').innerText(),/Websites, booking, search and ads/);
@@ -115,9 +115,9 @@ try {
       await page.locator('[data-hero-name]').waitFor({state:'attached'});
       await page.waitForFunction(()=>getComputedStyle(document.querySelector('[data-hero-name]').parentElement).position==='absolute');
       await available(page);assert.equal(await page.locator('[data-ready]').count(),0);
-      assert.ok(await page.locator('[data-mark-cell]').evaluateAll(tiles=>tiles.some(tile=>tile.getAnimations().length>0)),'Screen assembly starts without app JavaScript');
+      assert.ok(await page.locator('[data-name-window]').isVisible(),'The full-name screen window is present before app JavaScript');
       await page.waitForFunction(()=>document.documentElement.hasAttribute('data-opening-expired'));
-      await settledName(page);const before=await starts(page);assert.ok(before>0);
+      await settledName(page);const before=await starts(page);assert.equal(before,0);
       await page.screenshot({path:path.join(out,'slow-js-settled.png')});
       release();await page.waitForSelector('[data-ready]');await finish(page);
       await page.waitForTimeout(150);assert.equal(await starts(page),before,'Hydration does not replay the entrance');
@@ -127,7 +127,7 @@ try {
     const held=new Promise(resolve=>release=resolve);
     await ctx.route('**/*.js',async route=>{await held;await route.fallback();});
   });
-  pass('Slow JavaScript: controls usable at first paint; CSS finishes without hydration replay');
+  pass('Slow JavaScript: name window and controls appear at first paint; deadline resolves without hydration replay');
 
   for(const mode of ['no-js','os-reduce','saved-off']) {
     await withPage(mode==='no-js'?{javaScriptEnabled:false}:mode==='os-reduce'?{reducedMotion:'reduce'}:{},async page=>{
@@ -157,7 +157,7 @@ try {
   for(const interruption of ['scroll','rotate','reduce']) {
     await withPage({},async page=>{
       await page.goto(base+'/',{waitUntil:'domcontentloaded'});await page.waitForSelector('[data-ready]');
-      await page.waitForFunction(()=>window.__heroNameStarts.length>=2 || !document.querySelector('[data-hero-opening]'));
+      await page.waitForFunction(()=>window.__heroNameStarts.length>=1 || !document.querySelector('[data-hero-opening]'));
       const before=await starts(page);
       if(interruption==='scroll')await page.evaluate(()=>scrollTo({top:150,behavior:'instant'}));
       if(interruption==='rotate')await page.setViewportSize({width:844,height:390});
@@ -179,14 +179,7 @@ try {
       await page.locator('[data-hero-name]').waitFor({state:'attached'});
       await page.waitForFunction(()=>getComputedStyle(document.querySelector('[data-hero-name]').parentElement).position==='absolute');
       await page.evaluate(()=>document.fonts.ready);
-      // Hold only the name's CSS clock before hydration. Its retirement timer therefore starts
-      // with the full entrance remaining, and wall rendering/pointer input keep their real clocks.
-      const held=await page.locator('[data-mark-cell]').evaluateAll(tiles=>{
-        const animations=tiles.flatMap(tile=>tile.getAnimations());
-        animations.forEach(animation=>{animation.pause();animation.currentTime=0;});
-        return animations.length;
-      });
-      assert.ok(held>0,'The drag begins during a real CSS name entrance');
+      assert.ok(await page.locator('[data-name-window]').isVisible(),'The name window is ready before hydration');
       releaseDrag();await page.waitForSelector('[data-ready]');
       const point=await page.locator('[data-hero-name]').evaluate(name=>{
         const hero=name.closest('section');const nameBox=name.getBoundingClientRect();

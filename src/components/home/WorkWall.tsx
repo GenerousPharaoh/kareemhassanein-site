@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState, type CSSProperties } from 'react';
+import { useEffect, useId, useRef, useState, type CSSProperties } from 'react';
 import { prefersReducedMotion, subscribeMotionPreference } from '@/lib/useReducedMotion';
 import { Picture } from '@/components/media/Picture';
 import { ButtonLink } from '@/components/ui/ButtonLink';
@@ -14,14 +14,6 @@ type Props = { rows: WallTile[][]; name: string; line: string; bookingHref: stri
 
 /** Copies of each row laid end to end, so a row can travel one copy's length and start again unseen. */
 const COPIES = 3;
-// The screen tiles form K and H on a nine-column, five-row grid.
-const MARK = [
-  [0, 0], [3, 0], [5, 0], [8, 0],
-  [0, 1], [2, 1], [5, 1], [8, 1],
-  [0, 2], [1, 2], [5, 2], [6, 2], [7, 2], [8, 2],
-  [0, 3], [2, 3], [5, 3], [8, 3],
-  [0, 4], [3, 4], [5, 4], [8, 4],
-];
 /** The wall's resting pose, in degrees. */
 const TILT = { rx: 24, rz: -7 };
 /** Which way each row parts from the wall when it moves (toward the eye or away), in turn. */
@@ -39,13 +31,7 @@ export function WorkWall({ rows, name, line, bookingHref }: Props) {
   const started = useRef(false);
   const lanePositions = useRef<{ x: number; width: number }[]>([]);
   const finishOpening = useRef<(() => void) | null>(null);
-  const cells = new Map<string, number>();
-  const desktopRows = rows.map(row => row.map((tile, index) => ({ tile, index })).filter(({ tile }) => tile.device === 'desktop'));
-  for (let depth = 0; cells.size < MARK.length && desktopRows.some(row => row[depth]); depth++) {
-    desktopRows.forEach((row, r) => {
-      if (row[depth] && cells.size < MARK.length) cells.set(`${r}:${row[depth].index}`, cells.size);
-    });
-  }
+  const apertureId = useId();
 
   useEffect(() => {
     const finish = () => finishOpening.current?.();
@@ -63,13 +49,6 @@ export function WorkWall({ rows, name, line, bookingHref }: Props) {
     const firstLoad = !started.current;
     started.current = true;
     const allowOpening = firstLoad && !r && window.scrollY < 40 && !document.documentElement.hasAttribute('data-route-arrival') && !document.documentElement.hasAttribute('data-opening-expired');
-    const selected = [...el.querySelectorAll<HTMLElement>('[data-mark-cell]')];
-    // Capture the CSS assembly exactly where it is before giving these same tiles their wall layout.
-    const first = selected.map(tile => ({ tile, box: tile.getBoundingClientRect(), opacity: getComputedStyle(tile).opacity,
-      x: tile.offsetLeft + el.getBoundingClientRect().left, y: tile.offsetTop + el.getBoundingClientRect().top,
-      width: tile.offsetWidth, height: tile.offsetHeight }));
-    const gathering = selected.flatMap(tile => tile.getAnimations()).map(a => Number(a.effect?.getComputedTiming().endTime ?? 0) - Number(a.currentTime ?? 0));
-    const gatherTime = Math.max(.18, Math.min(.85, Math.max(0, ...gathering) / 1000));
     el.setAttribute('data-arrival-running', '');
     if (!allowOpening) setOpening(false);
     const plane = el.querySelector<HTMLElement>('[data-plane]')!;
@@ -101,7 +80,7 @@ export function WorkWall({ rows, name, line, bookingHref }: Props) {
       });
     };
     // The plane's pose, with a slow sway of the eye on top while the wall runs
-    const view = { rx: allowOpening ? 0 : TILT.rx, rz: allowOpening ? 0 : TILT.rz, s: 1, y: 0, o: 1 };
+    const view = { ...TILT, s: 1, y: 0, o: 1 };
     const sway = { rx: 0, rz: 0 };
     const pose = () => {
       plane.style.transform = `translate(-50%, -50%) translate3d(0, ${(view.y - exit * 6).toFixed(2)}vh, 0) rotate(${(view.rz + sway.rz).toFixed(3)}deg) rotateX(${(view.rx + sway.rx + exit * 14).toFixed(3)}deg) scale(${view.s})`;
@@ -132,8 +111,6 @@ export function WorkWall({ rows, name, line, bookingHref }: Props) {
     let lastY = window.scrollY;
     let clock = 0;
     const step = (_time: number, deltaMs: number) => {
-      // Let the name have the first beat, without competing work on a phone's main thread.
-      if (el.hasAttribute('data-hero-opening')) { lastY = window.scrollY; return; }
       const dt = Math.min(deltaMs, 50) / 1000;
       if (!dt) return;
       const y = window.scrollY;
@@ -244,40 +221,94 @@ export function WorkWall({ rows, name, line, bookingHref }: Props) {
     gsap.fromTo(el.querySelector('[data-dim]'), { opacity: 0 }, { opacity: 0.72, ease: 'none', scrollTrigger: { ...scrub, onUpdate: (self) => { exit = self.progress; pose(); sync(); } } });
 
     let arrival: gsap.core.Timeline | null = null;
+    let disposed = false;
+    let fontDeadline: ReturnType<typeof setTimeout> | undefined;
     if (allowOpening) {
-      el.setAttribute('data-opening-phase', 'assemble');
-      const rest = [...plane.querySelectorAll<HTMLElement>('[data-wall-tile]')].filter(tile => !tile.hasAttribute('data-mark-cell'));
+      el.setAttribute('data-opening-phase', 'name');
+      const aperture = el.querySelector<SVGSVGElement>('[data-name-window]')!;
+      const letters = aperture.querySelector<SVGGElement>('[data-window-letters]')!;
       const nameNode = el.querySelector<HTMLElement>('[data-hero-name]')!;
       const shade = el.querySelector<HTMLElement>('[data-reading-shade]')!;
-      const destinations = first.map(item => ({ ...item, home: item.tile.getBoundingClientRect() }));
-      gsap.set(rest, { opacity: 0 });
-      gsap.set(nameNode, { opacity: 0, y: 16 });
-      gsap.set(shade, { opacity: 0 });
+      let closed = false;
       const settle = () => {
-        gsap.set([...selected, ...rest, nameNode, shade], { clearProps: 'opacity,transform,transformOrigin' });
+        if (closed) return;
+        closed = true;
+        clearTimeout(fontDeadline);
+        arrival?.kill();
+        arrival = null;
+        letters.removeAttribute('transform');
+        nameNode.style.removeProperty('opacity');
+        shade.style.removeProperty('opacity');
         el.setAttribute('data-opening-phase', 'ready');
+        el.removeAttribute('data-window-painted');
+        el.removeAttribute('data-hero-opening');
         setOpening(false);
       };
-      arrival = gsap.timeline({ onComplete: settle });
-      const openAt = gatherTime + .32;
-      arrival.call(() => el.setAttribute('data-opening-phase', 'mark'), [], gatherTime)
-        .call(() => el.setAttribute('data-opening-phase', 'unfold'), [], openAt);
-      destinations.forEach(({ tile, box: initial, home, opacity, x, y, width, height }, i) => {
-        gsap.set(tile, { transformOrigin: '0 0', x: initial.left - home.left, y: initial.top - home.top,
-          scaleX: initial.width / home.width, scaleY: initial.height / home.height, opacity: Number(opacity) });
-        arrival!.to(tile, { x: x - home.left, y: y - home.top, scaleX: width / home.width,
-          scaleY: height / home.height, opacity: 1, duration: gatherTime, ease: 'power2.out' }, 0);
-        arrival!.to(tile, { x: 0, y: 0, scaleX: 1, scaleY: 1, duration: 1.65, ease: 'power3.inOut' }, openAt + (i % 6) * .012);
+      finishOpening.current = settle;
+      // Measure only the loaded type. A slow or failed font should reveal the usable final hero.
+      fontDeadline = setTimeout(settle, 900);
+      void document.fonts.ready.then(() => {
+        if (disposed || closed) return;
+        clearTimeout(fontDeadline);
+        const word = letters.querySelectorAll('text')[1];
+        const eye = apertureEye(word);
+        if (!eye) { settle(); return; }
+        const width = el.clientWidth;
+        const height = el.clientHeight;
+        const canvas = el.querySelector<HTMLCanvasElement>('[data-window-canvas]')!;
+        const image = document.createElement('canvas');
+        const ratio = Math.min(devicePixelRatio || 1, 2);
+        canvas.width = image.width = Math.ceil(width * ratio);
+        canvas.height = image.height = Math.ceil(height * ratio);
+        const context = canvas.getContext('2d');
+        const ink = image.getContext('2d');
+        if (!context || !ink) { settle(); return; }
+        ink.scale(ratio, ratio);
+        // Rasterise once at the exact SVG glyph positions. Enlarging this small source crop avoids
+        // the browser's oversized SVG-text limit and keeps each animation frame to one draw call.
+        letters.querySelectorAll('text').forEach(text => {
+          const style = getComputedStyle(text);
+          ink.font = `${style.fontWeight} ${style.fontSize} ${style.fontFamily}`;
+          [...text.textContent!].forEach((character, index) => {
+            const point = text.getStartPositionOfChar(index);
+            ink.fillText(character, point.x, point.y);
+          });
+        });
+        const ground = getComputedStyle(el).backgroundColor;
+        const endScale = Math.hypot(width, height) / eye.radius * 1.15;
+        const flight = { progress: 0 };
+        const paint = () => {
+          // Exponential scale keeps the first half readable and the flight continuous as the letter grows.
+          const scale = Math.exp(Math.log(endScale) * flight.progress);
+          const pan = 1 - (1 - flight.progress) ** 2;
+          const x = eye.x + (width / 2 - eye.x) * pan;
+          const y = eye.y + (height * .43 - eye.y) * pan;
+          context.globalCompositeOperation = 'source-over';
+          context.fillStyle = ground;
+          context.fillRect(0, 0, canvas.width, canvas.height);
+          context.globalCompositeOperation = 'destination-out';
+          context.drawImage(image, (eye.x - x / scale) * ratio, (eye.y - y / scale) * ratio,
+            width / scale * ratio, height / scale * ratio, 0, 0, canvas.width, canvas.height);
+        };
+        paint();
+        el.setAttribute('data-window-painted', '');
+        arrival = gsap.timeline({ onComplete: settle });
+        arrival.call(() => el.setAttribute('data-opening-phase', 'zoom'), [], .65)
+          .to(flight, { progress: 1, duration: 1.85, ease: 'power2.inOut', onUpdate: paint }, .65)
+          .call(() => el.setAttribute('data-opening-phase', 'land'), [], 2.1)
+          .fromTo(shade, { opacity: 0 }, { opacity: 1, duration: .65, ease: 'power2.inOut' }, 2.1)
+          .fromTo(nameNode, { opacity: 0 }, { opacity: 1, duration: .65, ease: 'power2.out' }, 2.2);
       });
-      arrival.to(view, { ...TILT, duration: 1.65, ease: 'power2.inOut', onUpdate: pose }, openAt + .08)
-        .to(rest, { opacity: 1, duration: 1.05, ease: 'power2.inOut' }, openAt + .4)
-        .to(shade, { opacity: 1, duration: 1.1, ease: 'power2.inOut' }, openAt + .45)
-        .to(nameNode, { opacity: 1, y: 0, duration: 1.05, ease: 'power2.out' }, openAt + .65);
-      finishOpening.current = () => { if (arrival && arrival.progress() < 1) arrival.progress(1); };
     } else finishOpening.current = () => setOpening(false);
 
     return () => {
+      disposed = true;
+      clearTimeout(fontDeadline);
       arrival?.kill();
+      el.removeAttribute('data-window-painted');
+      el.querySelector('[data-window-letters]')?.removeAttribute('transform');
+      el.querySelector<HTMLElement>('[data-hero-name]')?.style.removeProperty('opacity');
+      el.querySelector<HTMLElement>('[data-reading-shade]')?.style.removeProperty('opacity');
       lanePositions.current = lanes.map(({ x, width }) => ({ x, width }));
       finishOpening.current = null;
       el.removeAttribute('data-arrival-running');
@@ -304,25 +335,19 @@ export function WorkWall({ rows, name, line, bookingHref }: Props) {
             {rows.map((row, r) => (
               <div key={r} className={s.row} data-row data-dir={r % 2 ? 'right' : 'left'}>
                 {Array.from({ length: COPIES }, (_, copy) =>
-                  row.map((tile, index) => {
-                    const slot = copy === 0 ? cells.get(`${r}:${index}`) : undefined;
-                    const cell = slot !== undefined ? MARK[slot] : undefined;
-                    return (
+                  row.map((tile) => (
                     <div
                       key={`${copy}-${tile.key}`}
                       className={s.tile}
                       data-device={tile.device}
                       data-wall-tile
-                      data-mark-cell={slot}
-                      style={{ '--ground': tile.ground, '--ratio': tile.ratio,
-                        ...(cell ? { '--mark-col': cell[0], '--mark-row': cell[1], '--mark-order': slot,
-                          '--gather-x': `${(cell[0] - 4) * 14}px`, '--gather-y': `${(cell[1] - 2) * 18}px` } : {}) } as CSSProperties}
+                      style={{ '--ground': tile.ground, '--ratio': tile.ratio } as CSSProperties}
                     >
                       <span className={s.screen}>
-                        <Picture media={tile.still} priority={slot !== undefined && slot < 4} sizes={tile.device === 'phone' ? '(min-width: 761px) 140px, 90px' : '(min-width: 761px) 420px, 260px'} />
+                        <Picture media={tile.still} sizes={tile.device === 'phone' ? '(min-width: 761px) 140px, 90px' : '(min-width: 761px) 420px, 260px'} />
                       </span>
                     </div>
-                  );}),
+                  )),
                 )}
               </div>
             ))}
@@ -330,6 +355,18 @@ export function WorkWall({ rows, name, line, bookingHref }: Props) {
         </div>
       </div>
       <div className={s.readingShade} aria-hidden="true" data-reading-shade />
+      <svg className={s.aperture} aria-hidden="true" focusable="false" data-name-window>
+        <defs>
+          <mask id={apertureId} maskUnits="userSpaceOnUse" x="0" y="0" width="100%" height="100%" style={{ maskType: 'luminance' }}>
+            <rect width="100%" height="100%" fill="white" />
+            <g className={s.windowLetters} fill="black" textAnchor="middle" data-window-letters>
+              {name.split(' ').map((word, i) => <text key={word} x="50%" y="41%" dy={`${i - .16}em`}>{word}</text>)}
+            </g>
+          </mask>
+        </defs>
+        <rect width="100%" height="100%" fill="var(--stage)" mask={`url(#${apertureId})`} />
+      </svg>
+      {opening && <canvas className={s.windowCanvas} aria-hidden="true" data-window-canvas />}
       <div className={s.identity}>
         <h1 id="wall-title" className={s.name} aria-label={name} data-hero-name>
           {name.split(' ').map((word, i) => (
@@ -347,4 +384,34 @@ export function WorkWall({ rows, name, line, bookingHref }: Props) {
       <div className={s.dim} data-dim aria-hidden="true" />
     </section>
   );
+}
+
+/** Find a point safely inside the H stem, so the zoom clears the screen before the mask retires. */
+function apertureEye(word: SVGTextElement) {
+  const style = getComputedStyle(word);
+  const size = parseFloat(style.fontSize);
+  const canvas = document.createElement('canvas');
+  canvas.width = Math.ceil(size * 2);
+  canvas.height = Math.ceil(size * 2);
+  const ctx = canvas.getContext('2d', { willReadFrequently: true });
+  if (!ctx) return null;
+  const pad = Math.ceil(size * .2);
+  const baseline = Math.ceil(size * 1.3);
+  ctx.font = `${style.fontWeight} ${style.fontSize} ${style.fontFamily}`;
+  ctx.fillText(word.textContent![0], pad, baseline);
+  const pixels = ctx.getImageData(0, Math.round(baseline - size * .6), canvas.width, 1).data;
+  let start = -1;
+  for (let x = 0; x <= canvas.width; x++) {
+    const solid = x < canvas.width && pixels[x * 4 + 3] > 230;
+    if (solid && start < 0) start = x;
+    if (!solid && start >= 0) {
+      if (x - start >= size * .025) {
+        const origin = word.getStartPositionOfChar(0);
+        return { x: origin.x + (start + x) / 2 - pad, y: origin.y - size * .6,
+          radius: Math.min((x - start) * .25, size * .035) };
+      }
+      start = -1;
+    }
+  }
+  return null;
 }
