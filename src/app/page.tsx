@@ -7,7 +7,6 @@ import { WorkIndex, type IndexItem } from '@/components/home/WorkIndex';
 import { CASES } from '@/content/cases';
 import { SITE } from '@/content/site';
 import { PORTRAIT } from '@/content/portrait';
-import wallWidths from '@/content/wall-media.json';
 import { loop, still, type Still } from '@/lib/media';
 import { pageMeta } from '@/lib/meta';
 
