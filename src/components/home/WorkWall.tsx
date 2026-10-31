@@ -26,6 +26,7 @@ const wrap = (x: number, w: number) => (w ? ((x % w) + w) % w : 0);
 
 /** The name rests below the real project screens, which respond to scrolling and dragging. */
 export function WorkWall({ rows, name, line, bookingHref }: Props) {
+  const serviceBreak = line.lastIndexOf(', ') + 1;
   const root = useRef<HTMLElement>(null);
   const [opening, setOpening] = useState(true);
   const started = useRef(false);
@@ -363,14 +364,17 @@ export function WorkWall({ rows, name, line, bookingHref }: Props) {
         <rect width="100%" height="100%" fill="var(--stage)" mask={`url(#${apertureId})`} />
       </svg>
       {opening && <canvas className={s.windowCanvas} aria-hidden="true" data-window-canvas />}
-      <div className={s.identity} data-hero-identity data-theme="light">
+      <div className={s.identity} data-hero-identity data-theme="dark">
         <h1 id="wall-title" className={s.name} aria-label={name} data-hero-name>
           {name.split(' ').map((word, i) => (
             <span key={word} className={s.word}>{word}{i === 0 ? ' ' : ''}</span>
           ))}
         </h1>
         <div className={s.copy} data-hero-copy>
-          <p className={s.statement}>{line}</p>
+          <p className={s.statement}>
+            <span className={s.serviceLine}>{line.slice(0, serviceBreak)}</span>{' '}
+            <span className={s.serviceLine}>{line.slice(serviceBreak + 1)}</span>
+          </p>
           <div className={s.actions}>
             <ButtonLink href={bookingHref} arrow track="hero-book">Book a call</ButtonLink>
             <ButtonLink href="#selected-work" variant="text" track="hero-work">Selected work<span aria-hidden="true">↓</span></ButtonLink>
