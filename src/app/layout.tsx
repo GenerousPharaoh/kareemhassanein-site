@@ -15,6 +15,7 @@ const sans = Mona_Sans({ subsets: ['latin'], axes: ['wdth'], variable: '--font-m
 // Reuse Next's primary family with a fallback matched to case titles at 90% width.
 // A second next/font declaration would emit a duplicate copy of the font files.
 const narrowFamily = `${sans.style.fontFamily.split(',')[0]}, 'Mona Sans Narrow Fallback', Arial, sans-serif`;
+const wordmarkFamily = `${sans.style.fontFamily.split(',')[0]}, 'Mona Sans Wordmark Fallback', Arial, sans-serif`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
@@ -67,7 +68,7 @@ const jsonLd = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en-CA" className={sans.variable} style={{ ['--font-mona-narrow' as string]: narrowFamily }} suppressHydrationWarning>
+    <html lang="en-CA" className={sans.variable} style={{ ['--font-mona-narrow' as string]: narrowFamily, ['--font-mona-wordmark' as string]: wordmarkFamily }} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: "(()=>{let off=matchMedia('(prefers-reduced-motion: reduce)').matches;try{off=off||localStorage.getItem('kh-motion')==='off'}catch{}document.documentElement.dataset.motion=off?'off':'on';if(location.pathname==='/')setTimeout(()=>document.documentElement.setAttribute('data-opening-expired',''),3400)})()" }} />
       </head>

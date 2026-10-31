@@ -3,6 +3,16 @@
   directions. Each tile is a client screen, desktop or phone, on its client's own colour. Rows are moved
   by script (WorkWall.tsx); without it the wall stands still at its tilt.
 */
+/* Match the uppercase wordmark while the web font is unavailable. No extra font download. */
+@font-face {
+  font-family: 'Mona Sans Wordmark Fallback';
+  src: local('Arial');
+  size-adjust: 86.5%;
+  ascent-override: 126%;
+  descent-override: 37%;
+  line-gap-override: 0%;
+}
+
 .wall {
   --tile-h: 262px;
   --mat: 8px;
@@ -49,41 +59,42 @@
   will-change: transform;
 }
 
-/* Give the name a quiet field while the work keeps its colour to the right. */
+/* The wall stays bright above the wordmark; the bottom field supports the type. */
 .readingShade {
   position: absolute;
   z-index: 2;
   inset: 0;
-  background:
-    linear-gradient(90deg, #0c0c0b 0%, #0c0c0bf5 19%, #0c0c0bcb 37%, #0c0c0b55 57%, transparent 78%),
-    linear-gradient(0deg, #0c0c0bf5 0%, transparent 36%);
+  background: linear-gradient(0deg, #0c0c0b 0%, #0c0c0bfa 19%, #0c0c0bb0 35%, transparent 70%);
   pointer-events: none;
 }
 .identity {
   position: absolute;
   z-index: 4;
   left: var(--gutter-l);
-  bottom: calc(var(--peek, var(--sheet-r)) + clamp(36px, 5svh, 64px));
+  right: var(--gutter-r);
+  bottom: calc(var(--peek, var(--sheet-r)) + 34px);
   display: grid;
-  gap: clamp(26px, 3svh, 38px);
-  width: min(44vw, 660px);
+  grid-template-columns: minmax(0, 1fr);
+  gap: 32px;
   -webkit-user-select: text;
   user-select: text;
 }
 .copy {
-  display: grid;
-  justify-items: start;
-  gap: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
 }
 .statement {
-  max-width: 16em;
-  color: var(--ivory-2);
-  font-size: clamp(1.0625rem, 1.45vw, 1.375rem);
-  font-weight: 400;
-  line-height: 1.45;
-  letter-spacing: -.015em;
-  text-wrap: balance;
+  display: flex;
+  gap: clamp(24px, 3.7vw, 54px);
+  color: var(--ivory);
+  font-size: clamp(1.125rem, 1.7vw, 1.625rem);
+  font-weight: 450;
+  line-height: 1.2;
+  letter-spacing: -.025em;
 }
+.service { text-transform: capitalize; white-space: nowrap; }
 .actions {
   display: flex;
   flex-wrap: wrap;
@@ -167,19 +178,23 @@
   cursor: grabbing;
 }
 
-/* A personal signature, with both lines sharing one baseline rhythm and left edge. */
+/* One wordmark, sized to the actual letter widths at the font's 90% width axis. */
 .name {
-  display: grid;
-  gap: .015em;
-  font: 400 min(10vw, 20svh, 170px) / .88 var(--font-signature), Georgia, serif;
-  letter-spacing: -.035em;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: .19em;
+  min-width: 0;
+  font: 550 min(calc((100vw - var(--gutter-l) - var(--gutter-r)) / 8.14), 24svh) / .88 var(--font-mona-wordmark);
+  font-stretch: 90%;
+  letter-spacing: -.055em;
+  text-transform: uppercase;
   color: var(--ivory);
   pointer-events: none;
 }
 .word {
   display: block;
   width: fit-content;
-  padding: .02em .04em .06em 0;
   white-space: nowrap;
 }
 
@@ -229,24 +244,24 @@
     min-height: 620px;
   }
 
-  .readingShade {
-    background: linear-gradient(0deg, #0c0c0b 0%, #0c0c0bf5 25%, #0c0c0bd4 43%, #0c0c0b55 62%, transparent 80%);
-  }
   .identity {
-    left: var(--gutter-l);
-    right: var(--gutter-r);
-    bottom: calc(var(--peek, var(--sheet-r)) + 26px);
-    width: auto;
-    gap: 22px;
+    bottom: calc(var(--peek, var(--sheet-r)) + 34px);
   }
   .name {
-    font-size: clamp(58px, 21vw, 94px);
-    line-height: .92;
-    letter-spacing: -.025em;
-    gap: 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    justify-content: start;
+    font-size: calc((100vw - var(--gutter-l) - var(--gutter-r)) / 4.62);
+    gap: .04em;
   }
-  .copy { gap: 22px; }
-  .statement { font-size: 1.0625rem; max-width: 16em; line-height: 1.45; }
+  .copy { display: grid; justify-items: start; gap: 24px; }
+  .statement {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 24px;
+    width: min(100%, 320px);
+    font-size: 1.25rem;
+  }
   .actions { gap: 12px 18px; }
   .actions > a { font-size: .875rem; }
   .actions > a:first-child { padding-inline: 18px; }
@@ -266,7 +281,6 @@
 
 @media (min-width: 761px) and (max-height: 650px) {
   .identity { gap: 20px; bottom: calc(var(--peek, var(--sheet-r)) + 24px); }
-  .name { font-size: min(9vw, 19svh); }
   .copy { gap: 18px; }
-  .statement { font-size: 1rem; }
+  .statement { font-size: 1.125rem; }
 }

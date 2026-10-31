@@ -374,7 +374,11 @@ export function WorkWall({ rows, name, line, bookingHref }: Props) {
           ))}
         </h1>
         <div className={s.copy} data-hero-copy>
-          <p className={s.statement}>{line}</p>
+          <p className={s.statement}>
+            {line.split(/(, | and )/).map((part, i) => (
+              <span key={i} className={i % 2 ? 'sr-only' : s.service}>{part}</span>
+            ))}
+          </p>
           <div className={s.actions}>
             <ButtonLink href={bookingHref} arrow track="hero-book">Book a call</ButtonLink>
             <ButtonLink href="#selected-work" variant="text" track="hero-work">Selected work<span aria-hidden="true">↓</span></ButtonLink>

@@ -48,7 +48,7 @@ async function available(page) {
   assert.equal(await page.locator('[data-wall-intro], [data-intro-title], [data-mark-cell]').count(),0);
   assert.ok(await page.locator('body > header').evaluate(el=>getComputedStyle(el).visibility==='visible' && +getComputedStyle(el).opacity===1));
   assert.ok(await page.locator('[data-hero-copy]').evaluate(el=>getComputedStyle(el).visibility==='visible' && +getComputedStyle(el).opacity===1));
-  assert.match(await page.locator('[data-hero-copy] > p').innerText(),/Websites, booking, search and ads/);
+  assert.equal(await page.locator('[data-hero-copy] > p').textContent(),'Websites, booking, search and ads');
   for(const track of ['hero-book','hero-work']) {
     const link=page.locator(`[data-track="${track}"]`);
     assert.ok(await link.isVisible());
