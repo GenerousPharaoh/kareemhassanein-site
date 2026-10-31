@@ -253,21 +253,24 @@
     --tile-h: 162px;
     --mat: 5px;
     --gap: 14px;
-    min-height: 620px;
+    min-height: 560px;
   }
 
   .identity {
     grid-template-columns: minmax(0, 1fr);
-    gap: 26px;
-    padding-bottom: calc(var(--peek, var(--sheet-r)) + 28px);
+    gap: 18px;
+    padding-bottom: calc(var(--peek, var(--sheet-r)) + 22px);
   }
+  .identity::before { height: clamp(88px, 12svh, 112px); }
   .name {
-    font-size: min(calc((100vw - var(--gutter-l) - var(--gutter-r)) / 4.72), 19svh, 108px);
+    font-size: min(calc((100vw - var(--gutter-l) - var(--gutter-r)) / 5.65), 17svh, 72px);
   }
-  .copy { justify-self: start; gap: 22px; padding-bottom: 0; }
+  .copy { justify-self: start; gap: 16px; padding-bottom: 0; }
   .statement {
-    font-size: 1.5rem;
+    max-width: none;
+    font-size: clamp(1rem, 4.6vw, 1.1875rem);
   }
+  .serviceLine { display: inline; }
   .actions { gap: 12px 18px; }
   .actions > a { font-size: .875rem; }
   .actions > a:first-child { padding-inline: 18px; }
