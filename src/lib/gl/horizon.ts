@@ -29,6 +29,8 @@ export type HorizonView = {
   travel: number;
   /** Sideways distance each row has drifted, in world units (alternate rows go the other way) */
   drift: number;
+  /** How far the screens have switched on, from the nearest rows (0) out to the horizon (1) */
+  wave: number;
 };
 
 const ROWS = 10;
@@ -52,6 +54,7 @@ uniform float uTravel;
 uniform float uDrift;
 uniform float uH; // floor below and ceiling above the eye
 out vec2 vCorner;
+out float vOn;
 out vec2 vSize;
 out vec3 vGround;
 out float vDepth;
@@ -84,6 +87,8 @@ void main() {
   vSeed = aMeta.a;
   vDepth = -view.z;
   vPlane = plane;
+  // When this screen switches on in the opening: nearer rows first, a little scattered
+  vOn = (d - NEAR) / SPAN * 0.85 + aMeta.a * 0.15;
 }
 `;
 
@@ -95,7 +100,9 @@ in vec3 vGround;
 in float vDepth;
 in float vPlane;
 in float vSeed;
+in float vOn;
 uniform sampler2D uTex;
+uniform float uWave;
 uniform float uImgAspect;
 uniform float uLoaded;   // 0 until this image has arrived, then fades to 1
 uniform float uExposure;
@@ -128,11 +135,15 @@ void main() {
 
   vec3 ground = vGround;
   vec3 unlit = mix(uStage, ground, 0.16);
-  vec3 screen = mix(unlit, img * 0.94, uLoaded);
+  // Switching on: the screen lights from dark through a brief brightness to its picture
+  float k = clamp((uWave * 1.25 - vOn) / 0.14, 0.0, 1.0);
+  k = k * k * (3.0 - 2.0 * k);
+  vec3 screen = mix(unlit, img * 0.94, uLoaded * k) + k * (1.0 - k) * 0.55;
   // A faint sheen across the glass
   float sheen = smoothstep(0.35, 1.0, q.y + (q.x - 0.5) * 0.35) * 0.05;
   screen += sheen;
-  vec3 col = mix(mix(unlit, ground * 0.9, uLoaded), screen, ia);
+  // Until it switches on, the whole screen, frame included, is dark glass
+  vec3 col = mix(mix(unlit, ground * 0.9, uLoaded * k), screen, ia);
   // The light comes from below: the ceiling rows sit a little darker than the floor
   col *= vPlane > 0.0 ? 1.0 : 0.8;
 
@@ -180,7 +191,7 @@ export class HorizonGL {
     this.dpr = dpr;
     this.stage = hex(stage);
     this.program = this.link();
-    for (const name of ['uProj', 'uView', 'uTravel', 'uDrift', 'uH', 'uTex', 'uImgAspect', 'uLoaded', 'uExposure', 'uStage', 'uFog']) {
+    for (const name of ['uProj', 'uView', 'uTravel', 'uDrift', 'uH', 'uWave', 'uTex', 'uImgAspect', 'uLoaded', 'uExposure', 'uStage', 'uFog']) {
       this.u[name] = gl.getUniformLocation(this.program, name);
     }
     gl.enable(gl.DEPTH_TEST);
@@ -356,6 +367,7 @@ export class HorizonGL {
     gl.uniform1f(this.u.uTravel, v.travel);
     gl.uniform1f(this.u.uDrift, v.drift);
     gl.uniform1f(this.u.uExposure, v.exposure);
+    gl.uniform1f(this.u.uWave, v.wave);
     gl.uniform3fv(this.u.uStage, this.stage);
     gl.uniform2f(this.u.uFog, this.fog[0], this.fog[1]);
     gl.uniform1f(this.u.uH, this.planeH);

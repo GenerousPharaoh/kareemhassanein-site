@@ -13,7 +13,7 @@ export type SceneTile = { base: string; device: 'desktop' | 'phone'; ratio: numb
 type Props = { tiles: SceneTile[]; name: string; line: string; bookingHref: string };
 
 /** Where the camera starts: looking down at the screens, a little higher, turned slightly. */
-const START = { pitch: -44, roll: -5, lift: 0.4, boost: 3.6, exposure: 0 };
+const START = { pitch: -44, roll: -5, lift: 0.4, boost: 3.6, exposure: 0, wave: 0 };
 /** Forward speed at rest, in world units a second, and the sideways drift of the rows. */
 const CRUISE = 0.3;
 const DRIFT = 0.14;
@@ -60,7 +60,8 @@ export function Horizon({ tiles, name, line, bookingHref }: Props) {
     let scene: HorizonGL | null = null;
     try {
       if (HorizonGL.supported(canvas)) {
-        const big = window.innerWidth * (window.devicePixelRatio || 1) > 2200;
+        // Displays at 150% and above get the larger screen images, so the nearest rows stay sharp
+        const big = window.innerWidth * (window.devicePixelRatio || 1) > 1700;
         const list: HorizonTile[] = tiles.map((t) => ({
           src: `${t.base}-${t.device === 'phone' ? 320 : big ? 960 : 640}.webp`,
           ratio: t.ratio,
@@ -80,8 +81,8 @@ export function Horizon({ tiles, name, line, bookingHref }: Props) {
     el.setAttribute('data-scene-ready', '');
 
     // The view the scene draws: the opening's camera with a slow sway of the eye on top
-    const intro = allowOpening ? { ...START } : { pitch: 0, roll: 0, lift: 0, boost: 0, exposure: 1 };
-    const view: HorizonView = { pitch: 0, roll: 0, lift: 0, exposure: 1, travel: 0, drift: 0 };
+    const intro = allowOpening ? { ...START } : { pitch: 0, roll: 0, lift: 0, boost: 0, exposure: 1, wave: 1 };
+    const view: HorizonView = { pitch: 0, roll: 0, lift: 0, exposure: 1, travel: 0, drift: 0, wave: 1 };
     let exit = 0;
     let clock = 0;
     const compose = () => {
@@ -90,6 +91,7 @@ export function Horizon({ tiles, name, line, bookingHref }: Props) {
       view.roll = intro.roll + Math.sin(clock * 0.17 + 1.3) * 0.3 * sway;
       view.lift = intro.lift;
       view.exposure = intro.exposure;
+      view.wave = intro.wave;
     };
 
     // The horizon sits behind the middle of the name, wherever the layout puts it
@@ -171,7 +173,7 @@ export function Horizon({ tiles, name, line, bookingHref }: Props) {
 
     let arrival: gsap.core.Timeline | null = null;
     if (allowOpening) {
-      el.setAttribute('data-opening-phase', 'camera');
+      el.setAttribute('data-opening-phase', 'wait');
       const identity = el.querySelector<HTMLElement>('[data-hero-identity]')!;
       const letters = el.querySelectorAll<HTMLElement>('[data-word]');
       const rest = el.querySelectorAll<HTMLElement>('[data-hero-rest]');
@@ -181,7 +183,7 @@ export function Horizon({ tiles, name, line, bookingHref }: Props) {
         closed = true;
         arrival?.kill();
         arrival = null;
-        gsap.to(intro, { pitch: 0, roll: 0, lift: 0, boost: 0, exposure: 1, duration: 0.5, ease: 'power2.out', overwrite: true });
+        gsap.to(intro, { pitch: 0, roll: 0, lift: 0, boost: 0, exposure: 1, wave: 1, duration: 0.5, ease: 'power2.out', overwrite: true });
         gsap.set([identity, ...letters, ...rest], { clearProps: 'opacity,visibility,transform' });
         el.setAttribute('data-opening-phase', 'ready');
         el.removeAttribute('data-hero-opening');
@@ -189,12 +191,14 @@ export function Horizon({ tiles, name, line, bookingHref }: Props) {
       };
       finishOpening.current = settle;
       gsap.set(identity, { autoAlpha: 1 });
-      gsap.set(letters, { yPercent: 112, rotate: 2.5 });
+      gsap.set(letters, { yPercent: 140, rotate: 2.5 }); // far enough below that the tilt cannot lift a corner into view
       gsap.set(rest, { autoAlpha: 0, y: 18 });
-      // Hold on the bare stage until most screens have arrived (or a moment has passed), so the
-      // camera never moves over empty frames
+      // Hold on the bare stage until most screens have arrived (or a moment has passed); any that
+      // arrive later light up in place as the camera lifts
       arrival = gsap.timeline({ onComplete: settle, paused: true })
-        .to(intro, { exposure: 1, duration: 0.9, ease: 'power2.out' }, 0)
+        .call(() => el.setAttribute('data-opening-phase', 'camera'), [], 0)
+        .to(intro, { exposure: 1, duration: 0.6, ease: 'power2.out' }, 0)
+        .to(intro, { wave: 1, duration: 2.3, ease: 'none' }, 0)
         .to(intro, { boost: 0, duration: 2.7, ease: 'power2.out' }, 0)
         .to(intro, { pitch: 0, roll: 0, lift: 0, duration: 2.3, ease: 'power3.inOut' }, 0.1)
         .call(() => el.setAttribute('data-opening-phase', 'name'), [], 1.45)
@@ -204,7 +208,7 @@ export function Horizon({ tiles, name, line, bookingHref }: Props) {
       const ready = () => {
         if (closed || !arrival) return;
         const { loaded, total } = scene!.progress();
-        if (loaded >= total * 0.92 || performance.now() - begun > 1100) arrival.play();
+        if (loaded >= total * 0.6 || performance.now() - begun > 600) arrival.play();
         else gsap.delayedCall(0.06, ready);
       };
       ready();
