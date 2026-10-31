@@ -49,45 +49,49 @@
   will-change: transform;
 }
 
-/* Keep type legible while the client's own colours show through the centre. */
+/* Give the name a quiet field while the work keeps its colour to the right. */
 .readingShade {
   position: absolute;
   z-index: 2;
   inset: 0;
   background:
-    linear-gradient(0deg, #0c0c0b 0%, #0c0c0be8 15%, transparent 48%),
-    linear-gradient(180deg, #0c0c0bf5 0%, #0c0c0bd9 25%, #0c0c0b66 58%, #0c0c0b33 78%);
+    linear-gradient(90deg, #0c0c0b 0%, #0c0c0bf5 19%, #0c0c0bcb 37%, #0c0c0b55 57%, transparent 78%),
+    linear-gradient(0deg, #0c0c0bf5 0%, transparent 36%);
   pointer-events: none;
 }
-.copy {
+.identity {
   position: absolute;
   z-index: 3;
   left: var(--gutter-l);
-  right: var(--gutter-r);
-  bottom: calc(var(--peek, var(--sheet-r)) + clamp(32px, 5vh, 64px));
-  display: flex;
-  align-items: end;
-  justify-content: space-between;
-  gap: 28px;
+  bottom: calc(var(--peek, var(--sheet-r)) + clamp(36px, 5svh, 64px));
+  display: grid;
+  gap: clamp(26px, 3svh, 38px);
+  width: min(44vw, 660px);
   -webkit-user-select: text;
   user-select: text;
 }
+.copy {
+  display: grid;
+  justify-items: start;
+  gap: 26px;
+}
 .statement {
-  max-width: 15em;
-  font-size: clamp(1.25rem, 2vw, 2rem);
-  font-weight: 450;
-  line-height: 1.2;
-  letter-spacing: -.035em;
+  max-width: 16em;
+  color: var(--ivory-2);
+  font-size: clamp(1.0625rem, 1.45vw, 1.375rem);
+  font-weight: 400;
+  line-height: 1.45;
+  letter-spacing: -.015em;
   text-wrap: balance;
 }
-
 .actions {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 14px 28px;
+  gap: 14px 24px;
 }
-
+.actions > a { font-weight: 500; }
+.actions > a:last-child { color: var(--ivory-2); text-decoration-color: #cbcac440; }
 .actions > a:last-child > span { display: inline-flex; align-items: center; gap: 10px; }
 
 /* A point at the middle of the screen that the plane hangs from, and the eye it is seen with */
@@ -163,33 +167,21 @@
   cursor: grabbing;
 }
 
-/* One permanent name, set as an asymmetric two-line signature. */
+/* A personal signature, with both lines sharing one baseline rhythm and left edge. */
 .name {
-  position: absolute;
-  z-index: 3;
-  top: calc(var(--header-h) + clamp(28px, 5svh, 64px));
-  left: var(--gutter-l);
-  right: var(--gutter-r);
   display: grid;
-  grid-template-columns: minmax(0, 1fr);
   gap: .015em;
-  font: 550 min(16.7vw, 26svh, 310px) / .87 var(--font-display);
-  font-stretch: 100%;
-  letter-spacing: -.065em;
+  font: 400 min(10vw, 20svh, 170px) / .88 var(--font-signature), Georgia, serif;
+  letter-spacing: -.035em;
   color: var(--ivory);
   pointer-events: none;
-  contain: layout style;
 }
 .word {
-  position: relative;
   display: block;
   width: fit-content;
-  padding: .035em .06em .09em 0;
+  padding: .02em .04em .06em 0;
   white-space: nowrap;
-  transform: translateX(var(--name-anchor, 0%));
 }
-/* Anchor with a transform so changing glyph widths never shifts the page layout. */
-.word:last-child { --name-anchor: -100%; left: 100%; }
 
 /* First paint is the same set of screens in the monogram. JavaScript gives them
    their wall positions; the inline deadline restores the complete hero if it is delayed. */
@@ -243,33 +235,26 @@
   }
 
   .readingShade {
-    background:
-      linear-gradient(0deg, #0c0c0b 0%, #0c0c0bf5 18%, #0c0c0b77 38%, transparent 57%),
-      linear-gradient(180deg, #0c0c0b 0%, #0c0c0be8 14%, #0c0c0b77 38%, transparent 60%);
+    background: linear-gradient(0deg, #0c0c0b 0%, #0c0c0bf5 25%, #0c0c0bd4 43%, #0c0c0b55 62%, transparent 80%);
   }
-
-  .copy {
-    bottom: calc(var(--peek, var(--sheet-r)) + 30px);
-    display: grid;
+  .identity {
+    left: var(--gutter-l);
+    right: var(--gutter-r);
+    bottom: calc(var(--peek, var(--sheet-r)) + 26px);
+    width: auto;
     gap: 22px;
   }
-
   .name {
-    top: calc(var(--header-h) + 40px);
-    font-size: 16.8vw;
-    gap: .09em;
+    font-size: clamp(58px, 21vw, 94px);
+    line-height: .92;
+    letter-spacing: -.025em;
+    gap: 0;
   }
-  .word:first-child { font-size: 1.24em; }
-
-  .statement {
-    max-width: 17em;
-    font-size: clamp(1.2rem, 5.7vw, 1.6rem);
-    line-height: 1.2;
-    letter-spacing: -.035em;
-  }
-
-  .actions { gap: 12px 20px; }
+  .copy { gap: 22px; }
+  .statement { font-size: 1.0625rem; max-width: 16em; line-height: 1.45; }
+  .actions { gap: 12px 18px; }
   .actions > a { font-size: .875rem; }
+  .actions > a:first-child { padding-inline: 18px; }
 
   .tile {
     border-radius: 9px;
@@ -285,7 +270,8 @@
 }
 
 @media (min-width: 761px) and (max-height: 650px) {
-  .name { font-size: min(14vw, 27svh); top: calc(var(--header-h) + 14px); }
-  .statement { font-size: 1.25rem; }
-  .copy { bottom: calc(var(--peek, var(--sheet-r)) + 28px); gap: 24px; }
+  .identity { gap: 20px; bottom: calc(var(--peek, var(--sheet-r)) + 24px); }
+  .name { font-size: min(9vw, 19svh); }
+  .copy { gap: 18px; }
+  .statement { font-size: 1rem; }
 }

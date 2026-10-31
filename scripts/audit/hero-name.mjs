@@ -113,7 +113,7 @@ try {
     try {
       await page.goto(base+'/',{waitUntil:'commit'});
       await page.locator('[data-hero-name]').waitFor({state:'attached'});
-      await page.waitForFunction(()=>getComputedStyle(document.querySelector('[data-hero-name]')).position==='absolute');
+      await page.waitForFunction(()=>getComputedStyle(document.querySelector('[data-hero-name]').parentElement).position==='absolute');
       await available(page);assert.equal(await page.locator('[data-ready]').count(),0);
       assert.ok(await page.locator('[data-mark-cell]').evaluateAll(tiles=>tiles.some(tile=>tile.getAnimations().length>0)),'Screen assembly starts without app JavaScript');
       await page.waitForFunction(()=>document.documentElement.hasAttribute('data-opening-expired'));
@@ -177,7 +177,7 @@ try {
     try {
       await page.goto(base+'/',{waitUntil:'commit'});
       await page.locator('[data-hero-name]').waitFor({state:'attached'});
-      await page.waitForFunction(()=>getComputedStyle(document.querySelector('[data-hero-name]')).position==='absolute');
+      await page.waitForFunction(()=>getComputedStyle(document.querySelector('[data-hero-name]').parentElement).position==='absolute');
       await page.evaluate(()=>document.fonts.ready);
       // Hold only the name's CSS clock before hydration. Its retirement timer therefore starts
       // with the full entrance remaining, and wall rendering/pointer input keep their real clocks.

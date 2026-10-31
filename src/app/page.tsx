@@ -1,4 +1,5 @@
 import { Close, Offer } from '@/components/home/HomeEnd';
+import { Instrument_Serif } from 'next/font/google';
 import s from '@/components/home/Home.module.css';
 import type { ReelItem, ReelMedia } from '@/components/home/Showreel';
 import { WorkWall, type WallTile } from '@/components/home/WorkWall';
@@ -11,6 +12,7 @@ import wallWidths from '@/content/wall-media.json';
 import { loop, still, type Still } from '@/lib/media';
 import { pageMeta } from '@/lib/meta';
 
+const signature = Instrument_Serif({ weight: '400', subsets: ['latin'], variable: '--font-signature', display: 'swap' });
 
 export const metadata = pageMeta({
   title: `${SITE.name} · ${SITE.descriptor}`,
@@ -190,7 +192,7 @@ export default function Home() {
 
   return (
     <>
-      <div className={s.opening}>
+      <div className={`${s.opening} ${signature.variable}`}>
         <WorkWall rows={wall} name={SITE.name} line={SITE.descriptor} bookingHref={SITE.bookingHref} />
         <WorkIndex items={index} title="Selected work" />
       </div>

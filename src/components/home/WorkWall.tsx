@@ -330,16 +330,18 @@ export function WorkWall({ rows, name, line, bookingHref }: Props) {
         </div>
       </div>
       <div className={s.readingShade} aria-hidden="true" data-reading-shade />
-      <h1 id="wall-title" className={s.name} aria-label={name} data-hero-name>
-        {name.split(' ').map((word, i) => (
-          <span key={word} className={s.word}>{word}{i === 0 ? ' ' : ''}</span>
-        ))}
-      </h1>
-      <div className={s.copy} data-hero-copy>
-        <p className={s.statement}>{line}</p>
-        <div className={s.actions}>
-          <ButtonLink href={bookingHref} arrow track="hero-book">Book a call</ButtonLink>
-          <ButtonLink href="#selected-work" variant="text" track="hero-work">Selected work<span aria-hidden="true">↓</span></ButtonLink>
+      <div className={s.identity}>
+        <h1 id="wall-title" className={s.name} aria-label={name} data-hero-name>
+          {name.split(' ').map((word, i) => (
+            <span key={word} className={s.word}>{word}{i === 0 ? ' ' : ''}</span>
+          ))}
+        </h1>
+        <div className={s.copy} data-hero-copy>
+          <p className={s.statement}>{line}</p>
+          <div className={s.actions}>
+            <ButtonLink href={bookingHref} arrow track="hero-book">Book a call</ButtonLink>
+            <ButtonLink href="#selected-work" variant="text" track="hero-work">Selected work<span aria-hidden="true">↓</span></ButtonLink>
+          </div>
         </div>
       </div>
       <div className={s.dim} data-dim aria-hidden="true" />
