@@ -69,7 +69,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en-CA" className={sans.variable} style={{ ['--font-mona-narrow' as string]: narrowFamily }} suppressHydrationWarning>
       <head>
-        <script dangerouslySetInnerHTML={{ __html: "(()=>{let off=matchMedia('(prefers-reduced-motion: reduce)').matches;try{off=off||localStorage.getItem('kh-motion')==='off'}catch{}document.documentElement.dataset.motion=off?'off':'on'})()" }} />
+        <script dangerouslySetInnerHTML={{ __html: "(()=>{let off=matchMedia('(prefers-reduced-motion: reduce)').matches;try{off=off||localStorage.getItem('kh-motion')==='off'}catch{}document.documentElement.dataset.motion=off?'off':'on';if(location.pathname==='/')setTimeout(()=>document.documentElement.setAttribute('data-opening-expired',''),3400)})()" }} />
       </head>
       <body id="top">
         <MotionPreference />

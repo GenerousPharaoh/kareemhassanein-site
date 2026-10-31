@@ -191,14 +191,38 @@
 /* Anchor with a transform so changing glyph widths never shifts the page layout. */
 .word:last-child { --name-anchor: -100%; left: 100%; }
 
+/* First paint is the same set of screens in the monogram. JavaScript gives them
+   their wall positions; the inline deadline restores the complete hero if it is delayed. */
 @media (prefers-reduced-motion: no-preference) {
-  :global(html[data-motion='on']:not([data-route-arrival])) .wall[data-hero-opening] .word {
-    animation: name-open 1450ms cubic-bezier(.32, 0, .16, 1) calc(var(--word-index) * 120ms) both;
+  :global(html[data-motion='on']:not([data-route-arrival]):not([data-opening-expired])) .wall[data-hero-opening]:not([data-arrival-running]) {
+    --mark-gap: clamp(4px, .65vw, 9px);
+    --mark-w: min(92px, (100vw - var(--gutter-l) - var(--gutter-r) - var(--mark-gap) * 8) / 9);
+    --mark-h: calc(var(--mark-w) * .66);
   }
+  :global(html[data-motion='on']:not([data-route-arrival]):not([data-opening-expired])) .wall[data-hero-opening]:not([data-arrival-running]) .planeBox {
+    inset: 0; width: 100%; height: 100%; perspective: none;
+  }
+  :global(html[data-motion='on']:not([data-route-arrival]):not([data-opening-expired])) .wall[data-hero-opening]:not([data-arrival-running]) .plane {
+    inset: 0; width: 100%; height: 100%; display: block; transform: none;
+  }
+  :global(html[data-motion='on']:not([data-route-arrival]):not([data-opening-expired])) .wall[data-hero-opening]:not([data-arrival-running]) .row { display: contents; }
+  :global(html[data-motion='on']:not([data-route-arrival]):not([data-opening-expired])) .wall[data-hero-opening]:not([data-arrival-running]) .tile:not([data-mark-cell]) { display: none; }
+  :global(html[data-motion='on']:not([data-route-arrival]):not([data-opening-expired])) .wall[data-hero-opening]:not([data-arrival-running]) .tile[data-mark-cell] {
+    position: absolute;
+    left: calc(50% - (var(--mark-w) * 9 + var(--mark-gap) * 8) / 2 + var(--mark-col) * (var(--mark-w) + var(--mark-gap)));
+    top: calc(42% - (var(--mark-h) * 5 + var(--mark-gap) * 4) / 2 + var(--mark-row) * (var(--mark-h) + var(--mark-gap)));
+    width: var(--mark-w); height: var(--mark-h);
+    padding: clamp(1px, .15vw, 2px); border-radius: 3px;
+    animation: mark-gather 680ms cubic-bezier(.22, 1, .36, 1) calc(var(--mark-order) * 9ms) both;
+  }
+  :global(html[data-motion='on']:not([data-route-arrival]):not([data-opening-expired])) .wall[data-hero-opening]:not([data-arrival-running]) .tile[data-mark-cell] .screen {
+    width: 100%; height: 100%; aspect-ratio: auto; border-radius: 2px;
+  }
+  :global(html[data-motion='on']:not([data-route-arrival]):not([data-opening-expired])) .wall[data-hero-opening]:not([data-arrival-running]) :is(.readingShade, .name) { opacity: 0; }
 }
-@keyframes name-open {
-  from { font-stretch: 78%; font-weight: 380; opacity: .3; transform: translate3d(var(--name-anchor, 0%), .14em, 0); }
-  to { font-stretch: 100%; font-weight: 550; opacity: 1; transform: translate3d(var(--name-anchor, 0%), 0, 0); }
+@keyframes mark-gather {
+  from { opacity: 0; transform: translate(var(--gather-x), var(--gather-y)) scale(.7); }
+  to { opacity: 1; transform: none; }
 }
 
 .dim {

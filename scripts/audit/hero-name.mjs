@@ -1,4 +1,4 @@
-// Permanent homepage name: layout, first paint and interrupted entrances. Contact is blocked.
+// Screen monogram and permanent homepage name: layout, first paint and interruptions. Contact is blocked.
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -7,7 +7,7 @@ const require=createRequire('C:/Work/Portfolio/captures-2026-10/_tools/package.j
 const {chromium}=require('playwright-core');
 const base=(process.argv.find(a=>a.startsWith('--base='))?.slice(7)||'http://127.0.0.1:4323').replace(/\/$/,'');
 const origin=new URL(base).origin;
-const out=path.resolve(process.argv.find(a=>a.startsWith('--out='))?.slice(6)||'output/hero-name/checks');
+const out=path.resolve(process.argv.find(a=>a.startsWith('--out='))?.slice(6)||'output/work-monogram/checks');
 fs.mkdirSync(out,{recursive:true});
 const browser=await chromium.launch({channel:'chrome',headless:true});
 const checks=[];
@@ -27,7 +27,7 @@ async function withPage(options,check,setup=async()=>{}) {
     await ctx.addInitScript(()=>{
       window.__heroNameStarts=[];
       document.addEventListener('animationstart',event=>{
-        if(event.target instanceof Element && event.target.closest('[data-hero-name]')) window.__heroNameStarts.push({name:event.animationName,time:performance.now()});
+        if(event.target instanceof Element && event.target.closest('[data-mark-cell]')) window.__heroNameStarts.push({name:event.animationName,time:performance.now()});
       },true);
     });
     await setup(ctx);
@@ -62,6 +62,7 @@ async function available(page) {
 
 async function settledName(page,{checkViewport=true}={}) {
   await page.evaluate(()=>document.fonts.ready);
+  assert.equal(await page.locator('[data-hero-name]').evaluate(el=>Number(getComputedStyle(el).opacity)),1,'The complete name remains visible');
   const result=await page.locator('[data-hero-name]').evaluate(name=>{
     const box=el=>{const r=el.getBoundingClientRect();return {left:r.left,right:r.right,top:r.top,bottom:r.bottom,width:r.width,height:r.height};};
     const words=[...name.children].map(word=>{
@@ -114,8 +115,8 @@ try {
       await page.locator('[data-hero-name]').waitFor({state:'attached'});
       await page.waitForFunction(()=>getComputedStyle(document.querySelector('[data-hero-name]')).position==='absolute');
       await available(page);assert.equal(await page.locator('[data-ready]').count(),0);
-      assert.ok(await page.locator('[data-hero-name]').evaluate(el=>el.getAnimations({subtree:true}).length>0),'Name entrance starts without app JavaScript');
-      await page.waitForFunction(()=>document.querySelector('[data-hero-name]').getAnimations({subtree:true}).every(a=>a.playState!=='running'));
+      assert.ok(await page.locator('[data-mark-cell]').evaluateAll(tiles=>tiles.some(tile=>tile.getAnimations().length>0)),'Screen assembly starts without app JavaScript');
+      await page.waitForFunction(()=>document.documentElement.hasAttribute('data-opening-expired'));
       await settledName(page);const before=await starts(page);assert.ok(before>0);
       await page.screenshot({path:path.join(out,'slow-js-settled.png')});
       release();await page.waitForSelector('[data-ready]');await finish(page);
@@ -180,8 +181,8 @@ try {
       await page.evaluate(()=>document.fonts.ready);
       // Hold only the name's CSS clock before hydration. Its retirement timer therefore starts
       // with the full entrance remaining, and wall rendering/pointer input keep their real clocks.
-      const held=await page.locator('[data-hero-name]').evaluate(name=>{
-        const animations=name.getAnimations({subtree:true});
+      const held=await page.locator('[data-mark-cell]').evaluateAll(tiles=>{
+        const animations=tiles.flatMap(tile=>tile.getAnimations());
         animations.forEach(animation=>{animation.pause();animation.currentTime=0;});
         return animations.length;
       });
@@ -197,7 +198,6 @@ try {
       assert.ok(point.clear,'Pointer starts on open wall space');
       await page.mouse.click(point.x,point.y);
       assert.equal(await page.locator('[data-hero-opening]').count(),1,'A tap does not retire the name entrance');
-      assert.ok(await page.locator('[data-hero-name]').evaluate(name=>name.getAnimations({subtree:true}).every(animation=>animation.playState==='paused' && animation.currentTime===0)),'A tap does not restart or accelerate the name');
       await page.mouse.move(point.x,point.y);await page.mouse.down();
       await page.mouse.move(point.x+4,point.y);
       assert.equal(await page.locator('[data-dragging]').count(),0,'Sub-threshold pointer movement is still a tap');

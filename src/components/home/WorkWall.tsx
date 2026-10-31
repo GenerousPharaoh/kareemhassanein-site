@@ -14,6 +14,14 @@ type Props = { rows: WallTile[][]; name: string; line: string; bookingHref: stri
 
 /** Copies of each row laid end to end, so a row can travel one copy's length and start again unseen. */
 const COPIES = 3;
+// The screen tiles form K and H on a nine-column, five-row grid.
+const MARK = [
+  [0, 0], [3, 0], [5, 0], [8, 0],
+  [0, 1], [2, 1], [5, 1], [8, 1],
+  [0, 2], [1, 2], [5, 2], [6, 2], [7, 2], [8, 2],
+  [0, 3], [2, 3], [5, 3], [8, 3],
+  [0, 4], [3, 4], [5, 4], [8, 4],
+];
 /** The wall's resting pose, in degrees. */
 const TILT = { rx: 24, rz: -7 };
 /** Which way each row parts from the wall when it moves (toward the eye or away), in turn. */
@@ -28,25 +36,42 @@ const wrap = (x: number, w: number) => (w ? ((x % w) + w) % w : 0);
 export function WorkWall({ rows, name, line, bookingHref }: Props) {
   const root = useRef<HTMLElement>(null);
   const [opening, setOpening] = useState(true);
+  const started = useRef(false);
+  const lanePositions = useRef<{ x: number; width: number }[]>([]);
+  const finishOpening = useRef<(() => void) | null>(null);
+  const cells = new Map<string, number>();
+  const desktopRows = rows.map(row => row.map((tile, index) => ({ tile, index })).filter(({ tile }) => tile.device === 'desktop'));
+  for (let depth = 0; cells.size < MARK.length && desktopRows.some(row => row[depth]); depth++) {
+    desktopRows.forEach((row, r) => {
+      if (row[depth] && cells.size < MARK.length) cells.set(`${r}:${row[depth].index}`, cells.size);
+    });
+  }
 
-  // CSS owns the entrance from first paint. Hydration only retires it, never restarts it.
   useEffect(() => {
-    const el = root.current!;
-    const finish = () => setOpening(false);
-    const skip = () => prefersReducedMotion() || window.scrollY > 40 || document.documentElement.hasAttribute('data-route-arrival');
-    if (skip()) { finish(); return; }
-    const animations = el.querySelector('[data-hero-name]')!.getAnimations({ subtree: true });
-    const remaining = Math.max(0, ...animations.map(a => Number(a.effect?.getComputedTiming().endTime ?? 0) - Number(a.currentTime ?? 0)));
-    const timer = window.setTimeout(finish, Math.min(1800, remaining));
+    const finish = () => finishOpening.current?.();
     const onScroll = () => { if (window.scrollY > 40) finish(); };
+    const onVisibility = () => { if (document.hidden) finish(); };
     const unsubscribe = subscribeMotionPreference(() => { if (prefersReducedMotion()) finish(); });
     window.addEventListener('scroll', onScroll, { passive: true });
-    return () => { window.clearTimeout(timer); unsubscribe(); window.removeEventListener('scroll', onScroll); };
+    document.addEventListener('visibilitychange', onVisibility);
+    return () => { unsubscribe(); window.removeEventListener('scroll', onScroll); document.removeEventListener('visibilitychange', onVisibility); };
   }, []);
 
   useGsap(root, ({ reduce: r, mobile }) => {
     const { gsap } = getGsap();
     const el = root.current!;
+    const firstLoad = !started.current;
+    started.current = true;
+    const allowOpening = firstLoad && !r && window.scrollY < 40 && !document.documentElement.hasAttribute('data-route-arrival') && !document.documentElement.hasAttribute('data-opening-expired');
+    const selected = [...el.querySelectorAll<HTMLElement>('[data-mark-cell]')];
+    // Capture the CSS assembly exactly where it is before giving these same tiles their wall layout.
+    const first = selected.map(tile => ({ tile, box: tile.getBoundingClientRect(), opacity: getComputedStyle(tile).opacity,
+      x: tile.offsetLeft + el.getBoundingClientRect().left, y: tile.offsetTop + el.getBoundingClientRect().top,
+      width: tile.offsetWidth, height: tile.offsetHeight }));
+    const gathering = selected.flatMap(tile => tile.getAnimations()).map(a => Number(a.effect?.getComputedTiming().endTime ?? 0) - Number(a.currentTime ?? 0));
+    const gatherTime = Math.max(.18, Math.min(.85, Math.max(0, ...gathering) / 1000));
+    el.setAttribute('data-arrival-running', '');
+    if (!allowOpening) setOpening(false);
     const plane = el.querySelector<HTMLElement>('[data-plane]')!;
     const box = plane.parentElement!;
     const lanes = [...el.querySelectorAll<HTMLElement>('[data-row]')].map((row, i) => ({
@@ -54,14 +79,14 @@ export function WorkWall({ rows, name, line, bookingHref }: Props) {
       dir: row.dataset.dir === 'right' ? -1 : 1,
       speed: (mobile ? 13 : 20) + (i % 3) * 6,
       depth: DEPTH[i % DEPTH.length],
-      width: 0,
-      x: 0,
+      width: lanePositions.current[i]?.width ?? 0,
+      x: lanePositions.current[i]?.x ?? 0,
       skew: 0,
     }));
     const measure = () =>
-      lanes.forEach((l, i) => {
+      lanes.forEach((l) => {
         const width = l.row.offsetWidth / COPIES;
-        l.x = l.width ? (l.x / l.width) * width : ((i * 0.37) % 1) * width;
+        l.x = l.width ? (l.x / l.width) * width : 0;
         l.width = width;
       });
     // exit grows as the work list rises over the wall, which parts into its rows and falls away;
@@ -76,7 +101,7 @@ export function WorkWall({ rows, name, line, bookingHref }: Props) {
       });
     };
     // The plane's pose, with a slow sway of the eye on top while the wall runs
-    const view = { ...TILT, s: 1, y: 0, o: 1 };
+    const view = { rx: allowOpening ? 0 : TILT.rx, rz: allowOpening ? 0 : TILT.rz, s: 1, y: 0, o: 1 };
     const sway = { rx: 0, rz: 0 };
     const pose = () => {
       plane.style.transform = `translate(-50%, -50%) translate3d(0, ${(view.y - exit * 6).toFixed(2)}vh, 0) rotate(${(view.rz + sway.rz).toFixed(3)}deg) rotateX(${(view.rx + sway.rx + exit * 14).toFixed(3)}deg) scale(${view.s})`;
@@ -96,7 +121,10 @@ export function WorkWall({ rows, name, line, bookingHref }: Props) {
         .forEach(({ image }, i) => { image.loading = 'eager'; if (i < 2) image.fetchPriority = 'high'; });
     }
     if (r) {
-      return () => el.removeAttribute('data-ready');
+      return () => {
+        lanePositions.current = lanes.map(({ x, width }) => ({ x, width }));
+        el.removeAttribute('data-ready'); el.removeAttribute('data-arrival-running');
+      };
     }
 
     // Motion beyond the steady drift: a throw and the scroll, in px a second.
@@ -117,7 +145,7 @@ export function WorkWall({ rows, name, line, bookingHref }: Props) {
       spread += (clamp(surge / 2600, 0, 1) - spread) * (1 - Math.exp(-dt / 0.28));
       clock += dt;
       sway.rz = Math.sin(clock * 0.3) * 0.45;
-      sway.rx = Math.sin(clock * 0.24 + 0.6) * 0.7;
+      sway.rx = Math.sin(clock * 0.24) * 0.7;
       pose();
       for (const l of lanes) {
         const auto = l.dir * ((m.dragging ? 0 : l.speed) + m.scrollV * 0.5);
@@ -168,7 +196,7 @@ export function WorkWall({ rows, name, line, bookingHref }: Props) {
         }
         if (Math.abs(dx) < 8) return;
         drag.on = true;
-        setOpening(false);
+        finishOpening.current?.();
         m.dragging = true;
         m.fling = 0;
         el.setAttribute('data-dragging', '');
@@ -200,7 +228,10 @@ export function WorkWall({ rows, name, line, bookingHref }: Props) {
     window.addEventListener('pointercancel', up);
     el.addEventListener('dragstart', noGhost);
 
+    let measuredWidth = window.innerWidth;
     const onResize = () => {
+      if (window.innerWidth !== measuredWidth) finishOpening.current?.();
+      measuredWidth = window.innerWidth;
       measure();
       place();
     };
@@ -212,7 +243,44 @@ export function WorkWall({ rows, name, line, bookingHref }: Props) {
     gsap.fromTo(el.querySelector('[data-sink]'), { scale: 1, yPercent: 0 }, { scale: 0.92, yPercent: 5, ease: 'none', scrollTrigger: scrub });
     gsap.fromTo(el.querySelector('[data-dim]'), { opacity: 0 }, { opacity: 0.72, ease: 'none', scrollTrigger: { ...scrub, onUpdate: (self) => { exit = self.progress; pose(); sync(); } } });
 
+    let arrival: gsap.core.Timeline | null = null;
+    if (allowOpening) {
+      el.setAttribute('data-opening-phase', 'assemble');
+      const rest = [...plane.querySelectorAll<HTMLElement>('[data-wall-tile]')].filter(tile => !tile.hasAttribute('data-mark-cell'));
+      const nameNode = el.querySelector<HTMLElement>('[data-hero-name]')!;
+      const shade = el.querySelector<HTMLElement>('[data-reading-shade]')!;
+      const destinations = first.map(item => ({ ...item, home: item.tile.getBoundingClientRect() }));
+      gsap.set(rest, { opacity: 0 });
+      gsap.set(nameNode, { opacity: 0, y: 16 });
+      gsap.set(shade, { opacity: 0 });
+      const settle = () => {
+        gsap.set([...selected, ...rest, nameNode, shade], { clearProps: 'opacity,transform,transformOrigin' });
+        el.setAttribute('data-opening-phase', 'ready');
+        setOpening(false);
+      };
+      arrival = gsap.timeline({ onComplete: settle });
+      const openAt = gatherTime + .32;
+      arrival.call(() => el.setAttribute('data-opening-phase', 'mark'), [], gatherTime)
+        .call(() => el.setAttribute('data-opening-phase', 'unfold'), [], openAt);
+      destinations.forEach(({ tile, box: initial, home, opacity, x, y, width, height }, i) => {
+        gsap.set(tile, { transformOrigin: '0 0', x: initial.left - home.left, y: initial.top - home.top,
+          scaleX: initial.width / home.width, scaleY: initial.height / home.height, opacity: Number(opacity) });
+        arrival!.to(tile, { x: x - home.left, y: y - home.top, scaleX: width / home.width,
+          scaleY: height / home.height, opacity: 1, duration: gatherTime, ease: 'power2.out' }, 0);
+        arrival!.to(tile, { x: 0, y: 0, scaleX: 1, scaleY: 1, duration: 1.65, ease: 'power3.inOut' }, openAt + (i % 6) * .012);
+      });
+      arrival.to(view, { ...TILT, duration: 1.65, ease: 'power2.inOut', onUpdate: pose }, openAt + .08)
+        .to(rest, { opacity: 1, duration: 1.05, ease: 'power2.inOut' }, openAt + .4)
+        .to(shade, { opacity: 1, duration: 1.1, ease: 'power2.inOut' }, openAt + .45)
+        .to(nameNode, { opacity: 1, y: 0, duration: 1.05, ease: 'power2.out' }, openAt + .65);
+      finishOpening.current = () => { if (arrival && arrival.progress() < 1) arrival.progress(1); };
+    } else finishOpening.current = () => setOpening(false);
+
     return () => {
+      arrival?.kill();
+      lanePositions.current = lanes.map(({ x, width }) => ({ x, width }));
+      finishOpening.current = null;
+      el.removeAttribute('data-arrival-running');
       gsap.ticker.remove(step);
       io.disconnect();
       document.removeEventListener('visibilitychange', sync);
@@ -236,28 +304,35 @@ export function WorkWall({ rows, name, line, bookingHref }: Props) {
             {rows.map((row, r) => (
               <div key={r} className={s.row} data-row data-dir={r % 2 ? 'right' : 'left'}>
                 {Array.from({ length: COPIES }, (_, copy) =>
-                  row.map((tile) => (
+                  row.map((tile, index) => {
+                    const slot = copy === 0 ? cells.get(`${r}:${index}`) : undefined;
+                    const cell = slot !== undefined ? MARK[slot] : undefined;
+                    return (
                     <div
                       key={`${copy}-${tile.key}`}
                       className={s.tile}
                       data-device={tile.device}
-                      style={{ '--ground': tile.ground, '--ratio': tile.ratio } as CSSProperties}
+                      data-wall-tile
+                      data-mark-cell={slot}
+                      style={{ '--ground': tile.ground, '--ratio': tile.ratio,
+                        ...(cell ? { '--mark-col': cell[0], '--mark-row': cell[1], '--mark-order': slot,
+                          '--gather-x': `${(cell[0] - 4) * 14}px`, '--gather-y': `${(cell[1] - 2) * 18}px` } : {}) } as CSSProperties}
                     >
                       <span className={s.screen}>
-                        <Picture media={tile.still} sizes={tile.device === 'phone' ? '(min-width: 761px) 140px, 90px' : '(min-width: 761px) 420px, 260px'} />
+                        <Picture media={tile.still} priority={slot !== undefined && slot < 4} sizes={tile.device === 'phone' ? '(min-width: 761px) 140px, 90px' : '(min-width: 761px) 420px, 260px'} />
                       </span>
                     </div>
-                  )),
+                  );}),
                 )}
               </div>
             ))}
           </div>
         </div>
       </div>
-      <div className={s.readingShade} aria-hidden="true" />
+      <div className={s.readingShade} aria-hidden="true" data-reading-shade />
       <h1 id="wall-title" className={s.name} aria-label={name} data-hero-name>
         {name.split(' ').map((word, i) => (
-          <span key={word} className={s.word} style={{ '--word-index': i } as CSSProperties}>{word}{i === 0 ? ' ' : ''}</span>
+          <span key={word} className={s.word}>{word}{i === 0 ? ' ' : ''}</span>
         ))}
       </h1>
       <div className={s.copy} data-hero-copy>
