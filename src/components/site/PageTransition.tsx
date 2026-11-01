@@ -33,7 +33,7 @@ async function prepareImages() {
   let timeout = 0;
   await Promise.race([
     Promise.all(images.map((image) => image.decode().catch(() => {}))),
-    new Promise<void>((done) => { timeout = window.setTimeout(done, 120); }),
+    new Promise<void>((done) => { timeout = window.setTimeout(done, 80); }),
   ]);
   window.clearTimeout(timeout);
 }
@@ -61,8 +61,8 @@ export function PageTransition() {
       if (route.fallback && !prefersReducedMotion()) {
         arrival.current?.cancel();
         arrival.current = document.getElementById('main')?.animate(
-          [{ opacity: 0, transform: 'translateY(8px)' }, { opacity: 1, transform: 'none' }],
-          { duration: 480, easing: 'cubic-bezier(.4, 0, .3, 1)' },
+          [{ opacity: 0, transform: 'translateY(20px)' }, { opacity: 1, transform: 'none' }],
+          { duration: 340, easing: 'cubic-bezier(.16, 1, .3, 1)' },
         ) ?? null;
       }
       const hero = document.querySelector<HTMLElement>('[data-case-hero]');

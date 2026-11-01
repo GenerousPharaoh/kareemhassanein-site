@@ -10,7 +10,11 @@ import { getLenis } from './SmoothScroll';
 import { MotionControl } from './MotionControl';
 import styles from './Header.module.css';
 
-const MENU = [{ href: '/', label: 'Home' }, ...NAV, { href: '/notes', label: 'Notes' }];
+const NOTES = { href: '/notes', label: 'Notes' };
+const MENU = [{ href: '/', label: 'Home' }, ...NAV, NOTES];
+const DESKTOP = [...NAV, NOTES];
+/** The third door in the services panel: the first step on its own. */
+const CHECK = { href: '/book/check', label: 'Website check', description: '$1,500, credited toward any work' };
 
 /** The phone menu: shut, open, or on its way out (it stays in place for its short exit). */
 type Phase = 'closed' | 'open' | 'closing';
@@ -62,6 +66,28 @@ export function Header() {
       narrow.removeEventListener('change', resize);
     };
   }, [pathname]);
+
+  // A mouse opens the services panel by resting on it and closes it by leaving, with a little intent
+  // either way; touch and keyboard keep the click and Enter of the native details.
+  const hoverTimer = useRef(0);
+  const enterServices = (event: { pointerType: string }) => {
+    if (event.pointerType !== 'mouse') return;
+    window.clearTimeout(hoverTimer.current);
+    hoverTimer.current = window.setTimeout(() => { if (services.current) services.current.open = true; }, 90);
+  };
+  const leaveServices = (event: { pointerType: string }) => {
+    if (event.pointerType !== 'mouse') return;
+    window.clearTimeout(hoverTimer.current);
+    hoverTimer.current = window.setTimeout(() => {
+      const menu = services.current;
+      if (!menu) return;
+      // A keyboard user inside the panel keeps it; a summary focused by a click does not
+      const focused = document.activeElement;
+      const keyboard = focused instanceof HTMLElement && menu.contains(focused) && focused.matches(':focus-visible');
+      if (!keyboard) menu.open = false;
+    }, 240);
+  };
+  useEffect(() => () => window.clearTimeout(hoverTimer.current), []);
 
   const close = useCallback((returnFocus = false) => {
     setPhase((p) => (p === 'open' ? 'closing' : p));
@@ -223,8 +249,8 @@ export function Header() {
   // exit for reduced motion, where there is no animation).
   useEffect(() => {
     if (phase !== 'closing') return;
-    // The surface exits over 320ms; allow a short margin if animationend is interrupted.
-    const t = window.setTimeout(() => setPhase('closed'), prefersReducedMotion() ? 0 : 420);
+    // The surface exits over 220ms; allow a short margin if animationend is interrupted.
+    const t = window.setTimeout(() => setPhase('closed'), prefersReducedMotion() ? 0 : 320);
     return () => window.clearTimeout(t);
   }, [phase]);
 
@@ -261,18 +287,28 @@ export function Header() {
           </span>
         </Link>
         <nav className={styles.nav} aria-label="Main">
-          {NAV.map((item, i) => (
+          {DESKTOP.map((item, i) => (
             <Fragment key={item.href}>
             <Link key={item.href} href={item.href} className={styles.link} aria-current={isActive(item.href) ? 'page' : undefined}>
               {item.label}
             </Link>
-            {i === 0 ? <details ref={services} className={styles.services} onToggle={(event) => setServicesOpen(event.currentTarget.open)}>
-              <summary className={styles.serviceToggle} data-active={SERVICES.some((service) => isActive(service.href)) || undefined}>
+            {i === 0 ? <details
+              ref={services}
+              className={styles.services}
+              onToggle={(event) => setServicesOpen(event.currentTarget.open)}
+              onPointerEnter={enterServices}
+              onPointerLeave={leaveServices}
+            >
+              <summary
+                className={styles.serviceToggle}
+                data-active={SERVICES.some((service) => isActive(service.href)) || undefined}
+                onClick={(event) => { if (event.detail > 0 && services.current?.open) event.preventDefault(); }}
+              >
                 Services<svg viewBox="0 0 12 12" aria-hidden="true"><path d="m3 4.5 3 3 3-3" fill="none" stroke="currentColor" strokeWidth="1.3" /></svg>
               </summary>
               <div className={styles.servicePanel}>
-                {SERVICES.map((service) => <Link key={service.href} href={service.href} className={styles.serviceLink} aria-current={isActive(service.href) ? 'page' : undefined}>
-                  <span>{service.label}</span>
+                {[...SERVICES, CHECK].map((service, n) => <Link key={service.href} href={service.href} className={styles.serviceLink} style={{ ['--n' as string]: n }} aria-current={isActive(service.href) ? 'page' : undefined}>
+                  <span>{service.label}<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8h9M9 4.5 12.5 8 9 11.5" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" /></svg></span>
                   <small>{service.description}</small>
                 </Link>)}
               </div>
@@ -343,7 +379,7 @@ export function Header() {
             >
               {item.label}
             </Link>
-            {item.href === '/work' ? <div className={styles.sheetServices}>
+            {item.href === '/work' ? <div className={styles.sheetServices} style={{ ['--i' as string]: i + 0.6 }}>
               <p>Services</p>
               {SERVICES.map((service) => <Link key={service.href} href={service.href} className={styles.sheetServiceLink} aria-current={isActive(service.href) ? 'page' : undefined}>
                 <span>{service.label}</span><small>{service.description}</small>
@@ -355,6 +391,10 @@ export function Header() {
             <Link href={SITE.bookingHref} className={styles.sheetCta} data-track="menu-book">
               Book a 20-minute call
             </Link>
+            <a href={`mailto:${SITE.email}`} className={styles.sheetEmail}>
+              <span>Write to me</span>
+              <small>{SITE.email}</small>
+            </a>
             <p className={styles.sheetNote}>{SITE.reply}</p>
             <MotionControl />
           </div>

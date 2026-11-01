@@ -427,13 +427,18 @@ html:not([data-route-arrival]) body:has(main > :first-child[data-theme='light'],
   --hdr-rule: rgba(12, 12, 11, 0.12);
 }
 
+/*
+  A page change goes through the stage: the old page drops out, the stage shows for a beat, and the new
+  page comes up. The two pages are never on screen together, so nothing is doubled or washed out.
+*/
 :root:active-view-transition-type(page) {
-  --page-duration: 560ms;
-  --page-ease: cubic-bezier(.4, 0, .3, 1);
+  --page-out: 150ms;
+  --page-in: 340ms;
 }
 
 :root:active-view-transition-type(page)::view-transition {
   pointer-events: none;
+  background: var(--stage);
 }
 
 :root:active-view-transition-type(page)::view-transition-group(root) {
@@ -441,29 +446,23 @@ html:not([data-route-arrival]) body:has(main > :first-child[data-theme='light'],
   z-index: 0;
 }
 
-:root:active-view-transition-type(page)::view-transition-image-pair(root) {
-  isolation: isolate;
-}
-
 :root:active-view-transition-type(page)::view-transition-old(root) {
-  animation: page-retreat 340ms var(--page-ease) both;
-  mix-blend-mode: plus-lighter;
+  animation: page-out var(--page-out) cubic-bezier(.4, 0, 1, 1) both;
 }
 
 :root:active-view-transition-type(page)::view-transition-new(root) {
-  /* Let the old words recede before the new words become readable, without a blank hold. */
-  animation: page-reveal var(--page-duration) var(--page-ease) 60ms both;
-  mix-blend-mode: plus-lighter;
+  animation: page-in var(--page-in) cubic-bezier(.16, 1, .3, 1) var(--page-out) both;
 }
 
 :root:active-view-transition-type(back)::view-transition-old(root) {
-  animation-name: page-retreat-back;
+  animation-name: page-out-back;
 }
 
 :root:active-view-transition-type(back)::view-transition-new(root) {
-  animation-name: page-reveal-back;
+  animation-name: page-in-back;
 }
 
+/* The navigation stays put; only its colours hand over */
 ::view-transition-group(site-header) {
   animation: none;
   z-index: 10;
@@ -471,31 +470,31 @@ html:not([data-route-arrival]) body:has(main > :first-child[data-theme='light'],
 
 ::view-transition-image-pair(site-header) { isolation: isolate; }
 :root:active-view-transition-type(page)::view-transition-old(site-header) {
-  animation: surface-leave var(--page-duration) var(--page-ease) both;
+  animation: surface-leave 240ms linear both;
   mix-blend-mode: plus-lighter;
 }
 :root:active-view-transition-type(page)::view-transition-new(site-header) {
-  animation: surface-arrive var(--page-duration) var(--page-ease) both;
+  animation: surface-arrive 240ms linear both;
   mix-blend-mode: plus-lighter;
 }
 ::view-transition-old(site-header):only-child { display: none; }
 ::view-transition-new(site-header):only-child { animation: none; }
 
-@keyframes page-retreat {
-  to { opacity: 0; transform: translateY(-4px); }
+@keyframes page-out {
+  to { opacity: 0; transform: translateY(-10px); }
 }
 
-@keyframes page-reveal {
-  from { opacity: 0; transform: translateY(6px); }
+@keyframes page-in {
+  from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: none; }
 }
 
-@keyframes page-retreat-back {
-  to { opacity: 0; transform: translateY(4px); }
+@keyframes page-out-back {
+  to { opacity: 0; transform: translateY(10px); }
 }
 
-@keyframes page-reveal-back {
-  from { opacity: 0; transform: translateY(-6px); }
+@keyframes page-in-back {
+  from { opacity: 0; transform: translateY(-20px); }
   to { opacity: 1; transform: none; }
 }
 
@@ -504,21 +503,21 @@ html:not([data-route-arrival]) body:has(main > :first-child[data-theme='light'],
 
 /* Shared images between a work preview and its case page */
 ::view-transition-group(*.case-morph) {
-  animation-duration: 620ms;
-  animation-timing-function: cubic-bezier(.4, 0, .3, 1);
+  animation-duration: 520ms;
+  animation-timing-function: cubic-bezier(.4, 0, .2, 1);
   z-index: 2;
 }
 
 ::view-transition-image-pair(*.case-morph) { isolation: isolate; }
 /* Matching browser windows keep the first frame intact while the destination settles in. */
 ::view-transition-old(*.case-morph) {
-  animation: surface-leave 620ms cubic-bezier(.4, 0, .3, 1) both;
+  animation: surface-leave 520ms cubic-bezier(.4, 0, .3, 1) both;
   mix-blend-mode: plus-lighter;
   height: 100%;
   object-fit: fill;
 }
 ::view-transition-new(*.case-morph) {
-  animation: surface-arrive 620ms cubic-bezier(.4, 0, .3, 1) both;
+  animation: surface-arrive 520ms cubic-bezier(.4, 0, .3, 1) both;
   mix-blend-mode: plus-lighter;
   height: 100%;
   object-fit: fill;
@@ -526,8 +525,9 @@ html:not([data-route-arrival]) body:has(main > :first-child[data-theme='light'],
 
 /* A note's cover flies from the notes list into the note, and back; on any other page change it leaves and arrives with the page */
 ::view-transition-group(*.note-cover) {
-  animation-duration: 620ms;
-  animation-timing-function: cubic-bezier(.4, 0, .3, 1);
+  animation-duration: 520ms;
+  animation-timing-function: cubic-bezier(.4, 0, .2, 1);
+  z-index: 2;
 }
 
 ::view-transition-old(*.note-cover):only-child {
@@ -535,7 +535,7 @@ html:not([data-route-arrival]) body:has(main > :first-child[data-theme='light'],
 }
 
 ::view-transition-new(*.note-cover):only-child {
-  animation: cover-arrive var(--page-duration) var(--page-ease) both;
+  animation: cover-arrive var(--page-in) cubic-bezier(.16, 1, .3, 1) var(--page-out) both;
 }
 @keyframes cover-leave { to { opacity: 0; } }
 @keyframes cover-arrive { from { opacity: 0; } to { opacity: 1; } }

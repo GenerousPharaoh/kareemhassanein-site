@@ -202,19 +202,23 @@
 .serviceToggle[data-active], .services[open] .serviceToggle { color: var(--hdr-ink); }
 .serviceToggle[data-active] { text-decoration: underline; text-underline-offset: 9px; }
 .services[open] .serviceToggle svg { rotate: 180deg; }
+/* A bridge under the toggle keeps the panel open while the pointer crosses to it */
+.services::after { content: ''; position: absolute; left: 0; right: 0; top: 100%; height: 12px; }
 .servicePanel {
-  position: absolute; top: calc(100% + 8px); left: -22px; width: 310px;
+  position: absolute; top: calc(100% + 8px); left: -22px; width: 336px;
   padding: 8px; border: 1px solid #ffffff1c; border-radius: 16px;
   background: var(--stage-raised); color: var(--ivory);
-  box-shadow: 0 20px 50px #0003;
+  box-shadow: 0 24px 60px #0006, 0 0 0 1px #0008;
   --focus: var(--focus-on-dark);
 }
-.serviceLink { display: grid; gap: 5px; padding: 18px 16px; border-radius: 9px; text-decoration: none; transition: background-color 180ms var(--ease-colour); }
-.serviceLink + .serviceLink { border-top: 1px solid #ffffff14; }
-.serviceLink > span { display: flex; align-items: center; justify-content: space-between; gap: 20px; font-size: 1.125rem; font-weight: 500; }
-.serviceLink svg { width: 14px; height: 14px; }
+.serviceLink { display: grid; gap: 5px; padding: 16px 16px; border-radius: 10px; text-decoration: none; transition: background-color 180ms var(--ease-colour), color 180ms var(--ease-colour); }
+.serviceLink + .serviceLink { margin-top: 2px; }
+.serviceLink > span { display: flex; align-items: center; justify-content: space-between; gap: 20px; font-size: 1.0625rem; font-weight: 500; }
+.serviceLink svg { width: 14px; height: 14px; opacity: 0; translate: -4px 0; transition: opacity 180ms var(--ease-colour), translate 240ms var(--ease-out); }
 .serviceLink small { color: var(--ivory-2); font-size: .8125rem; }
 .serviceLink[aria-current='page'] { background: #ffffff0d; }
+.serviceLink[aria-current='page'] svg { opacity: .6; translate: 0 0; }
+.serviceLink:focus-visible svg { opacity: 1; translate: 0 0; }
 .sheetServices { display: grid; padding: 15px 0; border-bottom: 1px solid #ffffff14; }
 .sheetServices > p { color: var(--muted); font-size: .8125rem; margin-bottom: 6px; }
 .sheetServiceLink { display: grid; gap: 3px; min-height: 66px; padding: 8px 0; text-decoration: none; }
@@ -224,12 +228,15 @@
 @media (hover: hover) {
   .serviceToggle:hover { color: var(--hdr-ink); }
   .serviceLink:hover { background: #ffffff0d; }
+  .serviceLink:hover svg { opacity: 1; translate: 0 0; }
   .sheetServiceLink:hover > span { text-decoration: underline; text-underline-offset: .2em; }
 }
 @media (prefers-reduced-motion: no-preference) {
-  .services[open] .servicePanel { animation: services-in 360ms var(--menu-ease); }
+  .services[open] .servicePanel { animation: services-in 280ms var(--ease-out); }
+  .services[open] .serviceLink { animation: services-row-in 360ms var(--ease-out) both; animation-delay: calc(40ms + var(--n, 0) * 40ms); }
 }
-@keyframes services-in { from { opacity: 0; translate: 0 4px; } }
+@keyframes services-in { from { opacity: 0; translate: 0 6px; scale: .98; } }
+@keyframes services-row-in { from { opacity: 0; translate: 0 6px; } }
 
 /* A line draws in under the link on hover and stays under the page you are on */
 .link {
@@ -450,7 +457,10 @@
 }
 
 .sheetLink[aria-current='page'] {
-  color: var(--muted);
+  text-decoration: underline;
+  text-decoration-color: var(--muted);
+  text-decoration-thickness: 2px;
+  text-underline-offset: .14em;
 }
 
 .sheetLink:active {
@@ -481,6 +491,18 @@
 .sheetCta:active {
   transform: scale(0.985);
 }
+
+.sheetEmail {
+  display: grid;
+  justify-items: center;
+  gap: 2px;
+  min-height: 48px;
+  padding: 6px 0;
+  text-decoration: none;
+  color: var(--ivory);
+}
+.sheetEmail > span { font-weight: 500; }
+.sheetEmail small { font-size: var(--t-small); color: var(--muted); }
 
 .sheetNote {
   text-align: center;
@@ -518,16 +540,18 @@
   }
 
   /* Surface and navigation arrive together. The parent fade keeps the text from double-fading. */
+  /* The surface is there almost at once; its contents are what arrive */
   .sheet[data-phase='open'] {
-    animation: menu-surface-in 460ms var(--menu-ease) both;
+    animation: menu-surface-in 140ms var(--menu-ease) both;
   }
 
-  .sheet[data-phase='open'] .sheetNav {
-    animation: menu-content-in 460ms var(--menu-ease) both;
+  .sheet[data-phase='open'] :is(.sheetLink, .sheetServices, .sheetFoot) {
+    animation: menu-item-in 520ms var(--ease-out) both;
+    animation-delay: calc(40ms + var(--i, 0) * 45ms);
   }
 
   .sheet[data-phase='closing'] {
-    animation: menu-surface-out 320ms cubic-bezier(.4, 0, .6, 1) both;
+    animation: menu-surface-out 220ms cubic-bezier(.4, 0, .6, 1) both;
   }
 }
 
@@ -557,9 +581,10 @@
   }
 }
 
-@keyframes menu-content-in {
+@keyframes menu-item-in {
   from {
-    transform: translateY(10px);
+    opacity: 0;
+    transform: translateY(18px);
   }
 }
 
