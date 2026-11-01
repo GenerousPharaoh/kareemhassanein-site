@@ -1,3 +1,4 @@
+import { Film } from '@/components/home/Film';
 import { Close, Offer } from '@/components/home/HomeEnd';
 import s from '@/components/home/Home.module.css';
 import type { ReelItem, ReelMedia } from '@/components/home/Showreel';
@@ -188,6 +189,12 @@ export default function Home() {
         <Horizon tiles={scene} name={SITE.name} line={SITE.descriptor} bookingHref={SITE.bookingHref} />
         <WorkIndex items={index} title="Selected work" />
       </div>
+      <Film
+        desktop={{ src: '/film/search-to-booked--desktop.mp4', still: '/film/search-to-booked--desktop.webp', w: 1920, h: 1080 }}
+        phone={{ src: '/film/search-to-booked--phone.mp4', still: '/film/search-to-booked--phone.webp', w: 1080, h: 1350 }}
+        label="A film of three client websites: a search result opens into the site, the site comes apart into its layers, and a booking is made on the phone."
+        caption="From a search to a booking, on three of the sites I built."
+      />
       <Statement
         pieces={[
           'I build and run websites ',
