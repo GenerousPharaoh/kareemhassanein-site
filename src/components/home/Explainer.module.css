@@ -38,11 +38,85 @@
 }
 
 .scene,
-.svg {
+.svg,
+.cam {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
+}
+
+.cam {
+  transform-origin: 0 0;
+}
+
+/* A faint dot grid gives the dark its depth */
+.grid {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(238, 237, 232, 0.085) 1.2px, transparent 1.4px);
+  background-size: 40px 40px;
+  background-position: 20px 20px;
+  mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, #000 40%, transparent 100%);
+}
+
+/* A soft cobalt light that moves with the action */
+.glow {
+  position: absolute;
+  left: -450px;
+  top: -300px;
+  width: 900px;
+  height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(61, 107, 255, 0.12), rgba(61, 107, 255, 0.04) 55%, transparent 100%);
+  pointer-events: none;
+}
+
+/* A thin line along the top tells the time */
+.progress {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, rgba(61, 107, 255, 0.9), rgba(61, 107, 255, 0.4));
+}
+
+.sound {
+  position: absolute;
+  right: 16px;
+  bottom: 14px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 14px 0 10px;
+  border: 1px solid rgba(238, 237, 232, 0.16);
+  border-radius: 999px;
+  background: rgba(12, 12, 11, 0.6);
+  color: rgba(238, 237, 232, 0.8);
+  font: 500 0.875rem / 1 var(--font-display);
+  backdrop-filter: blur(8px);
+  cursor: pointer;
+  transition: color 0.3s var(--ease-out), border-color 0.3s var(--ease-out);
+}
+.sound svg {
+  width: 20px;
+  height: 20px;
+}
+.sound[aria-pressed='true'] {
+  color: #eeede8;
+  border-color: rgba(61, 107, 255, 0.8);
+}
+@media (hover: hover) {
+  .sound:hover {
+    color: #eeede8;
+  }
+}
+.sound:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
 }
 
 .svg {
@@ -53,6 +127,7 @@
 .strokeInk,
 .strokeMuted,
 .strokeAccent,
+.strokeAccentGlow,
 .strokeAccentThin,
 .strokeGreen {
   fill: none;
@@ -62,6 +137,7 @@
 .strokeInk { stroke: #eeede8; stroke-width: 2.2; }
 .strokeMuted { stroke: rgba(238, 237, 232, 0.5); stroke-width: 2.2; }
 .strokeAccent { stroke: var(--accent); stroke-width: 2.6; }
+.strokeAccentGlow { stroke: var(--accent); stroke-width: 2.6; filter: drop-shadow(0 0 14px rgba(61, 107, 255, 0.55)); }
 .strokeAccentThin { stroke: var(--accent); stroke-width: 1.6; }
 .strokeGreen { stroke: var(--green); stroke-width: 4; }
 
@@ -85,6 +161,7 @@
 .faint { background: rgba(238, 237, 232, 0.18); }
 
 .pill {
+  box-shadow: 0 10px 34px rgba(61, 107, 255, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.22);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -141,10 +218,30 @@
 }
 
 /* 2. The site, inside the frame that grew from the chosen result */
+.s2Window {
+  position: absolute;
+  left: 180px;
+  top: 150px;
+  width: 1240px;
+  height: 640px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: linear-gradient(180deg, rgba(238, 237, 232, 0.035), rgba(238, 237, 232, 0.012));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 40px 90px rgba(0, 0, 0, 0.5);
+}
+.sheen {
+  position: absolute;
+  top: -20%;
+  left: 0;
+  width: 40%;
+  height: 140%;
+  background: linear-gradient(100deg, transparent 0%, rgba(238, 237, 232, 0.07) 45%, rgba(238, 237, 232, 0.12) 50%, rgba(238, 237, 232, 0.07) 55%, transparent 100%);
+  pointer-events: none;
+}
 .s2Top {
   position: absolute;
-  left: 210px;
-  top: 150px;
+  left: 30px;
+  top: 0;
   display: flex;
   align-items: center;
   height: 52px;
@@ -169,8 +266,8 @@
 }
 .s2Page {
   position: absolute;
-  left: 180px;
-  top: 202px;
+  left: 0;
+  top: 52px;
   width: 1240px;
   height: 588px;
   border-top: 1px solid rgba(238, 237, 232, 0.14);
@@ -242,8 +339,8 @@
   align-items: flex-start;
   padding: 22px 24px;
   border-radius: 12px;
-  background: rgba(238, 237, 232, 0.05);
-  box-shadow: 0 0 0 1px rgba(238, 237, 232, 0.1);
+  background: linear-gradient(180deg, rgba(238, 237, 232, 0.07), rgba(238, 237, 232, 0.03));
+  box-shadow: 0 0 0 1px rgba(238, 237, 232, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.07), 0 18px 40px rgba(0, 0, 0, 0.35);
 }
 .cardMark {
   width: 14px;
@@ -257,6 +354,16 @@
 .s3Phone {
   position: absolute;
   inset: 0;
+}
+.s3Body {
+  position: absolute;
+  left: 640px;
+  top: 160px;
+  width: 320px;
+  height: 620px;
+  border-radius: 38px;
+  background: linear-gradient(180deg, rgba(238, 237, 232, 0.05), rgba(238, 237, 232, 0.015));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 40px 90px rgba(0, 0, 0, 0.55);
 }
 .notch {
   position: absolute;
@@ -335,8 +442,8 @@
   height: 600px;
   padding: 28px 30px;
   border-radius: 16px;
-  background: rgba(238, 237, 232, 0.035);
-  box-shadow: 0 0 0 1px rgba(238, 237, 232, 0.12);
+  background: linear-gradient(180deg, rgba(238, 237, 232, 0.06), rgba(238, 237, 232, 0.02));
+  box-shadow: 0 0 0 1px rgba(238, 237, 232, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.07), 0 30px 70px rgba(0, 0, 0, 0.45);
 }
 .label {
   font-size: 18px;
@@ -369,7 +476,8 @@
   display: block;
   width: 38px;
   border-radius: 8px 8px 3px 3px;
-  background: var(--accent);
+  background: linear-gradient(180deg, #6b8dff, var(--accent));
+  box-shadow: 0 10px 30px rgba(61, 107, 255, 0.25);
 }
 .ringTrack {
   fill: none;
@@ -414,6 +522,9 @@
   inset: 0;
   display: grid;
   place-items: center;
+}
+.wordWrap {
+  display: inline-block;
 }
 .word {
   position: absolute;
