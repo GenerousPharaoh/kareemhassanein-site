@@ -72,6 +72,13 @@ export default function PrivacyPage() {
               address temporarily to limit repeated submissions.
             </p>
 
+            <h2>The first look</h2>
+            <p>
+              When you paste an address into the first look, this site’s server fetches that page once, reads it, and shows
+              you what it found. The address and the result are not stored. The site you entered sees one visit from this site’s
+              server, the way it would from a link preview.
+            </p>
+
             <h2>Please do not send</h2>
             <p>
               Patient information, client files or passwords. I never ask for them by email or through this form. When work
@@ -92,7 +99,7 @@ export default function PrivacyPage() {
 
       <CloseBand
         title="Questions about any of this?"
-        line="Write to me, or book a call about your project. There is nothing to prepare."
+        line="Write to me, or book a call about your project."
         check={false}
         track="privacy-close"
       />

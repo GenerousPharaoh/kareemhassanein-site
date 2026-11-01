@@ -77,6 +77,42 @@
   font-size: .8125rem;
 }
 
+/* What I found here: hidden until the list is read by what I found, then under the summary */
+.found {
+  grid-column: 1 / -1;
+  display: none;
+  list-style: none;
+  margin-top: 6px;
+  border-top: 1px solid var(--case-rule);
+}
+
+.found::before {
+  content: 'What I found';
+  display: block;
+  padding-top: 12px;
+  font-size: .8125rem;
+  color: var(--case-muted);
+}
+
+.found li {
+  display: grid;
+  grid-template-columns: 10px minmax(0, 1fr);
+  gap: 12px;
+  align-items: start;
+  padding-block: 8px;
+  max-width: 60ch;
+  font-size: .9375rem;
+  line-height: 1.5;
+}
+
+.foundMark {
+  width: 10px;
+  height: 10px;
+  margin-top: .42em;
+  border-radius: 50%;
+  background: var(--case-accent);
+}
+
 .more {
   display: flex;
   align-items: center;

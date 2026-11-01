@@ -32,6 +32,7 @@ export function Footer() {
         <nav className={styles.nav} aria-label="Footer: services">
           <p className={styles.label}>Services</p>
           {SERVICES.map((item) => <Link key={item.href} href={item.href} className={styles.link}>{item.label}</Link>)}
+          <Link href="/look" className={styles.link}>First look</Link>
           <Link href="/pricing" className={styles.link}>Pricing</Link>
           <Link href={SITE.bookingHref} className={styles.link}>Book a call</Link>
         </nav>

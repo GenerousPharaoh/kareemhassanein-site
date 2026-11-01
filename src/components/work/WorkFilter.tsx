@@ -4,22 +4,29 @@ import { useCallback, useLayoutEffect, useRef, useState, useSyncExternalStore, t
 import { flushSync } from 'react-dom';
 import { getGsap } from '@/lib/gsap';
 import styles from './WorkFilter.module.css';
+import { PLACES, type PlaceId } from '@/content/found';
 import { prefersReducedMotion, subscribeMotionPreference } from '@/lib/useReducedMotion';
 
-const FILTERS = [
+const SECTORS = [
   { id: 'all', label: 'All cases', status: 'Showing all case studies.' },
   { id: 'firms', label: 'Law firms', status: 'Showing law firms.' },
   { id: 'clinics', label: 'Clinics', status: 'Showing clinics.' },
   { id: 'beyond', label: 'Other projects', status: 'Showing other projects.' },
 ] as const;
+// The second row: the cases by what I found, and where. Each card shows the matching findings.
+const FILTERS: ReadonlyArray<{ id: FilterId; label: string; status: string }> = [...SECTORS, ...PLACES];
 
-type FilterId = (typeof FILTERS)[number]['id'];
+type FilterId = (typeof SECTORS)[number]['id'] | PlaceId;
 const FILTER_KEY = '__khWorkFilter';
 const FILTER_EVENT = 'work-filter-change';
+const isFilter = (value: unknown): value is FilterId => FILTERS.some((item) => item.id === value);
 const initialFilter = (): FilterId => 'all';
+/** The choice in this history entry, or the one a link asked for (/work?filter=tracking). */
 const savedFilter = (): FilterId => {
   const saved = window.history.state?.[FILTER_KEY];
-  return FILTERS.some((item) => item.id === saved) ? saved : 'all';
+  if (isFilter(saved)) return saved;
+  const asked = new URLSearchParams(window.location.search).get('filter');
+  return isFilter(asked) ? asked : 'all';
 };
 const subscribeFilter = (changed: () => void) => {
   window.addEventListener('popstate', changed);
@@ -218,8 +225,15 @@ export function WorkFilter({ children }: { children: ReactNode }) {
       <div className={`container ${styles.bar}`} data-work-filter data-enter style={{ ['--i' as string]: 2 }}>
         <p className={styles.filterLabel} id="work-filter-label">Filter case studies</p>
         <div ref={chips} className={styles.chips} role="group" aria-labelledby="work-filter-label">
-          {FILTERS.map((f) => (
+          {SECTORS.map((f) => (
             <button key={f.id} type="button" className={styles.chip} aria-pressed={filter === f.id} onClick={() => choose(f.id)}>
+              {f.label}
+            </button>
+          ))}
+          <span className={styles.break} aria-hidden="true" />
+          <span className={styles.groupLabel} id="work-found-label">What I found</span>
+          {PLACES.map((f) => (
+            <button key={f.id} type="button" className={styles.chip} aria-pressed={filter === f.id} aria-describedby="work-found-label" onClick={() => choose(f.id)}>
               {f.label}
             </button>
           ))}

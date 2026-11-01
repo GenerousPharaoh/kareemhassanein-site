@@ -1,5 +1,5 @@
 import { pageMeta } from '@/lib/meta';
-import { BuildList } from '@/components/sales/BuildList';
+import { LookBand } from '@/components/look/LookBand';
 import { CaseBand } from '@/components/sales/CaseBand';
 import { CloseCall } from '@/components/sales/CloseCall';
 import { Hero } from '@/components/sales/Hero';
@@ -32,14 +32,15 @@ export default function FirmsPage() {
         phone={{ still: pickStill(trc, 'consult--phone'), caption: 'Intake on a phone: each request is screened before anyone books.' }}
       />
 
-      <BuildList id="firm-build" title="What I build" items={[
-        { title: 'Websites and tools', text: 'Practice pages and useful tools that help people understand their next step.' },
-        { title: 'Intake and CRM', text: 'Screened requests, straightforward booking, and the lead’s source carried into your CRM.' },
-        { title: 'Search and ads', text: 'Campaigns and landing pages measured by real enquiries and signed clients.' },
-      ]} />
+      <LookBand
+        id="firm-look"
+        track="firms-look"
+        title="See what I would see first."
+        text="Paste the firm’s address. In a few seconds: what Google sees, where the consultation request goes, whether a click is being counted as a lead, and the words the bar may question."
+      />
 
       <PriceLine id="firm-prices" track="firms" />
-      <CloseCall id="firm-close" track="firms-close" title="Tell me what you have in mind." text="Book a 20-minute call. There is nothing to prepare except your site address." />
+      <CloseCall id="firm-close" track="firms-close" title="Tell me about the firm." text="Twenty minutes, your site address, and whatever the ad account has been reporting." />
     </>
   );
 }

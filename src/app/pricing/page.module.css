@@ -110,6 +110,7 @@
 }
 
 .offers {
+  padding-top: clamp(40px, 5vw, 72px);
   padding-bottom: clamp(32px, 4vw, 56px);
 }
 

@@ -1,0 +1,10 @@
+.section {
+  position: relative;
+  z-index: 2;
+}
+
+.inner {
+  display: grid;
+  gap: clamp(32px, 4vw, 56px);
+  max-width: 1280px;
+}

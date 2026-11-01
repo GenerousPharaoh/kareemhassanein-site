@@ -101,7 +101,28 @@
 }
 
 .featureAction {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 24px;
   margin-top: 8px;
+}
+
+.featureAlt {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  font-size: var(--t-small);
+  font-weight: 500;
+  text-decoration-color: color-mix(in srgb, currentColor 35%, transparent);
+  text-underline-offset: 0.3em;
+  transition: text-decoration-color var(--dur-hover) var(--ease-colour);
+}
+
+@media (hover: hover) {
+  .featureAlt:hover {
+    text-decoration-color: currentColor;
+  }
 }
 
 .featureSide {

@@ -1,0 +1,174 @@
+/* The field: one line of large type over a rule, the button at its end. The rule draws across while the page is read. */
+
+.form {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+}
+
+.label {
+  font: 500 var(--t-small) / 1.3 var(--font-body);
+  color: var(--muted);
+}
+
+.row {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.input {
+  min-width: 0;
+  width: 100%;
+  margin: 0;
+  padding: 10px 0;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--ink);
+  font: 500 clamp(1.25rem, 1rem + 1.1vw, 1.75rem) / 1.2 var(--font-display);
+  letter-spacing: -0.02em;
+  caret-color: var(--ink);
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.form[data-large] .input {
+  font-size: clamp(1.5rem, 1.1rem + 2vw, 2.6rem);
+  letter-spacing: -0.03em;
+}
+
+.input::placeholder {
+  color: var(--faint);
+  opacity: 1;
+}
+
+/* Focus shows on the rule under the field: it draws across in ink, two pixels deep */
+.input:focus,
+.input:focus-visible {
+  outline: none;
+}
+
+.rule {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  background: var(--ink);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  transition: transform var(--dur-ui) var(--ease-out);
+}
+
+.row:focus-within .rule {
+  transform: scaleX(1);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .form[data-busy] .rule,
+  :global(html[data-looking]) .form .rule {
+    animation: reading 1.1s cubic-bezier(.65, 0, .35, 1) infinite;
+    transition: none;
+  }
+}
+
+@keyframes reading {
+  0% { transform: scaleX(0); transform-origin: 0 50%; }
+  48% { transform: scaleX(1); transform-origin: 0 50%; }
+  52% { transform: scaleX(1); transform-origin: 100% 50%; }
+  100% { transform: scaleX(0); transform-origin: 100% 50%; }
+}
+
+.button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 0 20px 0 22px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--paper);
+  font: 600 0.9375rem / 1 var(--font-body);
+  white-space: nowrap;
+  cursor: pointer;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--paper) 12%, transparent);
+  transition:
+    background-color var(--dur-hover) var(--ease-colour),
+    box-shadow var(--dur-hover) var(--ease-colour),
+    opacity var(--dur-hover) var(--ease-colour);
+}
+
+.button[aria-disabled='true'] {
+  cursor: progress;
+}
+
+/* Both labels share one cell, so the button keeps its width while it reads */
+.buttonText {
+  display: grid;
+}
+
+.buttonText > span {
+  grid-area: 1 / 1;
+  transition: opacity var(--dur-hover) var(--ease-colour);
+}
+
+.buttonText[data-state='ready'] > span:last-child,
+.buttonText[data-state='busy'] > span:first-child,
+:global(html[data-looking]) .buttonText > span:first-child {
+  opacity: 0;
+}
+
+:global(html[data-looking]) .buttonText > span:last-child {
+  opacity: 1;
+}
+
+:global(html[data-looking]) .form .arrow {
+  opacity: 0;
+}
+
+.arrow {
+  flex: none;
+  width: 16px;
+  height: 16px;
+  transition: transform var(--dur-ui) var(--ease-out), opacity var(--dur-hover) var(--ease-colour);
+}
+
+.form[data-busy] .arrow {
+  opacity: 0;
+}
+
+@media (hover: hover) {
+  .button:hover:not([aria-disabled='true']) {
+    background: color-mix(in srgb, var(--ink) 92%, var(--paper));
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--paper) 24%, transparent);
+  }
+}
+
+.button:active:not([aria-disabled='true']) {
+  background: color-mix(in srgb, var(--ink) 85%, var(--paper));
+  transition-duration: var(--dur-press);
+}
+
+.note {
+  font-size: var(--t-small);
+  color: var(--muted);
+}
+
+@media (max-width: 479px) {
+  .row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .button {
+    justify-self: start;
+  }
+  .form[data-large] .input {
+    font-size: 1.5rem;
+  }
+}

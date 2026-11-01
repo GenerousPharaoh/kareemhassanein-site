@@ -76,6 +76,18 @@ export function RequestForm({ initialTopic, checkPrice, checkNote, email }: Prop
 
   const trapRef = useRef<HTMLInputElement>(null);
   const wrapRef = useRef<HTMLDivElement>(null);
+
+  // Arriving from the first look (/book/check?site=...), the address comes along into the message.
+  // Read once the form is live on the client, and folded in during render rather than in an effect.
+  const [siteFolded, setSiteFolded] = useState(false);
+  if (ready && !siteFolded) {
+    setSiteFolded(true);
+    const site = new URLSearchParams(window.location.search).get('site')?.replace(/[\r\n\s]+/g, ' ').trim().slice(0, 200);
+    if (site && !values.message.includes(site)) {
+      const lead = values.message.trim();
+      setValues({ ...values, message: `${lead ? `${lead}\n` : ''}Site: ${site}` });
+    }
+  }
   const doneRef = useRef<HTMLHeadingElement>(null);
   const noticeRef = useRef<HTMLParagraphElement>(null);
 

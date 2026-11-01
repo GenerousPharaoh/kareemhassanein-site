@@ -82,6 +82,21 @@
   }
 }
 
+/* The second row starts after a break: "What I found", then the places */
+.break {
+  flex-basis: 100%;
+  height: 0;
+}
+
+.groupLabel {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  padding-bottom: 12px;
+  font-size: 0.9375rem;
+  color: var(--faint);
+}
+
 /* Keep every filter visible on phones, instead of hiding the final choice off screen. */
 
 @media (max-width: 520px) {
@@ -98,6 +113,14 @@
     font-size: 0.875rem;
     text-align: left;
   }
+  .break {
+    display: none;
+  }
+  .groupLabel {
+    grid-column: 1 / -1;
+    min-height: 0;
+    padding: 10px 0 2px;
+  }
 }
 
 /* Filtering: cards carry data-sectors, sections carry data-group */
@@ -110,9 +133,42 @@
   display: none;
 }
 
+/* By what I found: only the cases with a finding in that place, each showing those findings */
+
+.results[data-filter='ads'] [data-work-item][data-places]:not([data-places~='ads']),
+.results[data-filter='booking'] [data-work-item][data-places]:not([data-places~='booking']),
+.results[data-filter='tracking'] [data-work-item][data-places]:not([data-places~='tracking']),
+.results[data-filter='site'] [data-work-item][data-places]:not([data-places~='site']),
+.results[data-filter='search'] [data-work-item][data-places]:not([data-places~='search']),
+.results[data-filter='ads'] [data-group]:not(:has([data-places~='ads'])),
+.results[data-filter='booking'] [data-group]:not(:has([data-places~='booking'])),
+.results[data-filter='tracking'] [data-group]:not(:has([data-places~='tracking'])),
+.results[data-filter='site'] [data-group]:not(:has([data-places~='site'])),
+.results[data-filter='search'] [data-group]:not(:has([data-places~='search'])),
+.results:is([data-filter='ads'], [data-filter='booking'], [data-filter='tracking'], [data-filter='site'], [data-filter='search']) [data-group-line] {
+  display: none;
+}
+
+.results[data-filter='ads'] [data-found],
+.results[data-filter='booking'] [data-found],
+.results[data-filter='tracking'] [data-found],
+.results[data-filter='site'] [data-found],
+.results[data-filter='search'] [data-found] {
+  display: grid;
+}
+
+.results[data-filter='ads'] [data-found] > :not([data-place='ads']),
+.results[data-filter='booking'] [data-found] > :not([data-place='booking']),
+.results[data-filter='tracking'] [data-found] > :not([data-place='tracking']),
+.results[data-filter='site'] [data-found] > :not([data-place='site']),
+.results[data-filter='search'] [data-found] > :not([data-place='search']) {
+  display: none;
+}
+
 /* Shown on its own, the second group sits as close to the chips as the first one does */
 
-.results[data-filter='beyond'] [data-group='beyond'] {
+.results[data-filter='beyond'] [data-group='beyond'],
+.results:is([data-filter='ads'], [data-filter='booking'], [data-filter='tracking'], [data-filter='site'], [data-filter='search']) [data-group='beyond']:first-child {
   padding-top: 0;
 }
 

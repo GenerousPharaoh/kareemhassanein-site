@@ -1,0 +1,30 @@
+.inner {
+  display: grid;
+  gap: clamp(28px, 4vw, 48px);
+}
+
+.copy {
+  display: grid;
+  gap: 14px;
+  align-content: start;
+}
+
+.title {
+  max-width: 16ch;
+}
+
+.text {
+  max-width: 44ch;
+}
+
+.field {
+  align-self: end;
+}
+
+@media (min-width: 1000px) {
+  .inner {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    column-gap: clamp(48px, 6vw, 96px);
+    align-items: end;
+  }
+}

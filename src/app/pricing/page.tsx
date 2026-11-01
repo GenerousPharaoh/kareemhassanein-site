@@ -5,6 +5,7 @@ import { DisplayTitle } from '@/components/ui/DisplayTitle';
 import { CloseCall } from '@/components/sales/CloseCall';
 import { Faq } from '@/components/sales/Faq';
 import { CheckOffer, OfferRow } from '@/components/sales/Offers';
+import { ProblemFirstSection } from '@/components/sales/ProblemFirstSection';
 import { splitPrice } from '@/components/sales/style';
 import { PRICING_FAQ } from '@/content/faq';
 import { OFFERS, PRICE_NOTE } from '@/content/offers';
@@ -29,7 +30,7 @@ export default function PricingPage() {
           <div className={styles.intro}>
             <p className="t-label">Pricing</p>
             <DisplayTitle id="pricing-title" className={styles.title}>Know the cost before anything starts.</DisplayTitle>
-            <p className={styles.lede}>Start with the website check, or go straight to a fix if you already know the problem. Every price is fixed, and agreed before any work begins.</p>
+            <p className={styles.lede}>Five ways to work with me, each at a fixed price. Start from what is wrong, or read the list.</p>
             <ButtonLink href={SITE.bookingHref} variant="text" arrow track="pricing-hero-call">Book a 20-minute call</ButtonLink>
           </div>
           <div className={styles.index}>
@@ -56,6 +57,8 @@ export default function PricingPage() {
         </div>
       </section>
 
+      <ProblemFirstSection />
+
       <section className={styles.offers} aria-label="Offers">
         <div className={`container ${styles.inner}`}>
           {check ? <CheckOffer offer={check} /> : null}
@@ -78,10 +81,10 @@ export default function PricingPage() {
         track="pricing-close"
         title={
           <>
-            Not sure which one fits? <span>Start with a call.</span>
+            Still not sure? <span>Start with a call.</span>
           </>
         }
-        text="Tell me what is not working and I will tell you which step makes sense: usually the check, sometimes a single fix."
+        text="Twenty minutes, and you leave knowing which step makes sense for you."
       />
     </>
   );

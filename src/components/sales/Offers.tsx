@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { ButtonLink } from '@/components/ui/ButtonLink';
 import { Disclosure } from '@/components/ui/Disclosure';
 import type { Offer } from '@/content/offers';
@@ -56,6 +57,9 @@ export function CheckOffer({ offer }: { offer: Offer }) {
           <ButtonLink href={SITE.checkHref} arrow track="pricing-check">
             Start with a website check
           </ButtonLink>
+          <Link href="/look" className={styles.featureAlt}>
+            Or take a first look now, in a few seconds
+          </Link>
         </div>
       </div>
       <div className={styles.featureSide}>

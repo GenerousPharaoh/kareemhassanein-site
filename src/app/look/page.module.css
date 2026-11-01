@@ -1,0 +1,66 @@
+.top {
+  padding-top: clamp(28px, 3.2vw, 44px);
+  padding-bottom: clamp(32px, 4vw, 56px);
+}
+
+.quiet {
+  color: var(--muted);
+}
+
+/* The field takes the width of the lede's column, so the address has room */
+.top :global([data-enter]):has(form) {
+  width: 100%;
+  max-width: 760px;
+}
+
+.looksFor {
+  display: grid;
+  gap: clamp(20px, 2.5vw, 32px);
+  padding-top: clamp(32px, 4vw, 56px);
+  padding-bottom: clamp(64px, 8vw, 120px);
+}
+
+.looksForTitle {
+  font: 500 1rem / 1.4 var(--font-body);
+  color: var(--muted);
+}
+
+.list {
+  list-style: none;
+  display: grid;
+  border-top: 1px solid var(--rule);
+}
+
+.item {
+  display: grid;
+  gap: 8px;
+  padding-block: clamp(18px, 2.2vw, 28px);
+  border-bottom: 1px solid var(--rule);
+}
+
+.itemTitle {
+  font: 500 clamp(1.15rem, 1rem + 0.6vw, 1.5rem) / 1.2 var(--font-display);
+  letter-spacing: -0.02em;
+}
+
+.itemText {
+  max-width: 56ch;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.further {
+  max-width: 60ch;
+  padding-top: 8px;
+  font-size: var(--t-lede);
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+
+@media (min-width: 1000px) {
+  .item {
+    grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+    column-gap: clamp(40px, 5vw, 80px);
+    align-items: baseline;
+  }
+}

@@ -77,8 +77,7 @@ export default function NotesPage() {
         title="I can look at yours."
         line={
           <>
-            Book a <Keep>20-minute</Keep> call, or start with the website check: your whole path from search to booked, with a
-            fixed price beside each fix.
+            Paste your address for a <Link href="/look">first look</Link>, or book a <Keep>20-minute</Keep> call and bring the question.
           </>
         }
         track="notes-close"

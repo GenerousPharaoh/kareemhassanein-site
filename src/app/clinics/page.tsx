@@ -1,5 +1,5 @@
 import { pageMeta } from '@/lib/meta';
-import { BuildList } from '@/components/sales/BuildList';
+import { LookBand } from '@/components/look/LookBand';
 import { CaseCardsSection } from '@/components/sales/CaseCards';
 import { CloseCall } from '@/components/sales/CloseCall';
 import { Hero } from '@/components/sales/Hero';
@@ -40,14 +40,15 @@ export default function ClinicsPage() {
         ]}
       />
 
-      <BuildList id="clinic-booking" title="What I build" items={[
-        { title: 'Websites', text: 'Clear, fast pages that help people choose a service and practitioner.' },
-        { title: 'Online booking', text: 'Direct links to the right calendar, with bookings tracked through to confirmation.' },
-        { title: 'Search and ads', text: 'Google profiles, landing pages and campaigns, measured by bookings and calls.' },
-      ]} />
+      <LookBand
+        id="clinic-look"
+        track="clinics-look"
+        title="See what I would see first."
+        text="Paste the clinic’s address. In a few seconds: what Google sees, where Book goes and whether it goes anywhere, what is being counted, and the words your college may question."
+      />
 
       <PriceLine id="clinic-prices" track="clinics" />
-      <CloseCall id="clinic-close" track="clinics-close" title="Tell me what you have in mind." text="Book a 20-minute call. There is nothing to prepare except your site address." />
+      <CloseCall id="clinic-close" track="clinics-close" title="Tell me about the clinic." text="Twenty minutes, your site address and the name of your booking system are enough." />
     </>
   );
 }

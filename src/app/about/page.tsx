@@ -56,7 +56,7 @@ const QUESTIONS = [
   },
   {
     q: 'Will I have to manage you?',
-    a: 'There is one person to deal with: strategy, design, build, tracking and ads all stay with me. You choose between rendered designs instead of imagining them, approve a one-page list with a fixed price beside each item, and get a short update every week until handover.',
+    a: 'No. You choose between rendered designs instead of imagining them, and you get a short update every week until handover. Endorphins’ owner and agency got one briefing and every account stayed in the clinic’s name.',
     cases: ['endorphins', 'tax-relief-counsel'],
   },
 ];
@@ -76,8 +76,8 @@ export default function AboutPage() {
             <span className={styles.titleLine}>I run it.</span>
           </DisplayTitle>
           <p className={`t-lede ${styles.lede}`} data-enter style={enter(2)}>
-            I’m Kareem Hassanein. I design and build websites for businesses and personal projects, and run the
-            search, booking, ads and tracking around them. My background includes 13 years in healthcare, across different roles.
+            I’m Kareem Hassanein. I take on the whole path a client walks, from the search to the booking, and I do
+            the work myself: strategy, design, build, tracking and ads, with one person to deal with throughout.
           </p>
         </div>
         <figure className={styles.portrait}>
@@ -150,7 +150,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <CloseBand line="Tell me what you want to build or improve." track="about-close" />
+      <CloseBand line="Bring your site address and whatever has been bothering you about it." track="about-close" />
     </>
   );
 }

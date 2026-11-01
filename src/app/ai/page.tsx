@@ -67,7 +67,7 @@ export default function AiPage() {
 
       <CloseBand
         title="Questions about how I work?"
-        line="Ask on the call. It takes 20 minutes, and there is nothing to prepare."
+        line="Ask me on the call, or write to me. I will tell you exactly what the tools do on your project."
         track="ai-close"
       />
     </>

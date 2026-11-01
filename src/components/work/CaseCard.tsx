@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import type { CaseStudy } from '@/content/cases';
+import { foundIn, placesOf } from '@/content/found';
 import { BrowserFrame, PhoneFrame } from '@/components/media/Frames';
 import { LoopVideo } from '@/components/media/LoopVideo';
 import { Picture } from '@/components/media/Picture';
@@ -28,6 +29,8 @@ export function CaseCard({ c, variant = 'feature' }: Props) {
   const deskLoop = shape > 1.1 && shape < 1.9 ? c.hero : undefined;
   const phoneLoop = deskLoop ? undefined : c.loops.find((l) => l.device === 'phone');
   const feature = variant === 'feature';
+  // What I found here, by place: shown when the list is read by what I found (WorkFilter)
+  const places = placesOf(c.slug);
 
   return (
     <article className={styles.card} data-case-card data-variant={variant} data-tone={toneOf(c.palette)} data-theme={toneOf(c.palette)} style={paletteVars(c.palette)}>
@@ -42,6 +45,16 @@ export function CaseCard({ c, variant = 'feature' }: Props) {
         {/* A no-break space keeps each separator with the word before it, so no line starts with one */}
         <p className={styles.services}>{c.services.join('\u00a0· ')}</p>
         {c.status ? <p className={styles.status}>{c.status}</p> : null}
+        {places.length ? (
+          <ul className={styles.found} data-found aria-label="What I found">
+            {places.flatMap((place) => foundIn(c.slug, place).map((text) => (
+              <li key={text} data-place={place}>
+                <span className={styles.foundMark} aria-hidden="true" />
+                {text}
+              </li>
+            )))}
+          </ul>
+        ) : null}
       </Rise>
       <Exhibit className={styles.exhibit}>
       <div className={styles.media} data-exhibit data-case-preview={c.slug}>

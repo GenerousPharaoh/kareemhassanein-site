@@ -20,6 +20,9 @@ export default function NotFound() {
           <ButtonLink href="/work" variant="ghost">
             See the work
           </ButtonLink>
+          <ButtonLink href="/look" variant="ghost">
+            A first look at your site
+          </ButtonLink>
         </div>
       </PageHead>
     </div>

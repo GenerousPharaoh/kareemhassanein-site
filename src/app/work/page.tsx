@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { DisplayTitle } from '@/components/ui/DisplayTitle';
 import { preload } from 'react-dom';
 import { CaseCard } from '@/components/work/CaseCard';
@@ -6,6 +7,7 @@ import { CaseStack } from '@/components/work/CaseStack';
 import { CloseCall } from '@/components/work/CloseCall';
 import { WorkFilter } from '@/components/work/WorkFilter';
 import { BEYOND_CASES, PRACTICE_CASES } from '@/content/cases';
+import { placesOf } from '@/content/found';
 import { SITE } from '@/content/site';
 import styles from './page.module.css';
 
@@ -45,7 +47,8 @@ export default function WorkPage() {
           Case studies
         </DisplayTitle>
         <p className={styles.lede} data-enter style={{ ['--i' as string]: 1 }}>
-          Each case starts with a question, then what I found, what I decided, what shipped and what was measured.
+          Each case starts with the owner’s question, then what I found, what I decided, what shipped and what was measured.
+          Read them by client, or by what I found.
         </p>
       </header>
 
@@ -57,7 +60,7 @@ export default function WorkPage() {
           </h2>
           <CaseStack className={styles.features}>
             {PRACTICE_CASES.map((c) => (
-              <li key={c.slug} className={styles.item} data-sectors={c.sectors.join(' ')} data-work-item>
+              <li key={c.slug} className={styles.item} data-sectors={c.sectors.join(' ')} data-places={placesOf(c.slug).join(' ')} data-work-item>
                 <div className={styles.reveal}>
                   <CaseCard c={c} variant="feature" />
                 </div>
@@ -71,11 +74,11 @@ export default function WorkPage() {
             <h2 id="work-beyond" className={styles.groupTitle}>
               Other projects
             </h2>
-            <p className={styles.groupLine}>A gear store, a travel journal and a wedding.</p>
+            <p className={styles.groupLine} data-group-line>A gear store, a travel journal and a wedding.</p>
           </div>
           <ul className={styles.compacts}>
             {BEYOND_CASES.map((c) => (
-              <li key={c.slug} className={styles.item} data-sectors={c.sectors.join(' ')} data-work-item>
+              <li key={c.slug} className={styles.item} data-sectors={c.sectors.join(' ')} data-places={placesOf(c.slug).join(' ')} data-work-item>
                 <div className={styles.reveal}>
                   <CaseCard c={c} variant="compact" />
                 </div>
@@ -89,7 +92,11 @@ export default function WorkPage() {
         <CloseCall
           track="work"
           title="Not sure where to start?"
-          body="Book a short call and tell me what is not working, or begin with the website check. Its price is credited in full toward any work within 60 days."
+          body={
+            <>
+              Paste your address for a <Link href="/look">first look</Link>, or book a short call and tell me what is not working.
+            </>
+          }
         />
       </div>
     </>

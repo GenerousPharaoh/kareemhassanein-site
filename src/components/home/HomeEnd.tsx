@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useRef } from 'react';
 import { Disclosure } from '@/components/ui/Disclosure';
+import { LookForm } from '@/components/look/LookForm';
 import { OFFERS } from '@/content/offers';
 import { SITE } from '@/content/site';
 import { getGsap, useGsap } from '@/lib/gsap';
@@ -63,6 +64,13 @@ export function Offer() {
               </Link>
             </div>
           </div>
+        </div>
+        <div className={s.look} data-up>
+          <div className={s.lookCopy}>
+            <h3 className={s.lookTitle}>Or a first look, now.</h3>
+            <p className={s.lookText}>Paste your address and see what the check begins with, read from your page in a few seconds.</p>
+          </div>
+          <LookForm track="home-look" />
         </div>
       </div>
     </section>
