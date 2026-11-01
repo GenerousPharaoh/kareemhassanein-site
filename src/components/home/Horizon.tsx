@@ -5,7 +5,6 @@ import { prefersReducedMotion, subscribeMotionPreference } from '@/lib/useReduce
 import { ButtonLink } from '@/components/ui/ButtonLink';
 import { getGsap, useGsap } from '@/lib/gsap';
 import { HorizonGL, type HorizonTile, type HorizonView } from '@/lib/gl/horizon';
-import { Strands, type StrandsParams } from '@/lib/strands';
 import s from './Horizon.module.css';
 
 /** A screen for the scene: its image path without the width, which the browser picks. */
@@ -81,44 +80,6 @@ export function Horizon({ tiles, name, line, bookingHref }: Props) {
     }
     el.setAttribute('data-scene-ready', '');
 
-    // The name as strands of light: a second canvas over the scene, under the words, which go
-    // clear while it runs (phones and reduced motion keep the type)
-    let strands: Strands | null = null;
-    const strandCanvas = document.createElement('canvas');
-    if (!reduce && !mobile) {
-      try {
-        if (Strands.supported(strandCanvas)) {
-          strandCanvas.className = s.strands;
-          strandCanvas.setAttribute('aria-hidden', 'true');
-          strandCanvas.style.opacity = '0';
-          el.querySelector('[data-hero-identity]')!.before(strandCanvas);
-          strands = new Strands(strandCanvas, { count: 3000, trail: 72, dpr: Math.min(window.devicePixelRatio || 1, 1.75) });
-          el.setAttribute('data-strands', '');
-        }
-      } catch {
-        strands = null;
-      }
-    }
-    const strandParams: StrandsParams = { windX: 70, windY: 0, release: 0, time: 0 };
-    let strandsLaid = false;
-    let strandsNeedSettle = false;
-    const layoutStrands = () => {
-      if (!strands) return;
-      const box = el.getBoundingClientRect();
-      const t = title.getBoundingClientRect();
-      const cs = getComputedStyle(title);
-      strands.resize(el.clientWidth, el.clientHeight);
-      strands.setText(name, `${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`, cs.letterSpacing, 'expanded', { x: t.left - box.left, y: t.top - box.top, w: t.width, h: t.height });
-      strandsLaid = true;
-      if (strandsNeedSettle) {
-        strandsNeedSettle = false;
-        strands.settle(strandParams);
-      }
-    };
-    // Lay the name out now (fonts are usually in by this point) and again once they are certain
-    layoutStrands();
-    if (strands) (el as HTMLElement & { __strands?: Strands }).__strands = strands;
-
     // The view the scene draws: the opening's camera with a slow sway of the eye on top
     const intro = allowOpening ? { ...START } : { pitch: 0, roll: 0, lift: 0, boost: 0, exposure: 1, wave: 1 };
     const view: HorizonView = { pitch: 0, roll: 0, lift: 0, exposure: 1, travel: 0, drift: 0, wave: 1 };
@@ -152,15 +113,14 @@ export function Horizon({ tiles, name, line, bookingHref }: Props) {
         queued = 0;
         if (ticking) return;
         compose();
-        strands?.render(intro.exposure);
         if (scene!.render(view)) draw();
       });
     };
     scene.onLoad = draw;
-    const ro = new ResizeObserver(() => { size(); if (strandsLaid) layoutStrands(); draw(); });
+    const ro = new ResizeObserver(() => { size(); draw(); });
     ro.observe(el);
     ro.observe(title);
-    void document.fonts.ready.then(() => { size(); layoutStrands(); draw(); });
+    void document.fonts.ready.then(() => { size(); draw(); });
 
     if (reduce) {
       setOpening(false);
@@ -188,15 +148,6 @@ export function Horizon({ tiles, name, line, bookingHref }: Props) {
       view.drift += DRIFT * dt;
       compose();
       scene!.render(view);
-      if (strands) {
-        // A breeze across the band; scrolling turns it into a gust that takes the letters apart
-        strandParams.time = clock;
-        strandParams.windX = 110 + m.scrollV * 0.05;
-        strandParams.windY = clamp(m.scrollV * 0.5, -260, 260);
-        strandParams.release = clamp(Math.max(exit * 2.2, Math.abs(m.scrollV) / 1400), 0, 1);
-        strands.update(dt, strandParams);
-        strands.render(intro.exposure);
-      }
     };
 
     let inView = true;
@@ -234,11 +185,6 @@ export function Horizon({ tiles, name, line, bookingHref }: Props) {
         arrival = null;
         gsap.to(intro, { pitch: 0, roll: 0, lift: 0, boost: 0, exposure: 1, wave: 1, duration: 0.5, ease: 'power2.out', overwrite: true });
         gsap.set([identity, ...letters, ...rest], { clearProps: 'opacity,visibility,transform' });
-        if (strands) {
-          strands.setFront(Infinity);
-          strands.setCapture(2);
-          gsap.to(strandCanvas, { opacity: 1, duration: 0.3, overwrite: true });
-        }
         el.setAttribute('data-opening-phase', 'ready');
         el.removeAttribute('data-hero-opening');
         setOpening(false);
@@ -258,17 +204,6 @@ export function Horizon({ tiles, name, line, bookingHref }: Props) {
         .call(() => el.setAttribute('data-opening-phase', 'name'), [], 1.45)
         .to(letters, { yPercent: 0, rotate: 0, duration: 1.1, ease: 'expo.out', stagger: 0.09 }, 1.45)
         .to(rest, { autoAlpha: 1, y: 0, duration: 0.8, ease: 'power3.out', stagger: 0.09 }, 1.8);
-      if (strands) {
-        // Loose strands stream across the band as the camera lifts; then a front sweeps left to
-        // right and the letters catch what passes, so the name writes itself in the stream
-        strands.scatter();
-        strands.setFront(-60);
-        strands.setCapture(2.6);
-        const sweep = { x: -60 };
-        arrival
-          .to(strandCanvas, { opacity: 1, duration: 0.9, ease: 'power2.out' }, 0.2)
-          .to(sweep, { x: el.clientWidth + 80, duration: 1.6, ease: 'power1.inOut', onUpdate: () => strands?.setFront(sweep.x) }, 1.35);
-      }
       const begun = performance.now();
       const ready = () => {
         if (closed || !arrival) return;
@@ -280,14 +215,6 @@ export function Horizon({ tiles, name, line, bookingHref }: Props) {
     } else {
       finishOpening.current = () => setOpening(false);
       setOpening(false);
-      if (strands) {
-        // No opening: the name is already written, its strands in place and moving
-        strands.setFront(Infinity);
-        strands.setCapture(2);
-        strandCanvas.style.opacity = '1';
-        if (strandsLaid) strands.settle(strandParams);
-        else strandsNeedSettle = true;
-      }
     }
 
     return () => {
@@ -298,10 +225,6 @@ export function Horizon({ tiles, name, line, bookingHref }: Props) {
       io.disconnect();
       ro.disconnect();
       document.removeEventListener('visibilitychange', sync);
-      strands?.dispose();
-      strandCanvas.remove();
-      el.removeAttribute('data-strands');
-      delete (el as HTMLElement & { __strands?: Strands }).__strands;
       scene!.dispose();
       canvas.remove();
       el.removeAttribute('data-scene-ready');
