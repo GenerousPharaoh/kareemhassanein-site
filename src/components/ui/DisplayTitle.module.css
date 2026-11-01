@@ -1,11 +1,13 @@
 .word {
   display: inline-block;
   /* Include the mask's inline padding when a short heading sizes itself to its text. */
-  max-width: calc(100% + .04em);
+  max-width: calc(100% + .24em);
   overflow: clip;
   vertical-align: top;
-  padding: .07em .02em .18em;
-  margin: -.07em -.02em -.18em;
+  /* Tight letter-spacing (down to -.065em) ends the box before the last glyph does, and the ink
+     leans 2deg as it rises: the mask keeps .12em of room at each side, paid back by the margins. */
+  padding: .07em .12em .18em;
+  margin: -.07em -.12em -.18em;
 }
 
 .ink {
