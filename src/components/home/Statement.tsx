@@ -42,7 +42,7 @@ export function Statement({ pieces, body, link, portrait }: Props) {
       if (w.hasAttribute('data-chip')) {
         // A picture lights like the words beside it, and settles from a closer framing as it does
         tl.fromTo(w, { opacity: 0.16 }, { opacity: 1, ease: 'none', duration: 1 }, i * 0.35)
-          .fromTo(w.querySelector('img'), { scale: 1.3 }, { scale: 1, ease: 'power2.out', duration: 1.6 }, i * 0.35);
+          .fromTo(w.querySelector('img'), { scale: 1.3, force3D: true }, { scale: 1, ease: 'power2.out', duration: 1.6, force3D: true }, i * 0.35);
       } else {
         tl.fromTo(w, { opacity: 0.16 }, { opacity: 1, ease: 'none', duration: 1 }, i * 0.35);
       }

@@ -382,6 +382,15 @@ ol {
 /* Internal navigation has one composed arrival, not another round of delayed entrances. */
 html[data-route-arrival] [data-enter] { animation: none; }
 
+/* While the page is moving under a mouse (SmoothScroll.tsx), nothing in it answers the pointer: rows and
+   buttons passing under a resting cursor would light up and go out in turn, which reads as flicker. */
+@media (hover: hover) and (pointer: fine) {
+  html[data-scroll-moving] main,
+  html[data-scroll-moving] body > footer {
+    pointer-events: none;
+  }
+}
+
 @keyframes enter {
   from {
     opacity: 0.01;

@@ -18,10 +18,18 @@ export const getLenis = () => instance;
 export function SmoothScroll() {
   // Scrolling moves the page under a resting pointer. Until the pointer itself moves again, html carries
   // data-scrolling and hover effects that would otherwise light up by themselves hold back.
+  // While the page is actually moving, html also carries data-scroll-moving and the page ignores the
+  // pointer (globals.css): rows and buttons gliding under a resting cursor would otherwise light up and
+  // go out one after another, which reads as the content flickering. It clears a moment after the last
+  // scroll event, so a click once the page has settled lands as usual.
   useEffect(() => {
     const root = document.documentElement;
+    let settle = 0;
     const onScroll = () => {
       if (!root.hasAttribute('data-scrolling')) root.setAttribute('data-scrolling', '');
+      if (!root.hasAttribute('data-scroll-moving')) root.setAttribute('data-scroll-moving', '');
+      window.clearTimeout(settle);
+      settle = window.setTimeout(() => root.removeAttribute('data-scroll-moving'), 160);
     };
     const onMove = (e: PointerEvent) => {
       if ((e.movementX || e.movementY) && root.hasAttribute('data-scrolling')) root.removeAttribute('data-scrolling');
@@ -29,9 +37,11 @@ export function SmoothScroll() {
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('pointermove', onMove, { passive: true });
     return () => {
+      window.clearTimeout(settle);
       window.removeEventListener('scroll', onScroll);
       window.removeEventListener('pointermove', onMove);
       root.removeAttribute('data-scrolling');
+      root.removeAttribute('data-scroll-moving');
     };
   }, []);
 
