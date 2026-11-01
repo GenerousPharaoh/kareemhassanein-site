@@ -1,3 +1,4 @@
+import { Explainer } from '@/components/home/Explainer';
 import { Close, Offer } from '@/components/home/HomeEnd';
 import s from '@/components/home/Home.module.css';
 import type { ReelItem, ReelMedia } from '@/components/home/Showreel';
@@ -188,6 +189,7 @@ export default function Home() {
         <Horizon tiles={scene} name={SITE.name} line={SITE.descriptor} bookingHref={SITE.bookingHref} />
         <WorkIndex items={index} title="Selected work" />
       </div>
+      <Explainer />
       <Statement
         pieces={[
           'I build and run websites ',
