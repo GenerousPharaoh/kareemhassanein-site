@@ -76,7 +76,8 @@
   .compacts {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-  .compacts > :last-child {
+  /* The lead of the group takes the whole row; the rest pair up under it */
+  .compacts > :first-child {
     grid-column: 1 / -1;
   }
 }

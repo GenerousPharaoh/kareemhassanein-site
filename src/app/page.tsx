@@ -124,7 +124,7 @@ const REEL: Array<Omit<ReelItem, 'kind' | 'href'> & { deep: string }> = [
     deep: '#1c2430',
     focus: { desktop: 0.45, phone: 0.3 },
     desktop: reelLoop('wedding/opening--desktop'),
-    phone: reelLoop('wedding/opening--phone'),
+    phone: reelLoop('wedding/home-scroll--phone'),
     seconds: { desktop: 3.5, phone: 3.5 },
   },
 ];
@@ -146,6 +146,12 @@ const PREVIEWS: Record<string, [string, string][]> = {
     ['home-hero--desktop', 'The Techniques Combat homepage, with its boxing film and gold typography.'],
     ['campaign--desktop', 'The campaign collection on the Techniques Combat website.'],
     ['product--desktop', 'The Techniques Combat product page for a pair of MMA gloves.'],
+  ],
+  'travel-journal': [
+    ['home-hero--desktop', 'The travel journal cover: a woman on a swing at sunset beside “A change of scenery.”'],
+    ['travels-top--desktop', 'Our Travels opens on a postcard headed “Wish you were here.”'],
+    ['stamps--desktop', 'Every country on one sheet of stamps.'],
+    ['hello--desktop', 'An introduction beside a photograph of the couple.'],
   ],
 };
 
@@ -172,7 +178,7 @@ export default function Home() {
   const scene: SceneTile[] = [];
   for (let i = 0; pools.some((p) => p[i]); i++) pools.forEach((p) => p[i] && scene.push(p[i]));
 
-  const index: IndexItem[] = CASES.filter((c) => ['tax-relief-counsel', 'physiomax', 'techniques-combat'].includes(c.slug)).map((c) => ({
+  const index: IndexItem[] = ['tax-relief-counsel', 'physiomax', 'techniques-combat', 'travel-journal'].map((slug) => CASES.find((c) => c.slug === slug)!).map((c) => ({
     slug: c.slug,
     name: REEL.find((r) => r.slug === c.slug)?.name ?? c.short,
     kind: c.kindLabel,

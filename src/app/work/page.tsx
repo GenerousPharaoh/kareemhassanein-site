@@ -74,13 +74,13 @@ export default function WorkPage() {
             <h2 id="work-beyond" className={styles.groupTitle}>
               Other projects
             </h2>
-            <p className={styles.groupLine} data-group-line>A gear store, a travel journal and a wedding.</p>
+            <p className={styles.groupLine} data-group-line>A travel journal, a gear store and a wedding.</p>
           </div>
           <ul className={styles.compacts}>
-            {BEYOND_CASES.map((c) => (
+            {BEYOND_CASES.map((c, i) => (
               <li key={c.slug} className={styles.item} data-sectors={c.sectors.join(' ')} data-places={placesOf(c.slug).join(' ')} data-work-item>
                 <div className={styles.reveal}>
-                  <CaseCard c={c} variant="compact" />
+                  <CaseCard c={c} variant={i === 0 ? 'feature' : 'compact'} />
                 </div>
               </li>
             ))}

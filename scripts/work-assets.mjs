@@ -150,14 +150,18 @@ export const ASSETS = {
     stills: [
       ['stills/hero--desktop.png', 'hero--desktop'],
       ['stills/hero--phone.png', 'hero--phone'],
-      ['stills/welcome--desktop.png', 'welcome--desktop'],
-      ['stills/day--desktop.png', 'day--desktop'],
-      ['stills/day--phone.png', 'day--phone'],
-      ['stills/story--desktop.png', 'story--desktop', { crop: { left: 0, top: 0, width: 2752, height: 2400 } }],
+      ['stills/began--desktop.png', 'began--desktop'],
+      ['stills/began--phone.png', 'began--phone'],
+      // The travel section down to the end of the aerial photograph of Miraflores
+      ['stills/lima--desktop.png', 'lima--desktop', { crop: { left: 0, top: 0, width: 2752, height: 1860 } }],
+      ['stills/save--desktop.png', 'save--desktop'],
+      ['stills/save--phone.png', 'save--phone'],
+      ['stills/rsvp--phone.png', 'rsvp--phone'],
+      ['stills/thanks--desktop.png', 'thanks--desktop'],
     ],
     loops: [
       ['loops/opening--desktop.mp4', 'opening--desktop'],
-      ['loops/opening--phone.mp4', 'opening--phone'],
+      ['loops/itinerary--desktop.mp4', 'itinerary--desktop'],
       ['loops/home-scroll--phone.mp4', 'home-scroll--phone'],
     ],
   },
