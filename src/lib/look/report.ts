@@ -262,7 +262,7 @@ function searchLines(p: Parsed, finalUrl: URL, robots: RobotsFile | null, lines:
   }) as Array<{ name?: unknown; '@id'?: unknown }>;
   const names = new Set(business.map((b) => (typeof b.name === 'string' ? b.name.trim().toLowerCase() : '')).filter(Boolean));
   const shown = [...new Set(types.filter((t) => t !== '__invalid__'))].slice(0, 4);
-  if (names.size >= 2) lines.push({ tone: 'look', text: `Two business records in the structured data, under different names (${[...names].map((n) => `“${n}”`).join(' and ')}).`, seen: finding('kinetikare', 'Duplicate identity data') });
+  if (names.size >= 2) lines.push({ tone: 'look', text: `Two business records in the structured data, under different names (${[...names].map((n) => `“${n}”`).join(' and ')}).` });
   else if (shown.length) lines.push({ tone: 'fine', text: `Structured data: ${shown.join(', ')}.` });
   else lines.push({ tone: 'note', text: 'No structured data, so nothing on the page tells Google which business this is.' });
 
