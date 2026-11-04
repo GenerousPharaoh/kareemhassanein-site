@@ -1,5 +1,5 @@
 // Which captures the site uses. Sources live outside the repo, in the capture folder
-// (C:\Work\Portfolio\captures-2026-10); `npm run assets` turns them into responsive
+// (C:\Work\Portfolio\captures-2026-10, or a case's captureRoot); `npm run assets` turns them into responsive
 // AVIF/WebP files under public/work-media and writes src/content/media.generated.ts.
 export const CAPTURES = 'C:/Work/Portfolio/captures-2026-10';
 
@@ -85,26 +85,28 @@ export const ASSETS = {
   },
   kinetikare: {
     dir: 'kinetikare',
+    captureRoot: 'C:/Work/Portfolio/captures-2026-11',
     stills: [
-      ['stills/home-hero--desktop.png', 'home-hero--desktop'],
-      ['stills/home-hero--phone.png', 'home-hero--phone'],
-      ['stills/home-journey--desktop.png', 'journey--desktop'],
-      ['stills/home-getback--desktop.png', 'getback--desktop'],
-      ['stills/home-topics--desktop.png', 'topics--desktop', { crop: { left: 0, top: 0, width: 2880, height: 1500 } }],
-      ['stills/knee-hub--desktop.png', 'knee-hub--desktop'],
-      ['stills/knee-hub--phone.png', 'knee-hub--phone'],
-      ['stills/condition--desktop.png', 'condition--desktop', { ba: true }],
-      ['stills/condition--phone.png', 'condition--phone', { ba: true }],
-      ['stills/condition-quiz--desktop.png', 'quiz--desktop'],
-      ['stills/knee-evidence--desktop.png', 'evidence--desktop', { crop: { left: 0, top: 0, width: 2880, height: 1700 } }],
-      ['stills/heel--phone.png', 'heel--phone'],
+      ['stills/home-hero--desktop.png', 'home-hero-2026-11--desktop'],
+      ['stills/home-hero--phone.png', 'home-hero-2026-11--phone'],
+      ['stills/home-journey--desktop.png', 'journey-2026-11--desktop'],
+      ['stills/home-atlas--desktop.png', 'atlas-2026-11--desktop'],
+      ['stills/home-services--desktop.png', 'services-2026-11--desktop', { crop: { left: 0, top: 0, width: 2880, height: 1800 } }],
+      ['stills/knee-hub--desktop.png', 'knee-hub-2026-11--desktop'],
+      ['stills/knee-hub--phone.png', 'knee-hub-2026-11--phone'],
+      ['stills/condition--desktop.png', 'condition-2026-11--desktop', { ba: true }],
+      ['stills/condition--phone.png', 'condition-2026-11--phone', { ba: true }],
+      ['stills/condition-quiz--desktop.png', 'quiz-2026-11--desktop'],
+      ['stills/knee-evidence--desktop.png', 'evidence-2026-11--desktop', { crop: { left: 0, top: 0, width: 2880, height: 1700 } }],
+      ['stills/heel--phone.png', 'heel-2026-11--phone'],
       ['before/old-condition-sept--desktop.jpg', 'old-condition--desktop', { ba: true, only: 'ba' }],
       ['before/old-condition-sept--phone.jpg', 'old-condition--phone', { ba: true, only: 'ba' }],
     ],
     loops: [
-      ['loops/condition-scroll--phone.mp4', 'condition-scroll--phone'],
-      ['loops/quiz--desktop.mp4', 'quiz--desktop'],
-      ['loops/home-scroll--phone.mp4', 'home-scroll--phone'],
+      ['loops/condition-scroll--phone.mp4', 'condition-scroll-2026-11--phone'],
+      ['loops/quiz--desktop.mp4', 'quiz-2026-11--desktop'],
+      ['loops/home-scroll--phone.mp4', 'home-scroll-2026-11--phone'],
+      ['loops/atlas-scroll--desktop.mp4', 'atlas-scroll-2026-11--desktop'],
     ],
   },
   'techniques-combat': {

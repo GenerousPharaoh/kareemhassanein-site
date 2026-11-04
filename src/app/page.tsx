@@ -87,8 +87,8 @@ const REEL: Array<Omit<ReelItem, 'kind' | 'href'> & { deep: string }> = [
     deep: '#141b2b',
     // The knee pain page: the illustrated runner, with the navigation kept in frame
     focus: { desktop: 0.1, phone: 0 },
-    desktop: reelStill('kinetikare/knee-hub--desktop'),
-    phone: reelStill('kinetikare/knee-hub--phone', 780),
+    desktop: reelStill('kinetikare/knee-hub-2026-11--desktop'),
+    phone: reelStill('kinetikare/knee-hub-2026-11--phone', 780),
     seconds: { desktop: 4.4, phone: 4.4 },
   },
   {
@@ -137,7 +137,7 @@ const PREVIEW: Record<string, string> = {
   'tax-relief-counsel': 'tax-relief-counsel/decoder--desktop',
   endorphins: 'endorphins/lp-physio--desktop',
   physiomax: 'physiomax/home-hero--desktop',
-  kinetikare: 'kinetikare/knee-hub--desktop',
+  kinetikare: 'kinetikare/knee-hub-2026-11--desktop',
   'techniques-combat': 'techniques-combat/home-hero--desktop',
   'travel-journal': 'travel-journal/travels-top--desktop',
   wedding: 'wedding/welcome--desktop',
