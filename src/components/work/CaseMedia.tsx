@@ -18,11 +18,12 @@ function ZoomCapture({ media, children }: { media: Still; children: ReactNode })
   </a>;
 }
 
-/* Captions repeat the media's own alt text or label, so assistive technology hears it once */
+// Accessible descriptions stay on the media. Visible captions add project context only.
 
 /** The case's best moment, large, near the top of the story. */
 export function HeroLoop({ c }: { c: CaseStudy }) {
   const loop = c.hero;
+  const caption = c.mediaNotes?.[loop.src.replace('/work-media/', '')];
   return (
     <div className={`container ${styles.heroWrap}`}>
       <figure className={styles.hero} style={shape(ratio(loop))} data-reveal>
@@ -35,16 +36,13 @@ export function HeroLoop({ c }: { c: CaseStudy }) {
             <LoopVideo loop={loop} />
           </ScreenFrame>
         )}
-        <figcaption className={styles.caption} aria-hidden="true">
-          {loop.label}
-        </figcaption>
+        {caption ? <figcaption className={styles.caption}>{caption}</figcaption> : null}
       </figure>
     </div>
   );
 }
 
-function ShotFigure({ shot, share, solo }: { shot: Shot; share: number; solo: boolean }) {
-  const caption = shot.kind === 'loop' ? shot.media.label : shot.media.alt;
+function ShotFigure({ shot, share, solo, caption }: { shot: Shot; share: number; solo: boolean; caption?: string }) {
   // A capture alone in its row is held to 820px tall, so a narrow one never fills the row
   const cap = solo ? Math.round(820 * ratio(shot.media)) : undefined;
   return (
@@ -52,14 +50,12 @@ function ShotFigure({ shot, share, solo }: { shot: Shot; share: number; solo: bo
       <ScreenFrame className={styles.frame}>
         {shot.kind === 'loop' ? <LoopVideo loop={shot.media} /> : <ZoomCapture media={shot.media}><Picture media={shot.media} sizes={rowSizes(share, cap)} /></ZoomCapture>}
       </ScreenFrame>
-      <figcaption className={styles.caption} aria-hidden="true">
-        {caption}
-      </figcaption>
+      {caption ? <figcaption className={styles.caption}>{caption}</figcaption> : null}
     </figure>
   );
 }
 
-function PhoneFigure({ media, sizes }: { media: Loop | Still; sizes: string }) {
+function PhoneFigure({ media, sizes, caption }: { media: Loop | Still; sizes: string; caption?: string }) {
   const isLoop = 'poster' in media;
   return (
     <li className={styles.phoneItem}>
@@ -67,9 +63,7 @@ function PhoneFigure({ media, sizes }: { media: Loop | Still; sizes: string }) {
         <PhoneFrame className={styles.phoneFrame}>
           {isLoop ? <LoopVideo loop={media} /> : <ZoomCapture media={media}><Picture media={media} sizes={sizes} /></ZoomCapture>}
         </PhoneFrame>
-        <figcaption className={styles.caption} aria-hidden="true">
-          {isLoop ? media.label : media.alt}
-        </figcaption>
+        {caption ? <figcaption className={styles.caption}>{caption}</figcaption> : null}
       </figure>
     </li>
   );
@@ -88,14 +82,15 @@ export function Gallery({ c }: { c: CaseStudy }) {
   ];
   const phones: Array<Loop | Still> = [...c.loops.filter((l) => l.device === 'phone'), ...c.stills.filter((s) => s.device === 'phone')];
   const rows = shotRows(shots);
+  const captionFor = (media: Loop | Still) => c.mediaNotes?.[media.src.replace('/work-media/', '')];
   if (!rows.length && !phones.length) return null;
 
   return (
-    <GalleryViewer items={shots.filter((shot) => shot.kind === 'still').map((shot) => shot.media as Still).concat(phones.filter((media): media is Still => !('poster' in media))).map((media) => ({ key: media.src, src: fullSrc(media), thumbnail: `${media.src}-${media.widths[0]}.avif`, alt: media.alt, width: media.w, height: media.h }))}>
+    <GalleryViewer items={shots.filter((shot) => shot.kind === 'still').map((shot) => shot.media as Still).concat(phones.filter((media): media is Still => !('poster' in media))).map((media) => ({ key: media.src, src: fullSrc(media), thumbnail: `${media.src}-${media.widths[0]}.avif`, alt: media.alt, caption: captionFor(media), width: media.w, height: media.h }))}>
     <section className={styles.band} data-tone={toneOf(c.palette)} data-theme={toneOf(c.palette)} aria-labelledby="case-screens">
       <div className="container">
         <h2 id="case-screens" className={styles.title}>
-          What it looks like
+          Website
         </h2>
         {rows.length ? (
           <div className={styles.rows}>
@@ -104,7 +99,7 @@ export function Gallery({ c }: { c: CaseStudy }) {
               return (
                 <div key={row.map((s) => s.media.src).join()} className={styles.row} data-solo={row.length === 1 || undefined} data-reveal>
                   {row.map((s) => (
-                    <ShotFigure key={s.media.src} shot={s} share={ratio(s.media) / total} solo={row.length === 1} />
+                    <ShotFigure key={s.media.src} shot={s} share={ratio(s.media) / total} solo={row.length === 1} caption={captionFor(s.media)} />
                   ))}
                 </div>
               );
@@ -113,10 +108,10 @@ export function Gallery({ c }: { c: CaseStudy }) {
         ) : null}
         {phones.length ? (
           <div className={styles.phones}>
-            <h3 className={styles.subtitle}>On a phone</h3>
+            <h3 className={styles.subtitle}>Mobile</h3>
             <ul className={styles.phoneRow} aria-label="Phone screens">
               {phones.map((m) => (
-                <PhoneFigure key={m.src} media={m} sizes={phoneRowSizes(phones.length)} />
+                <PhoneFigure key={m.src} media={m} sizes={phoneRowSizes(phones.length)} caption={captionFor(m)} />
               ))}
             </ul>
           </div>

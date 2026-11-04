@@ -32,7 +32,7 @@ export function CaseBand({ c, findings, wide, phone }: Props) {
             <h2 id={id} className={styles.name}>
               {c.name}
             </h2>
-            <p className={styles.question}>{c.question}</p>
+            <p className={styles.question}>{c.intro}</p>
             {c.status ? (
               <p className={styles.status}>
                 <span className={styles.statusDot} aria-hidden="true" />

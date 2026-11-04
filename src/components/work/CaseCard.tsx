@@ -41,7 +41,7 @@ export function CaseCard({ c, variant = 'feature' }: Props) {
             {c.name}
           </Link>
         </h3>
-        <p className={styles.summary}>{c.summary ?? c.question}</p>
+        <p className={styles.summary}>{c.intro}</p>
         {/* A no-break space keeps each separator with the word before it, so no line starts with one */}
         <p className={styles.services}>{c.services.join('\u00a0· ')}</p>
         {c.status ? <p className={styles.status}>{c.status}</p> : null}

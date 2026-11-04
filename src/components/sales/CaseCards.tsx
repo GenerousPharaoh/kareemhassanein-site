@@ -54,7 +54,7 @@ export function CaseCards({ items, concise = false }: { items: CaseCard[]; conci
                     <span className="sr-only">: read the case</span>
                   </Link>
                 </h3>
-                {!concise ? <p className={styles.question}>{c.question}</p> : null}
+                {!concise ? <p className={styles.question}>{c.intro}</p> : null}
                 <p className={styles.point}>
                   <span className={styles.pointLabel}>{point.label}</span>
                   <span>{point.text}</span>

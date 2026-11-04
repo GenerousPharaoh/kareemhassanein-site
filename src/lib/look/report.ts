@@ -307,7 +307,7 @@ function wordingLines(p: Parsed, lines: Line[]) {
   hits.sort((a, b) => Number(b[2]) - Number(a[2]) || b[1] - a[1]);
   const list = (items: typeof hits) => items.slice(0, 6).map(([label, n]) => `“${label}”${n > 1 ? ` (${n})` : ''}`).join(', ');
   if (hits.some((h) => h[2])) {
-    lines.push({ tone: 'look', text: `Words a college or law society may question: ${list(hits)}.`, seen: finding('endorphins', 'Some wording') });
+    lines.push({ tone: 'look', text: `Words a college or law society may question: ${list(hits)}.` });
   } else if (hits.length) {
     lines.push({ tone: 'note', text: `Worth a read against your rules: ${list(hits)}.` });
   } else {

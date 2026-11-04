@@ -12,7 +12,7 @@ import { SITE } from '@/content/site';
 import styles from './page.module.css';
 
 const description =
-  'Case studies from a tax law firm and health clinics, then a gear store, a travel journal and a wedding. Each starts with the owner’s question, then what I found, what I decided and what shipped.';
+  'Website design, booking, online stores and digital tools for law firms, clinics, retailers and personal projects.';
 
 const ogImage = PRACTICE_CASES[0].plate.desktop;
 
@@ -47,8 +47,7 @@ export default function WorkPage() {
           Case studies
         </DisplayTitle>
         <p className={styles.lede} data-enter style={{ ['--i' as string]: 1 }}>
-          Each case starts with the owner’s question, then what I found, what I decided, what shipped and what was measured.
-          Read them by client, or by what I found.
+          Websites and digital tools for law firms, clinics, retailers and personal projects.
         </p>
       </header>
 

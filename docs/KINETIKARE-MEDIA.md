@@ -38,8 +38,7 @@ Source URL, timestamp, dimensions and video durations are recorded in the
 source folder's manifests. Generated responsive images, posters, videos and
 wall thumbnails belong in `public/work-media`; raw captures stay outside Git.
 
-Updated public filenames include `2026-11`. The media route has a one-year
-immutable cache policy, so refreshed captures must use new URLs. Keep the
-historical before filenames unchanged. A future refresh needs another version
-in the output names in `scripts/work-assets.mjs` and the corresponding content
-references.
+Updated public filenames include `2026-11` to distinguish these captures from
+the archived version. The production media route revalidates cached files.
+Keep historical filenames unchanged; use another version in the output names
+and content references for a future capture refresh.

@@ -15,7 +15,7 @@ export const heroInHeader = (c: CaseStudy) => isWindow(c.hero);
 
 /**
  * The case's first screen, in its own palette (the --case-* properties come from the page):
- * the owner's question as the lede, then the site on desktop and phone, its foot reaching
+ * the project's purpose as the lede, then the site on desktop and phone, its foot reaching
  * past the band into the page. When the best moment is a whole-window loop it plays in the
  * desktop frame, so the page opens with the site moving and nothing repeats further down.
  */
@@ -41,7 +41,7 @@ export function CaseHeader({ c }: { c: CaseStudy }) {
         </DisplayTitle>
         <div className={styles.lead}>
           <p className={styles.question} data-enter style={enter(2)}>
-            {c.question}
+            {c.intro}
           </p>
           <div className={styles.meta} data-enter style={enter(3)}>
             <p className={styles.metaLabel} id={`${c.slug}-services`}>

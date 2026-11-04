@@ -24,16 +24,16 @@ export type CaseStudy = {
   domain: string;
   status?: string;
   palette: Palette;
-  question: string;
-  summary?: string;
+  intro: string;
   context?: string;
   found?: string[];
-  decided?: string[];
   shipped: string[];
   shippedLabel?: string;
   measured?: Measured[];
   credit?: string;
   note?: string;
+  /** Captions that add functional context beyond the image's accessible description. */
+  mediaNotes?: Record<string, string>;
   plate: { desktop: Still; phone: Still };
   /** The loop for index cards and the case header. */
   hero: Loop;
@@ -51,42 +51,32 @@ export const CASES: CaseStudy[] = [
     kind: 'law',
     kindLabel: 'Tax law firm · Washington, D.C.',
     sectors: ['firms'],
-    services: ['Diagnosis', 'Website', 'Tools', 'Intake', 'Tracking', 'Ads'],
+    services: ['Website', 'Interactive tools', 'Intake', 'Tracking', 'Ads'],
     domain: 'taxreliefcounsel.com',
-    status: 'Rebuild finished, launch pending',
+    status: 'Launch pending',
     palette: { ground: '#1b2740', ink: '#efeae1', muted: '#b6bdca', rule: 'rgba(239,234,225,0.16)', accent: '#d9b48f' },
-    question: 'Why was a tax law firm paying for leads that were really button clicks, and what would a site built for its clients look like?',
-    summary: 'From an ad account counting button clicks to a rebuilt site with tools its clients use and intake that routes every request.',
+    intro: 'Tax information, interactive tools and consultation intake for a law firm.',
+    context: 'Existing page addresses are mapped to the replacement site. Consultation requests use the firm’s existing CRM format, so its intake automations can continue working.',
     found: [
       'Most of the conversions the ad account reported were clicks on the consultation button, not leads.',
       'Audit campaigns were reaching people looking for the IRS phone number.',
-      'A missing template had stripped the headings and bylines from archived posts for months.',
-      'A broken link sat in every footer.',
-      'Several articles were due for an update to current IRS guidance.',
-    ],
-    decided: [
-      'Fix the live site first, with a backup and an undo for every change.',
-      'Rebuild with every old address mapped, so nothing the firm had earned in search was lost.',
-      'Build tools that answer a reader’s own situation, with the IRS source beside each number.',
-      'Screen every form: qualified requests go to the scheduler, the rest go to the attorney.',
-      'Keep the CRM’s lead format exactly, so the firm’s automations keep working.',
-      'Count a conversion only after the lead has been delivered.',
-      'Launch by changing one DNS record, reversible in one step.',
-      'The “light on stone” design, chosen from rendered options.',
+      'A missing template had stripped the headings and bylines from archived posts.',
     ],
     shipped: [
-      '78 pages and 32 articles',
-      'Seven interactive tools, including a notice decoder',
+      'Practice-area pages and tax information articles',
+      'Interactive tax tools, including an IRS notice decoder',
       'Site search',
-      'Intake that screens and routes each request',
-      'Tracking that counts delivered leads',
-      'A launch plan with a one-step way back',
+      'Consultation intake with screening and CRM delivery',
+      'Conversion tracking for successfully delivered enquiries',
+      'Redirects for existing page addresses',
     ],
     measured: [
-      { fact: '120 old addresses checked, all loading on the new site', how: 'Redirect map tested address by address' },
-      { fact: 'Accessibility scores of 97 to 99', how: 'Lighthouse audits of the rebuilt pages' },
+      { fact: '120 existing URLs verified on the replacement site', how: 'Redirects checked address by address before launch' },
     ],
-    note: 'The rebuild is finished and waiting on launch. The old site was captured before launch day replaces it.',
+    mediaNotes: {
+      'tax-relief-counsel/decoder--desktop.mp4': 'The notice decoder identifies response deadlines and links readers to IRS guidance.',
+      'tax-relief-counsel/consult--desktop': 'Requests are screened before scheduling and delivered in the firm’s existing CRM format.',
+    },
     plate: {
       desktop: still('tax-relief-counsel/home-hero--desktop', 'Tax Relief Counsel home page: the attorney standing against a limestone wall beside the headline “Your Trusted Tax Attorney”.'),
       phone: still('tax-relief-counsel/home-hero--phone', 'Tax Relief Counsel home page on a phone.'),
@@ -136,37 +126,26 @@ export const CASES: CaseStudy[] = [
     services: ['Website', 'Booking', 'Business Profile', 'Tracking', 'Ads plan'],
     domain: 'endorphinshealth.com',
     palette: { ground: '#e2eadb', ink: '#18230f', muted: '#4f5e45', rule: 'rgba(24,35,15,0.14)', accent: '#4d7c22' },
-    question: 'How does an eight-practitioner clinic start advertising without losing control of its accounts, or paying for clicks it cannot count?',
-    summary: 'Six disciplines with their practitioners on the first screen, ad pages that show the next real openings, and every account in the clinic’s name.',
-    context: 'I first joined Endorphins to launch physiotherapy there as a new service.',
+    intro: 'A clinic website with practitioner booking and advertising pages for individual services.',
+    context: 'The clinic owns its advertising and analytics accounts. Access is shared with the people managing them.',
     found: [
       'Search visits came almost entirely from people who already knew the clinic’s name.',
       'There was no way to tell which bookings came from the site.',
       'Only some practitioners could be booked online.',
-      'Some wording a college would flag, and a site that read as a template.',
-    ],
-    decided: [
-      'One design system, chosen from rendered options.',
-      'Name the colleges in text instead of showing their logos.',
-      'Ad pages for physiotherapy, chiropractic and massage that show the next real openings from Jane.',
-      'Keep Analytics, and keep it out of the tag manager so nothing counts twice.',
-      'A click on Book is not counted as a booking.',
-      'Every account in the clinic’s name, with the agency on limited access.',
-      'Business Profile categories that do not compete with the clinic’s own physiotherapist.',
-      'Model the ad budget before a dollar is spent.',
     ],
     shipped: [
-      'A redesigned site',
-      'Three ad landing pages with live openings',
-      'Tag manager and cross-domain analytics with Jane',
-      'A rebuilt Business Profile',
-      'Linked structured data',
-      'A budget model and a briefing for the owner and the agency',
+      'Service and practitioner pages with booking links',
+      'Three ad landing pages with appointment availability from Jane',
+      'Cross-domain booking analytics with Jane',
+      'Google Business Profile categories and clinic information',
+      'An advertising budget model and account handover guide',
     ],
     measured: [
-      { fact: 'Every page indexed, with no errors across 39 addresses', how: 'Search Console and a crawl at audit' },
-      { fact: 'Ad results to follow once the campaigns launch' },
+      { fact: '39 page addresses confirmed indexed', how: 'Search Console check during the project' },
     ],
+    mediaNotes: {
+      'endorphins/lp-physio--desktop': 'Appointment availability comes from Jane, connecting the ad landing page to the clinic’s booking system.',
+    },
     plate: {
       desktop: still('endorphins/home-hero--desktop', 'Endorphins home page: a dark green hero listing six disciplines with practitioner photos beside each.'),
       phone: still('endorphins/home-hero--phone', 'Endorphins home page on a phone.'),
@@ -202,37 +181,29 @@ export const CASES: CaseStudy[] = [
     services: ['Redesign', 'Booking', 'Tracking', 'Ads', 'Privacy pages'],
     domain: 'physiomaxwellness.ca',
     palette: { ground: '#eef1f4', ink: '#132f45', muted: '#4b6275', rule: 'rgba(19,47,69,0.14)', accent: '#c4561f' },
-    question: 'How do you fix an agency-built clinic site when the Book button goes nowhere, without breaking what already works?',
-    summary: 'An agency-built site repaired in place: every practitioner bookable, bookings counted, and a body chart patients use to find their problem.',
+    intro: 'Condition guides, practitioner booking and advertising tracking for a physiotherapy clinic.',
+    context: 'The work was carried out on the clinic’s existing site and Jane booking system.',
     found: [
       'Book Appointment linked to nothing.',
       'Demo pages were indexed in Google.',
       'There was no privacy policy, despite health forms.',
-      'There was no analytics, and bookings had never reached it.',
-      'A very heavy homepage and placeholder bios.',
+      'There was no analytics setup connecting bookings to the site or ads.',
       'The ads were optimising for taps on map directions.',
     ],
-    decided: [
-      'Ship the redesign as a layer over the existing site, with the old one a single switch away.',
-      'Run automated release checks on every version.',
-      'Write privacy and terms for health information.',
-      'Remove outcome claims.',
-      'Remove a service the clinic does not offer, with a redirect.',
-      'Rebuild the ads to count bookings.',
-    ],
     shipped: [
-      '51 pages redesigned and 2 written new',
-      'A body-chart “What we treat” guide',
-      'Analytics and Jane booking tracking',
-      'Search Console',
-      'A restructured ad account with an automatic report to the owner every two weeks',
+      'Service, practitioner and condition pages',
+      'A body chart linking body areas to conditions and practitioners',
+      'Jane booking links and conversion tracking',
+      'Google Ads and an automated booking report for the owner',
+      'Privacy and terms pages for the site’s forms',
+      'Search Console setup and page indexing checks',
     ],
     measured: [
-      { fact: 'Text contrast raised from 2.06:1 to 4.5:1', how: 'The accessible minimum for body text' },
-      { fact: 'No script errors across 53 pages', how: 'Release checks on every version' },
       { fact: 'All 11 practitioners bookable directly' },
-      { fact: '67 dead links removed' },
     ],
+    mediaNotes: {
+      'physiomax/treat--desktop': 'Choosing a body area links patients to the relevant conditions and the practitioners who treat them.',
+    },
     plate: {
       desktop: still('physiomax/home-hero--desktop', 'PhysioMax home page: a deep navy hero reading “Move better, recover faster, live pain-free”.'),
       phone: still('physiomax/home-hero--phone', 'PhysioMax home page on a phone.'),
@@ -270,7 +241,7 @@ export const CASES: CaseStudy[] = [
     services: ['Content', 'Search', 'Speed', 'Ads', 'Measurement'],
     domain: 'kinetikarephysio.com',
     palette: { ground: '#f1ede4', ink: '#1a2233', muted: '#5d6370', rule: 'rgba(26,34,51,0.14)', accent: '#94733f' },
-    question: 'Patient education and marketing for a solo physiotherapy practice.',
+    intro: 'Patient education and marketing for a solo physiotherapy practice.',
     shippedLabel: 'On the site',
     shipped: [
       'Condition guides and body-region navigation',
@@ -307,22 +278,15 @@ export const CASES: CaseStudy[] = [
     kind: 'brand',
     kindLabel: 'Personal travel brand',
     sectors: [],
-    services: ['Art direction', 'Motion', 'Website'],
+    services: ['Design', 'Website', 'Motion'],
     domain: 'daria-travel.vercel.app',
     status: 'Not public yet',
     palette: { ground: '#182d3d', ink: '#f6f1e7', muted: '#b4c0c8', rule: 'rgba(246,241,231,0.16)', accent: '#e3a07d' },
-    question: 'How do you make a travel membership feel like a personal journal rather than a sales funnel?',
-    summary: 'A journal that opens on load, a plane that crosses between chapters, and every country on one sheet of stamps.',
-    decided: [
-      'One readable typeface and native scrolling.',
-      'Honest empty spaces where content did not exist yet.',
-      'The clients’ own photographs, given careful crops.',
-    ],
+    intro: 'A personal travel journal using the clients’ photography, with a country stamp index.',
     shipped: [
-      'A journal that opens on load',
-      'Chapter transitions: a plane on a drawn route, a woodcut sun chosen from three versions, a landing ticket',
-      'A stamp sheet of every country',
-      'Six revision rounds, each turned around the same day',
+      'Editorial page design using the clients’ travel photography',
+      'Travel pages and a country stamp index',
+      'Animated transitions between journal chapters',
     ],
     plate: {
       desktop: still('travel-journal/home-hero--desktop', 'Travel journal home page: a woman on a swing at sunset beside the headline “A change of scenery.”'),
@@ -350,29 +314,23 @@ export const CASES: CaseStudy[] = [
     kind: 'store',
     kindLabel: 'Combat sports store · Shopify',
     sectors: [],
-    services: ['Investigation', 'Redesign', 'Speed'],
+    services: ['Shopify', 'Storefront', 'Product pages', 'Tracking'],
     domain: 'techniquescombat.com',
     palette: { ground: '#0c0c0c', ink: '#eeeeee', muted: '#a3a3a3', rule: 'rgba(238,238,238,0.14)', accent: '#d4b04a' },
-    question: 'Why were a gear store’s checkouts climbing while its orders fell, and what should the store look like once it was safe?',
-    summary: 'Bot checkouts traced to their source, then a redesign built around film, live the same evening.',
+    intro: 'A Shopify storefront with shoppable video and product pages for combat sports gear.',
     found: [
       'Bots were creating checkouts and flooding Meta with fake checkout signals.',
-      'A DNS firewall would not help, because Shopify does not enforce where traffic comes from.',
       'The tag manager was loading twice.',
       'The home page’s largest paint was a slide appearing 15 seconds after load.',
     ],
-    decided: [
-      'Protection at the checkout, ads optimised for purchases, and no DNS proxy.',
-      'A redesign on a copy of the theme, with a one-step rollback.',
-      'Later hero slides drawn so they no longer count as the largest paint, the pop-up held until the first touch, and lighter video.',
-    ],
     shipped: [
-      'A redesign live the same evening',
-      'A video hero and shoppable film reels',
-      'A product page with a sticky add-to-bag and a phone photo collage',
-      'A privacy policy and terms',
+      'Video homepage and shoppable product reels',
+      'Product pages with a sticky add-to-bag control',
+      'Mobile product image layouts and collection navigation',
+      'Ads optimised for purchases',
+      'Privacy policy and terms pages',
     ],
-    measured: [{ fact: 'Home page largest paint from 15.3 s to 0.64 s on a phone', how: 'Lab measurement before and after' }],
+    measured: [{ fact: 'Homepage LCP reduced from 15.3 s to 0.64 s', how: 'Largest Contentful Paint, measured in a phone lab test' }],
     credit: 'The drop in fake checkouts came from the checkout protection the owner switched on.',
     plate: {
       desktop: still('techniques-combat/home-hero--desktop', 'Techniques Combat home page: a dark video hero reading “Gold Standard” over a boxer in a ring.'),
@@ -416,18 +374,19 @@ export const CASES: CaseStudy[] = [
     kind: 'event',
     kindLabel: 'Destination wedding · Peru',
     sectors: [],
-    services: ['Design', 'RSVP'],
+    services: ['Website', 'RSVP', 'Google Sheets'],
     domain: 'david-daria.com',
     palette: { ground: '#f2f1ec', ink: '#1e2630', muted: '#5e6b78', rule: 'rgba(30,38,48,0.14)', accent: '#90672b' },
-    question: 'How do you give guests flying to Peru everything in one link, and make it feel like the invitation?',
-    summary: 'Everything guests need for a wedding in Peru in one link, set like the invitation, with an RSVP that writes to the couple’s own spreadsheet.',
-    decided: [
-      'Sections in the order a guest needs them.',
-      'A framed, card-like layout.',
-      'An arch-shaped hero, built and then replaced when the couple preferred their full photograph.',
-      'Decoration removed wherever it distracted.',
+    intro: 'Guest information and online RSVPs for a destination wedding in Peru.',
+    shipped: [
+      'Wedding details and travel information for guests',
+      'RSVP form connected to the couple’s Google Sheet',
+      'An optional Machu Picchu trip itinerary',
     ],
-    shipped: ['Live at david-daria.com', 'A working RSVP that writes to the couple’s own Google Sheet', 'A pinned Machu Picchu itinerary'],
+    credit: 'The Peru landscape photographs are licensed stock.',
+    mediaNotes: {
+      'wedding/rsvp--phone': 'RSVP responses, including the optional Machu Picchu trip, are saved to the couple’s Google Sheet.',
+    },
     plate: {
       desktop: still('wedding/hero--desktop', 'Wedding site opening: the couple photographed in a gold-ruled frame above their names and the date.'),
       phone: still('wedding/hero--phone', 'The wedding site on a phone.'),

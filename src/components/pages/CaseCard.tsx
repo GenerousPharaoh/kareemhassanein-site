@@ -17,7 +17,7 @@ export function CaseCard({ item, headingLevel = 3 }: { item: CaseStudy; headingL
       <div className={styles.copy}>
         <span className={styles.kind}>{keepDots(item.kindLabel)}</span>
         <Heading className={styles.name}>{item.name}</Heading>
-        <span className={styles.summary}>{item.summary}</span>
+        <span className={styles.summary}>{item.intro}</span>
         <span className={styles.more}>
           Read the case
           <svg viewBox="0 0 16 16" aria-hidden="true">

@@ -22,7 +22,7 @@ export default function FirmsPage() {
         title={<>From search to <em>signed.</em></>}
         lede="Websites, intake and Google Ads for law, tax and accounting firms in Canada and the US."
         track="firms-hero"
-        stage={<HeroStage palette={trc.palette} desktop={pickStill(trc, 'home-hero--desktop')} phone={pickLoop(trc, 'home-scroll--phone')} domain={trc.domain} caption="The rebuilt home page of Tax Relief Counsel, a tax law firm in Washington, D.C. Finished, and waiting on launch." />}
+        stage={<HeroStage palette={trc.palette} desktop={pickStill(trc, 'home-hero--desktop')} phone={pickLoop(trc, 'home-scroll--phone')} domain={trc.domain} caption="Tax Relief Counsel website and consultation intake. Launch pending." />}
       />
 
       <CaseBand

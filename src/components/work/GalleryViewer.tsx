@@ -5,7 +5,7 @@ import { prefersReducedMotion } from '@/lib/useReducedMotion';
 import { getLenis } from '@/components/site/SmoothScroll';
 import s from './GalleryViewer.module.css';
 
-export type ZoomItem = { key: string; src: string; thumbnail: string; alt: string; width: number; height: number };
+export type ZoomItem = { key: string; src: string; thumbnail: string; alt: string; caption?: string; width: number; height: number };
 
 /** Full captures and their index load only after opening the viewer. Native dialog owns focus. */
 export function GalleryViewer({ items, children }: { items: ZoomItem[]; children: ReactNode }) {
@@ -138,7 +138,7 @@ export function GalleryViewer({ items, children }: { items: ZoomItem[]; children
     }}>
       {item && <div className={s.viewer} data-lenis-prevent>
         <div className={s.toolbar}>
-          <p id={`${uid}-caption`} className={s.caption}>{item.alt}</p>
+          <p id={`${uid}-caption`} className={s.caption}>{item.caption ?? `Screen ${index! + 1} of ${items.length}`}</p>
           <button type="button" className={s.control} onClick={close} aria-label="Close image"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M6 18 18 6" /></svg></button>
         </div>
         <div ref={viewport} className={s.viewport} data-expanded={expanded || undefined} aria-busy={pending !== null} onPointerDown={(event) => {

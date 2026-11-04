@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const img = c.plate.desktop;
   const width = img.widths.includes(1600) ? 1600 : Math.max(...img.widths.filter((w) => w <= 1600));
   const image = { url: `${img.src}-${width}.webp`, width, height: Math.round((width * img.h) / img.w), alt: img.alt };
-  const description = `${c.kindLabel}${c.kindLabel.endsWith('.') ? '' : '.'} ${c.summary ?? c.question}`;
+  const description = `${c.kindLabel}${c.kindLabel.endsWith('.') ? '' : '.'} ${c.intro}`;
   return {
     title: c.name,
     description,
@@ -48,25 +48,23 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
   const c = caseBySlug(slug);
   if (!c) notFound();
   const next = CASES[(CASES.indexOf(c) + 1) % CASES.length];
-  // The note explains the before shots when there are any; otherwise it belongs with the summary.
-  const noteWithSummary = c.note && !c.pairs.length ? c.note : undefined;
-  const hasSummary = Boolean(c.summary || c.context || noteWithSummary);
+  const contextNote = c.note && !c.pairs.length ? c.note : undefined;
+  const hasContext = Boolean(c.context || contextNote);
 
   return (
     <article className={styles.page} style={paletteVars(c.palette)}>
       <CaseHeader c={c} />
       <CaseNavigator name={c.short} sections={[
-        ...(hasSummary ? [{ id: 'case-short', label: 'The story' }] : []),
-        { id: 'case-screens', label: 'The work' },
-        ...(c.pairs.length ? [{ id: 'case-before-after', label: 'Before & after' }] : [{ id: 'case-shipped', label: c.shippedLabel ?? 'What shipped' }]),
+        ...(hasContext ? [{ id: 'case-short', label: 'Context' }] : []),
+        { id: 'case-screens', label: 'Website' },
+        { id: 'case-shipped', label: c.shippedLabel ?? 'Project scope' },
       ]} />
 
-      {hasSummary ? (
+      {hasContext ? (
         <div className={`container ${styles.story} ${styles.first}`}>
-          <StoryBlock id="case-short" label="In short">
-            {c.summary ? <p className={styles.summary}>{c.summary}</p> : null}
-            {c.context ? <p className={styles.aside}>{c.context}</p> : null}
-            {noteWithSummary ? <p className={styles.aside}>{noteWithSummary}</p> : null}
+          <StoryBlock id="case-short" label="Project context">
+            {c.context ? <p className={styles.summary}>{c.context}</p> : null}
+            {contextNote ? <p className={styles.aside}>{contextNote}</p> : null}
           </StoryBlock>
         </div>
       ) : null}
@@ -78,7 +76,7 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
       {c.measured?.length || c.credit ? (
         <div className={`container ${styles.story} ${styles.after}`}>
           {c.measured?.length ? (
-            <StoryBlock id="case-measured" label="What was measured">
+            <StoryBlock id="case-measured" label="Results">
               <MeasuredList items={c.measured} />
               {c.credit ? <Credit>{c.credit}</Credit> : null}
             </StoryBlock>
@@ -92,9 +90,8 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
 
       <Ledger
         columns={[
-          ...(c.found?.length ? [{ id: 'case-found', label: 'What I found', items: c.found, kind: 'numbered' as const }] : []),
-          ...(c.decided?.length ? [{ id: 'case-decided', label: 'What I decided', items: c.decided, kind: 'numbered' as const }] : []),
-          { id: 'case-shipped', label: c.shippedLabel ?? 'What shipped', items: c.shipped, kind: 'shipped' },
+          ...(c.found?.length ? [{ id: 'case-found', label: 'Initial review', items: c.found, kind: 'numbered' as const }] : []),
+          { id: 'case-shipped', label: c.shippedLabel ?? 'Project scope', items: c.shipped, kind: 'shipped' },
         ]}
       />
 
@@ -104,10 +101,10 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
 
       <CloseCall
         track="case"
-        title="What would you like to build or improve?"
+        title="Discuss your project"
         body={
           <>
-            Tell me about your business or project on a <span style={{ whiteSpace: 'nowrap' }}>20-minute</span> call.
+            A <span style={{ whiteSpace: 'nowrap' }}>20-minute</span> call about your website, booking or online marketing.
           </>
         }
       />

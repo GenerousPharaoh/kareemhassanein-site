@@ -33,11 +33,7 @@ const WHERE: Record<PlaceId, Array<[slug: string, startsWith: string]>> = {
   ],
   site: [
     ['tax-relief-counsel', 'A missing template'],
-    ['tax-relief-counsel', 'A broken link'],
-    ['tax-relief-counsel', 'Several articles'],
     ['physiomax', 'There was no privacy policy'],
-    ['physiomax', 'A very heavy homepage'],
-    ['endorphins', 'Some wording'],
     ['techniques-combat', 'The home page’s largest paint'],
   ],
   search: [
