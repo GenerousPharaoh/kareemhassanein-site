@@ -19,8 +19,10 @@ compressed to 1600 pixels wide on desktop and 780 on phones, with WebP posters.
 The capture browser blocks analytics and declines cookie consent. It does not
 submit a booking or contact form.
 
-The September before images are copied intact from the October archive. Only
-the current side of each comparison is refreshed.
+The public case presents the current site as patient education and marketing
+for a solo physiotherapy practice. Do not reintroduce before-and-after
+comparisons or a redesign narrative. Historical comparison assets remain at
+their existing URLs for cached pages, but are not part of the current case.
 
 To repeat the refresh on this capture workstation:
 

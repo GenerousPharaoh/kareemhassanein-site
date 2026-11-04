@@ -36,7 +36,7 @@ export default function ClinicsPage() {
         items={[
           { c: endorphins, point: { label: 'Shipped', text: pickLine(endorphins.shipped, 'Three ad landing pages') } },
           { c: physiomax, point: { label: 'Measured', text: pickLine(facts(physiomax), 'All 11 practitioners') } },
-          { c: kinetikare, point: { label: 'Measured', text: pickLine(facts(kinetikare), 'Largest paint') } },
+          { c: kinetikare, point: { label: 'On the site', text: pickLine(kinetikare.shipped, 'Condition guides') } },
         ]}
       />
 

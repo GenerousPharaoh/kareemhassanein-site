@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const img = c.plate.desktop;
   const width = img.widths.includes(1600) ? 1600 : Math.max(...img.widths.filter((w) => w <= 1600));
   const image = { url: `${img.src}-${width}.webp`, width, height: Math.round((width * img.h) / img.w), alt: img.alt };
-  const description = `${c.kindLabel}${c.kindLabel.endsWith('.') ? '' : '.'} ${c.summary}`;
+  const description = `${c.kindLabel}${c.kindLabel.endsWith('.') ? '' : '.'} ${c.summary ?? c.question}`;
   return {
     title: c.name,
     description,
@@ -50,46 +50,51 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
   const next = CASES[(CASES.indexOf(c) + 1) % CASES.length];
   // The note explains the before shots when there are any; otherwise it belongs with the summary.
   const noteWithSummary = c.note && !c.pairs.length ? c.note : undefined;
+  const hasSummary = Boolean(c.summary || c.context || noteWithSummary);
 
   return (
     <article className={styles.page} style={paletteVars(c.palette)}>
       <CaseHeader c={c} />
       <CaseNavigator name={c.short} sections={[
-        { id: 'case-short', label: 'The story' },
+        ...(hasSummary ? [{ id: 'case-short', label: 'The story' }] : []),
         { id: 'case-screens', label: 'The work' },
-        ...(c.pairs.length ? [{ id: 'case-before-after', label: 'Before & after' }] : [{ id: 'case-shipped', label: 'What shipped' }]),
+        ...(c.pairs.length ? [{ id: 'case-before-after', label: 'Before & after' }] : [{ id: 'case-shipped', label: c.shippedLabel ?? 'What shipped' }]),
       ]} />
 
-      <div className={`container ${styles.story} ${styles.first}`}>
-        <StoryBlock id="case-short" label="In short">
-          <p className={styles.summary}>{c.summary}</p>
-          {c.context ? <p className={styles.aside}>{c.context}</p> : null}
-          {noteWithSummary ? <p className={styles.aside}>{noteWithSummary}</p> : null}
-        </StoryBlock>
-      </div>
+      {hasSummary ? (
+        <div className={`container ${styles.story} ${styles.first}`}>
+          <StoryBlock id="case-short" label="In short">
+            {c.summary ? <p className={styles.summary}>{c.summary}</p> : null}
+            {c.context ? <p className={styles.aside}>{c.context}</p> : null}
+            {noteWithSummary ? <p className={styles.aside}>{noteWithSummary}</p> : null}
+          </StoryBlock>
+        </div>
+      ) : null}
 
       {heroInHeader(c) ? null : <HeroLoop c={c} />}
 
       <Gallery c={c} />
 
-      <div className={`container ${styles.story} ${styles.after}`}>
-        {c.measured?.length ? (
-          <StoryBlock id="case-measured" label="What was measured">
-            <MeasuredList items={c.measured} />
-            {c.credit ? <Credit>{c.credit}</Credit> : null}
-          </StoryBlock>
-        ) : c.credit ? (
-          <StoryBlock id="case-credit" label="Credit">
-            <p className={styles.summary}>{c.credit}</p>
-          </StoryBlock>
-        ) : null}
-      </div>
+      {c.measured?.length || c.credit ? (
+        <div className={`container ${styles.story} ${styles.after}`}>
+          {c.measured?.length ? (
+            <StoryBlock id="case-measured" label="What was measured">
+              <MeasuredList items={c.measured} />
+              {c.credit ? <Credit>{c.credit}</Credit> : null}
+            </StoryBlock>
+          ) : c.credit ? (
+            <StoryBlock id="case-credit" label="Credit">
+              <p className={styles.summary}>{c.credit}</p>
+            </StoryBlock>
+          ) : null}
+        </div>
+      ) : null}
 
       <Ledger
         columns={[
           ...(c.found?.length ? [{ id: 'case-found', label: 'What I found', items: c.found, kind: 'numbered' as const }] : []),
-          { id: 'case-decided', label: 'What I decided', items: c.decided, kind: 'numbered' },
-          { id: 'case-shipped', label: 'What shipped', items: c.shipped, kind: 'shipped' },
+          ...(c.decided?.length ? [{ id: 'case-decided', label: 'What I decided', items: c.decided, kind: 'numbered' as const }] : []),
+          { id: 'case-shipped', label: c.shippedLabel ?? 'What shipped', items: c.shipped, kind: 'shipped' },
         ]}
       />
 

@@ -19,8 +19,6 @@ const WHERE: Record<PlaceId, Array<[slug: string, startsWith: string]>> = {
   ads: [
     ['tax-relief-counsel', 'Most of the conversions'],
     ['tax-relief-counsel', 'Audit campaigns'],
-    ['kinetikare', 'Most of the reported ad conversions'],
-    ['kinetikare', 'The booking event'],
     ['physiomax', 'The ads were optimising'],
   ],
   booking: [
@@ -32,7 +30,6 @@ const WHERE: Record<PlaceId, Array<[slug: string, startsWith: string]>> = {
     ['endorphins', 'There was no way to tell'],
     ['techniques-combat', 'The tag manager'],
     ['techniques-combat', 'Bots were creating'],
-    ['kinetikare', 'Over half of all visits'],
   ],
   site: [
     ['tax-relief-counsel', 'A missing template'],
@@ -41,14 +38,11 @@ const WHERE: Record<PlaceId, Array<[slug: string, startsWith: string]>> = {
     ['physiomax', 'There was no privacy policy'],
     ['physiomax', 'A very heavy homepage'],
     ['endorphins', 'Some wording'],
-    ['kinetikare', 'A hero fade'],
-    ['kinetikare', 'Condition pages'],
     ['techniques-combat', 'The home page’s largest paint'],
   ],
   search: [
     ['endorphins', 'Search visits came'],
     ['physiomax', 'Demo pages were indexed'],
-    ['kinetikare', 'Duplicate identity data'],
   ],
 };
 

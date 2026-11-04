@@ -25,11 +25,12 @@ export type CaseStudy = {
   status?: string;
   palette: Palette;
   question: string;
-  summary: string;
+  summary?: string;
   context?: string;
   found?: string[];
-  decided: string[];
+  decided?: string[];
   shipped: string[];
+  shippedLabel?: string;
   measured?: Measured[];
   credit?: string;
   note?: string;
@@ -264,38 +265,18 @@ export const CASES: CaseStudy[] = [
     short: 'KinetiKare',
     group: 'practices',
     kind: 'own-practice',
-    kindLabel: 'My own practice · Burlington',
+    kindLabel: 'Physiotherapy · Burlington',
     sectors: ['clinics'],
     services: ['Content', 'Search', 'Speed', 'Ads', 'Measurement'],
     domain: 'kinetikarephysio.com',
     palette: { ground: '#f1ede4', ink: '#1a2233', muted: '#5d6370', rule: 'rgba(26,34,51,0.14)', accent: '#94733f' },
-    question: 'What does a practitioner’s site look like when every claim is checked and every booking is counted?',
-    summary: 'Sixty condition pages rebuilt in the order a patient needs them, every citation checked against its source, and a hero that paints in under a second.',
-    found: [
-      'Most of the reported ad conversions were button clicks.',
-      'The booking event the ads optimised on counted page views across the whole clinic.',
-      'Over half of all visits came from bots.',
-      'A hero fade was costing seconds of load time.',
-      'Duplicate identity data was confusing Google.',
-      'Condition pages made patients scroll past the science to find answers.',
-    ],
-    decided: [
-      'One identity record shared across three sites.',
-      'Opening hours kept in one place.',
-      'Condition pages rebuilt in the order a patient needs them.',
-      'Every research card linked to its source, and “when to see a doctor first” on every page.',
-      'A running log of ad changes that records its own corrections.',
-    ],
+    question: 'Patient education and marketing for a solo physiotherapy practice.',
+    shippedLabel: 'On the site',
     shipped: [
-      'About 98 pages: 60 conditions, five regional hubs, guides and comparisons',
-      'Restructured ads and call tracking',
-      'A call-back form',
-      'Bot protection',
-    ],
-    measured: [
-      { fact: 'Largest paint from 2.2 s to 0.7 s', how: 'Lab measurement on a throttled phone' },
-      { fact: 'Every citation re-checked against PubMed' },
-      { fact: 'A six-reviewer review of every page, with all critical and high findings fixed' },
+      'Condition guides and body-region navigation',
+      'An interactive symptom pattern check',
+      'Online booking links and a call-back form',
+      'Google Ads and conversion tracking',
     ],
     plate: {
       desktop: still('kinetikare/home-hero-2026-11--desktop', 'KinetiKare home page: the treatment room, a vertical wordmark and a gold headline.'),
@@ -316,18 +297,7 @@ export const CASES: CaseStudy[] = [
       still('kinetikare/knee-hub-2026-11--phone', 'The knee hub on a phone.'),
       still('kinetikare/heel-2026-11--phone', 'The plantar fasciitis page on a phone.'),
     ],
-    pairs: [
-      {
-        before: baStill('kinetikare/old-condition--phone', 'The kneecap pain page in September.'),
-        after: baStill('kinetikare/condition-2026-11--phone', 'The kneecap pain page now.'),
-        label: 'The kneecap pain page on a phone, September and now.',
-      },
-      {
-        before: baStill('kinetikare/old-condition--desktop', 'The kneecap pain page on desktop in September.'),
-        after: baStill('kinetikare/condition-2026-11--desktop', 'The kneecap pain page on desktop now.'),
-        label: 'The same page on desktop.',
-      },
-    ],
+    pairs: [],
   },
   {
     slug: 'travel-journal',
