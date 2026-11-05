@@ -191,7 +191,7 @@ export default function Home() {
   return (
     <>
       <div className={s.opening}>
-        <Horizon tiles={scene} name={SITE.name} line={SITE.descriptor} bookingHref={SITE.bookingHref} />
+        <Horizon tiles={scene} name={SITE.name} line={SITE.heroLine} bookingHref={SITE.bookingHref} />
         <WorkIndex items={index} title="Selected work" />
       </div>
       <Statement

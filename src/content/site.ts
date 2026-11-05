@@ -3,6 +3,8 @@
 export const SITE = {
   name: 'Kareem Hassanein',
   descriptor: 'Websites, booking, search and ads',
+  // Kept together so a phone breaks the line before "for", not inside "law firms"
+  heroLine: 'Websites, booking, search and ads for\u00a0law\u00a0firms\u00a0and\u00a0clinics',
   description: 'I design and build websites for businesses and personal projects, with booking, search, ads and tracking where they are needed.',
   url: 'https://www.khassanein.bio',
   email: 'kareem.hassanein@gmail.com',
