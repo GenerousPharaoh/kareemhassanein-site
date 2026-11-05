@@ -74,9 +74,11 @@ export default function PrivacyPage() {
 
             <h2>The first look</h2>
             <p>
-              When you paste an address into the first look, this site’s server fetches that page once, reads it, and shows
-              you what it found. The address and the result are not stored. The site you entered sees one visit from this site’s
-              server, the way it would from a link preview.
+              When you paste an address into the first look, this site’s server fetches that page and its robots.txt file,
+              following any redirects, reads them, and shows you what it found. Anything after a question mark in the address
+              is left out. This site does not save the address or the result, though Vercel’s server logs may record the
+              address and it stays in your browser history. The site you entered sees these requests from this site’s server,
+              the way it would from a link preview.
             </p>
 
             <h2>Please do not send</h2>

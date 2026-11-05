@@ -36,7 +36,8 @@ export function LookForm({ initial = '', track, large = false, autoFocus = false
 
   const submit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const address = value.trim();
+    // Anything after a ? or # is left out of the page's own address, so it never reaches history or logs
+    const address = value.trim().split(/[?#]/)[0];
     if (!address) {
       field.current?.focus();
       return;
@@ -85,7 +86,7 @@ export function LookForm({ initial = '', track, large = false, autoFocus = false
         <span className={styles.rule} aria-hidden="true" />
       </div>
       <p id={`${id}-note`} className={styles.note}>
-        A few seconds, read from the page itself. Nothing is stored.
+        A few seconds, read from the page itself.
       </p>
       <p role="status" aria-live="polite" className="sr-only">{busy ? 'Reading the page.' : ''}</p>
     </form>

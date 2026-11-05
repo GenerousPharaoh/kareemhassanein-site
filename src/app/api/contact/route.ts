@@ -4,6 +4,7 @@ export const dynamic = 'force-dynamic';
 
 // Field length caps. Bound the email payload and reject abusive blobs early.
 const MAX = { name: 100, email: 200, organization: 200, message: 5000 } as const;
+const MAX_BODY = 32_768;
 
 // Best-effort, in-memory per-IP throttle. This resets on cold start and is
 // per-serverless-instance, so it is a speed bump against naive flooding rather
@@ -38,7 +39,15 @@ function getClientIp(request: Request): string {
 
 export async function POST(request: Request) {
   try {
-    const body = await request.json();
+    // Far more than the capped fields can fill, so an oversized body is refused before it is parsed.
+    if (Number(request.headers.get('content-length') ?? 0) > MAX_BODY) {
+      return NextResponse.json({ error: 'One or more fields are too long.' }, { status: 413 });
+    }
+    const raw = await request.text();
+    if (raw.length > MAX_BODY) {
+      return NextResponse.json({ error: 'One or more fields are too long.' }, { status: 413 });
+    }
+    const body = JSON.parse(raw);
     const { name, email, organization, message, company } = body ?? {};
 
     // Honeypot: real users never fill this hidden field. Accept and silently

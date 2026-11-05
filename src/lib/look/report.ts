@@ -1,7 +1,7 @@
 // The first look: what can be read from a page in a few seconds, written the way the check is.
 // Each line is a plain sentence; the ones worth a look point to the case where I found the same thing.
 import { finding, type Finding } from '@/content/found';
-import { fetchPage, LookError, normalizeAddress, type Hop } from './net';
+import { fetchPage, fetchSmallText, LookError, normalizeAddress, type Hop } from './net';
 import { parse, schemaTypes, type Anchor, type Parsed } from './parse';
 
 export type Tone = 'look' | 'fine' | 'note';
@@ -53,6 +53,11 @@ const BOOKING_HOSTS: Array<[RegExp, string]> = [
 ];
 
 const BOOK_WORDS = /\b(book|booking|appointment|schedule|scheduling|consult|consultation|get started|request a|reserve)\b/i;
+// A label that asks for the booking, at its start: "Book a call", "Request a consultation"
+const BOOK_ASK = /^(book\b|schedule\b|reserve\b|request a\b|get started\b|make an? |appointments?\b|consult)/i;
+const isShort = (text: string) => text.trim().split(/\s+/).length <= 5;
+/** About booking, rather than only mentioning it: a logo line or a menu entry's description does not count. */
+const isBookingLabel = (text: string) => BOOK_WORDS.test(text) && (BOOK_ASK.test(text.trim()) || isShort(text));
 const DEAD_HREF = /^(#!?|javascript:(void\(0\);?|;)?|)$/i;
 const MAPS = /(^|\.)google\.[a-z.]+\/maps|maps\.app\.goo\.gl|goo\.gl\/maps|g\.page\//i;
 const PHONE_TEXT = /(?:\+?1[\s.-]?)?\(?\b\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}\b/;
@@ -112,11 +117,9 @@ type RobotsFile = { found: boolean; blocksAll: boolean; sitemap: boolean };
 
 async function readRobots(origin: string): Promise<RobotsFile | null> {
   try {
-    const res = await fetch(`${origin}/robots.txt`, { redirect: 'follow', signal: AbortSignal.timeout(3000), headers: { 'user-agent': 'Mozilla/5.0 (compatible; khassanein.bio first look)' } });
-    if (!res.ok) return { found: false, blocksAll: false, sitemap: false };
-    const type = res.headers.get('content-type') ?? '';
-    if (type.includes('html')) return { found: false, blocksAll: false, sitemap: false };
-    const text = (await res.text()).slice(0, 50_000);
+    const { status, contentType, text } = await fetchSmallText(`${origin}/robots.txt`);
+    if (status < 200 || status >= 300) return { found: false, blocksAll: false, sitemap: false };
+    if (contentType.includes('html')) return { found: false, blocksAll: false, sitemap: false };
     const lines = text.split(/\r?\n/).map((l) => l.replace(/#.*/, '').trim()).filter(Boolean);
     let agentAll = false;
     let blocksAll = false;
@@ -141,33 +144,50 @@ function challenged(status: number, headers: Record<string, string>, p: Parsed):
   return (status === 403 || status === 503 || status === 429) && /cloudflare|captcha|challenge|verify you are human/i.test(p.text.slice(0, 2000));
 }
 
-function bookingLines(p: Parsed, finalHost: string, lines: Line[]) {
-  const site = bare(finalHost);
+function bookingLines(p: Parsed, finalUrl: URL, lines: Line[]) {
+  const site = bare(finalUrl.hostname);
+  const here = finalUrl.pathname.replace(/\/$/, '');
   const destinations = new Map<string, string>();
   const dead: Anchor[] = [];
-  let internal: string | null = null;
+  // The site's own booking pages, by address: how many links reach each, and whether any of them asks outright
+  const internal = new Map<string, { count: number; asks: boolean }>();
   for (const a of p.anchors) {
-    const bookish = BOOK_WORDS.test(a.text);
+    const href = a.href.trim();
+    const bookish = isBookingLabel(a.text);
     let host = '';
     try {
-      host = a.href && /^https?:/i.test(a.href) ? new URL(a.href).hostname.toLowerCase() : '';
+      host = /^(https?:)?\/\//i.test(href) ? new URL(href, finalUrl).hostname.toLowerCase() : '';
     } catch {
       host = '';
     }
     const known = BOOKING_HOSTS.find(([re]) => re.test(host));
     if (known) destinations.set(known[1], host);
     else if (bookish) {
-      if (DEAD_HREF.test(a.href.trim()) && !a.onclick) dead.push(a);
+      if (DEAD_HREF.test(href) && !a.onclick) dead.push(a);
       else if (host && bare(host) !== site && !/facebook|instagram|google|twitter|linkedin|youtube|tiktok/.test(host)) destinations.set(host, host);
-      else if (!host && a.href && !DEAD_HREF.test(a.href.trim()) && !/^(tel|mailto):/i.test(a.href) && !internal) internal = a.href;
+      else if (href && !DEAD_HREF.test(href) && !/^(tel|mailto|sms|javascript):/i.test(href)) {
+        try {
+          const target = new URL(href, finalUrl);
+          const samePage = target.pathname.replace(/\/$/, '') === here;
+          if (target.hash || !samePage) {
+            const path = samePage ? `${target.pathname}${target.hash}` : `${target.pathname}${target.search}`;
+            const seen = internal.get(path);
+            const asks = BOOK_ASK.test(a.text.trim());
+            internal.set(path, { count: (seen?.count ?? 0) + 1, asks: Boolean(seen?.asks) || asks });
+          }
+        } catch {
+          // An address that cannot be read is not a booking page
+        }
+      }
     }
   }
 
   if (destinations.size) {
     const list = [...destinations].map(([name, host]) => (name === host ? host : `${name} (${host})`)).join(', ');
     lines.push({ tone: 'fine', text: `Booking goes to ${list}.` });
-  } else if (internal) {
-    lines.push({ tone: 'fine', text: `Booking starts on the site’s own page: ${internal.replace(/^https?:\/\/[^/]+/, '').slice(0, 60)}.` });
+  } else if (internal.size) {
+    const [path] = [...internal].sort(([, a], [, b]) => Number(b.asks) - Number(a.asks) || b.count - a.count)[0];
+    lines.push({ tone: 'fine', text: `Booking starts on the site’s own page: ${path.slice(0, 60)}.` });
   }
   if (dead.length) {
     const label = dead[0].text.length > 32 ? `${dead[0].text.slice(0, 32)}…` : dead[0].text;
@@ -177,7 +197,7 @@ function bookingLines(p: Parsed, finalHost: string, lines: Line[]) {
   const tel = p.anchors.some((a) => /^tel:/i.test(a.href));
   const phoneInText = PHONE_TEXT.test(p.text);
 
-  if (!destinations.size && !internal && !dead.length) {
+  if (!destinations.size && !internal.size && !dead.length) {
     if (p.forms) lines.push({ tone: 'fine', text: `Requests come through ${plural(p.forms, 'form')} on the page.` });
     else if (!tel) lines.push({ tone: 'look', text: 'No booking link, no form and no tappable phone number: there is no way in from this page.' });
     else lines.push({ tone: 'note', text: 'No booking link or form on this page; the phone is the only way in.' });
@@ -222,7 +242,7 @@ function countingLines(p: Parsed, destinations: Map<string, string>, lines: Line
   if (/gtag_report_conversion|gtag\(\s*['"]event['"]\s*,\s*['"]conversion['"]/.test(code)) {
     lines.push({ tone: 'look', text: 'A Google Ads conversion fires on a click, so a click counts as a lead.', seen: finding('tax-relief-counsel', 'Most of the conversions') });
   }
-  if (/fbq\(\s*['"]init['"]|connect\.facebook\.net\/[^'"\s]*fbevents\.js/.test(code)) lines.push({ tone: 'note', text: 'A Meta pixel is on the page.' });
+  if (/fbq\(\s*['"]init['"]|connect\.facebook\.net\/[^'"\s]{0,160}fbevents\.js/.test(code)) lines.push({ tone: 'note', text: 'A Meta pixel is on the page.' });
   if (/clarity\.ms/.test(code)) lines.push({ tone: 'note', text: 'Microsoft Clarity records visits on the page.' });
   if (/static\.hotjar\.com/.test(code)) lines.push({ tone: 'note', text: 'Hotjar records visits on the page.' });
   if ((ga4.length || gtmIds.length) && destinations.size) {
@@ -272,7 +292,7 @@ function searchLines(p: Parsed, finalUrl: URL, robots: RobotsFile | null, lines:
 }
 
 function phoneLines(p: Parsed, fetched: { bytes: number; wait: number; truncated: boolean }, platform: string | null, lines: Line[]) {
-  if (p.viewport) lines.push({ tone: 'fine', text: 'Laid out for phones.' });
+  if (p.viewport) lines.push({ tone: 'fine', text: 'A phone layout is set. This does not show how the page looks on a phone.' });
   else lines.push({ tone: 'look', text: 'No viewport setting, so a phone shows the desktop layout shrunk down.' });
 
   const kb = Math.round(fetched.bytes / 1024);
@@ -350,7 +370,7 @@ export async function look(address: string): Promise<Report> {
   transportLines(requested, finalUrl, fetched.hops, search);
   searchLines(p, finalUrl, robots, search);
   phoneLines(p, fetched, platform, phone);
-  const { destinations } = bookingLines(p, finalUrl.hostname, booking);
+  const { destinations } = bookingLines(p, finalUrl, booking);
   countingLines(p, destinations, counting);
   wordingLines(p, wording);
 

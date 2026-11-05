@@ -1,5 +1,6 @@
 // Reading a page's HTML without a browser: enough structure for the first look, no more.
-// Everything here is regular expressions over text, tolerant of broken markup.
+// Tags are found in one forward pass with indexOf, never a regular expression across the document,
+// so a hostile page of unclosed tags costs no more to read than a normal page of the same size.
 
 export type Anchor = { href: string; text: string; onclick: string };
 export type Img = { src: string; alt: string | null; sized: boolean; lazy: boolean };
@@ -29,10 +30,13 @@ const NAMED: Record<string, string> = {
   copy: '©', reg: '®', trade: '™', bull: '•', middot: '·', laquo: '«', raquo: '»', eacute: 'é', egrave: 'è', ccedil: 'ç', agrave: 'à', ocirc: 'ô', ouml: 'ö', uuml: 'ü', auml: 'ä',
 };
 
+/** A character reference outside Unicode stays as written rather than throwing. */
+const fromCode = (code: number, raw: string) => (Number.isInteger(code) && code >= 0 && code <= 0x10ffff ? String.fromCodePoint(code) : raw);
+
 const decode = (s: string) =>
   s
-    .replace(/&#(\d+);/g, (_m, n: string) => String.fromCodePoint(Number(n)))
-    .replace(/&#x([0-9a-f]+);/gi, (_m, n: string) => String.fromCodePoint(parseInt(n, 16)))
+    .replace(/&#(\d+);/g, (m, n: string) => fromCode(Number(n), m))
+    .replace(/&#x([0-9a-f]+);/gi, (m, n: string) => fromCode(parseInt(n, 16), m))
     .replace(/&([a-z]+);/gi, (m, name: string) => NAMED[name.toLowerCase()] ?? m)
     .replace(/&#39;/g, '’');
 
@@ -42,55 +46,159 @@ const attr = (tag: string, name: string): string | null => {
   return decode(m[1] ?? m[2] ?? m[3] ?? '').trim();
 };
 
-const strip = (html: string) => decode(html.replace(/<[^>]*>/g, ' ')).replace(/\s+/g, ' ').trim();
+/** Tags replaced by spaces. Once no ">" remains there are no more tags, so the rest is kept as it stands. */
+function withoutTags(html: string): string {
+  const pieces: string[] = [];
+  let at = 0;
+  for (;;) {
+    const open = html.indexOf('<', at);
+    const close = open < 0 ? -1 : html.indexOf('>', open + 1);
+    if (close < 0) {
+      pieces.push(html.slice(at));
+      return pieces.join(' ');
+    }
+    pieces.push(html.slice(at, open));
+    at = close + 1;
+  }
+}
+
+const strip = (html: string) => decode(withoutTags(html)).replace(/\s+/g, ' ').trim();
+
+/** The document beside a lowercase copy of the same length, for finding tags in any case. */
+type Doc = { html: string; lower: string };
+const toDoc = (html: string): Doc => ({ html, lower: html.replace(/[A-Z]+/g, (m) => m.toLowerCase()) });
+
+/** Whether a tag name ends at this character, so <a> and <a href> match "a" but <abbr> does not. */
+const endsName = (code: number) =>
+  !((code >= 48 && code <= 57) || (code >= 97 && code <= 122) || code === 45 || code === 58 || code === 95);
+
+type Tag = { start: number; end: number; attrs: string };
+
+function nextTag(doc: Doc, name: string, from: number): Tag | null {
+  const needle = `<${name}`;
+  let at = from;
+  for (;;) {
+    const start = doc.lower.indexOf(needle, at);
+    if (start < 0) return null;
+    const after = start + needle.length;
+    if (!endsName(doc.lower.charCodeAt(after))) {
+      at = after;
+      continue;
+    }
+    const close = doc.lower.indexOf('>', after);
+    // No ">" here means none further on either, so nothing later can be a tag
+    if (close < 0) return null;
+    return { start, end: close + 1, attrs: doc.html.slice(after, close) };
+  }
+}
+
+function* tags(doc: Doc, name: string): Generator<Tag> {
+  let at = 0;
+  for (;;) {
+    const tag = nextTag(doc, name, at);
+    if (!tag) return;
+    yield tag;
+    at = tag.end;
+  }
+}
+
+type Element = { start: number; stop: number; attrs: string; inner: string };
+
+/** Each element from its opening tag to the first closing tag after it. Once one has no closing tag, no later one does. */
+function* elements(doc: Doc, name: string): Generator<Element> {
+  const closer = `</${name}`;
+  let at = 0;
+  for (;;) {
+    const open = nextTag(doc, name, at);
+    if (!open) return;
+    let close = doc.lower.indexOf(closer, open.end);
+    while (close >= 0 && !endsName(doc.lower.charCodeAt(close + closer.length))) close = doc.lower.indexOf(closer, close + closer.length);
+    if (close < 0) return;
+    const closeEnd = doc.lower.indexOf('>', close);
+    const stop = closeEnd < 0 ? doc.html.length : closeEnd + 1;
+    yield { start: open.start, stop, attrs: open.attrs, inner: doc.html.slice(open.end, close) };
+    at = stop;
+  }
+}
+
+function withoutElements(html: string, name: string): string {
+  const pieces: string[] = [];
+  let at = 0;
+  for (const element of elements(toDoc(html), name)) {
+    pieces.push(html.slice(at, element.start));
+    at = element.stop;
+  }
+  pieces.push(html.slice(at));
+  return pieces.join(' ');
+}
+
+function withoutComments(html: string): string {
+  const pieces: string[] = [];
+  let at = 0;
+  for (;;) {
+    const open = html.indexOf('<!--', at);
+    const close = open < 0 ? -1 : html.indexOf('-->', open + 4);
+    if (close < 0) {
+      pieces.push(html.slice(at));
+      return pieces.join(' ');
+    }
+    pieces.push(html.slice(at, open));
+    at = close + 3;
+  }
+}
+
+/** Long enough for any real link, short enough that the checks run over it stay cheap. */
+const MAX_LINK = 2048;
 
 export function parse(html: string): Parsed {
-  const head = html.slice(0, 400_000);
-  const titleMatch = /<title[^>]*>([\s\S]*?)<\/title>/i.exec(head);
-  const htmlTag = /<html\b[^>]*>/i.exec(head)?.[0] ?? '';
+  const doc = toDoc(html);
+  const head = toDoc(html.slice(0, 400_000));
+
+  const titleElement = elements(head, 'title').next();
+  const htmlTag = nextTag(head, 'html', 0);
 
   const metas = new Map<string, string>();
-  for (const m of head.matchAll(/<meta\b[^>]*>/gi)) {
-    const tag = m[0];
-    const key = (attr(tag, 'name') ?? attr(tag, 'property') ?? '').toLowerCase();
-    const content = attr(tag, 'content');
+  for (const { attrs } of tags(head, 'meta')) {
+    const key = (attr(attrs, 'name') ?? attr(attrs, 'property') ?? '').toLowerCase();
+    const content = attr(attrs, 'content');
     if (key && content !== null && !metas.has(key)) metas.set(key, content);
   }
 
   let canonical: string | null = null;
   let stylesheets = 0;
-  for (const m of head.matchAll(/<link\b[^>]*>/gi)) {
-    const rel = (attr(m[0], 'rel') ?? '').toLowerCase().split(/\s+/);
-    if (rel.includes('canonical') && !canonical) canonical = attr(m[0], 'href');
+  for (const { attrs } of tags(head, 'link')) {
+    const rel = (attr(attrs, 'rel') ?? '').toLowerCase().split(/\s+/);
+    if (rel.includes('canonical') && !canonical) canonical = attr(attrs, 'href');
     if (rel.includes('stylesheet')) stylesheets++;
   }
 
-  const h1 = [...html.matchAll(/<h1\b[^>]*>([\s\S]*?)<\/h1>/gi)].map((m) => strip(m[1])).filter(Boolean);
+  const h1: string[] = [];
+  for (const { inner } of elements(doc, 'h1')) {
+    const text = strip(inner);
+    if (text) h1.push(text);
+  }
 
   const anchors: Anchor[] = [];
-  for (const m of html.matchAll(/<a\b([^>]*)>([\s\S]*?)<\/a>/gi)) {
-    const tag = `<a${m[1]}>`;
-    anchors.push({ href: attr(tag, 'href') ?? '', text: strip(m[2]).slice(0, 120), onclick: attr(tag, 'onclick') ?? '' });
+  for (const { attrs, inner } of elements(doc, 'a')) {
+    anchors.push({ href: (attr(attrs, 'href') ?? '').slice(0, MAX_LINK), text: strip(inner).slice(0, 120), onclick: (attr(attrs, 'onclick') ?? '').slice(0, MAX_LINK) });
     if (anchors.length > 600) break;
   }
   // Buttons that act as links, with the page's own script behind them
-  for (const m of html.matchAll(/<button\b([^>]*)>([\s\S]*?)<\/button>/gi)) {
-    const tag = `<button${m[1]}>`;
-    anchors.push({ href: attr(tag, 'data-href') ?? attr(tag, 'formaction') ?? '', text: strip(m[2]).slice(0, 120), onclick: attr(tag, 'onclick') ?? '' });
+  for (const { attrs, inner } of elements(doc, 'button')) {
+    anchors.push({ href: (attr(attrs, 'data-href') ?? attr(attrs, 'formaction') ?? '').slice(0, MAX_LINK), text: strip(inner).slice(0, 120), onclick: (attr(attrs, 'onclick') ?? '').slice(0, MAX_LINK) });
     if (anchors.length > 800) break;
   }
 
-  const forms = (html.match(/<form\b/gi) ?? []).length;
+  const forms = [...tags(doc, 'form')].length;
 
   const images: Img[] = [];
-  for (const m of html.matchAll(/<img\b[^>]*>/gi)) {
-    const tag = m[0];
-    const style = attr(tag, 'style') ?? '';
+  for (const { attrs } of tags(doc, 'img')) {
+    const style = attr(attrs, 'style') ?? '';
     images.push({
-      src: attr(tag, 'src') ?? attr(tag, 'data-src') ?? '',
-      alt: attr(tag, 'alt'),
-      sized: (attr(tag, 'width') !== null && attr(tag, 'height') !== null) || /aspect-ratio|height\s*:/i.test(style),
-      lazy: (attr(tag, 'loading') ?? '').toLowerCase() === 'lazy',
+      src: attr(attrs, 'src') ?? attr(attrs, 'data-src') ?? '',
+      alt: attr(attrs, 'alt'),
+      sized: (attr(attrs, 'width') !== null && attr(attrs, 'height') !== null) || /aspect-ratio|height\s*:/i.test(style),
+      lazy: (attr(attrs, 'loading') ?? '').toLowerCase() === 'lazy',
     });
     if (images.length > 400) break;
   }
@@ -98,13 +206,12 @@ export function parse(html: string): Parsed {
   const scriptSrcs: string[] = [];
   const inline: string[] = [];
   const jsonLd: unknown[] = [];
-  for (const m of html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)) {
-    const tag = `<script${m[1]}>`;
-    const type = (attr(tag, 'type') ?? '').toLowerCase();
-    const src = attr(tag, 'src');
+  for (const { attrs, inner } of elements(doc, 'script')) {
+    const type = (attr(attrs, 'type') ?? '').toLowerCase();
+    const src = attr(attrs, 'src');
     if (type === 'application/ld+json') {
       try {
-        const data: unknown = JSON.parse(m[2].trim());
+        const data: unknown = JSON.parse(inner.trim());
         if (Array.isArray(data)) jsonLd.push(...data);
         else if (data && typeof data === 'object' && Array.isArray((data as { '@graph'?: unknown[] })['@graph'])) jsonLd.push(...(data as { '@graph': unknown[] })['@graph']);
         else if (data) jsonLd.push(data);
@@ -115,21 +222,14 @@ export function parse(html: string): Parsed {
       continue;
     }
     if (src) scriptSrcs.push(src);
-    else if (m[2].trim()) inline.push(m[2]);
+    else if (inner.trim()) inline.push(inner);
   }
 
-  const text = strip(
-    html
-      .replace(/<script\b[\s\S]*?<\/script>/gi, ' ')
-      .replace(/<style\b[\s\S]*?<\/style>/gi, ' ')
-      .replace(/<noscript\b[\s\S]*?<\/noscript>/gi, ' ')
-      .replace(/<svg\b[\s\S]*?<\/svg>/gi, ' ')
-      .replace(/<!--[\s\S]*?-->/g, ' '),
-  );
+  const text = strip(withoutComments(withoutElements(withoutElements(withoutElements(withoutElements(html, 'script'), 'style'), 'noscript'), 'svg')));
 
   return {
-    title: titleMatch ? strip(titleMatch[1]) : null,
-    lang: attr(htmlTag, 'lang'),
+    title: titleElement.done ? null : strip(titleElement.value.inner),
+    lang: htmlTag ? attr(htmlTag.attrs, 'lang') : null,
     metas,
     canonical,
     viewport: metas.get('viewport') ?? null,
