@@ -55,13 +55,13 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
     <article className={styles.page} style={paletteVars(c.palette)}>
       <CaseHeader c={c} />
       <CaseNavigator name={c.short} sections={[
-        { id: 'case-short', label: 'The story' },
-        { id: 'case-screens', label: 'The work' },
-        ...(c.pairs.length ? [{ id: 'case-before-after', label: 'Before & after' }] : [{ id: 'case-shipped', label: 'What shipped' }]),
+        { id: 'case-short', label: 'Overview' },
+        { id: 'case-screens', label: 'Screenshots' },
+        ...(c.pairs.length ? [{ id: 'case-before-after', label: 'Before & after' }] : [{ id: 'case-shipped', label: 'Work completed' }]),
       ]} />
 
       <div className={`container ${styles.story} ${styles.first}`}>
-        <StoryBlock id="case-short" label="In short">
+        <StoryBlock id="case-short" label="Overview">
           <p className={styles.summary}>{c.summary}</p>
           {c.context ? <p className={styles.aside}>{c.context}</p> : null}
           {noteWithSummary ? <p className={styles.aside}>{noteWithSummary}</p> : null}
@@ -89,7 +89,7 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
         columns={[
           ...(c.found?.length ? [{ id: 'case-found', label: 'What I found', items: c.found, kind: 'numbered' as const }] : []),
           { id: 'case-decided', label: 'What I decided', items: c.decided, kind: 'numbered' },
-          { id: 'case-shipped', label: 'What shipped', items: c.shipped, kind: 'shipped' },
+          { id: 'case-shipped', label: 'Work completed', items: c.shipped, kind: 'shipped' },
         ]}
       />
 
@@ -99,11 +99,11 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
 
       <CloseCall
         track="case"
-        title="Does your practice have a question like this one?"
+        title="Discuss a project"
         body={
           <>
-            Tell me what is not working on a <span style={{ whiteSpace: 'nowrap' }}>20-minute</span> call. Or start with a website check: I walk your whole path from
-            search to booked, then send a ranked list with a fixed price beside each fix.
+            Tell me what you want to build or improve on a <span style={{ whiteSpace: 'nowrap' }}>20-minute</span> call.
+            Or request a website check for a recorded review and a list of recommended fixes with prices.
           </>
         }
       />

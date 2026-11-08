@@ -23,9 +23,9 @@ export default function PrivacyPage() {
     <>
       <div className={`container ${styles.page}`}>
         <PageHead
-          label={<time dateTime="2026-10">Last updated October 2026</time>}
+          label={<time dateTime="2026-11">Last updated November 2026</time>}
           title="Privacy"
-          lede="This site asks for very little. What you send through the request form reaches my email, is used only to reply to you, and is not sold or shared."
+          lede="I use the information you send through the request form to reply to you. I do not sell or share it."
         />
 
         <dl className={styles.summary} data-enter style={enter(3)}>
@@ -53,7 +53,7 @@ export default function PrivacyPage() {
           <div className={`prose ${styles.prose}`}>
             <h2>What the form collects</h2>
             <p>
-              When you send a request, the form collects your name, your email address, your practice or firm if you add it,
+              When you send a request, the form collects your name, your email address, your business or project if you add it,
               and your message. Nothing is collected until you press send.
             </p>
 
@@ -88,8 +88,8 @@ export default function PrivacyPage() {
       </div>
 
       <CloseBand
-        title="Questions about any of this?"
-        line="Write to me, or book a call about your own site. There is nothing to prepare except its address."
+        title="Contact me"
+        line="Email me with privacy questions, or book a call to discuss a website project."
         check={false}
         track="privacy-close"
       />

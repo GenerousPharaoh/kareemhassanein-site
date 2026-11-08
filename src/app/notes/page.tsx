@@ -14,7 +14,7 @@ import styles from './page.module.css';
 export const metadata = pageMeta({
   title: 'Notes',
   description:
-    'Practical notes for owners of law firms and of dental and medical practices: what Google Ads really counts, and which new patients came from the website and ads.',
+    'Notes from my work on websites, advertising and tracking: what Google Ads counts, how booking can be measured and what to check.',
   path: '/notes',
 });
 
@@ -24,8 +24,8 @@ export default function NotesPage() {
       <div className={`container ${styles.page}`}>
         <PageHead
           label="Notes"
-          title="Notes for practice owners"
-          lede="Practical answers to questions owners ask about their ads, tracking and booking, each from work on a real practice."
+          title="Website and advertising notes"
+          lede="How to check ad conversions, track bookings and read the results from your website."
         />
 
         <ol className={styles.list} data-enter style={enter(3)}>
@@ -74,10 +74,10 @@ export default function NotesPage() {
       </div>
 
       <CloseBand
-        title="I can look at yours."
+        title="Request a website check"
         line={
           <>
-            Book a <Keep>20-minute</Keep> call, or start with the website check: your whole path from search to booked, with a
+            Book a <Keep>20-minute</Keep> call, or start with the website check: a review of your site and the tools around it, with a
             fixed price beside each fix.
           </>
         }

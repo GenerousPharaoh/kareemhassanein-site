@@ -95,7 +95,7 @@ export function Gallery({ c }: { c: CaseStudy }) {
     <section className={styles.band} data-tone={toneOf(c.palette)} data-theme={toneOf(c.palette)} aria-labelledby="case-screens">
       <div className="container">
         <h2 id="case-screens" className={styles.title}>
-          What it looks like
+          Screenshots and recordings
         </h2>
         {rows.length ? (
           <div className={styles.rows}>

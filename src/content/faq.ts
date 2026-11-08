@@ -17,7 +17,7 @@ export const FIRM_FAQ: FaqItem[] = [
   {
     q: 'Will our client information go into AI tools?',
     a: [
-      'No. I use AI tools to help me build, and client information, client files and passwords never go into them. The website work does not need client information at all.',
+      'No. Client information, files and passwords do not go into AI tools. I do not need client records to build or review the website.',
     ],
     link: { href: '/ai', label: 'How I use AI' },
   },
@@ -31,13 +31,13 @@ export const FIRM_FAQ: FaqItem[] = [
   {
     q: 'Do we own everything?',
     a: [
-      'Yes. The domain, hosting, website, Google accounts and ad account stay in the firm’s name, and you pay those bills directly. If you ever move on, there is nothing to hand back.',
+      'Yes. The domain, hosting, website, Google accounts and ad account stay in the firm’s name, and you pay those bills directly. You keep control of the accounts if you change providers.',
     ],
   },
   {
     q: 'Can you work alongside our agency or IT provider?',
     a: [
-      'Yes. They get the access they need and no more, and every change I make is logged with a way to undo it, so nobody is surprised.',
+      'Yes. I agree access and responsibilities with you, record my changes and provide instructions for reversing them.',
     ],
   },
   {
@@ -49,7 +49,7 @@ export const FIRM_FAQ: FaqItem[] = [
   {
     q: 'Do you guarantee rankings or signed clients?',
     a: [
-      'No, and no one honestly can. I measure what happens and report it plainly: leads and signed clients by source, not clicks.',
+      'No. I report the enquiries and client outcomes your systems can measure, with their sources where available.',
     ],
   },
 ];
@@ -58,7 +58,7 @@ export const CLINIC_FAQ: FaqItem[] = [
   {
     q: 'Do I own everything?',
     a: [
-      'Yes. The domain, hosting, website, Google profile, Analytics, ad account and booking system stay in the clinic’s name, and you pay those bills directly. If you ever move on, there is nothing to hand back.',
+      'Yes. The domain, hosting, website, Google profile, Analytics, ad account and booking system stay in the clinic’s name, and you pay those bills directly. You keep control of the accounts if you change providers.',
     ],
   },
   {
@@ -84,14 +84,14 @@ export const CLINIC_FAQ: FaqItem[] = [
   {
     q: 'Do you work with dental and medical clinics?',
     a: [
-      'Yes. The path from a search to a booked appointment is much the same: a Google profile that shows up, a site that makes the choice easy, booking that works on the first tap, and bookings counted by source.',
+      'Yes. The work can include service information, booking, your Google profile and advertising measurement.',
       'The clinics on this page are a multidisciplinary clinic, a physiotherapy clinic and my own practice. For a dental or medical clinic, I read your college’s standard and learn your systems before I change anything.',
     ],
   },
   {
     q: 'Do you guarantee more patients?',
     a: [
-      'No, and no one honestly can. I measure what happens and report real bookings by source, so you can judge the work for yourself.',
+      'No. I report the bookings your system can measure, with their sources where available.',
     ],
   },
 ];
@@ -99,7 +99,7 @@ export const CLINIC_FAQ: FaqItem[] = [
 export const PRICING_FAQ: FaqItem[] = [
   {
     q: 'Why fixed prices?',
-    a: ['You know the cost before anything starts, and the price is for the result, not the time it takes.'],
+    a: ['I agree the scope and total price with you before work starts. You can choose which work to go ahead with.'],
   },
   {
     q: 'Is the check credited?',
@@ -112,9 +112,9 @@ export const PRICING_FAQ: FaqItem[] = [
     ],
   },
   {
-    q: 'Why are larger practices quoted?',
+    q: 'Why are larger projects quoted?',
     a: [
-      'The prices here are set for one location and a small team. Group practices, several locations and larger firms have more to set up and more riding on it, so I quote them after the first call.',
+      'The prices here are set for one location and a small team. Several locations, larger teams and more complex builds need a separate scope, so I quote them after the first call.',
     ],
   },
   {
@@ -124,13 +124,13 @@ export const PRICING_FAQ: FaqItem[] = [
   {
     q: 'What is not included?',
     a: [
-      'The bills for your own domain, hosting, booking system and other software. They stay in your name and you pay them directly, so they keep working whoever looks after the site.',
+      'Domain, hosting, booking system and other software subscriptions are separate. You pay those providers directly, and the accounts stay in your name.',
     ],
   },
   {
     q: 'Do you guarantee results?',
     a: [
-      'No one honestly can. I measure what happens and report real bookings or signed clients by source, and monthly plans are reviewed every six months against that report.',
+      'No. I agree what can be measured before work starts, then report what happened and what I changed. Monthly plans are reviewed every six months against that report.',
     ],
   },
 ];

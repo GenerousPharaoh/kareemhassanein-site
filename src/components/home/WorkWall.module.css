@@ -289,6 +289,29 @@
   }
 }
 
+.caption {
+  position: absolute;
+  z-index: 3;
+  left: 0;
+  right: 0;
+  bottom: calc(var(--peek, var(--sheet-r)) + 24px);
+  padding-right: calc(var(--gutter-r) + 64px);
+  color: var(--ivory);
+  font: 500 clamp(1.2rem, 0.9rem + 1.1vw, 1.9rem) / 1.2 var(--font-display);
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+  pointer-events: none;
+}
+
+.caption::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: -80px 0 calc(-24px - var(--peek, var(--sheet-r)));
+  background: linear-gradient(transparent, rgba(12, 12, 11, 0.9) 35%, #0c0c0b);
+  pointer-events: none;
+}
+
 .pause {
   position: absolute;
   z-index: 3;

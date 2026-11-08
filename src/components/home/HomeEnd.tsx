@@ -38,7 +38,7 @@ export function Offer() {
         <span className={s.offerRule} data-rule aria-hidden="true" />
         <div className={s.offerGrid}>
           <h2 id="offer-h" className={s.offerTitle} data-up>
-            Start with the website check
+            Website check
           </h2>
           <div className={s.offerBody} data-up>
             <p className={s.offerSummary}>{check.summary}</p>
@@ -55,7 +55,7 @@ export function Offer() {
             <p className={s.terms}>{check.terms}</p>
             <div className={s.offerLinks}>
               <Link href={SITE.checkHref} className={s.primary} data-track="home-check">
-                <span>Start with the check</span>
+                <span>Request a website check</span>
                 <Arrow />
               </Link>
               <Link href="/pricing" className={s.secondary}>
@@ -101,7 +101,7 @@ export function Close() {
           </Link>
         </h2>
         <p className={s.alt} data-up>
-          Tell me what is not working. There is nothing to prepare except your site address.
+          Tell me about your business and what you want to build or improve.
         </p>
       </div>
     </section>

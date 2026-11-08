@@ -5,14 +5,16 @@ import { CaseCard } from '@/components/work/CaseCard';
 import { CaseStack } from '@/components/work/CaseStack';
 import { CloseCall } from '@/components/work/CloseCall';
 import { WorkFilter } from '@/components/work/WorkFilter';
-import { BEYOND_CASES, PRACTICE_CASES } from '@/content/cases';
+import { CASES, caseBySlug } from '@/content/cases';
 import { SITE } from '@/content/site';
 import styles from './page.module.css';
 
 const description =
-  'Case studies from a tax law firm and health clinics, then a gear store, a travel journal and a wedding. Each starts with the owner’s question, then what I found, what I decided and what shipped.';
+  'Website builds, an online store redesign, booking integrations and advertising reviews, with screenshots, completed work and recorded results.';
 
-const ogImage = PRACTICE_CASES[0].plate.desktop;
+const businessCases = ['techniques-combat', 'endorphins', 'tax-relief-counsel', 'physiomax', 'kinetikare'].map((slug) => caseBySlug(slug)!);
+const personalCases = CASES.filter((c) => ['travel-journal', 'wedding'].includes(c.slug));
+const ogImage = businessCases[0].plate.desktop;
 
 export const metadata: Metadata = {
   title: 'Work',
@@ -31,7 +33,7 @@ export const metadata: Metadata = {
 
 export default function WorkPage() {
   // The first card's loop poster is the largest thing on the first screen; fetch it first.
-  preload(PRACTICE_CASES[0].hero.poster, { as: 'image', fetchPriority: 'high' });
+  preload(businessCases[0].hero.poster, { as: 'image', fetchPriority: 'high' });
 
   return (
     <>
@@ -45,19 +47,19 @@ export default function WorkPage() {
           Work
         </DisplayTitle>
         <p className={styles.lede} data-enter style={{ ['--i' as string]: 1 }}>
-          Each case starts with the owner’s question, then what I found, what I decided, what shipped and what was measured.
+          Website builds, an online store redesign, booking integrations and advertising reviews, with screenshots and details of the work.
         </p>
       </header>
 
       {/* data-work-item marks what takes part when the filter changes (see WorkFilter) */}
       <WorkFilter>
-        <section className={`container ${styles.group}`} data-group="practices" aria-labelledby="work-practices">
-          <h2 id="work-practices" className={styles.groupTitle} data-work-item>
-            Law firms and clinics
+        <section className={`container ${styles.group}`} data-group="business" aria-labelledby="work-business">
+          <h2 id="work-business" className={styles.groupTitle} data-work-item>
+            Business projects
           </h2>
           <CaseStack className={styles.features}>
-            {PRACTICE_CASES.map((c) => (
-              <li key={c.slug} className={styles.item} data-sectors={c.sectors.join(' ')} data-work-item>
+            {businessCases.map((c) => (
+              <li key={c.slug} className={styles.item} data-category={c.slug === 'techniques-combat' ? 'stores' : 'websites'} data-work-item>
                 <div className={styles.reveal}>
                   <CaseCard c={c} variant="feature" />
                 </div>
@@ -66,16 +68,16 @@ export default function WorkPage() {
           </CaseStack>
         </section>
 
-        <section className={`container ${styles.group} ${styles.beyond}`} data-group="beyond" aria-labelledby="work-beyond">
+        <section className={`container ${styles.group} ${styles.beyond}`} data-group="personal" aria-labelledby="work-personal">
           <div className={styles.groupHead} data-work-item>
-            <h2 id="work-beyond" className={styles.groupTitle}>
-              Beyond practices
+            <h2 id="work-personal" className={styles.groupTitle}>
+              Personal projects
             </h2>
-            <p className={styles.groupLine}>The same way of working, outside practices: a gear store, a travel journal and a wedding.</p>
+            <p className={styles.groupLine}>A travel journal built around the clients’ photographs, and a wedding site with travel information and RSVP.</p>
           </div>
           <ul className={styles.compacts}>
-            {BEYOND_CASES.map((c) => (
-              <li key={c.slug} className={styles.item} data-sectors={c.sectors.join(' ')} data-work-item>
+            {personalCases.map((c) => (
+              <li key={c.slug} className={styles.item} data-category="personal" data-work-item>
                 <div className={styles.reveal}>
                   <CaseCard c={c} variant="compact" />
                 </div>
@@ -88,8 +90,8 @@ export default function WorkPage() {
       <div data-work-item>
         <CloseCall
           track="work"
-          title="Not sure where to start?"
-          body="Book a short call and tell me what is not working, or begin with the website check. Its price is credited in full toward any work within 60 days."
+          title="Discuss a website project"
+          body="Describe the work you need on a 20-minute call, or request a website check. The check is credited in full toward any work within 60 days."
         />
       </div>
     </>

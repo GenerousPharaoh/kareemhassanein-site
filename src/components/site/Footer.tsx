@@ -30,7 +30,7 @@ export function Footer() {
         <p>
           © {new Date().getFullYear()} {SITE.name}. {SITE.descriptor}, from {SITE.location}.
         </p>
-        <p>Every account stays in your name.</p>
+        <p>Your accounts stay in your name.</p>
       </div>
     </footer>
   );

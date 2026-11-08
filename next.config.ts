@@ -36,7 +36,6 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
-      { source: '/services', destination: '/work', permanent: true },
       { source: '/contact', destination: '/book', permanent: true },
       // Older check links used a query; the check now has its own static page.
       { source: '/book', has: [{ type: 'query', key: 'topic', value: 'check' }], destination: '/book/check', permanent: true },

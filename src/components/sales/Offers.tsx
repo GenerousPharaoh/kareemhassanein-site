@@ -15,7 +15,7 @@ function Price({ price, large = false }: { price: string; large?: boolean }) {
   );
 }
 
-/** "Grow: Google profile, ..." sets its plan name in bold; plain lines stay plain. */
+/** Set a plan name before a colon in bold; leave other lines plain. */
 function Includes({ items }: { items: string[] }) {
   return (
     <ul className={styles.includes}>
@@ -53,7 +53,7 @@ export function CheckOffer({ offer }: { offer: Offer }) {
         <p className={styles.featureSummary}>{offer.summary}</p>
         <div className={styles.featureAction}>
           <ButtonLink href={SITE.checkHref} arrow track="pricing-check">
-            Start with a website check
+            Request a website check
           </ButtonLink>
         </div>
       </div>

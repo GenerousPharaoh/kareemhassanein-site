@@ -1,8 +1,8 @@
-/* Hero: who he is, beside his portrait. Phones: words, portrait, facts. */
+/* A text-led introduction, with experience and education below. */
 
 .hero {
   display: grid;
-  grid-template-areas: 'copy' 'portrait' 'facts';
+  grid-template-areas: 'copy' 'facts';
   gap: clamp(24px, 3vw, 32px);
   padding-top: clamp(32px, 4vw, 56px);
   padding-bottom: clamp(40px, 4.5vw, 64px);
@@ -70,30 +70,15 @@
   color: var(--muted);
 }
 
-.portrait {
-  grid-area: portrait;
-  margin: 0;
-  width: min(64vw, 280px);
-  max-width: 100%;
-  justify-self: center;
-}
-
 @media (min-width: 960px) {
-  .hero {
-    grid-template-columns: minmax(0, 1fr) 320px;
-    grid-template-areas: 'copy portrait'
-      'facts facts';
-    grid-template-rows: auto auto;
+  .heroCopy {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: end;
     column-gap: 48px;
-    row-gap: 32px;
   }
   .facts {
     grid-template-columns: repeat(4, minmax(0, 1fr));
     column-gap: 24px;
-  }
-  .portrait {
-    width: min(100%, 320px);
-    align-self: center;
   }
 }
 
@@ -364,31 +349,5 @@
 @media (max-width: 760px) {
   .hero .title {
     font-size: clamp(2.5rem, 10.5vw, 4rem);
-  }
-}
-
-/* The portrait opens from the foot up as the page arrives, settling as it does */
-@media (prefers-reduced-motion: no-preference) {
-  .portrait {
-    animation: portrait-open 900ms var(--ease-out) 120ms both;
-  }
-
-  .portrait :global(img) {
-    animation: portrait-settle 1300ms var(--ease-out) 120ms both;
-  }
-}
-
-@keyframes portrait-open {
-  from {
-    clip-path: inset(100% 0 0 0);
-  }
-  to {
-    clip-path: inset(0 0 0 0);
-  }
-}
-
-@keyframes portrait-settle {
-  from {
-    transform: scale(1.14) translateY(4%);
   }
 }

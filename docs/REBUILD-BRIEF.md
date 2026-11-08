@@ -4,13 +4,23 @@ Branch `rebuild-2026`. Nothing here goes to `main` (which deploys the live site)
 
 ## What the site is for
 
-Kareem Hassanein owns the whole path from a Google search to a booked appointment for independent practices: the website, the Google profile, booking or intake, ads, and the tracking that ties them together. He has worked in the healthcare industry for 13 years, across different roles, and he builds and runs this work himself. Lead with that breadth of healthcare experience. His education may be referenced, but do not describe him as a Registered Physiotherapist or make registration his differentiator. Do not imply 13 years of clinical practice.
+Kareem Hassanein designs, builds and manages the online side of businesses: websites, online stores, search, advertising and the tools for enquiries, booking and tracking. The work starts with what the business sells, how customers find it and what they need to do next. He handles defined projects and ongoing work directly.
 
-Readers: owners and partners of law firms (Canada and US), dental practices and private-pay medical clinics. Physio, chiro and massage clinics are welcome but no longer lead. They read on a phone, between patients or meetings.
+Readers: business owners across sectors in Canada and the US, with personal projects also welcome. Do not organise the main pitch or navigation around industries. Websites, stores and service businesses should each have a clear route into the work. Keep the firm and clinic pages as focused evidence of experience, and keep personal and editorial work clearly identified.
+
+Kareem has worked in the healthcare industry for 13 years, across different roles. Lead the biography with that experience and his education, then connect it to how he understands other businesses. Do not describe him as a Registered Physiotherapist, make registration his differentiator or imply 13 years of clinical practice.
+
+The tone is restrained, active and specific. Use the work and decisions to show capability. Avoid slogans, forced familiarity, industry lists in the opening pitch and broad claims about understanding every field. The main homepage message is: "I build websites and manage online marketing."
+
+Use plain page titles such as "About me". Do not turn basic process statements into taglines.
+
+Name the service, action or deliverable in headings and descriptions. Avoid vague phrases such as "the whole path", "done properly" and "I look beyond the website". Explain development and measurement terms in words a business owner can understand. Keep case-study results, measurement conditions, ownership, credits and launch status intact.
+
+Use text-led layouts for the homepage introduction and biography. Do not use AI-generated portraits of Kareem.
 
 The site must let an owner, on a phone:
 1. understand what he does and who it is for within ten seconds;
-2. see proof from their own kind of practice within one scroll;
+2. see relevant proof of the work within one scroll;
 3. know roughly what it costs before talking to him;
 4. book a call in two taps;
 5. feel that the site itself is the proof: fast, accessible, and better made than anything their agency has shown them.

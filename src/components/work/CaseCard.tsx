@@ -11,7 +11,7 @@ import { Rise } from '@/components/ui/Rise';
 
 type Props = {
   c: CaseStudy;
-  /** Feature: a large stage for a practice. Compact: a smaller exhibit for the other work. */
+  /** Feature: a large stage for a business. Compact: a smaller exhibit for personal projects. */
   variant?: 'feature' | 'compact';
 };
 

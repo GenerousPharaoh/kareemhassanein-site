@@ -1,18 +1,16 @@
 import Link from 'next/link';
 import { DisplayTitle } from '@/components/ui/DisplayTitle';
 import { Disclosure } from '@/components/ui/Disclosure';
-import { PortraitFrame } from '@/components/media/PortraitFrame';
 import { CaseChips } from '@/components/pages/CaseChips';
 import { CloseBand } from '@/components/pages/CloseBand';
 import { enter } from '@/components/pages/enter';
 import { pageMeta } from '@/lib/meta';
-import { PORTRAIT as portrait } from '@/content/portrait';
 import styles from './page.module.css';
 
 export const metadata = pageMeta({
   title: 'About',
   description:
-    'I have worked in healthcare for 13 years, across different roles. I build and run the online side of law firms and independent practices.',
+    'I have worked in healthcare for 13 years, across different roles. I work directly with business owners on websites, online stores and online marketing.',
   path: '/about',
 });
 
@@ -26,47 +24,47 @@ const FACTS = [
 const STEPS = [
   {
     name: 'Assess',
-    text: 'I walk the whole path, from the search result to the booked appointment or signed client, and tell you what is actually happening.',
+    text: 'I review the website, ads, forms, booking and tracking. I identify problems and check which customer actions your systems can report.',
   },
   {
     name: 'Plan',
-    text: 'You get a short, ranked list with a fixed price beside each item. You choose what gets done.',
+    text: 'I give you a list of recommended changes in priority order, with a fixed price for each. You choose the work you want to go ahead with.',
   },
   {
     name: 'Build',
-    text: 'I design and build it, with real options to choose from. I direct AI build tools the way a lead directs a studio; every decision, review and test is mine.',
+    text: 'I show you design options, build the agreed work and test it on phones and computers. You approve the wording and design before launch.',
     link: { href: '/ai', label: 'How I use AI' },
   },
   {
     name: 'Run',
-    text: 'I keep it working, report bookings or signed clients by source, and answer for it. Every change is logged and can be undone.',
+    text: 'For ongoing work, I maintain the site and manage the marketing included in your plan. I keep a record of changes and report the results your systems can measure.',
   },
 ];
 
 const QUESTIONS = [
   {
-    q: 'Will you find what is actually wrong?',
+    q: 'How do you identify the problem?',
     a: 'Tax Relief Counsel asked about its website. The larger problem was in the ad account, where most of the reported conversions were clicks on the consultation button. At PhysioMax, bookings had never reached Analytics, and the gap was inside the booking system, not the website.',
     cases: ['tax-relief-counsel', 'physiomax'],
   },
   {
-    q: 'Will you understand my field?',
-    a: 'Booking systems, practice websites and how patients choose are part of my work. At Endorphins, I named the colleges in text instead of showing their logos, which the colleges restrict. For a tax law firm, I built tools around IRS procedures, with the IRS source beside every figure.',
-    cases: ['endorphins', 'tax-relief-counsel'],
+    q: 'How do you approach an unfamiliar business?',
+    a: 'I ask about your services or products, review the existing site and tools, and agree the requirements with you. For Techniques, the work centred on product pages, shopping and video. For Endorphins, it centred on service information and practitioner booking.',
+    cases: ['techniques-combat', 'endorphins'],
   },
   {
-    q: 'How fast, and what if something breaks?',
+    q: 'How do you handle a website launch?',
     a: 'A gear store’s redesign went live the same evening, built on a copy of its theme with a one-step rollback. A law firm’s new site launches with one DNS change, reversible the same way.',
     cases: ['techniques-combat', 'tax-relief-counsel'],
   },
   {
-    q: 'Will I have to manage you?',
-    a: 'There is one person to deal with: strategy, design, build, tracking and ads all stay with me. You choose between rendered designs instead of imagining them, approve a one-page list with a fixed price beside each item, and get a short update every week until handover.',
+    q: 'Who will I work with?',
+    a: 'You work directly with me on planning, design, development, tracking and ads. I show you design options, confirm the scope and fixed price, and send a weekly update until handover.',
     cases: ['endorphins', 'tax-relief-counsel'],
   },
   {
-    q: 'Whose side are you on?',
-    a: 'Yours. Your domain, hosting, Google accounts and booking system stay in your name, and you pay those bills directly. At Endorphins, every account is in the clinic’s name and the agency has limited access. On my own practice’s ads, I keep a running log of every change, corrections included.',
+    q: 'Who owns the website and accounts?',
+    a: 'Your domain, hosting, Google accounts and booking system stay in your name, and you pay those bills directly. At Endorphins, the clinic owns the accounts and grants limited access to its agency. I keep a record of changes made to the accounts I manage.',
     cases: ['endorphins', 'kinetikare'],
   },
 ];
@@ -77,25 +75,15 @@ export default function AboutPage() {
       <div className={`paper ${styles.opening}`} data-theme="light">
       <section className={`container ${styles.hero}`} aria-labelledby="about-title">
         <div className={styles.heroCopy}>
-          <p className="t-label" data-enter style={enter(0)}>
-            About
-          </p>
           <DisplayTitle id="about-title" className={`t-h1 ${styles.title}`}>
-            I know healthcare from the inside.
+            About me
           </DisplayTitle>
           <p className={`t-lede ${styles.lede}`} data-enter style={enter(2)}>
             I’m Kareem Hassanein. I’ve worked in the healthcare industry for 13 years, across different roles.
-            I build and run the online side of law firms and independent practices: the website, the Google profile,
-            booking or intake, ads, and the tracking that ties them together.
+            I work directly with business owners on websites, online stores, search and advertising,
+            including the tools for enquiries, booking and tracking.
           </p>
         </div>
-        <figure className={styles.portrait}>
-          <PortraitFrame
-            media={portrait}
-            sizes="(min-width: 960px) 263px, min(52.5vw, 230px)"
-            priority
-          />
-        </figure>
         <dl className={styles.facts} data-enter style={enter(3)}>
           {FACTS.map((f) => (
             <div key={f.term} className={styles.fact}>
@@ -114,23 +102,21 @@ export default function AboutPage() {
       <section className={`container ${styles.whySection}`} aria-labelledby="why-title">
         <div className={styles.why}>
           <div className={styles.whyHead} data-reveal>
-            <p className="t-label">Why healthcare experience matters</p>
             <h2 id="why-title" className={`t-h2 ${styles.whyTitle}`}>
-              I look beyond the website.
+              How I review a site
             </h2>
           </div>
           <div className={styles.whyBody} data-reveal>
             <p>
-              Working in healthcare has shown me how people choose a practice, how booking works at the front desk,
-              and how much happens between an enquiry and an appointment. Law firms have their own version of that path.
-              I learn yours before changing anything.
+              I test how someone gets from a search result or ad to the website, then to an enquiry, booking or purchase.
+              I check the pages they use, the forms they complete and where the information is sent.
             </p>
             <p>
-              I start with the whole path, then trace the problem to its cause. A website can look like the problem when
-              the gap is inside the booking system or the way leads are counted.
+              If bookings are missing from Analytics, I check the booking integration and confirmation pages.
+              If an ad account reports more leads than you received, I check which actions it counts as conversions.
             </p>
             <p className={styles.whyAside}>
-              Outside the practice and the build work, I volunteer as a mentor for Lab2Market Validate at McMaster University,
+              I also volunteer as a mentor for Lab2Market Validate at McMaster University,
               supporting Canadian researchers who are taking health innovations to market.
             </p>
           </div>
@@ -141,7 +127,7 @@ export default function AboutPage() {
         <div className="container">
           <div className={styles.howHead} data-reveal>
             <h2 id="how-title" className="t-h2">
-              I work in four steps.
+              Working with me
             </h2>
           </div>
           <ol className={styles.steps}>
@@ -171,7 +157,7 @@ export default function AboutPage() {
         <div className={`container ${styles.hire}`}>
         <div className={styles.hireHead} data-reveal>
           <h2 id="hire-title" className="t-h2">
-            Why owners hire me
+            Questions about working with me
           </h2>
         </div>
         <div className={styles.rows}>

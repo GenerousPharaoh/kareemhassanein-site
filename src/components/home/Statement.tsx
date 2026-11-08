@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import { useRef } from 'react';
 import { Picture } from '@/components/media/Picture';
-import { PortraitFrame } from '@/components/media/PortraitFrame';
 import { getGsap, useGsap } from '@/lib/gsap';
 import type { Still } from '@/lib/media';
 import s from './Statement.module.css';
@@ -12,20 +11,19 @@ import s from './Statement.module.css';
  * A run of text, or a small piece of the work set into the line beside the word it shows. Every
  * piece has the same height and corners; its width follows the picture.
  */
-export type Piece = string | { still: Still; label: string };
+export type Piece = string | { still: Still; label: string; punctuation?: string };
 
 type Props = {
   pieces: Piece[];
   body: string;
   link: { href: string; label: string };
-  portrait: Still;
 };
 
 /**
  * Who builds it: one long sentence on a light sheet, lit word by word as it scrolls into place,
- * with client captures in the line and a printed portrait beside its caption.
+ * with client captures in the line and a short explanation of the work beside it.
  */
-export function Statement({ pieces, body, link, portrait }: Props) {
+export function Statement({ pieces, body, link }: Props) {
   const root = useRef<HTMLElement>(null);
 
   useGsap(root, ({ reduce }) => {
@@ -66,18 +64,18 @@ export function Statement({ pieces, body, link, portrait }: Props) {
                   {p}
                 </span>
               ) : (
-                <span key={i} className={s.chip} data-chip aria-hidden="true" title={p.label} style={{ ['--ratio' as string]: (p.still.w / p.still.h).toFixed(3) }}>
-                  <span className={s.chipImg}>
-                    <Picture media={p.still} sizes="160px" />
+                <span key={i} className={s.workWord} data-chip>
+                  <span className={s.chip} aria-hidden="true" title={p.label} style={{ ['--ratio' as string]: (p.still.w / p.still.h).toFixed(3) }}>
+                    <span className={s.chipImg}>
+                      <Picture media={p.still} sizes="160px" />
+                    </span>
                   </span>
+                  {p.punctuation}
                 </span>
               ),
             )}
           </h2>
         </div>
-        <figure className={s.portrait}>
-          <PortraitFrame media={portrait} sizes="(min-width: 900px) 230px, clamp(82px, 23vw, 132px)" />
-        </figure>
         <div className={s.caption}>
             <p className={s.body} data-after>
               {body}

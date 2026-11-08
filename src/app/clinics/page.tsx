@@ -24,29 +24,29 @@ const ASKS = [
   'Our agency’s numbers do not match the front desk.',
   'We are not sure what we are allowed to say.',
   'The site is slow on phones.',
-  'Our Google listing is a mess.',
+  'Our Google listing has incorrect details.',
 ];
 
 const BOOKING: BuildItem[] = [
   {
-    title: 'Booking links straight to each practitioner and service',
-    text: 'A patient who wants a particular practitioner or treatment lands on that calendar in one tap, not on a search through the whole clinic.',
+    title: 'Practitioner and service booking links',
+    text: 'I link patients to the calendar for the practitioner or treatment they choose.',
   },
   {
-    title: 'The next real openings, on your ad pages',
-    text: 'Where the booking system allows it, a patient sees when they could actually be seen, before they decide.',
+    title: 'Available appointments on landing pages',
+    text: 'Where the booking system supports it, I show available appointments on the page before a patient starts booking.',
   },
   {
-    title: 'Online bookings and calls, counted',
-    text: 'In Analytics and Google Ads, so you know which bookings came from search, the site or an ad, and your ads learn from bookings, not clicks.',
+    title: 'Booking and call tracking',
+    text: 'I set up Analytics and Google Ads to record completed bookings and calls, with their source where the systems support it.',
   },
   {
-    title: 'Online booking switched on properly, practitioner by practitioner',
-    text: 'Every setting that can hide a practitioner’s times is checked in the booking system itself, so nobody shows an empty calendar by mistake.',
+    title: 'Practitioner booking settings',
+    text: 'I check online booking permissions and calendar settings to identify why a practitioner’s available times are not showing.',
   },
   {
-    title: 'Every account in the clinic’s name',
-    text: 'The website, domain, Google profile, Analytics and ad account belong to the clinic, and your agency gets the access it needs and no more.',
+    title: 'Account ownership',
+    text: 'The clinic owns the website, domain, Google profile, Analytics and ad account. I work with the access you grant and can coordinate with your agency.',
   },
 ];
 
@@ -60,12 +60,8 @@ export default function ClinicsPage() {
     <>
       <Hero
         label="For clinics"
-        title={
-          <>
-            From search to <em>seen.</em>
-          </>
-        }
-        lede="Websites, online booking, Google profiles, ads and tracking for dental, medical and health clinics. I bring 13 years of experience in healthcare, across different roles. I build and run it myself, and every account stays in the clinic’s name."
+        title="Websites and booking for clinics"
+        lede="I’ve worked in healthcare for 13 years, across different roles. I build websites, connect online booking and manage Google profiles, ads and tracking for dental, medical and health clinics. Your accounts stay in the clinic’s name."
         track="clinics-hero"
         specs={[
           { term: 'Booking', detail: 'Jane, or the system you already use' },
@@ -88,24 +84,20 @@ export default function ClinicsPage() {
         id="clinic-asks"
         title="What clinic owners ask me to fix"
         items={ASKS}
-        note="These are often connected. When bookings are not counted where they happen, the agency’s report and the front desk’s calendar will not agree."
+        note="I compare the website and ad reports with what the booking system records, then check the links and settings behind any differences."
       />
 
       <BuildList
         id="clinic-booking"
         label="Booking"
-        title="Booking, done properly"
-        intro="A patient who has decided to book can still be lost between the Book button and the calendar. This is usually where I start."
+        title="Booking links and tracking"
+        intro="I check where booking links lead, which practitioners can be booked online and whether completed bookings reach your reports."
         items={BOOKING}
       />
 
       <Wording
         id="clinic-wording"
-        title={
-          <>
-            Written to your college’s rules. <span>You approve every word.</span>
-          </>
-        }
+        title="Clinic website content"
         text="Before I write for your clinic, I read the advertising standard your college sets: what you can call yourself, what you can promise, and how testimonials and logos can be used. Nothing goes live until you have approved it."
         examples={[
           { slug: 'endorphins', name: 'Endorphins', text: 'The colleges named in plain text instead of shown as logos.' },
@@ -123,34 +115,30 @@ export default function ClinicsPage() {
             <Removed>The best</Removed> <Added>Family</Added> dental care in Burlington.
           </>,
         ]}
-        sheetNote="The kinds of words I flag. Your college’s standard decides what stays."
+        sheetNote="Examples of wording I review against the applicable advertising standard."
       />
 
       <CaseCardsSection
         id="clinic-work"
         label="The work"
         title="Recent clinic work"
-        intro="Each case shows what I found, what I decided and what shipped. One of them is my own practice."
+        intro="Website, booking and tracking work for Endorphins, PhysioMax and my own practice, KinetiKare."
         items={[
-          { c: endorphins, point: { label: 'Shipped', text: pickLine(endorphins.shipped, 'Three ad landing pages') } },
+          { c: endorphins, point: { label: 'Completed', text: pickLine(endorphins.shipped, 'Three ad landing pages') } },
           { c: physiomax, point: { label: 'Measured', text: pickLine(facts(physiomax), 'All 11 practitioners') } },
-          { c: kinetikare, point: { label: 'Measured', text: pickLine(facts(kinetikare), 'Largest paint') } },
+          { c: kinetikare, point: { label: 'Measured', text: pickLine(facts(kinetikare), 'Largest page element') } },
         ]}
       />
 
       <PriceLine id="clinic-prices" track="clinics" />
 
-      <Faq id="clinic-faq" title="Questions clinic owners ask" intro="If yours is not here, ask me on the call." items={CLINIC_FAQ} />
+      <Faq id="clinic-faq" title="Questions about working with me" items={CLINIC_FAQ} />
 
       <CloseCall
         id="clinic-close"
         track="clinics-close"
-        title={
-          <>
-            Tell me where patients get lost. <span>I will tell you what I would fix first.</span>
-          </>
-        }
-        text="Book a 20-minute call and tell me what is not working. If you would rather see the whole picture first, start with the website check: its cost comes off any work within 60 days."
+        title="Discuss your website or booking"
+        text="Describe the problem on a 20-minute call, or request a website check. The check is credited in full toward any work within 60 days."
       />
     </>
   );

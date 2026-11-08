@@ -80,19 +80,20 @@
   }
 }
 
-/* Filtering: cards carry data-sectors, sections carry data-group */
+/* Filtering: cards carry data-category, sections carry data-group. */
 
-.results[data-filter='firms'] [data-sectors]:not([data-sectors~='firms']),
-.results[data-filter='clinics'] [data-sectors]:not([data-sectors~='clinics']),
-.results[data-filter='firms'] [data-group='beyond'],
-.results[data-filter='clinics'] [data-group='beyond'],
-.results[data-filter='beyond'] [data-group='practices'] {
+.results[data-filter='websites'] [data-category]:not([data-category='websites']),
+.results[data-filter='stores'] [data-category]:not([data-category='stores']),
+.results[data-filter='personal'] [data-category]:not([data-category='personal']),
+.results[data-filter='websites'] [data-group='personal'],
+.results[data-filter='stores'] [data-group='personal'],
+.results[data-filter='personal'] [data-group='business'] {
   display: none;
 }
 
 /* Shown on its own, the second group sits as close to the chips as the first one does */
 
-.results[data-filter='beyond'] [data-group='beyond'] {
+.results[data-filter='personal'] [data-group='personal'] {
   padding-top: 0;
 }
 

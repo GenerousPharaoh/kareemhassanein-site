@@ -9,8 +9,8 @@
 
 .grid {
   display: grid;
-  grid-template-columns: clamp(100px, 28vw, 160px) minmax(0, 1fr);
-  grid-template-areas: 'copy copy' 'portrait caption';
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas: 'copy' 'caption';
   align-items: center;
   gap: 28px 16px;
   padding-block: clamp(40px, 4.5vw, 64px);
@@ -32,6 +32,11 @@
 
 /* A small picture of the work, set into the line like a word: the same height and corners for
    all three, centred on the capitals, its width following the picture */
+.workWord {
+  display: inline-block;
+  white-space: nowrap;
+}
+
 .chip {
   display: inline-block;
   vertical-align: middle;
@@ -91,28 +96,18 @@
   }
 }
 
-/* On phones, the portrait and biography form one compact byline. */
-.portrait {
-  grid-area: portrait;
-  justify-self: start;
-  width: 100%;
-  margin: 0;
-}
-
 .caption {
   grid-area: caption;
   display: grid;
   gap: 8px;
 }
 
-/* Larger screens: the sentence starts on the same edge as every other section, at a set measure,
-   with the portrait beside it rather than out at the far edge; spare width falls to the right. */
+/* On larger screens, the description sits beside the main statement. */
 @media (min-width: 900px) {
   .grid {
-    grid-template-columns: minmax(0, max-content) 280px;
-    grid-template-areas: 'copy portrait' 'caption portrait';
-    justify-content: start;
-    align-items: start;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+    grid-template-areas: 'copy caption';
+    align-items: end;
     gap: 24px clamp(48px, 5vw, 80px);
   }
 
@@ -123,11 +118,6 @@
   .copy {
     align-self: start;
     padding-bottom: 0;
-  }
-
-  .portrait {
-    display: block;
-    width: min(100%, 280px);
   }
 
   .caption {

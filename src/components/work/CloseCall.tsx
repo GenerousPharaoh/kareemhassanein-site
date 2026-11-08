@@ -27,7 +27,7 @@ export function CloseCall({ title, body, track }: Props) {
               Book a 20-minute call
             </ButtonLink>
             <ButtonLink href={SITE.checkHref} variant="ghost" track={`${track}-check`}>
-              Start with a website check, {check?.price ?? '$1,500'}
+              Request a website check, {check?.price ?? '$1,500'}
             </ButtonLink>
           </div>
           <p className={styles.reply}>{SITE.reply}</p>

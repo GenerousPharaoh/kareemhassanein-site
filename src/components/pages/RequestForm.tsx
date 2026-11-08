@@ -23,7 +23,7 @@ type Props = {
 // The contact endpoint caps the message at 5,000 characters; a topic line is added in front of it.
 const LIMIT = { name: 100, email: 200, organization: 200, message: 4800 } as const;
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const CHECK_PREFILL = 'I would like to start with the website check.';
+const CHECK_PREFILL = 'I would like a website check.';
 const ORDER: Field[] = ['name', 'email', 'organization', 'message'];
 const subscribeReady = () => () => {};
 const clientReady = () => true;
@@ -33,7 +33,7 @@ const MESSAGES = {
   name: 'Please enter your name.',
   emailEmpty: 'Please enter your email address.',
   emailShape: 'Please check your email address. It should look like name@example.com.',
-  message: 'Please add a line or two about what is going on.',
+  message: 'Please describe the work you need.',
 };
 
 function validate(v: Values): Errors {
@@ -233,7 +233,7 @@ export function RequestForm({ initialTopic, checkPrice, checkNote, email }: Prop
             My reply will come from <span className={styles.address}>{email}</span>.
           </p>
           <Link href="/work" className={styles.doneLink}>
-            See the work while you wait
+            View my work
             <svg viewBox="0 0 16 16" aria-hidden="true">
               <path d="M3 8h9.5M8.5 4l4 4-4 4" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
@@ -340,7 +340,7 @@ export function RequestForm({ initialTopic, checkPrice, checkNote, email }: Prop
 
           <div className={styles.field}>
             <label htmlFor={id('organization')} className={styles.label}>
-              Practice or firm <span className={styles.optional}>Optional</span>
+              Business or project <span className={styles.optional}>Optional</span>
             </label>
             <input
               id={id('organization')}
@@ -358,10 +358,10 @@ export function RequestForm({ initialTopic, checkPrice, checkNote, email }: Prop
 
           <div className={styles.field}>
             <label htmlFor={id('message')} className={styles.label}>
-              What is going on?
+              What would you like to build or improve?
             </label>
             <p id={id('message-hint')} className={styles.hint}>
-              Your site address and what is not working is plenty.
+              Tell me what you have in place and what you want to change. Include your site address if you have one.
             </p>
             <div className={styles.control}>
               <textarea
@@ -392,7 +392,7 @@ export function RequestForm({ initialTopic, checkPrice, checkNote, email }: Prop
                 Both labels share one cell, so the button keeps its size when one replaces the other. */}
             <button type="submit" className={styles.submit} aria-disabled={sending || undefined} data-sending={sending || undefined}>
               <span className={styles.submitLabel} aria-hidden={sending || undefined}>
-                <span>{topic === 'check' ? 'Request the check' : 'Send request'}</span>
+                <span>{topic === 'check' ? 'Request the check' : 'Request a call'}</span>
                 <svg className={styles.arrow} viewBox="0 0 16 16" aria-hidden="true">
                   <path d="M3 8h9.5M8.5 4l4 4-4 4" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>

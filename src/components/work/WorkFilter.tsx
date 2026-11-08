@@ -6,10 +6,10 @@ import { getGsap } from '@/lib/gsap';
 import styles from './WorkFilter.module.css';
 
 const FILTERS = [
-  { id: 'all', label: 'All', status: 'Showing all the work.' },
-  { id: 'firms', label: 'Law firms', status: 'Showing law firms.' },
-  { id: 'clinics', label: 'Clinics', status: 'Showing clinics.' },
-  { id: 'beyond', label: 'Beyond practices', status: 'Showing work beyond practices.' },
+  { id: 'all', label: 'All work', status: 'Showing all the work.' },
+  { id: 'websites', label: 'Business websites', status: 'Showing business websites.' },
+  { id: 'stores', label: 'Online stores', status: 'Showing online stores.' },
+  { id: 'personal', label: 'Personal projects', status: 'Showing personal projects.' },
 ] as const;
 
 type FilterId = (typeof FILTERS)[number]['id'];
@@ -46,7 +46,7 @@ function setName(el: HTMLElement, name: string, kind = '') {
 }
 
 /**
- * Filter chips over a list rendered on the server. The cards carry data-sectors and their
+ * Filter chips over a list rendered on the server. The cards carry data-category and their
  * sections data-group; this component only sets data-filter, and CSS does the hiding,
  * so the full list is there without JavaScript.
  *

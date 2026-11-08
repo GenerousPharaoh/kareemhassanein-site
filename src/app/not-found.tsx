@@ -10,8 +10,8 @@ export default function NotFound() {
     <div className={`container section ${styles.page}`}>
       <PageHead
         label="404"
-        title="This page took a wrong turn."
-        lede="The address may have changed when the site was rebuilt. The work and the prices are a click away."
+        title="Page not found"
+        lede="There is no page at this address. You can return home or view my work."
       >
         <div className={styles.actions}>
           <ButtonLink href="/" arrow>

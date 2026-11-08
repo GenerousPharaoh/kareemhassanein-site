@@ -14,7 +14,7 @@ export function BookActions({ track, className }: { track: string; className?: s
           Book a 20-minute call
         </ButtonLink>
         <ButtonLink href={SITE.checkHref} variant="ghost" track={`${track}-check`} className={styles.button}>
-          {`Start with a website check, ${checkPrice}`}
+          {`Request a website check, ${checkPrice}`}
         </ButtonLink>
       </div>
       <p className={styles.reply}>

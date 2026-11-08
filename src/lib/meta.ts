@@ -17,7 +17,7 @@ export const SITE_IMAGE = {
   url: '/og.png',
   width: 1200,
   height: 630,
-  alt: 'Kareem Hassanein: from a Google search to a booked appointment, every step working and counted.',
+  alt: `${SITE.name}: ${SITE.descriptor}.`,
 };
 
 /**

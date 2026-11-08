@@ -12,13 +12,13 @@ import styles from './page.module.css';
 export const BOOK_META = {
   title: 'Book a call',
   description:
-    'Tell me what is not working at your practice or firm. I reply within one business day to set up a 20-minute call, or to start a website check.',
+    'Tell me about your business or project and what you want to build or improve. I reply within one business day to arrange a call or confirm a website check.',
   path: '/book',
 };
 
 const check = OFFERS.find((o) => o.id === 'check');
 const CHECK_PRICE = check?.price ?? '$1,500';
-const CHECK_NOTE = `I walk your whole path from search to booked, then send a recorded walkthrough and a ranked list with a fixed price beside each fix, within five business days. ${
+const CHECK_NOTE = `I review your website and the search, ads, forms or booking that apply, then send a recorded walkthrough and a ranked list with a fixed price beside each fix, within five business days. ${
   check?.terms ?? ''
 }`.trim();
 
@@ -27,9 +27,9 @@ export function BookView({ initialTopic }: { initialTopic: Topic }) {
     <div className={`container ${styles.layout}`}>
       <PageHead
         className={styles.head}
-        label="Book a call"
-        title="Tell me what is not working."
-        lede="A few lines about your practice or firm are enough. I read every request myself."
+        label="Contact"
+        title={initialTopic === 'check' ? 'Request a website check' : 'Book a call'}
+        lede="A few lines about your business or project and what you want to build or improve are enough. I read every request myself."
       />
 
       <section className={styles.formCol} aria-label="Send a request" data-enter style={enter(1)}>
@@ -57,7 +57,7 @@ export function BookView({ initialTopic }: { initialTopic: Topic }) {
             <path d="M6.75 9V6.75a3.25 3.25 0 0 1 6.5 0V9" fill="none" stroke="currentColor" strokeWidth="1.5" />
           </svg>
           <span>
-            I never ask for passwords or patient information by email. When work needs access, you add me as a user in your
+            I do not need passwords or sensitive customer information in your message. When work needs access, you add me as a user in your
             own accounts.
           </span>
         </p>

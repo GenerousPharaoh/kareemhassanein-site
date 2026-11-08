@@ -84,31 +84,6 @@
   padding-top: 8px;
 }
 
-/* His face, cropped from the cut-out portrait */
-.avatar {
-  position: relative;
-  width: 46px;
-  height: 46px;
-  flex: none;
-  overflow: hidden;
-  border-radius: 50%;
-  background: var(--paper-2);
-  box-shadow: inset 0 0 0 1px var(--rule-soft);
-}
-
-.avatar picture {
-  position: absolute;
-  left: -21px;
-  top: 2px;
-  width: 88px;
-  max-width: none;
-}
-
-.avatar img {
-  width: 88px;
-  max-width: none;
-}
-
 .bylineText {
   display: grid;
   gap: 2px;

@@ -379,6 +379,7 @@ export function WorkWall({ rows, name, line }: Props) {
           </div>
         </div>
       )}
+      <p className={`container ${s.caption}`} data-after>{line}</p>
       {!reduce && (
         <button type="button" className={s.pause} onClick={() => setPaused((p) => !p)} aria-pressed={paused} aria-label={paused ? 'Play the wall of work' : 'Pause the wall of work'} data-after>
           <svg viewBox="0 0 24 24" aria-hidden="true">

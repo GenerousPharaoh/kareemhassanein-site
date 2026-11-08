@@ -5,7 +5,7 @@ export const googleAdsLeads: Note = {
   title: 'Your Google Ads leads might be button clicks. How to check in ten minutes.',
   summary:
     'If your ad account reports more leads than your inbox received, it may be counting clicks. How to see what it counts, and what to change.',
-  audience: 'For law firms and practices running Google Ads',
+  audience: 'For businesses running Google Ads',
   month: '2026-10',
   monthLabel: 'October 2026',
   cases: ['tax-relief-counsel', 'kinetikare'],
@@ -14,16 +14,16 @@ export const googleAdsLeads: Note = {
   body: [
     {
       type: 'p',
-      text: 'Google Ads has a column called Conversions, and many owners read it as their number of leads. It is really a count of whatever the account was set up to count. Sometimes that is a delivered inquiry. Often it is something earlier: a click on a Book or Request a Consultation button, a visit to a page, or a tap on a phone number.',
+      text: 'Google Ads has a column called Conversions. It counts the actions configured in the account, which may be completed enquiries or earlier actions such as clicking Book, viewing a page or tapping a phone number.',
     },
     {
       type: 'p',
       text: 'I have found this in a tax law firm’s account, where most of the reported conversions were clicks on the consultation button, and in my own practice’s account, where the booking the ads optimised for was really a page view. You can check yours in about ten minutes.',
     },
-    { type: 'h2', id: 'why-it-matters', text: 'Why it matters' },
+    { type: 'h2', id: 'why-it-matters', text: 'How conversion settings affect bidding' },
     {
       type: 'p',
-      text: 'If your campaigns use automated bidding, Google spends your budget looking for more of whatever counts as a conversion. Count button clicks, and it learns to find people who click buttons. Your cost per lead also looks lower than it is, because clicks that did not become an inquiry are counted as if they had.',
+      text: 'Automated bidding uses the account’s conversion actions to guide bids. If a primary action counts button clicks, the campaign can optimise for those clicks. Reporting them as leads also makes the cost per lead look lower than the cost of a completed enquiry.',
     },
     { type: 'h2', id: 'list-what-it-counts', kicker: 'Step 1 · 2 minutes', text: 'List what the account counts' },
     {
@@ -77,13 +77,13 @@ export const googleAdsLeads: Note = {
     },
     {
       type: 'p',
-      text: 'In your campaigns report, break the conversions down by conversion action. Most reports offer this as a segment. Then count what arrived from ads in the same month: inquiries in your inbox or CRM with an ads source, or the new patients or clients who told the front desk they found you through an ad.',
+      text: 'In your campaigns report, break the conversions down by conversion action. Most reports offer this as a segment. Then count what arrived from ads in the same month: enquiries in your inbox or CRM with an ads source, or the new patients or clients who told the front desk they found you through an ad.',
     },
     {
       type: 'p',
       text: 'If the account reports far more conversions than you received, the difference is what it counts that is not a lead. If the two are close, the tracking is probably sound, and the next question is how many of those leads became clients.',
     },
-    { type: 'h2', id: 'what-to-change', text: 'What to change' },
+    { type: 'h2', id: 'what-to-change', text: 'Correct the conversion actions' },
     {
       type: 'ul',
       items: [
@@ -91,10 +91,10 @@ export const googleAdsLeads: Note = {
         '**Fire the lead conversion only after the request is delivered,** not when someone presses the button or opens the form. On the tax firm’s rebuilt site, the conversion fires once a request has reached the firm, and carries an ID so the same request cannot count twice.',
         '**Count calls that last long enough to be a conversation.** Google lets you set a minimum call length for calls from ads.',
         '**Write down the date of the change.** The Conversions column does not rewrite the past. In my own account, after I moved button clicks to secondary, the earlier weeks still included them. Compare before and after by conversion action, not by the total.',
-        '**Expect the number to drop.** Fewer conversions after a fix is the account telling the truth. If the campaigns bid automatically toward conversions, give them time to adjust before you judge the change.',
+        '**Expect the reported total to change.** Removing button clicks from primary conversions can reduce the total. If the campaigns bid automatically toward conversions, give them time to adjust before you judge the change.',
       ],
     },
-    { type: 'h2', id: 'search-terms', text: 'One more look while you are there' },
+    { type: 'h2', id: 'search-terms', text: 'Check the search terms' },
     {
       type: 'p',
       text: 'Open the search terms report and read what people typed before they clicked. In the tax firm’s account, the audit campaigns were reaching people looking for the IRS phone number. No conversion setting fixes that; negative keywords do.',

@@ -20,10 +20,10 @@ type Props = {
 export function CloseBand({
   title = (
     <>
-      Start with a <Keep>20-minute</Keep> call.
+      Book a <Keep>20-minute</Keep> call
     </>
   ),
-  line = 'Tell me what is not working. There is nothing to prepare except your site address.',
+  line = 'Tell me about your business and what you want to build or improve.',
   check = true,
   track = 'close',
 }: Props) {
@@ -42,7 +42,7 @@ export function CloseBand({
           </ButtonLink>
           {check ? (
             <ButtonLink href={SITE.checkHref} variant="ghost" track={`${track}-check`} className={styles.button}>
-              {`Start with a website check, ${CHECK_PRICE}`}
+              {`Request a website check, ${CHECK_PRICE}`}
             </ButtonLink>
           ) : null}
           <p className={styles.reply}>

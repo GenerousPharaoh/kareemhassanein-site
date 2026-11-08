@@ -13,7 +13,7 @@ import { SITE } from '@/content/site';
 import styles from './page.module.css';
 
 export const metadata = pageMeta({
-  title: 'Fixed prices for websites, booking and ads',
+  title: 'Fixed prices for websites and online marketing',
   description:
     'A $1,500 website check, fixes from $1,000, two-week sprints from $5,000, new websites from $10,000 and monthly plans from $1,000 a month. Fixed prices, agreed before work starts.',
   path: '/pricing',
@@ -22,7 +22,7 @@ export const metadata = pageMeta({
 const STEPS: Step[] = [
   {
     title: 'A 20-minute call',
-    text: 'You tell me what is not working, what you have tried, and what a new patient or client is worth to you. I tell you which step makes sense.',
+    text: 'I ask about the website or marketing work you need and what you have tried. I recommend a review, a specific fix or a larger project.',
   },
   {
     title: 'The check, in five business days',
@@ -30,7 +30,7 @@ const STEPS: Step[] = [
   },
   {
     title: 'A short proposal',
-    text: 'One page: your problem in your words, what I found, and three options from a focused fix to the whole path, with a fixed price for each.',
+    text: 'A one-page proposal with the problem, my findings and three options for the work, each with a scope and fixed price.',
   },
   {
     title: 'Agreement and deposit',
@@ -38,11 +38,11 @@ const STEPS: Step[] = [
   },
   {
     title: 'A short weekly update',
-    text: 'One message a week until handover: what changed, what is next and anything I need from you. Every change is logged and can be undone.',
+    text: 'A weekly update until handover: completed work, the next steps and anything I need from you. I record changes and keep rollback instructions.',
   },
   {
     title: 'Handover',
-    text: 'Accounts confirmed in your name, a short guide to what was built, and the offer of a monthly plan if you want one.',
+    text: 'I confirm account ownership, provide a short guide to the site and tools, and discuss ongoing support if you need it.',
   },
 ];
 
@@ -56,8 +56,8 @@ export default function PricingPage() {
         <div className={`container ${styles.overview}`}>
           <div className={styles.intro}>
             <p className="t-label">Pricing</p>
-            <DisplayTitle id="pricing-title" className={styles.title}>Know the cost before anything starts.</DisplayTitle>
-            <p className={styles.lede}>Start with the website check, or go straight to a fix if you already know the problem. Every price is fixed, and agreed before any work begins.</p>
+            <DisplayTitle id="pricing-title" className={styles.title}>Projects and monthly plans</DisplayTitle>
+            <p className={styles.lede}>I agree the scope and fixed price with you before work starts. Choose a website check if you need a review, or discuss a specific fix or project.</p>
             <ButtonLink href={SITE.bookingHref} variant="text" arrow track="pricing-hero-call">Book a 20-minute call</ButtonLink>
           </div>
           <div className={styles.index}>
@@ -97,23 +97,19 @@ export default function PricingPage() {
 
       <Steps
         id="pricing-steps"
-        title="How working together goes"
-        intro="From the first call to the handover, you know what happens next and what it costs."
+        title="From the first call to handover"
+        intro="I confirm the scope, price and schedule before work starts, then send weekly updates until handover."
         steps={STEPS}
-        note="If you already know the problem, the check can be skipped: the call goes straight to a proposal for the fix."
+        note="The website check is optional. If you already know the problem, I can quote the fix after the call."
       />
 
-      <Faq sheet id="pricing-faq" title="Questions about price" intro="If yours is not here, ask me on the call." items={PRICING_FAQ} />
+      <Faq sheet id="pricing-faq" title="Questions about price" items={PRICING_FAQ} />
 
       <CloseCall
         id="pricing-close"
         track="pricing-close"
-        title={
-          <>
-            Not sure which one fits? <span>Start with a call.</span>
-          </>
-        }
-        text="Tell me what is not working and I will tell you which step makes sense: usually the check, sometimes a single fix."
+        title="Discuss the scope and price"
+        text="Describe the work you need on a 20-minute call. I will recommend an option and explain what it includes."
       />
     </>
   );

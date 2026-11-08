@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { Picture } from '@/components/media/Picture';
 import { CaseCard } from '@/components/pages/CaseCard';
 import { ContentsSpy } from '@/components/pages/ContentsSpy';
 import { enter } from '@/components/pages/enter';
@@ -15,7 +14,6 @@ import { caseBySlug } from '@/content/cases';
 import { NOTES, noteBySlug, readingMinutes, type Block } from '@/content/notes';
 import { OFFERS } from '@/content/offers';
 import { SITE } from '@/content/site';
-import { still } from '@/lib/media';
 import styles from './page.module.css';
 
 export const dynamicParams = false;
@@ -34,7 +32,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 const check = OFFERS.find((o) => o.id === 'check');
-const avatar = still('site/portrait', '');
 
 type Heading = Extract<Block, { type: 'h2' }>;
 
@@ -89,9 +86,6 @@ export default async function NotePage({ params }: Props) {
             {note.summary}
           </p>
           <div className={styles.byline} data-enter style={enter(3)}>
-            <span className={styles.avatar} aria-hidden="true">
-              <Picture media={avatar} sizes="88px" />
-            </span>
             <span className={styles.bylineText}>
               <span className={styles.author}>{SITE.name}</span>
               <span className={styles.when}>
@@ -129,9 +123,8 @@ export default async function NotePage({ params }: Props) {
       <footer className={styles.end} aria-labelledby="end-title">
         <div className={`container ${styles.endInner}`}>
           <div className={styles.endHead} data-reveal>
-            <p className="t-label">From the work</p>
             <h2 id="end-title" className="t-h2">
-              Where this comes from
+              Related projects
             </h2>
           </div>
           <div className={styles.cases}>
@@ -146,7 +139,7 @@ export default async function NotePage({ params }: Props) {
             <div className={styles.checkCopy}>
               <p className="t-label">The website check</p>
               <h3 id="check-title" className={styles.checkTitle}>
-                I can check yours.
+                Request a website check
               </h3>
               <p className={styles.checkLine}>{note.check}</p>
             </div>
@@ -155,7 +148,7 @@ export default async function NotePage({ params }: Props) {
               {check?.terms ? <p className={styles.terms}>{check.terms}</p> : null}
               <div className={styles.actions}>
                 <ButtonLink href={SITE.checkHref} arrow track={`note-check-${note.slug}`}>
-                  Start with a website check
+                  Request a website check
                 </ButtonLink>
                 <ButtonLink href={SITE.bookingHref} variant="ghost" track={`note-book-${note.slug}`}>
                   <>

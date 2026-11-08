@@ -10,11 +10,11 @@ export const newPatientsSource: Note = {
   monthLabel: 'October 2026',
   cases: ['physiomax', 'endorphins'],
   check:
-    'The website check follows a patient from the search to the booked appointment, including what your booking system can and cannot report, with a fixed price beside each fix.',
+    'The website check covers your booking links, integrations and tracking, including what the booking system can report, with a fixed price for each recommended fix.',
   body: [
     {
       type: 'p',
-      text: 'A question I hear from practice owners is a simple one: of this month’s new patients, how many came from the website, and how many from ads? The answer depends mostly on one thing, which is whether your booking system can tell Google when someone books.',
+      text: 'To see which new patients came from your website or ads, first check whether your booking system can send completed bookings to Google. That determines which tracking you can use.',
     },
     { type: 'p', text: 'Both situations can be measured. They need different set-ups.' },
     { type: 'h2', id: 'when-it-reports', text: 'When your booking system reports bookings' },
@@ -22,7 +22,7 @@ export const newPatientsSource: Note = {
       type: 'p',
       text: 'Some online booking systems send a booking event to Google Analytics and Google Ads themselves. Jane, for example, does it through its Google integration. Once it is set up, each online booking appears in Analytics with the source that brought the visitor, and the booking can be the conversion your ads count.',
     },
-    { type: 'p', text: 'Set up is not the same as working. Check three things:' },
+    { type: 'p', text: 'Check these settings after connecting the booking system:' },
     {
       type: 'ul',
       items: [
@@ -33,12 +33,12 @@ export const newPatientsSource: Note = {
     },
     {
       type: 'p',
-      text: 'One more thing to know: an online booking is not necessarily a new patient. Existing patients book online too, so this gives you all online bookings by source. The monthly check below is where you separate new patients from returning ones.',
+      text: 'An online booking is not necessarily a new patient. Existing patients book online too, so this gives you all online bookings by source. The monthly check below is where you separate new patients from returning ones.',
     },
-    { type: 'h2', id: 'when-it-cannot', text: 'When it cannot' },
+    { type: 'h2', id: 'when-it-cannot', text: 'When your booking system cannot report bookings' },
     {
       type: 'p',
-      text: 'Many booking and practice management systems, including many used by dental offices, cannot send anything to Google. You can still measure most of what matters with three pieces.',
+      text: 'Some booking and practice management systems cannot send bookings to Google. Depending on what the system supports, a confirmation page, a request form and call tracking can provide additional counts.',
     },
     { type: 'h3', text: 'A confirmation page on your own site' },
     {
@@ -71,7 +71,7 @@ export const newPatientsSource: Note = {
       type: 'p',
       text: 'The three will rarely match exactly. People remember differently, and someone who saw an ad may search your name before calling. You are looking for the trend, and for gaps large enough to mean something is broken.',
     },
-    { type: 'h2', id: 'patient-privacy', text: 'Patient privacy, handled properly' },
+    { type: 'h2', id: 'patient-privacy', text: 'Patient information and tracking' },
     {
       type: 'p',
       text: 'None of this needs patient information in Analytics or Google Ads. Counting that a booking happened, where the visitor came from and, if you like, a value, is enough.',

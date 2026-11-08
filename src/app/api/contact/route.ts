@@ -73,7 +73,7 @@ export async function POST(request: Request) {
       message.length > MAX.message
     ) {
       return NextResponse.json(
-        { error: 'One or more fields are too long.' },
+        { error: 'Please shorten your name, email or message and try again.' },
         { status: 400 }
       );
     }
@@ -88,7 +88,7 @@ export async function POST(request: Request) {
     // Throttle the costly action (sending) per IP.
     if (rateLimited(getClientIp(request), Date.now())) {
       return NextResponse.json(
-        { error: 'Too many messages. Please try again in a little while.' },
+        { error: 'Too many requests. Please try again in ten minutes.' },
         { status: 429 }
       );
     }
@@ -96,7 +96,7 @@ export async function POST(request: Request) {
     if (!process.env.RESEND_API_KEY) {
       // Missing server config: fail closed with the generic message.
       return NextResponse.json(
-        { error: 'Something went wrong. Please try again.' },
+        { error: 'Your request could not be sent. Please try again.' },
         { status: 500 }
       );
     }
@@ -118,7 +118,7 @@ export async function POST(request: Request) {
 
     if (error) {
       return NextResponse.json(
-        { error: 'Something went wrong. Please try again.' },
+        { error: 'Your request could not be sent. Please try again.' },
         { status: 502 }
       );
     }
@@ -126,7 +126,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ success: true });
   } catch {
     return NextResponse.json(
-      { error: 'Something went wrong. Please try again.' },
+      { error: 'Your request could not be sent. Please try again.' },
       { status: 500 }
     );
   }

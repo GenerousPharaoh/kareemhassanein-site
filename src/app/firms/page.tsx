@@ -13,7 +13,7 @@ import { FIRM_FAQ } from '@/content/faq';
 export const metadata = pageMeta({
   title: 'Websites, intake and Google Ads for law firms',
   description:
-    'Websites, intake, CRM handoff, Google Ads and tracking for law firms, and for tax and accounting firms, in Canada and the US. Every account stays in the firm’s name.',
+    'I build websites and intake forms, connect them to the firm’s CRM, and manage Google Ads and tracking for law, tax and accounting firms in Canada and the US.',
   path: '/firms',
 });
 
@@ -28,24 +28,24 @@ const ASKS = [
 
 const BUILD: BuildItem[] = [
   {
-    title: 'Practice area pages in plain language',
-    text: 'Someone with a problem finds the page for it, understands where they stand, and knows what to do next.',
+    title: 'Service and practice area pages',
+    text: 'I explain the firm’s services in plain language and give readers a clear way to make an enquiry.',
   },
   {
-    title: 'Tools that answer a reader’s own situation',
-    text: 'A reader works out their own deadline or next step before they call, with the source beside every figure, so they arrive informed.',
+    title: 'Interactive tools with source references',
+    text: 'I build tools such as notice decoders and deadline calculators, with a source reference beside each figure.',
   },
   {
-    title: 'Intake that screens and routes each request',
-    text: 'Requests that fit go straight to your scheduler and the rest come to you to review, so consultation time goes to the right clients.',
+    title: 'Enquiry forms and scheduling',
+    text: 'I route requests using the firm’s screening criteria. Suitable requests reach the scheduler; other requests go to the firm for review.',
   },
   {
-    title: 'The lead’s source, carried into your CRM',
-    text: 'You can see which search or campaign brought in each signed client, and a conversion counts only once the lead is delivered, so your ads learn from real leads, not clicks.',
+    title: 'Enquiry sources in your CRM',
+    text: 'I pass the enquiry and its source to your CRM, preserve the fields your automations need and check for duplicate conversion events.',
   },
   {
-    title: 'Launches you can reverse in one step',
-    text: 'Every old address is redirected, the new site goes live with one change, and the old one stays a step away until you are sure.',
+    title: 'Launch plan and redirects',
+    text: 'I map old page addresses to the new site and prepare instructions for restoring the previous site if needed.',
   },
 ];
 
@@ -56,15 +56,11 @@ export default function FirmsPage() {
     <>
       <Hero
         label="For firms"
-        title={
-          <>
-            From search to <em>signed.</em>
-          </>
-        }
-        lede="Websites, intake, CRM handoff, Google Ads and tracking for law firms, and for tax and accounting firms, in Canada and the US. I build and run all of it myself, and every account stays in the firm’s name."
+        title="Websites and intake for firms"
+        lede="I build websites and intake forms, connect them to your CRM, and manage Google Ads and tracking for law, tax and accounting firms in Canada and the US. Your accounts stay in the firm’s name."
         track="firms-hero"
         specs={[
-          { term: 'Your CRM', detail: 'Clio and others, learned before anything changes' },
+          { term: 'Your CRM', detail: 'Clio or the system your firm already uses' },
           { term: 'Wording', detail: 'To your law society’s or bar’s rules' },
           { term: 'Client information', detail: 'Never goes into AI tools' },
           { term: 'Your accounts', detail: 'Stay in the firm’s name' },
@@ -75,7 +71,7 @@ export default function FirmsPage() {
             desktop={pickStill(trc, 'home-hero--desktop')}
             phone={pickLoop(trc, 'home-scroll--phone')}
             domain={trc.domain}
-            caption="The rebuilt home page of Tax Relief Counsel, a tax law firm in Washington, D.C. Finished, and waiting on launch."
+            caption="The rebuilt Tax Relief Counsel home page. The site is complete and awaiting launch."
           />
         }
       />
@@ -84,13 +80,13 @@ export default function FirmsPage() {
         id="firm-asks"
         title="What firm owners ask me to fix"
         items={ASKS}
-        note="These are often connected. The gap that loses a lead’s source on the way into the CRM is usually the same one that hides which campaign worked."
+        note="I check the website, enquiry forms, CRM fields and ad conversions to see where information is lost."
       />
 
       <BuildList
         id="firm-build"
         title="What I build"
-        intro="Each piece works on its own. Together they carry a reader from the first search to a signed engagement, with the source attached all the way."
+        intro="The scope can include service pages, interactive tools, intake forms, CRM connections and ad tracking."
         items={BUILD}
       />
 
@@ -110,17 +106,13 @@ export default function FirmsPage() {
 
       <PriceLine id="firm-prices" track="firms" />
 
-      <Faq id="firm-faq" title="Questions firm owners ask" intro="If yours is not here, ask me on the call." items={FIRM_FAQ} />
+      <Faq id="firm-faq" title="Questions about working with me" items={FIRM_FAQ} />
 
       <CloseCall
         id="firm-close"
         track="firms-close"
-        title={
-          <>
-            Tell me where the leads go missing. <span>I will tell you what I would fix first.</span>
-          </>
-        }
-        text="Book a 20-minute call and tell me what is not working. If you would rather see the whole picture first, start with the website check: its cost comes off any work within 60 days."
+        title="Discuss your website or intake"
+        text="Describe the problem on a 20-minute call, or request a website check. The check is credited in full toward any work within 60 days."
       />
     </>
   );

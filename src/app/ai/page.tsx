@@ -8,22 +8,22 @@ import styles from './page.module.css';
 export const metadata = pageMeta({
   title: 'How I use AI',
   description:
-    'AI tools help me build. I review and test every change myself and decide what ships, and nothing that speaks for your practice goes live without your approval.',
+    'I use AI tools to draft code and text and run checks. I review and test the changes, and you approve the wording before publication.',
   path: '/ai',
 });
 
 const TOOLS = ['Write code to my instructions', 'Check code for errors', 'Draft text for me to rewrite', 'Run tests and checks across a site'];
 
 const ME = [
-  'Decide what gets built, and how',
-  'Review every change',
-  'Test it myself, on phones and computers',
-  'Decide what ships, and answer for it',
+  'Plan the website and choose what to build',
+  'Review the generated code and text',
+  'Test the site on phones and computers',
+  'Approve changes for launch',
 ];
 
 const SETTINGS = [
   { term: 'Your accounts', value: 'Your Google accounts and your booking system stay in your name. I work in them with access you grant, and you can remove it at any time.' },
-  { term: 'Your wording', value: 'Nothing that speaks for your practice goes live until you have approved it.' },
+  { term: 'Your wording', value: 'You approve the wording before I publish it.' },
 ];
 
 export default function AiPage() {
@@ -32,13 +32,8 @@ export default function AiPage() {
       <div className={`container ${styles.top}`}>
         <PageHead
           measure="wide"
-          label="How I use AI"
-          title={
-            <>
-              <span className={styles.quiet}>I use AI to build.</span>
-              <br /> I decide what ships.
-            </>
-          }
+          label="Tools"
+          title="How I use AI"
           lede="AI tools write and check code, draft text and run tests for me. I review and test every change myself before it goes live."
         />
 
@@ -84,8 +79,8 @@ export default function AiPage() {
       </section>
 
       <CloseBand
-        title="Questions about how I work?"
-        line="Ask on the call. It takes 20 minutes, and there is nothing to prepare except your site address."
+        title="Discuss a project"
+        line="Ask about the design, development and review process on a 20-minute call."
         track="ai-close"
       />
     </>
