@@ -13,17 +13,16 @@
 // account; Google Ads signs in with Kareem's own access and only ever sends
 // queries. Neither key is in this repository: on his laptop they are read from
 // his user folder. In a cloud session (Claude or Codex) the two key files
-// arrive encrypted and this script unlocks them itself, once, with the
-// environment's GOOGLE_KEYS_PASS. When a key is missing, the commands that
-// need it say so and stop.
+// arrive encrypted and this script unlocks them itself, in memory, with the
+// environment's GOOGLE_KEYS_PASS; nothing unlocked is written to disk. When a
+// key is missing, the commands that need it say so and stop.
 //
 // What has no programmatic route at all: Search Console's "Request indexing"
 // button. Ads customer id: none for this site.
 //
 // Before quoting a number, read what CLAUDE.md and .claude/notes say about
 // this site's data (bot traffic, what each conversion really counts).
-import { spawnSync } from 'node:child_process';
-import { createSign } from 'node:crypto';
+import { createDecipheriv, createSign, pbkdf2Sync } from 'node:crypto';
 import { existsSync, readFileSync } from 'node:fs';
 import { homedir } from 'node:os';
 import path from 'node:path';
@@ -38,16 +37,23 @@ const SCOPES = [
   'https://www.googleapis.com/auth/webmasters.readonly',
 ];
 
-// Cloud sessions only: the setup script leaves the key files encrypted beside
-// an unlock script. Runs at most once, prints nothing, and does nothing on a
-// machine without that script or without GOOGLE_KEYS_PASS.
-let unlockTried = false;
-function unlockKeys() {
-  if (unlockTried) return false;
-  unlockTried = true;
-  const script = path.join(homedir(), '.claude', 'kareem', 'unlock-google.sh');
-  if (!process.env.GOOGLE_KEYS_PASS || !existsSync(script)) return false;
-  return spawnSync('bash', [script], { stdio: 'ignore' }).status === 0;
+// Cloud sessions only: the setup script leaves each key file encrypted in
+// ~/.claude/kareem (openssl enc -aes-256-cbc -pbkdf2 -iter 200000 -base64 -A).
+// This reads one and unlocks it in memory with GOOGLE_KEYS_PASS. It returns
+// null on a machine without that file or that variable, or if they do not match.
+function unlockKey(name) {
+  const pass = process.env.GOOGLE_KEYS_PASS;
+  const file = path.join(homedir(), '.claude', 'kareem', name);
+  if (!pass || !existsSync(file)) return null;
+  try {
+    const raw = Buffer.from(readFileSync(file, 'utf8').trim(), 'base64');
+    if (raw.subarray(0, 8).toString('latin1') !== 'Salted__') return null;
+    const derived = pbkdf2Sync(pass, raw.subarray(8, 16), 200000, 48, 'sha256');
+    const decipher = createDecipheriv('aes-256-cbc', derived.subarray(0, 32), derived.subarray(32));
+    return JSON.parse(Buffer.concat([decipher.update(raw.subarray(16)), decipher.final()]).toString('utf8'));
+  } catch {
+    return null;
+  }
 }
 
 function loadKey() {
@@ -58,13 +64,10 @@ function loadKey() {
     process.env.GOOGLE_APPLICATION_CREDENTIALS,
     path.join(homedir(), '.config', 'gcloud', 'kinetikare-mcp-sa.json'),
   ].filter(Boolean);
-  for (let attempt = 0; attempt < 2; attempt += 1) {
-    for (const file of candidates) {
-      if (existsSync(file)) return JSON.parse(readFileSync(file, 'utf8'));
-    }
-    if (!unlockKeys()) break;
+  for (const file of candidates) {
+    if (existsSync(file)) return JSON.parse(readFileSync(file, 'utf8'));
   }
-  return null;
+  return unlockKey('sa.enc');
 }
 
 function loadAdsKey() {
@@ -72,8 +75,7 @@ function loadAdsKey() {
     return JSON.parse(Buffer.from(process.env.GOOGLE_ADS_ADC_B64.trim(), 'base64').toString('utf8'));
   }
   const file = path.join(homedir(), '.config', 'gcloud', 'google-ads-adc.json');
-  if (!existsSync(file)) unlockKeys();
-  return existsSync(file) ? JSON.parse(readFileSync(file, 'utf8')) : null;
+  return existsSync(file) ? JSON.parse(readFileSync(file, 'utf8')) : unlockKey('adc.enc');
 }
 
 async function adsToken(key) {
