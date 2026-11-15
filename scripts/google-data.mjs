@@ -22,6 +22,7 @@
 //
 // Before quoting a number, read what CLAUDE.md and .claude/notes say about
 // this site's data (bot traffic, what each conversion really counts).
+import { spawnSync } from 'node:child_process';
 import { createDecipheriv, createSign, pbkdf2Sync } from 'node:crypto';
 import { existsSync, readFileSync } from 'node:fs';
 import { homedir } from 'node:os';
@@ -176,6 +177,24 @@ function readBody(arg) {
 }
 
 const day = (offset) => new Date(Date.now() - offset * 86400000).toISOString().slice(0, 10);
+
+// Some cloud machines (Codex) only reach the internet through a proxy, which
+// Node's fetch ignores unless told. When a proxy is configured and a direct
+// request fails, run this script again with Node's proxy support switched on
+// (Node 22.21 or newer). Never happens on the laptop: no proxy is set there.
+if ((process.env.HTTPS_PROXY || process.env.https_proxy) && !process.env.NODE_USE_ENV_PROXY) {
+  const direct = await fetch('https://oauth2.googleapis.com/', { method: 'HEAD', signal: AbortSignal.timeout(8000) }).then(
+    () => true,
+    () => false,
+  );
+  if (!direct) {
+    const again = spawnSync(process.execPath, process.argv.slice(1), {
+      stdio: 'inherit',
+      env: { ...process.env, NODE_USE_ENV_PROXY: '1' },
+    });
+    process.exit(again.status ?? 1);
+  }
+}
 
 const [what, arg, arg2] = process.argv.slice(2);
 const noKey = () =>
