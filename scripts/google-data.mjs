@@ -12,15 +12,17 @@
 // Analytics and Search Console sign in as the site's read-only reporting
 // account; Google Ads signs in with Kareem's own access and only ever sends
 // queries. Neither key is in this repository: on his laptop they are read from
-// his user folder, and in a cloud session from the environment's
-// GOOGLE_SA_KEY_B64 and GOOGLE_ADS_ADC_B64 variables (each key file, base64
-// encoded). When one is missing, the commands that need it say so and stop.
+// his user folder. In a cloud session (Claude or Codex) the two key files
+// arrive encrypted and this script unlocks them itself, once, with the
+// environment's GOOGLE_KEYS_PASS. When a key is missing, the commands that
+// need it say so and stop.
 //
 // What has no programmatic route at all: Search Console's "Request indexing"
 // button. Ads customer id: none for this site.
 //
 // Before quoting a number, read what CLAUDE.md and .claude/notes say about
 // this site's data (bot traffic, what each conversion really counts).
+import { spawnSync } from 'node:child_process';
 import { createSign } from 'node:crypto';
 import { existsSync, readFileSync } from 'node:fs';
 import { homedir } from 'node:os';
@@ -36,6 +38,18 @@ const SCOPES = [
   'https://www.googleapis.com/auth/webmasters.readonly',
 ];
 
+// Cloud sessions only: the setup script leaves the key files encrypted beside
+// an unlock script. Runs at most once, prints nothing, and does nothing on a
+// machine without that script or without GOOGLE_KEYS_PASS.
+let unlockTried = false;
+function unlockKeys() {
+  if (unlockTried) return false;
+  unlockTried = true;
+  const script = path.join(homedir(), '.claude', 'kareem', 'unlock-google.sh');
+  if (!process.env.GOOGLE_KEYS_PASS || !existsSync(script)) return false;
+  return spawnSync('bash', [script], { stdio: 'ignore' }).status === 0;
+}
+
 function loadKey() {
   if (process.env.GOOGLE_SA_KEY_B64) {
     return JSON.parse(Buffer.from(process.env.GOOGLE_SA_KEY_B64.trim(), 'base64').toString('utf8'));
@@ -44,8 +58,11 @@ function loadKey() {
     process.env.GOOGLE_APPLICATION_CREDENTIALS,
     path.join(homedir(), '.config', 'gcloud', 'kinetikare-mcp-sa.json'),
   ].filter(Boolean);
-  for (const file of candidates) {
-    if (existsSync(file)) return JSON.parse(readFileSync(file, 'utf8'));
+  for (let attempt = 0; attempt < 2; attempt += 1) {
+    for (const file of candidates) {
+      if (existsSync(file)) return JSON.parse(readFileSync(file, 'utf8'));
+    }
+    if (!unlockKeys()) break;
   }
   return null;
 }
@@ -55,6 +72,7 @@ function loadAdsKey() {
     return JSON.parse(Buffer.from(process.env.GOOGLE_ADS_ADC_B64.trim(), 'base64').toString('utf8'));
   }
   const file = path.join(homedir(), '.config', 'gcloud', 'google-ads-adc.json');
+  if (!existsSync(file)) unlockKeys();
   return existsSync(file) ? JSON.parse(readFileSync(file, 'utf8')) : null;
 }
 
@@ -158,8 +176,8 @@ function readBody(arg) {
 const day = (offset) => new Date(Date.now() - offset * 86400000).toISOString().slice(0, 10);
 
 const [what, arg, arg2] = process.argv.slice(2);
-const noKey = (name) =>
-  `On the laptop it is in the user folder; in a cloud session the environment needs ${name}. Tell Kareem; do not ask him to paste a key into the chat.`;
+const noKey = () =>
+  'On the laptop it is in the user folder; in a cloud session the environment needs GOOGLE_KEYS_PASS and the encrypted key files from its setup script. Tell Kareem; do not ask him to paste a key into the chat.';
 const adsKey = loadAdsKey();
 const key = loadKey();
 
@@ -193,7 +211,7 @@ try {
   }
   if (what === 'check') {
     if (!ADS_CUSTOMER) console.log('Google Ads: no account for this site.');
-    else if (!adsKey) console.log('Google Ads: no access on this machine (GOOGLE_ADS_ADC_B64 is not set).');
+    else if (!adsKey) console.log('Google Ads: no access on this machine (no key file and nothing to unlock).');
     else {
       try {
         const rows = await adsSearch(adsKey, 'SELECT campaign.name, campaign.status FROM campaign');
