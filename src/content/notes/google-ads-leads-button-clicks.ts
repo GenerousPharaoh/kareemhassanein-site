@@ -3,11 +3,13 @@ import type { Note } from './types';
 export const googleAdsLeads: Note = {
   slug: 'google-ads-leads-button-clicks',
   title: 'Your Google Ads leads might be button clicks. How to check in ten minutes.',
+  searchTitle: 'Your Google Ads leads might be button clicks',
   summary:
     'If your ad account reports more leads than your inbox received, it may be counting clicks. How to see what it counts, and what to change.',
   audience: 'For law firms and practices running Google Ads',
   month: '2026-10',
   monthLabel: 'October 2026',
+  published: '2026-10-29',
   cases: ['tax-relief-counsel', 'kinetikare'],
   check:
     'The website check covers your conversion actions, your forms or booking, and the path each lead takes to your inbox or CRM, with a fixed price beside each fix.',

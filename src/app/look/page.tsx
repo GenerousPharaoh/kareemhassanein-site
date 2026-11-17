@@ -14,7 +14,7 @@ import styles from './page.module.css';
 export const metadata = pageMeta({
   title: 'A first look at your site',
   description:
-    'Paste your site address. In a few seconds you see what Google sees, how the page opens on a phone, where booking or intake goes, what is being counted, and the words a college or law society may question.',
+    'Paste your site address to see what Google sees, how it opens on a phone, where booking goes, what is counted, and words a college or law society may question.',
   path: '/look',
 });
 

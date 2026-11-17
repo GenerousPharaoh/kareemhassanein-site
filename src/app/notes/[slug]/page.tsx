@@ -6,7 +6,7 @@ import { CaseCard } from '@/components/pages/CaseCard';
 import { ContentsSpy } from '@/components/pages/ContentsSpy';
 import { enter } from '@/components/pages/enter';
 import { Keep } from '@/components/pages/Keep';
-import { pageMeta } from '@/lib/meta';
+import { pageMeta, SITE_IMAGE } from '@/lib/meta';
 import { NoteBody, NoteTitle } from '@/components/pages/NoteBody';
 import { NoteCover } from '@/components/pages/NoteCover';
 import { ButtonLink } from '@/components/ui/ButtonLink';
@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const note = noteBySlug(slug);
   if (!note) return {};
-  return pageMeta({ title: note.title, description: note.summary, path: `/notes/${note.slug}`, type: 'article' });
+  return pageMeta({ title: note.searchTitle ?? note.title, description: note.summary, path: `/notes/${note.slug}`, type: 'article' });
 }
 
 const check = OFFERS.find((o) => o.id === 'check');
@@ -63,6 +63,8 @@ export default async function NotePage({ params }: Props) {
     '@type': 'Article',
     headline: note.title,
     description: note.summary,
+    datePublished: note.published,
+    image: `${SITE.url}${SITE_IMAGE.url}`,
     inLanguage: 'en-CA',
     mainEntityOfPage: `${SITE.url}/notes/${note.slug}`,
     author: { '@id': SITE.personId },

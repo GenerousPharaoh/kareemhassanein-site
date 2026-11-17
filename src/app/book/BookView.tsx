@@ -11,7 +11,7 @@ import styles from './page.module.css';
 export const BOOK_META = {
   title: 'Book a call',
   description:
-    'Tell me what you want to build or improve for your business or personal project. I reply within one business day to set up a 20-minute call, or to start a website check.',
+    'Tell me what you want to build or improve. I reply within one business day to set up a 20-minute call, or to start a website check.',
   path: '/book',
 };
 

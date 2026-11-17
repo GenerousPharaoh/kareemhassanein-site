@@ -14,6 +14,11 @@ export type Block =
 export type Note = {
   slug: string;
   title: string;
+  /**
+   * A shorter title for search results, when the title plus " · Kareem Hassanein" runs past
+   * about 60 characters and Google would cut it mid-sentence. The page heading keeps `title`.
+   */
+  searchTitle?: string;
   /** One line for the index, the page standfirst and the meta description. */
   summary: string;
   /** Who it is written for, shown above the title. */
@@ -21,6 +26,8 @@ export type Note = {
   /** Valid HTML month string for <time>, and the label shown. */
   month: string;
   monthLabel: string;
+  /** The day it went live, YYYY-MM-DD, for the Article structured data. */
+  published: string;
   /** Slugs of the cases the note comes from, in order. */
   cases: string[];
   /** The sentence beside the website check at the end of the note. */

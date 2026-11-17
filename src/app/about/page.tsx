@@ -12,7 +12,7 @@ import styles from './page.module.css';
 export const metadata = pageMeta({
   title: 'About',
   description:
-    'I design and build websites for businesses and personal projects, and run the systems around them. My background includes 13 years in healthcare, across different roles.',
+    'I design, build and run websites for businesses and personal projects. My background includes 13 years in healthcare, across different roles.',
   path: '/about',
 });
 

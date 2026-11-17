@@ -8,6 +8,7 @@ export const newPatientsSource: Note = {
   audience: 'For dental and medical practices',
   month: '2026-10',
   monthLabel: 'October 2026',
+  published: '2026-10-29',
   cases: ['physiomax', 'endorphins'],
   check:
     'The website check follows a patient from the search to the booked appointment, including what your booking system can and cannot report, with a fixed price beside each fix.',

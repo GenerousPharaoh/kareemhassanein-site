@@ -15,7 +15,7 @@ import styles from './page.module.css';
 export const metadata = pageMeta({
   title: 'Fixed prices for websites, booking and ads',
   description:
-    'A $1,500 website check, fixes from $1,000, two-week sprints from $5,000, new websites from $10,000 and monthly plans from $1,000 a month. Fixed prices, agreed before work starts.',
+    'A $1,500 website check, fixes from $1,000, two-week sprints from $5,000, new websites from $10,000 and monthly plans from $1,000. Agreed before work starts.',
   path: '/pricing',
 });
 
